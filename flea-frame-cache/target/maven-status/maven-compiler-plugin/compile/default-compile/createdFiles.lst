@@ -1,0 +1,16 @@
+com\huazie\frame\cache\memcached\MemcachedSpringCacheManager.class
+com\huazie\frame\cache\memcached\MemcachedFleaCacheManager.class
+com\huazie\frame\cache\common\CacheEnum.class
+com\huazie\frame\cache\AbstractSpringCacheManager.class
+com\huazie\frame\cache\redis\impl\RedisSpringCache.class
+com\huazie\frame\cache\AbstractFleaCacheManager.class
+com\huazie\frame\cache\memcached\impl\MemcachedFleaCache.class
+com\huazie\frame\cache\memcached\impl\MemcachedSpringCache.class
+com\huazie\frame\cache\common\CacheConstants.class
+com\huazie\frame\cache\memcached\config\MemcachedConfig.class
+com\huazie\frame\cache\AbstractFleaCache.class
+com\huazie\frame\cache\IFleaCache.class
+com\huazie\frame\cache\common\CacheConstants$MemcachedConfigConstants.class
+com\huazie\frame\cache\redis\RedisFleaCacheManager.class
+com\huazie\frame\cache\redis\impl\RedisFleaCache.class
+com\huazie\frame\cache\AbstractSpringCache.class
