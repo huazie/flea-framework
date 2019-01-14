@@ -23,3 +23,5 @@
 hs_err_pid*
 .idea/
 flea-frame-common/target/
+flea-frame-cache/target/
+flea-frame-db/target/

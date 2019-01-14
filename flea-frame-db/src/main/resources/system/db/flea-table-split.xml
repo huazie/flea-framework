@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tables>
+
+	<table id="fleaFileInfo" name="flea_file_info" entityClass="com.huazie.ffs.entity.FleaFileInfo" >
+		<split key="twohex" column="file_id" implClass="com.huazie.frame.db.common.tab.split.impl.TwoHexTableSplitImpl"/>
+	</table>
+	
+</tables>
