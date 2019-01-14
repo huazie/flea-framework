@@ -7,6 +7,7 @@
     <modules>
         <module>flea-frame-common</module>
         <module>flea-frame-cache</module>
+        <module>flea-frame-db</module>
     </modules>
     <packaging>pom</packaging>
     <name>Flea Frame</name>
@@ -99,6 +100,12 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.21</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.4</version>
         </dependency>
 
         <!-- Spring相关 -->

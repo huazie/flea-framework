@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	
+	<persistence-unit name="fleamarket" transaction-type="RESOURCE_LOCAL">
+		<!-- provider -->
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<!-- Connection JDBC -->
+		<class>com.huazie.frame.common.base.code.entity.ValidateCode</class>
+		<class>com.huazie.frame.common.base.delivery.entity.Courier</class>
+		<class>com.huazie.frame.common.base.delivery.entity.Delivery</class>
+		<class>com.huazie.frame.common.base.delivery.entity.DeliveryDetail</class>
+		<class>com.huazie.frame.common.base.log.entity.LoginLog</class>
+		<class>com.huazie.frame.common.base.log.entity.OperLog</class>
+		<class>com.huazie.frame.common.base.order.entity.Order</class>
+		<class>com.huazie.frame.common.base.order.entity.OrderDetail</class>
+		<class>com.huazie.frame.common.base.res.entity.Res</class>
+		<class>com.huazie.frame.common.base.res.entity.ResCategory</class>
+		<class>com.huazie.frame.common.base.res.entity.ResPic</class>
+		<class>com.huazie.frame.common.base.user.entity.Account</class>
+		<class>com.huazie.frame.common.base.user.entity.Favorite</class>
+		<class>com.huazie.frame.common.base.user.entity.ShoppingCart</class>
+		<class>com.huazie.frame.common.base.user.entity.User</class>
+		<class>com.huazie.frame.common.base.user.entity.UserRealName</class>
+		<class>com.huazie.frame.common.base.user.entity.UserRealNamePic</class>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		
+		<properties>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+			<property name="javax.persistence.jdbc.url"
+				value="jdbc:mysql://localhost:3306/fleamarket?useUnicode=true&amp;characterEncoding=UTF-8" />
+			<property name="javax.persistence.jdbc.user" value="root" />
+			<property name="javax.persistence.jdbc.password" value="root" />
+			<!--<property name="eclipselink.ddl-generation" value="create-tables"/> -->
+		</properties>
+	</persistence-unit>
+	
+</persistence>
