@@ -17,10 +17,11 @@ import com.huazie.frame.common.util.PropertiesUtil;
 import com.huazie.frame.common.util.StringUtils;
 
 /**
- *  i18n 配置类
+ *  <p>flea i18n 配置类</p>
  *  
  * @author huazie
  * @version v1.0.0
+ * @since 1.0.0
  * @date 2018年7月29日
  *
  */
@@ -42,11 +43,16 @@ public class FleaI18nConfig {
 	}
 	
 	/**
-	 * 只允许通过getConfig()获取 i18n配置类实例
+	 * <p>只允许通过getConfig()获取 flea i18n配置类实例</p>
 	 */
 	private FleaI18nConfig(){
 	}
 
+	/**
+	 * <p>获取Flea i18n 配置类实例</p>
+	 *
+	 * @return Flea I18n 配置类实例
+	 */
 	public static FleaI18nConfig getConfig(){
 		if(config == null){
 			synchronized (FleaI18nConfig.class) {
@@ -57,30 +63,28 @@ public class FleaI18nConfig {
 		}
 		return config;
 	}
-	
+
 	/**
 	 * 通过国际化数据的key，获取当前系统指定资源的国际化资源
-	 * 
-	 * @date 2018年7月29日
 	 *
-	 * @param key
-	 * @return
+	 * @param key     国际化资源KEY
+	 * @param resName 资源名
+	 * @param locale  国际化标识
+	 * @return 国际化资源数据
 	 * @throws Exception
 	 */
 	public FleaI18nData getI18NData(String key, String resName, Locale locale)throws Exception{
 		return new FleaI18nData(key, this.getI18NDataValue(key, resName, locale));
 	}
-	
+
 	/**
-	 * 通过国际化数据的key，获取当前系统指定资源的国际化资源
-	 * 
-	 * @date 2018年12月24日
+	 * 通过国际化数据的key，获取当前系统指定资源的国际化资源数据
 	 *
-	 * @param key
-	 * @param values
-	 * @param resName
-	 * @param locale
-	 * @return
+	 * @param key     国际化资源KEY
+	 * @param values  国际化资源数据替换内容
+	 * @param resName 资源名
+	 * @param locale  国际化标识
+	 * @return 国际化资源数据
 	 * @throws Exception
 	 */
 	public String getI18NDataValue(String key, String[] values, String resName, Locale locale)throws Exception{
@@ -94,16 +98,14 @@ public class FleaI18nConfig {
 		}
 		return value;
 	}
-	
+
 	/**
-	 * 通过国际化数据的key，获取当前系统指定资源的国际化资源
-	 * 
-	 * @date 2018年7月29日
+	 * <p>通过国际化数据的key，获取当前系统指定资源的国际化资源数据</p>
 	 *
-	 * @param key
-	 * @param resName
-	 * @param locale
-	 * @return
+	 * @param key     国际化资源KEY
+	 * @param resName 资源名
+	 * @param locale  国际化标识
+	 * @return 国际化资源数据
 	 * @throws Exception
 	 */
 	public String getI18NDataValue(String key, String resName, Locale locale)throws Exception{
@@ -112,7 +114,7 @@ public class FleaI18nConfig {
 			LOGGER.debug("Find the resource name: {}", resName);
 			LOGGER.debug("Find the locale : {} , {}" , locale == null ? Locale.getDefault() : locale , locale == null ? Locale.getDefault().getDisplayLanguage() : locale.getDisplayLanguage());
 		}
-		ResourceBundle resource = this.getResouceBundle(resName, locale);
+		ResourceBundle resource = this.getResourceBundle(resName, locale);
 		
 		String value = null;
 		if(null != resource){
@@ -124,16 +126,15 @@ public class FleaI18nConfig {
 		}
 		return value;
 	}
-	
+
 	/**
-	 * 根据国际化标识获取指定国际化配置文件
-	 * 
-	 * @date 2018年8月12日
+	 * <p>根据资源名和国际化标识获取指定国际化配置ResourceBundle对象</p>
 	 *
-	 * @param locale
-	 * @return
+	 * @param resName 资源名
+	 * @param locale  国际化标识
+	 * @return 国际化配置ResourceBundle对象
 	 */
-	private ResourceBundle getResouceBundle(String resName, Locale locale)throws Exception{
+	private ResourceBundle getResourceBundle(String resName, Locale locale)throws Exception{
 		
 		String key = this.generateKey(resName, locale);
 		ResourceBundle resource = this.resources.get(key);
@@ -156,22 +157,18 @@ public class FleaI18nConfig {
 		
 		return resource;
 	}
-	
+
 	/**
-	 * 获取资源和国际化的key
-	 * 
+	 * <p>获取国际化资源文件KEY</p>
+	 * <p>
 	 * 如果资源名不为空，则资源名作为key，同时如果国际化标识不为空，则取资源名+下划线+国际化语言作为key；
-	 * 
-	 * @date 2018年8月19日
 	 *
-	 * @param resName
-	 *            资源名
-	 * @param locale
-	 *            国际化标识
-	 * @return
+	 * @param resName 资源名
+	 * @param locale  国际化标识
+	 * @return 国际化资源文件KEY
 	 */
 	private String generateKey(String resName, Locale locale)throws Exception{
-		String key = null;
+		String key;
 		if(StringUtils.isNotBlank(resName)){
 			key = resName;
 			if(null != locale){
