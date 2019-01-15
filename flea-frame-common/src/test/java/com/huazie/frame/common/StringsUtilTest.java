@@ -20,38 +20,38 @@ public class StringsUtilTest {
 	
 	@Test
 	public void testStringBefore(){
-		StringsUtilTest.LOGGER.debug(StringUtils.subStrBefore("asda", 0));
-		StringsUtilTest.LOGGER.debug(StringUtils.subStrBefore("asda", -1));
-		StringsUtilTest.LOGGER.debug(StringUtils.subStrBefore("asda", 2));
-		StringsUtilTest.LOGGER.debug(StringUtils.subStrBefore("asda", 5));
+		LOGGER.debug(StringUtils.subStrBefore("asda", 0));
+		LOGGER.debug(StringUtils.subStrBefore("asda", -1));
+		LOGGER.debug(StringUtils.subStrBefore("asda", 2));
+		LOGGER.debug(StringUtils.subStrBefore("asda", 5));
 	}
 	
 	@Test
 	public void testStringLast(){
-		StringsUtilTest.LOGGER.debug(StringUtils.subStrLast("asda", 0));
-		StringsUtilTest.LOGGER.debug(StringUtils.subStrLast("asda", -1));
-		StringsUtilTest.LOGGER.debug(StringUtils.subStrLast("asda", 2));
-		StringsUtilTest.LOGGER.debug(StringUtils.subStrLast("asda", 5));
+		LOGGER.debug(StringUtils.subStrLast("asda", 0));
+		LOGGER.debug(StringUtils.subStrLast("asda", -1));
+		LOGGER.debug(StringUtils.subStrLast("asda", 2));
+		LOGGER.debug(StringUtils.subStrLast("asda", 5));
 	}
 	
 	@Test
 	public void testStringCat(){
-		StringsUtilTest.LOGGER.debug(StringUtils.strCat("flea_file_info", "_" , "ff"));
+		LOGGER.debug(StringUtils.strCat("flea_file_info", "_" , "ff"));
 	}
 	
 	@Test
 	public void testReplace(){
 		StringBuilder strBuilder = new StringBuilder();
 		strBuilder.append("INSERT INTO {##table##} ( {##columns##} ) VALUES( {##values##} )");
-		StringsUtilTest.LOGGER.debug(strBuilder.toString());
+		LOGGER.debug(strBuilder.toString());
 		String placeholder = "{##table##}";
 		String str = "flea_file_info_ff";
 		try {
 			StringUtils.replace(strBuilder, placeholder, str);
 		} catch (Exception e) {
-			StringsUtilTest.LOGGER.error("Exception={}", e);
+			LOGGER.error("Exception={}", e);
 		}
-		StringsUtilTest.LOGGER.debug(strBuilder.toString());
+		LOGGER.debug(strBuilder.toString());
 	}
 	
 	@Test
@@ -59,10 +59,10 @@ public class StringsUtilTest {
 		String[] strs = StringUtils.split(" para_id = :paraId, para_type = :paraType", ",");
 		if(!ArrayUtils.isEmpty(strs)){
 			for(String str : strs){
-				StringsUtilTest.LOGGER.debug("Str={}", str);
+				LOGGER.debug("Str={}", str);
 			}
 		}else{
-			StringsUtilTest.LOGGER.debug("null");
+			LOGGER.debug("null");
 		}
 	}
 }

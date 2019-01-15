@@ -49,7 +49,7 @@ public class DateUtils {
 	public static String date2String(Date date, String datePattern) {
 		String dateStr = null;
 		if(date == null){
-			date = DateUtils.getCurrentTime();
+			date = getCurrentTime();
 		}
 		if (StringUtils.isEmpty(datePattern)) {
 			datePattern = DateFormatEnum.DATA_FORMAT_DEFAULT;
@@ -58,7 +58,7 @@ public class DateUtils {
 		try {
 			dateStr = dateFormat.format(date);
 		} catch (Exception e) {
-			DateUtils.LOGGER.error("DateUtils##date2String 日期转换异常：", e);
+			LOGGER.error("DateUtils##date2String 日期转换异常：", e);
 		}
 		return dateStr;
 	}
@@ -98,7 +98,7 @@ public class DateUtils {
             SimpleDateFormat dateFormat = new SimpleDateFormat(datepattern);
             return dateFormat.parse(dateStr);
         } catch (Exception e) {
-        	DateUtils.LOGGER.error("DateUtils##string2Date 日期字符串转换异常：",e);
+        	LOGGER.error("DateUtils##string2Date 日期字符串转换异常：",e);
         }
         return null;
     }

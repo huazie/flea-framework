@@ -22,16 +22,16 @@ import com.huazie.frame.db.common.util.EntityUtils;
  */
 public class TableSplitTest {
 
-	private final static Logger LOOGER = LoggerFactory.getLogger(TableSplitTest.class);
+	private final static Logger LOGGER = LoggerFactory.getLogger(TableSplitTest.class);
 	
 	@Test
 	public void testTableSplit(){
 		
 		ITableSplit tableSplit = new TwoHexTableSplitImpl();
 		try {
-			TableSplitTest.LOOGER.debug(tableSplit.convert("flea_file_info", "12312311FF"));
+			LOGGER.debug(tableSplit.convert("flea_file_info", "12312311FF"));
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error("Exception={}",e);
 		}
 	}
 	
@@ -40,9 +40,9 @@ public class TableSplitTest {
 		
 		ITableSplit tableSplit = new YYYYTableSplitImpl();
 		try {
-			TableSplitTest.LOOGER.debug(tableSplit.convert("flea_file_info", ""));
+			LOGGER.debug(tableSplit.convert("flea_file_info", ""));
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error("Exception={}",e);
 		}
 	}
 	
@@ -51,9 +51,9 @@ public class TableSplitTest {
 		
 		ITableSplit tableSplit = new YYYYMMTableSplitImpl();
 		try {
-			TableSplitTest.LOOGER.debug(tableSplit.convert("flea_file_info", ""));
+			LOGGER.debug(tableSplit.convert("flea_file_info", ""));
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error("Exception={}",e);
 		}
 	}
 	
@@ -62,23 +62,23 @@ public class TableSplitTest {
 		
 		ITableSplit tableSplit = new YYYYMMDDTableSplitImpl();
 		try {
-			TableSplitTest.LOOGER.debug(tableSplit.convert("flea_file_info", ""));
+			LOGGER.debug(tableSplit.convert("flea_file_info", ""));
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error("Exception={}",e);
 		}
 	}
 	
 	@Test
 	public void testTableSplitConfig(){
-		TableSplitTest.LOOGER.debug(TableSplitConfig.getConfig().getTables().toString());
+		LOGGER.debug(TableSplitConfig.getConfig().getTables().toString());
 	}
 	
 	@Test
 	public void testEntityUtils(){
 		try {
-			TableSplitTest.LOOGER.debug(EntityUtils.getEntity(TableSplitEnum.values(), "key", "twohex").toString());
+			LOGGER.debug(EntityUtils.getEntity(TableSplitEnum.values(), "key", "twohex").toString());
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error("Exception={}",e);
 		}
 	}
 }

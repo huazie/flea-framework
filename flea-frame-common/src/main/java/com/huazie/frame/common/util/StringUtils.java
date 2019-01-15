@@ -3,23 +3,19 @@ package com.huazie.frame.common.util;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.lang.ArrayUtils;
-
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.PinyinEnum;
 
 /**
  *
- * @Description 字符串相关的工具类
+ * <p>字符串相关的工具类</p>
  * 
  * @author huazie
  * @version v1.0.0
- * @date 2016年9月25日
+ * @since 1.0.0
  *
  */
 public class StringUtils {
-
-	// private static final Logger LOGGER = LoggerFactory.getLogger(StringsUtil.class);
 
 	/**
 	 * 
@@ -171,7 +167,7 @@ public class StringUtils {
 	 * @return 截取后的字符串
 	 */
 	public static String subStrLast(String value, int length) {
-		if (StringUtils.isEmpty(value) || length <= 0) {
+		if (isEmpty(value) || length <= 0) {
 			return null;
 		}
 		int strLen = value.length();
@@ -194,7 +190,7 @@ public class StringUtils {
 	 * @return 截取后的字符串
 	 */
 	public static String subStrBefore(String value, int length) {
-		if (StringUtils.isEmpty(value) || length <= 0) {
+		if (isEmpty(value) || length <= 0) {
 			return null;
 		}
 		int strLen = value.length();
@@ -212,14 +208,14 @@ public class StringUtils {
 	 * @date 2018年1月25日
 	 * @param value
 	 *            待连接字符串
-	 * @param otherStr
+	 * @param others
 	 *            其他字符串数组
 	 * @return 依次连接后的字符串
 	 */
-	public static String strCat(String value, String... otherStrs) {
+	public static String strCat(String value, String... others) {
 		StringBuilder strBuilder = new StringBuilder();
 		strBuilder.append(value);
-		for (String otherStr : otherStrs) {
+		for (String otherStr : others) {
 			strBuilder.append(otherStr);
 		}
 		return strBuilder.toString();
@@ -243,7 +239,7 @@ public class StringUtils {
 	 */
 	public static String strCombined(Object[] objs, String attrName, String before, String after)throws Exception {
 		StringBuilder strBuilder = new StringBuilder();
-		if (objs == null || objs.length == 0 || StringUtils.isEmpty(attrName)) {
+		if (objs == null || objs.length == 0 || isEmpty(attrName)) {
 			return null;
 		}
 		for (int i = 0; i < objs.length; i++) {
@@ -321,7 +317,7 @@ public class StringUtils {
 	 * @return 分割后的字符串数组
 	 */
 	public static String[] split(String value, String placeholder) {
-		if (StringUtils.isBlank(value) || StringUtils.isBlank(placeholder)) {
+		if (isBlank(value) || isBlank(placeholder)) {
 			return null;
 		}
 		return value.split(placeholder);
@@ -339,14 +335,14 @@ public class StringUtils {
 	 */
 	public static Map<String, String> split(String[] values, String placeholder) {
 		Map<String, String> map = null;
-		if (ArrayUtils.isEmpty(values) || StringUtils.isBlank(placeholder)) {
+		if (ArrayUtils.isEmpty(values) || isBlank(placeholder)) {
 			return map;
 		}
-		map = new HashMap<String, String>();
+		map = new HashMap<>();
 		for (String str : values) {
-			String[] ss = StringUtils.split(str, placeholder);
+			String[] ss = split(str, placeholder);
 			if (ss.length == 2) {
-				map.put(StringUtils.trim(ss[0]), StringUtils.trim(ss[1]));
+				map.put(trim(ss[0]), trim(ss[1]));
 			}
 		}
 		return map;
@@ -363,7 +359,7 @@ public class StringUtils {
 	 * @return 分割后的字符串数组
 	 */
 	public static String[] split(String value, String... placeholders) {
-		if (StringUtils.isBlank(value) || ArrayUtils.isEmpty(placeholders)) {
+		if (isBlank(value) || ArrayUtils.isEmpty(placeholders)) {
 			return null;
 		}
 

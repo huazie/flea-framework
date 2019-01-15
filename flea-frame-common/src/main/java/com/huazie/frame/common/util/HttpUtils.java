@@ -16,8 +16,6 @@ import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.util.json.FastJsonUtils;
 import com.huazie.frame.common.util.json.GsonUtils;
 
-
-
 /**
  * @Description Http工具类
  * 

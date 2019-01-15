@@ -1,7 +1,5 @@
 package com.huazie.frame.common.util;
 
-import org.apache.commons.lang.ArrayUtils;
-
 /**
  *  Unicode工具类
  *  

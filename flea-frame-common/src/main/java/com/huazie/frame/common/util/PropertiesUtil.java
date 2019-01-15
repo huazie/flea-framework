@@ -5,12 +5,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * <p>
- * 		读取后缀为properties的配置文件
- * </p>
+ * <p>读取后缀为properties的配置文件</p>
+ *
  * @author huazie
  * @version v1.0.0
  * @date 2018年1月22日
@@ -18,7 +18,7 @@ import org.apache.log4j.Logger;
  */
 public class PropertiesUtil {
 	
-	private final static Logger LOGGER = Logger.getLogger(PropertiesUtil.class);
+	private final static Logger LOGGER = LoggerFactory.getLogger(PropertiesUtil.class);
 	
 	/**
 	 * <p>
@@ -43,7 +43,7 @@ public class PropertiesUtil {
 			prop.load(reader);
 		} catch (Exception e) {
 			prop = null;
-			PropertiesUtil.LOGGER.error("PropertiesUtil##getProperties 读取路径为【" + path + "】的配置出错", e);
+			LOGGER.error("PropertiesUtil##getProperties 读取路径为【" + path + "】的配置出错", e);
 		} finally {
 			try {
 				if (reader != null) {
@@ -54,7 +54,7 @@ public class PropertiesUtil {
 				}
 			} catch (Exception e) {
 				prop = null;
-				PropertiesUtil.LOGGER.error("PropertiesUtil##getProperties 读取路径为【" + path + "】的配置出错", e);
+				LOGGER.error("PropertiesUtil##getProperties 读取路径为【" + path + "】的配置出错", e);
 			}
 		}
 		
@@ -110,7 +110,7 @@ public class PropertiesUtil {
 	 * @param key
 	 * @return
 	 */
-	public static Integer getIntegerValue(Properties prop, String key)throws Exception{
+	public static Integer getIntegerValue(Properties prop, String key){
 		Integer value = null;
 		String val = getStringValue(prop, key);
 		if(val != null){
@@ -130,7 +130,7 @@ public class PropertiesUtil {
 	 * @param key
 	 * @return
 	 */
-	public static Long getLongValue(Properties prop, String key)throws Exception{
+	public static Long getLongValue(Properties prop, String key){
 		Long value = null;
 		String val = getStringValue(prop, key);
 		if(val != null){
@@ -150,7 +150,7 @@ public class PropertiesUtil {
 	 * @param key
 	 * @return
 	 */
-	public static Boolean getBooleanValue(Properties prop, String key)throws Exception{
+	public static Boolean getBooleanValue(Properties prop, String key){
 		Boolean value = null;
 		String val = getStringValue(prop, key);
 		if(val != null){

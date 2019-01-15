@@ -33,8 +33,7 @@ public class EncryptUtils {
 	private final static String SHA_1 = "SHA-1";
 	
 	/**
-	 * <p>
-	 * 进行MD5加密
+	 * <p>进行MD5加密</p>
 	 * 
 	 * @version v1.0.0
 	 * @date 2016年9月29日
@@ -43,17 +42,17 @@ public class EncryptUtils {
 	 *            要加密的信息
 	 * @return String 加密后的字符串
 	 */
-    public String encryptToMD5(String info) {
+    public static String encryptToMD5(String info) {
         byte[] digestInfo = null;
         try {
             // 得到一个md5的消息摘要
-            MessageDigest messageDigest = MessageDigest.getInstance(EncryptUtils.MD5);
+            MessageDigest messageDigest = MessageDigest.getInstance(MD5);
             // 添加要进行计算摘要的信息
             messageDigest.update(info.getBytes());
             // 得到该摘要
             digestInfo = messageDigest.digest();
         } catch (NoSuchAlgorithmException e) {
-        	EncryptUtils.LOGGER.error("EncryptUtils##encryptToMD5(info)=", e);
+        	LOGGER.error("EncryptUtils##encryptToMD5 Exception={}", e);
         }
         // 将摘要转为字符串
         String result = byte2hex(digestInfo);
@@ -70,17 +69,17 @@ public class EncryptUtils {
      * @param info 要加密的信息
      * @return String 加密后的字符串
      */
-    public String encryptToSHA(String info) {
+    public static String encryptToSHA(String info) {
         byte[] digestInfo = null;
         try {
             // 得到一个SHA-1的消息摘要
-            MessageDigest alga = MessageDigest.getInstance(EncryptUtils.SHA_1);
+            MessageDigest alga = MessageDigest.getInstance(SHA_1);
             // 添加要进行计算摘要的信息
             alga.update(info.getBytes());
             // 得到该摘要
             digestInfo = alga.digest();
         } catch (NoSuchAlgorithmException e) {
-        	EncryptUtils.LOGGER.error("EncryptUtils##encryptToSHA(info)=", e);
+        	LOGGER.error("EncryptUtils##encryptToSHA(info)=", e);
         }
         // 将摘要转为字符串
         String result = byte2hex(digestInfo);
@@ -98,8 +97,8 @@ public class EncryptUtils {
      * 	
      * @return
      */
-    public String getAESKey(String src){
-        return this.getKey(EncryptUtils.AES, src);
+    public static String getAESKey(String src){
+        return getKey(AES, src);
     }
     
     /**
@@ -112,8 +111,8 @@ public class EncryptUtils {
      * @param src
      * @return
      */
-    public String getDESKey(String src){
-        return this.getKey(EncryptUtils.DES, src);
+    public static String getDESKey(String src){
+        return getKey(DES, src);
     }
     
     /**
@@ -128,10 +127,10 @@ public class EncryptUtils {
 	 * @param src
 	 * @return
 	 */
-    private String getKey(String algorithm, String src){
-        if(algorithm.equals(EncryptUtils.AES)){
+    private static String getKey(String algorithm, String src){
+        if(algorithm.equals(AES)){
             return src.substring(0, 16);
-        }else if(algorithm.equals(EncryptUtils.DES)){
+        }else if(algorithm.equals(DES)){
             return src.substring(0, 8);
         }else{
             return null;
@@ -147,8 +146,8 @@ public class EncryptUtils {
      *
      * @return
      */
-    public SecretKey createSecretAESKey() {
-        return createSecretKey(EncryptUtils.AES);
+    public static SecretKey createSecretAESKey() {
+        return createSecretKey(AES);
     }
 
     /**
@@ -160,8 +159,8 @@ public class EncryptUtils {
      *
      * @return
      */
-    public SecretKey createSecretDESKey() {
-        return createSecretKey(EncryptUtils.DES);
+    public static SecretKey createSecretDESKey() {
+        return createSecretKey(DES);
     }
     
 	/**
@@ -175,7 +174,7 @@ public class EncryptUtils {
 	 *            加密算法,可用 AES, DES, DESede, Blowfish
 	 * @return SecretKey 秘密（对称）密钥
 	 */
-    public SecretKey createSecretKey(String algorithm) {
+    public static SecretKey createSecretKey(String algorithm) {
         // 声明KeyGenerator对象
         KeyGenerator keygen;
         // 声明 密钥对象
@@ -186,7 +185,7 @@ public class EncryptUtils {
             // 生成一个密钥
             deskey = keygen.generateKey();
         } catch (NoSuchAlgorithmException e) {
-        	EncryptUtils.LOGGER.error("EncryptUtils##createSecretKey(algorithm)=", e);
+        	LOGGER.error("EncryptUtils##createSecretKey(algorithm)=", e);
         }
         // 返回密匙
         return deskey;
@@ -205,7 +204,7 @@ public class EncryptUtils {
 	 * @param info
 	 * @return
 	 */
-    public String encrypt(String algorithm, SecretKey key, String info) {
+    public static String encrypt(String algorithm, SecretKey key, String info) {
         // 定义要生成的密文
         byte[] cipherByte = null;
         try {
@@ -217,7 +216,7 @@ public class EncryptUtils {
             // 对要加密的内容进行编码处理,
             cipherByte = c1.doFinal(info.getBytes());
         } catch (Exception e) {
-        	EncryptUtils.LOGGER.error("EncryptUtils##encrypt(algorithm,key,info)=", e);
+        	LOGGER.error("EncryptUtils##encrypt(algorithm,key,info)=", e);
         }
         // 返回密文的十六进制形式
         return byte2hex(cipherByte);
@@ -236,7 +235,7 @@ public class EncryptUtils {
      * @param info
      * @return
      */
-    public String decrypt(String algorithm, SecretKey key, String info) {
+    public static String decrypt(String algorithm, SecretKey key, String info) {
         byte[] cipherByte = null;
         try {
             // 得到加密/解密器
@@ -246,7 +245,7 @@ public class EncryptUtils {
             // 对要解密的内容进行编码处理
             cipherByte = c1.doFinal(hex2byte(info));
         } catch (Exception e) {
-        	EncryptUtils.LOGGER.error("EncryptUtils##decrypt(algorithm,key,info)=", e);
+        	LOGGER.error("EncryptUtils##decrypt(algorithm,key,info)=", e);
         }
         return new String(cipherByte);
     }
@@ -255,7 +254,7 @@ public class EncryptUtils {
      * @Description 根据相应的解密算法、指定的密钥和需要解密的文本进行解密，返回解密后的文本内容
      * @param algorithm 加密算法:DES,AES
      * @param key 这个key可以由用户自己指定 注意AES的长度为16位,DES的长度为8位
-     * @param sInfo
+     * @param info
      * @return
      */
     public static String decrypt(String algorithm, String key, String info) throws Exception {
@@ -277,13 +276,11 @@ public class EncryptUtils {
             Cipher cipher = Cipher.getInstance(algorithm);
             cipher.init(Cipher.DECRYPT_MODE, skeySpec);
             byte[] encrypted1 = hex2byte(info);
-            try {
-                byte[] original = cipher.doFinal(encrypted1);
-                String originalString = new String(original);
-                return originalString;
-            } catch (Exception e) {
-                throw e;
-            }
+
+            byte[] original = cipher.doFinal(encrypted1);
+            String originalString = new String(original);
+            return originalString;
+
         } catch (Exception ex) {
             throw ex;
         }
@@ -323,7 +320,7 @@ public class EncryptUtils {
      * @param info
      * @return
      */
-    public String encryptToDES(SecretKey key, String info) {
+    public static String encryptToDES(SecretKey key, String info) {
         return encrypt("DES", key, info);
     }
 
@@ -334,7 +331,7 @@ public class EncryptUtils {
      * @return
      * @throws Exception
      */
-    public String encryptToDES(String key, String info) throws Exception {
+    public static String encryptToDES(String key, String info) throws Exception {
         return encrypt("DES", key, info);
     }
 
@@ -344,7 +341,7 @@ public class EncryptUtils {
      * @param info
      * @return
      */
-    public String decryptByDES(SecretKey key, String info) {
+    public static String decryptByDES(SecretKey key, String info) {
         return decrypt("DES", key, info);
     }
 
@@ -354,7 +351,7 @@ public class EncryptUtils {
      * @param info
      * @return
      */
-    public String decryptByDES(String key, String info) throws Exception {
+    public static String decryptByDES(String key, String info) throws Exception {
         return decrypt("DES", key, info);
     }
 
@@ -364,7 +361,7 @@ public class EncryptUtils {
      * @param info
      * @return
      */
-    public String encryptToAES(SecretKey key, String info) {
+    public static String encryptToAES(SecretKey key, String info) {
         return encrypt("AES", key, info);
     }
     
@@ -375,7 +372,7 @@ public class EncryptUtils {
      * @return
      * @throws Exception
      */
-    public String encryptToAES(String key, String info) throws Exception {
+    public static String encryptToAES(String key, String info) throws Exception {
         return encrypt("AES", key, info);
     }
 
@@ -385,7 +382,7 @@ public class EncryptUtils {
 	 * @param info
 	 * @return
 	 */
-    public String decryptByAES(SecretKey key, String info) {
+    public static String decryptByAES(SecretKey key, String info) {
         return decrypt("AES", key, info);
     }
     
@@ -395,7 +392,7 @@ public class EncryptUtils {
      * @param info
      * @return
      */
-    public String decryptByAES(String key, String info) throws Exception {
+    public static String decryptByAES(String key, String info) throws Exception {
         return decrypt("AES", key, info);
     }
 
@@ -405,17 +402,17 @@ public class EncryptUtils {
      * @param hex
      * @return
      */
-    public static byte[] hex2byte(String strhex) {
-        if (strhex == null) {
+    public static byte[] hex2byte(String hex) {
+        if (hex == null) {
             return null;
         }
-        int l = strhex.length();
+        int l = hex.length();
         if (l % 2 == 1) {
             return null;
         }
         byte[] b = new byte[l / 2];
         for (int i = 0; i != l / 2; i++) {
-            b[i] = (byte) Integer.parseInt(strhex.substring(i * 2, i * 2 + 2), 16);
+            b[i] = (byte) Integer.parseInt(hex.substring(i * 2, i * 2 + 2), 16);
         }
         return b;
     }
@@ -438,54 +435,5 @@ public class EncryptUtils {
             }
         }
         return hs.toUpperCase();
-    }
-
-    /**
-     * 测试
-     * 
-     * @param args
-     */
-    public static void main(String[] args) {
-        EncryptUtils encryptUtils = new EncryptUtils();
-        String source = "123asd";
-        System.out.println("123asd经过MD5:" + encryptUtils.encryptToMD5(source));
-        System.out.println("123asd经过SHA:" + encryptUtils.encryptToSHA(source));
-        System.out.println("========随机生成Key进行加解密==============");
-        // 生成一个DES算法的密匙
-        SecretKey key = encryptUtils.createSecretDESKey();
-        String str1 = encryptUtils.encryptToDES(key, source);
-        System.out.println("DES加密后为:" + str1);
-        // 使用这个密匙解密
-        String str2 = encryptUtils.decryptByDES(key, str1);
-        System.out.println("DES解密后为：" + str2);
-
-//         生成一个AES算法的密匙
-        SecretKey key1 = encryptUtils.createSecretAESKey();
-        String stra = encryptUtils.encryptToAES(key1, source);
-        System.out.println("AES加密后为:" + stra);
-//         使用这个密匙解密
-        String strb = encryptUtils.decryptByAES(key1, stra);
-        System.out.println("AES解密后为：" + strb);
-        System.out.println("========指定Key进行加解密==============");
-        try {
-            String AESKey = encryptUtils.getAESKey(encryptUtils.encryptToSHA(source));
-            String DESKey = encryptUtils.getDESKey(encryptUtils.encryptToSHA(source));
-            System.out.println(AESKey);
-            System.out.println(DESKey);
-            String str11 = encryptUtils.encryptToDES(DESKey, source);
-            System.out.println("DES加密后为:" + str11);
-            // 使用这个密匙解密
-            String str12 = encryptUtils.decryptByDES(DESKey, str11);
-            System.out.println("DES解密后为：" + str12);
-
-            // 生成一个AES算法的密匙
-            String strc = encryptUtils.encryptToAES(AESKey, source);
-            System.out.println("AES加密后为:" + strc);
-            // 使用这个密匙解密
-            String strd = encryptUtils.decryptByAES(AESKey, strc);
-            System.out.println("AES解密后为：" + strd);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

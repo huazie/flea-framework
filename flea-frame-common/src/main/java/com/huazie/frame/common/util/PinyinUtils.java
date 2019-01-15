@@ -12,9 +12,9 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 
 /**
- * 汉字转拼音工具类，用于获取汉字对应的简拼或全拼
- * 
- * <p>调用示例：
+ * <p>汉字转拼音工具类，用于获取汉字对应的简拼或全拼</p>
+ *
+ * <p>调用示例：</p>
  * <pre>
  *    PinyinUtils.getJianPin("中国", PinyinEnum.LOWER_CASE.getType());
  *    PinyinUtils.getJianPin("中国", PinyinEnum.UPPER_CASE.getType());
@@ -24,6 +24,7 @@ import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombi
  * 
  * @author huazie
  * @version v1.0.0
+ * @since 1.0.0
  * @date 2017年3月6日
  *
  */

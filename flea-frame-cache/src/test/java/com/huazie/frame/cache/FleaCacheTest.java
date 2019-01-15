@@ -24,17 +24,17 @@ public class FleaCacheTest {
 		MemcachedFleaCacheManager manager = MemcachedFleaCacheManager.getInstance();
 		
 		AbstractFleaCache cache = manager.getCache("fleaparadetail");
-		FleaCacheTest.LOGGER.debug("Cache={}",cache);
+		LOGGER.debug("Cache={}",cache);
 		
 		//#### 1.  简单字符串
 //		cache.put("menu1", "huazie");
-		FleaCacheTest.LOGGER.debug(cache.get("menu1")+"");
-		FleaCacheTest.LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
+		LOGGER.debug(cache.get("menu1")+"");
+		LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
 	}
 	
 	@Test
 	public void testProperties()throws Exception{
 		MemcachedConfig config = MemcachedConfig.getConfig();
-		FleaCacheTest.LOGGER.debug(config.toString());
+		LOGGER.debug(config.toString());
 	}
 }

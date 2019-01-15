@@ -58,6 +58,7 @@ public class FleaI18NTest {
 			StringUtils.replace(strBuilder, "{" + 1 + "}", "china");
 			System.out.println(strBuilder.toString());
 		} catch (Exception e) {
+			LOGGER.error("Exception={}", e);
 		}
 	}
 }
