@@ -14,20 +14,20 @@ public class SpringCacheTest {
 
 	@Test
 	public void test() {
-		ApplicationContext applicationContext = null;
+		ApplicationContext applicationContext;
 		try {
 			applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
-			SpringCacheTest.LOGGER.debug(applicationContext+"");
+			LOGGER.debug("ApplicationContext={}", applicationContext);
 			
 			MemcachedSpringCacheManager memcachedCacheManager = (MemcachedSpringCacheManager) applicationContext.getBean("cacheManager");
-			SpringCacheTest.LOGGER.debug("MemcachedCacheManager={}",memcachedCacheManager);
+			LOGGER.debug("MemcachedCacheManager={}",memcachedCacheManager);
 			
 			AbstractSpringCache cache = memcachedCacheManager.getCache("fleaparadetail");
-			SpringCacheTest.LOGGER.debug("Cache={}",cache);
+			LOGGER.debug("Cache={}",cache);
 			
 			//#### 1.  简单字符串
 //			cache.put("menu1", "huazie");
-			SpringCacheTest.LOGGER.debug(cache.get("menu1", String.class));
+			LOGGER.debug(cache.get("menu1", String.class));
 			
 			//#### 2.  简单对象(要是可以序列化的对象)
 //			String user = new String("huazie");
@@ -43,7 +43,7 @@ public class SpringCacheTest {
 //			TestCache.LOGGER.debug(cache.get("user_list",userList.getClass()).toString());
 			
 		} catch (Exception e) {
-			SpringCacheTest.LOGGER.error("",e);
+			LOGGER.error("Exception={}",e);
 		}
 	}
 	

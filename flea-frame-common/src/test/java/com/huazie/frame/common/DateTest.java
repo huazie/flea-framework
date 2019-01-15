@@ -19,6 +19,6 @@ public class DateTest {
 	
 	@Test
 	public void testDate(){
-		DateTest.LOGGER.debug(DateUtils.date2String(null, DateFormatEnum.YYYY_MM_DDHH_MM_SS));
+		LOGGER.debug(DateUtils.date2String(null, DateFormatEnum.YYYY_MM_DDHH_MM_SS));
 	}
 }

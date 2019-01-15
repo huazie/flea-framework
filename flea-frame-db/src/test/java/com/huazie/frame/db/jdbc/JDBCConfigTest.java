@@ -1,13 +1,15 @@
 package com.huazie.frame.db.jdbc;
 
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.junit.Assert;
 import org.junit.Test;
 
 import com.huazie.frame.db.common.DBEnum;
-import com.huazie.frame.db.jdbc.JDBCConfig;
-import com.huazie.frame.db.jdbc.JDBCUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *  
@@ -18,21 +20,25 @@ import com.huazie.frame.db.jdbc.JDBCUtils;
  */
 public class JDBCConfigTest {
 	
-	private final static Logger LOGGER = Logger.getLogger(JDBCConfigTest.class);
+	private final static Logger LOGGER = LoggerFactory.getLogger(JDBCConfigTest.class);
 
 	@Test
 	public void testConfig(){
 		JDBCConfig.init(DBEnum.MySQL.getName(), "fleamanagement");
-		JDBCConfigTest.LOGGER.debug(JDBCConfig.getConfig());
+		JDBCConfig config = JDBCConfig.getConfig();
+		Assert.assertNotNull(config);
+		LOGGER.debug(config.toString());
 	}
 	
 	@Test
 	public void testJDBCQuery(){
 		JDBCConfig.init(DBEnum.MySQL.getName(), "fleamarket");
 		try {
-			JDBCConfigTest.LOGGER.debug(JDBCUtils.query("SELECT * FROM flea_user"));
+			List<Map<String, Object>> results = JDBCUtils.query("SELECT * FROM flea_user");
+			Assert.assertNotNull(results);
+			LOGGER.debug(results.toString());
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOGGER.error("Exception={}",e);
 		}
 	}
 }

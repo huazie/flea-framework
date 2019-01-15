@@ -26,35 +26,35 @@ public class SqlTemplateTest {
 
 	@Test
 	public void testSqlTemplate(){
-		SqlTemplateTest.LOGGER.debug(SqlTemplateConfig.getConfig().getSql().toString());
+		LOGGER.debug(SqlTemplateConfig.getConfig().getSql().toString());
 	}
 	
 	@Test
 	public void testRules(){
-		SqlTemplateTest.LOGGER.debug(SqlTemplateConfig.getConfig().getRule("insert").toString());
-		SqlTemplateTest.LOGGER.debug(SqlTemplateConfig.getConfig().getRule("update").toString());
-		SqlTemplateTest.LOGGER.debug(SqlTemplateConfig.getConfig().getRule("delete").toString());
-		SqlTemplateTest.LOGGER.debug(SqlTemplateConfig.getConfig().getRule("select").toString());
+		LOGGER.debug(SqlTemplateConfig.getConfig().getRule("insert").toString());
+		LOGGER.debug(SqlTemplateConfig.getConfig().getRule("update").toString());
+		LOGGER.debug(SqlTemplateConfig.getConfig().getRule("delete").toString());
+		LOGGER.debug(SqlTemplateConfig.getConfig().getRule("select").toString());
 	}
 	
 	@Test
 	public void testInsertSqlTemplate(){
-		SqlTemplateTest.LOGGER.debug(SqlTemplateConfig.getConfig().getInsertTemplate("insert").toString());
+		LOGGER.debug(SqlTemplateConfig.getConfig().getInsertTemplate("insert").toString());
 	}
 	
 	@Test
 	public void testUpdateSqlTemplate(){
-		SqlTemplateTest.LOGGER.debug(SqlTemplateConfig.getConfig().getUpdateTemplate("update").toString());
+		LOGGER.debug(SqlTemplateConfig.getConfig().getUpdateTemplate("update").toString());
 	}
 	
 	@Test
 	public void testSelectSqlTemplate(){
-		SqlTemplateTest.LOGGER.debug(SqlTemplateConfig.getConfig().getSelectTemplate("select").toString());
+		LOGGER.debug(SqlTemplateConfig.getConfig().getSelectTemplate("select").toString());
 	}
 	
 	@Test
 	public void testDeleteSqlTemplate(){
-		SqlTemplateTest.LOGGER.debug(SqlTemplateConfig.getConfig().getDeleteTemplate("delete").toString());
+		LOGGER.debug(SqlTemplateConfig.getConfig().getDeleteTemplate("delete").toString());
 	}
 	
 	@Test
@@ -63,7 +63,7 @@ public class SqlTemplateTest {
 //		String template = " INSERT INTO ##table## ( ##columns## ) VALUES ( ##values## )";
 		String template = " insert into ##table## ( ##columns## ) values ( ##values## )";
 		
-		SqlTemplateTest.LOGGER.debug("======INSERT规则校验开始======");
+		LOGGER.debug("======INSERT规则校验开始======");
 		
 		Rule rule = SqlTemplateConfig.getConfig().getRule("insert");
 		
@@ -74,12 +74,12 @@ public class SqlTemplateTest {
 		Pattern p = Pattern.compile(regExp, Pattern.CASE_INSENSITIVE);
 		Matcher matcher = p.matcher(template);
 		if(matcher.matches()){// SQL模板满足校验规则配置
-			SqlTemplateTest.LOGGER.debug("INSERT规则校验通过");
+			LOGGER.debug("INSERT规则校验通过");
 		}else{
-			SqlTemplateTest.LOGGER.debug("INSERT规则校验失败");
+			LOGGER.debug("INSERT规则校验失败");
 		}
 		
-		SqlTemplateTest.LOGGER.debug("======INSERT规则校验结束======");
+		LOGGER.debug("======INSERT规则校验结束======");
 	}
 	
 	@Test
@@ -88,7 +88,7 @@ public class SqlTemplateTest {
 //		String template = " UPDATE ##table## SET ##columns## WHERE ##conditions## ";
 		String template = " update ##table## set ##columns## where ##conditions## ";
 
-		SqlTemplateTest.LOGGER.debug("======UPDATE规则校验开始======");
+		LOGGER.debug("======UPDATE规则校验开始======");
 		
 		Rule rule = SqlTemplateConfig.getConfig().getRule("update");
 		
@@ -99,12 +99,12 @@ public class SqlTemplateTest {
 		Pattern p = Pattern.compile(regExp, Pattern.CASE_INSENSITIVE);
 		Matcher matcher = p.matcher(template);
 		if(matcher.matches()){// SQL模板满足校验规则配置
-			SqlTemplateTest.LOGGER.debug("UPDATE规则校验通过");
+			LOGGER.debug("UPDATE规则校验通过");
 		}else{
-			SqlTemplateTest.LOGGER.debug("UPDATE规则校验失败");
+			LOGGER.debug("UPDATE规则校验失败");
 		}
 		
-		SqlTemplateTest.LOGGER.debug("======UPDATE规则校验结束======");
+		LOGGER.debug("======UPDATE规则校验结束======");
 	}
 	
 	@Test
@@ -113,7 +113,7 @@ public class SqlTemplateTest {
 //		String template = " SELECT ##columns## FROM ##table## WHERE ##conditions## ";
 		String template = " select ##columns## from ##table## where ##conditions## ";
 
-		SqlTemplateTest.LOGGER.debug("======SELECT规则校验开始======");
+		LOGGER.debug("======SELECT规则校验开始======");
 		
 		Rule rule = SqlTemplateConfig.getConfig().getRule("select");
 		
@@ -124,12 +124,12 @@ public class SqlTemplateTest {
 		Pattern p = Pattern.compile(regExp, Pattern.CASE_INSENSITIVE);
 		Matcher matcher = p.matcher(template);
 		if(matcher.matches()){// SQL模板满足校验规则配置
-			SqlTemplateTest.LOGGER.debug("SELECT规则校验通过");
+			LOGGER.debug("SELECT规则校验通过");
 		}else{
-			SqlTemplateTest.LOGGER.debug("SELECT规则校验失败");
+			LOGGER.debug("SELECT规则校验失败");
 		}
 		
-		SqlTemplateTest.LOGGER.debug("======SELECT规则校验结束======");
+		LOGGER.debug("======SELECT规则校验结束======");
 	}
 	
 	@Test
@@ -138,7 +138,7 @@ public class SqlTemplateTest {
 		String template = " DELETE FROM ##table## WHERE ##conditions## ";
 //		String template = " delete from ##table## where ##conditions## ";
 
-		SqlTemplateTest.LOGGER.debug("======DELETE规则校验开始======");
+		LOGGER.debug("======DELETE规则校验开始======");
 		
 		Rule rule = SqlTemplateConfig.getConfig().getRule("delete");
 		
@@ -149,12 +149,12 @@ public class SqlTemplateTest {
 		Pattern p = Pattern.compile(regExp, Pattern.CASE_INSENSITIVE);
 		Matcher matcher = p.matcher(template);
 		if(matcher.matches()){// SQL模板满足校验规则配置
-			SqlTemplateTest.LOGGER.debug("DELETE规则校验通过");
+			LOGGER.debug("DELETE规则校验通过");
 		}else{
-			SqlTemplateTest.LOGGER.debug("DELETE规则校验失败");
+			LOGGER.debug("DELETE规则校验失败");
 		}
 		
-		SqlTemplateTest.LOGGER.debug("======DELETE规则校验结束======");
+		LOGGER.debug("======DELETE规则校验结束======");
 	}
 	
 }

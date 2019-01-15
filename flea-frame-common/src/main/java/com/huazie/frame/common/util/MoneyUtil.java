@@ -22,7 +22,7 @@ public class MoneyUtil {
 
     /**
      * 获取分到元
-     * @param dollar 1101
+     * @param cent 1101
      * @return 11.01  
      */
     public static String getCentToDollar(long cent) {
@@ -34,7 +34,7 @@ public class MoneyUtil {
 
     /**
      * 获取分到元 不计小数部分
-     * @param dollar
+     * @param cent
      * @return
      */
     public static String getCentToDollarInt(long cent) {
