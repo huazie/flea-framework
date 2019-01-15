@@ -1,44 +1,44 @@
 package com.huazie.frame.common.i18n.pojo;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 import java.io.Serializable;
 
 /**
- *  i18n数据
- *  
+ * <p>Flea I18n数据</p>
+ *
  * @author huazie
  * @version v1.0.0
- * @date 2018年7月29日
- *
  */
 @SuppressWarnings("serial")
-public class FleaI18nData implements Serializable{
-	
-	private String key;
-	
-	private String value;
-	
-	public FleaI18nData() {
-	}
+public class FleaI18nData implements Serializable {
 
-	public FleaI18nData(String key, String value) {
-		this.key = key;
-		this.value = value;
-	}
+    private String key;
 
-	public String getKey() {
-		return key;
-	}
+    private String value;
 
-	public void setKey(String key) {
-		this.key = key;
-	}
+    public FleaI18nData() {
+    }
 
-	public String getValue() {
-		return value;
-	}
+    public FleaI18nData(String key, String value) {
+        this.key = key;
+        this.value = value;
+    }
 
-	public void setValue(String value) {
-		this.value = value;
-	}
-	
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
 }

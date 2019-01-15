@@ -18,7 +18,7 @@ public interface CommonConstants {
 	 * @date 2018年1月29日
 	 *
 	 */
-	public interface MethodConstants{
+	interface MethodConstants{
 		String GET = "get";
 		String SET = "set";
 	}
@@ -32,7 +32,7 @@ public interface CommonConstants {
 	 * @date 2018年6月3日
 	 *
 	 */
-	public interface SymbolConstants{
+	interface SymbolConstants{
 		/**
 		 * 左花括号
 		 */
@@ -63,7 +63,7 @@ public interface CommonConstants {
 	 * @date 2018年11月8日
 	 *
 	 */
-	public interface FleaI18NConstants{
+	interface FleaI18NConstants{
 		String FLEA_I18N_FILE_NAME_PREFIX = "flea_i18n";
 		String FLEA_I18N_CONFIG_FILE_NAME = "flea_i18n_config.properties";
 		String FLEA_I18N_CONFIG_KEY_FILE_NAME_PREFIX = "file_name_prefix";
@@ -78,7 +78,7 @@ public interface CommonConstants {
 	 * @date 2017年3月2日
 	 *
 	 */
-	public interface IPAddressConstants{
+	interface IPAddressConstants{
 		/**
 		 * @Description 国家
 		 */
