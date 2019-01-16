@@ -8,6 +8,7 @@
         <module>flea-frame-common</module>
         <module>flea-frame-cache</module>
         <module>flea-frame-db</module>
+        <module>flea-frame-config</module>
     </modules>
     <packaging>pom</packaging>
     <name>Flea Frame</name>

@@ -25,3 +25,4 @@ hs_err_pid*
 flea-frame-common/target/
 flea-frame-cache/target/
 flea-frame-db/target/
+flea-frame-config/target/

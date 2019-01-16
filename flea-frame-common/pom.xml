@@ -69,6 +69,13 @@
             <version>2.5.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.huazie.frame</groupId>
+            <artifactId>flea-frame-config</artifactId>
+            <version>1.0.0</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
 </project>
