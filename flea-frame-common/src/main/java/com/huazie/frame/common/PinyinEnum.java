@@ -1,48 +1,45 @@
 package com.huazie.frame.common;
 
 /**
- * <p>
- * 		拼音相关枚举
- * </p>
- *  
+ * <p>拼音相关枚举</p>
+ *
  * @author huazie
  * @version v1.0.0
- * @date 2018年1月24日
- *
+ * @since 1.0.0
  */
 public enum PinyinEnum {
-	/**
-	 * 大写
-	 */
-	UPPER_CASE(0, "大写"),
-	/**
-	 * 小写
-	 */
-	LOWER_CASE(1, "小写"),
-	/**
-	 * 简拼
-	 */
-	JIANPIN(0, "简拼"),
-	/**
-	 * 全拼
-	 */
-	QUANPIN(1, "全拼");
-	
-	private int type;
-	
-	private String desc;
-	
-	private PinyinEnum(int type, String desc){
-		this.type = type;
-		this.desc = desc;
-	}
+    /**
+     * <p>大写</p>
+     */
+    UPPER_CASE(0, "大写"),
+    /**
+     * <p>小写</p>
+     */
+    LOWER_CASE(1, "小写"),
+    /**
+     * <p>简拼</p>
+     */
+    JIAN_PIN(0, "简拼"),
+    /**
+     * <p>全拼</p>
+     */
+    QUAN_PIN(1, "全拼");
 
-	public int getType() {
-		return type;
-	}
+    private int type;
 
-	public String getDesc() {
-		return desc;
-	}
+    private String desc;
+
+    PinyinEnum(int type, String desc) {
+        this.type = type;
+        this.desc = desc;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
 
 }
