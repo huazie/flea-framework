@@ -65,6 +65,7 @@ public class FleaI18nConfig {
      * @param resName 资源名
      * @param locale  国际化标识
      * @return 国际化资源数据
+     * @since 1.0.0
      */
     public FleaI18nData getI18NData(String key, String resName, Locale locale) {
         return new FleaI18nData(key, this.getI18NDataValue(key, resName, locale));
@@ -78,6 +79,7 @@ public class FleaI18nConfig {
      * @param resName 资源名
      * @param locale  国际化标识
      * @return 国际化资源数据
+     * @since 1.0.0
      */
     public String getI18NDataValue(String key, String[] values, String resName, Locale locale) {
         String value = this.getI18NDataValue(key, resName, locale);
@@ -98,6 +100,7 @@ public class FleaI18nConfig {
      * @param resName 资源名
      * @param locale  国际化标识
      * @return 国际化资源数据
+     * @since 1.0.0
      */
     public String getI18NDataValue(String key, String resName, Locale locale) {
         if (LOGGER.isDebugEnabled()) {

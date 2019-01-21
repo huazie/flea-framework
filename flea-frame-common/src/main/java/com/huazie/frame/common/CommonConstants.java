@@ -13,7 +13,6 @@ public interface CommonConstants {
      * <p>方法常量</p>
      *
      * @author huazie
-     * @version v1.0.0
      * @since 1.0.0
      */
     interface MethodConstants {
@@ -25,7 +24,6 @@ public interface CommonConstants {
      * <p>符号常量</p>
      *
      * @author huazie
-     * @version v1.0.0
      * @since 1.0.0
      */
     interface SymbolConstants {
@@ -55,7 +53,6 @@ public interface CommonConstants {
      * <p>Flea I18N 常量</p>
      *
      * @author huazie
-     * @version v1.0.0
      * @since 1.0.0
      */
     interface FleaI18NConstants {
@@ -68,7 +65,6 @@ public interface CommonConstants {
      * <p>IP地址常量</p>
      *
      * @author huazie
-     * @version v1.0.0
      * @since 1.0.0
      */
     interface IPAddressConstants {
