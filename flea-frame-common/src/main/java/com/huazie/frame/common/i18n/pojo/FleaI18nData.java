@@ -42,4 +42,8 @@ public class FleaI18nData implements Serializable {
         this.value = value;
     }
 
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
 }

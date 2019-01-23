@@ -12,3 +12,5 @@
 10. Ctrl + Shift + F     全局查找
 11. Ctrl + R             单个类查找替换
 12. Ctrl + Shift + R     全局查找替换
+13. Ctrl + Alt + 向左箭头 返回上一步（Back）
+14. Ctrl + Alt + 向右箭头 回到下一步（Forward）
