@@ -95,7 +95,7 @@ public class HttpUtils {
 			String urlStr = HttpUtils.TAOBAO_IP_URL + ip;
 			String retJson = getAddress(urlStr);
 			
-			Map<String, Object> map = GsonUtils.getMap(retJson);
+			Map<String, Object> map = GsonUtils.toMap(retJson);
 			
 			if(StringUtils.isEmpty(map)){
 				return "";
