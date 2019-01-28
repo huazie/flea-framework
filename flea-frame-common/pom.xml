@@ -11,7 +11,27 @@
     <artifactId>flea-frame-common</artifactId>
     <packaging>jar</packaging>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
     <dependencies>
+
+        <dependency>
+            <groupId>com.huazie.frame</groupId>
+            <artifactId>flea-frame-config</artifactId>
+            <version>1.0.0</version>
+            <scope>test</scope>
+        </dependency>
 
         <!-- Http操作相关 -->
         <dependency>
@@ -67,13 +87,6 @@
             <groupId>com.belerweb</groupId>
             <artifactId>pinyin4j</artifactId>
             <version>2.5.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.huazie.frame</groupId>
-            <artifactId>flea-frame-config</artifactId>
-            <version>1.0.0</version>
-            <scope>test</scope>
         </dependency>
 
     </dependencies>

@@ -43,7 +43,7 @@ public class PinyinUtils {
 	 * @return
 	 */
 	public static String getJianPin(String chinese, int caseType) {
-		String name = getPinyin(chinese, caseType, PinyinEnum.JIANPIN.getType());
+		String name = getPinyin(chinese, caseType, PinyinEnum.JIAN_PIN.getType());
 		if(PinyinUtils.LOGGER.isDebugEnabled()){
 			PinyinUtils.LOGGER.debug("PinyinUtils##converterToFirstSpell() JianPin : {}", name);
 		}
@@ -62,7 +62,7 @@ public class PinyinUtils {
 	 * @return
 	 */
 	public static String getQuanPin(String chinese, int caseType) {
-		String name = getPinyin(chinese, caseType, PinyinEnum.QUANPIN.getType());
+		String name = getPinyin(chinese, caseType, PinyinEnum.QUAN_PIN.getType());
 		if(PinyinUtils.LOGGER.isDebugEnabled()){
 			PinyinUtils.LOGGER.debug("PinyinUtils##converterToAllSpell() QuanPin : {}", name);
 		}
@@ -96,9 +96,9 @@ public class PinyinUtils {
 				try {
 					String[] pinyin = PinyinHelper.toHanyuPinyinStringArray(nameChar[i], defaultFormat);
 					if ((pinyin != null) && (pinyin.length > 0)) {
-						if (howManyCharacter == PinyinEnum.JIANPIN.getType()) {
+						if (howManyCharacter == PinyinEnum.JIAN_PIN.getType()) {
 							pinyinName = pinyinName + pinyin[0].charAt(0);
-						} else if (howManyCharacter == PinyinEnum.QUANPIN.getType()) {
+						} else if (howManyCharacter == PinyinEnum.QUAN_PIN.getType()) {
 							pinyinName = pinyinName + pinyin[0];
 						}
 					}

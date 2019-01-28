@@ -2,44 +2,34 @@ package com.huazie.frame.common.pojo;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-
 /**
- * <p>
- * 		定义公用的返回数据
- * </p>
- * 
+ * <p>定义公用的返回数据</p>
+ *
  * @author huazie
  * @version v1.0.0
- * @date 2017年2月19日
- *
+ * @since 1.0.0
  */
-public class OutputCommonData implements Serializable{
+public class OutputCommonData implements Serializable {
 
-	private static final long serialVersionUID = -9098279075924276663L;
-	
-	private String retCode;
-	private String retMess;
+    private static final long serialVersionUID = -9098279075924276663L;
 
-	public String getRetCode() {
-		return retCode;
-	}
+    private String retCode; // 返回码
+    private String retMess; // 返回信息
 
-	public void setRetCode(String retCode) {
-		this.retCode = retCode;
-	}
+    public String getRetCode() {
+        return retCode;
+    }
 
-	public String getRetMess() {
-		return retMess;
-	}
+    public void setRetCode(String retCode) {
+        this.retCode = retCode;
+    }
 
-	public void setRetMess(String retMess) {
-		this.retMess = retMess;
-	}
+    public String getRetMess() {
+        return retMess;
+    }
 
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
-	}
-	
+    public void setRetMess(String retMess) {
+        this.retMess = retMess;
+    }
+
 }

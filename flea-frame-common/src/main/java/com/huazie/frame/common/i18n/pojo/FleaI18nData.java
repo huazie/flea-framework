@@ -5,10 +5,11 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import java.io.Serializable;
 
 /**
- * <p>Flea I18n数据</p>
+ * <p>Flea I18n 数据</p>
  *
  * @author huazie
  * @version v1.0.0
+ * @since 1.0.0
  */
 @SuppressWarnings("serial")
 public class FleaI18nData implements Serializable {
@@ -41,4 +42,8 @@ public class FleaI18nData implements Serializable {
         this.value = value;
     }
 
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
 }

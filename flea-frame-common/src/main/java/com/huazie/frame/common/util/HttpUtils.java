@@ -1,20 +1,18 @@
 package com.huazie.frame.common.util;
 
+import com.huazie.frame.common.CommonConstants;
+import com.huazie.frame.common.util.json.FastJsonUtils;
+import com.huazie.frame.common.util.json.GsonUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.huazie.frame.common.CommonConstants;
-import com.huazie.frame.common.util.json.FastJsonUtils;
-import com.huazie.frame.common.util.json.GsonUtils;
 
 /**
  * @Description Http工具类
@@ -97,7 +95,7 @@ public class HttpUtils {
 			String urlStr = HttpUtils.TAOBAO_IP_URL + ip;
 			String retJson = getAddress(urlStr);
 			
-			Map<String, Object> map = GsonUtils.getMap(retJson);
+			Map<String, Object> map = GsonUtils.toMap(retJson);
 			
 			if(StringUtils.isEmpty(map)){
 				return "";
@@ -149,7 +147,7 @@ public class HttpUtils {
 			String urlStr = HttpUtils.SINA_IP_URL + ip;
 			String retJson = getAddress(urlStr);
 			
-			Map<String, Object> map = FastJsonUtils.getMap(retJson);
+			Map<String, Object> map = FastJsonUtils.toMap(retJson);
 			
 			if(StringUtils.isEmpty(map)){
 				return "";

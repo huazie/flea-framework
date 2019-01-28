@@ -4,12 +4,6 @@
     <groupId>com.huazie.frame</groupId>
     <artifactId>flea-frame</artifactId>
     <version>1.0.0</version>
-    <modules>
-        <module>flea-frame-common</module>
-        <module>flea-frame-cache</module>
-        <module>flea-frame-db</module>
-        <module>flea-frame-config</module>
-    </modules>
     <packaging>pom</packaging>
     <name>Flea Frame</name>
 
@@ -48,32 +42,36 @@
                     </compilerArgs>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>2.1.2</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.6</version>
-                <configuration>
-                    <excludes>
-                        <exclude>*.xml</exclude>
-                        <exclude>*.properties</exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
         </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>2.1.2</version>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>jar-no-fork</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>2.6</version>
+                    <configuration>
+                        <excludes>
+                            <exclude>*.xml</exclude>
+                            <exclude>*.properties</exclude>
+                        </excludes>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
     <dependencies>
@@ -224,5 +222,12 @@
         </dependency>
 
     </dependencies>
+
+    <modules>
+        <module>flea-frame-common</module>
+        <module>flea-frame-cache</module>
+        <module>flea-frame-db</module>
+        <module>flea-frame-config</module>
+    </modules>
 
 </project>
