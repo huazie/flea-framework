@@ -68,11 +68,11 @@ public class SecurityUtils {
         byte[] digestInfo = null;
         try {
             // 得到一个SHA-1的消息摘要
-            MessageDigest alga = MessageDigest.getInstance(EncryptionAlgorithmEnum.SHA_1.getAlgorithm());
+            MessageDigest messageDigest = MessageDigest.getInstance(EncryptionAlgorithmEnum.SHA_1.getAlgorithm());
             // 添加要进行计算摘要的信息
-            alga.update(info.getBytes());
+            messageDigest.update(info.getBytes());
             // 得到该摘要
-            digestInfo = alga.digest();
+            digestInfo = messageDigest.digest();
         } catch (NoSuchAlgorithmException e) {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("SecurityUtils#encryptToSHA(String) Exception = ", e);

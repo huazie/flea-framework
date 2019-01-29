@@ -23,21 +23,19 @@ public class SecurityUtilsTest {
         String source = "123asd";
         // 生成一个AES算法的密匙
         SecretKey key1 = SecurityUtils.createSecretAESKey();
-        String stra = SecurityUtils.encryptToAES(key1, source);
+        String result = SecurityUtils.encryptToAES(key1, source);
         // 使用这个密匙解密
-        SecurityUtils.decryptByAES(key1, stra);
+        SecurityUtils.decryptByAES(key1, result);
     }
 
     @Test
-    public void testDES()throws Exception{
+    public void testDES(){
         String source = "123asd";
         // 生成一个DES算法的密匙
         SecretKey key = SecurityUtils.createSecretDESKey();
-        String str1 = SecurityUtils.encryptToDES(key, source);
-        System.out.println("DES加密后为:" + str1);
+        String result = SecurityUtils.encryptToDES(key, source);
         // 使用这个密匙解密
-        String str2 = SecurityUtils.decryptByDES(key, str1);
-        System.out.println("DES解密后为：" + str2);
+        SecurityUtils.decryptByDES(key, result);
     }
 
     @Test
