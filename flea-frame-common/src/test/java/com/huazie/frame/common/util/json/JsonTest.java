@@ -74,6 +74,14 @@ public class JsonTest {
     @Test
     public void testJson() {
 
+        String json = "{\"liststring\":[\"beijing\",\"shanghai\",\"hangzhou\"]}";
+
+        // 转换成String对象的List集合
+        JsonUtils.toStringList(json, "liststring");
+
+        // 转换成Map对象的List集合
+        String json1 = "{\"listmap\":[{\"address\":\"beijing\", \"name\":\"jack\", \"id\":1001}, {\"address\": \"shanghai\", \"name\":\"rose\", \"id\":1002}]}";
+        JsonUtils.toMapList(json1, "listmap");
     }
 }
 

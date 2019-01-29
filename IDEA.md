@@ -17,3 +17,14 @@
 15. Alt + Enter          很多功能（https://www.aliyun.com/zixun/wenji/1289027.html）
 16. Ctrl + F4            关闭当前文件
 17. Ctrl + Alt + O       手动清除无用的包
+
+## Debug调试快捷键
+1. F9               恢复程序（resume program）
+2. Alt + F10        显示执行断点（show execution point）
+3. F8               跳到下一步（Step Over，相当于eclipse的F6） 
+4. F7               进入到代码（Step Into，相当于eclipse的F5）
+5. Alt + Shift + F7 强制进入代码（Force Step Into）
+6. Shift + F8       跳到下一个断点（Step Out，相当于eclipse的F8，也相当于eclipse的F7跳出函数）
+7. Atl + F9         运行到光标处（Run To Cursor）
+8. Ctrl + Shift + F9 debug运行java类
+9. Alt + F8          debug时选中查看值
