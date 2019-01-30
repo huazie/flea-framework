@@ -16,31 +16,6 @@ import java.util.Map;
 public class StringUtils {
 
     /**
-     * 判断value是否为空
-     *
-     * @param value 待检查字符串
-     * @return 如果为空或null，返回true；否则返回false
-     * @date 2016年9月27日
-     */
-    public static boolean isEmpty(Object value) {
-        if (value instanceof String) {
-            return value == null || "".equals(value);
-        }
-        return value == null;
-    }
-
-    /**
-     * 判断value是否不为空
-     *
-     * @param value 待检查字符串
-     * @return 如果不为空，返回true；否则返回false
-     * @date 2018年8月19日
-     */
-    public static boolean isNotEmpty(Object value) {
-        return !isEmpty(value);
-    }
-
-    /**
      * 判断字符串是否为空
      *
      * @param value 待检查字符串
@@ -144,14 +119,14 @@ public class StringUtils {
      * @date 2018年1月25日
      */
     public static String subStrLast(String value, int length) {
-        if (isEmpty(value) || length <= 0) {
+        if (isBlank(value) || length <= 0) {
             return null;
         }
         int strLen = value.length();
         if (strLen < length) {// 字符串长度小于 待截取长度
-            return value.substring(0);// 返回相同拷贝值的字符串
+            return new String(value);// 返回相同拷贝值的字符串
         }
-        return value.substring(value.length() - length, value.length());
+        return value.substring(value.length() - length);
     }
 
     /**
@@ -165,12 +140,12 @@ public class StringUtils {
      * @date 2018年1月25日
      */
     public static String subStrBefore(String value, int length) {
-        if (isEmpty(value) || length <= 0) {
+        if (isBlank(value) || length <= 0) {
             return null;
         }
         int strLen = value.length();
         if (strLen < length) {// 字符串长度小于 待截取长度
-            return value.substring(0); // 返回相同拷贝值的字符串
+            return new String(value); // 返回相同拷贝值的字符串
         }
         return value.substring(0, length);
     }
@@ -208,7 +183,7 @@ public class StringUtils {
      */
     public static String strCombined(Object[] objs, String attrName, String before, String after) throws Exception {
         StringBuilder strBuilder = new StringBuilder();
-        if (objs == null || objs.length == 0 || isEmpty(attrName)) {
+        if (objs == null || objs.length == 0 || isBlank(attrName)) {
             return null;
         }
         for (int i = 0; i < objs.length; i++) {

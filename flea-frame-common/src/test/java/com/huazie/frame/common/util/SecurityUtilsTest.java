@@ -3,6 +3,7 @@ package com.huazie.frame.common.util;
 import org.junit.Test;
 
 import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 
 public class SecurityUtilsTest {
 
@@ -39,30 +40,29 @@ public class SecurityUtilsTest {
     }
 
     @Test
-    public void testEncrypt(){
+    public void testCustomKeyAES(){
 
         String source = "123asd";
+        String DESKey = SecurityUtils.getDESKey(SecurityUtils.encryptToSHA(source));
+        String str11 = SecurityUtils.encryptToDES(DESKey, source);
+        SecurityUtils.decryptByDES(DESKey, str11);
+    }
 
-        System.out.println("========指定Key进行加解密==============");
-        try {
-            String AESKey = SecurityUtils.getAESKey(SecurityUtils.encryptToSHA(source));
-            String DESKey = SecurityUtils.getDESKey(SecurityUtils.encryptToSHA(source));
-            System.out.println(AESKey);
-            System.out.println(DESKey);
-            String str11 = SecurityUtils.encryptToDES(DESKey, source);
-            System.out.println("DES加密后为:" + str11);
-            // 使用这个密匙解密
-            String str12 = SecurityUtils.decryptByDES(DESKey, str11);
-            System.out.println("DES解密后为：" + str12);
+    @Test
+    public void testCustomKeyDES(){
 
-            // 生成一个AES算法的密匙
-            String strc = SecurityUtils.encryptToAES(AESKey, source);
-            System.out.println("AES加密后为:" + strc);
-            // 使用这个密匙解密
-            String strd = SecurityUtils.decryptByAES(AESKey, strc);
-            System.out.println("AES解密后为：" + strd);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        String source = "123asd";
+        String AESKey = SecurityUtils.getAESKey(SecurityUtils.encryptToSHA(source));
+        String strc = SecurityUtils.encryptToAES(AESKey, source);
+        SecurityUtils.decryptByAES(AESKey, strc);
+    }
+
+    @Test
+    public void testOther(){
+        String hexKey = "1A2025C4044F4508";
+        String result = "AC235D321317B49E";
+        byte[] bytes = DataConvert.hex2byte(hexKey);
+        SecretKeySpec skeySpec = new SecretKeySpec(bytes, "DES");
+        SecurityUtils.decryptByDES(skeySpec, result);
     }
 }

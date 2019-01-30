@@ -30,28 +30,7 @@ public class SecurityUtils {
      * @since 1.0.0
      */
     public static String encryptToMD5(String info) {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("SecurityUtils#encryptToMD5(String) Info = {}", info);
-        }
-        byte[] digestInfo = null;
-        try {
-            // 得到一个md5的消息摘要
-            MessageDigest messageDigest = MessageDigest.getInstance(EncryptionAlgorithmEnum.MD5.getAlgorithm());
-            // 添加要进行计算摘要的信息
-            messageDigest.update(info.getBytes());
-            // 得到该摘要
-            digestInfo = messageDigest.digest();
-        } catch (NoSuchAlgorithmException e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("SecurityUtils#encryptToMD5(String) Exception = ", e);
-            }
-        }
-        // 将摘要转为字符串
-        String result = DataConvert.byte2hex(digestInfo);
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("SecurityUtils#encryptToMD5(String) Result = {}", result);
-        }
-        return result;
+        return encrypt(EncryptionAlgorithmEnum.MD5, info);
     }
 
     /**
@@ -62,26 +41,39 @@ public class SecurityUtils {
      * @since 1.0.0
      */
     public static String encryptToSHA(String info) {
+        return encrypt(EncryptionAlgorithmEnum.SHA_1, info);
+    }
+
+    /**
+     * <P>信息加密</P>
+     *
+     * @param algorithm 加密算法枚举
+     * @param info 待加密的信息
+     * @return 加密后的信息
+     * @since 1.0.0
+     */
+    private static String encrypt(EncryptionAlgorithmEnum algorithm, String info){
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("SecurityUtils#encryptToSHA(String) info = {}", info);
+            LOGGER.debug("SecurityUtils#encrypt(EncryptionAlgorithmEnum, String) Algorithm = {}", algorithm.getAlgorithm());
+            LOGGER.debug("SecurityUtils#encrypt(EncryptionAlgorithmEnum, String) info = {}", info);
         }
         byte[] digestInfo = null;
         try {
-            // 得到一个SHA-1的消息摘要
-            MessageDigest messageDigest = MessageDigest.getInstance(EncryptionAlgorithmEnum.SHA_1.getAlgorithm());
+            // 得到一个加密算法（MD5, SHA-1）消息摘要
+            MessageDigest messageDigest = MessageDigest.getInstance(algorithm.getAlgorithm());
             // 添加要进行计算摘要的信息
             messageDigest.update(info.getBytes());
             // 得到该摘要
             digestInfo = messageDigest.digest();
         } catch (NoSuchAlgorithmException e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("SecurityUtils#encryptToSHA(String) Exception = ", e);
+                LOGGER.error("SecurityUtils#encrypt(EncryptionAlgorithmEnum, String) Exception = ", e);
             }
         }
         // 将摘要转为字符串
         String result = DataConvert.byte2hex(digestInfo);
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("SecurityUtils#encryptToSHA(String) Result = {}", result);
+            LOGGER.debug("SecurityUtils#encrypt(EncryptionAlgorithmEnum, String) Result = {}", result);
         }
         return result;
     }
@@ -117,7 +109,10 @@ public class SecurityUtils {
      * @since 1.0.0
      */
     private static String getKey(EncryptionAlgorithmEnum algorithm, String src) {
-
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("SecurityUtils#getKey(EncryptionAlgorithmEnum, String) Algorithm = {}", algorithm.getAlgorithm());
+            LOGGER.debug("SecurityUtils#getKey(EncryptionAlgorithmEnum, String) Src = {}", src);
+        }
         String key = null;
         if (null != algorithm) {
             String algorithmName = algorithm.getAlgorithm();
@@ -126,6 +121,9 @@ public class SecurityUtils {
             } else if (EncryptionAlgorithmEnum.DES.getAlgorithm().equals(algorithmName)) {
                 key = src.substring(0, 8);
             }
+        }
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("SecurityUtils#getKey(EncryptionAlgorithmEnum, String) Key = {}", key);
         }
         return key;
     }
@@ -228,32 +226,10 @@ public class SecurityUtils {
      * @since 1.0.0
      */
     private static String encrypt(String algorithm, String key, String info) {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("SecurityUtils#encrypt(String, String, String) Algorithm = {}", algorithm);
-            LOGGER.debug("SecurityUtils#encrypt(String, String, String) Key = {}", key);
-            LOGGER.debug("SecurityUtils#encrypt(String, String, String) Info = {}", info);
-        }
         String result = null;
         try {
-            // 判断Key是否正确
-            if (key == null) {
-                throw new Exception("Key为空null");
-            }
-            // 判断采用AES加解密方式的Key是否为16位
-            if (algorithm.equals("AES") && key.length() != 16) {
-                throw new Exception("Key长度不是16位");
-            }
-            // 判断采用DES加解密方式的Key是否为8位
-            if (algorithm.equals("DES") && key.length() != 8) {
-                throw new Exception("Key长度不是8位");
-            }
-            byte[] raw = key.getBytes("ASCII");
-            SecretKeySpec skeySpec = new SecretKeySpec(raw, algorithm);
-            Cipher cipher = Cipher.getInstance(algorithm);
-            cipher.init(Cipher.ENCRYPT_MODE, skeySpec);
-            byte[] encrypted = cipher.doFinal(info.getBytes());
-            // 返回密文的十六进制形式
-            result = DataConvert.byte2hex(encrypted);
+            SecretKey secretKey = checkKey(algorithm, key);
+            result = encrypt(algorithm, secretKey, info);
         } catch (Exception e) {
             if(LOGGER.isErrorEnabled()){
                 LOGGER.error("SecurityUtils#encrypt(String, String, String) Exception = ", e);
@@ -310,40 +286,15 @@ public class SecurityUtils {
      * @since 1.0.0
      */
     private static String decrypt(String algorithm, String key, String info) {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("SecurityUtils#decrypt(String, String, String) Algorithm = {}", algorithm);
-            LOGGER.debug("SecurityUtils#decrypt(String, String, String) Key = {}", key);
-            LOGGER.debug("SecurityUtils#decrypt(String, String, String) Info = {}", info);
-        }
         String result = null;
         try {
-            // 判断Key是否正确
-            if (key == null) {
-                throw new Exception("Key为空null");
-            }
-            // 判断采用AES加解密方式的Key是否为16位
-            if (algorithm.equals("AES") && key.length() != 16) {
-                throw new Exception("Key长度不是16位");
-            }
-            // 判断采用DES加解密方式的Key是否为8位
-            if (algorithm.equals("DES") && key.length() != 8) {
-                throw new Exception("Key长度不是8位");
-            }
-            byte[] raw = key.getBytes("ASCII");
-            SecretKeySpec skeySpec = new SecretKeySpec(raw, algorithm);
-            Cipher cipher = Cipher.getInstance(algorithm);
-            cipher.init(Cipher.DECRYPT_MODE, skeySpec);
-            byte[] encrypted1 = DataConvert.hex2byte(info);
-
-            byte[] original = cipher.doFinal(encrypted1);
-            result = new String(original);
-
+            SecretKey secretKey = checkKey(algorithm, key);
+            result = decrypt(algorithm, secretKey, info);
         } catch (Exception e) {
             if(LOGGER.isErrorEnabled()){
                 LOGGER.error("SecurityUtils#decrypt(String, String, String) Exception = ", e);
             }
         }
-        // 返回密文的十六进制形式
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("SecurityUtils#decrypt(String, String, String) Decrypt Result = {}", result);
         }
@@ -444,6 +395,24 @@ public class SecurityUtils {
      */
     public static String decryptByAES(String key, String info) {
         return decrypt(EncryptionAlgorithmEnum.AES.getAlgorithm(), key, info);
+    }
+
+    private static SecretKey checkKey(String algorithm, String key)throws Exception{
+        // 判断Key是否正确
+        if (StringUtils.isBlank(key)) {
+            throw new Exception("密钥不能为空");
+        }
+        // 判断采用AES加解密方式的Key是否为16位
+        if ("AES".equals(algorithm) && key.length() != 16) {
+            throw new Exception("密钥长度不是16位");
+        }
+        // 判断采用DES加解密方式的Key是否为8位
+        if ("DES".equals(algorithm) && key.length() != 8) {
+            throw new Exception("密钥长度不是8位");
+        }
+        byte[] raw = key.getBytes("ASCII");
+        SecretKeySpec secretKey = new SecretKeySpec(raw, algorithm);
+        return secretKey;
     }
 
 }
