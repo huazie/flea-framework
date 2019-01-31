@@ -71,10 +71,9 @@ public class HttpUtils {
      * <p> 通过TaoBao的接口获取ip的地理地址 </p>
      *
      * @param ip ip地址
-     * @return
-     * @Description
+     * @return 较为精确的地理地址
+     * @since 1.0.0
      */
-    @SuppressWarnings("unchecked")
     public static String getAddressByTaoBao(String ip) {
         StringBuilder sb = new StringBuilder();
         try {
@@ -94,8 +93,8 @@ public class HttpUtils {
             }
 
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("HttpUtils##getAddressBySina() Map={}", map);
-                LOGGER.debug("HttpUtils##getAddressBySina() Data={}", dataMap);
+                LOGGER.debug("HttpUtils#getAddressByTaoBao(String) Map = {}", map);
+                LOGGER.debug("HttpUtils#getAddressByTaoBao(String) Data = {}", dataMap);
             }
 
             sb.append(dataMap.get(CommonConstants.IPAddressConstants.COUNTRY));
@@ -106,11 +105,14 @@ public class HttpUtils {
                 sb.append("(" + dataMap.get(CommonConstants.IPAddressConstants.ISP) + ")");
             }
 
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("HttpUtils##getAddressBySina() Address={}", sb);
-            }
         } catch (Exception e) {
-            LOGGER.error("HttpUtils##getAddressByTaoBao() Exception=", e);
+            if(LOGGER.isErrorEnabled()){
+                LOGGER.error("HttpUtils##getAddressByTaoBao(String) Exception = ", e);
+            }
+        }
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("HttpUtils##getAddressByTaoBao(String) Address = {}", sb);
         }
 
         return sb.toString();
