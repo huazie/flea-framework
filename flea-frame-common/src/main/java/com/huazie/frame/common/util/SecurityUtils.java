@@ -45,7 +45,7 @@ public class SecurityUtils {
     }
 
     /**
-     * <P>信息加密</P>
+     * <p> 信息加密 </p>
      *
      * @param algorithm 加密算法枚举
      * @param info 待加密的信息
