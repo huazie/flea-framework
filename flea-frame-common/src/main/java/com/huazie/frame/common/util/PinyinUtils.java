@@ -12,8 +12,8 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 
 /**
- * <p>汉字转拼音工具类，用于获取汉字对应的简拼或全拼</p>
- * <p>调用示例：</p>
+ * <p> 汉字转拼音工具类，用于获取汉字对应的简拼或全拼 </p>
+ * <p> 调用示例：</p>
  * <pre>
  *    PinyinUtils.getJianPin("中国", PinyinEnum.LOWER_CASE.getType());
  *    PinyinUtils.getJianPin("中国", PinyinEnum.UPPER_CASE.getType());
@@ -26,6 +26,7 @@ import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombi
  * @since 1.0.0
  */
 public class PinyinUtils {
+
     private final static Logger LOGGER = LoggerFactory.getLogger(PinyinUtils.class);
 
     /**
@@ -37,8 +38,8 @@ public class PinyinUtils {
      */
     public static String getJianPin(String chinese, int caseType) {
         String name = getPinyin(chinese, caseType, PinyinEnum.JIAN_PIN.getType());
-        if (PinyinUtils.LOGGER.isDebugEnabled()) {
-            PinyinUtils.LOGGER.debug("PinyinUtils##getJianPin(String, int) JianPin : {}", name);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("PinyinUtils##getJianPin(String, int) JianPin : {}", name);
         }
         return name;
     }
@@ -52,8 +53,8 @@ public class PinyinUtils {
      */
     public static String getQuanPin(String chinese, int caseType) {
         String name = getPinyin(chinese, caseType, PinyinEnum.QUAN_PIN.getType());
-        if (PinyinUtils.LOGGER.isDebugEnabled()) {
-            PinyinUtils.LOGGER.debug("PinyinUtils##getQuanPin(String, int) QuanPin : {}", name);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("PinyinUtils##getQuanPin(String, int) QuanPin : {}", name);
         }
         return name;
     }
@@ -86,7 +87,7 @@ public class PinyinUtils {
                         }
                     }
                 } catch (BadHanyuPinyinOutputFormatCombination e) {
-                    PinyinUtils.LOGGER.error("拼英转换出现异常， Exception = ", e);
+                    LOGGER.error("拼英转换出现异常， Exception = ", e);
                 }
             } else {
                 pinyinName = pinyinName + nameChar[i];

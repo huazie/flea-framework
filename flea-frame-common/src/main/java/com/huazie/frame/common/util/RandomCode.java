@@ -1,5 +1,9 @@
 package com.huazie.frame.common.util;
 
+import com.huazie.frame.common.CommonConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Random;
 import java.util.UUID;
 
@@ -11,6 +15,8 @@ import java.util.UUID;
  * @since 1.0.0
  */
 public class RandomCode {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(RandomCode.class);
 
     // 创建随机数对象
     private static Random random = new Random();
@@ -24,11 +30,14 @@ public class RandomCode {
      */
     public static String toNumberCode(int len) {
         // 随机产生认证码(len位数字)
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sNumberCode = new StringBuilder();
         for (int i = 0; i < len; i++) {
-            sb.append(random.nextInt(10));
+            sNumberCode.append(random.nextInt(10));
         }
-        return sb.toString();
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("RandomCode##toNumberCode(int) NumberCode = {}", sNumberCode.toString());
+        }
+        return sNumberCode.toString();
     }
 
     /**
@@ -39,12 +48,12 @@ public class RandomCode {
      * @since 1.0.0
      */
     public static String toLetterCode(int len) {
-        String sNum = "";
+        StringBuilder sLetterCode = new StringBuilder();
         for (int i = 0; i < len; i++) {
 
+            sLetterCode.append(random.nextInt(10) );
         }
-
-        return sNum;
+        return sLetterCode.toString();
     }
 
     /**
@@ -54,8 +63,15 @@ public class RandomCode {
      * @since 1.0.0
      */
     public static String toUUID() {
-        String s = UUID.randomUUID().toString();
+        String sUUID = UUID.randomUUID().toString();
+        if(LOGGER.isDebugEnabled()){
+            LOGGER.debug("RandomCode##toUUID() Before UUID = {}", sUUID);
+        }
         // 去掉"-"符号
-        return s.substring(0, 8) + s.substring(9, 13) + s.substring(14, 18) + s.substring(19, 23) + s.substring(24);
+        String sResult = sUUID.replaceAll(CommonConstants.SymbolConstants.HYPHEN, "");
+        if(LOGGER.isDebugEnabled()){
+            LOGGER.debug("RandomCode##toUUID() After UUID = {}", sResult);
+        }
+        return sResult;
     }
 }
