@@ -19,11 +19,11 @@ public enum PinyinEnum {
     /**
      * <p>简拼</p>
      */
-    JIAN_PIN(0, "简拼"),
+    JIAN_PIN(2, "简拼"),
     /**
      * <p>全拼</p>
      */
-    QUAN_PIN(1, "全拼");
+    QUAN_PIN(3, "全拼");
 
     private int type;
 

@@ -41,7 +41,7 @@ public class JsonTest {
     }
 
     @Test
-    public void testGsonJson() {
+    public void testGson() {
         FleaI18nData data = new FleaI18nData();
         data.setKey("CACHE0000003");
         data.setValue("你是来自何方");
@@ -74,6 +74,13 @@ public class JsonTest {
     @Test
     public void testJson() {
 
+        String json = "{\"listString\":[\"beijing\",\"shanghai\",\"hangzhou\"]}";
+        // 转换成String对象的List集合
+        JsonUtils.toStringList(json, "listString");
+
+        String json1 = "{\"listMap\":[{\"address\":\"beijing\", \"name\":\"jack\", \"id\":1001}, {\"address\": \"shanghai\", \"name\":\"rose\", \"id\":1002}]}";
+        // 转换成Map对象的List集合
+        JsonUtils.toMapList(json1, "listMap");
     }
 }
 

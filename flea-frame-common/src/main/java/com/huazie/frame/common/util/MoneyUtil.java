@@ -9,11 +9,11 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * 
+ * <p> 人名币工具类 </p>
  *  
  * @author huazie
  * @version v1.0.0
- * @date 2018年1月24日
+ * @since 1.0.0
  *
  */
 public class MoneyUtil {
