@@ -1,6 +1,7 @@
 package com.huazie.frame.common.util;
 
 import com.huazie.frame.common.CommonConstants;
+import com.huazie.frame.common.PinyinEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +22,12 @@ public class RandomCode {
     // 创建随机数对象
     private static Random random = new Random();
 
+    private static final int LOWER_A_ASCII_VALUE = 97;
+
+    private static final int UPPER_A_ASCII_VALUE = 65;
+
+    private static final int LETTER_NUM = 26;
+
     /**
      * <p> 产生随机的数字，位数由len控制,以字符串形式返回 </p>
      *
@@ -35,23 +42,54 @@ public class RandomCode {
             sNumberCode.append(random.nextInt(10));
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("RandomCode##toNumberCode(int) NumberCode = {}", sNumberCode.toString());
+            LOGGER.debug("RandomCode##toNumberCode(int) NumberCode = {}", sNumberCode);
         }
         return sNumberCode.toString();
     }
 
     /**
-     * <p> 产生随机的字母，位数由len控制。以连续的字符串形式返回 </p>
+     * <p> 产生随机的小写字母，位数由len控制。以连续的字符串形式返回 </p>
      *
      * @param len 随机字母长度
-     * @return 制定长度的字母字符串
+     * @return 指定定长度的字母字符串
      * @since 1.0.0
      */
-    public static String toLetterCode(int len) {
+    public static String toLowerLetterCode(int len) {
+        return toLetterCode(len, PinyinEnum.LOWER_CASE);
+    }
+
+    /**
+     * <p> 产生随机的大写字母，位数由len控制。以连续的字符串形式返回 </p>
+     *
+     * @param len 随机字母长度
+     * @return 指定长度的字母字符串
+     * @since 1.0.0
+     */
+    public static String toUpperLetterCode(int len) {
+        return toLetterCode(len, PinyinEnum.UPPER_CASE);
+    }
+
+    /**
+     * <p> 产生随机的大写字母，位数由len控制。以连续的字符串形式返回 </p>
+     *
+     * @param len   随机字母长度
+     * @param pEnum 大小写标识
+     * @return 指定长度的字母字符串
+     * @since 1.0.0
+     */
+    private static String toLetterCode(int len, PinyinEnum pEnum) {
         StringBuilder sLetterCode = new StringBuilder();
         for (int i = 0; i < len; i++) {
-
-            sLetterCode.append(random.nextInt(10) );
+            char letter;
+            if (PinyinEnum.LOWER_CASE.getType() == pEnum.getType()) {
+                letter = (char) (random.nextInt(LETTER_NUM) + LOWER_A_ASCII_VALUE);
+            } else {
+                letter = (char) (random.nextInt(LETTER_NUM) + UPPER_A_ASCII_VALUE);
+            }
+            sLetterCode.append(letter);
+        }
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("RandomCode##toLowerLetterCode(int) LetterCode = {}", sLetterCode);
         }
         return sLetterCode.toString();
     }
@@ -64,12 +102,12 @@ public class RandomCode {
      */
     public static String toUUID() {
         String sUUID = UUID.randomUUID().toString();
-        if(LOGGER.isDebugEnabled()){
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("RandomCode##toUUID() Before UUID = {}", sUUID);
         }
         // 去掉"-"符号
         String sResult = sUUID.replaceAll(CommonConstants.SymbolConstants.HYPHEN, "");
-        if(LOGGER.isDebugEnabled()){
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("RandomCode##toUUID() After UUID = {}", sResult);
         }
         return sResult;
