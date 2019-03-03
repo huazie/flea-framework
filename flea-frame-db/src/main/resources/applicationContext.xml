@@ -48,7 +48,7 @@
 	<!-- ################################## -->
 	<!-- FleaMarket TransAction Manager JPA -->
 	<!-- ################################## -->
-	<!-- <bean id="fleaMarketDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+	<!-- <bean tempId="fleaMarketDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close">
 		<property name="driverClass" value="${mysql.fleamarket.driver}" />
 		<property name="jdbcUrl" value="${mysql.fleamarket.url}" />
@@ -80,7 +80,7 @@
 	<!-- ###################################### -->
 	<!-- FleaManagement TransAction Manager JPA -->
 	<!-- ###################################### -->
-	<!-- <bean id="fleaManagementDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+	<!-- <bean tempId="fleaManagementDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close">
 		<property name="driverClass" value="${mysql.fleamanagement.driver}" />
 		<property name="jdbcUrl" value="${mysql.fleamanagement.url}" />

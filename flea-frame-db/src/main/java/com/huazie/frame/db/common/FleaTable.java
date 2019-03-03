@@ -15,5 +15,5 @@ import java.lang.annotation.Target;
 @Target({java.lang.annotation.ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface FleaTable {
-	public abstract String name();
+	String name();
 }

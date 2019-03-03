@@ -1,12 +1,13 @@
 package com.huazie.frame.db.common.tab.split.impl;
 
-import java.util.Date;
-
 import com.huazie.frame.common.DateFormatEnum;
 import com.huazie.frame.common.util.DateUtils;
+import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.DBConstants;
 import com.huazie.frame.db.common.tab.split.ITableSplit;
+
+import java.util.Date;
 
 /**
  *  <p>
@@ -25,7 +26,7 @@ public class YYYYTableSplitImpl implements ITableSplit {
 	@Override
 	public String convert(String tableName, Object tableSplitColumn) throws Exception {
 		String tSplitPrefix = null;
-		if(StringUtils.isEmpty(tableSplitColumn)){
+		if(ObjectUtils.isEmpty(tableSplitColumn)){
 			tSplitPrefix = DateUtils.date2String(null, DateFormatEnum.YYYY);
 		}
 		if(tableSplitColumn instanceof Date){

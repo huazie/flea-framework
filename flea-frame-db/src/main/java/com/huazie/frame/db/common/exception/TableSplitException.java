@@ -1,24 +1,30 @@
 package com.huazie.frame.db.common.exception;
 
+import com.huazie.frame.common.exception.CommonException;
+
 /**
- * 
- * 分表异常实现类
- *  
+ * <p> 操作分表 异常实现类 </p>
+ *
  * @author huazie
  * @version v1.0.0
- * @date 2018年1月29日
- *
+ * @since 1.0.0
  */
-public class TableSplitException extends Exception {
+public class TableSplitException extends CommonException {
 
-	private static final long serialVersionUID = 2242056751387595190L;
+    public TableSplitException(String key) {
+        super(key);
+    }
 
-	public TableSplitException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public TableSplitException(String key, String... values) {
+        super(key, values);
+    }
 
-	public TableSplitException(String message) {
-		super(message);
-	}
-	
+    public TableSplitException(String key, Throwable cause) {
+        super(key, cause);
+    }
+
+    public TableSplitException(String key, Throwable cause, String... values) {
+        super(key, cause, values);
+    }
+
 }

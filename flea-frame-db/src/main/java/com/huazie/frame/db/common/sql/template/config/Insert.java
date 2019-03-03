@@ -1,59 +1,66 @@
 package com.huazie.frame.db.common.sql.template.config;
 
+import com.huazie.frame.db.common.util.EntityUtils;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-
 /**
- *  <p>
- *  定义插入语句模板集合
- *  
- * @author huazie
- * @version v1.0.0
- * @date 2018年1月26日
+ * <p> 定义新增语句模板集合 </p>
  *
+ * @author huazie
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public class Insert {
-	
-	private List<Template> inserts = new ArrayList<Template>();
 
-	public List<Template> getInserts() {
-		return inserts;
-	}
-	
-	public Template[] toInsertsArray(){
-		return inserts.toArray(new Template[0]);
-	}
-	
-	/**
-	 * <p>
-	 * 获取插入模板的Map集合，便于根据id查找
-	 * 
-	 * @date 2018年1月26日
-	 *
-	 * @return
-	 */
-	public Map<String, Template> toInsertsMap(){
-		Map<String, Template> insertsMap = new HashMap<String, Template>();
-		Iterator<Template> insertsIt = inserts.iterator();
-		while(insertsIt.hasNext()){
-			Template template = insertsIt.next();
-			insertsMap.put(template.getId(), template);
-		}
-		return insertsMap;
-	}
-	
-	public void addTemplate(Template template){
-		inserts.add(template);
-	}
-	
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
-	}
-	
+    private List<Template> inserts = new ArrayList<Template>();
+
+    /**
+     * <p> 获取新增模板的List对象 </p>
+     *
+     * @return 新增模板的List对象
+     * @since 1.0.0
+     */
+    public List<Template> getInserts() {
+        return inserts;
+    }
+
+    /**
+     * <p> 获取新增模板的数组对象 </p>
+     *
+     * @return 新增模板的数组对象
+     * @since 1.0.0
+     */
+    public Template[] toInsertsArray() {
+        return inserts.toArray(new Template[0]);
+    }
+
+    /**
+     * <p> 获取新增模板的Map对象，便于根据Sql模板id查找 </p>
+     *
+     * @return 新增模板的Map对象
+     * @since 1.0.0
+     */
+    public Map<String, Template> toInsertsMap() {
+        return EntityUtils.toTemplatesMap(inserts);
+    }
+
+    /**
+     * <p> 添加一个新增模板 </p>
+     *
+     * @param template Sql模板对象
+     * @since 1.0.0
+     */
+    public void addTemplate(Template template) {
+        inserts.add(template);
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
+
 }

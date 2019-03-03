@@ -3,59 +3,57 @@ package com.huazie.frame.db.common.sql.template.config;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
- *  <p>
- *  定义SQL模板
- *  
- * @author huazie
- * @version v1.0.0
- * @date 2018年1月26日
+ * <p> 定义SQL模板 </p>
  *
+ * @author huazie
+ * @version 1.0.0
+ * @since 1.0.0
  */
-public class Template extends Properties{
-	
-	private String id;
-	
-	private String ruleId;
-	
-	private String name;
-	
-	private String desc;
-	
-	public String getId() {
-		return id;
-	}
+public class Template extends Properties {
 
-	public void setId(String id) {
-		this.id = id;
-	}
-	
-	public String getRuleId() {
-		return ruleId;
-	}
+    private String id;    // 模板编号
 
-	public void setRuleId(String ruleId) {
-		this.ruleId = ruleId;
-	}
+    private String ruleId; // 校验规则编号
 
-	public String getName() {
-		return name;
-	}
+    private String name; // 模板名
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    private String desc; // 模板描述
 
-	public String getDesc() {
-		return desc;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public void setDesc(String desc) {
-		this.desc = desc;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
-	}
+    public String getRuleId() {
+        return ruleId;
+    }
+
+    public void setRuleId(String ruleId) {
+        this.ruleId = ruleId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
 
 }

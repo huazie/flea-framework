@@ -28,6 +28,8 @@ public class RandomCode {
 
     private static final int LETTER_NUM = 26;
 
+    private static final int NUMBER_TEN = 10;
+
     /**
      * <p> 产生随机的数字，位数由len控制,以字符串形式返回 </p>
      *
@@ -39,7 +41,7 @@ public class RandomCode {
         // 随机产生认证码(len位数字)
         StringBuilder sNumberCode = new StringBuilder();
         for (int i = 0; i < len; i++) {
-            sNumberCode.append(random.nextInt(10));
+            sNumberCode.append(random.nextInt(NUMBER_TEN));
         }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("RandomCode##toNumberCode(int) NumberCode = {}", sNumberCode);
@@ -70,6 +72,17 @@ public class RandomCode {
     }
 
     /**
+     * <p> 产生随机的大小写字母，位数由len控制。以连续的字符串形式返回 </p>
+     *
+     * @param len 随机字母长度
+     * @return 指定长度的字母字符串
+     * @since 1.0.0
+     */
+    public static String toRandomLetterCode(int len) {
+        return toLetterCode(len, null);
+    }
+
+    /**
      * <p> 产生随机的大写字母，位数由len控制。以连续的字符串形式返回 </p>
      *
      * @param len   随机字母长度
@@ -81,17 +94,58 @@ public class RandomCode {
         StringBuilder sLetterCode = new StringBuilder();
         for (int i = 0; i < len; i++) {
             char letter;
-            if (PinyinEnum.LOWER_CASE.getType() == pEnum.getType()) {
-                letter = (char) (random.nextInt(LETTER_NUM) + LOWER_A_ASCII_VALUE);
+            if (null != pEnum) {
+                if (PinyinEnum.UPPER_CASE.getType() == pEnum.getType()) {
+                    letter = toUpperSingleLetter();
+                } else if (PinyinEnum.LOWER_CASE.getType() == pEnum.getType()) {
+                    letter = toLowerSingleLetter();
+                } else {
+                    letter = toRandomSingleLetter();
+                }
             } else {
-                letter = (char) (random.nextInt(LETTER_NUM) + UPPER_A_ASCII_VALUE);
+                letter = toRandomSingleLetter();
             }
             sLetterCode.append(letter);
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("RandomCode##toLowerLetterCode(int) LetterCode = {}", sLetterCode);
+            LOGGER.debug("RandomCode##toLowerLetterCode(int, PinyinEnum) LetterCode = {}", sLetterCode);
         }
         return sLetterCode.toString();
+    }
+
+    /**
+     * <p> 随机取单个大小写字母 </p>
+     *
+     * @return 单个字母
+     * @since 1.0.0
+     */
+    public static char toRandomSingleLetter() {
+        int n = random.nextInt(NUMBER_TEN);
+        if (n % 2 == 0) {
+            return toUpperSingleLetter();
+        } else {
+            return toLowerSingleLetter();
+        }
+    }
+
+    /**
+     * <p> 单个大写字母 </p>
+     *
+     * @return 单个大写字母
+     * @since 1.0.0
+     */
+    public static char toUpperSingleLetter() {
+        return (char) (random.nextInt(LETTER_NUM) + UPPER_A_ASCII_VALUE);
+    }
+
+    /**
+     * <p> 单个小写字母 </p>
+     *
+     * @return 单个小写字母
+     * @since 1.0.0
+     */
+    public static char toLowerSingleLetter() {
+        return (char) (random.nextInt(LETTER_NUM) + LOWER_A_ASCII_VALUE);
     }
 
     /**

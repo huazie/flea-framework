@@ -1,34 +1,30 @@
 package com.huazie.frame.db.common.exception;
 
+import com.huazie.frame.common.exception.CommonException;
+
 /**
- * 
- * @Description 业务逻辑层出现的异常
- * 
+ * <p> 业务逻辑层出现的异常 </p>
+ *
  * @author huazie
  * @version v1.0.0
- * @date 2017年2月19日
- *
+ * @since 1.0.0
  */
-public class ServiceException extends Exception {
+public class ServiceException extends CommonException {
 
-	private static final long serialVersionUID = -1661201330754177789L;
+    public ServiceException(String key) {
+        super(key);
+    }
 
-	private int type;// 异常的类型
-	
-	public ServiceException(int type, String message) {
-		super(message);
-		this.type = type;
-	}
+    public ServiceException(String key, String... values) {
+        super(key, values);
+    }
 
-	public ServiceException(String message) {
-		super(message);
-	}
+    public ServiceException(String key, Throwable cause) {
+        super(key, cause);
+    }
 
-	public int getType() {
-		return type;
-	}
+    public ServiceException(String key, Throwable cause, String... values) {
+        super(key, cause, values);
+    }
 
-	public void setType(int type) {
-		this.type = type;
-	}
 }

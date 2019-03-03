@@ -1,13 +1,11 @@
 package com.huazie.frame.db.jpa.common;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import com.huazie.frame.common.util.ObjectUtils;
+import com.huazie.frame.common.util.StringUtils;
+import com.huazie.frame.db.common.DBConstants;
+import com.huazie.frame.db.common.exception.DaoException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -17,14 +15,14 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.huazie.frame.common.util.ObjectUtils;
-import com.huazie.frame.common.util.StringUtils;
-import com.huazie.frame.db.common.DBConstants;
-import com.huazie.frame.db.common.exception.DaoException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * 
@@ -127,11 +125,10 @@ public final class FleaJPAQuery implements Serializable {
 	 */
 	public void equal(String attrName, Object value) throws DaoException {
 		if (StringUtils.isNotBlank(attrName)) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "AttrName is null or empty");
+			throw new DaoException("AttrName is null or empty");
 		}
 		if (ObjectUtils.isEmpty(value)) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL,
-					"The value of '" + attrName + "' is null");
+			throw new DaoException("The value of '" + attrName + "' is null");
 		}
 		if(LOGGER.isDebugEnabled()){
         	LOGGER.debug("FMJPAQuery##equal(attrName, value) -->> AttrName={},Value={}", attrName, value);
@@ -152,7 +149,7 @@ public final class FleaJPAQuery implements Serializable {
 	 */
 	public void equal(Map<String, Object> paramterMap) throws DaoException {
 		if (paramterMap == null || paramterMap.isEmpty()) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "ParamterMap is null or empty");
+			throw new DaoException("ParamterMap is null or empty");
 		}
 		if(LOGGER.isDebugEnabled()){
 			LOGGER.debug("FMJPAQuery##equal(paramterMap) -->> paramterMap={}", paramterMap);
@@ -181,10 +178,10 @@ public final class FleaJPAQuery implements Serializable {
 	 */
 	public void notEqual(String attrName, Object value) throws DaoException {
 		if (StringUtils.isNotBlank(attrName)) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "AttrName is null or empty");
+			throw new DaoException("AttrName is null or empty");
 		}
 		if (ObjectUtils.isEmpty(value)) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "This value of '" + attrName + "' is null or empty");
+			throw new DaoException("This value of '" + attrName + "' is null or empty");
 		}
 		if(LOGGER.isDebugEnabled()){
         	LOGGER.debug("FMJPAQuery##notEqual(attrName, value) -->> AttrName={},Value={}", attrName, value);
@@ -205,7 +202,7 @@ public final class FleaJPAQuery implements Serializable {
 	 */
 	public void isNull(String attrName) throws DaoException {
 		if (StringUtils.isNotBlank(attrName)) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "AttrName is null or empty");
+			throw new DaoException("AttrName is null or empty");
 		}
 		if(LOGGER.isDebugEnabled()){
         	LOGGER.debug("FMJPAQuery##isNull(attrName) -->> AttrName={},Value={}", attrName);
@@ -226,7 +223,7 @@ public final class FleaJPAQuery implements Serializable {
 	 */
 	public void isNotNull(String attrName) throws DaoException {
 		if (StringUtils.isNotBlank(attrName)) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "AttrName is null or empty");
+			throw new DaoException("AttrName is null or empty");
 		}
 		if(LOGGER.isDebugEnabled()){
         	LOGGER.debug("FMJPAQuery##isNotNull(attrName) -->> AttrName={},Value={}", attrName);
@@ -249,10 +246,10 @@ public final class FleaJPAQuery implements Serializable {
      */
     public void in(String attrName, Collection value) throws DaoException {
     	if (StringUtils.isNotBlank(attrName)) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "AttrName is null or empty");
+			throw new DaoException("AttrName is null or empty");
 		}
 		if (ObjectUtils.isEmpty(value) || value.isEmpty()) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "This value of collection is null or empty");
+			throw new DaoException("This value of collection is null or empty");
 		}
 		if(LOGGER.isDebugEnabled()){
         	LOGGER.debug("FMJPAQuery##in(attrName, value) -->> AttrName={},Value={}", attrName, value);
@@ -280,10 +277,10 @@ public final class FleaJPAQuery implements Serializable {
      */
     public void notIn(String attrName, Collection value) throws DaoException {
      	if (StringUtils.isNotBlank(attrName)) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "AttrName is null or empty");
+			throw new DaoException("AttrName is null or empty");
 		}
 		if (ObjectUtils.isEmpty(value) || value.isEmpty()) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "This value of collection is null or empty");
+			throw new DaoException("This value of collection is null or empty");
 		}
 		if(LOGGER.isDebugEnabled()){
         	LOGGER.debug("FMJPAQuery##notIn(attrName, value) -->> AttrName={},Value={}", attrName, value);
@@ -311,10 +308,10 @@ public final class FleaJPAQuery implements Serializable {
      */
     public void like(String attrName, String value) throws DaoException {
     	if (StringUtils.isNotBlank(attrName)) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "AttrName is null or empty");
+			throw new DaoException("AttrName is null or empty");
 		}
     	if (ObjectUtils.isEmpty(value)) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "This value of '" + attrName + "' is null or empty");
+			throw new DaoException("This value of '" + attrName + "' is null or empty");
 		}
     	if(LOGGER.isDebugEnabled()){
         	LOGGER.debug("FMJPAQuery##like(attrName, value) -->> AttrName={},Value={}", attrName, value);
@@ -340,10 +337,10 @@ public final class FleaJPAQuery implements Serializable {
      */
     public void le(String attrName, Number value) throws DaoException {
     	if (StringUtils.isNotBlank(attrName)) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "AttrName is null or empty");
+			throw new DaoException("AttrName is null or empty");
 		}
     	if (ObjectUtils.isEmpty(value)) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "This value of '" + attrName + "' is null or empty");
+			throw new DaoException("This value of '" + attrName + "' is null or empty");
 		}
     	if(LOGGER.isDebugEnabled()){
         	LOGGER.debug("FMJPAQuery##le(attrName, value) -->> AttrName={},Value={}", attrName, value);
@@ -366,10 +363,10 @@ public final class FleaJPAQuery implements Serializable {
      */
     public void lt(String attrName, Number value) throws DaoException {
     	if (StringUtils.isNotBlank(attrName)) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "AttrName is null or empty");
+			throw new DaoException("AttrName is null or empty");
 		}
     	if (ObjectUtils.isEmpty(value)) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "This value of '" + attrName + "' is null or empty");
+			throw new DaoException("This value of '" + attrName + "' is null or empty");
 		}
     	if(LOGGER.isDebugEnabled()){
         	LOGGER.debug("FMJPAQuery##lt(attrName, value) -->> AttrName={},Value={}", attrName, value);
@@ -392,10 +389,10 @@ public final class FleaJPAQuery implements Serializable {
      */
     public void ge(String attrName, Number value) throws DaoException {
     	if (StringUtils.isNotBlank(attrName)) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "AttrName is null or empty");
+			throw new DaoException("AttrName is null or empty");
 		}
     	if (ObjectUtils.isEmpty(value)) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "This value of '" + attrName + "' is null or empty");
+			throw new DaoException("This value of '" + attrName + "' is null or empty");
 		}
     	if(LOGGER.isDebugEnabled()){
         	LOGGER.debug("FMJPAQuery##ge(attrName, value) -->> AttrName={},Value={}", attrName, value);
@@ -418,10 +415,10 @@ public final class FleaJPAQuery implements Serializable {
      */
     public void gt(String attrName, Number value) throws DaoException {
     	if (StringUtils.isNotBlank(attrName)) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "AttrName is null or empty");
+			throw new DaoException("AttrName is null or empty");
 		}
     	if (ObjectUtils.isEmpty(value)) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "This value of '" + attrName + "' is null or empty");
+			throw new DaoException("This value of '" + attrName + "' is null or empty");
 		}
     	if(LOGGER.isDebugEnabled()){
         	LOGGER.debug("FMJPAQuery##gt(attrName, value) -->> AttrName={},Value={}", attrName, value);
@@ -446,13 +443,13 @@ public final class FleaJPAQuery implements Serializable {
 	 */
     public void between(String attrName, Date startTime, Date endTime) throws DaoException{
     	if (StringUtils.isNotBlank(attrName)) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "AttrName is null or empty");
+			throw new DaoException("AttrName is null or empty");
 		}
 		if (ObjectUtils.isEmpty(startTime) || ObjectUtils.isEmpty(endTime)) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "StartTime or EndTime is null");
+			throw new DaoException("StartTime or EndTime is null");
 		}
     	if(startTime.after(endTime)){
-    		throw new DaoException(DBConstants.DaoConstants.DAO_INVALID_START_END_TIME, "开始时间不能大于结束时间");
+    		throw new DaoException("开始时间不能大于结束时间");
     	}
     	if(LOGGER.isDebugEnabled()){
         	LOGGER.debug("FMJPAQuery##between(attrName, startTime, endTime) -->> AttrName={},StartTime={},EndTime={}", attrName, startTime, endTime);
@@ -475,10 +472,10 @@ public final class FleaJPAQuery implements Serializable {
 	 */
     public void greaterThan(String attrName, Date value) throws DaoException{
     	if (StringUtils.isNotBlank(attrName)) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "AttrName is null or empty");
+			throw new DaoException("AttrName is null or empty");
 		}
     	if (ObjectUtils.isEmpty(value)) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "This value of '" + attrName + "' is null or empty");
+			throw new DaoException("This value of '" + attrName + "' is null or empty");
 		}
     	if(LOGGER.isDebugEnabled()){
     		LOGGER.debug("FMJPAQuery##greaterThan() -->> AttrName={}, Date={}", attrName, value);
@@ -501,10 +498,10 @@ public final class FleaJPAQuery implements Serializable {
      */
     public void greaterThanOrEqualTo(String attrName, Date value) throws DaoException{
     	if (StringUtils.isNotBlank(attrName)) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "AttrName is null or empty");
+			throw new DaoException("AttrName is null or empty");
 		}
     	if (ObjectUtils.isEmpty(value)) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "This value of '" + attrName + "' is null or empty");
+			throw new DaoException("This value of '" + attrName + "' is null or empty");
 		}
     	if(LOGGER.isDebugEnabled()){
     		LOGGER.debug("FMJPAQuery##greaterThanOrEqualTo() -->> AttrName={}, Date={}", attrName, value);
@@ -527,10 +524,10 @@ public final class FleaJPAQuery implements Serializable {
      */
     public void lessThan(String attrName, Date value) throws DaoException{
     	if (StringUtils.isNotBlank(attrName)) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "AttrName is null or empty");
+			throw new DaoException("AttrName is null or empty");
 		}
     	if (ObjectUtils.isEmpty(value)) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "This value of '" + attrName + "' is null or empty");
+			throw new DaoException("This value of '" + attrName + "' is null or empty");
 		}
     	if(LOGGER.isDebugEnabled()){
     		LOGGER.debug("FMJPAQuery##lessThan() -->> AttrName={}, Date={}", attrName, value);
@@ -553,10 +550,10 @@ public final class FleaJPAQuery implements Serializable {
      */
     public void lessThanOrEqualTo(String attrName, Date value) throws DaoException{
     	if (StringUtils.isNotBlank(attrName)) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "AttrName is null or empty");
+			throw new DaoException("AttrName is null or empty");
 		}
     	if (ObjectUtils.isEmpty(value)) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "This value of '" + attrName + "' is null or empty");
+			throw new DaoException("This value of '" + attrName + "' is null or empty");
 		}
     	if(LOGGER.isDebugEnabled()){
     		LOGGER.debug("FMJPAQuery##lessThanOrEqualTo() -->> AttrName={}, Date={}", attrName, value);
@@ -600,7 +597,7 @@ public final class FleaJPAQuery implements Serializable {
      */
     public void max(String attrName) throws DaoException{
     	if (StringUtils.isNotBlank(attrName)) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "AttrName is null or empty");
+			throw new DaoException("AttrName is null or empty");
 		}
     	if(LOGGER.isDebugEnabled()){
     		LOGGER.debug("FMJPAQuery##max(attrName) -->> AttrName={}", attrName);
@@ -620,7 +617,7 @@ public final class FleaJPAQuery implements Serializable {
      */
     public void min(String attrName) throws DaoException{
     	if (StringUtils.isNotBlank(attrName)) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "AttrName is null or empty");
+			throw new DaoException("AttrName is null or empty");
 		}
     	if(LOGGER.isDebugEnabled()){
     		LOGGER.debug("FMJPAQuery##min(attrName) -->> AttrName={}", attrName);
@@ -640,7 +637,7 @@ public final class FleaJPAQuery implements Serializable {
      */
     public void avg(String attrName) throws DaoException{
     	if (StringUtils.isNotBlank(attrName)) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "AttrName is null or empty");
+			throw new DaoException("AttrName is null or empty");
 		}
     	if(LOGGER.isDebugEnabled()){
     		LOGGER.debug("FMJPAQuery##avg(attrName) -->> AttrName={}", attrName);
@@ -660,7 +657,7 @@ public final class FleaJPAQuery implements Serializable {
      */
     public void sum(String attrName) throws DaoException{
     	if (StringUtils.isNotBlank(attrName)) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "AttrName is null or empty");
+			throw new DaoException("AttrName is null or empty");
 		}
     	if(LOGGER.isDebugEnabled()){
     		LOGGER.debug("FMJPAQuery##sum(attrName) -->> AttrName={}", attrName);
@@ -680,7 +677,7 @@ public final class FleaJPAQuery implements Serializable {
      */
     public void sumAsLong(String attrName) throws DaoException{
     	if (StringUtils.isNotBlank(attrName)) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "AttrName is null or empty");
+			throw new DaoException("AttrName is null or empty");
 		}
     	if(LOGGER.isDebugEnabled()){
     		LOGGER.debug("FMJPAQuery##sumAsLong(attrName) -->> AttrName={}", attrName);
@@ -700,7 +697,7 @@ public final class FleaJPAQuery implements Serializable {
      */
     public void sumAsDouble(String attrName) throws DaoException{
     	if (StringUtils.isNotBlank(attrName)) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "AttrName is null or empty");
+			throw new DaoException("AttrName is null or empty");
 		}
     	if(LOGGER.isDebugEnabled()){
     		LOGGER.debug("FMJPAQuery##sumAsDouble(attrName) -->> AttrName={}", attrName);
@@ -719,7 +716,7 @@ public final class FleaJPAQuery implements Serializable {
      */
     public void distinct(String attrName) throws DaoException{
     	if (StringUtils.isNotBlank(attrName)) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "AttrName is null or empty");
+			throw new DaoException("AttrName is null or empty");
 		}
     	if(LOGGER.isDebugEnabled()){
     		LOGGER.debug("FMJPAQuery##sumAsDouble(attrName) -->> AttrName={}", attrName);
@@ -742,7 +739,7 @@ public final class FleaJPAQuery implements Serializable {
 	 */
     public void addOrder(String attrName, String orderBy) throws DaoException {
     	if (StringUtils.isNotBlank(attrName)) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PARAMETER_IS_NULL, "AttrName is null or empty");
+			throw new DaoException("AttrName is null or empty");
 		}
         if (this.orders == null){
         	this.orders = new ArrayList();
@@ -752,7 +749,7 @@ public final class FleaJPAQuery implements Serializable {
 		} else if (orderBy.equalsIgnoreCase(DBConstants.SQLConstants.SQL_ORDER_DESC)) {
 			this.orders.add(this.criteriaBuilder.desc(this.root.get(attrName)));
 		} else {
-			throw new DaoException(DBConstants.DaoConstants.DAO_INVALID_ORDER, "Order '" + orderBy + "' is invalid, it must be 'asc' or 'desc'");
+			throw new DaoException("Order '" + orderBy + "' is invalid, it must be 'asc' or 'desc'");
 		}
 		if(LOGGER.isDebugEnabled()){
 			LOGGER.debug("FMJPAQuery##addOrder(attrName, orderBy) -->> AttrName={},OrderBy={}", attrName, orderBy);
@@ -770,7 +767,7 @@ public final class FleaJPAQuery implements Serializable {
 	 */
 	public List getResultList() throws DaoException {
 		if(this.sourceClazz == null){
-			throw new DaoException(DBConstants.DaoConstants.DAO_INVALID_QUERY, "This Query is invalid,SourceClazz is null");
+			throw new DaoException("This Query is invalid,SourceClazz is null");
 		}
 		if(this.predicates != null && !this.predicates.isEmpty()){
 			// 将所有条件用 and 联合起来
@@ -801,7 +798,7 @@ public final class FleaJPAQuery implements Serializable {
 	 */
 	public List getResultList(int start, int max) throws DaoException{
 		if(this.sourceClazz == null){
-			throw new DaoException(DBConstants.DaoConstants.DAO_INVALID_QUERY, "This Query is invalid, SourceClazz is null");
+			throw new DaoException("This Query is invalid, SourceClazz is null");
 		}
 		if(predicates != null && !predicates.isEmpty()){
 			// 将所有条件用 and 联合起来
@@ -829,7 +826,7 @@ public final class FleaJPAQuery implements Serializable {
 	 */
 	public List getSingleResultList() throws DaoException {
 		if(this.sourceClazz == null){
-			throw new DaoException(DBConstants.DaoConstants.DAO_INVALID_QUERY, "This Query is invalid,SourceClazz is null");
+			throw new DaoException("This Query is invalid,SourceClazz is null");
 		}
 		if(this.predicates != null && !this.predicates.isEmpty()){
 			// 将所有条件用 and 联合起来
@@ -861,7 +858,7 @@ public final class FleaJPAQuery implements Serializable {
 	 */
 	public List getSingleResultList(int start, int max) throws DaoException{
 		if(this.sourceClazz == null){
-			throw new DaoException(DBConstants.DaoConstants.DAO_INVALID_QUERY, "This Query is invalid, SourceClazz is null");
+			throw new DaoException("This Query is invalid, SourceClazz is null");
 		}
 		if(predicates != null && !predicates.isEmpty()){
 			// 将所有条件用 and 联合起来
@@ -887,7 +884,7 @@ public final class FleaJPAQuery implements Serializable {
 	 */
 	public Object getSingleResult() throws DaoException{
 		if(this.resultClazz == null){
-			throw new DaoException(DBConstants.DaoConstants.DAO_INVALID_QUERY, "This Query is invalid,ResultClazz is null");
+			throw new DaoException("This Query is invalid,ResultClazz is null");
 		}
 		if(predicates != null && !predicates.isEmpty()){
 			// 将所有条件用 and 联合起来

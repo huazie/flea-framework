@@ -1,29 +1,20 @@
 package com.huazie.frame.db.jpa.dao.impl;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.huazie.frame.common.CommonConstants;
+import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.DBConstants;
 import com.huazie.frame.db.common.exception.DaoException;
 import com.huazie.frame.db.jpa.common.FleaJPAQuery;
 import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.*;
+import java.util.*;
 
 /**
  * 抽象Dao层实现类，该类实现了基本的增删改查功能，开发人员可以自行拓展
@@ -183,7 +174,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 	@Override
 	public T store(T entity) throws Exception {
 		if (entity == null) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_OBJECT_IS_NULL, "The entity need to be stored is null");
+			throw new DaoException("The entity need to be stored is null");
 		}
 		T t = getEntityManager().merge(entity);
 		return t;
@@ -192,7 +183,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 	@Override
 	public List<T> batchUpdate(List<T> entitys) throws Exception {
 		if (entitys == null || entitys.isEmpty()) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_OBJECT_IS_NULL, "The entitys need to be saved is null or empty");
+			throw new DaoException("The entitys need to be saved is null or empty");
 		}
 		for(int i = 0; i< entitys.size(); i++){
 			getEntityManager().merge(entitys.get(i));
@@ -203,7 +194,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 	@Override
 	public void save(T entity) throws Exception {
 		if (entity == null) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_OBJECT_IS_NULL, "The entity need to be saved is null");
+			throw new DaoException("The entity need to be saved is null");
 		}
 		getEntityManager().persist(entity);
 	}
@@ -211,7 +202,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 	@Override
 	public void batchSave(List<T> entitys) throws Exception {
 		if (entitys == null || entitys.isEmpty()) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_OBJECT_IS_NULL, "The entitys need to be saved is null or empty");
+			throw new DaoException("The entitys need to be saved is null or empty");
 		}
 		for(int i = 0; i< entitys.size(); i++){
 			getEntityManager().persist(entitys.get(i));
@@ -221,7 +212,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 	@Override
 	public boolean update(T entity) throws Exception {
 		if (entity == null) {
-			throw new DaoException(DBConstants.DaoConstants.DAO_OBJECT_IS_NULL, "The entity need to be updated is null");
+			throw new DaoException("The entity need to be updated is null");
 		}
 		String entityName = StringUtils.toLowerCaseInitial(clazz.getSimpleName());
 		StringBuilder sql = new StringBuilder(
@@ -250,25 +241,21 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 					if(annotations == null || annotations.length == 0){//表示属性上没有注解
 						annotations = method.getAnnotations();//获取方法上的注解
 						if(annotations == null || annotations.length == 0){//表示方法上没有注解
-							throw new DaoException(DBConstants.DaoConstants.DAO_ENTITY_NOT_BE_ANNOTATED,
-									"The Entity of " + clazz.getSimpleName() + "is not be annotated");
+							throw new DaoException("The Entity of " + clazz.getSimpleName() + "is not be annotated");
 						}
 					}
 					for (Annotation an : annotations) {//遍历属性或get方法上的注解（注解一般要么全部写在属性上，要么全部写在get方法上）
 						if (javax.persistence.Id.class.getName().equals(an.annotationType().getName())) {// 表示该属性是主键
 							if (fields[i].getType() == long.class || fields[i].getType() == Long.class) {// 该实体的主键是long类型
 								if (Long.valueOf(value.toString()) <= 0) {
-									throw new DaoException(DBConstants.DaoConstants.DAO_PRIMARY_KEY_NOT_POSITIVE_INTEGER,
-											"The primary key '" + attrName + "' is not a positive Integer");
+									throw new DaoException("The primary key '" + attrName + "' is not a positive Integer");
 								}
 							} else if (fields[i].getType() == String.class) {// 该实体的主键是String类型
-								if (StringUtils.isEmpty(value)) {
-									throw new DaoException(DBConstants.DaoConstants.DAO_PRIMARY_KEY_IS_NULL,
-											"The primary key '" + attrName + "' is null or empty");
+								if (ObjectUtils.isEmpty(value)) {
+									throw new DaoException("The primary key '" + attrName + "' is null or empty");
 								}
 							} else {
-								throw new DaoException(DBConstants.DaoConstants.DAO_PRIMARY_KEY_NOT_LONG_OR_STRING,
-										"The primary key '" + attrName + "' must be long(Long) or String type");
+								throw new DaoException("The primary key '" + attrName + "' must be long(Long) or String type");
 							}
 							whereSql.append(entityName).append(DBConstants.SQLConstants.SQL_DOT).append(attrName)
 									.append(DBConstants.SQLConstants.SQL_BLANK).append(DBConstants.SQLConstants.SQL_EQUAL)
@@ -314,8 +301,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 				return false;
 			}
 		} else {
-			throw new DaoException(DBConstants.DaoConstants.DAO_PRIMARY_KEY_NOT_EXIST,
-					"The primary key of " + clazz.getSimpleName() + " is not exist");
+			throw new DaoException("The primary key of " + clazz.getSimpleName() + " is not exist");
 		}
 	}
 	
@@ -345,14 +331,14 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 	private void checkPrimaryKey(Object entityId) throws DaoException{
 		if(entityId.getClass() == long.class || entityId.getClass() == Long.class) {// 该实体的主键是long类型
 			if (Long.valueOf(entityId.toString()) <= 0) {
-				throw new DaoException(DBConstants.DaoConstants.DAO_PRIMARY_KEY_NOT_POSITIVE_INTEGER, "The primary key must be positive number");
+				throw new DaoException("The primary key must be positive number");
 			}
 		}else if(entityId.getClass() == String.class){// 该实体的主键是String类型
-			if(StringUtils.isEmpty(entityId)){
-				throw new DaoException(DBConstants.DaoConstants.DAO_PRIMARY_KEY_IS_NULL, "The primary key is null or empty");
+			if(ObjectUtils.isEmpty(entityId)){
+				throw new DaoException("The primary key is null or empty");
 			}
 		}else{
-			throw new DaoException(DBConstants.DaoConstants.DAO_PRIMARY_KEY_NOT_LONG_OR_STRING, "The primary key must be long(Long) or String type");
+			throw new DaoException("The primary key must be long(Long) or String type");
 		}
 	}
 

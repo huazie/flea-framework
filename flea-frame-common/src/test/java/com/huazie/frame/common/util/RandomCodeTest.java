@@ -20,7 +20,13 @@ public class RandomCodeTest {
     }
 
     @Test
+    public void toRandomLetterCode() {
+        RandomCode.toRandomLetterCode(6);
+    }
+
+    @Test
     public void toUUID() {
         RandomCode.toUUID();
     }
+
 }
