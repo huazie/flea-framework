@@ -26,6 +26,13 @@
 
     <dependencies>
 
+        <dependency>
+            <groupId>com.huazie.frame</groupId>
+            <artifactId>flea-frame-config</artifactId>
+            <version>1.0.0</version>
+            <scope>test</scope>
+        </dependency>
+
         <!-- Memcached相关 https://mvnrepository.com/artifact/com.whalin/Memcached-Java-Client -->
         <dependency>
             <groupId>com.whalin</groupId>

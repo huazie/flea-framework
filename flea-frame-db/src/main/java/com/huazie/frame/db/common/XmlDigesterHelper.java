@@ -100,7 +100,7 @@ public class XmlDigesterHelper {
 	
 	private Tables newTables()throws TableSplitException{
 		Tables tabs = null;
-		String fileName = "system/db/flea-table-split.xml";
+		String fileName = "flea/db/flea-table-split.xml";
 		if(StringUtils.isNotBlank(System.getProperty("fleaframe.db.table.split.filename"))){
 			fileName = StringUtils.trim(System.getProperty("fleaframe.db.table.split.filename"));
 			if(XmlDigesterHelper.LOGGER.isDebugEnabled()){
@@ -173,7 +173,7 @@ public class XmlDigesterHelper {
 	private Sql newSqlTemplate()throws SqlTemplateException{
 		Sql sqlTemplate = null;
 		
-		String fileName = "system/db/flea-sql-template.xml";
+		String fileName = "flea/db/flea-sql-template.xml";
 		if(StringUtils.isNotBlank(System.getProperty("fleaframe.db.sql.template.filename"))){
 			fileName = StringUtils.trim(System.getProperty("fleaframe.db.sql.template.filename"));
 			if(XmlDigesterHelper.LOGGER.isDebugEnabled()){

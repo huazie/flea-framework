@@ -48,7 +48,7 @@ public class JDBCConfig {
 	private String password;	// 数据库登录密码
 	
 	static {
-		String fileName = "flea-db-config.properties"; // 数据库配置文件名
+		String fileName = "flea/db/flea-db-config.properties"; // 数据库配置文件名
 		if(StringUtils.isNotBlank(System.getProperty("fleaframe.db.jdbc.config.filename"))){
 			fileName = StringUtils.trim(System.getProperty("fleaframe.db.jdbc.config.filename"));
 			if(LOGGER.isDebugEnabled()){
