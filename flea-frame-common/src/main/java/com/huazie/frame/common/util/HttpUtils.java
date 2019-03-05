@@ -29,9 +29,11 @@ public class HttpUtils {
 
     private final static String SINA_IP_URL = "http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=json&ip=";
 
+    private final static String YOUDAO_IP_URL = "";
+
     /**
      * <p> 获取Http请求的客户端IP地址 </p>
-     * <p>X-Forwarded-For: 简称XFF头，它代表客户端，也就是HTTP的请求端真实的IP，只有在通过了HTTP代理或者负载均衡服务器时才会添加该项</p>
+     * <p> X-Forwarded-For: 简称XFF头，它代表客户端，也就是HTTP的请求端真实的IP，只有在通过了HTTP代理或者负载均衡服务器时才会添加该项 </p>
      *
      * @param request Http请求对象
      * @return ip地址
@@ -106,7 +108,7 @@ public class HttpUtils {
             }
 
         } catch (Exception e) {
-            if(LOGGER.isErrorEnabled()){
+            if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("HttpUtils##getAddressByTaoBao(String) Exception = ", e);
             }
         }
@@ -119,16 +121,16 @@ public class HttpUtils {
     }
 
     /**
+     * <p> 通过Sina的接口获取ip的精确地址 </p>
+     *
      * @param ip ip地址
-     * @return
-     * @Description 通过Sina的接口获取ip的精确地址
-     * @version v1.0.0
-     * @date 2017年3月2日
+     * @return 较为精确的地理地址
+     * @since 1.0.0
      */
     public static String getAddressBySina(String ip) {
         StringBuilder sb = new StringBuilder();
         try {
-            String urlStr = HttpUtils.SINA_IP_URL + ip;
+            String urlStr = SINA_IP_URL + ip;
             String retJson = getAddress(urlStr);
 
             Map<String, Object> map = FastJsonUtils.toMap(retJson);
@@ -163,28 +165,36 @@ public class HttpUtils {
      * @date 2017年3月2日
      */
     private static String getAddress(String urlStr) {
+        StringBuilder sb = new StringBuilder();
         BufferedReader reader = null;
         try {
             URL url = new URL(urlStr);
             URLConnection conn = url.openConnection();
-            reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), "GBK"));
+            reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
             String line;
-            StringBuilder sb = new StringBuilder();
+
             while ((line = reader.readLine()) != null) {
                 sb.append(line);
             }
-            if (reader != null) {
-                reader.close();
-                reader = null;
-            }
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("HttpUtils##getAddress() Address={}", sb.toString());
+                LOGGER.debug("HttpUtils##getAddress() Address={}", sb);
             }
-            return sb.toString();
         } catch (IOException e) {
-            LOGGER.error("HttpUtils##getAddress() IOException={}", e);
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("HttpUtils##getAddress() IOException={}", e);
+            }
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    if (LOGGER.isErrorEnabled()) {
+                        LOGGER.error("HttpUtils##getAddress() IOException={}", e);
+                    }
+                }
+            }
         }
-        return "";
+        return sb.toString();
     }
 
 }
