@@ -23,15 +23,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * <p>
- * Sql模板父类定义
+ * <p> Sql模板父类定义 </p>
  *
  * @author huazie
  * @version v1.0.0
- * @date 2018年1月25日
+ * @since 1.0.0
  */
 @SuppressWarnings("serial")
-public abstract class SqlTemplate<T> implements ITemplate {
+public abstract class SqlTemplate<T> implements ITemplate<T> {
 
     private StringBuilder sql = new StringBuilder();
 
