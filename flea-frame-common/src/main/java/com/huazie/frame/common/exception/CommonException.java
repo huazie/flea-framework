@@ -2,6 +2,7 @@ package com.huazie.frame.common.exception;
 
 import com.huazie.frame.common.FleaFrameManager;
 import com.huazie.frame.common.i18n.FleaI18nHelper;
+import com.huazie.frame.common.util.ArrayUtils;
 
 import java.util.Locale;
 
@@ -26,13 +27,13 @@ public class CommonException extends Exception {
     }
 
     public CommonException(String mKey, Locale mLocale) {
-        this(mKey, mLocale, null);// 使用指定的国际化区域设置
+        this(mKey, mLocale, new String[]{});// 使用指定的国际化区域设置
     }
 
     public CommonException(String mKey, Locale mLocale, String... mValues) {
         super(convert(mKey, mValues, mLocale)); // 使用指定的国际化区域设置
-        this.key = mKey;
-        this.locale = mLocale;
+        key = mKey;
+        locale = mLocale;
     }
 
     public CommonException(String mKey, Throwable cause) {
@@ -44,7 +45,7 @@ public class CommonException extends Exception {
     }
 
     public CommonException(String mKey, Throwable cause, Locale mLocale) {
-        this(mKey, cause, mLocale, null);// 使用指定的国际化区域设置
+        this(mKey, cause, mLocale, new String[]{});// 使用指定的国际化区域设置
     }
 
     public CommonException(String mKey, Throwable cause, Locale mLocale, String... mValues) {
@@ -57,7 +58,7 @@ public class CommonException extends Exception {
         if (null == locale) {
             locale = FleaFrameManager.getManager().getLocale(); // 使用服务器当前默认的国际化区域设置
         }
-        if(null != values){
+        if(ArrayUtils.isNotEmpty(values)){
             return FleaI18nHelper.i18nForError(key, values, locale);
         }else{
             return FleaI18nHelper.i18nForError(key, locale);

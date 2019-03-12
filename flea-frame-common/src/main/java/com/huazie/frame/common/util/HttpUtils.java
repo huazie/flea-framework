@@ -27,9 +27,7 @@ public class HttpUtils {
 
     private final static String TAOBAO_IP_URL = "http://ip.taobao.com/service/getIpInfo.php?ip=";
 
-    private final static String SINA_IP_URL = "http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=json&ip=";
-
-    private final static String YOUDAO_IP_URL = "";
+    private final static String SINA_IP_URL = "http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js&ip=";
 
     /**
      * <p> 获取Http请求的客户端IP地址 </p>
@@ -39,7 +37,7 @@ public class HttpUtils {
      * @return ip地址
      * @since 1.0.0
      */
-    public static String getIp(HttpServletRequest request) throws Exception {
+    public static String getIp(HttpServletRequest request) {
 
         String ip = request.getHeader("X-Forwarded-For");
         if (StringUtils.isNotBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
