@@ -1,38 +1,36 @@
 package com.huazie.frame.db.common.sql.template;
 
 /**
- * <p>
- * 	 	SQL模板枚举
- * </p>
- * @author huazie
- * @version v1.0.0
- * @date 2018年1月25日
+ * <p> SQL模板枚举 </p>
  *
+ * @author huazie
+ * @version 1.0.0
+ * @dsince 1.0.0
  */
 public enum SqlTemplateEnum {
-	
-	SQL("sql", "rule校验规则关键字"),
-	TEMPLATE("template", "SQL模板定义关键字"),
-	TABLE("table", "表名定义关键字"),
-	COLUMNS("columns", "列定义关键字"),
-	VALUES("values", "值定义关键字"),
-	CONDITIONS("conditions", "条件定义关键字"),
-	PLACEHOLDER("##", "替换符号");
-	
-	private String key;
-	private String desc;
-	
-	private SqlTemplateEnum(String key, String desc){
-		this.key = key;
-		this.desc = desc;
-	}
 
-	public String getKey() {
-		return key;
-	}
+    SQL("sql", "rule校验规则关键字"),
+    TEMPLATE("template", "SQL模板定义关键字"),
+    TABLE("table", "表名定义关键字"),
+    COLUMNS("columns", "列定义关键字"),
+    VALUES("values", "值定义关键字"),
+    CONDITIONS("conditions", "条件定义关键字"),
+    PLACEHOLDER("##", "替换符号");
 
-	public String getDesc() {
-		return desc;
-	}
-	
+    private String key;
+    private String desc;
+
+    SqlTemplateEnum(String key, String desc) {
+        this.key = key;
+        this.desc = desc;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
 }

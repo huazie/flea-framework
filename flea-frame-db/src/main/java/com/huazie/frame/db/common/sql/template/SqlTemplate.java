@@ -23,13 +23,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * <p> Sql模板父类定义 </p>
+ * <p> Sql模板抽象类 </p>
  *
  * @author huazie
- * @version v1.0.0
+ * @version 1.0.0
  * @since 1.0.0
  */
-@SuppressWarnings("serial")
 public abstract class SqlTemplate<T> implements ITemplate<T> {
 
     private StringBuilder sql = new StringBuilder();
@@ -42,13 +41,13 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
 
     private T entity; // 实体类
 
-    private String tempId;    //模板编号
+    private String tempId; // 模板编号
 
     private Template template; // SQL模板
 
-    private Rule rule;//校验规则
+    private Rule rule; // 校验规则
 
-    protected TemplateTypeEnum templateType;// 模板类型
+    protected TemplateTypeEnum templateType; // 模板类型
 
     public SqlTemplate() {
     }
@@ -275,6 +274,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
         return cols.toArray(new Column[0]);
     }
 
+    @Override
     public String getId() {
         return tempId;
     }
@@ -285,6 +285,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
         this.rule = SqlTemplateConfig.getConfig().getRule(this.template.getRuleId());
     }
 
+    @Override
     public String getTableName() {
         return tableName;
     }
@@ -293,6 +294,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
         this.tableName = tableName;
     }
 
+    @Override
     public T getEntity() {
         return entity;
     }
@@ -301,6 +303,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
         this.entity = entity;
     }
 
+    @Override
     public String getSplitTableName() {
         return realTableName;
     }
@@ -309,27 +312,28 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
         return template;
     }
 
+    @Override
     public Rule getRule() {
         return rule;
     }
 
     /**
-     * <p>
-     * 根据模板编号，获取对应SQL模板
+     * <p> 根据模板编号，获取对应SQL模板 </p>
      *
-     * @param id
-     * @return
-     * @date 2018年1月29日
+     * @param id 模板编号
+     * @return SQL模板
+     * @since 1.0.0
      */
     protected abstract Template getSqlTemplate(String id);
 
     /**
-     * <p>
-     * 用于特殊处理SQL模板的初始化工作
+     * <p> 用于特殊处理SQL模板的初始化工作 </p>
      *
+     * @param sql 原声SQL
+     * @param params SQL参数
+     * @param entityCols 实体类T的对象的属性列相关信息
      * @param propMap
      * @throws Exception
-     * @date 2018年1月29日
      */
     protected abstract void initSqlTemplate(StringBuilder sql, Map<String, Object> params, final Column[] entityCols, Map<String, Property> propMap) throws Exception;
 
