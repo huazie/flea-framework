@@ -39,10 +39,10 @@ import java.util.Map;
  *  sqlTemplate.setEntity(student);// 实体类的实例对象
  *  sqlTemplate.initialize();// 模板初始化<br/>
  *  示例2：(该方式需要在实体类被@Table或者@FleaTable修饰，能获取指定的表名)
- *  ITemplate sqlTemplate = new InsertSqlTemplate<Student>("insert", student);
+ *  ITemplate<Student> sqlTemplate = new InsertSqlTemplate<Student>("insert", student);
  *  sqlTemplate.initialize();// 模板初始化<br/>
  *  示例3：
- *  ITemplate sqlTemplate = new InsertSqlTemplate<Student>("insert", "student", student);
+ *  ITemplate<Student> sqlTemplate = new InsertSqlTemplate<Student>("insert", "student", student);
  *  sqlTemplate.initialize();// 模板初始化<br/>
  *  (3) 模板初始化后，就可以获取原生SQL和相关参数了，如下：<br/>
  *  String sql = sqlTemplate.toNativeSql();//获取原生SQL
@@ -50,7 +50,7 @@ import java.util.Map;
  * </pre>
  *
  * @author huazie
- * @version v1.0.0
+ * @version 1.0.0
  * @since 1.0.0
  */
 public class InsertSqlTemplate<T> extends SqlTemplate<T> {
@@ -85,8 +85,8 @@ public class InsertSqlTemplate<T> extends SqlTemplate<T> {
         // 获取【key=values】的属性(类似  :id, :name)
         Property values = propMap.get(SqlTemplateEnum.VALUES.getKey());
 
-        String colStr = "";
-        String valStr = "";
+        String colStr;
+        String valStr;
         if (columns == null && values == null) { // 表示将实体类的全部变量替换
             colStr = StringUtils.strCombined(entityCols, Column.COLUMN_TAB_COL_NAME, DBConstants.SQLConstants.SQL_BLANK, DBConstants.SQLConstants.SQL_COMMA);
             valStr = StringUtils.strCombined(entityCols, Column.COLUMN_ATTR_NAME, DBConstants.SQLConstants.SQL_BLANK + DBConstants.SQLConstants.SQL_COLON, DBConstants.SQLConstants.SQL_COMMA);
@@ -114,27 +114,28 @@ public class InsertSqlTemplate<T> extends SqlTemplate<T> {
      *
      * @param entityCols 实体类对象的属性集合
      * @param cols       表属性列数组
-     * @param vals       表属性列对应值数组
+     * @param values     表属性列对应值数组
+     * @return
      * @throws Exception
-     * @date 2018年1月30日
+     * @since 1.0.0
      */
-    private Column[] check(final Column[] entityCols, String[] cols, String[] vals) throws Exception {
+    private Column[] check(final Column[] entityCols, String[] cols, String[] values) throws Exception {
         if (ArrayUtils.isEmpty(cols)) {
             throw new SqlTemplateException("请检查SQL模板【id=" + this.getId() + "】配置属性（【key=columns】中的【value】不能为空）");
         }
 
-        if (ArrayUtils.isEmpty(vals)) {
+        if (ArrayUtils.isEmpty(values)) {
             throw new SqlTemplateException("请检查SQL模板【id=" + this.getId() + "】配置属性（【key=values】中的【value】不能为空）");
         }
 
-        if (!ArrayUtils.isSameLength(cols, vals)) {
+        if (!ArrayUtils.isSameLength(cols, values)) {
             throw new SqlTemplateException("请检查SQL模板【id=" + this.getId() + "】配置属性（【key=columns】和【key=values】中表字段个数不一致）");
         }
 
         List<Column> entityColsList = new ArrayList<Column>();
         for (int n = 0; n < cols.length; n++) {
             String tabColumnName = StringUtils.trim(cols[n]);//表字段名
-            String attrName = StringUtils.trim(vals[n]);//该表字段对应的属性变量值 (如 :paraId )
+            String attrName = StringUtils.trim(values[n]);//该表字段对应的属性变量值 (如 :paraId )
 
             if (StringUtils.isBlank(attrName)) {
                 throw new SqlTemplateException("请检查SQL模板【id=" + this.getId() + "】配置属性（【key=columns】中的表字段【" + tabColumnName + "】对应的（【key=values】中的表字段变量为空）");

@@ -1,9 +1,5 @@
 package com.huazie.frame.db.common.sql.template.impl;
 
-import java.util.Map;
-
-import org.apache.commons.lang.ArrayUtils;
-
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.DBConstants;
 import com.huazie.frame.db.common.exception.SqlTemplateException;
@@ -14,6 +10,9 @@ import com.huazie.frame.db.common.sql.template.config.Property;
 import com.huazie.frame.db.common.sql.template.config.SqlTemplateConfig;
 import com.huazie.frame.db.common.sql.template.config.Template;
 import com.huazie.frame.db.common.tab.column.Column;
+import org.apache.commons.lang.ArrayUtils;
+
+import java.util.Map;
 
 /**
  * 更新SQL模板, 用于使用原生SQL实现分表;<br/>
@@ -35,10 +34,10 @@ import com.huazie.frame.db.common.tab.column.Column;
  *  sqlTemplate.setEntity(student);// 实体类的实例对象
  *  sqlTemplate.initialize();// 模板初始化<br/>
  *  示例2：(该方式需要在实体类被@Table或者@FleaTable修饰，能获取指定的表名)
- *  ITemplate sqlTemplate = new UpdateSqlTemplate<Student>("update", student);
+ *  ITemplate<Student> sqlTemplate = new UpdateSqlTemplate<Student>("update", student);
  *  sqlTemplate.initialize();// 模板初始化<br/>
  *  示例3：
- *  ITemplate sqlTemplate = new UpdateSqlTemplate<FleaParaDetail>("update", "student", student);
+ *  ITemplate<Student> sqlTemplate = new UpdateSqlTemplate<FleaParaDetail>("update", "student", student);
  *  sqlTemplate.initialize();// 模板初始化<br/>
  *  (3) 模板初始化后，就可以获取原生SQL和相关参数了，如下：<br/>
  *  String sql = sqlTemplate.toNativeSql();//获取原生SQL
@@ -46,8 +45,8 @@ import com.huazie.frame.db.common.tab.column.Column;
  * </pre>
  * 
  * @author huazie
- * @version v1.0.0
- * @date 2018年1月30日
+ * @version 1.0.0
+ * @since 1.0.0
  *
  */
 public class UpdateSqlTemplate<T> extends SqlTemplate<T> {
@@ -119,6 +118,7 @@ public class UpdateSqlTemplate<T> extends SqlTemplate<T> {
 	 *            WHERE子句的map集合（key：属性列， map：属性列变量）
 	 * @return
 	 * @throws Exception
+	 * @since 1.0.0
 	 */
 	private Column[] check(final Column[] entityCols, Map<String, String> setMap, Map<String, String> whereMap)throws Exception{
 		if(setMap == null || setMap.isEmpty()){

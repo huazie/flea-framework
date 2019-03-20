@@ -243,12 +243,12 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
      * @date 2018年1月31日
      */
     protected Column[] checkOneByOne(final Column[] entityCols, Map<String, String> map, SqlTemplateEnum sqlTemplateEnum) throws Exception {
-        List<Column> cols = null;
-        if (map == null || map.isEmpty()) {
+
+        if (null == map || map.isEmpty()) {
             return null;
         }
 
-        cols = new ArrayList<Column>();
+        List<Column> cols = new ArrayList<Column>();
 
         Set<String> tabColNameSet = map.keySet();
         Iterator<String> tabColNameIt = tabColNameSet.iterator();
