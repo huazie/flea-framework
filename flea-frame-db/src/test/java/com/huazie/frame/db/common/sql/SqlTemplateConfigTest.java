@@ -15,8 +15,8 @@ import java.util.regex.Pattern;
 /**
  *  
  * @author huazie
- * @version v1.0.0
- * @date 2018年1月26日
+ * @version 1.0.0
+ * @since 1.0.0
  *
  */
 public class SqlTemplateConfigTest {

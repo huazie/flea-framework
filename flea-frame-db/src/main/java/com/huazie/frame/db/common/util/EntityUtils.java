@@ -33,7 +33,7 @@ public class EntityUtils {
      * @return Sql模板的Map集合
      * @since 1.0.0
      */
-    public static Map<String, Template> toTemplatesMap(List<Template> templates){
+    public static Map<String, Template> toTemplatesMap(List<Template> templates) {
         Map<String, Template> templatesMap = new HashMap<String, Template>();
         Iterator<Template> templatesIt = templates.iterator();
         while (templatesIt.hasNext()) {
@@ -49,10 +49,10 @@ public class EntityUtils {
      * @param entity 实体类对象
      * @return 实体对象的列数组
      * @throws Exception
-     * @date 2018年1月29日
+     * @since 1.0.0
      */
     public static Column[] toColumnsArray(Object entity) throws Exception {
-        return EntityUtils.toColumnsList(entity).toArray(new Column[0]);
+        return toColumnsList(entity).toArray(new Column[0]);
     }
 
     /**
@@ -61,7 +61,7 @@ public class EntityUtils {
      * @param entity 实体类对象
      * @return 实体对象的列集合
      * @throws Exception
-     * @date 2018年1月29日
+     * @since 1.0.0
      */
     public static List<Column> toColumnsList(Object entity) throws Exception {
         Field[] fields = entity.getClass().getDeclaredFields();// 获取该实体类中的属性集
@@ -133,13 +133,13 @@ public class EntityUtils {
     }
 
     /**
-     * 根据指定的属性名及其属性值，获取指定实体
+     * <p> 根据指定的属性名及其属性值，获取指定实体 </p>
      *
      * @param objs      实体数组
      * @param attrName  属性名
      * @param attrValue 属性值
      * @return 实体对象
-     * @date 2018年1月29日
+     * @since 1.0.0
      */
     public static Object getEntity(Object[] objs, String attrName, Object attrValue) throws Exception {
         Object object = null;
@@ -163,23 +163,23 @@ public class EntityUtils {
     }
 
     /**
-     * 根据实体类获取对应的表名信息<br/>
-     * （前提：实体类包含@Table或者@FleaTable注解）
+     * <p> 根据实体类获取对应的表名信息 </p>
+     * <p>（前提：实体类包含@Table或者@FleaTable注解）</p>
      *
      * @param entity 被@Table或者@FleaTable注解修饰的实体类
      * @return 实体类对应数据库表名
-     * @date 2018年6月2日
+     * @since 1.0.0
      */
-    public static String getTableName(Object entity) throws Exception {
+    public static String getTableName(Object entity) {
         String tableName = "";
-        Annotation tableAnno = entity.getClass().getAnnotation(javax.persistence.Table.class);
-        if (tableAnno != null) {
-            javax.persistence.Table table = (javax.persistence.Table) tableAnno;
+        Annotation tableAnnotation = entity.getClass().getAnnotation(javax.persistence.Table.class);
+        if (tableAnnotation != null) {
+            javax.persistence.Table table = (javax.persistence.Table) tableAnnotation;
             tableName = table.name();
         } else {
-            Annotation fleaTableAnno = entity.getClass().getAnnotation(com.huazie.frame.db.common.FleaTable.class);
-            if (fleaTableAnno != null) {
-                com.huazie.frame.db.common.FleaTable fleaTable = (com.huazie.frame.db.common.FleaTable) fleaTableAnno;
+            Annotation fleaTableAnnotation = entity.getClass().getAnnotation(com.huazie.frame.db.common.FleaTable.class);
+            if (fleaTableAnnotation != null) {
+                com.huazie.frame.db.common.FleaTable fleaTable = (com.huazie.frame.db.common.FleaTable) fleaTableAnnotation;
                 tableName = fleaTable.name();
             }
         }

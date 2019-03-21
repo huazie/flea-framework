@@ -95,11 +95,11 @@ public class InsertSqlTemplate<T> extends SqlTemplate<T> {
             colStr = columns.getValue();
             valStr = values.getValue();
 
-            String[] cols = StringUtils.split(StringUtils.trim(colStr), DBConstants.SQLConstants.SQL_COMMA);
-            String[] vals = StringUtils.split(StringUtils.trim(valStr), DBConstants.SQLConstants.SQL_COMMA);
+            String[] colArr = StringUtils.split(StringUtils.trim(colStr), DBConstants.SQLConstants.SQL_COMMA);
+            String[] valArr = StringUtils.split(StringUtils.trim(valStr), DBConstants.SQLConstants.SQL_COMMA);
 
             // 校验表字段列和 属性值变量(是否合法, 是否一一对应)
-            Column[] realEntityCols = this.check(entityCols, cols, vals);
+            Column[] realEntityCols = this.check(entityCols, colArr, valArr);
             this.createParamMap(params, realEntityCols);// 设置SQL参数
         } else {
             throw new SqlTemplateException("请检查SQL模板【id=" + this.getId() + "】配置属性（【key=columns】和【key=values】要么都配置 或者 要么都不配置）");
