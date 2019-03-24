@@ -7,6 +7,7 @@
         <groupId>com.huazie.frame</groupId>
         <version>1.0.0</version>
     </parent>
+    <name>FLEA FRAME CACHE</name>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>flea-frame-cache</artifactId>
     <packaging>jar</packaging>

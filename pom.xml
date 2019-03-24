@@ -5,12 +5,12 @@
     <artifactId>flea-frame</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
-    <name>Flea Frame</name>
+    <name>FLEA FRAME</name>
 
     <developers>
         <developer>
-            <id>Huazie</id>
-            <name>HuazieLau</name>
+            <id>huazie</id>
+            <name>Huazie</name>
             <email>huazie.lgh@gmail.com</email>
         </developer>
     </developers>
@@ -228,6 +228,7 @@
         <module>flea-frame-cache</module>
         <module>flea-frame-db</module>
         <module>flea-frame-config</module>
+        <module>flea-frame-core</module>
     </modules>
 
 </project>

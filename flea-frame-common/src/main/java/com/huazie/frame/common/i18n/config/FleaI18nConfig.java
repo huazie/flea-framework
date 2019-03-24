@@ -113,6 +113,9 @@ public class FleaI18nConfig {
         String value = null;
         if (null != resource) {
             value = resource.getString(key);
+            if (StringUtils.isBlank(value)) { // 如果取不到数据，则使用key返回
+                value = key;
+            }
         }
 
         if (LOGGER.isDebugEnabled()) {

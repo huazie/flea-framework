@@ -29,7 +29,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(AbstractFleaJPADAOImpl.class);
 	
-	private Class<T> clazz = null;
+	private Class<T> clazz;
 
 	/**
 	 * 获取T类型的Class对象
@@ -52,16 +52,14 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 	@Override
 	public T query(long entityId) throws Exception {
 		checkPrimaryKey(entityId);
-		T t = null;
-		t = getEntityManager().find(clazz, entityId);
+		T t = getEntityManager().find(clazz, entityId);
 		return t;
 	}
 	
 	@Override
 	public T query(String entityId) throws Exception {
 		checkPrimaryKey(entityId);
-		T t = null;
-		t = getEntityManager().find(clazz, entityId);
+		T t = getEntityManager().find(clazz, entityId);
 		return t;
 	}
 

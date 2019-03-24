@@ -13,7 +13,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- *  
+ * <p> SQL模板配置自测 </p>
+ *
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0
@@ -60,7 +61,7 @@ public class SqlTemplateConfigTest {
 	public void testInsertTemplateRule(){
 		
 //		String template = " INSERT INTO ##table## ( ##columns## ) VALUES ( ##values## )";
-		String template = " insert into ##table## ( ##columns## ) values ( ##values## )";
+		String template = " Insert into ##table## ( ##columns## ) values ( ##values## )";
 		
 		LOGGER.debug("======INSERT规则校验开始======");
 		

@@ -7,13 +7,13 @@
         <groupId>com.huazie.frame</groupId>
         <version>1.0.0</version>
     </parent>
-    <name>FLEA FRAME DB</name>
+    <name>FLEA FRAME CORE</name>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>flea-frame-db</artifactId>
+    <artifactId>flea-frame-core</artifactId>
     <packaging>jar</packaging>
 
     <build>
-        <plugins>
+        <plugins>W
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
@@ -34,28 +34,12 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- 数据库JDBC连接相关 （MySQL的JDBC驱动）-->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.25</version>
-        </dependency>
-
-        <!-- 数据库持久化相关 EclipseLink-->
-        <dependency>
-            <groupId>org.eclipse.persistence</groupId>
-            <artifactId>eclipselink</artifactId>
-            <version>2.5.0</version>
-        </dependency>
-
-        <!-- Flea Frame Common -->
         <dependency>
             <groupId>com.huazie.frame</groupId>
-            <artifactId>flea-frame-common</artifactId>
+            <artifactId>flea-frame-db</artifactId>
             <version>1.0.0</version>
         </dependency>
 
     </dependencies>
-
 
 </project>

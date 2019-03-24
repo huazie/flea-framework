@@ -3,16 +3,16 @@
 	<!-- 这边的规则为固定写法，一般不做修改 -->
 	<rules>
 		<rule id="insert" name="插入模板的校验规则配置">
-			<property key="sql" value="[ ]*(INSERT|insert)[ ]+(INTO|into)[ ]+##table##[ ]+\([ ]*##columns##[ ]+\)[ ]+(VALUES|values)[ ]+\([ ]*##values##[ ]+\)[ ]*" />
+			<property key="sql" value="[ ]*(INSERT)[ ]+(INTO)[ ]+##table##[ ]+\([ ]*##columns##[ ]+\)[ ]+(VALUES)[ ]+\([ ]*##values##[ ]+\)[ ]*" />
 		</rule>
 		<rule id="update" name="更新模板的校验规则配置">
-			<property key="sql" value="[ ]*(UPDATE|update)[ ]+##table##[ ]+(SET|set)[ ]+##columns##[ ]+(WHERE|where)[ ]+##conditions##[ ]*" />
+			<property key="sql" value="[ ]*(UPDATE)[ ]+##table##[ ]+(SET)[ ]+##columns##[ ]+(WHERE)[ ]+##conditions##[ ]*" />
 		</rule>
 		<rule id="select" name="查询模板的校验规则配置">
-			<property key="sql" value="[ ]*(SELECT|select)[ ]+##columns##[ ]+(FROM|from)[ ]+##table##[ ]+(WHERE|where)[ ]+##conditions##[ ]*" />
+			<property key="sql" value="[ ]*(SELECT)[ ]+##columns##[ ]+(FROM)[ ]+##table##[ ]+(WHERE)[ ]+##conditions##[ ]*" />
 		</rule>
 		<rule id="delete" name="删除模板的校验规则配置">
-			<property key="sql" value="[ ]*(DELETE|delete)[ ]+(FROM|from)[ ]+##table##[ ]+(WHERE|where)[ ]+##conditions##[ ]*" />
+			<property key="sql" value="[ ]*(DELETE)[ ]+(FROM)[ ]+##table##[ ]+(WHERE)[ ]+##conditions##[ ]*" />
 		</rule>
 	</rules>
 	<insert>
