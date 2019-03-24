@@ -3,8 +3,11 @@ package com.huazie.frame.core.base.cfgdata.service.impl;
 import java.util.List;
 
 import com.huazie.frame.core.base.cfgdata.dao.interfaces.IFleaParaDetailDAO;
+import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
 import com.huazie.frame.core.base.cfgdata.ivalues.IFleaParaDetailValue;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaParaDetailSV;
+import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
+import com.huazie.frame.db.jpa.service.impl.AbstractFleaJPASVImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +15,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import com.huazie.frame.common.base.cfgdata.entity.FleaParaDetail;
-import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
-import com.huazie.frame.db.jpa.service.impl.AbstractFleaJPASVImpl;
 
 /**
  * <p> 静态配置service层实现类 </p>
