@@ -3,10 +3,10 @@ package com.huazie.frame.db.common.exception;
 import com.huazie.frame.common.exception.CommonException;
 
 /**
- * <p> 操作分表 异常实现类 </p>
+ * <p> 分表实现异常类 </p>
  *
  * @author huazie
- * @version v1.0.0
+ * @version 1.0.0
  * @since 1.0.0
  */
 public class TableSplitException extends CommonException {

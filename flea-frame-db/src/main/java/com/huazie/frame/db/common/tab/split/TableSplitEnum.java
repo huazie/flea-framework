@@ -20,7 +20,7 @@ public enum TableSplitEnum {
 	private String implClass;
 	private String desc;
 	
-	private TableSplitEnum(String key, String implClass, String desc){
+	TableSplitEnum(String key, String implClass, String desc){
 		this.key = key;
 		this.implClass = implClass;
 		this.desc = desc;

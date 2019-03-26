@@ -6,7 +6,7 @@ import com.huazie.frame.common.exception.CommonException;
  * <p> 处理SQL模板 异常实现类 </p>
  *
  * @author huazie
- * @version v1.0.0
+ * @version 1.0.0
  * @since 1.0.0
  */
 public class SqlTemplateException extends CommonException {

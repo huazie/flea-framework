@@ -6,7 +6,7 @@ import com.huazie.frame.common.exception.CommonException;
  * <p> 业务逻辑层出现的异常 </p>
  *
  * @author huazie
- * @version v1.0.0
+ * @version 1.0.0
  * @since 1.0.0
  */
 public class ServiceException extends CommonException {

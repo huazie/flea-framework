@@ -11,7 +11,7 @@ import java.util.Locale;
 
 /**
  * @author huazie
- * @version v1.0.0
+ * @version 1.0.0
  */
 public class FleaI18NTest {
 
