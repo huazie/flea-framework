@@ -1,65 +1,63 @@
 package com.huazie.frame.db.common.tab.split.config;
 
-import java.io.Serializable;
-
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import java.io.Serializable;
+
 /**
- * <p>
- * 分表定义类
- * 
- * @author huazie
- * @version v1.0.0
- * @date 2018年1月25日
+ * <p> 分表定义类 </p>
  *
+ * @author huazie
+ * @version 1.0.0
+ * @since 1.0.0
  */
-public class Table implements Serializable{
+public class Table implements Serializable {
 
-	private static final long serialVersionUID = 6269688704177325112L;
-	
-	private String id;			//分表定义编码
+    private static final long serialVersionUID = 6269688704177325112L;
 
-	private String name;		//分表定义名
+    private String id;          //分表定义编码
 
-	private String entityClass;	//主表实体类
-	
-	private Split split;		//分表后缀配置类
-	
-	public String getId() {
-		return id;
-	}
+    private String name;        //分表定义名
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    private String entityClass; //主表实体类
 
-	public String getName() {
-		return name;
-	}
+    private Split split;        //分表后缀配置类
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public String getEntityClass() {
-		return entityClass;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public void setEntityClass(String entityClass) {
-		this.entityClass = entityClass;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public Split getSplit() {
-		return split;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setSplit(Split split) {
-		this.split = split;
-	}
+    public String getEntityClass() {
+        return entityClass;
+    }
 
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
-	}
-	
+    public void setEntityClass(String entityClass) {
+        this.entityClass = entityClass;
+    }
+
+    public Split getSplit() {
+        return split;
+    }
+
+    public void setSplit(Split split) {
+        this.split = split;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
+
 }
