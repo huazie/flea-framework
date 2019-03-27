@@ -23,20 +23,19 @@ public class JDBCUtils {
     private static PreparedStatement preparedStatement;
 
     /**
-     * 用于查询，返回结果集
+     * <p> 以返回List<Map>，其中Map的键为属性名，值为相应的数据 </p>
      *
      * @param sql 数据库sql语句
-     * @return 结果集list还有各个数据的map
+     * @return 查询结果数据集合
      * @throws SQLException
+     * @since 1.0.0
      */
     public static List<Map<String, Object>> query(String sql) throws SQLException {
-
         ResultSet rs = null;
         try {
             getPreparedStatement(sql);
             rs = preparedStatement.executeQuery();
             return ResultToListMap(rs);
-
         } catch (SQLException e) {
             throw new SQLException(e);
         } finally {
@@ -45,22 +44,18 @@ public class JDBCUtils {
     }
 
     /**
-     * 用于带参数的查询，返回List<Map>，其中Map的键为属性名，值为相应的数据
+     * <p> 用于带参数的查询，返回List<Map>，其中Map的键为属性名，值为相应的数据 </p>
      *
-     * @param sql       数据库sql语句
-     * @param paramters 参数列表
-     * @return 结果集
+     * @param sql    数据库sql语句
+     * @param params 参数列表
+     * @return 查询结果数据集合
      * @throws SQLException
+     * @since 1.0.0
      */
-    public static List<Map<String, Object>> query(String sql, Object... paramters) throws SQLException {
-
+    public static List<Map<String, Object>> query(String sql, Object... params) throws SQLException {
         ResultSet rs = null;
         try {
-            getPreparedStatement(sql);
-            for (int i = 0; i < paramters.length; i++) {
-                preparedStatement.setObject(i + 1, paramters[i]);
-            }
-            rs = preparedStatement.executeQuery();
+            rs = queryWithReturnResultSet(sql, params);
             return ResultToListMap(rs);
         } catch (SQLException e) {
             throw new SQLException(e);
@@ -71,37 +66,30 @@ public class JDBCUtils {
     }
 
     /**
-     * 用于带参数的查询，返回List<Map>，其中Map的键为属性名，值为相应的数据
+     * <p> 用于带参数的查询，返回List<Map>，其中Map的键为属性名，值为相应的数据 </p>
      *
-     * @param sql       数据库sql语句
-     * @param paramters 参数列表
+     * @param sql    数据库sql语句
+     * @param params 参数列表
      * @return
      * @throws SQLException
+     * @since 1.0.0
      */
-    public static List<Map<String, Object>> query(String sql, List<Object> paramters) throws SQLException {
-
-        ResultSet rs = null;
-        try {
-            getPreparedStatement(sql);
-            for (int i = 0; i < paramters.size(); i++) {
-                preparedStatement.setObject(i + 1, paramters.get(i));
-            }
-            rs = preparedStatement.executeQuery();
-            return ResultToListMap(rs);
-        } catch (SQLException e) {
-            throw new SQLException(e);
-        } finally {
-            close(rs);
+    public static List<Map<String, Object>> query(String sql, List<Object> params) throws SQLException {
+        List<Map<String, Object>> data = null;
+        if (null != params && !params.isEmpty()) {
+            Object[] paramArr = params.toArray(new Object[0]);
+            data = query(sql, paramArr);
         }
-
+        return data;
     }
 
     /**
-     * 用于查询，返回结果集ResultSet
+     * <p> 用于查询，返回结果集ResultSet </p>
      *
      * @param sql 数据库sql语句
      * @return 结果集
      * @throws SQLException
+     * @since 1.0.0
      */
     public static ResultSet queryWithReturnResultSet(String sql) throws SQLException {
         ResultSet rs = null;
@@ -110,7 +98,6 @@ public class JDBCUtils {
             rs = preparedStatement.executeQuery();
             return rs;
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new SQLException(e);
         } finally {
             close(rs);
@@ -118,19 +105,20 @@ public class JDBCUtils {
     }
 
     /**
-     * 用于带参数的查询，返回结果集
+     * <p> 用于带参数的查询，返回结果集 </p>
      *
-     * @param sql       数据库sql语句
-     * @param paramters 参数列表
+     * @param sql    数据库sql语句
+     * @param params 参数列表
      * @return 结果集
      * @throws SQLException
+     * @since 1.0.0
      */
-    public static ResultSet queryWithReturnResultSet(String sql, Object... paramters) throws SQLException {
+    public static ResultSet queryWithReturnResultSet(String sql, Object... params) throws SQLException {
         ResultSet rs = null;
         try {
             getPreparedStatement(sql);
-            for (int i = 0; i < paramters.length; i++) {
-                preparedStatement.setObject(i + 1, paramters[i]);
+            for (int i = 0; i < params.length; i++) {
+                preparedStatement.setObject(i + 1, params[i]);
             }
             rs = preparedStatement.executeQuery();
             return rs;
@@ -142,35 +130,30 @@ public class JDBCUtils {
     }
 
     /**
-     * 用于带参数的查询，返回结果集
+     * <p> 用于带参数的查询，返回结果集 </p>
      *
-     * @param sql       数据库sql语句
-     * @param paramters 参数列表
+     * @param sql    数据库sql语句
+     * @param params 参数列表
      * @return 结果集
      * @throws SQLException
+     * @since 1.0.0
      */
-    public static ResultSet queryWithReturnResultSet(String sql, List<Object> paramters) throws SQLException {
-        ResultSet rs = null;
-        try {
-            getPreparedStatement(sql);
-            for (int i = 0; i < paramters.size(); i++) {
-                preparedStatement.setObject(i + 1, paramters.get(i));
-            }
-            rs = preparedStatement.executeQuery();
-            return rs;
-        } catch (SQLException e) {
-            throw new SQLException(e);
-        } finally {
-            close(rs);
+    public static ResultSet queryWithReturnResultSet(String sql, List<Object> params) throws SQLException {
+        ResultSet resultSet = null;
+        if (null != params && !params.isEmpty()) {
+            Object[] paramArr = params.toArray(new Object[0]);
+            resultSet = queryWithReturnResultSet(sql, paramArr);
         }
+        return resultSet;
     }
 
     /**
-     * 返回单个结果的值，如count\min\max等等
+     * <p> 返回单个结果的值，如count\min\max等等 </p>
      *
      * @param sql 数据库sql语句
-     * @return
+     * @return 单个结果
      * @throws SQLException
+     * @since 1.0.0
      */
     public static Object querySingle(String sql) throws SQLException {
         Object result = null;
@@ -190,22 +173,19 @@ public class JDBCUtils {
     }
 
     /**
-     * 返回单个结果值，如count\min\max等
+     * <p> 返回单个结果值，如count\min\max等 </p>
      *
-     * @param sql       数据库sql语句
-     * @param paramters 参数列表
-     * @return 结果
+     * @param sql    数据库sql语句
+     * @param params 参数列表
+     * @return 单个结果
      * @throws SQLException
+     * @since 1.0.0
      */
-    public static Object querySingle(String sql, Object... paramters) throws SQLException {
+    public static Object querySingle(String sql, Object... params) throws SQLException {
         Object result = null;
         ResultSet rs = null;
         try {
-            getPreparedStatement(sql);
-            for (int i = 0; i < paramters.length; i++) {
-                preparedStatement.setObject(i + 1, paramters[i]);
-            }
-            rs = preparedStatement.executeQuery();
+            rs = queryWithReturnResultSet(sql, params);
             if (rs.next()) {
                 result = rs.getObject(1);
             }
@@ -218,42 +198,32 @@ public class JDBCUtils {
     }
 
     /**
-     * 返回单个结果值，如count\min\max等
+     * <p> 返回单个结果值，如count\min\max等 </p>
      *
-     * @param sql       数据库sql语句
-     * @param paramters 参数列表
-     * @return 结果
+     * @param sql    数据库sql语句
+     * @param params 参数列表
+     * @return 单个结果
      * @throws SQLException
+     * @since 1.0.0
      */
-    public static Object querySingle(String sql, List<Object> paramters) throws SQLException {
+    public static Object querySingle(String sql, List<Object> params) throws SQLException {
         Object result = null;
-        ResultSet rs = null;
-        try {
-            getPreparedStatement(sql);
-            for (int i = 0; i < paramters.size(); i++) {
-                preparedStatement.setObject(i + 1, paramters.get(i));
-            }
-            rs = preparedStatement.executeQuery();
-            if (rs.next()) {
-                result = rs.getObject(1);
-            }
-            return result;
-        } catch (SQLException e) {
-            throw new SQLException(e);
-        } finally {
-            close(rs);
+        if (null != params && !params.isEmpty()) {
+            Object[] paramArr = params.toArray(new Object[0]);
+            result = querySingle(sql, paramArr);
         }
+        return result;
     }
 
     /**
-     * 用于更新数据 sql语句为update语句
+     * <p> 用于更新数据 sql语句为update语句 </p>
      *
      * @param sql 数据库sql语句
      * @return 影响行数
      * @throws SQLException
+     * @since 1.0.0
      */
     public static int update(String sql) throws SQLException {
-
         try {
             getPreparedStatement(sql);
             return preparedStatement.executeUpdate();
@@ -265,18 +235,19 @@ public class JDBCUtils {
     }
 
     /**
-     * 用于更新数据 sql语句为update语句（带参数）
+     * <p> 用于更新数据 sql语句为update语句（带参数） </p>
      *
-     * @param sql       数据库sql语句
-     * @param paramters 参数列表
+     * @param sql    数据库sql语句
+     * @param params 参数列表
      * @return 影响行数
      * @throws SQLException
+     * @since 1.0.0
      */
-    public static int update(String sql, Object... paramters) throws SQLException {
+    public static int update(String sql, Object... params) throws SQLException {
         try {
             getPreparedStatement(sql);
-            for (int i = 0; i < paramters.length; i++) {
-                preparedStatement.setObject(i + 1, paramters[i]);
+            for (int i = 0; i < params.length; i++) {
+                preparedStatement.setObject(i + 1, params[i]);
             }
             return preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -287,103 +258,106 @@ public class JDBCUtils {
     }
 
     /**
-     * 用于更新数据 sql语句为update语句（带参数）
+     * <p> 用于更新数据 sql语句为update语句（带参数） </p>
      *
-     * @param sql       数据库sql语句
-     * @param paramters 参数列表
+     * @param sql    数据库sql语句
+     * @param params 参数列表
      * @return 影响行数
      * @throws SQLException
+     * @since 1.0.0
      */
-    public static int update(String sql, List<Object> paramters) throws SQLException {
-        try {
-            getPreparedStatement(sql);
-            for (int i = 0; i < paramters.size(); i++) {
-                preparedStatement.setObject(i + 1, paramters.get(i));
-            }
-            return preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new SQLException(e);
-        } finally {
-            close();
+    public static int update(String sql, List<Object> params) throws SQLException {
+        int retVal = -1;
+        if (null != params && !params.isEmpty()) {
+            Object[] paramArr = params.toArray(new Object[0]);
+            retVal = update(sql, paramArr);
         }
+        return retVal;
     }
 
     /**
-     * 用于增加数据 sql语句为insert语句
+     * <p> 于增加数据 sql语句为insert语句 </p>用
      *
      * @param sql 数据库sql语句
      * @return 影响行数
      * @throws SQLException
+     * @since 1.0.0
      */
     public static int insert(String sql) throws SQLException {
         return update(sql);
     }
 
     /**
-     * 用于增加数据 sql语句为insert语句（带参数）
+     * <p> 用于增加数据 sql语句为insert语句（带参数） </p>
      *
-     * @param sql       数据库sql语句
-     * @param paramters 参数列表
+     * @param sql    数据库sql语句
+     * @param params 参数列表
      * @return 影响行数
      * @throws SQLException
+     * @since 1.0.0
      */
-    public static int insert(String sql, Object... paramters) throws SQLException {
-        return update(sql, paramters);
+    public static int insert(String sql, Object... params) throws SQLException {
+        return update(sql, params);
     }
 
     /**
-     * 用于增加数据 sql语句为insert语句（带参数）
+     * <p> 用于增加数据 sql语句为insert语句（带参数） </p>
      *
-     * @param sql       数据库sql语句
-     * @param paramters 参数列表
+     * @param sql    数据库sql语句
+     * @param params 参数列表
      * @return 影响行数
      * @throws SQLException
+     * @since 1.0.0
      */
-    public static int insert(String sql, List<Object> paramters) throws SQLException {
-        return update(sql, paramters);
+    public static int insert(String sql, List<Object> params) throws SQLException {
+        return update(sql, params);
     }
 
     /**
-     * 用于删除数据 sql语句为delete语句
+     * <p> 用于删除数据 sql语句为delete语句 </p>
      *
      * @param sql 数据库sql语句
      * @return 影响行数
      * @throws SQLException
+     * @since 1.0.0
      */
     public static int delete(String sql) throws SQLException {
         return update(sql);
     }
 
     /**
-     * 用于删除数据 sql语句为delete语句（带参数）
+     * <p> 用于删除数据 sql语句为delete语句（带参数） </p>
      *
-     * @param sql       数据库sql语句
-     * @param paramters 参数列表
+     * @param sql    数据库sql语句
+     * @param params 参数列表
      * @return 影响行数
      * @throws SQLException
+     * @since 1.0.0
      */
-    public static int delete(String sql, Object... paramters) throws SQLException {
-        return update(sql, paramters);
+    public static int delete(String sql, Object... params) throws SQLException {
+        return update(sql, params);
     }
 
     /**
-     * 用于删除数据 sql语句为delete语句（带参数）
+     * <p> 用于删除数据 sql语句为delete语句（带参数） </p>
      *
-     * @param sql       数据库sql语句
-     * @param paramters 参数列表
+     * @param sql    数据库sql语句
+     * @param params 参数列表
      * @return 影响行数
      * @throws SQLException
+     * @since 1.0.0
      */
-    public static int delete(String sql, List<Object> paramters) throws SQLException {
-        return update(sql, paramters);
+    public static int delete(String sql, List<Object> params) throws SQLException {
+        return update(sql, params);
     }
 
     /**
-     * 将结果集ResultSet转换为包含Map<String,Object>的List集合
+     * <p> 将结果集ResultSet转换为包含Map<String,Object>的List集合 </p>
      *
      * @param rs 结果集对象
-     * @return
+     * @return 包含Map<String   ,   Object>的List数据集合
      * @throws SQLException
+     * @since 1.0.0
      */
     private static List<Map<String, Object>> ResultToListMap(ResultSet rs) throws SQLException {
         List<Map<String, Object>> listMaps = new ArrayList<Map<String, Object>>();
@@ -399,11 +373,11 @@ public class JDBCUtils {
     }
 
     /**
-     * 获取PreparedStatement
+     * <p> 获取PreparedStatement </p>
      *
      * @param sql 数据库sql语句
      * @throws SQLException
-     * @throws ClassNotFoundException
+     * @since 1.0.0
      */
     private static void getPreparedStatement(String sql) throws SQLException {
         conn = JDBCConfig.getConnection();
@@ -411,19 +385,19 @@ public class JDBCUtils {
     }
 
     /**
-     * 释放资源connection,statement,ResultSet
+     * <p> 释放资源connection,statement,ResultSet </p>
      *
      * @param rs 结果集
-     * @throws SQLException
+     * @since 1.0.0
      */
     public static void close(ResultSet rs) {
         JDBCConfig.close(conn, preparedStatement, rs);
     }
 
     /**
-     * 释放资源connection和statement
+     * <p> 释放资源connection和statement </p>
      *
-     * @throws SQLException
+     * @since 1.0.0
      */
     public static void close() {
         close(null);
