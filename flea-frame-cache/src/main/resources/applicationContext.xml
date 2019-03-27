@@ -19,7 +19,7 @@
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations"><!-- 单个配置文件使用location，且不用使用list，多个配置文件使用locations -->
 			<list>
-				<value>classpath:memcached.properties</value>
+				<value>classpath:flea/cache/memcached.properties</value>
 			</list>
 		</property>
 		<property name="fileEncoding" value="UTF-8" />

@@ -1,12 +1,11 @@
 package com.huazie.frame.db.common.tab.split.config;
 
-import java.util.Map;
-
+import com.huazie.frame.db.common.XmlDigesterHelper;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.huazie.frame.db.common.XmlDigesterHelper;
+import java.util.Map;
 
 /**
  *  <p>
@@ -25,13 +24,17 @@ public class TableSplitConfig {
 	private static TableSplitConfig config;
 	
 	private Tables tables;	//分表集合类
-	
+
+	private TableSplitConfig(Tables tables){
+		this.tables = tables;
+	}
+
 	public static TableSplitConfig getConfig(){
 		if(config == null){
 			try {
 				config = new TableSplitConfig(XmlDigesterHelper.getInstance().getTables());
 			} catch (Exception e) {
-				TableSplitConfig.LOGGER.debug("Fail to init flea-table-split.xml");
+				LOGGER.debug("Fail to init flea-table-split.xml");
 			}
 		}
 		return config;
@@ -48,16 +51,11 @@ public class TableSplitConfig {
 	 * @return
 	 */
 	public Table getTable(String name){
-		Table table = null;
-		Map<String, Table> tableMap = this.tables.toTableMap();
-		table = tableMap.get(name);
+		Map<String, Table> tableMap = tables.toTableMap();
+		Table table = tableMap.get(name);
 		return table;
 	}
 	
-	private TableSplitConfig(Tables tables){
-		this.tables = tables;
-	}
-
 	public Tables getTables() {
 		return tables;
 	}

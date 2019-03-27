@@ -1,26 +1,30 @@
 package com.huazie.frame.db.common.exception;
 
-import java.sql.SQLException;
+import com.huazie.frame.common.exception.CommonException;
 
 /**
- * 
- * SQL模板异常实现类
- * 
- * @author huazie
- * @version v1.0.0
- * @date 2018年1月29日
+ * <p> 处理SQL模板 异常实现类 </p>
  *
+ * @author huazie
+ * @version 1.0.0
+ * @since 1.0.0
  */
-public class SqlTemplateException extends SQLException {
+public class SqlTemplateException extends CommonException {
 
-	private static final long serialVersionUID = -6012817461659087101L;
+    public SqlTemplateException(String key) {
+        super(key);
+    }
 
-	public SqlTemplateException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public SqlTemplateException(String key, String... values) {
+        super(key, values);
+    }
 
-	public SqlTemplateException(String message) {
-		super(message);
-	}
+    public SqlTemplateException(String key, Throwable cause) {
+        super(key, cause);
+    }
+
+    public SqlTemplateException(String key, Throwable cause, String... values) {
+        super(key, cause, values);
+    }
 
 }

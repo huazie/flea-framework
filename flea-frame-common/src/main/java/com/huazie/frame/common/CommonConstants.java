@@ -44,6 +44,10 @@ public interface CommonConstants {
          */
         String UNDERLINE = "_";
         /**
+         * <p>连号</p>
+         */
+        String HYPHEN = "-";
+        /**
          * <p>点号</p>
          */
         String DOT = ".";
