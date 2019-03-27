@@ -45,7 +45,7 @@ public class TableSplitTest {
     }
 
     @Test
-    public void testTableSplit1() {
+    public void testTableSplitYYYY() {
 
         ITableSplit tableSplit = new YYYYTableSplitImpl();
         try {
@@ -56,7 +56,7 @@ public class TableSplitTest {
     }
 
     @Test
-    public void testTableSplit2() {
+    public void testTableSplitYYYYMM() {
 
         ITableSplit tableSplit = new YYYYMMTableSplitImpl();
         try {
@@ -67,7 +67,7 @@ public class TableSplitTest {
     }
 
     @Test
-    public void testTableSplit3() {
+    public void testTableSplitYYYYMMDD() {
 
         ITableSplit tableSplit = new YYYYMMDDTableSplitImpl();
         try {

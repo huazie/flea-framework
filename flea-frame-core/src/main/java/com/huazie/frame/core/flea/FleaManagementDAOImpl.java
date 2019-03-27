@@ -1,13 +1,11 @@
 package com.huazie.frame.core.flea;
 
-import java.util.List;
+import com.huazie.frame.db.jpa.dao.impl.AbstractFleaJPADAOImpl;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
-import org.springframework.transaction.annotation.Transactional;
-
-import com.huazie.frame.db.jpa.dao.impl.AbstractFleaJPADAOImpl;
+import java.util.List;
 
 /**
  * <p> FleaManagement数据源DAO层实现类 </p>

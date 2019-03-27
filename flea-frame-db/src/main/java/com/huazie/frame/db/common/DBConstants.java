@@ -4,10 +4,21 @@ package com.huazie.frame.db.common;
  * <p> DB常量类 </p>
  *
  * @author huazie
- * @version v1.0.0
+ * @version 1.0.0
  * @since 1.0.0
  */
 public interface DBConstants {
+
+    /**
+     * <p> 分表常量类 </p>
+     *
+     * @since 1.0.0
+     */
+    interface TableSplitConstants {
+        int TWO = 2;    // 两位分表
+        int THREE = 3;  // 三位分表
+        String KEY = "key"; // 分表枚举key变量名
+    }
 
     /**
      * <p> SQL语句中的常用关键字 和 相关符号 </p>
@@ -48,7 +59,7 @@ public interface DBConstants {
         String SQL_GT = ">";
         String SQL_EQUAL = "=";
         String SQL_PERCENT = "%";
-        String SQL_EQUATION = "1 = 1";
+        String SQL_EQUATION = "1=1";
         String SQL_ORDER_ASC = "asc";
         String SQL_ORDER_DESC = "desc";
         String SQL_LEFT_ROUND_BRACKETS = "(";

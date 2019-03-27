@@ -1,6 +1,7 @@
 package com.huazie.frame.db.common.util;
 
 import com.huazie.frame.common.CommonConstants;
+import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.exception.DaoException;
@@ -91,13 +92,14 @@ public class EntityUtils {
                 boolean isUnique = false;// 判断当前的属性是否唯一
 
                 Annotation[] annotations = fields[i].getAnnotations();// 获取属性上的注解
-                if (annotations == null || annotations.length == 0) {// 表示属性上没有注解
+                if (ArrayUtils.isEmpty(annotations)) {// 表示属性上没有注解
                     annotations = method.getAnnotations();// 获取方法上的注解
-                    if (annotations == null || annotations.length == 0) {// 表示方法上没有注解
+                    if (ArrayUtils.isEmpty(annotations)) {// 表示方法上没有注解
                         throw new DaoException("The Entity of " + entity.getClass().getSimpleName() + "is not be annotated");
                     }
                 }
-                for (Annotation an : annotations) {// 遍历属性或get方法上的注解（注解一般要么全部写在属性上，要么全部写在get方法上）
+                // 遍历属性或get方法上的注解（注解一般要么全部写在属性上，要么全部写在get方法上）
+                for (Annotation an : annotations) {
                     // 兼容JPA
                     if (javax.persistence.Id.class.getName().equals(an.annotationType().getName())) {// 表示该属性是主键
                         if (fields[i].getType() == long.class || fields[i].getType() == Long.class) {// 该实体的主键是long类型
