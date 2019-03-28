@@ -3,10 +3,10 @@ package com.huazie.frame.common;
 import java.util.Locale;
 
 /**
- * <p>Flea Frame Manager</p>
+ * <p> Flea Frame Manager </p>
  *
  * @author huazie
- * @version v1.0.0
+ * @version 1.0.0
  * @since 1.0.0
  */
 public class FleaFrameManager {
@@ -19,7 +19,7 @@ public class FleaFrameManager {
     }
 
     /**
-     * <p>获取一个Flea Frame管理类实例</p>
+     * <p> 获取一个Flea Frame管理类实例 </p>
      *
      * @return Flea Frame 管理类
      */

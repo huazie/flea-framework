@@ -124,7 +124,7 @@ public class JDBCConfig {
      */
     public static Connection getConnection() {
         Connection conn = null;
-        JDBCConfig config = JDBCConfig.getConfig();
+        JDBCConfig config = getConfig();
         try {
             Class.forName(config.getDriver());
             conn = DriverManager.getConnection(config.getUrl(), config.getUser(), config.getPassword());
