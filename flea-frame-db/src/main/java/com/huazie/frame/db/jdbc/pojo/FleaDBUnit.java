@@ -3,7 +3,7 @@ package com.huazie.frame.db.jdbc.pojo;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
- * <p> Flea 数据库单元</p>
+ * <p> Flea 数据库单元 </p>
  *
  * @author huazie
  * @version 1.0.0

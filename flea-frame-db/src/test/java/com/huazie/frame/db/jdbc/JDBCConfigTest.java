@@ -34,7 +34,7 @@ public class JDBCConfigTest {
 	public void testJDBCQuery(){
 		FleaJDBCConfig.init(DBEnum.MySQL.getName(), "fleamarket");
 		try {
-			List<Map<String, Object>> results = JDBCUtils.query("SELECT * FROM flea_user");
+			List<Map<String, Object>> results = FleaJDBCUtils.query("SELECT * FROM flea_user");
 			Assert.assertNotNull(results);
 			LOGGER.debug(results.toString());
 		} catch (SQLException e) {

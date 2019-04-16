@@ -17,7 +17,7 @@ import java.util.Map;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class JDBCUtils {
+public class FleaJDBCUtils {
 
     private static Connection conn;
     private static PreparedStatement preparedStatement;
@@ -380,7 +380,7 @@ public class JDBCUtils {
      * @since 1.0.0
      */
     private static void getPreparedStatement(String sql) throws SQLException {
-        conn = JDBCConfig.getConnection();
+        conn = FleaJDBCConfig.getConnection();
         preparedStatement = conn.prepareStatement(sql);
     }
 
@@ -391,7 +391,7 @@ public class JDBCUtils {
      * @since 1.0.0
      */
     public static void close(ResultSet rs) {
-        JDBCConfig.close(conn, preparedStatement, rs);
+        FleaJDBCConfig.close(conn, preparedStatement, rs);
     }
 
     /**
