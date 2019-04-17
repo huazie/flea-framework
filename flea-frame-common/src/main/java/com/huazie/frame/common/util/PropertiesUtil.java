@@ -12,7 +12,7 @@ import java.util.Properties;
  * <p> 读取后缀为properties的配置文件 </p>
  *
  * @author huazie
- * @version v1.0.0
+ * @version 1.0.0
  * @since 1.0.0
  */
 public class PropertiesUtil {
@@ -20,10 +20,10 @@ public class PropertiesUtil {
     private final static Logger LOGGER = LoggerFactory.getLogger(PropertiesUtil.class);
 
     /**
-     * <p> 获取配置对象 </p>
+     * <p> 获取指定配置文件对象 </p>
      *
      * @param path 配置文件路径
-     * @return 配置对象
+     * @return 指定path的配置文件对象
      * @since 1.0.0
      */
     public static Properties getProperties(String path) {
@@ -32,7 +32,7 @@ public class PropertiesUtil {
         BufferedReader reader = null;
         try {
             input = ResourcesUtil.getInputStreamFromClassPath(path);
-            if (input == null) {
+            if (ObjectUtils.isEmpty(input)) {
                 throw new Exception("该路径下找不到指定配置文件");
             }
             reader = new BufferedReader(new InputStreamReader(input));
@@ -42,10 +42,10 @@ public class PropertiesUtil {
             LOGGER.error("PropertiesUtil##getProperties 读取路径为【" + path + "】的配置出错", e);
         } finally {
             try {
-                if (reader != null) {
+                if (ObjectUtils.isNotEmpty(reader)) {
                     reader.close();
                 }
-                if (input != null) {
+                if (ObjectUtils.isNotEmpty(input)) {
                     input.close();
                 }
             } catch (Exception e) {
@@ -66,7 +66,7 @@ public class PropertiesUtil {
      */
     public static Object getObjectValue(Properties prop, String key) {
         Object value = null;
-        if (prop != null) {
+        if (ObjectUtils.isNotEmpty(prop)) {
             value = prop.get(key);
         }
         return value;
@@ -77,12 +77,12 @@ public class PropertiesUtil {
      *
      * @param prop 配置对象
      * @param key  指定KEY值
-     * @return 对应String值
+     * @return KEY对应键值
      * @since 1.0.0
      */
     public static String getStringValue(Properties prop, String key) {
         String value = null;
-        if (prop != null) {
+        if (ObjectUtils.isNotEmpty(prop)) {
             value = prop.getProperty(key);
         }
         return value;
@@ -99,7 +99,7 @@ public class PropertiesUtil {
     public static Integer getIntegerValue(Properties prop, String key) {
         Integer value = null;
         String val = getStringValue(prop, key);
-        if (val != null) {
+        if (StringUtils.isNotBlank(val)) {
             value = Integer.valueOf(val);
         }
         return value;
@@ -116,7 +116,7 @@ public class PropertiesUtil {
     public static Long getLongValue(Properties prop, String key) {
         Long value = null;
         String val = getStringValue(prop, key);
-        if (val != null) {
+        if (StringUtils.isNotBlank(val)) {
             value = Long.valueOf(val);
         }
         return value;
@@ -133,7 +133,7 @@ public class PropertiesUtil {
     public static Boolean getBooleanValue(Properties prop, String key) {
         Boolean value = null;
         String val = getStringValue(prop, key);
-        if (val != null) {
+        if (StringUtils.isNotBlank(val)) {
             value = Boolean.valueOf(val);
         }
         return value;

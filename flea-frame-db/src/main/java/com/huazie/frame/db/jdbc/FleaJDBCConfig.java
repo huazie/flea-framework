@@ -23,11 +23,11 @@ import java.util.Properties;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class JDBCConfig {
+public class FleaJDBCConfig {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(JDBCConfig.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(FleaJDBCConfig.class);
 
-    private static Map<String, JDBCConfig> configs = new HashMap<String, JDBCConfig>();
+    private static Map<String, FleaJDBCConfig> configs = new HashMap<String, FleaJDBCConfig>();
 
     private static Properties prop;
 
@@ -76,9 +76,9 @@ public class JDBCConfig {
      * @return JDBC配置对象
      * @since 1.0.0
      */
-    public static JDBCConfig getConfig() {
+    public static FleaJDBCConfig getConfig() {
         String dbPrefix = database.toLowerCase() + DBConstants.SQLConstants.SQL_DOT + name.toLowerCase() + DBConstants.SQLConstants.SQL_DOT;
-        JDBCConfig config;
+        FleaJDBCConfig config;
         if (configs.isEmpty()) {
             config = getConfig(dbPrefix);
             configs.put(dbPrefix, config);
@@ -107,8 +107,8 @@ public class JDBCConfig {
      * @return 数据库配置信息类对象
      * @since 1.0.0
      */
-    private static JDBCConfig getConfig(String dbPrefix) {
-        JDBCConfig config = new JDBCConfig();
+    private static FleaJDBCConfig getConfig(String dbPrefix) {
+        FleaJDBCConfig config = new FleaJDBCConfig();
         config.setDriver(PropertiesUtil.getStringValue(prop, dbPrefix + DBConstants.DBConfigConstants.DB_CONFIG_DRIVER));
         config.setUrl(PropertiesUtil.getStringValue(prop, dbPrefix + DBConstants.DBConfigConstants.DB_CONFIG_URL));
         config.setUser(PropertiesUtil.getStringValue(prop, dbPrefix + DBConstants.DBConfigConstants.DB_CONFIG_USER));
@@ -124,7 +124,7 @@ public class JDBCConfig {
      */
     public static Connection getConnection() {
         Connection conn = null;
-        JDBCConfig config = JDBCConfig.getConfig();
+        FleaJDBCConfig config = getConfig();
         try {
             Class.forName(config.getDriver());
             conn = DriverManager.getConnection(config.getUrl(), config.getUser(), config.getPassword());

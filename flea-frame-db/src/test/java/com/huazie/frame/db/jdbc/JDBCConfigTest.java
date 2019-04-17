@@ -24,17 +24,17 @@ public class JDBCConfigTest {
 
 	@Test
 	public void testConfig(){
-		JDBCConfig.init(DBEnum.MySQL.getName(), "fleamanagement");
-		JDBCConfig config = JDBCConfig.getConfig();
+		FleaJDBCConfig.init(DBEnum.MySQL.getName(), "fleamanagement");
+		FleaJDBCConfig config = FleaJDBCConfig.getConfig();
 		Assert.assertNotNull(config);
 		LOGGER.debug(config.toString());
 	}
 	
 	@Test
 	public void testJDBCQuery(){
-		JDBCConfig.init(DBEnum.MySQL.getName(), "fleamarket");
+		FleaJDBCConfig.init(DBEnum.MySQL.getName(), "fleamarket");
 		try {
-			List<Map<String, Object>> results = JDBCUtils.query("SELECT * FROM flea_user");
+			List<Map<String, Object>> results = FleaJDBCUtils.query("SELECT * FROM flea_user");
 			Assert.assertNotNull(results);
 			LOGGER.debug(results.toString());
 		} catch (SQLException e) {
