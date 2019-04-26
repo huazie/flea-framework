@@ -380,7 +380,7 @@ public class FleaJDBCUtils {
      * @since 1.0.0
      */
     private static void getPreparedStatement(String sql) throws SQLException {
-        conn = FleaJDBCConfig.getConnection();
+        conn = FleaJDBCConfig.getConfig().getConnection();
         preparedStatement = conn.prepareStatement(sql);
     }
 

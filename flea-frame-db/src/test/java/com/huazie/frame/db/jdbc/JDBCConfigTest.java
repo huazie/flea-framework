@@ -1,15 +1,15 @@
 package com.huazie.frame.db.jdbc;
 
+import com.huazie.frame.common.FleaFrameManager;
+import com.huazie.frame.db.common.DBEnum;
+import org.junit.Assert;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
-
-import org.junit.Assert;
-import org.junit.Test;
-
-import com.huazie.frame.db.common.DBEnum;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *  
@@ -23,11 +23,9 @@ public class JDBCConfigTest {
 	private final static Logger LOGGER = LoggerFactory.getLogger(JDBCConfigTest.class);
 
 	@Test
-	public void testConfig(){
+	public void testDBPrefix(){
 		FleaJDBCConfig.init(DBEnum.MySQL.getName(), "fleamanagement");
-		FleaJDBCConfig config = FleaJDBCConfig.getConfig();
-		Assert.assertNotNull(config);
-		LOGGER.debug(config.toString());
+		LOGGER.debug(FleaFrameManager.getManager().getDBPrefix());
 	}
 	
 	@Test
