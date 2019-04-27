@@ -35,8 +35,6 @@ public class FleaJDBCConfig {
 
     private static Properties prop;
 
-    private FleaDBUnit fleaDBUnit;
-
     static {
         String fileName = "flea/db/flea-db-config.properties"; // 数据库配置文件名
         if (StringUtils.isNotBlank(System.getProperty("fleaframe.db.jdbc.config.filename"))) {
@@ -93,7 +91,7 @@ public class FleaJDBCConfig {
      */
     public Connection getConnection() {
         Connection conn = null;
-
+        FleaDBUnit fleaDBUnit;
         String dbPrefix = FleaFrameManager.getManager().getDBPrefix();
         if (fleaDBUnits.isEmpty()) {
             fleaDBUnit = getFleaDBUnit(dbPrefix);
@@ -145,15 +143,6 @@ public class FleaJDBCConfig {
         }
 
         return fDBUnit;
-    }
-
-    /**
-     * <p> 获取Flea数据库单元 </p>
-     *
-     * @return Flea数据库单元
-     */
-    public FleaDBUnit getFleaDBUnit() {
-        return fleaDBUnit;
     }
 
     /**
