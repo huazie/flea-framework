@@ -350,7 +350,6 @@ public class FleaJDBCUtils {
         handler.setConnection(connection);
         handler.setPreparedStatement(preparedStatement);
 
-
         return handler;
     }
 
