@@ -82,7 +82,7 @@ public class FleaFrameManager {
      */
     public void setDBPrefix(String database, String name){
         if(StringUtils.isNotBlank(database) && StringUtils.isNotBlank(name)){
-            sDBLocal.set(database.toLowerCase() + CommonConstants.SymbolConstants.DOT + name.toLowerCase() + CommonConstants.SymbolConstants.DOT);
+            sDBLocal.set(database.toLowerCase() + CommonConstants.SymbolConstants.DOT + name.toLowerCase());
         }
     }
 
