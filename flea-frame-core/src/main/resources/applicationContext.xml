@@ -11,8 +11,8 @@
 	http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd"
 	default-autowire="byName" default-lazy-init="false">
 
-	<!-- 自动扫描
-	<context:component-scan base-package="com.huazie.**.dao.impl,com.huazie.**.service.impl,com.huazie.**.web" />-->
+	<!-- 自动扫描-->
+	<context:component-scan base-package="com.huazie.**.dao.impl,com.huazie.**.service.impl,com.huazie.**.web" />
 
 	<!-- 读取的配置文件 -->
 	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -29,6 +29,7 @@
 		<property name="persistenceXmlLocations">
 			<!-- 可以配置多个持久单元 -->
 			<list>
+				<value>classpath:META-INF/fleaconfig-persistence.xml</value>
 				<value>classpath:META-INF/fleamarket-persistence.xml</value>
 				<value>classpath:META-INF/fleamanagement-persistence.xml</value>
 			</list>
@@ -45,6 +46,38 @@
 
 	<bean id="defaultJpaDialect"
 		class="org.springframework.orm.jpa.vendor.EclipseLinkJpaDialect" />
+
+	<!-- ################################## -->
+	<!-- FleaConfig TransAction Manager JPA -->
+	<!-- ################################## -->
+	<!-- <bean tempId="fleaConfigDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="${mysql.fleaconfig.driver}" />
+		<property name="jdbcUrl" value="${mysql.fleaconfig.url}" />
+		<property name="user" value="${mysql.fleaconfig.user}" />
+		<property name="password" value="${mysql.fleaconfig.password}" />
+	</bean> -->
+	<bean id="fleaConfigEntityManagerFactory"
+		  class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="persistenceUnitManager" ref="defaultPersistenceManager" />
+		<property name="persistenceUnitName" value="fleaconfig" />
+		<!-- <property name="dataSource" ref="fleaMarketDataSource" /> -->
+		<property name="persistenceProvider" ref="defaultPersistenceProvider" />
+		<!-- <property name="loadTimeWeaver" ref="defaultLoadTimeWeaver" /> -->
+		<property name="jpaVendorAdapter" ref="defaultVendorAdapter" />
+		<property name="jpaDialect" ref="defaultJpaDialect" />
+		<property name="jpaPropertyMap">
+			<map>
+				<entry key="eclipselink.weaving" value="false" />
+			</map>
+		</property>
+	</bean>
+
+	<bean id="fleaConfigTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="fleaConfigEntityManagerFactory" />
+	</bean>
+
+	<tx:annotation-driven transaction-manager="fleaConfigTransactionManager" />
 
 	<!-- ################################## -->
 	<!-- FleaMarket TransAction Manager JPA -->

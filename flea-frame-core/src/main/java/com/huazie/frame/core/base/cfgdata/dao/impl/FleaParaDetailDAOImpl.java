@@ -1,27 +1,25 @@
 package com.huazie.frame.core.base.cfgdata.dao.impl;
 
-import java.util.List;
-
+import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.core.base.cfgdata.dao.interfaces.IFleaParaDetailDAO;
 import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
 import com.huazie.frame.core.base.cfgdata.ivalues.IFleaParaDetailValue;
-import com.huazie.frame.core.flea.FleaManagementDAOImpl;
+import com.huazie.frame.db.jpa.common.FleaJPAQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import com.huazie.frame.common.util.StringUtils;
-import com.huazie.frame.db.jpa.common.FleaJPAQuery;
+import java.util.List;
 
 /**
- *
+ * <p> 静态参数配置DAO层实现 </p>
  *
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0
  */
 @Repository("fleaParaDetailDAOImpl")
-public class FleaParaDetailDAOImpl extends FleaManagementDAOImpl<FleaParaDetail> implements IFleaParaDetailDAO {
+public class FleaParaDetailDAOImpl extends FleaConfigDAOImpl<FleaParaDetail> implements IFleaParaDetailDAO {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(FleaParaDetailDAOImpl.class);
 
@@ -42,9 +40,9 @@ public class FleaParaDetailDAOImpl extends FleaManagementDAOImpl<FleaParaDetail>
 
         List<IFleaParaDetailValue> fleaParaDetailList = query.getResultList();
 
-        if (FleaParaDetailDAOImpl.LOGGER.isDebugEnabled()) {
-            FleaParaDetailDAOImpl.LOGGER.debug("FleaParaDetailDAOImpl##getParaDetail(paraType, paraCode) FleaParaDetailList={}", fleaParaDetailList);
-            FleaParaDetailDAOImpl.LOGGER.debug("FleaParaDetailDAOImpl##getParaDetail(paraType, paraCode) The Number of FleaParaDetailList={}", fleaParaDetailList.size());
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("FleaParaDetailDAOImpl##getParaDetail(paraType, paraCode) FleaParaDetailList={}", fleaParaDetailList);
+            LOGGER.debug("FleaParaDetailDAOImpl##getParaDetail(paraType, paraCode) The Number of FleaParaDetailList={}", fleaParaDetailList.size());
         }
 
         return fleaParaDetailList;

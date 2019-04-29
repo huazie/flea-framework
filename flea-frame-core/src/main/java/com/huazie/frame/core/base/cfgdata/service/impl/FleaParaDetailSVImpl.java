@@ -1,7 +1,5 @@
 package com.huazie.frame.core.base.cfgdata.service.impl;
 
-import java.util.List;
-
 import com.huazie.frame.core.base.cfgdata.dao.interfaces.IFleaParaDetailDAO;
 import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
 import com.huazie.frame.core.base.cfgdata.ivalues.IFleaParaDetailValue;
@@ -15,12 +13,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 /**
- * <p> 静态配置service层实现类 </p>
+ * <p> 参数配置数据service层实现类 </p>
  *
  * @author huazie
- * @version v1.0.0
+ * @version 1.0.0
  * @since 1.0.0
  */
 @Service("fleaParaDetailSVImpl")
@@ -47,7 +47,7 @@ public class FleaParaDetailSVImpl extends AbstractFleaJPASVImpl<FleaParaDetail> 
         List<IFleaParaDetailValue> fleaParaDetailValues = fleaParaDetailDao.getParaDetail(paraType, paraCode);
         IFleaParaDetailValue fleaParaDetailValue = null;
 
-        if (fleaParaDetailValues != null && fleaParaDetailValues.size() == 1) {
+        if (null != fleaParaDetailValues && !fleaParaDetailValues.isEmpty()) {
             fleaParaDetailValue = fleaParaDetailValues.get(0);
         }
 

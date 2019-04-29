@@ -111,7 +111,7 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void equal(String attrName, Object value) throws DaoException {
-        if (StringUtils.isNotBlank(attrName)) {
+        if (StringUtils.isBlank(attrName)) {
             throw new DaoException("AttrName is null or empty");
         }
         if (ObjectUtils.isEmpty(value)) {
@@ -155,7 +155,7 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void notEqual(String attrName, Object value) throws DaoException {
-        if (StringUtils.isNotBlank(attrName)) {
+        if (StringUtils.isBlank(attrName)) {
             throw new DaoException("AttrName is null or empty");
         }
         if (ObjectUtils.isEmpty(value)) {
@@ -198,7 +198,7 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void isNull(String attrName) throws DaoException {
-        if (StringUtils.isNotBlank(attrName)) {
+        if (StringUtils.isBlank(attrName)) {
             throw new DaoException("AttrName is null or empty");
         }
         if (LOGGER.isDebugEnabled()) {
@@ -215,7 +215,7 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void isNotNull(String attrName) throws DaoException {
-        if (StringUtils.isNotBlank(attrName)) {
+        if (StringUtils.isBlank(attrName)) {
             throw new DaoException("AttrName is null or empty");
         }
         if (LOGGER.isDebugEnabled()) {
@@ -233,7 +233,7 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void in(String attrName, Collection value) throws DaoException {
-        if (StringUtils.isNotBlank(attrName)) {
+        if (StringUtils.isBlank(attrName)) {
             throw new DaoException("AttrName is null or empty");
         }
         if (ObjectUtils.isEmpty(value) || value.isEmpty()) {
@@ -259,7 +259,7 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void notIn(String attrName, Collection value) throws DaoException {
-        if (StringUtils.isNotBlank(attrName)) {
+        if (StringUtils.isBlank(attrName)) {
             throw new DaoException("AttrName is null or empty");
         }
         if (ObjectUtils.isEmpty(value) || value.isEmpty()) {
@@ -285,7 +285,7 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void like(String attrName, String value) throws DaoException {
-        if (StringUtils.isNotBlank(attrName)) {
+        if (StringUtils.isBlank(attrName)) {
             throw new DaoException("AttrName is null or empty");
         }
         if (ObjectUtils.isEmpty(value)) {
@@ -309,7 +309,7 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void le(String attrName, Number value) throws DaoException {
-        if (StringUtils.isNotBlank(attrName)) {
+        if (StringUtils.isBlank(attrName)) {
             throw new DaoException("AttrName is null or empty");
         }
         if (ObjectUtils.isEmpty(value)) {
@@ -330,7 +330,7 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void lt(String attrName, Number value) throws DaoException {
-        if (StringUtils.isNotBlank(attrName)) {
+        if (StringUtils.isBlank(attrName)) {
             throw new DaoException("AttrName is null or empty");
         }
         if (ObjectUtils.isEmpty(value)) {
@@ -351,7 +351,7 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void ge(String attrName, Number value) throws DaoException {
-        if (StringUtils.isNotBlank(attrName)) {
+        if (StringUtils.isBlank(attrName)) {
             throw new DaoException("AttrName is null or empty");
         }
         if (ObjectUtils.isEmpty(value)) {
@@ -372,7 +372,7 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void gt(String attrName, Number value) throws DaoException {
-        if (StringUtils.isNotBlank(attrName)) {
+        if (StringUtils.isBlank(attrName)) {
             throw new DaoException("AttrName is null or empty");
         }
         if (ObjectUtils.isEmpty(value)) {
@@ -394,7 +394,7 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void between(String attrName, Date startTime, Date endTime) throws DaoException {
-        if (StringUtils.isNotBlank(attrName)) {
+        if (StringUtils.isBlank(attrName)) {
             throw new DaoException("AttrName is null or empty");
         }
         if (ObjectUtils.isEmpty(startTime) || ObjectUtils.isEmpty(endTime)) {
@@ -418,7 +418,7 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void greaterThan(String attrName, Date value) throws DaoException {
-        if (StringUtils.isNotBlank(attrName)) {
+        if (StringUtils.isBlank(attrName)) {
             throw new DaoException("AttrName is null or empty");
         }
         if (ObjectUtils.isEmpty(value)) {
@@ -439,7 +439,7 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void greaterThanOrEqualTo(String attrName, Date value) throws DaoException {
-        if (StringUtils.isNotBlank(attrName)) {
+        if (StringUtils.isBlank(attrName)) {
             throw new DaoException("AttrName is null or empty");
         }
         if (ObjectUtils.isEmpty(value)) {
@@ -460,7 +460,7 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void lessThan(String attrName, Date value) throws DaoException {
-        if (StringUtils.isNotBlank(attrName)) {
+        if (StringUtils.isBlank(attrName)) {
             throw new DaoException("AttrName is null or empty");
         }
         if (ObjectUtils.isEmpty(value)) {
@@ -481,7 +481,7 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void lessThanOrEqualTo(String attrName, Date value) throws DaoException {
-        if (StringUtils.isNotBlank(attrName)) {
+        if (StringUtils.isBlank(attrName)) {
             throw new DaoException("AttrName is null or empty");
         }
         if (ObjectUtils.isEmpty(value)) {
@@ -519,7 +519,7 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void max(String attrName) throws DaoException {
-        if (StringUtils.isNotBlank(attrName)) {
+        if (StringUtils.isBlank(attrName)) {
             throw new DaoException("AttrName is null or empty");
         }
         if (LOGGER.isDebugEnabled()) {
@@ -536,7 +536,7 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void min(String attrName) throws DaoException {
-        if (StringUtils.isNotBlank(attrName)) {
+        if (StringUtils.isBlank(attrName)) {
             throw new DaoException("AttrName is null or empty");
         }
         if (LOGGER.isDebugEnabled()) {
@@ -553,7 +553,7 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void avg(String attrName) throws DaoException {
-        if (StringUtils.isNotBlank(attrName)) {
+        if (StringUtils.isBlank(attrName)) {
             throw new DaoException("AttrName is null or empty");
         }
         if (LOGGER.isDebugEnabled()) {
@@ -570,7 +570,7 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void sum(String attrName) throws DaoException {
-        if (StringUtils.isNotBlank(attrName)) {
+        if (StringUtils.isBlank(attrName)) {
             throw new DaoException("AttrName is null or empty");
         }
         if (LOGGER.isDebugEnabled()) {
@@ -587,7 +587,7 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void sumAsLong(String attrName) throws DaoException {
-        if (StringUtils.isNotBlank(attrName)) {
+        if (StringUtils.isBlank(attrName)) {
             throw new DaoException("AttrName is null or empty");
         }
         if (LOGGER.isDebugEnabled()) {
@@ -604,7 +604,7 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void sumAsDouble(String attrName) throws DaoException {
-        if (StringUtils.isNotBlank(attrName)) {
+        if (StringUtils.isBlank(attrName)) {
             throw new DaoException("AttrName is null or empty");
         }
         if (LOGGER.isDebugEnabled()) {
@@ -621,7 +621,7 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void distinct(String attrName) throws DaoException {
-        if (StringUtils.isNotBlank(attrName)) {
+        if (StringUtils.isBlank(attrName)) {
             throw new DaoException("AttrName is null or empty");
         }
         if (LOGGER.isDebugEnabled()) {
@@ -639,7 +639,7 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void addOrder(String attrName, String orderBy) throws DaoException {
-        if (StringUtils.isNotBlank(attrName)) {
+        if (StringUtils.isBlank(attrName)) {
             throw new DaoException("AttrName is null or empty");
         }
         if (orders == null) {
