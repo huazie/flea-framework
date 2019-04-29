@@ -13,7 +13,7 @@ public class CacheConstants {
 		/**
 		 * memcache 文件名
 		 */
-		String MEMCACHE_FILE_NAME = "memcached.properties";
+		String MEMCACHE_FILE_NAME = "flea/cache/memcached.properties";
 		/**
 		 * Memcached服务器地址总数
 		 */

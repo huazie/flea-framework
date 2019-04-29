@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+	http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd"
+       default-autowire="byName" default-lazy-init="false">
+
+    <!-- 自动扫描-->
+    <context:component-scan base-package="com.huazie.**.dao.impl,com.huazie.**.service.impl,com.huazie.**.web"/>
+
+    <!-- 读取的配置文件 -->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations"><!-- 单个配置文件使用location，且不用使用list，多个配置文件使用locations -->
+            <list>
+                <value>classpath:flea/db/flea-db-config.properties</value>
+                <value>classpath:flea/cache/memcached.properties</value>
+            </list>
+        </property>
+        <property name="fileEncoding" value="UTF-8"/>
+    </bean>
+
+    <bean id="defaultPersistenceManager"
+          class="org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager">
+        <property name="persistenceXmlLocations">
+            <!-- 可以配置多个持久单元 -->
+            <list>
+                <value>classpath:META-INF/fleaconfig-persistence.xml</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="defaultPersistenceProvider" class="org.eclipse.persistence.jpa.PersistenceProvider"/>
+
+    <bean id="defaultLoadTimeWeaver" class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver"/>
+
+    <bean id="defaultVendorAdapter" class="org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter">
+        <property name="showSql" value="true"/>
+    </bean>
+
+    <bean id="defaultJpaDialect"
+          class="org.springframework.orm.jpa.vendor.EclipseLinkJpaDialect"/>
+
+    <!-- ################################## -->
+    <!-- FleaConfig TransAction Manager JPA -->
+    <!-- ################################## -->
+    <!-- <bean tempId="fleaConfigDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+        destroy-method="close">
+        <property name="driverClass" value="${mysql.fleaconfig.driver}" />
+        <property name="jdbcUrl" value="${mysql.fleaconfig.url}" />
+        <property name="user" value="${mysql.fleaconfig.user}" />
+        <property name="password" value="${mysql.fleaconfig.password}" />
+    </bean> -->
+    <bean id="fleaConfigEntityManagerFactory"
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="persistenceUnitManager" ref="defaultPersistenceManager"/>
+        <property name="persistenceUnitName" value="fleaconfig"/>
+        <!-- <property name="dataSource" ref="fleaMarketDataSource" /> -->
+        <property name="persistenceProvider" ref="defaultPersistenceProvider"/>
+        <!-- <property name="loadTimeWeaver" ref="defaultLoadTimeWeaver" /> -->
+        <property name="jpaVendorAdapter" ref="defaultVendorAdapter"/>
+        <property name="jpaDialect" ref="defaultJpaDialect"/>
+        <property name="jpaPropertyMap">
+            <map>
+                <entry key="eclipselink.weaving" value="false"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="fleaConfigTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="fleaConfigEntityManagerFactory"/>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="fleaConfigTransactionManager"/>
+
+    <!-- 配置Memcached -->
+    <!-- 开启缓存 -->
+    <cache:annotation-driven cache-manager="cacheManager" proxy-target-class="true"/>
+
+    <bean id="memcachedPool" class="com.whalin.MemCached.SockIOPool"
+          factory-method="getInstance" init-method="initialize" lazy-init="false"
+          destroy-method="shutDown">
+        <constructor-arg>
+            <value>memcachedPool</value>
+        </constructor-arg>
+        <property name="servers">
+            <list>
+                <value>${memcached.server1}</value>
+                <value>${memcached.server2}</value>
+            </list>
+        </property>
+        <property name="weights">
+            <list>
+                <value>${memcached.weight1}</value>
+                <value>${memcached.weight2}</value>
+            </list>
+        </property>
+        <property name="initConn">
+            <value>${memcached.initConn}</value>
+        </property>
+        <property name="minConn">
+            <value>${memcached.minConn}</value>
+        </property>
+        <property name="maxConn">
+            <value>${memcached.maxConn}</value>
+        </property>
+        <property name="maintSleep">
+            <value>${memcached.maintSleep}</value>
+        </property>
+        <property name="nagle">
+            <value>${memcached.nagle}</value>
+        </property>
+        <property name="socketTO">
+            <value>${memcached.socketTO}</value>
+        </property>
+        <property name="socketConnectTO">
+            <value>${memcached.socketConnectTO}</value>
+        </property>
+        <property name="hashingAlg">
+            <value>${memcached.hashingAlg}</value>
+        </property>
+    </bean>
+
+    <!-- 配置MemcachedClient -->
+    <bean id="memcachedClient" class="com.whalin.MemCached.MemCachedClient">
+        <constructor-arg>
+            <value>memcachedPool</value>
+        </constructor-arg>
+    </bean>
+
+    <!-- 配置缓存管理 -->
+    <bean id="cacheManager" class="com.huazie.frame.cache.memcached.MemcachedSpringCacheManager">
+        <property name="memcachedClient" ref="memcachedClient"/>
+        <!-- 配置缓存时间 -->
+        <property name="configMap">
+            <map>
+                <!-- key缓存对象名称 value缓存过期时间 这个要定好 -->
+                <entry key="fleaparadetail" value="0"/>
+            </map>
+        </property>
+    </bean>
+
+    <!-- 导入调度任务 -->
+    <!-- <import resource="spring-quartz.xml" /> -->
+
+</beans>
