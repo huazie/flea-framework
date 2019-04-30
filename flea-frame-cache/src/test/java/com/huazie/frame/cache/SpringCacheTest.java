@@ -10,41 +10,41 @@ import com.huazie.frame.cache.memcached.MemcachedSpringCacheManager;
 
 public class SpringCacheTest {
 
-	private final static Logger LOGGER = LoggerFactory.getLogger(SpringCacheTest.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(SpringCacheTest.class);
 
-	@Test
-	public void test() {
-		ApplicationContext applicationContext;
-		try {
-			applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
-			LOGGER.debug("ApplicationContext={}", applicationContext);
-			
-			MemcachedSpringCacheManager memcachedCacheManager = (MemcachedSpringCacheManager) applicationContext.getBean("cacheManager");
-			LOGGER.debug("MemcachedCacheManager={}",memcachedCacheManager);
-			
-			AbstractSpringCache cache = memcachedCacheManager.getCache("fleaparadetail");
-			LOGGER.debug("Cache={}",cache);
-			
-			//#### 1.  简单字符串
+    @Test
+    public void test() {
+        ApplicationContext applicationContext;
+        try {
+            applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+            LOGGER.debug("ApplicationContext={}", applicationContext);
+
+            MemcachedSpringCacheManager memcachedCacheManager = (MemcachedSpringCacheManager) applicationContext.getBean("cacheManager");
+            LOGGER.debug("MemcachedCacheManager={}", memcachedCacheManager);
+
+            AbstractSpringCache cache = memcachedCacheManager.getCache("fleaparadetail");
+            LOGGER.debug("Cache={}", cache);
+
+            //#### 1.  简单字符串
 //			cache.put("menu1", "huazie");
-			LOGGER.debug(cache.get("menu1", String.class));
-			
-			//#### 2.  简单对象(要是可以序列化的对象)
+            LOGGER.debug(cache.get("menu1", String.class));
+
+            //#### 2.  简单对象(要是可以序列化的对象)
 //			String user = new String("huazie");
 //			cache.put("user", user);
 //			TestCache.LOGGER.debug(cache.get("user", String.class));
-			
-			//#### 3.  List塞对象
+
+            //#### 3.  List塞对象
 //			List<String> userList = new ArrayList<String>();
 //			userList.add("huazie");
 //			userList.add("lgh");
 //			cache.put("user_list", userList);
 
 //			TestCache.LOGGER.debug(cache.get("user_list",userList.getClass()).toString());
-			
-		} catch (Exception e) {
-			LOGGER.error("Exception={}",e);
-		}
-	}
-	
+
+        } catch (Exception e) {
+            LOGGER.error("Exception={}", e);
+        }
+    }
+
 }

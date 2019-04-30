@@ -43,6 +43,9 @@ public class FleaJDBCConfig {
                 LOGGER.debug("JDBCConfig Use the specified flea-db-config.properties：{}", fileName);
             }
         }
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("JDBCConfig Use the current memcached.properties：{}", fileName);
+        }
         prop = PropertiesUtil.getProperties(fileName);
     }
 
