@@ -1,5 +1,11 @@
 package com.huazie.frame.db.jdbc;
 
+import com.huazie.frame.common.util.ArrayUtils;
+import com.huazie.frame.common.util.ObjectUtils;
+import com.huazie.frame.db.jdbc.pojo.FleaDBOperationHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,8 +25,7 @@ import java.util.Map;
  */
 public class FleaJDBCUtils {
 
-    private static Connection conn;
-    private static PreparedStatement preparedStatement;
+    private final static Logger LOGGER = LoggerFactory.getLogger(FleaJDBCUtils.class);
 
     /**
      * <p> 以返回List<Map>，其中Map的键为属性名，值为相应的数据 </p>
@@ -31,15 +36,14 @@ public class FleaJDBCUtils {
      * @since 1.0.0
      */
     public static List<Map<String, Object>> query(String sql) throws SQLException {
-        ResultSet rs = null;
+        FleaDBOperationHandler handler = null;
         try {
-            getPreparedStatement(sql);
-            rs = preparedStatement.executeQuery();
-            return ResultToListMap(rs);
+            handler = queryWithReturnResultSet(sql);
+            return ResultToListMap(handler.getResultSet());
         } catch (SQLException e) {
             throw new SQLException(e);
         } finally {
-            close(rs);
+            close(handler);
         }
     }
 
@@ -53,16 +57,15 @@ public class FleaJDBCUtils {
      * @since 1.0.0
      */
     public static List<Map<String, Object>> query(String sql, Object... params) throws SQLException {
-        ResultSet rs = null;
+        FleaDBOperationHandler handler = null;
         try {
-            rs = queryWithReturnResultSet(sql, params);
-            return ResultToListMap(rs);
+            handler = queryWithReturnResultSet(sql, params);
+            return ResultToListMap(handler.getResultSet());
         } catch (SQLException e) {
             throw new SQLException(e);
         } finally {
-            close(rs);
+            close(handler);
         }
-
     }
 
     /**
@@ -75,12 +78,12 @@ public class FleaJDBCUtils {
      * @since 1.0.0
      */
     public static List<Map<String, Object>> query(String sql, List<Object> params) throws SQLException {
-        List<Map<String, Object>> data = null;
+        List<Map<String, Object>> datas = null;
         if (null != params && !params.isEmpty()) {
             Object[] paramArr = params.toArray(new Object[0]);
-            data = query(sql, paramArr);
+            datas = query(sql, paramArr);
         }
-        return data;
+        return datas;
     }
 
     /**
@@ -91,17 +94,8 @@ public class FleaJDBCUtils {
      * @throws SQLException
      * @since 1.0.0
      */
-    public static ResultSet queryWithReturnResultSet(String sql) throws SQLException {
-        ResultSet rs = null;
-        try {
-            getPreparedStatement(sql);
-            rs = preparedStatement.executeQuery();
-            return rs;
-        } catch (SQLException e) {
-            throw new SQLException(e);
-        } finally {
-            close(rs);
-        }
+    public static FleaDBOperationHandler queryWithReturnResultSet(String sql) throws SQLException {
+        return queryWithReturnResultSet(sql, new Object[]{});
     }
 
     /**
@@ -113,20 +107,15 @@ public class FleaJDBCUtils {
      * @throws SQLException
      * @since 1.0.0
      */
-    public static ResultSet queryWithReturnResultSet(String sql, Object... params) throws SQLException {
-        ResultSet rs = null;
-        try {
-            getPreparedStatement(sql);
-            for (int i = 0; i < params.length; i++) {
-                preparedStatement.setObject(i + 1, params[i]);
+    public static FleaDBOperationHandler queryWithReturnResultSet(String sql, Object... params) throws SQLException {
+        FleaDBOperationHandler handler = getDBOperationHandler(sql, params);
+        if (null != handler) {
+            PreparedStatement preparedStatement = handler.getPreparedStatement();
+            if (null != preparedStatement) {
+                handler.setResultSet(preparedStatement.executeQuery());
             }
-            rs = preparedStatement.executeQuery();
-            return rs;
-        } catch (SQLException e) {
-            throw new SQLException(e);
-        } finally {
-            close(rs);
         }
+        return handler;
     }
 
     /**
@@ -138,13 +127,13 @@ public class FleaJDBCUtils {
      * @throws SQLException
      * @since 1.0.0
      */
-    public static ResultSet queryWithReturnResultSet(String sql, List<Object> params) throws SQLException {
-        ResultSet resultSet = null;
+    public static FleaDBOperationHandler queryWithReturnResultSet(String sql, List<Object> params) throws SQLException {
+        FleaDBOperationHandler handler = null;
         if (null != params && !params.isEmpty()) {
             Object[] paramArr = params.toArray(new Object[0]);
-            resultSet = queryWithReturnResultSet(sql, paramArr);
+            handler = queryWithReturnResultSet(sql, paramArr);
         }
-        return resultSet;
+        return handler;
     }
 
     /**
@@ -156,20 +145,7 @@ public class FleaJDBCUtils {
      * @since 1.0.0
      */
     public static Object querySingle(String sql) throws SQLException {
-        Object result = null;
-        ResultSet rs = null;
-        try {
-            getPreparedStatement(sql);
-            rs = preparedStatement.executeQuery();
-            if (rs.next()) {
-                result = rs.getObject(1);
-            }
-            return result;
-        } catch (SQLException e) {
-            throw new SQLException(e);
-        } finally {
-            close(rs);
-        }
+        return querySingle(sql, new Object[]{});
     }
 
     /**
@@ -183,9 +159,10 @@ public class FleaJDBCUtils {
      */
     public static Object querySingle(String sql, Object... params) throws SQLException {
         Object result = null;
-        ResultSet rs = null;
+        FleaDBOperationHandler handler = null;
         try {
-            rs = queryWithReturnResultSet(sql, params);
+            handler = queryWithReturnResultSet(sql, params);
+            ResultSet rs = handler.getResultSet();
             if (rs.next()) {
                 result = rs.getObject(1);
             }
@@ -193,7 +170,7 @@ public class FleaJDBCUtils {
         } catch (SQLException e) {
             throw new SQLException(e);
         } finally {
-            close(rs);
+            close(handler);
         }
     }
 
@@ -224,14 +201,7 @@ public class FleaJDBCUtils {
      * @since 1.0.0
      */
     public static int update(String sql) throws SQLException {
-        try {
-            getPreparedStatement(sql);
-            return preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new SQLException(e);
-        } finally {
-            close();
-        }
+        return update(sql, new Object[]{});
     }
 
     /**
@@ -244,16 +214,18 @@ public class FleaJDBCUtils {
      * @since 1.0.0
      */
     public static int update(String sql, Object... params) throws SQLException {
+        FleaDBOperationHandler handler = null;
         try {
-            getPreparedStatement(sql);
-            for (int i = 0; i < params.length; i++) {
-                preparedStatement.setObject(i + 1, params[i]);
+            handler = getDBOperationHandler(sql, params);
+            PreparedStatement preparedStatement = null;
+            if (null != handler) {
+                preparedStatement = handler.getPreparedStatement();
             }
-            return preparedStatement.executeUpdate();
+            return null != preparedStatement ? preparedStatement.executeUpdate() : -1;
         } catch (SQLException e) {
             throw new SQLException(e);
         } finally {
-            close();
+            close(handler);
         }
     }
 
@@ -352,55 +324,70 @@ public class FleaJDBCUtils {
     }
 
     /**
+     * <p> 获取一次数据库操作处理 </p>
+     *
+     * @return
+     * @throws SQLException
+     */
+    private static FleaDBOperationHandler getDBOperationHandler(String sql, Object... params) throws SQLException {
+
+        FleaDBOperationHandler handler = new FleaDBOperationHandler();
+        Connection connection = FleaJDBCConfig.getConfig().getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("FleaJDBCUtils##getDBOperationHandler(String, Object...) SQL    : {}", sql);
+        }
+
+        if (null != preparedStatement && ArrayUtils.isNotEmpty(params)) {
+            for (int i = 0; i < params.length; i++) {
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("FleaJDBCUtils##getDBOperationHandler(String, Object...) PARAM{} : {}", i + 1, params[i]);
+                }
+                preparedStatement.setObject(i + 1, params[i]);
+            }
+        }
+        handler.setConnection(connection);
+        handler.setPreparedStatement(preparedStatement);
+
+        return handler;
+    }
+
+    /**
      * <p> 将结果集ResultSet转换为包含Map<String,Object>的List集合 </p>
      *
      * @param rs 结果集对象
-     * @return 包含Map<String   ,   Object>的List数据集合
+     * @return 查询数据集合
      * @throws SQLException
      * @since 1.0.0
      */
     private static List<Map<String, Object>> ResultToListMap(ResultSet rs) throws SQLException {
         List<Map<String, Object>> listMaps = new ArrayList<Map<String, Object>>();
-        while (rs.next()) {
-            ResultSetMetaData rsmd = rs.getMetaData();
-            Map<String, Object> map = new HashMap<String, Object>();
-            for (int i = 0; i < rsmd.getColumnCount(); i++) {
-                map.put(rsmd.getColumnLabel(i + 1), rs.getObject(i + 1));
+        if (ObjectUtils.isNotEmpty(rs)) {
+            while (rs.next()) {
+                ResultSetMetaData rsmd = rs.getMetaData();
+                Map<String, Object> map = new HashMap<String, Object>();
+                if (ObjectUtils.isNotEmpty(rsmd)) {
+                    for (int i = 0; i < rsmd.getColumnCount(); i++) {
+                        map.put(rsmd.getColumnLabel(i + 1), rs.getObject(i + 1));
+                    }
+                }
+                listMaps.add(map);
             }
-            listMaps.add(map);
         }
         return listMaps;
     }
 
     /**
-     * <p> 获取PreparedStatement </p>
+     * <p> 关闭Connection，PreparedStatement，ResultSet </p>
      *
-     * @param sql 数据库sql语句
-     * @throws SQLException
+     * @param handler 一次数据库操作处理
      * @since 1.0.0
      */
-    private static void getPreparedStatement(String sql) throws SQLException {
-        conn = FleaJDBCConfig.getConnection();
-        preparedStatement = conn.prepareStatement(sql);
-    }
-
-    /**
-     * <p> 释放资源connection,statement,ResultSet </p>
-     *
-     * @param rs 结果集
-     * @since 1.0.0
-     */
-    public static void close(ResultSet rs) {
-        FleaJDBCConfig.close(conn, preparedStatement, rs);
-    }
-
-    /**
-     * <p> 释放资源connection和statement </p>
-     *
-     * @since 1.0.0
-     */
-    public static void close() {
-        close(null);
+    public static void close(FleaDBOperationHandler handler) {
+        if (null != handler) {
+            FleaJDBCConfig.close(handler.getConnection(), handler.getPreparedStatement(), handler.getResultSet());
+        }
     }
 
 }

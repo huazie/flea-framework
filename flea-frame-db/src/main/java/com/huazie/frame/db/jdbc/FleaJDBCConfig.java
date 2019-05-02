@@ -1,9 +1,11 @@
 package com.huazie.frame.db.jdbc;
 
+import com.huazie.frame.common.FleaFrameManager;
+import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.PropertiesUtil;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.DBConstants;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import com.huazie.frame.db.jdbc.pojo.FleaDBUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,21 +29,11 @@ public class FleaJDBCConfig {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(FleaJDBCConfig.class);
 
-    private static Map<String, FleaJDBCConfig> configs = new HashMap<String, FleaJDBCConfig>();
+    private static volatile FleaJDBCConfig config;
+
+    private static Map<String, FleaDBUnit> fleaDBUnits = new HashMap<String, FleaDBUnit>();
 
     private static Properties prop;
-
-    private static String database; // 数据库管理系统名
-
-    private static String name; // 数据库名 或 数据库用户名
-
-    private String driver; // 数据库驱动名
-
-    private String url; // 数据库连接地址
-
-    private String user; // 数据库登录用户名
-
-    private String password; // 数据库登录密码
 
     static {
         String fileName = "flea/db/flea-db-config.properties"; // 数据库配置文件名
@@ -51,7 +43,32 @@ public class FleaJDBCConfig {
                 LOGGER.debug("JDBCConfig Use the specified flea-db-config.properties：{}", fileName);
             }
         }
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("JDBCConfig Use the current memcached.properties：{}", fileName);
+        }
         prop = PropertiesUtil.getProperties(fileName);
+    }
+
+    private FleaJDBCConfig() {
+    }
+
+    /**
+     * <p> 读取数据库相关配置信息 </p>
+     *
+     * @return JDBC配置对象
+     * @since 1.0.0
+     */
+    public static FleaJDBCConfig getConfig() {
+
+        if (null == config) {
+            synchronized (FleaJDBCConfig.class) {
+                if (null == config) {
+                    config = new FleaJDBCConfig();
+                }
+            }
+        }
+
+        return config;
     }
 
     /**
@@ -62,42 +79,48 @@ public class FleaJDBCConfig {
      * @since 1.0.0
      */
     public static void init(String mDatabase, String mName) {
-        database = mDatabase;
-        name = mName;
+        FleaFrameManager.getManager().setDBPrefix(mDatabase, mName);
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("###### 初始化关系数据库管理系统名：{}", mDatabase);
-            LOGGER.debug("###### 初始化数据库名或数据库用户：{}", mName);
+            LOGGER.debug("JDBCConfig##init(String, String) 关系数据库管理系统名：{}", mDatabase);
+            LOGGER.debug("JDBCConfig##init(String, String) 数据库名或数据库用户：{}", mName);
         }
     }
 
     /**
-     * <p> 读取数据库相关配置信息 </p>
+     * <p> 建立数据库连接 </p>
      *
-     * @return JDBC配置对象
+     * @return 数据库连接对象
      * @since 1.0.0
      */
-    public static FleaJDBCConfig getConfig() {
-        String dbPrefix = database.toLowerCase() + DBConstants.SQLConstants.SQL_DOT + name.toLowerCase() + DBConstants.SQLConstants.SQL_DOT;
-        FleaJDBCConfig config;
-        if (configs.isEmpty()) {
-            config = getConfig(dbPrefix);
-            configs.put(dbPrefix, config);
+    public Connection getConnection() {
+        Connection conn = null;
+        FleaDBUnit fleaDBUnit;
+        String dbPrefix = FleaFrameManager.getManager().getDBPrefix();
+        if (fleaDBUnits.isEmpty()) {
+            fleaDBUnit = getFleaDBUnit(dbPrefix);
+            fleaDBUnits.put(dbPrefix, fleaDBUnit);
         } else {
-            config = configs.get(dbPrefix);
-            if (null == config) {
-                config = getConfig(dbPrefix);
-                configs.put(dbPrefix, config);
+            fleaDBUnit = fleaDBUnits.get(dbPrefix);
+            if (null == fleaDBUnit) {
+                fleaDBUnit = getFleaDBUnit(dbPrefix);
+                fleaDBUnits.put(dbPrefix, fleaDBUnit);
             }
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("###### 数据库驱动名称：{}", config.getDriver());
-            LOGGER.debug("###### 数据库连接地址：{}", config.getUrl());
-            LOGGER.debug("###### 数据库登录用户：{}", config.getUser());
-            LOGGER.debug("###### 数据库登录密码：{}", config.getPassword());
+            LOGGER.debug("JDBCConfig##getConnection() 数据库驱动名称：{}", fleaDBUnit.getDriver());
+            LOGGER.debug("JDBCConfig##getConnection() 数据库连接地址：{}", fleaDBUnit.getUrl());
+            LOGGER.debug("JDBCConfig##getConnection() 数据库登录用户：{}", fleaDBUnit.getUser());
+            LOGGER.debug("JDBCConfig##getConnection() 数据库登录密码：{}", fleaDBUnit.getPassword());
         }
 
-        return config;
+        try {
+            Class.forName(fleaDBUnit.getDriver());
+            conn = DriverManager.getConnection(fleaDBUnit.getUrl(), fleaDBUnit.getUser(), fleaDBUnit.getPassword());
+        } catch (Exception e) {
+            LOGGER.error("JDBCConfig##getConnection 获取数据库连接异常 ：", e);
+        }
+        return conn;
     }
 
     /**
@@ -107,31 +130,22 @@ public class FleaJDBCConfig {
      * @return 数据库配置信息类对象
      * @since 1.0.0
      */
-    private static FleaJDBCConfig getConfig(String dbPrefix) {
-        FleaJDBCConfig config = new FleaJDBCConfig();
-        config.setDriver(PropertiesUtil.getStringValue(prop, dbPrefix + DBConstants.DBConfigConstants.DB_CONFIG_DRIVER));
-        config.setUrl(PropertiesUtil.getStringValue(prop, dbPrefix + DBConstants.DBConfigConstants.DB_CONFIG_URL));
-        config.setUser(PropertiesUtil.getStringValue(prop, dbPrefix + DBConstants.DBConfigConstants.DB_CONFIG_USER));
-        config.setPassword(PropertiesUtil.getStringValue(prop, dbPrefix + DBConstants.DBConfigConstants.DB_CONFIG_PASSWORD));
-        return config;
-    }
-
-    /**
-     * <p> 建立数据库连接 </p>
-     *
-     * @return 数据库连接对象
-     * @since 1.0.0
-     */
-    public static Connection getConnection() {
-        Connection conn = null;
-        FleaJDBCConfig config = getConfig();
-        try {
-            Class.forName(config.getDriver());
-            conn = DriverManager.getConnection(config.getUrl(), config.getUser(), config.getPassword());
-        } catch (Exception e) {
-            LOGGER.error("JDBCConfig##getConnection 获取数据库连接异常 ：", e);
+    private FleaDBUnit getFleaDBUnit(String dbPrefix) {
+        FleaDBUnit fDBUnit = null;
+        if (StringUtils.isNotBlank(dbPrefix)) {
+            fDBUnit = new FleaDBUnit();
+            String[] strs = StringUtils.split(dbPrefix, DBConstants.SQLConstants.SQL_DOT);
+            if (ArrayUtils.isNotEmpty(strs) && strs.length == 2) {
+                fDBUnit.setDatabase(strs[0]);
+                fDBUnit.setName(strs[1]);
+            }
+            fDBUnit.setDriver(PropertiesUtil.getStringValue(prop, dbPrefix + DBConstants.SQLConstants.SQL_DOT + DBConstants.DBConfigConstants.DB_CONFIG_DRIVER));
+            fDBUnit.setUrl(PropertiesUtil.getStringValue(prop, dbPrefix + DBConstants.SQLConstants.SQL_DOT + DBConstants.DBConfigConstants.DB_CONFIG_URL));
+            fDBUnit.setUser(PropertiesUtil.getStringValue(prop, dbPrefix + DBConstants.SQLConstants.SQL_DOT + DBConstants.DBConfigConstants.DB_CONFIG_USER));
+            fDBUnit.setPassword(PropertiesUtil.getStringValue(prop, dbPrefix + DBConstants.SQLConstants.SQL_DOT + DBConstants.DBConfigConstants.DB_CONFIG_PASSWORD));
         }
-        return conn;
+
+        return fDBUnit;
     }
 
     /**
@@ -141,10 +155,12 @@ public class FleaJDBCConfig {
      */
     private static void closeConnection(Connection conn) {
         try {
-            conn.close();
+            if (null != conn) {
+                conn.close();
+            }
         } catch (SQLException e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("JDBCConfig##closeResultSet 关闭数据库连接异常：", e);
+                LOGGER.error("JDBCConfig##closeConnection(Connection) 关闭数据库连接异常：", e);
             }
         }
     }
@@ -156,10 +172,12 @@ public class FleaJDBCConfig {
      */
     private static void closeStatement(Statement statement) {
         try {
-            statement.close();
+            if (null != statement) {
+                statement.close();
+            }
         } catch (SQLException e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("JDBCConfig##closeResultSet 关闭数据库statement异常：", e);
+                LOGGER.error("JDBCConfig##closeStatement(Statement) 关闭数据库statement异常：", e);
             }
         }
     }
@@ -171,10 +189,12 @@ public class FleaJDBCConfig {
      */
     private static void closeResultSet(ResultSet rs) {
         try {
-            rs.close();
+            if (null != rs) {
+                rs.close();
+            }
         } catch (SQLException e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("JDBCConfig##closeResultSet 关闭结果集异常：", e);
+                LOGGER.error("JDBCConfig##closeResultSet(ResultSet) 关闭结果集异常：", e);
             }
         }
     }
@@ -187,52 +207,9 @@ public class FleaJDBCConfig {
      * @param rs        数据库结果集对象
      */
     public static void close(Connection conn, Statement statement, ResultSet rs) {
-        if (null != rs) {
-            closeResultSet(rs);
-        }
-        if (null != statement) {
-            closeStatement(statement);
-        }
-        if (null != conn) {
-            closeConnection(conn);
-        }
-    }
-
-    public String getDriver() {
-        return driver;
-    }
-
-    public void setDriver(String driver) {
-        this.driver = driver;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
+        closeConnection(conn);
+        closeStatement(statement);
+        closeResultSet(rs);
     }
 
 }

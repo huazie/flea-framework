@@ -8,7 +8,7 @@ import java.util.List;
 
 
 /**
- * <p> 静态配置Service操作接口 </p>
+ * <p> 参数配置数据Service接口 </p>
  *
  * @author huazie
  * @version 1.0.0
@@ -17,23 +17,24 @@ import java.util.List;
 public interface IFleaParaDetailSV extends IAbstractFleaJPASV<FleaParaDetail> {
 
     /**
-     * @param paraType
-     * @param paraCode
-     * @return
+     * <p> 获取参数配置数据集合 </p>
+     *
+     * @param paraType 参数配置数据类型
+     * @param paraCode 参数配置数据编码
+     * @return 参数配置数据集合
      * @throws Exception
-     * @Description 获取多条数据
-     * @date 2017年4月1日
+     * @since 1.0.0
      */
     public List<IFleaParaDetailValue> getParaDetails(String paraType, String paraCode) throws Exception;
 
     /**
-     * @param paraType
-     * @param paraCode
-     * @return
+     * <p> 获取单个参数配置数据 </p>
+     *
+     * @param paraType 参数配置数据类型
+     * @param paraCode 参数配置数据编码
+     * @return 单个参数配置数据
      * @throws Exception
-     * @Description 获取一条数据
-     * @version v1.0.0
-     * @date 2017年4月1日
+     * @since 1.0.0
      */
     public IFleaParaDetailValue getParaDetail(String paraType, String paraCode) throws Exception;
 }

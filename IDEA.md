@@ -12,8 +12,8 @@
 10. Ctrl + Shift + F     全局查找
 11. Ctrl + R             单个类查找替换
 12. Ctrl + Shift + R     全局查找替换
-13. Ctrl + Alt + 向左箭头 返回上一步（Back）
-14. Ctrl + Alt + 向右箭头 回到下一步（Forward）
+13. Alt + 向左箭头 返回上一步（Back）
+14. Alt + 向右箭头 回到下一步（Forward）
 15. Alt + Enter          很多功能（https://www.aliyun.com/zixun/wenji/1289027.html）
 16. Ctrl + F4            关闭当前文件
 17. Ctrl + Alt + O       手动清除无用的包

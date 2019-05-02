@@ -1,4 +1,4 @@
-package com.huazie.frame.core.flea;
+package com.huazie.frame.core.base.cfgdata.dao.impl;
 
 import com.huazie.frame.db.jpa.dao.impl.AbstractFleaJPADAOImpl;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,58 +8,56 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 /**
- * <p> FleaManagement数据源DAO层实现类 </p>
+ * <p> FleaConfig数据源DAO层实现类 </p>
  * 
  * @author huazie
- * @version v1.0.0
- * @date 2017年1月28日
+ * @version 1.0.0
+ * @since 1.0.0
  * 
  */
-public class FleaManagementDAOImpl<T> extends AbstractFleaJPADAOImpl<T> {
+public class FleaConfigDAOImpl<T> extends AbstractFleaJPADAOImpl<T> {
 	
-	//private final static Logger LOGGER = LoggerFactory.getLogger(FleaManagementDAOImpl.class);
-
-	@PersistenceContext(unitName="fleamanagement")
+	@PersistenceContext(unitName="fleaconfig")
 	protected EntityManager entityManager;
 	
 	@Override
-	@Transactional("fleaManagementTransactionManager")
+	@Transactional("fleaConfigTransactionManager")
 	public boolean remove(long entityId) throws Exception {
 		return super.remove(entityId);
 	}
 	
 	@Override
-	@Transactional("fleaManagementTransactionManager")
+	@Transactional("fleaConfigTransactionManager")
 	public boolean remove(String entityId) throws Exception {
 		return super.remove(entityId);
 	}
 
 	@Override
-	@Transactional("fleaManagementTransactionManager")
+	@Transactional("fleaConfigTransactionManager")
 	public T store(T entity) throws Exception {
 		return super.store(entity);
 	}
 	
 	@Override
-	@Transactional("fleaManagementTransactionManager")
+	@Transactional("fleaConfigTransactionManager")
 	public List<T> batchUpdate(List<T> entitys) throws Exception {
 		return super.batchUpdate(entitys);
 	}
 
 	@Override
-	@Transactional("fleaManagementTransactionManager")
+	@Transactional("fleaConfigTransactionManager")
 	public void save(T entity) throws Exception {
 		super.save(entity);
 	}
 	
 	@Override
-	@Transactional("fleaManagementTransactionManager")
+	@Transactional("fleaConfigTransactionManager")
 	public void batchSave(List<T> entitys) throws Exception {
 		super.batchSave(entitys);
 	}
 
 	@Override
-	@Transactional("fleaManagementTransactionManager")
+	@Transactional("fleaConfigTransactionManager")
 	public boolean update(T entity) throws Exception {
 		return super.update(entity);
 	}

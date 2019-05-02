@@ -1,5 +1,8 @@
 package com.huazie.frame.core.base.cfgdata.entity;
 
+import com.huazie.frame.core.base.cfgdata.ivalues.IFleaParaDetailValue;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,12 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.huazie.frame.core.base.cfgdata.ivalues.IFleaParaDetailValue;
-import org.apache.commons.lang.builder.ToStringBuilder;
-
 
 /**
- * <p> 静态参数配置表 </p>
+ * <p> 参数配置数据表对应实体类 </p>
  *
  * @author huazie
  * @version 1.0.0

@@ -1,27 +1,28 @@
 package com.huazie.frame.core.base.cfgdata.dao.interfaces;
 
-import java.util.List;
-
 import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
 import com.huazie.frame.core.base.cfgdata.ivalues.IFleaParaDetailValue;
 import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 
+import java.util.List;
+
 /**
+ * <p>参数配置数据DAO层接口</p>
+ *
  * @author huazie
- * @version v1.0.0
- * @Description 静态参数配置表接口
- * @date 2017年1月30日
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public interface IFleaParaDetailDAO extends IAbstractFleaJPADAO<FleaParaDetail> {
 
     /**
-     * @param paraType
-     * @param paraCode
-     * @return
+     * <p> 获取参数配置数据集合 </p>
+     *
+     * @param paraType 参数配置数据类型
+     * @param paraCode 参数配置数据编码
+     * @return 参数配置数据集合
      * @throws Exception
-     * @Description 获取静态数据
-     * @version v1.0.0
-     * @date 2017年3月28日
+     * @since 1.0.0
      */
     List<IFleaParaDetailValue> getParaDetail(String paraType, String paraCode) throws Exception;
 
