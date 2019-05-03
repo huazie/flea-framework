@@ -1,6 +1,8 @@
 package com.huazie.frame.cache.memcached.config;
 
 import com.huazie.frame.cache.common.CacheConstants;
+import com.huazie.frame.cache.common.exception.MemcachedException;
+import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.PropertiesUtil;
 import com.huazie.frame.common.util.StringUtils;
 import com.whalin.MemCached.MemCachedClient;
@@ -22,11 +24,9 @@ public class MemcachedConfig {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(MemcachedConfig.class);
 
-    private static MemcachedConfig config;
+    private static volatile MemcachedConfig config;
 
     private static Properties prop;
-
-    private static MemCachedClient client;
 
     private String[] servers;   //服务器地址
 
@@ -69,85 +69,47 @@ public class MemcachedConfig {
      * @return Memcached缓存配置类实例
      * @since 1.0.0
      */
-    public static MemcachedConfig getConfig() {
+    public static MemcachedConfig getConfig() throws Exception {
 
-        if (config == null) {
+        if (null == config) {
+            synchronized (MemcachedConfig.class){
+                if(null == config){
+                    config = new MemcachedConfig();
+                    int serverCount = PropertiesUtil.getIntegerValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_SERVER_COUNT);
+                    if (serverCount > 0) {
+                        String[] servers = new String[serverCount];
+                        for (int i = 0; i < serverCount; i++) {
+                            String server = PropertiesUtil.getStringValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_SERVER + (i + 1));
+                            if (StringUtils.isBlank(server)) {
+                                throw new MemcachedException("请检查Memcached配置：" + CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_SERVER + (i + 1) + "不存在");
+                            }
+                            servers[i] = server;
+                        }
 
-            if (prop == null) {
-                return config;
-            }
+                        Integer[] weights = new Integer[serverCount];
+                        for (int i = 0; i < serverCount; i++) {
+                            Integer weight = PropertiesUtil.getIntegerValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_WEIGHT + (i + 1));
+                            if (ObjectUtils.isEmpty(weight)) {
+                                throw new MemcachedException("请检查Memcached配置：" + CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_WEIGHT + (i + 1) + "不存在");
+                            }
+                            weights[i] = weight;
+                        }
 
-            int serverCount = PropertiesUtil.getIntegerValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_SERVER_COUNT);
-            if (serverCount > 0) {
-                String[] servers = new String[serverCount];
-                for (int i = 0; i < serverCount; i++) {
-                    String server = PropertiesUtil.getStringValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_SERVER + (i + 1));
-                    servers[i] = server;
+                        config.setServers(servers);
+                        config.setWeights(weights);
+                        config.setInitConn(PropertiesUtil.getIntegerValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_INITCONN));
+                        config.setMinConn(PropertiesUtil.getIntegerValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_MINCONN));
+                        config.setMaxConn(PropertiesUtil.getIntegerValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_MAXCONN));
+                        config.setMaintSleep(PropertiesUtil.getIntegerValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_MAINTSLEEP));
+                        config.setNagle(PropertiesUtil.getBooleanValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_NAGLE));
+                        config.setSocketTO(PropertiesUtil.getIntegerValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_SOCKETTO));
+                        config.setSocketConnectTO(PropertiesUtil.getIntegerValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_SOCKETCONNECTTO));
+                        config.setHashingAlg(PropertiesUtil.getIntegerValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_HASHINGALG));
+                    }
                 }
-
-                Integer[] weights = new Integer[serverCount];
-                for (int i = 0; i < serverCount; i++) {
-                    Integer weight = PropertiesUtil.getIntegerValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_WEIGHT + (i + 1));
-                    weights[i] = weight;
-                }
-
-                config = new MemcachedConfig();
-                config.setServers(servers);
-                config.setWeights(weights);
-                config.setInitConn(PropertiesUtil.getIntegerValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_INITCONN));
-                config.setMinConn(PropertiesUtil.getIntegerValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_MINCONN));
-                config.setMaxConn(PropertiesUtil.getIntegerValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_MAXCONN));
-                config.setMaintSleep(PropertiesUtil.getIntegerValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_MAINTSLEEP));
-                config.setNagle(PropertiesUtil.getBooleanValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_NAGLE));
-                config.setSocketTO(PropertiesUtil.getIntegerValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_SOCKETTO));
-                config.setSocketConnectTO(PropertiesUtil.getIntegerValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_SOCKETCONNECTTO));
-                config.setHashingAlg(PropertiesUtil.getIntegerValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_HASHINGALG));
             }
         }
         return config;
-    }
-
-    /**
-     * <p>
-     * 获取memcached客户端
-     * </p>
-     *
-     * @return
-     * @version v1.0.0
-     * @date 2018年1月23日
-     */
-    public static MemCachedClient getClient() {
-        if (client == null) {
-            client = new MemCachedClient();
-        }
-        return client;
-    }
-
-    /**
-     * <p>
-     * 初始化memcached连接池
-     * </p>
-     *
-     * @version v1.0.0
-     * @date 2018年1月23日
-     */
-    public static void initSockIOPool() {
-        try {
-            MemcachedConfig config = MemcachedConfig.getConfig();
-            SockIOPool sockIOPool = SockIOPool.getInstance();
-            sockIOPool.setServers(config.getServers());
-            sockIOPool.setWeights(config.getWeights());
-            sockIOPool.setInitConn(config.getInitConn());
-            sockIOPool.setMinConn(config.getMinConn());
-            sockIOPool.setMaxConn(config.getMaxConn());
-            sockIOPool.setMaintSleep(config.getMaintSleep());
-            sockIOPool.setNagle(config.isNagle());
-            sockIOPool.setSocketTO(config.getSocketTO());
-            sockIOPool.setSocketConnectTO(config.getSocketConnectTO());
-            sockIOPool.setHashingAlg(config.getHashingAlg());
-            sockIOPool.initialize();
-        } catch (Exception e) {
-        }
     }
 
     public String[] getServers() {

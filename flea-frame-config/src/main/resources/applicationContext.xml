@@ -80,9 +80,6 @@
     <tx:annotation-driven transaction-manager="fleaConfigTransactionManager"/>
 
     <!-- 配置Memcached -->
-    <!-- 开启缓存 -->
-    <cache:annotation-driven cache-manager="cacheManager" proxy-target-class="true"/>
-
     <bean id="memcachedPool" class="com.whalin.MemCached.SockIOPool"
           factory-method="getInstance" init-method="initialize" lazy-init="false"
           destroy-method="shutDown">
@@ -145,6 +142,9 @@
             </map>
         </property>
     </bean>
+
+    <!-- 开启缓存 -->
+    <cache:annotation-driven cache-manager="cacheManager" proxy-target-class="true"/>
 
     <!-- 导入调度任务 -->
     <!-- <import resource="spring-quartz.xml" /> -->

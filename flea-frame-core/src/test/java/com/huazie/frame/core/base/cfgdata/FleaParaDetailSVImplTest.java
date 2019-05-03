@@ -29,6 +29,7 @@ public class FleaParaDetailSVImplTest {
             sv.getParaDetails("FLEA_RES_STATE","");
         } catch (Exception e) {
             LOGGER.error("Exception={}", e);
+
         }
     }
 
@@ -50,9 +51,10 @@ public class FleaParaDetailSVImplTest {
         AbstractFleaCache cache = manager.getCache("fleaparadetail");
         LOGGER.debug("Cache={}", cache);
 
-        //#### 1.  简单字符串
+        //#### 复杂配置参数
 //		cache.put("menu1", "huazie");
-        LOGGER.debug(cache.get("FLEAER_CERT_TYPE") + "");
+        LOGGER.debug(cache.get("FLEAER_CERT_TYPE_1") + "");
+        LOGGER.debug(cache.get("FLEA_RES_STATE") + "");
         LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
     }
 

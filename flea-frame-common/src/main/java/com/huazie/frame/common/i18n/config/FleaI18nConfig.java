@@ -48,12 +48,12 @@ public class FleaI18nConfig {
      * @return Flea I18n 配置类实例
      */
     public static FleaI18nConfig getConfig() {
-        if (config == null) {
-            synchronized (FleaI18nConfig.class) {
-                if (config == null) {
-                    config = new FleaI18nConfig();
-                }
+        if (config == null) {synchronized (FleaI18nConfig.class) {
+            if (config == null) {
+                config = new FleaI18nConfig();
             }
+        }
+
         }
         return config;
     }

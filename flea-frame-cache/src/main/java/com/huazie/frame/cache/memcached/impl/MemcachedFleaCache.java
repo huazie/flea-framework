@@ -38,6 +38,7 @@ public class MemcachedFleaCache extends AbstractFleaCache{
 	protected void putNativeValue(String key, Object value, int expire) throws Exception {
 		if(LOGGER.isDebugEnabled()){
 			LOGGER.debug("MemcachedFleaCacheImpl##putNativeValue(String, Object, int) KEY=" + key);
+			LOGGER.debug("MemcachedFleaCacheImpl##putNativeValue(String, Object, int) VALUE=" + value);
     	}
 		this.memcachedClient.set(key, value, expire);
 	}
