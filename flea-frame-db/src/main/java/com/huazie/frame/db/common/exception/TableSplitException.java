@@ -1,6 +1,7 @@
 package com.huazie.frame.db.common.exception;
 
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.i18n.FleaI18nResEnum;
 
 /**
  * <p> 分表实现异常类 </p>
@@ -12,19 +13,19 @@ import com.huazie.frame.common.exception.CommonException;
 public class TableSplitException extends CommonException {
 
     public TableSplitException(String key) {
-        super(key);
+        super(key, FleaI18nResEnum.ERROR_DB);
     }
 
     public TableSplitException(String key, String... values) {
-        super(key, values);
+        super(key, FleaI18nResEnum.ERROR_DB, values);
     }
 
     public TableSplitException(String key, Throwable cause) {
-        super(key, cause);
+        super(key, FleaI18nResEnum.ERROR_DB, cause);
     }
 
     public TableSplitException(String key, Throwable cause, String... values) {
-        super(key, cause, values);
+        super(key, FleaI18nResEnum.ERROR_DB, cause, values);
     }
 
 }

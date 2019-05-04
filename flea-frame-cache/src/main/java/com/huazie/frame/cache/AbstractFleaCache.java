@@ -1,7 +1,8 @@
 package com.huazie.frame.cache;
 
 import com.huazie.frame.cache.common.CacheEnum;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -15,7 +16,7 @@ import java.util.Set;
  */
 public abstract class AbstractFleaCache implements IFleaCache {
 
-    private final static Logger LOGGER = Logger.getLogger(AbstractFleaCache.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(AbstractFleaCache.class);
 
     private Set<String> keySet = new HashSet<String>();
     private final String name;  // 缓存主要关键字（用于区分）
@@ -34,7 +35,9 @@ public abstract class AbstractFleaCache implements IFleaCache {
         try {
             value = this.getNativeValue(this.getNativeKey(key));
         } catch (Exception e) {
-            LOGGER.warn("获取" + cache.getName() + "缓存出现异常", e);
+            if(LOGGER.isErrorEnabled()){
+                LOGGER.error("获取" + cache.getName() + "缓存出现异常", e);
+            }
         }
         return value;
     }
@@ -47,7 +50,9 @@ public abstract class AbstractFleaCache implements IFleaCache {
             this.putNativeValue(this.getNativeKey(key), value, expire);
             keySet.add(key);
         } catch (Exception e) {
-            LOGGER.warn("更新" + cache.getName() + "缓存出现异常", e);
+            if(LOGGER.isErrorEnabled()){
+                LOGGER.error("更新" + cache.getName() + "缓存出现异常", e);
+            }
         }
     }
 
@@ -63,7 +68,9 @@ public abstract class AbstractFleaCache implements IFleaCache {
         try {
             this.deleteNativeValue(this.getNativeKey(key));
         } catch (Exception e) {
-            LOGGER.warn("删除" + cache.getName() + "缓存出现异常", e);
+            if(LOGGER.isErrorEnabled()){
+                LOGGER.error("删除" + cache.getName() + "缓存出现异常", e);
+            }
         }
     }
 

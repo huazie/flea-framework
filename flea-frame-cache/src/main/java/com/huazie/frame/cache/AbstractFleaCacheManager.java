@@ -16,6 +16,7 @@ import java.util.concurrent.ConcurrentMap;
 public abstract class AbstractFleaCacheManager {
 
     protected ConcurrentMap<String, AbstractFleaCache> cacheMap = new ConcurrentHashMap<String, AbstractFleaCache>();
+
     protected Map<String, Integer> configMap = new HashMap<String, Integer>();   // 各缓存的时间Map
 
     protected Collection<? extends AbstractFleaCache> loadCaches() {

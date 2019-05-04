@@ -31,7 +31,7 @@ public class FleaCacheTest {
     }
 
     @Test
-    public void testProperties() throws Exception {
+    public void testProperties()throws Exception{
         MemcachedConfig config = MemcachedConfig.getConfig();
         LOGGER.debug(config.toString());
     }
