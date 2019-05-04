@@ -3,6 +3,7 @@ package com.huazie.frame.common.i18n.config;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.i18n.pojo.FleaI18nData;
 import com.huazie.frame.common.util.ArrayUtils;
+import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.PropertiesUtil;
 import com.huazie.frame.common.util.StringUtils;
 import org.slf4j.Logger;
@@ -11,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 
 /**
- * <p>flea i18n 配置类</p>
+ * <p> flea i18n 配置类 </p>
  *
  * @author huazie
  * @version v1.0.0
@@ -23,16 +24,34 @@ public class FleaI18nConfig {
 
     private static volatile FleaI18nConfig config;
 
-    private static String FILE_NAME_PREFIX = CommonConstants.FleaI18NConstants.FLEA_I18N_FILE_NAME_PREFIX;
+    private static String RES_FILE_NAME = CommonConstants.FleaI18NConstants.FLEA_I18N_FILE_PATH + CommonConstants.FleaI18NConstants.FLEA_I18N_FILE_NAME_PREFIX;
 
     private Map<String, ResourceBundle> resources = new HashMap<String, ResourceBundle>();//资源集合
 
     static {
         // Flea i18n config
-        Properties fleaI18nConfig = PropertiesUtil.getProperties(CommonConstants.FleaI18NConstants.FLEA_I18N_CONFIG_FILE_NAME);
-        if (fleaI18nConfig != null) {
+        String fileName = CommonConstants.FleaI18NConstants.FLEA_I18N_CONFIG_FILE_NAME;
+        if (StringUtils.isNotBlank(System.getProperty("fleaframe.i18n.config.filename"))) {
+            fileName = StringUtils.trim(System.getProperty("fleaframe.i18n.config.filename"));
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("FleaI18nConfig Use the specified flea_i18n_config.properties：{}", fileName);
+            }
+        }
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("FleaI18nConfig Use the current flea_i18n_config.properties：{}", fileName);
+        }
+        Properties fleaI18nProp = PropertiesUtil.getProperties(fileName);
+        if (ObjectUtils.isNotEmpty(fleaI18nProp)) {
+            // 获取资源文件路径
+            String filePath = PropertiesUtil.getStringValue(fleaI18nProp, CommonConstants.FleaI18NConstants.FLEA_I18N_CONFIG_KEY_FILE_PATH);
             // 获取资源文件前缀
-            FILE_NAME_PREFIX = PropertiesUtil.getStringValue(fleaI18nConfig, CommonConstants.FleaI18NConstants.FLEA_I18N_CONFIG_KEY_FILE_NAME_PREFIX);
+            String fileNamePrefix = PropertiesUtil.getStringValue(fleaI18nProp, CommonConstants.FleaI18NConstants.FLEA_I18N_CONFIG_KEY_FILE_NAME_PREFIX);
+            // 如果资源文件路径最后没有 "/"，自动添加
+            if (CommonConstants.SymbolConstants.SLASH.equals(StringUtils.subStrLast(filePath, 1))) {
+                RES_FILE_NAME = filePath + fileNamePrefix;
+            } else {
+                RES_FILE_NAME = filePath + CommonConstants.SymbolConstants.SLASH + fileNamePrefix;
+            }
         }
     }
 
@@ -48,12 +67,12 @@ public class FleaI18nConfig {
      * @return Flea I18n 配置类实例
      */
     public static FleaI18nConfig getConfig() {
-        if (config == null) {synchronized (FleaI18nConfig.class) {
-            if (config == null) {
-                config = new FleaI18nConfig();
+        if (config == null) {
+            synchronized (FleaI18nConfig.class) {
+                if (config == null) {
+                    config = new FleaI18nConfig();
+                }
             }
-        }
-
         }
         return config;
     }
@@ -137,7 +156,7 @@ public class FleaI18nConfig {
         ResourceBundle resource = this.resources.get(key);
 
         // 获取资源文件名
-        StringBuilder fileName = new StringBuilder(FILE_NAME_PREFIX);
+        StringBuilder fileName = new StringBuilder(RES_FILE_NAME);
         if (StringUtils.isNotBlank(resName)) {
             fileName.append(CommonConstants.SymbolConstants.UNDERLINE).append(resName);
         }

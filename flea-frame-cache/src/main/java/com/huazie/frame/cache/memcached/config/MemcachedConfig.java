@@ -1,12 +1,9 @@
 package com.huazie.frame.cache.memcached.config;
 
 import com.huazie.frame.cache.common.CacheConstants;
-import com.huazie.frame.cache.common.exception.MemcachedException;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.PropertiesUtil;
 import com.huazie.frame.common.util.StringUtils;
-import com.whalin.MemCached.MemCachedClient;
-import com.whalin.MemCached.SockIOPool;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,8 +69,8 @@ public class MemcachedConfig {
     public static MemcachedConfig getConfig() throws Exception {
 
         if (null == config) {
-            synchronized (MemcachedConfig.class){
-                if(null == config){
+            synchronized (MemcachedConfig.class) {
+                if (null == config) {
                     config = new MemcachedConfig();
                     int serverCount = PropertiesUtil.getIntegerValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_SERVER_COUNT);
                     if (serverCount > 0) {
@@ -81,7 +78,7 @@ public class MemcachedConfig {
                         for (int i = 0; i < serverCount; i++) {
                             String server = PropertiesUtil.getStringValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_SERVER + (i + 1));
                             if (StringUtils.isBlank(server)) {
-                                throw new MemcachedException("请检查Memcached配置：" + CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_SERVER + (i + 1) + "不存在");
+                                throw new Exception("请检查Memcached配置：" + CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_SERVER + (i + 1) + "不存在");
                             }
                             servers[i] = server;
                         }
@@ -90,7 +87,7 @@ public class MemcachedConfig {
                         for (int i = 0; i < serverCount; i++) {
                             Integer weight = PropertiesUtil.getIntegerValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_WEIGHT + (i + 1));
                             if (ObjectUtils.isEmpty(weight)) {
-                                throw new MemcachedException("请检查Memcached配置：" + CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_WEIGHT + (i + 1) + "不存在");
+                                throw new Exception("请检查Memcached配置：" + CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_WEIGHT + (i + 1) + "不存在");
                             }
                             weights[i] = weight;
                         }

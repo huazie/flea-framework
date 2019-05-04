@@ -1,6 +1,7 @@
 package com.huazie.frame.cache;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cache.Cache;
 import org.springframework.cache.support.SimpleValueWrapper;
 
@@ -15,7 +16,7 @@ import java.util.concurrent.Callable;
  */
 public abstract class AbstractSpringCache implements Cache {
 
-    private final static Logger LOGGER = Logger.getLogger(AbstractSpringCache.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(AbstractSpringCache.class);
 
     protected final String name;  // 缓存主要关键字（用于区分）
 
@@ -42,7 +43,7 @@ public abstract class AbstractSpringCache implements Cache {
         Object cacheValue = this.fleaCache.get(key.toString());
         if (cacheValue != null) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("AbstractSpringCache##get Get Value:" + cacheValue);
+                LOGGER.debug("AbstractSpringCache##get(Object) VALUE={}", cacheValue);
             }
             wrapper = new SimpleValueWrapper(cacheValue);
         }
@@ -83,7 +84,7 @@ public abstract class AbstractSpringCache implements Cache {
             this.fleaCache.put(key.toString(), value);
         } else {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("AbstractSpringCache##putIfAbsent Find Value:" + cacheValue);
+                LOGGER.debug("AbstractSpringCache##putIfAbsent(Object, Object) VALUE=", cacheValue);
             }
             wrapper = new SimpleValueWrapper(cacheValue);
         }

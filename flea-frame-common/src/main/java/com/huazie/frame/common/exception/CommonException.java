@@ -2,7 +2,9 @@ package com.huazie.frame.common.exception;
 
 import com.huazie.frame.common.FleaFrameManager;
 import com.huazie.frame.common.i18n.FleaI18nHelper;
+import com.huazie.frame.common.i18n.FleaI18nResEnum;
 import com.huazie.frame.common.util.ArrayUtils;
+import com.huazie.frame.common.util.ObjectUtils;
 
 import java.util.Locale;
 
@@ -10,58 +12,61 @@ import java.util.Locale;
  * <p> Flea I18n 通用异常实现 </p>
  *
  * @author huazie
- * @version v1.0.0
+ * @version 1.0.0
  * @since 1.0.0
  */
-public class CommonException extends Exception {
+public abstract class CommonException extends Exception {
 
     private String key;
     private Locale locale;
+    private FleaI18nResEnum i18nResEnum;
 
-    public CommonException(String mKey) {
-        this(mKey, FleaFrameManager.getManager().getLocale());// 使用服务器当前默认的国际化区域设置
+    public CommonException(String mKey, FleaI18nResEnum mI18nResEnum) {
+        this(mKey, mI18nResEnum, FleaFrameManager.getManager().getLocale());// 使用服务器当前默认的国际化区域设置
     }
 
-    public CommonException(String mKey, String... mValues) {
-        this(mKey, FleaFrameManager.getManager().getLocale(), mValues);// 使用服务器当前默认的国际化区域设置
+    public CommonException(String mKey, FleaI18nResEnum mI18nResEnum, String... mValues) {
+        this(mKey, mI18nResEnum, FleaFrameManager.getManager().getLocale(), mValues);// 使用服务器当前默认的国际化区域设置
     }
 
-    public CommonException(String mKey, Locale mLocale) {
-        this(mKey, mLocale, new String[]{});// 使用指定的国际化区域设置
+    public CommonException(String mKey, FleaI18nResEnum mI18nResEnum, Locale mLocale) {
+        this(mKey, mI18nResEnum, mLocale, new String[]{});// 使用指定的国际化区域设置
     }
 
-    public CommonException(String mKey, Locale mLocale, String... mValues) {
-        super(convert(mKey, mValues, mLocale)); // 使用指定的国际化区域设置
-        key = mKey;
-        locale = mLocale;
-    }
-
-    public CommonException(String mKey, Throwable cause) {
-        this(mKey, cause, FleaFrameManager.getManager().getLocale());// 使用服务器当前默认的国际化区域设置
-    }
-
-    public CommonException(String mKey, Throwable cause, String... mValues) {
-        this(mKey, cause, FleaFrameManager.getManager().getLocale(), mValues);// 使用服务器当前默认的国际化区域设置
-    }
-
-    public CommonException(String mKey, Throwable cause, Locale mLocale) {
-        this(mKey, cause, mLocale, new String[]{});// 使用指定的国际化区域设置
-    }
-
-    public CommonException(String mKey, Throwable cause, Locale mLocale, String... mValues) {
-        super(convert(mKey, mValues, mLocale), cause); // 使用指定的国际化区域设置
+    public CommonException(String mKey, FleaI18nResEnum mI18nResEnum, Locale mLocale, String... mValues) {
+        super(convert(mKey, mValues, mI18nResEnum, mLocale)); // 使用指定的国际化区域设置
         this.key = mKey;
         this.locale = mLocale;
+        this.i18nResEnum = mI18nResEnum;
     }
 
-    private static String convert(String key, String[] values, Locale locale) {
+    public CommonException(String mKey, FleaI18nResEnum mI18nResEnum, Throwable cause) {
+        this(mKey, mI18nResEnum, FleaFrameManager.getManager().getLocale(), cause);// 使用服务器当前默认的国际化区域设置
+    }
+
+    public CommonException(String mKey, FleaI18nResEnum mI18nResEnum, Throwable cause, String... mValues) {
+        this(mKey, mI18nResEnum, FleaFrameManager.getManager().getLocale(), cause, mValues);// 使用服务器当前默认的国际化区域设置
+    }
+
+    public CommonException(String mKey, FleaI18nResEnum mI18nResEnum, Locale mLocale, Throwable cause) {
+        this(mKey, mI18nResEnum, mLocale, cause, new String[]{});// 使用指定的国际化区域设置
+    }
+
+    public CommonException(String mKey, FleaI18nResEnum mI18nResEnum, Locale mLocale, Throwable cause, String... mValues) {
+        super(convert(mKey, mValues, mI18nResEnum, mLocale), cause); // 使用指定的国际化区域设置
+        this.key = mKey;
+        this.locale = mLocale;
+        this.i18nResEnum = mI18nResEnum;
+    }
+
+    private static String convert(String key, String[] values, FleaI18nResEnum i18nResEnum, Locale locale) {
         if (null == locale) {
             locale = FleaFrameManager.getManager().getLocale(); // 使用服务器当前默认的国际化区域设置
         }
-        if(ArrayUtils.isNotEmpty(values)){
-            return FleaI18nHelper.i18nForError(key, values, locale);
-        }else{
-            return FleaI18nHelper.i18nForError(key, locale);
+        if (ArrayUtils.isNotEmpty(values) && ObjectUtils.isNotEmpty(i18nResEnum)) {
+            return FleaI18nHelper.i18n(key, values, i18nResEnum.getResName(), locale);
+        } else {
+            return FleaI18nHelper.i18n(key, i18nResEnum.getResName(), locale);
         }
     }
 
@@ -73,4 +78,7 @@ public class CommonException extends Exception {
         return this.locale;
     }
 
+    public FleaI18nResEnum getI18nResEnum() {
+        return i18nResEnum;
+    }
 }

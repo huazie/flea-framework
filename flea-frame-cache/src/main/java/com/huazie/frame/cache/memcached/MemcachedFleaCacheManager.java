@@ -20,8 +20,8 @@ public class MemcachedFleaCacheManager extends AbstractFleaCacheManager {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(MemcachedFleaCacheManager.class);
 
-
     private static volatile MemcachedFleaCacheManager cacheManager;
+
     private MemCachedClient memcachedClient;   // memcached 客户端类
 
     private MemcachedFleaCacheManager(MemCachedClient memcachedClient) {

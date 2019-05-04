@@ -17,9 +17,9 @@ public class ObjectUtils {
      */
     public static boolean isEmpty(Object value) {
         if (value instanceof String) {
-            return value == null || "".equals(value);
+            return null == value || "".equals(value);
         }
-        return value == null;
+        return null == value;
     }
 
     /**
