@@ -4,6 +4,7 @@ import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.util.ObjectUtils;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -20,7 +21,7 @@ public abstract class AbstractFleaCacheManager {
 
     private static ConcurrentMap<String, AbstractFleaCache> cacheMap = new ConcurrentHashMap<String, AbstractFleaCache>();
 
-    protected Map<String, Integer> configMap = new HashMap<String, Integer>();   // 各缓存的时间Map
+    protected Map<String, Long> configMap = new HashMap<String, Long>();   // 各缓存的时间Map
 
     protected Collection<? extends AbstractFleaCache> loadCaches() {
         Collection<AbstractFleaCache> values = cacheMap.values();
@@ -37,7 +38,7 @@ public abstract class AbstractFleaCacheManager {
     public AbstractFleaCache getCache(String name) {
         synchronized (cacheMap) {
             if (!cacheMap.containsKey(name)) {
-                Integer expire = configMap.get(name);
+                Long expire = configMap.get(name);
                 if (ObjectUtils.isEmpty(expire)) {
                     expire = CommonConstants.NumeralConstants.ZERO; // 表示永久
                     configMap.put(name, expire);
@@ -56,9 +57,9 @@ public abstract class AbstractFleaCacheManager {
      * @return 新建的缓存对象
      * @since 1.0.0
      */
-    protected abstract AbstractFleaCache newCache(String name, int expire);
+    protected abstract AbstractFleaCache newCache(String name, long expire);
 
-    public void setConfigMap(Map<String, Integer> configMap) {
+    public void setConfigMap(Map<String, Long> configMap) {
         this.configMap = configMap;
     }
 

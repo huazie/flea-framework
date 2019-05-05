@@ -26,9 +26,9 @@ public interface CommonConstants {
      */
     interface NumeralConstants {
         /**
-         * <p> 整数 0 , Integer类型 </p>
+         * <p> 整数 0 , long类型 </p>
          */
-        Integer ZERO = 0;
+        long ZERO = 0L;
     }
 
     /**

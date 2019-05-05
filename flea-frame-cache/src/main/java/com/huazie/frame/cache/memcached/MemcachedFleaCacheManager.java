@@ -9,6 +9,8 @@ import com.whalin.MemCached.SockIOPool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Date;
+
 /**
  * <p> Memcached的Flea缓存管理类 </p>
  *
@@ -74,7 +76,7 @@ public class MemcachedFleaCacheManager extends AbstractFleaCacheManager {
     }
 
     @Override
-    protected AbstractFleaCache newCache(String name, int expire) {
+    protected AbstractFleaCache newCache(String name, long expire) {
         return new MemcachedFleaCache(name, expire, memcachedClient);
     }
 
