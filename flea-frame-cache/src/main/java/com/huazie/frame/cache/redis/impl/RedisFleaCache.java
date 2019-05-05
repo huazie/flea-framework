@@ -26,7 +26,7 @@ public class RedisFleaCache extends AbstractFleaCache {
     }
 
     @Override
-    protected void deleteNativeValue(String key)  {
+    protected void deleteNativeValue(String key) {
 
     }
 

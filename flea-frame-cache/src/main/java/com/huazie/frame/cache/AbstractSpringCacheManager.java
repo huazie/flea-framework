@@ -53,6 +53,12 @@ public abstract class AbstractSpringCacheManager extends AbstractTransactionSupp
      */
     protected abstract AbstractSpringCache newCache(String name, long expire);
 
+    /**
+     * <p> 设置各缓存失效时间配置Map </p>
+     *
+     * @param configMap 失效时间配置Map
+     * @since 1.0.0
+     */
     public void setConfigMap(Map<String, Long> configMap) {
         this.configMap = configMap;
     }

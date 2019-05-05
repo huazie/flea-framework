@@ -1,10 +1,10 @@
 package com.huazie.frame.cache.memcached.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.huazie.frame.cache.AbstractFleaCache;
 import com.huazie.frame.cache.common.CacheEnum;
 import com.whalin.MemCached.MemCachedClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 

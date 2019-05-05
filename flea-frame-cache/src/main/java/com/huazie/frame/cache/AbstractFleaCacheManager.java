@@ -4,7 +4,6 @@ import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.util.ObjectUtils;
 
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -59,6 +58,12 @@ public abstract class AbstractFleaCacheManager {
      */
     protected abstract AbstractFleaCache newCache(String name, long expire);
 
+    /**
+     * <p> 设置各缓存失效时间配置Map </p>
+     *
+     * @param configMap 失效时间配置Map
+     * @since 1.0.0
+     */
     public void setConfigMap(Map<String, Long> configMap) {
         this.configMap = configMap;
     }
