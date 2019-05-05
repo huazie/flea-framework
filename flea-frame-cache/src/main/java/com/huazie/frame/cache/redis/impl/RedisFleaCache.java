@@ -11,22 +11,22 @@ import com.huazie.frame.cache.AbstractFleaCache;
  */
 public class RedisFleaCache extends AbstractFleaCache {
 
-    public RedisFleaCache(String name, int expire) {
+    public RedisFleaCache(String name, long expire) {
         super(name, expire);
     }
 
     @Override
-    protected Object getNativeValue(String key) throws Exception {
+    protected Object getNativeValue(String key) {
         return null;
     }
 
     @Override
-    protected void putNativeValue(String key, Object value, int expire) throws Exception {
+    protected void putNativeValue(String key, Object value, long expire) {
 
     }
 
     @Override
-    protected void deleteNativeValue(String key) throws Exception {
+    protected void deleteNativeValue(String key) {
 
     }
 

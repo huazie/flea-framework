@@ -1,6 +1,7 @@
 package com.huazie.frame.cache;
 
 import com.huazie.frame.cache.common.CacheEnum;
+import com.huazie.frame.common.util.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,11 +21,11 @@ public abstract class AbstractFleaCache implements IFleaCache {
 
     private Set<String> keySet = new HashSet<String>();
     private final String name;  // 缓存主要关键字（用于区分）
-    private final int expire;   // 失效时间（毫秒单位）
+    private final long expire;  // 失效时间(单位：秒)
 
     protected CacheEnum cache;  // 缓存类型
 
-    public AbstractFleaCache(String name, int expire) {
+    public AbstractFleaCache(String name, long expire) {
         this.name = name;
         this.expire = expire;
     }
@@ -33,10 +34,16 @@ public abstract class AbstractFleaCache implements IFleaCache {
     public Object get(String key) {
         Object value = null;
         try {
-            value = this.getNativeValue(this.getNativeKey(key));
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("AbstractFleaCache##get(String) KEY={}", key);
+            }
+            value = getNativeValue(getNativeKey(key));
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("AbstractFleaCache##get(String) VALUE={}", value);
+            }
         } catch (Exception e) {
-            if(LOGGER.isErrorEnabled()){
-                LOGGER.error("获取" + cache.getName() + "缓存出现异常", e);
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("The action of getting [" + cache.getName() + "] cache occurs exception ：", e);
             }
         }
         return value;
@@ -44,14 +51,14 @@ public abstract class AbstractFleaCache implements IFleaCache {
 
     @Override
     public void put(String key, Object value) {
-        if (value == null)
+        if (ObjectUtils.isEmpty(value))
             return;
         try {
-            this.putNativeValue(this.getNativeKey(key), value, expire);
+            putNativeValue(getNativeKey(key), value, expire);
             keySet.add(key);
         } catch (Exception e) {
-            if(LOGGER.isErrorEnabled()){
-                LOGGER.error("更新" + cache.getName() + "缓存出现异常", e);
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("The action of adding [" + cache.getName() + "] cache occurs exception ：", e);
             }
         }
     }
@@ -66,19 +73,40 @@ public abstract class AbstractFleaCache implements IFleaCache {
     @Override
     public void delete(String key) {
         try {
-            this.deleteNativeValue(this.getNativeKey(key));
+            deleteNativeValue(getNativeKey(key));
         } catch (Exception e) {
-            if(LOGGER.isErrorEnabled()){
-                LOGGER.error("删除" + cache.getName() + "缓存出现异常", e);
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("The action of deleting [" + cache.getName() + "] cache occurs exception ：", e);
             }
         }
     }
 
-    protected abstract Object getNativeValue(String key) throws Exception;
+    /**
+     * <p> 获取缓存值 </p>
+     *
+     * @param key 缓存键
+     * @return 缓存值
+     * @since 1.0.0
+     */
+    protected abstract Object getNativeValue(String key);
 
-    protected abstract void putNativeValue(String key, Object value, int expire) throws Exception;
+    /**
+     * <p> 添加缓存数据 </p>
+     *
+     * @param key    缓存键
+     * @param value  缓存值
+     * @param expire 失效时间（单位：秒）
+     * @since 1.0.0
+     */
+    protected abstract void putNativeValue(String key, Object value, long expire);
 
-    protected abstract void deleteNativeValue(String key) throws Exception;
+    /**
+     * <p> 删除指定缓存数据 </p>
+     *
+     * @param key 缓存键
+     * @since 1.0.0
+     */
+    protected abstract void deleteNativeValue(String key);
 
     protected String getNativeKey(String key) {
         return name + "_" + key;  // 可以自己定义
@@ -88,7 +116,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
         return name;
     }
 
-    public int getExpire() {
+    public long getExpire() {
         return expire;
     }
 

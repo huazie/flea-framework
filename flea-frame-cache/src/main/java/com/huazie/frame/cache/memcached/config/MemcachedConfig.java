@@ -50,11 +50,11 @@ public class MemcachedConfig {
         if (StringUtils.isNotBlank(System.getProperty("fleaframe.cache.memcached.config.filename"))) {
             fileName = StringUtils.trim(System.getProperty("fleaframe.cache.memcached.config.filename"));
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("JDBCConfig Use the specified memcached.properties：{}", fileName);
+                LOGGER.debug("MemcachedConfig Use the specified memcached.properties：{}", fileName);
             }
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("JDBCConfig Use the current memcached.properties：{}", fileName);
+            LOGGER.debug("MemcachedConfig Use the current memcached.properties：{}", fileName);
         }
         // 获取配置文件
         prop = PropertiesUtil.getProperties(fileName);

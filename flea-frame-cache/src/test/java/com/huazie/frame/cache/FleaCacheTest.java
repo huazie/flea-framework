@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import com.huazie.frame.cache.memcached.MemcachedFleaCacheManager;
 import com.huazie.frame.cache.memcached.config.MemcachedConfig;
 
+import java.util.Date;
+
 /**
  * @author huazie
  * @version v1.0.0
@@ -26,13 +28,21 @@ public class FleaCacheTest {
 
         //#### 1.  简单字符串
 //		cache.put("menu1", "huazie");
-        LOGGER.debug(cache.get("menu1") + "");
+        cache.get("menu1");
+//        cache.delete("menu1");
         LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
     }
 
     @Test
-    public void testProperties()throws Exception{
+    public void testProperties() throws Exception {
         MemcachedConfig config = MemcachedConfig.getConfig();
         LOGGER.debug(config.toString());
+    }
+
+    @Test
+    public void testMemcachedExpire() throws Exception {
+        Date date = new Date(1000);
+        long aa = date.getTime() / 1000;
+        LOGGER.debug("huazie:{}", aa);
     }
 }

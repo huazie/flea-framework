@@ -55,9 +55,9 @@ public class FleaParaDetailSVImplTest {
 
             //#### 复杂配置参数
 //		    cache.put("menu1", "huazie");
-            LOGGER.debug(cache.get("menu1") + "");
-            LOGGER.debug(cache.get("FLEAER_CERT_TYPE_1") + "");
-            LOGGER.debug(cache.get("FLEA_RES_STATE") + "");
+//            cache.get("menu1");
+            cache.get("FLEAER_CERT_TYPE_1");
+//            cache.get("FLEA_RES_STATE");
             LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
         } catch (Exception e) {
             LOGGER.error("Exception:", e);
@@ -75,7 +75,8 @@ public class FleaParaDetailSVImplTest {
 
             //#### 1.  简单字符串
 //			cache.put("menu1", "huazie");
-            LOGGER.debug(cache.get("menu1") + "");
+            cache.get("menu1");
+//            cache.get("menu1", String.class);
 
             //#### 2.  简单对象(要是可以序列化的对象)
 //			String user = new String("huazie");

@@ -4,7 +4,7 @@ package com.huazie.frame.common;
  * <p> 公共常量类 </p>
  *
  * @author huazie
- * @version v1.0.0
+ * @version 1.0.0
  * @since 1.0.0
  */
 public interface CommonConstants {
@@ -12,7 +12,6 @@ public interface CommonConstants {
     /**
      * <p> 方法常量 </p>
      *
-     * @author huazie
      * @since 1.0.0
      */
     interface MethodConstants {
@@ -21,9 +20,20 @@ public interface CommonConstants {
     }
 
     /**
+     * <p> 数字常量 </p>
+     *
+     * @since 1.0.0
+     */
+    interface NumeralConstants {
+        /**
+         * <p> 整数 0 , long类型 </p>
+         */
+        long ZERO = 0L;
+    }
+
+    /**
      * <p> 符号常量 </p>
      *
-     * @author huazie
      * @since 1.0.0
      */
     interface SymbolConstants {
@@ -60,7 +70,6 @@ public interface CommonConstants {
     /**
      * <p>Flea I18N 常量</p>
      *
-     * @author huazie
      * @since 1.0.0
      */
     interface FleaI18NConstants {
@@ -74,7 +83,6 @@ public interface CommonConstants {
     /**
      * <p>IP地址常量</p>
      *
-     * @author huazie
      * @since 1.0.0
      */
     interface IPAddressConstants {

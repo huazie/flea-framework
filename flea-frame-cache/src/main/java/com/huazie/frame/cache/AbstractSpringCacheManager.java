@@ -1,5 +1,6 @@
 package com.huazie.frame.cache;
 
+import com.huazie.frame.common.CommonConstants;
 import org.springframework.cache.transaction.AbstractTransactionSupportingCacheManager;
 
 import java.util.Collection;
@@ -17,9 +18,9 @@ import java.util.concurrent.ConcurrentMap;
  */
 public abstract class AbstractSpringCacheManager extends AbstractTransactionSupportingCacheManager {
 
-    protected ConcurrentMap<String, AbstractSpringCache> cacheMap = new ConcurrentHashMap<String, AbstractSpringCache>();
+    private static ConcurrentMap<String, AbstractSpringCache> cacheMap = new ConcurrentHashMap<String, AbstractSpringCache>();
 
-    protected Map<String, Integer> configMap = new HashMap<String, Integer>();   // 各缓存的时间Map
+    protected Map<String, Long> configMap = new HashMap<String, Long>();   // 各缓存的时间Map
 
     @Override
     protected Collection<? extends AbstractSpringCache> loadCaches() {
@@ -29,22 +30,36 @@ public abstract class AbstractSpringCacheManager extends AbstractTransactionSupp
 
     @Override
     public AbstractSpringCache getCache(String name) {
-        AbstractSpringCache cache = cacheMap.get(name);
-        if (cache == null) {
-            Integer expire = configMap.get(name);
-            if (expire == null) {
-                expire = 0;//表示永久
-                configMap.put(name, expire);
+        synchronized (cacheMap) {
+            if (!cacheMap.containsKey(name)) {
+                Long expire = configMap.get(name);
+                if (expire == null) {
+                    expire = CommonConstants.NumeralConstants.ZERO; // 表示永久
+                    configMap.put(name, expire);
+                }
+                cacheMap.put(name, newCache(name, expire));
             }
-            cache = newCache(name, expire);
-            cacheMap.put(name, cache);
         }
-        return cache;
+        return cacheMap.get(name);
     }
 
-    protected abstract AbstractSpringCache newCache(String name, int expire);
+    /**
+     * <p> 新创建一个缓存对象 </p>
+     *
+     * @param name   缓存名
+     * @param expire 失效时间（0：表示永久）
+     * @return 新建的缓存对象
+     * @since 1.0.0
+     */
+    protected abstract AbstractSpringCache newCache(String name, long expire);
 
-    public void setConfigMap(Map<String, Integer> configMap) {
+    /**
+     * <p> 设置各缓存失效时间配置Map </p>
+     *
+     * @param configMap 失效时间配置Map
+     * @since 1.0.0
+     */
+    public void setConfigMap(Map<String, Long> configMap) {
         this.configMap = configMap;
     }
 
