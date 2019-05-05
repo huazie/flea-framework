@@ -16,17 +16,17 @@ public class RedisFleaCache extends AbstractFleaCache {
     }
 
     @Override
-    protected Object getNativeValue(String key) throws Exception {
+    protected Object getNativeValue(String key) {
         return null;
     }
 
     @Override
-    protected void putNativeValue(String key, Object value, int expire) throws Exception {
+    protected void putNativeValue(String key, Object value, int expire) {
 
     }
 
     @Override
-    protected void deleteNativeValue(String key) throws Exception {
+    protected void deleteNativeValue(String key)  {
 
     }
 

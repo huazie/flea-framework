@@ -25,7 +25,7 @@ public interface IFleaParaDetailSV extends IAbstractFleaJPASV<FleaParaDetail> {
      * @throws Exception
      * @since 1.0.0
      */
-    public List<IFleaParaDetailValue> getParaDetails(String paraType, String paraCode) throws Exception;
+    List<IFleaParaDetailValue> getParaDetails(String paraType, String paraCode) throws Exception;
 
     /**
      * <p> 获取单个参数配置数据 </p>
@@ -36,5 +36,5 @@ public interface IFleaParaDetailSV extends IAbstractFleaJPASV<FleaParaDetail> {
      * @throws Exception
      * @since 1.0.0
      */
-    public IFleaParaDetailValue getParaDetail(String paraType, String paraCode) throws Exception;
+    IFleaParaDetailValue getParaDetail(String paraType, String paraCode) throws Exception;
 }

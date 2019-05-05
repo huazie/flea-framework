@@ -1,5 +1,6 @@
 package com.huazie.frame.cache;
 
+import com.huazie.frame.common.util.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.Cache;
@@ -29,19 +30,22 @@ public abstract class AbstractSpringCache implements Cache {
 
     @Override
     public String getName() {
-        return this.name;
+        return name;
     }
 
     @Override
     public IFleaCache getNativeCache() {
-        return this.fleaCache;
+        return fleaCache;
     }
 
     @Override
     public ValueWrapper get(Object key) {
         ValueWrapper wrapper = null;
-        Object cacheValue = this.fleaCache.get(key.toString());
-        if (cacheValue != null) {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("AbstractSpringCache##get(Object) KEY={}", key);
+        }
+        Object cacheValue = fleaCache.get(key.toString());
+        if (ObjectUtils.isNotEmpty(cacheValue)) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("AbstractSpringCache##get(Object) VALUE={}", cacheValue);
             }
@@ -52,36 +56,43 @@ public abstract class AbstractSpringCache implements Cache {
 
     @Override
     public void put(Object key, Object value) {
-        this.fleaCache.put(key.toString(), value);
+        fleaCache.put(key.toString(), value);
     }
 
     @Override
     public void evict(Object key) {
-        this.fleaCache.delete(key.toString());
+        fleaCache.delete(key.toString());
     }
 
     @Override
     public void clear() {
-        this.fleaCache.clear();
+        fleaCache.clear();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public <T> T get(Object key, Class<T> type) {
-        Object cacheValue = this.fleaCache.get(key.toString());
-        Object value = (cacheValue != null ? cacheValue : null);
-        if (type != null && !type.isInstance(value)) {
-            throw new IllegalStateException("Cached value is not of required type [" + type.getName() + "]: " + value);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("AbstractSpringCache##get(Object) KEY={}", key);
         }
-        return (T) value;
+        Object cacheValue = fleaCache.get(key.toString());
+        if (ObjectUtils.isNotEmpty(type) && !type.isInstance(cacheValue)) {
+            if(LOGGER.isDebugEnabled()){
+                LOGGER.debug("AbstractSpringCache##get(Object, Class<T>) Cached value is not of required type [{}]: {}" , type.getName(), cacheValue);
+            }
+            return null;
+        }
+        if(LOGGER.isDebugEnabled()){
+            LOGGER.debug("AbstractSpringCache##get(Object, Class<T>) VALUE={}", cacheValue);
+        }
+        return (T) cacheValue;
     }
 
     @Override
     public ValueWrapper putIfAbsent(Object key, Object value) {
         ValueWrapper wrapper = null;
-        Object cacheValue = this.fleaCache.get(key.toString());
-        if (cacheValue == null) {
-            this.fleaCache.put(key.toString(), value);
+        Object cacheValue = fleaCache.get(key.toString());
+        if (ObjectUtils.isEmpty(cacheValue)) {
+            fleaCache.put(key.toString(), value);
         } else {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("AbstractSpringCache##putIfAbsent(Object, Object) VALUE=", cacheValue);

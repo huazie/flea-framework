@@ -26,7 +26,8 @@ public class FleaCacheTest {
 
         //#### 1.  简单字符串
 //		cache.put("menu1", "huazie");
-        LOGGER.debug(cache.get("menu1") + "");
+        cache.get("menu1");
+//        cache.delete("menu1");
         LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
     }
 

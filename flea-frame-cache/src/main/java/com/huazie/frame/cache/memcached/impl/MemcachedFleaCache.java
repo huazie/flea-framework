@@ -22,32 +22,32 @@ public class MemcachedFleaCache extends AbstractFleaCache {
     public MemcachedFleaCache(String name, int expire, MemCachedClient memcachedClient) {
         super(name, expire);
         this.memcachedClient = memcachedClient;
-        this.cache = CacheEnum.Memcached;
+        cache = CacheEnum.Memcached;
     }
 
     @Override
-    protected Object getNativeValue(String key) throws Exception {
+    protected Object getNativeValue(String key){
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("MemcachedFleaCache##getNativeValue(String) KEY={}", key);
         }
-        return this.memcachedClient.get(key);
+        return memcachedClient.get(key);
     }
 
     @Override
-    protected void putNativeValue(String key, Object value, int expire) throws Exception {
+    protected void putNativeValue(String key, Object value, int expire){
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("MemcachedFleaCache##putNativeValue(String, Object, int) KEY={}", key);
             LOGGER.debug("MemcachedFleaCache##putNativeValue(String, Object, int) VALUE={}", value);
         }
-        this.memcachedClient.set(key, value, expire);
+        memcachedClient.set(key, value, expire);
     }
 
     @Override
-    protected void deleteNativeValue(String key) throws Exception {
+    protected void deleteNativeValue(String key){
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("MemcachedFleaCache##deleteNativeValue(String) KEY=" + key);
         }
-        this.memcachedClient.delete(key);
+        memcachedClient.delete(key);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.huazie.frame.cache;
 
 import com.huazie.frame.cache.common.CacheEnum;
+import com.huazie.frame.common.util.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,10 +34,16 @@ public abstract class AbstractFleaCache implements IFleaCache {
     public Object get(String key) {
         Object value = null;
         try {
-            value = this.getNativeValue(this.getNativeKey(key));
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("AbstractFleaCache##get(String) KEY={}", key);
+            }
+            value = getNativeValue(getNativeKey(key));
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("AbstractFleaCache##get(String) VALUE={}", value);
+            }
         } catch (Exception e) {
-            if(LOGGER.isErrorEnabled()){
-                LOGGER.error("获取" + cache.getName() + "缓存出现异常", e);
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("The action of getting [" + cache.getName() + "] cache occurs exception ：", e);
             }
         }
         return value;
@@ -44,14 +51,14 @@ public abstract class AbstractFleaCache implements IFleaCache {
 
     @Override
     public void put(String key, Object value) {
-        if (value == null)
+        if (ObjectUtils.isEmpty(value))
             return;
         try {
-            this.putNativeValue(this.getNativeKey(key), value, expire);
+            putNativeValue(getNativeKey(key), value, expire);
             keySet.add(key);
         } catch (Exception e) {
-            if(LOGGER.isErrorEnabled()){
-                LOGGER.error("更新" + cache.getName() + "缓存出现异常", e);
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("The action of adding [" + cache.getName() + "] cache occurs exception ：", e);
             }
         }
     }
@@ -66,19 +73,19 @@ public abstract class AbstractFleaCache implements IFleaCache {
     @Override
     public void delete(String key) {
         try {
-            this.deleteNativeValue(this.getNativeKey(key));
+            deleteNativeValue(getNativeKey(key));
         } catch (Exception e) {
-            if(LOGGER.isErrorEnabled()){
-                LOGGER.error("删除" + cache.getName() + "缓存出现异常", e);
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("The action of deleting [" + cache.getName() + "] cache occurs exception ：", e);
             }
         }
     }
 
-    protected abstract Object getNativeValue(String key) throws Exception;
+    protected abstract Object getNativeValue(String key);
 
-    protected abstract void putNativeValue(String key, Object value, int expire) throws Exception;
+    protected abstract void putNativeValue(String key, Object value, int expire);
 
-    protected abstract void deleteNativeValue(String key) throws Exception;
+    protected abstract void deleteNativeValue(String key);
 
     protected String getNativeKey(String key) {
         return name + "_" + key;  // 可以自己定义
