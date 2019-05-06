@@ -34,7 +34,6 @@ public class FleaParaDetailSVImplTest {
             sv.getParaDetails("FLEA_RES_STATE", "");
         } catch (Exception e) {
             LOGGER.error("Exception:", e);
-
         }
     }
 

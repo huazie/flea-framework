@@ -9,7 +9,11 @@ import com.huazie.frame.common.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Properties;
+import java.util.ResourceBundle;
 
 /**
  * <p> flea i18n 配置类 </p>
@@ -26,7 +30,7 @@ public class FleaI18nConfig {
 
     private static String RES_FILE_NAME = CommonConstants.FleaI18NConstants.FLEA_I18N_FILE_PATH + CommonConstants.FleaI18NConstants.FLEA_I18N_FILE_NAME_PREFIX;
 
-    private Map<String, ResourceBundle> resources = new HashMap<String, ResourceBundle>();//资源集合
+    private static Map<String, ResourceBundle> resources = new HashMap<String, ResourceBundle>();//资源集合
 
     static {
         // Flea i18n config
@@ -153,6 +157,11 @@ public class FleaI18nConfig {
     private ResourceBundle getResourceBundle(String resName, Locale locale) {
 
         String key = generateKey(resName, locale);
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Find the resKey  : {}", key);
+        }
+
         ResourceBundle resource = resources.get(key);
 
         // 获取资源文件名
@@ -191,7 +200,7 @@ public class FleaI18nConfig {
         String key = "";
         if (StringUtils.isNotBlank(resName)) {
             key = resName;
-            if (ObjectUtils.isEmpty(locale)) {
+            if (ObjectUtils.isNotEmpty(locale)) {
                 key += CommonConstants.SymbolConstants.UNDERLINE + locale.getLanguage();
             }
         }
