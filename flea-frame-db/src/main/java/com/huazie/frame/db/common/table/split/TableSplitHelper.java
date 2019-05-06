@@ -1,4 +1,4 @@
-package com.huazie.frame.db.common.tab.split;
+package com.huazie.frame.db.common.table.split;
 
 import com.huazie.frame.db.common.DBConstants;
 import org.slf4j.Logger;
@@ -8,10 +8,10 @@ import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.ReflectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.exception.TableSplitException;
-import com.huazie.frame.db.common.tab.column.Column;
-import com.huazie.frame.db.common.tab.split.config.Split;
-import com.huazie.frame.db.common.tab.split.config.Table;
-import com.huazie.frame.db.common.tab.split.config.TableSplitConfig;
+import com.huazie.frame.db.common.table.column.Column;
+import com.huazie.frame.db.common.table.split.config.Split;
+import com.huazie.frame.db.common.table.split.config.Table;
+import com.huazie.frame.db.common.table.split.config.TableSplitConfig;
 import com.huazie.frame.db.common.util.EntityUtils;
 
 /**

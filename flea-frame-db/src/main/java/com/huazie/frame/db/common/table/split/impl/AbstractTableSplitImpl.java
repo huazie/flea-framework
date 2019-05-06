@@ -1,4 +1,4 @@
-package com.huazie.frame.db.common.tab.split.impl;
+package com.huazie.frame.db.common.table.split.impl;
 
 import com.huazie.frame.common.DateFormatEnum;
 import com.huazie.frame.common.util.DateUtils;
@@ -6,7 +6,7 @@ import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.DBConstants;
 import com.huazie.frame.db.common.exception.TableSplitException;
-import com.huazie.frame.db.common.tab.split.ITableSplit;
+import com.huazie.frame.db.common.table.split.ITableSplit;
 
 import java.util.Date;
 

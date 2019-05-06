@@ -4,6 +4,7 @@ import com.huazie.frame.cache.AbstractFleaCache;
 import com.huazie.frame.cache.AbstractSpringCache;
 import com.huazie.frame.cache.memcached.MemcachedFleaCacheManager;
 import com.huazie.frame.cache.memcached.MemcachedSpringCacheManager;
+import com.huazie.frame.common.FleaFrameManager;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaParaDetailSV;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,6 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import java.util.Locale;
 
 public class FleaParaDetailSVImplTest {
 
@@ -91,6 +94,17 @@ public class FleaParaDetailSVImplTest {
 
 //			TestCache.LOGGER.debug(cache.get("user_list",userList.getClass()).toString());
 
+        } catch (Exception e) {
+            LOGGER.error("Exception:", e);
+        }
+    }
+
+    @Test
+    public void testFleaJPAQuery() {
+        FleaFrameManager.getManager().setLocale(Locale.US);
+        IFleaParaDetailSV sv = (IFleaParaDetailSV) applicationContext.getBean("fleaParaDetailSVImpl");
+        try {
+            sv.queryAll("PARA_TYPE", "111");
         } catch (Exception e) {
             LOGGER.error("Exception:", e);
         }

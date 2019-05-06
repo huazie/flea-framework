@@ -1,4 +1,4 @@
-package com.huazie.frame.db.common.tab.split.config;
+package com.huazie.frame.db.common.table.split.config;
 
 import com.huazie.frame.db.common.XmlDigesterHelper;
 import org.apache.commons.lang.builder.ToStringBuilder;

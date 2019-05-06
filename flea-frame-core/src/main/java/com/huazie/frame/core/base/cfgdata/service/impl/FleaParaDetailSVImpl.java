@@ -6,8 +6,6 @@ import com.huazie.frame.core.base.cfgdata.ivalues.IFleaParaDetailValue;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaParaDetailSV;
 import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import com.huazie.frame.db.jpa.service.impl.AbstractFleaJPASVImpl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
@@ -25,8 +23,6 @@ import java.util.List;
  */
 @Service("fleaParaDetailSVImpl")
 public class FleaParaDetailSVImpl extends AbstractFleaJPASVImpl<FleaParaDetail> implements IFleaParaDetailSV {
-
-    private final static Logger LOGGER = LoggerFactory.getLogger(FleaParaDetailSVImpl.class);
 
     @Autowired
     @Qualifier("fleaParaDetailDAOImpl")

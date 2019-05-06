@@ -6,7 +6,7 @@ import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.exception.DaoException;
 import com.huazie.frame.db.common.sql.template.config.Template;
-import com.huazie.frame.db.common.tab.column.Column;
+import com.huazie.frame.db.common.table.column.Column;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;

@@ -130,19 +130,21 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     }
 
     @Override
-    public int queryCount() throws Exception {
+    public long queryCount() throws Exception {
         FleaJPAQuery query = getQuery(Long.class);
         query.countDistinct();
-        int count = ((Long) query.getSingleResult()).intValue();
+        long count = ((Long) query.getSingleResult());
         return count;
     }
 
     @Override
-    public int queryCount(Map<String, Object> paramterMap) throws Exception {
+    public long queryCount(Map<String, Object> paramterMap) throws Exception {
         FleaJPAQuery query = getQuery(Long.class);
-        query.equal(paramterMap); // 添加Where子句查询条件
-        query.countDistinct(); // 设置调用SQL的COUNT函数统计数目
-        int count = ((Long) query.getSingleResult()).intValue();
+        // 添加Where子句查询条件
+        query.equal(paramterMap);
+        // 设置调用SQL的COUNT函数统计数目
+        query.countDistinct();
+        long count = ((Long) query.getSingleResult());
         return count;
     }
 
@@ -150,7 +152,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     public boolean remove(long entityId) throws Exception {
         checkPrimaryKey(entityId);
         final T old = query(entityId);
-        if (old != null) {
+        if (ObjectUtils.isNotEmpty(old)) {
             getEntityManager().remove(old);
             return true;
         } else {
@@ -162,7 +164,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     public boolean remove(String entityId) throws Exception {
         checkPrimaryKey(entityId);
         final T old = query(entityId);
-        if (old != null) {
+        if (ObjectUtils.isNotEmpty(old)) {
             getEntityManager().remove(old);
             return true;
         } else {
@@ -171,9 +173,9 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     }
 
     @Override
-    public T store(T entity) throws Exception {
+    public T update(T entity) throws Exception {
         if (entity == null) {
-            throw new DaoException("The entity need to be stored is null");
+            throw new DaoException("ERROR-DB-DAO0000000012");
         }
         T t = getEntityManager().merge(entity);
         return t;
@@ -182,7 +184,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     @Override
     public List<T> batchUpdate(List<T> entitys) throws Exception {
         if (entitys == null || entitys.isEmpty()) {
-            throw new DaoException("The entitys need to be saved is null or empty");
+            throw new DaoException("ERROR-DB-DAO0000000013");
         }
         for (int i = 0; i < entitys.size(); i++) {
             getEntityManager().merge(entitys.get(i));
@@ -193,7 +195,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     @Override
     public void save(T entity) throws Exception {
         if (entity == null) {
-            throw new DaoException("The entity need to be saved is null");
+            throw new DaoException("ERROR-DB-DAO0000000012");
         }
         getEntityManager().persist(entity);
     }
@@ -201,15 +203,14 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     @Override
     public void batchSave(List<T> entitys) throws Exception {
         if (entitys == null || entitys.isEmpty()) {
-            throw new DaoException("The entitys need to be saved is null or empty");
+            throw new DaoException("ERROR-DB-DAO0000000013");
         }
         for (int i = 0; i < entitys.size(); i++) {
             getEntityManager().persist(entitys.get(i));
         }
     }
 
-    @Override
-    public boolean update(T entity) throws Exception {
+    public boolean update(T entity,String a) throws Exception {
         if (entity == null) {
             throw new DaoException("The entity need to be updated is null");
         }
@@ -283,7 +284,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
             sql.deleteCharAt(sql.length() - 1);// 去掉最后的逗号
             sql.append(DBConstants.SQLConstants.SQL_BLANK).append(whereSql);
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("SQL = {}", sql.toString());
+                LOGGER.debug("SQL = {}", sql);
             }
             Query query = getEntityManager().createQuery(sql.toString());
             Set<String> keySet = map.keySet();
@@ -317,23 +318,23 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     }
 
     /**
-     * <p> 校验主键 </p>
+     * <p> 校验主键合法性 </p>
      *
-     * @param entityId 实体主键编号
+     * @param entityId 实体类对应的主键编号
      * @throws DaoException 数据操作层异常
      * @since 1.0.0
      */
     private void checkPrimaryKey(Object entityId) throws DaoException {
         if (entityId.getClass() == long.class || entityId.getClass() == Long.class) {// 该实体的主键是long类型
             if (Long.valueOf(entityId.toString()) <= 0) {
-                throw new DaoException("The primary key must be positive number");
+                throw new DaoException("ERROR-DB-DAO0000000009");
             }
         } else if (entityId.getClass() == String.class) {// 该实体的主键是String类型
             if (ObjectUtils.isEmpty(entityId)) {
-                throw new DaoException("The primary key is null or empty");
+                throw new DaoException("ERROR-DB-DAO0000000010");
             }
         } else {
-            throw new DaoException("The primary key must be long(Long) or String type");
+            throw new DaoException("ERROR-DB-DAO0000000011");
         }
     }
 

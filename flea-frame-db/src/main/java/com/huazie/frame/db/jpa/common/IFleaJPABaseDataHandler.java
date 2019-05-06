@@ -48,7 +48,7 @@ public interface IFleaJPABaseDataHandler<T> {
      * @param paramterMap 多条件参数
      * @param attrName    属性名
      * @param orderBy     排序方式（desc：降序，asc：升序）
-     * @return
+     * @return 实体对象集合
      * @throws Exception
      * @since 1.0.0
      */
@@ -74,7 +74,7 @@ public interface IFleaJPABaseDataHandler<T> {
      * @param orderBy     排序方式（desc：降序，asc：升序）
      * @param start       开始查询记录行
      * @param max         一次最大查询数量
-     * @return
+     * @return 实体对象集合
      * @throws Exception
      * @since 1.0.0
      */
@@ -83,7 +83,7 @@ public interface IFleaJPABaseDataHandler<T> {
     /**
      * <p> 查询所有数据 </p>
      *
-     * @return
+     * @return 实体对象集合
      * @throws Exception
      * @since 1.0.0
      */
@@ -94,7 +94,7 @@ public interface IFleaJPABaseDataHandler<T> {
      *
      * @param attrName 属性名
      * @param orderBy  排序方式（desc：降序，asc：升序）
-     * @return
+     * @return 实体对象集合
      * @throws Exception
      * @since 1.0.0
      */
@@ -105,7 +105,7 @@ public interface IFleaJPABaseDataHandler<T> {
      *
      * @param start 开始查询记录行
      * @param max   一次最大查询数量
-     * @return
+     * @return 实体对象集合
      * @throws Exception
      * @since 1.0.0
      */
@@ -118,7 +118,7 @@ public interface IFleaJPABaseDataHandler<T> {
      * @param orderBy  排序方式（desc：降序，asc：升序）
      * @param start    开始查询记录行
      * @param max      一次最大查询数量
-     * @return
+     * @return 实体对象集合
      * @throws Exception
      * @since 1.0.0
      */
@@ -127,27 +127,27 @@ public interface IFleaJPABaseDataHandler<T> {
     /**
      * <p> 查询表中数据的总数 </p>
      *
-     * @return
+     * @return 总数据量
      * @throws Exception
      * @since 1.0.0
      */
-    int queryCount() throws Exception;
+    long queryCount() throws Exception;
 
     /**
      * <p> 带条件查询表中数据的总数 </p>
      *
      * @param paramterMap 多条件参数
-     * @return
+     * @return 带条件的总数据量
      * @throws Exception
      * @since 1.0.0
      */
-    int queryCount(Map<String, Object> paramterMap) throws Exception;
+    long queryCount(Map<String, Object> paramterMap) throws Exception;
 
     /**
      * <p> 删除某条数据 </p>
      *
      * @param entityId 实体类的主键
-     * @return
+     * @return true:删除成功，false：删除失败
      * @throws Exception
      * @since 1.0.0
      */
@@ -157,26 +157,27 @@ public interface IFleaJPABaseDataHandler<T> {
      * <p> 删除某条数据 </p>
      *
      * @param entityId 实体类的主键
-     * @return
+     * @return true:删除成功，false：删除失败
      * @throws Exception
      * @since 1.0.0
      */
     boolean remove(String entityId) throws Exception;
 
     /**
-     * <p> 保存一条记录,可用于更新 </p>
+     * <p> 更新一条记录 </p>
      *
-     * @param entity 一条记录对应的实体类
-     * @return
+     * @param entity 待更新的实体
+     * @return 更新后的实体
      * @throws Exception
      * @since 1.0.0
      */
-    T store(final T entity) throws Exception;
+    T update(final T entity) throws Exception;
 
     /**
      * <p> 批量更新 </p>
      *
-     * @param entitys
+     * @param entitys 待更新的实体集合
+     * @return 批量更新后的实体集合
      * @throws Exception
      * @since 1.0.0
      */
@@ -185,8 +186,7 @@ public interface IFleaJPABaseDataHandler<T> {
     /**
      * <p> 保存一条记录 </p>
      *
-     * @param entity 一条记录对应的实体类
-     * @return
+     * @param entity 待保存的实体
      * @throws Exception
      * @since 1.0.0
      */
@@ -201,13 +201,4 @@ public interface IFleaJPABaseDataHandler<T> {
      */
     void batchSave(List<T> entitys) throws Exception;
 
-    /**
-     * <p> 更新一条记录 </p>
-     *
-     * @param entity 一条记录对应的实体类
-     * @return 更新成功返回true
-     * @throws Exception
-     * @since 1.0.0
-     */
-    boolean update(final T entity) throws Exception;
 }

@@ -1,5 +1,6 @@
 package com.huazie.frame.common;
 
+import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 
 import java.util.Locale;
@@ -28,9 +29,9 @@ public class FleaFrameManager {
      * @return Flea Frame 管理类
      */
     public static FleaFrameManager getManager() {
-        if (null == manager) {
+        if (ObjectUtils.isEmpty(manager)) {
             synchronized (FleaFrameManager.class) {
-                if (null == manager) {
+                if (ObjectUtils.isEmpty(manager)) {
                     manager = new FleaFrameManager();
                 }
             }
@@ -46,7 +47,7 @@ public class FleaFrameManager {
      */
     public Locale getLocale() {
         Locale locale = sLocale.get();
-        if (null == locale) {
+        if (ObjectUtils.isEmpty(locale)) {
             locale = Locale.getDefault();
         }
         return locale;
@@ -59,7 +60,7 @@ public class FleaFrameManager {
      * @since 1.0.0
      */
     public void setLocale(Locale locale) {
-        if(null == locale){
+        if(ObjectUtils.isEmpty(locale)){
             locale = Locale.getDefault();
         }
         sLocale.set(locale);
@@ -77,12 +78,12 @@ public class FleaFrameManager {
     /**
      * <p> 设置当前线程中使用JDBC连接的数据库配置前缀 </p>
      *
-     * @param database
-     * @param name
+     * @param dbSysName 数据库系统名
+     * @param dbName 数据库名
      */
-    public void setDBPrefix(String database, String name){
-        if(StringUtils.isNotBlank(database) && StringUtils.isNotBlank(name)){
-            sDBLocal.set(database.toLowerCase() + CommonConstants.SymbolConstants.DOT + name.toLowerCase());
+    public void setDBPrefix(String dbSysName, String dbName){
+        if(StringUtils.isNotBlank(dbSysName) && StringUtils.isNotBlank(dbName)){
+            sDBLocal.set(dbSysName.toLowerCase() + CommonConstants.SymbolConstants.DOT + dbName.toLowerCase());
         }
     }
 

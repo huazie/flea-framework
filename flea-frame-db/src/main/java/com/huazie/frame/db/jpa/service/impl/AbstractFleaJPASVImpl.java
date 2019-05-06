@@ -67,12 +67,12 @@ public abstract class AbstractFleaJPASVImpl<T> implements IAbstractFleaJPASV<T> 
     }
 
     @Override
-    public int queryCount() throws Exception {
+    public long queryCount() throws Exception {
         return getDAO().queryCount();
     }
 
     @Override
-    public int queryCount(Map<String, Object> paramMap) throws Exception {
+    public long queryCount(Map<String, Object> paramMap) throws Exception {
         return getDAO().queryCount(paramMap);
     }
 
@@ -87,8 +87,8 @@ public abstract class AbstractFleaJPASVImpl<T> implements IAbstractFleaJPASV<T> 
     }
 
     @Override
-    public T store(T entity) throws Exception {
-        return getDAO().store(entity);
+    public T update(T entity) throws Exception {
+        return getDAO().update(entity);
     }
 
     @Override
@@ -104,11 +104,6 @@ public abstract class AbstractFleaJPASVImpl<T> implements IAbstractFleaJPASV<T> 
     @Override
     public void batchSave(List<T> entityList) throws Exception {
         getDAO().batchSave(entityList);
-    }
-
-    @Override
-    public boolean update(T entity) throws Exception {
-        return getDAO().update(entity);
     }
 
     /**

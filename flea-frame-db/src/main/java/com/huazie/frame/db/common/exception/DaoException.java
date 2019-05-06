@@ -13,19 +13,19 @@ import com.huazie.frame.common.i18n.FleaI18nResEnum;
 public class DaoException extends CommonException {
 
     public DaoException(String key) {
-        super(key, FleaI18nResEnum.ERROR);
+        super(key, FleaI18nResEnum.ERROR_DB);
     }
 
     public DaoException(String key, String... values) {
-        super(key, FleaI18nResEnum.ERROR, values);
+        super(key, FleaI18nResEnum.ERROR_DB, values);
     }
 
     public DaoException(String key, Throwable cause) {
-        super(key, FleaI18nResEnum.ERROR, cause);
+        super(key, FleaI18nResEnum.ERROR_DB, cause);
     }
 
     public DaoException(String key, Throwable cause, String... values) {
-        super(key, FleaI18nResEnum.ERROR, cause, values);
+        super(key, FleaI18nResEnum.ERROR_DB, cause, values);
     }
 
 }

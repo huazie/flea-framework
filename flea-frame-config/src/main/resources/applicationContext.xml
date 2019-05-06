@@ -52,18 +52,18 @@
     <!-- ################################## -->
     <!-- <bean tempId="fleaConfigDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
         destroy-method="close">
-        <property name="driverClass" value="${mysql.fleaconfig.driver}" />
-        <property name="jdbcUrl" value="${mysql.fleaconfig.url}" />
-        <property name="user" value="${mysql.fleaconfig.user}" />
-        <property name="password" value="${mysql.fleaconfig.password}" />
+        <property dbName="driverClass" value="${mysql.fleaconfig.driver}" />
+        <property dbName="jdbcUrl" value="${mysql.fleaconfig.url}" />
+        <property dbName="user" value="${mysql.fleaconfig.user}" />
+        <property dbName="password" value="${mysql.fleaconfig.password}" />
     </bean> -->
     <bean id="fleaConfigEntityManagerFactory"
           class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="persistenceUnitManager" ref="defaultPersistenceManager"/>
         <property name="persistenceUnitName" value="fleaconfig"/>
-        <!-- <property name="dataSource" ref="fleaMarketDataSource" /> -->
+        <!-- <property dbName="dataSource" ref="fleaMarketDataSource" /> -->
         <property name="persistenceProvider" ref="defaultPersistenceProvider"/>
-        <!-- <property name="loadTimeWeaver" ref="defaultLoadTimeWeaver" /> -->
+        <!-- <property dbName="loadTimeWeaver" ref="defaultLoadTimeWeaver" /> -->
         <property name="jpaVendorAdapter" ref="defaultVendorAdapter"/>
         <property name="jpaDialect" ref="defaultJpaDialect"/>
         <property name="jpaPropertyMap">

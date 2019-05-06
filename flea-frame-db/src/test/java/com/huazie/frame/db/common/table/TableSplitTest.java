@@ -1,17 +1,17 @@
-package com.huazie.frame.db.common.tab;
+package com.huazie.frame.db.common.table;
 
-import com.huazie.frame.db.common.tab.split.impl.ThreeHexTableSplitImpl;
+import com.huazie.frame.db.common.table.split.impl.ThreeHexTableSplitImpl;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.huazie.frame.db.common.tab.split.ITableSplit;
-import com.huazie.frame.db.common.tab.split.TableSplitEnum;
-import com.huazie.frame.db.common.tab.split.config.TableSplitConfig;
-import com.huazie.frame.db.common.tab.split.impl.TwoHexTableSplitImpl;
-import com.huazie.frame.db.common.tab.split.impl.YYYYMMDDTableSplitImpl;
-import com.huazie.frame.db.common.tab.split.impl.YYYYMMTableSplitImpl;
-import com.huazie.frame.db.common.tab.split.impl.YYYYTableSplitImpl;
+import com.huazie.frame.db.common.table.split.ITableSplit;
+import com.huazie.frame.db.common.table.split.TableSplitEnum;
+import com.huazie.frame.db.common.table.split.config.TableSplitConfig;
+import com.huazie.frame.db.common.table.split.impl.TwoHexTableSplitImpl;
+import com.huazie.frame.db.common.table.split.impl.YYYYMMDDTableSplitImpl;
+import com.huazie.frame.db.common.table.split.impl.YYYYMMTableSplitImpl;
+import com.huazie.frame.db.common.table.split.impl.YYYYTableSplitImpl;
 import com.huazie.frame.db.common.util.EntityUtils;
 
 /**

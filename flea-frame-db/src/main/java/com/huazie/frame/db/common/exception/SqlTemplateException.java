@@ -12,6 +12,8 @@ import com.huazie.frame.common.i18n.FleaI18nResEnum;
  */
 public class SqlTemplateException extends CommonException {
 
+    private static final long serialVersionUID = 5955045201447063616L;
+
     public SqlTemplateException(String key) {
         super(key, FleaI18nResEnum.ERROR_DB);
     }

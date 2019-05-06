@@ -2,7 +2,7 @@
 <tables>
 
 	<table id="fleaFileInfo" name="flea_file_info" entityClass="com.huazie.ffs.entity.FleaFileInfo" >
-		<split key="twohex" column="file_id" implClass="com.huazie.frame.db.common.tab.split.impl.TwoHexTableSplitImpl"/>
+		<split key="twohex" column="file_id" implClass="com.huazie.frame.db.common.table.split.impl.TwoHexTableSplitImpl"/>
 	</table>
 	
 </tables>

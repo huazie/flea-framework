@@ -8,7 +8,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 /**
- * <p> FleaConfig数据源DAO层实现类 </p>
+ * <p> FleaConfig数据源DAO层父类 </p>
  * 
  * @author huazie
  * @version 1.0.0
@@ -34,8 +34,8 @@ public class FleaConfigDAOImpl<T> extends AbstractFleaJPADAOImpl<T> {
 
 	@Override
 	@Transactional("fleaConfigTransactionManager")
-	public T store(T entity) throws Exception {
-		return super.store(entity);
+	public T update(T entity) throws Exception {
+		return super.update(entity);
 	}
 	
 	@Override
@@ -57,14 +57,8 @@ public class FleaConfigDAOImpl<T> extends AbstractFleaJPADAOImpl<T> {
 	}
 
 	@Override
-	@Transactional("fleaConfigTransactionManager")
-	public boolean update(T entity) throws Exception {
-		return super.update(entity);
-	}
-	
-	@Override
 	protected EntityManager getEntityManager() {
-		return this.entityManager;
+		return entityManager;
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.huazie.frame.db.common.tab.split.impl;
+package com.huazie.frame.db.common.table.split.impl;
 
 import com.huazie.frame.common.DateFormatEnum;
 import com.huazie.frame.db.common.exception.TableSplitException;

@@ -8,8 +8,8 @@ import com.huazie.frame.db.common.sql.template.config.Property;
 import com.huazie.frame.db.common.sql.template.config.Rule;
 import com.huazie.frame.db.common.sql.template.config.SqlTemplateConfig;
 import com.huazie.frame.db.common.sql.template.config.Template;
-import com.huazie.frame.db.common.tab.column.Column;
-import com.huazie.frame.db.common.tab.split.TableSplitHelper;
+import com.huazie.frame.db.common.table.column.Column;
+import com.huazie.frame.db.common.table.split.TableSplitHelper;
 import com.huazie.frame.db.common.util.EntityUtils;
 import org.apache.commons.lang.ArrayUtils;
 

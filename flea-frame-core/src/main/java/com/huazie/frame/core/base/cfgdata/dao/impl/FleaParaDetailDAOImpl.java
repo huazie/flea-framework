@@ -26,7 +26,7 @@ public class FleaParaDetailDAOImpl extends FleaConfigDAOImpl<FleaParaDetail> imp
     @Override
     public List<IFleaParaDetailValue> getParaDetail(String paraType, String paraCode) throws Exception {
 
-        FleaJPAQuery query = this.getQuery(null);
+        FleaJPAQuery query = getQuery(null);
 
         if (StringUtils.isNotBlank(paraType)) {
             query.equal(IFleaParaDetailValue.S_PARA_TYPE, paraType);
@@ -41,8 +41,8 @@ public class FleaParaDetailDAOImpl extends FleaConfigDAOImpl<FleaParaDetail> imp
         List<IFleaParaDetailValue> fleaParaDetailList = query.getResultList();
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaParaDetailDAOImpl##getParaDetail(paraType, paraCode) FleaParaDetailList={}", fleaParaDetailList);
-            LOGGER.debug("FleaParaDetailDAOImpl##getParaDetail(paraType, paraCode) The Number of FleaParaDetailList={}", fleaParaDetailList.size());
+            LOGGER.debug("FleaParaDetailDAOImpl##getParaDetail(String, String) FleaParaDetailList={}", fleaParaDetailList);
+            LOGGER.debug("FleaParaDetailDAOImpl##getParaDetail(String, String) The Number of FleaParaDetailList={}", fleaParaDetailList.size());
         }
 
         return fleaParaDetailList;

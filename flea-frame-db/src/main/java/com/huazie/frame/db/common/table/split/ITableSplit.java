@@ -1,4 +1,4 @@
-package com.huazie.frame.db.common.tab.split;
+package com.huazie.frame.db.common.table.split;
 
 import com.huazie.frame.db.common.exception.TableSplitException;
 

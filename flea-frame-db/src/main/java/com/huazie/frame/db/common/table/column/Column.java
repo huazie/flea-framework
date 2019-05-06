@@ -1,4 +1,4 @@
-package com.huazie.frame.db.common.tab.column;
+package com.huazie.frame.db.common.table.column;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 

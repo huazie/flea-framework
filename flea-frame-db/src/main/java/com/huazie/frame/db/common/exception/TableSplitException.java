@@ -12,6 +12,8 @@ import com.huazie.frame.common.i18n.FleaI18nResEnum;
  */
 public class TableSplitException extends CommonException {
 
+    private static final long serialVersionUID = -4673322966676796640L;
+
     public TableSplitException(String key) {
         super(key, FleaI18nResEnum.ERROR_DB);
     }

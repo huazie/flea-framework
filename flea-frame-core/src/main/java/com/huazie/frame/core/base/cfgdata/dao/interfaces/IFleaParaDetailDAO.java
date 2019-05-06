@@ -7,7 +7,7 @@ import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import java.util.List;
 
 /**
- * <p>参数配置数据DAO层接口</p>
+ * <p> 参数配置数据DAO层接口 </p>
  *
  * @author huazie
  * @version 1.0.0

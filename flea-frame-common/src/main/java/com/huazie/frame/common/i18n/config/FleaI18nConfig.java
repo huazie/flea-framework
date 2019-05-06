@@ -101,7 +101,7 @@ public class FleaI18nConfig {
      * @since 1.0.0
      */
     public String getI18NDataValue(String key, String[] values, String resName, Locale locale) {
-        String value = this.getI18NDataValue(key, resName, locale);
+        String value = getI18NDataValue(key, resName, locale);
         if (ArrayUtils.isNotEmpty(values)) {
             StringBuilder builder = new StringBuilder(value);
             for (int i = 0; i < values.length; i++) {
@@ -127,7 +127,7 @@ public class FleaI18nConfig {
             LOGGER.debug("Find the resName : {}", resName);
             LOGGER.debug("Find the locale  : {} , {}", locale == null ? Locale.getDefault() : locale, locale == null ? Locale.getDefault().getDisplayLanguage() : locale.getDisplayLanguage());
         }
-        ResourceBundle resource = this.getResourceBundle(resName, locale);
+        ResourceBundle resource = getResourceBundle(resName, locale);
 
         String value = null;
         if (null != resource) {
@@ -152,8 +152,8 @@ public class FleaI18nConfig {
      */
     private ResourceBundle getResourceBundle(String resName, Locale locale) {
 
-        String key = this.generateKey(resName, locale);
-        ResourceBundle resource = this.resources.get(key);
+        String key = generateKey(resName, locale);
+        ResourceBundle resource = resources.get(key);
 
         // 获取资源文件名
         StringBuilder fileName = new StringBuilder(RES_FILE_NAME);
@@ -166,13 +166,13 @@ public class FleaI18nConfig {
         }
 
         // 获取资源文件
-        if (null == resource) {
-            if (null == locale) {
+        if (ObjectUtils.isEmpty(resource)) {
+            if (ObjectUtils.isEmpty(locale)) {
                 resource = ResourceBundle.getBundle(fileName.toString());
             } else {
                 resource = ResourceBundle.getBundle(fileName.toString(), locale);
             }
-            this.resources.put(key, resource);
+            resources.put(key, resource);
         }
 
         return resource;
@@ -191,7 +191,7 @@ public class FleaI18nConfig {
         String key = "";
         if (StringUtils.isNotBlank(resName)) {
             key = resName;
-            if (null != locale) {
+            if (ObjectUtils.isEmpty(locale)) {
                 key += CommonConstants.SymbolConstants.UNDERLINE + locale.getLanguage();
             }
         }

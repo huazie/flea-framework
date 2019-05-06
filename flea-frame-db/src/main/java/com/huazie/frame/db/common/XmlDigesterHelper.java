@@ -21,9 +21,9 @@ import com.huazie.frame.db.common.sql.template.config.Select;
 import com.huazie.frame.db.common.sql.template.config.Sql;
 import com.huazie.frame.db.common.sql.template.config.Template;
 import com.huazie.frame.db.common.sql.template.config.Update;
-import com.huazie.frame.db.common.tab.split.config.Split;
-import com.huazie.frame.db.common.tab.split.config.Table;
-import com.huazie.frame.db.common.tab.split.config.Tables;
+import com.huazie.frame.db.common.table.split.config.Split;
+import com.huazie.frame.db.common.table.split.config.Table;
+import com.huazie.frame.db.common.table.split.config.Tables;
 
 /**
  * XML解析类（涉及SQL模板配置flea-sql-template.xml, 分表配置flea-table-split.xml）
