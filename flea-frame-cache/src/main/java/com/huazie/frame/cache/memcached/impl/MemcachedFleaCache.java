@@ -21,8 +21,8 @@ public class MemcachedFleaCache extends AbstractFleaCache {
 
     private final MemCachedClient memcachedClient;  // Memcached客户端类
 
-    public MemcachedFleaCache(String name, long expire, MemCachedClient memcachedClient) {
-        super(name, expire);
+    public MemcachedFleaCache(String name, long expiry, MemCachedClient memcachedClient) {
+        super(name, expiry);
         this.memcachedClient = memcachedClient;
         cache = CacheEnum.Memcached;
     }

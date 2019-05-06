@@ -52,7 +52,7 @@ public abstract class AbstractFleaCacheManager {
      * <p> 新创建一个缓存对象 </p>
      *
      * @param name   缓存名
-     * @param expire 失效时间（0：表示永久）
+     * @param expiry 失效时间（0：表示永久）
      * @return 新建的缓存对象
      * @since 1.0.0
      */

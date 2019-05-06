@@ -95,10 +95,10 @@ public abstract class AbstractFleaCache implements IFleaCache {
      *
      * @param key    缓存键
      * @param value  缓存值
-     * @param expire 失效时间（单位：秒）
+     * @param expiry 失效时间（单位：秒）
      * @since 1.0.0
      */
-    protected abstract void putNativeValue(String key, Object value, long expire);
+    protected abstract void putNativeValue(String key, Object value, long expiry);
 
     /**
      * <p> 删除指定缓存数据 </p>
