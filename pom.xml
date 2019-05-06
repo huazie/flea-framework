@@ -229,6 +229,7 @@
         <module>flea-frame-db</module>
         <module>flea-frame-config</module>
         <module>flea-frame-core</module>
+        <module>flea-frame-tools</module>
     </modules>
 
 </project>
