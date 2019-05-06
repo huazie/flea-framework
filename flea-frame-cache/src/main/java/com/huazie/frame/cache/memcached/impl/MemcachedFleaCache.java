@@ -36,14 +36,14 @@ public class MemcachedFleaCache extends AbstractFleaCache {
     }
 
     @Override
-    protected void putNativeValue(String key, Object value, long expire){
+    protected void putNativeValue(String key, Object value, long expiry){
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("MemcachedFleaCache##putNativeValue(String, Object, long) KEY={}", key);
             LOGGER.debug("MemcachedFleaCache##putNativeValue(String, Object, long) VALUE={}", value);
-            LOGGER.debug("MemcachedFleaCache##putNativeValue(String, Object, long) SECONDS={}", value);
+            LOGGER.debug("MemcachedFleaCache##putNativeValue(String, Object, long) EXPIRY={}s", expiry);
 
         }
-        memcachedClient.set(key, value, new Date(expire * 1000));
+        memcachedClient.set(key, value, new Date(expiry * 1000));
     }
 
     @Override

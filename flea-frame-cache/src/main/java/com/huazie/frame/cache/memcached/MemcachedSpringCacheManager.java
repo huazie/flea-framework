@@ -17,8 +17,8 @@ public class MemcachedSpringCacheManager extends AbstractSpringCacheManager {
     private MemCachedClient memcachedClient;   // memcached客户端类
 
     @Override
-    protected AbstractSpringCache newCache(String name, long expire) {
-        return new MemcachedSpringCache(name, expire, memcachedClient);
+    protected AbstractSpringCache newCache(String name, long expiry) {
+        return new MemcachedSpringCache(name, expiry, memcachedClient);
     }
 
     public void setMemcachedClient(MemCachedClient memcachedClient) {

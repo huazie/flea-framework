@@ -37,12 +37,12 @@ public abstract class AbstractFleaCacheManager {
     public AbstractFleaCache getCache(String name) {
         synchronized (cacheMap) {
             if (!cacheMap.containsKey(name)) {
-                Long expire = configMap.get(name);
-                if (ObjectUtils.isEmpty(expire)) {
-                    expire = CommonConstants.NumeralConstants.ZERO; // 表示永久
-                    configMap.put(name, expire);
+                Long expiry = configMap.get(name);
+                if (ObjectUtils.isEmpty(expiry)) {
+                    expiry = CommonConstants.NumeralConstants.ZERO; // 表示永久
+                    configMap.put(name, expiry);
                 }
-                cacheMap.put(name, newCache(name, expire));
+                cacheMap.put(name, newCache(name, expiry));
             }
         }
         return cacheMap.get(name);
@@ -56,7 +56,7 @@ public abstract class AbstractFleaCacheManager {
      * @return 新建的缓存对象
      * @since 1.0.0
      */
-    protected abstract AbstractFleaCache newCache(String name, long expire);
+    protected abstract AbstractFleaCache newCache(String name, long expiry);
 
     /**
      * <p> 设置各缓存失效时间配置Map </p>

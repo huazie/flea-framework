@@ -21,13 +21,13 @@ public abstract class AbstractFleaCache implements IFleaCache {
 
     private Set<String> keySet = new HashSet<String>();
     private final String name;  // 缓存主要关键字（用于区分）
-    private final long expire;  // 失效时间(单位：秒)
+    private final long expiry;  // 有效期(单位：秒)
 
     protected CacheEnum cache;  // 缓存类型
 
-    public AbstractFleaCache(String name, long expire) {
+    public AbstractFleaCache(String name, long expiry) {
         this.name = name;
-        this.expire = expire;
+        this.expiry = expiry;
     }
 
     @Override
@@ -54,7 +54,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
         if (ObjectUtils.isEmpty(value))
             return;
         try {
-            putNativeValue(getNativeKey(key), value, expire);
+            putNativeValue(getNativeKey(key), value, expiry);
             keySet.add(key);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
@@ -116,8 +116,8 @@ public abstract class AbstractFleaCache implements IFleaCache {
         return name;
     }
 
-    public long getExpire() {
-        return expire;
+    public long getExpiry() {
+        return expiry;
     }
 
     public String getCacheName() {

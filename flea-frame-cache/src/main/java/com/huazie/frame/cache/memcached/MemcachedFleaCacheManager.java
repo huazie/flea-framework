@@ -74,8 +74,8 @@ public class MemcachedFleaCacheManager extends AbstractFleaCacheManager {
     }
 
     @Override
-    protected AbstractFleaCache newCache(String name, long expire) {
-        return new MemcachedFleaCache(name, expire, memcachedClient);
+    protected AbstractFleaCache newCache(String name, long expiry) {
+        return new MemcachedFleaCache(name, expiry, memcachedClient);
     }
 
     public void setMemcachedClient(MemCachedClient memcachedClient) {

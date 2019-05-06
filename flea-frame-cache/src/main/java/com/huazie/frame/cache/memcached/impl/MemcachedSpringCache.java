@@ -17,8 +17,8 @@ public class MemcachedSpringCache extends AbstractSpringCache {
         super(name, fleaCache);
     }
 
-    public MemcachedSpringCache(String name, long expire, MemCachedClient memcachedClient) {
-        super(name, new MemcachedFleaCache(name, expire, memcachedClient));
+    public MemcachedSpringCache(String name, long expiry, MemCachedClient memcachedClient) {
+        super(name, new MemcachedFleaCache(name, expiry, memcachedClient));
     }
 
 }

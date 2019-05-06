@@ -13,7 +13,7 @@ import com.huazie.frame.cache.AbstractSpringCacheManager;
 public class RedisFleaCacheManager extends AbstractSpringCacheManager {
 
     @Override
-    protected AbstractSpringCache newCache(String name, long expire) {
+    protected AbstractSpringCache newCache(String name, long expiry) {
         return null;
     }
 
