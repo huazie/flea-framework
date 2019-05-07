@@ -75,7 +75,7 @@ public final class FleaJPAQuery implements Serializable {
         this.sourceClazz = sourceClazz;
         this.resultClazz = resultClazz;
         criteriaBuilder = entityManager.getCriteriaBuilder();
-        if (null == resultClazz) {
+        if (ObjectUtils.isEmpty(resultClazz)) {
             criteriaQuery = criteriaBuilder.createQuery(sourceClazz);
         } else {
             criteriaQuery = criteriaBuilder.createQuery(resultClazz);
@@ -111,39 +111,18 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void equal(String attrName, Object value) throws DaoException {
-        if (StringUtils.isBlank(attrName)) {
-            throw new DaoException("ERROR-DB-DAO0000000001");
-        }
-        if (ObjectUtils.isEmpty(value)) {
-            throw new DaoException("ERROR-DB-DAO0000000002", attrName);
-        }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FMJPAQuery##equal(attrName, value) -->> AttrName={}, Value={}", attrName, value);
-        }
-        predicates.add(criteriaBuilder.equal(root.get(attrName), value));
+        newEqualExpression(attrName, value, true);
     }
 
     /**
      * <p> 等于条件 </p>
      *
-     * @param paramterMap 参数集合
+     * @param paramMap 参数集合
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void equal(Map<String, Object> paramterMap) throws DaoException {
-        if (paramterMap == null || paramterMap.isEmpty()) {
-            throw new DaoException("ERROR-DB-DAO0000000003");
-        }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FMJPAQuery##equal(paramterMap) -->> paramterMap={}", paramterMap);
-        }
-        Set<String> keySet = paramterMap.keySet();
-        Iterator<String> it = keySet.iterator();
-        while (it.hasNext()) {
-            String key = it.next();
-            Object value = paramterMap.get(key);
-            predicates.add(criteriaBuilder.equal(root.get(key), value));
-        }
+    public void equal(Map<String, Object> paramMap) throws DaoException {
+        newEqualExpression(paramMap, true);
     }
 
     /**
@@ -155,6 +134,30 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void notEqual(String attrName, Object value) throws DaoException {
+        newEqualExpression(attrName, value, false);
+    }
+
+    /**
+     * <p> 等于条件 </p>
+     *
+     * @param paramMap 条件集合
+     * @throws DaoException 数据操作层异常类
+     * @since 1.0.0
+     */
+    public void notEqual(Map<String, Object> paramMap) throws DaoException {
+        newEqualExpression(paramMap, false);
+    }
+
+    /**
+     * <p> 构建 equal 或 notEqual 表达式 </p>
+     *
+     * @param attrName 属性名
+     * @param value    属性值
+     * @param isEqual  true: 构建equal表达式; false: 构建notEqual表达式
+     * @throws DaoException 数据操作层异常类
+     * @since 1.0.0
+     */
+    private void newEqualExpression(String attrName, Object value, boolean isEqual) throws DaoException {
         if (StringUtils.isBlank(attrName)) {
             throw new DaoException("ERROR-DB-DAO0000000001");
         }
@@ -162,31 +165,48 @@ public final class FleaJPAQuery implements Serializable {
             throw new DaoException("ERROR-DB-DAO0000000002", attrName);
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FMJPAQuery##notEqual(attrName, value) -->> AttrName={}, Value={}", attrName, value);
+            if (isEqual) {
+                LOGGER.debug("FMJPAQuery##equal(attrName, value) -->> AttrName={}, Value={}", attrName, value);
+            } else {
+                LOGGER.debug("FMJPAQuery##notEqual(attrName, value) -->> AttrName={}, Value={}", attrName, value);
+            }
         }
-        predicates.add(criteriaBuilder.notEqual(root.get(attrName), value));
+        if (isEqual) {
+            predicates.add(criteriaBuilder.equal(root.get(attrName), value));
+        } else {
+            predicates.add(criteriaBuilder.notEqual(root.get(attrName), value));
+        }
     }
 
     /**
-     * <p> 等于条件 </p>
+     * <p> 构建 equal 或 notEqual 表达式 </p>
      *
-     * @param paramterMap 条件集合
+     * @param paramMap 条件集合
+     * @param isEqual  true: 构建equal表达式; false: 构建notEqual表达式
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void notEqual(Map<String, Object> paramterMap) throws DaoException {
-        if (paramterMap == null || paramterMap.isEmpty()) {
+    private void newEqualExpression(Map<String, Object> paramMap, boolean isEqual) throws DaoException {
+        if (paramMap == null || paramMap.isEmpty()) {
             throw new DaoException("ERROR-DB-DAO0000000003");
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FMJPAQuery##equal(paramterMap) -->> paramterMap={}", paramterMap);
+            if (isEqual) {
+                LOGGER.debug("FMJPAQuery##equal(Map<String, Object>) -->> paramMap={}", paramMap);
+            } else {
+                LOGGER.debug("FMJPAQuery##notEqual(Map<String, Object>) -->> paramMap={}", paramMap);
+            }
         }
-        Set<String> keySet = paramterMap.keySet();
+        Set<String> keySet = paramMap.keySet();
         Iterator<String> it = keySet.iterator();
         while (it.hasNext()) {
             String key = it.next();
-            Object value = paramterMap.get(key);
-            predicates.add(criteriaBuilder.notEqual(root.get(key), value));
+            Object value = paramMap.get(key);
+            if (isEqual) {
+                predicates.add(criteriaBuilder.equal(root.get(key), value));
+            } else {
+                predicates.add(criteriaBuilder.notEqual(root.get(key), value));
+            }
         }
     }
 
@@ -198,13 +218,7 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void isNull(String attrName) throws DaoException {
-        if (StringUtils.isBlank(attrName)) {
-            throw new DaoException("ERROR-DB-DAO0000000001");
-        }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FMJPAQuery##isNull(attrName) -->> AttrName={}, Value={}", attrName);
-        }
-        predicates.add(criteriaBuilder.isNull(root.get(attrName)));
+        newIsNullExpression(attrName, true);
     }
 
     /**
@@ -215,13 +229,33 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void isNotNull(String attrName) throws DaoException {
+        newIsNullExpression(attrName, false);
+    }
+
+    /**
+     * <p> 构建 isNull 或 isNotNull 表达式  </p>
+     *
+     * @param attrName 属性名
+     * @param isNull   true: 构建isNull表达式; false: 构建isNotNull表达式
+     * @throws DaoException 数据操作层异常类
+     * @since 1.0.0
+     */
+    private void newIsNullExpression(String attrName, boolean isNull) throws DaoException {
         if (StringUtils.isBlank(attrName)) {
             throw new DaoException("ERROR-DB-DAO0000000001");
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FMJPAQuery##isNotNull(attrName) -->> AttrName={}, Value={}", attrName);
+            if (isNull) {
+                LOGGER.debug("FMJPAQuery##isNull(attrName) -->> AttrName={}, Value={}", attrName);
+            } else {
+                LOGGER.debug("FMJPAQuery##isNotNull(attrName) -->> AttrName={}, Value={}", attrName);
+            }
         }
-        predicates.add(criteriaBuilder.isNotNull(root.get(attrName)));
+        if (isNull) {
+            predicates.add(criteriaBuilder.isNull(root.get(attrName)));
+        } else {
+            predicates.add(criteriaBuilder.isNotNull(root.get(attrName)));
+        }
     }
 
     /**
@@ -233,21 +267,7 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void in(String attrName, Collection value) throws DaoException {
-        if (StringUtils.isBlank(attrName)) {
-            throw new DaoException("ERROR-DB-DAO0000000001");
-        }
-        if (ObjectUtils.isEmpty(value) || value.isEmpty()) {
-            throw new DaoException("ERROR-DB-DAO0000000004");
-        }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FMJPAQuery##in(attrName, value) -->> AttrName={}, Value={}", attrName, value);
-        }
-        Iterator iterator = value.iterator();
-        In in = criteriaBuilder.in(root.get(attrName));
-        while (iterator.hasNext()) {
-            in.value(iterator.next());
-        }
-        predicates.add(in);
+        newInExpression(attrName, value, true);
     }
 
     /**
@@ -259,6 +279,18 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void notIn(String attrName, Collection value) throws DaoException {
+        newInExpression(attrName, value, false);
+    }
+
+    /**
+     * <p> 构建 In 或 notIn 表达式 </p>
+     *
+     * @param attrName 属性名称
+     * @param value    值集合
+     * @throws DaoException 数据操作层异常类
+     * @since 1.0.0
+     */
+    private void newInExpression(String attrName, Collection value, boolean isIn) throws DaoException {
         if (StringUtils.isBlank(attrName)) {
             throw new DaoException("ERROR-DB-DAO0000000001");
         }
@@ -266,14 +298,22 @@ public final class FleaJPAQuery implements Serializable {
             throw new DaoException("ERROR-DB-DAO0000000004");
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FMJPAQuery##notIn(attrName, value) -->> AttrName={}, Value={}", attrName, value);
+            if (isIn) {
+                LOGGER.debug("FMJPAQuery##in(attrName, value) -->> AttrName={}, Value={}", attrName, value);
+            } else {
+                LOGGER.debug("FMJPAQuery##notIn(attrName, value) -->> AttrName={}, Value={}", attrName, value);
+            }
         }
         Iterator iterator = value.iterator();
         In in = criteriaBuilder.in(root.get(attrName));
         while (iterator.hasNext()) {
             in.value(iterator.next());
         }
-        predicates.add(criteriaBuilder.not(in));
+        if (isIn) {
+            predicates.add(in);
+        } else {
+            predicates.add(criteriaBuilder.not(in));
+        }
     }
 
     /**
@@ -294,7 +334,7 @@ public final class FleaJPAQuery implements Serializable {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FMJPAQuery##like(attrName, value) -->> AttrName={}, Value={}", attrName, value);
         }
-        if (value.indexOf(DBConstants.SQLConstants.SQL_PERCENT) < 0) {
+        if (!value.contains(DBConstants.SQLConstants.SQL_PERCENT)) {
             value = DBConstants.SQLConstants.SQL_PERCENT + value + DBConstants.SQLConstants.SQL_PERCENT;
         }
         predicates.add(criteriaBuilder.like(root.get(attrName), value));
@@ -658,118 +698,87 @@ public final class FleaJPAQuery implements Serializable {
     }
 
     /**
-     * <p> 获取查询的结果集合 </p>
+     * <p> 获取查询的记录行结果集合 </p>
      *
-     * @return 查询结果集合
+     * @return 记录行结果集合
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
     public List getResultList() throws DaoException {
-        if (ObjectUtils.isEmpty(sourceClazz)) {
-            throw new DaoException("ERROR-DB-DAO0000000008");
-        }
-        if (predicates != null && !predicates.isEmpty()) {
-            // 将所有条件用 and 联合起来
-            criteriaQuery.where(criteriaBuilder.and(predicates.toArray(new Predicate[0])));
-            criteriaQuery.select(root);
-        }
-        if (orders != null && !orders.isEmpty()) {
-            criteriaQuery.orderBy(orders);
-        }
-        if (groupBy != null && !groupBy.isEmpty()) { // 有待修改
-            criteriaQuery.groupBy(root.get(groupBy));
-        }
-        return entityManager.createQuery(criteriaQuery).getResultList();
+        return createQuery(false).getResultList();
     }
 
     /**
-     * <p> 获取查询的结果集合（设置分页） </p>
+     * <p> 获取查询的记录行结果集合（设置分页） </p>
      *
      * @param start 开始查询记录行
      * @param max   最大查询数量
-     * @return 查询的结果集合（可以分页）
+     * @return 记录行结果集合
      * @since 1.0.0
      */
     public List getResultList(int start, int max) throws DaoException {
-        if (ObjectUtils.isEmpty(sourceClazz)) {
-            throw new DaoException("ERROR-DB-DAO0000000008");
-        }
-        if (predicates != null && !predicates.isEmpty()) {
-            // 将所有条件用 and 联合起来
-            criteriaQuery.where(criteriaBuilder.and(predicates.toArray(new Predicate[0])));
-            criteriaQuery.select(root);
-        }
-        if (orders != null && !orders.isEmpty()) {
-            criteriaQuery.orderBy(orders);
-        }
-        final TypedQuery query = entityManager.createQuery(criteriaQuery);
-        query.setMaxResults(max);// 设置一次最大查询数量
-        query.setFirstResult(start);// 设置开始查询记录行
+        TypedQuery query = createQuery(false);
+        // 设置开始查询记录行
+        query.setFirstResult(start);
+        // 设置一次最大查询数量
+        query.setMaxResults(max);
         return query.getResultList();
     }
 
     /**
-     * <p> 获取查询的单个结果集合 </p>
-     * <p> 注意：这个需要提前调用select </p>
+     * <p> 获取查询的单个属性列结果集合 </p>
+     * <p> 需要先调用 distinct，否则默认返回行记录结果集合 </p>
      *
-     * @return 查询单个结果的集合
+     * @return 单个属性列结果集合
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
     public List getSingleResultList() throws DaoException {
-        if (ObjectUtils.isEmpty(sourceClazz)) {
-            throw new DaoException("ERROR-DB-DAO0000000008");
-        }
-        if (predicates != null && !predicates.isEmpty()) {
-            // 将所有条件用 and 联合起来
-            criteriaQuery.where(criteriaBuilder.and(predicates.toArray(new Predicate[0])));
-        }
-        if (orders != null && !orders.isEmpty()) {
-            criteriaQuery.orderBy(orders);
-        }
-        if (groupBy != null && !groupBy.isEmpty()) { // 有待修改
-            criteriaQuery.groupBy(root.get(groupBy));
-        }
-        return entityManager.createQuery(criteriaQuery).getResultList();
+        return createQuery(true).getResultList();
     }
 
     /**
-     * <p> 获取查询的单个结果集合（设置分页）</p>
-     * <p> 注意：这个需要提前调用select </p>
+     * <p> 获取查询的单个属性列结果集合（设置分页） </p>
+     * <p> 需要先调用 distinct，否则默认返回行记录结果集合 </p>
      *
      * @param start 开始查询记录行
      * @param max   最大查询数量
-     * @return 查询的单个结果集合（分页）
-     * @throws DaoException 数据操作层异常类
+     * @return 单个属性列结果集合（
      * @since 1.0.0
      */
     public List getSingleResultList(int start, int max) throws DaoException {
-        if (ObjectUtils.isEmpty(sourceClazz)) {
-            throw new DaoException("ERROR-DB-DAO0000000008");
-        }
-        if (predicates != null && !predicates.isEmpty()) {
-            // 将所有条件用 and 联合起来
-            criteriaQuery.where(criteriaBuilder.and(predicates.toArray(new Predicate[0])));
-        }
-        if (orders != null && !orders.isEmpty()) {
-            criteriaQuery.orderBy(orders);
-        }
-        final TypedQuery query = entityManager.createQuery(criteriaQuery);
-        query.setMaxResults(max);// 设置一次最大查询数量
-        query.setFirstResult(start);// 设置开始查询记录行
+        TypedQuery query = createQuery(true);
+        // 设置开始查询记录行
+        query.setFirstResult(start);
+        // 设置一次最大查询数量
+        query.setMaxResults(max);
         return query.getResultList();
     }
 
     /**
      * <p> 获取查询的单个结果 </p>
+     * <p> select 提前调用 (count, countDistinct, max, min, avg, sum, sumAsLong, sumAsDouble) </p>
      *
      * @return 查询的单个结果
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
     public Object getSingleResult() throws DaoException {
+        return createQuery(true).getSingleResult();
+    }
+
+    /**
+     * <p> 创建查询对象 </p>
+     *
+     * @return 查询对象
+     * @throws DaoException
+     */
+    private TypedQuery createQuery(boolean isSingle) throws DaoException {
         if (ObjectUtils.isEmpty(sourceClazz)) {
             throw new DaoException("ERROR-DB-DAO0000000008");
+        }
+        if (!isSingle) {
+            criteriaQuery.select(root);
         }
         if (predicates != null && !predicates.isEmpty()) {
             // 将所有条件用 and 联合起来
@@ -779,8 +788,10 @@ public final class FleaJPAQuery implements Serializable {
             // 将order by 添加到查询语句中
             criteriaQuery.orderBy(orders);
         }
-        Object result = entityManager.createQuery(criteriaQuery).getSingleResult();
-        return result;
+        if (groupBy != null && !groupBy.isEmpty()) { // 有待修改
+            criteriaQuery.groupBy(root.get(groupBy));
+        }
+        return entityManager.createQuery(criteriaQuery);
     }
 
     public EntityManager getEntityManager() {
