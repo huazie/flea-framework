@@ -1,13 +1,6 @@
 package com.huazie.frame.db.common;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import org.apache.commons.digester.Digester;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.xml.sax.SAXException;
-
+import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.ResourcesUtil;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.exception.SqlTemplateException;
@@ -24,6 +17,11 @@ import com.huazie.frame.db.common.sql.template.config.Update;
 import com.huazie.frame.db.common.table.split.config.Split;
 import com.huazie.frame.db.common.table.split.config.Table;
 import com.huazie.frame.db.common.table.split.config.Tables;
+import org.apache.commons.digester.Digester;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.InputStream;
 
 /**
  * XML解析类（涉及SQL模板配置flea-sql-template.xml, 分表配置flea-table-split.xml）
@@ -36,30 +34,29 @@ public class XmlDigesterHelper {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(XmlDigesterHelper.class);
 
-    private static XmlDigesterHelper xmlDigester = null;
+    private static volatile XmlDigesterHelper xmlDigester;
 
     private static Boolean isInit = Boolean.FALSE;
     private static Boolean isTablesInit = Boolean.FALSE;
     private static Boolean isSqlTemplateInit = Boolean.FALSE;
 
-    private static Tables tables = null;
+    private static Tables tables;
 
-    private static Sql sql = null;
+    private static Sql sql;
 
     /**
-     * 只允许通过getInstance()获取 XML解析类
+     * <p> 只允许通过getInstance()获取 XML解析类 </p>
      */
     private XmlDigesterHelper() {
     }
 
     /**
-     * 获取XML工具类
+     * <p> 获取XML工具类 </p>
      *
      * @return XML解析工具类对象
-     * @throws Exception
-     * @date 2018年1月26日
+     * @since 1.0.0
      */
-    public static XmlDigesterHelper getInstance() throws Exception {
+    public static XmlDigesterHelper getInstance() {
         if (isInit.equals(Boolean.FALSE)) {
             synchronized (isInit) {
                 if (isInit.equals(Boolean.FALSE)) {
@@ -72,13 +69,13 @@ public class XmlDigesterHelper {
     }
 
     /**
-     * 获取分表信息
+     * <p> 获取分表信息 </p>
      *
      * @return 分表信息对象
-     * @date 2018年1月26日
+     * @since 1.0.0
      */
     public Tables getTables() {
-        if (tables == null) {
+        if (ObjectUtils.isEmpty(tables)) {
             synchronized (isTablesInit) {
                 if (isTablesInit.equals(Boolean.FALSE)) {
                     try {
@@ -94,22 +91,22 @@ public class XmlDigesterHelper {
     }
 
     private Tables newTables() throws TableSplitException {
-        Tables tabs = null;
+        Tables tabs;
         String fileName = "flea/db/flea-table-split.xml";
         if (StringUtils.isNotBlank(System.getProperty("fleaframe.db.table.split.filename"))) {
             fileName = StringUtils.trim(System.getProperty("fleaframe.db.table.split.filename"));
-            if (XmlDigesterHelper.LOGGER.isDebugEnabled()) {
-                XmlDigesterHelper.LOGGER.debug("XmlDigesterHelper##newTables Use the specified flea-table-split.xml :" + fileName);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("XmlDigesterHelper##newTables Use the specified flea-table-split.xml :" + fileName);
             }
         }
 
-        if (XmlDigesterHelper.LOGGER.isDebugEnabled()) {
-            XmlDigesterHelper.LOGGER.debug("XmlDigesterHelper##newTables Start parse the flea-table-split.xml");
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("XmlDigesterHelper##newTables Start parse the flea-table-split.xml");
         }
 
         InputStream input = ResourcesUtil.getInputStreamFromClassPath(fileName);
-        if (input == null) {
-            throw new TableSplitException("该路径下找不到指定配置文件");
+        if (ObjectUtils.isEmpty(input)) {
+            throw new TableSplitException("ERROR-DB-SQT0000000027", fileName);
         }
 
         Digester digester = new Digester();
@@ -129,27 +126,25 @@ public class XmlDigesterHelper {
 
         try {
             tabs = (Tables) digester.parse(input);
-        } catch (IOException e) {
-            throw new TableSplitException("XML转化异常：", e);
-        } catch (SAXException e) {
-            throw new TableSplitException("XML转化异常：", e);
+        } catch (Exception e) {
+            throw new TableSplitException("ERROR-DB-SQT0000000028", e);
         }
 
-        if (XmlDigesterHelper.LOGGER.isDebugEnabled()) {
-            XmlDigesterHelper.LOGGER.debug("XmlDigesterHelper##newTables End parse the flea-table-split.xml");
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("XmlDigesterHelper##newTables End parse the flea-table-split.xml");
         }
 
         return tabs;
     }
 
     /**
-     * 获取Sql模板配置
+     * <p> 获取Sql模板配置 </p>
      *
      * @return Sql模板对象
-     * @date 2018年1月26日
+     * @since 1.0.0
      */
     public Sql getSqlTemplate() {
-        if (sql == null) {
+        if (ObjectUtils.isEmpty(sql)) {
             synchronized (isSqlTemplateInit) {
                 if (isSqlTemplateInit.equals(Boolean.FALSE)) {
                     try {
@@ -165,23 +160,24 @@ public class XmlDigesterHelper {
     }
 
     private Sql newSqlTemplate() throws SqlTemplateException {
-        Sql sqlTemplate = null;
+        Sql sqlTemplate;
 
         String fileName = "flea/db/flea-sql-template.xml";
         if (StringUtils.isNotBlank(System.getProperty("fleaframe.db.sql.template.filename"))) {
             fileName = StringUtils.trim(System.getProperty("fleaframe.db.sql.template.filename"));
-            if (XmlDigesterHelper.LOGGER.isDebugEnabled()) {
-                XmlDigesterHelper.LOGGER.debug("XmlDigesterHelper##newSqlTemplate Use the specified flea-sql-template.xml :" + fileName);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("XmlDigesterHelper##newSqlTemplate Use the specified flea-sql-template.xml :" + fileName);
             }
         }
 
-        if (XmlDigesterHelper.LOGGER.isDebugEnabled()) {
-            XmlDigesterHelper.LOGGER.debug("XmlDigesterHelper##newTables Start parse the flea-sql-template.xml");
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("XmlDigesterHelper##newSqlTemplate Use the current flea-sql-template.xml :" + fileName);
+            LOGGER.debug("XmlDigesterHelper##newTables Start parse the flea-sql-template.xml");
         }
 
         InputStream input = ResourcesUtil.getInputStreamFromClassPath(fileName);
-        if (input == null) {
-            throw new SqlTemplateException("该路径下找不到指定配置文件");
+        if (ObjectUtils.isEmpty(input)) {
+            throw new SqlTemplateException("ERROR-DB-SQT0000000027", fileName);
         }
 
         Digester digester = new Digester();
@@ -257,14 +253,12 @@ public class XmlDigesterHelper {
 
         try {
             sqlTemplate = (Sql) digester.parse(input);
-        } catch (IOException e) {
-            throw new SqlTemplateException("XML转化异常：", e);
-        } catch (SAXException e) {
-            throw new SqlTemplateException("XML转化异常：", e);
+        } catch (Exception e) {
+            throw new SqlTemplateException("ERROR-DB-SQT0000000028", e);
         }
 
-        if (XmlDigesterHelper.LOGGER.isDebugEnabled()) {
-            XmlDigesterHelper.LOGGER.debug("XmlDigesterHelper##newTables End parse the flea-sql-template.xml");
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("XmlDigesterHelper##newTables End parse the flea-sql-template.xml");
         }
 
         return sqlTemplate;

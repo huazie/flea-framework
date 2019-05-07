@@ -76,17 +76,17 @@ public class DeleteSqlTemplate<T> extends SqlTemplate<T> {
         Property conditions = propMap.get(SqlTemplateEnum.CONDITIONS.getKey());
 
         if (conditions == null) {
-            throw new SqlTemplateException("请检查SQL模板【id=" + this.getId() + "】配置属性（【key=conditions】的配置不存在）");
+            throw new SqlTemplateException("ERROR-DB-SQT0000000016", getId());
         }
 
         String condStr = conditions.getValue();
-        Map<String, String> whereMap = this.createConditionMap(condStr);
+        Map<String, String> whereMap = createConditionMap(condStr);
 
         // 校验【key=conditions】的数据是否正确
-        Column[] realEntityCols = this.check(entityCols, whereMap);
-        this.createParamMap(params, realEntityCols);// 设置SQL参数
+        Column[] realEntityCols = check(entityCols, whereMap);
+        createParamMap(params, realEntityCols);// 设置SQL参数
 
-        StringUtils.replace(sql, this.createPlaceHolder(SqlTemplateEnum.CONDITIONS.getKey()), condStr);
+        StringUtils.replace(sql, createPlaceHolder(SqlTemplateEnum.CONDITIONS.getKey()), condStr);
 
     }
 
@@ -94,21 +94,20 @@ public class DeleteSqlTemplate<T> extends SqlTemplate<T> {
      * 校验【key=conditions】的数据是否正确 <br/>
      * 注意： （1） where子句的属性列和属性变量一一对应
      *
-     * @param entityCols 实体类对象的属性集合
+     * @param entityCols 实体类对象的属性数组
      * @param whereMap   WHERE子句的map集合（key：属性列， map：属性列变量）
-     * @return
+     * @return where子句对应的实体类对象的属性数组
      * @throws Exception
-     * @date 2018年6月2日
      * @since 1.0.0
      */
     private Column[] check(final Column[] entityCols, Map<String, String> whereMap) throws Exception {
 
         if (whereMap == null || whereMap.isEmpty()) {
-            throw new SqlTemplateException("请检查SQL模板【id=" + this.getId() + "】配置属性（【key=conditions】中的【value】不能为空）");
+            throw new SqlTemplateException("ERROR-DB-SQT0000000018", getId());
         }
 
         // 校验WHERE子句中的属性列和属性变量是否一一对应，并获取WHERE子句相关的属性列集合
-        Column[] whereCols = this.checkOneByOne(entityCols, whereMap, SqlTemplateEnum.CONDITIONS);
+        Column[] whereCols = checkOneByOne(entityCols, whereMap, SqlTemplateEnum.CONDITIONS);
 
         return whereCols;
     }

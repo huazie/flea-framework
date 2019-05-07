@@ -74,8 +74,8 @@ public class UnicodeUtils {
      * @throws Exception
      * @since 1.0.0
      */
-    public static void fileNativeToUnicode(String exePath, String nativeFilePath, String unicodeFilePath) throws Exception {
-        String[] cmd = {exePath, "-encoding", "utf-8", nativeFilePath, unicodeFilePath};
+    public static void fileNativeToUnicode(String exePath, String charset, String nativeFilePath, String unicodeFilePath) throws Exception {
+        String[] cmd = {exePath, "-encoding", charset, nativeFilePath, unicodeFilePath};
         Runtime.getRuntime().exec(cmd);
     }
 

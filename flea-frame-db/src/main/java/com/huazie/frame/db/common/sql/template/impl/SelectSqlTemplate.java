@@ -1,5 +1,6 @@
 package com.huazie.frame.db.common.sql.template.impl;
 
+import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.DBConstants;
 import com.huazie.frame.db.common.exception.SqlTemplateException;
@@ -73,19 +74,18 @@ public class SelectSqlTemplate<T> extends SqlTemplate<T> {
     }
 
     @Override
-    protected void initSqlTemplate(StringBuilder sql, Map<String, Object> params, Column[] entityCols,
-                                   Map<String, Property> propMap) throws Exception {
+    protected void initSqlTemplate(StringBuilder sql, Map<String, Object> params, Column[] entityCols, Map<String, Property> propMap) throws Exception {
         // 获取【key=columns】的属性， 存储SELECT子句的内容（ para_id, para_type, para_code等等）
         Property columns = propMap.get(SqlTemplateEnum.COLUMNS.getKey());
         // 获取【key=conditions】的属性，存储WHERE子句的内容 （para_id = :paraId and para_type = :paraType）
         Property conditions = propMap.get(SqlTemplateEnum.CONDITIONS.getKey());
 
-        if (columns == null) {
-            throw new SqlTemplateException("请检查SQL模板【id=" + this.getId() + "】配置属性（【key=columns】的配置不存在）");
+        if (ObjectUtils.isEmpty(columns)) {
+            throw new SqlTemplateException("ERROR-DB-SQT0000000015", getId());
         }
 
-        if (conditions == null) {
-            throw new SqlTemplateException("请检查SQL模板【id=" + this.getId() + "】配置属性（【key=conditions】的配置不存在）");
+        if (ObjectUtils.isEmpty(conditions)) {
+            throw new SqlTemplateException("ERROR-DB-SQT0000000016", getId());
         }
 
         String colStr = columns.getValue();
@@ -96,13 +96,14 @@ public class SelectSqlTemplate<T> extends SqlTemplate<T> {
         }
 
         String[] cols = StringUtils.split(StringUtils.trim(colStr), DBConstants.SQLConstants.SQL_COMMA);
-        Map<String, String> whereMap = this.createConditionMap(condStr);
+        Map<String, String> whereMap = createConditionMap(condStr);
 
-        Column[] realEntityCols = this.check(entityCols, cols, whereMap);
-        this.createParamMap(params, realEntityCols);// 设置SQL参数
+        Column[] realEntityCols = check(entityCols, cols, whereMap);
+        // 设置SQL参数
+        createParamMap(params, realEntityCols);
 
-        StringUtils.replace(sql, this.createPlaceHolder(SqlTemplateEnum.COLUMNS.getKey()), colStr);
-        StringUtils.replace(sql, this.createPlaceHolder(SqlTemplateEnum.CONDITIONS.getKey()), condStr);
+        StringUtils.replace(sql, createPlaceHolder(SqlTemplateEnum.COLUMNS.getKey()), colStr);
+        StringUtils.replace(sql, createPlaceHolder(SqlTemplateEnum.CONDITIONS.getKey()), condStr);
 
     }
 
@@ -110,35 +111,34 @@ public class SelectSqlTemplate<T> extends SqlTemplate<T> {
      * 校验【key=columns】和【key=conditions】的数据是否正确 <br/>
      * 注意： （1）where子句的属性列和属性变量一一对应【key=conditions】
      *
-     * @param entityCols 实体类对象的属性集合
+     * @param entityCols 实体类对象的属性数组
      * @param cols       查询显示列数组
      * @param whereMap   WHERE子句的map集合（key：属性列， map：属性列变量）
-     * @return
+     * @return where子句对应的实体类对象的属性数组
      * @throws Exception
-     * @date 2018年6月3日
      * @since 1.0.0
      */
     private Column[] check(final Column[] entityCols, String[] cols, Map<String, String> whereMap) throws Exception {
 
         if (ArrayUtils.isEmpty(cols)) {
-            throw new SqlTemplateException("请检查SQL模板【id=" + this.getId() + "】配置属性（【key=columns】中的【value】不能为空）");
+            throw new SqlTemplateException("ERROR-DB-SQT0000000017", getId());
         }
 
         if (whereMap == null || whereMap.isEmpty()) {
-            throw new SqlTemplateException("请检查SQL模板【id=" + this.getId() + "】配置属性（【key=conditions】中的【value】不能为空）");
+            throw new SqlTemplateException("ERROR-DB-SQT0000000018", getId());
         }
 
         for (int n = 0; n < cols.length; n++) {
             String tabColumnName = StringUtils.trim(cols[n]);//表字段名
 
             Column column = (Column) EntityUtils.getEntity(entityCols, Column.COLUMN_TAB_COL_NAME, tabColumnName);
-            if (column == null) {
-                throw new SqlTemplateException("请检查SQL模板【id=" + this.getId() + "】配置属性（【key=columns】中的表字段 【" + tabColumnName + "】不存在)");
+            if (ObjectUtils.isEmpty(column)) {
+                throw new SqlTemplateException("ERROR-DB-SQT0000000024", getId(), tabColumnName);
             }
         }
 
         // 校验WHERE子句中的属性列和属性变量是否一一对应，并获取WHERE子句相关的属性列集合
-        Column[] whereCols = this.checkOneByOne(entityCols, whereMap, SqlTemplateEnum.CONDITIONS);
+        Column[] whereCols = checkOneByOne(entityCols, whereMap, SqlTemplateEnum.CONDITIONS);
 
         return whereCols;
     }

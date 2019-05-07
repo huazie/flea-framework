@@ -17,7 +17,7 @@ public class SqlTemplateConfig {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(SqlTemplateConfig.class);
 
-    private static volatile SqlTemplateConfig config = null;
+    private static volatile SqlTemplateConfig config;
 
     private Sql sql;
 
@@ -43,7 +43,7 @@ public class SqlTemplateConfig {
                         config = new SqlTemplateConfig(XmlDigesterHelper.getInstance().getSqlTemplate());
                     }
                 } catch (Exception e) {
-                    SqlTemplateConfig.LOGGER.error("Fail to init flea-sql-template.xml");
+                    LOGGER.error("Fail to init flea-sql-template.xml", e);
                 }
             }
         }

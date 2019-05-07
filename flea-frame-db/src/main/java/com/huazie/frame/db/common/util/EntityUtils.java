@@ -5,6 +5,7 @@ import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.exception.DaoException;
+import com.huazie.frame.db.common.exception.SqlTemplateException;
 import com.huazie.frame.db.common.sql.template.config.Template;
 import com.huazie.frame.db.common.table.column.Column;
 
@@ -149,8 +150,8 @@ public class EntityUtils {
             for (int i = 0; i < objs.length; i++) {
                 Object obj = objs[i];
                 Field field = obj.getClass().getDeclaredField(attrName);
-                if (field == null) {
-                    throw new Exception("请检查实体类中的属性（该属性" + attrName + "不存在）");
+                if (ObjectUtils.isEmpty(field)) {
+                    throw new SqlTemplateException("ERROR-DB-SQT0000000026", attrName);
                 }
                 String getter = CommonConstants.MethodConstants.GET + StringUtils.toUpperCaseInitial(attrName);// 属性的get方法名
                 Method method = obj.getClass().getMethod(getter, new Class[]{});

@@ -47,26 +47,26 @@ public class TableSplitHelper {
                 String implClass = split.getImplClass();// 分表转换实现类
 
                 if (StringUtils.isBlank(key)) {
-                    throw new TableSplitException("请检查分表配置信息（分表关键字key不能为空）");
+                    throw new TableSplitException("ERROR-DB-TSP0000000004");
                 }
 
                 if (StringUtils.isBlank(column)) {
-                    throw new TableSplitException("请检查分表配置信息（分表列名column不能为空）");
+                    throw new TableSplitException("ERROR-DB-TSP0000000005");
                 }
 
                 if (StringUtils.isBlank(implClass)) {
-                    throw new TableSplitException("请检查分表配置信息（分表分表转换实现类implClass不能为空）");
+                    throw new TableSplitException("ERROR-DB-TSP0000000006");
                 }
 
                 TableSplitEnum tableSplitEnum = (TableSplitEnum) EntityUtils.getEntity(TableSplitEnum.values(), DBConstants.TableSplitConstants.KEY, key);
 
                 if (null != tableSplitEnum && !implClass.equals(tableSplitEnum.getImplClass())) {
-                    throw new TableSplitException("请检查分表配置信息（分表转换实现类implClass非法）");
+                    throw new TableSplitException("ERROR-DB-TSP0000000007");
                 }
 
                 Column entityCol = (Column) EntityUtils.getEntity(entityCols, Column.COLUMN_TAB_COL_NAME, column);
                 if (ObjectUtils.isEmpty(entityCol)) {
-                    throw new TableSplitException("请检查分表配置信息（分表列名column不存在）");
+                    throw new TableSplitException("ERROR-DB-TSP0000000008");
                 }
                 // 获取分表转换实现类
                 ITableSplit tableSplit = (ITableSplit) ReflectUtils.newInstance(implClass);

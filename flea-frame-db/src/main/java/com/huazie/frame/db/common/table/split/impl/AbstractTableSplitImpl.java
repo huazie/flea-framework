@@ -39,7 +39,7 @@ public abstract class AbstractTableSplitImpl implements ITableSplit {
             tSplitPrefix = DateUtils.date2String((Date) tableSplitColumn, dateFormatEnum);
         }
         if (StringUtils.isBlank(tSplitPrefix)) {
-            throw new TableSplitException("获取" + dateFormatEnum.getFormat() + "分表后缀异常");
+            throw new TableSplitException("ERROR-DB-TSP0000000001", dateFormatEnum.getFormat());
         }
         return StringUtils.strCat(tableName, DBConstants.SQLConstants.SQL_UNDERLINE, tSplitPrefix);
     }
@@ -55,14 +55,14 @@ public abstract class AbstractTableSplitImpl implements ITableSplit {
      */
     protected String convert(String tableName, Object tableSplitColumn, int len) throws TableSplitException {
         if (StringUtils.isBlank(tableName)) {
-            throw new TableSplitException("分表对应主表名不能为空");
+            throw new TableSplitException("ERROR-DB-TSP0000000002");
         }
         if (ObjectUtils.isEmpty(tableSplitColumn)) {
-            throw new TableSplitException("分表字段不能为空");
+            throw new TableSplitException("ERROR-DB-TSP0000000003");
         }
         String tSplitCol = tableSplitColumn.toString();
         if (StringUtils.isBlank(tSplitCol)) {
-            throw new TableSplitException("分表字段不能为空");
+            throw new TableSplitException("ERROR-DB-TSP0000000003");
         }
         String tSplitPrefix = StringUtils.subStrLast(tSplitCol, len);
         return StringUtils.strCat(tableName, DBConstants.SQLConstants.SQL_UNDERLINE, tSplitPrefix.toLowerCase());
