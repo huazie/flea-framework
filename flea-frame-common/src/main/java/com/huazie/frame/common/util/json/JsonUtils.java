@@ -16,7 +16,7 @@ import java.util.Map;
  * <p> Json 工具包 </p>
  *
  * @author huazie
- * @version v1.0.0
+ * @version 1.0.0
  * @since 1.0.0
  */
 public class JsonUtils {
@@ -52,7 +52,7 @@ public class JsonUtils {
                 }
             }
         } catch (Exception e) {
-            if(LOGGER.isErrorEnabled()){
+            if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("JsonUtils#toStringList(String, String) Exception = ", e);
             }
         }

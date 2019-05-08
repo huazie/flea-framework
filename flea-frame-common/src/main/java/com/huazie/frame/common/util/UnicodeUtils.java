@@ -4,7 +4,7 @@ package com.huazie.frame.common.util;
  * <p> Unicode工具类 </p>
  *
  * @author huazie
- * @version v1.0.0
+ * @version 1.0.0
  * @since 1.0.0
  */
 public class UnicodeUtils {
@@ -16,11 +16,10 @@ public class UnicodeUtils {
      * <p> 本地字符串转换为Unicode字符串 </p>
      *
      * @param nativeStr 本地字符串
-     * @return
-     * @throws Exception
+     * @return Unicode字符串
      * @since 1.0.0
      */
-    public static String nativeToUnicode(String nativeStr) throws Exception {
+    public static String nativeToUnicode(String nativeStr) {
         StringBuilder strBuilder = new StringBuilder();
         if (StringUtils.isNotBlank(nativeStr)) {
             for (int i = 0; i < nativeStr.length(); i++) {
@@ -44,11 +43,10 @@ public class UnicodeUtils {
      * <p> Unicode字符串转换为本地字符串 </p>
      *
      * @param unicodeStr unicode字符串
-     * @return
-     * @throws Exception
+     * @return 本地字符串
      * @since 1.0.0
      */
-    public static String unicodeToNative(String unicodeStr) throws Exception {
+    public static String unicodeToNative(String unicodeStr) {
         StringBuilder strBuilder = new StringBuilder();
         if (StringUtils.isNotBlank(unicodeStr)) {
             String[] unicodeArr = unicodeStr.split("\\\\u");
@@ -68,7 +66,7 @@ public class UnicodeUtils {
     /**
      * <p> 本地文件转成Unicode文件 </p>
      *
-     * @param exePath
+     * @param exePath 可执行文件路径（native2ascii.exe）
      * @param nativeFilePath  本地文件路径
      * @param unicodeFilePath Unicode文件路径
      * @throws Exception
@@ -82,7 +80,7 @@ public class UnicodeUtils {
     /**
      * <p> Unicode文件转成本地文件 </p>
      *
-     * @param exePath
+     * @param exePath 可执行文件路径（native2ascii.exe）
      * @param nativeFilePath  本地文件路径
      * @param unicodeFilePath Unicode文件路径
      * @throws Exception

@@ -3,6 +3,7 @@ package com.huazie.frame.db.common.util;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.ObjectUtils;
+import com.huazie.frame.common.util.ReflectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.exception.DaoException;
 import com.huazie.frame.db.common.sql.template.config.Template;
@@ -84,7 +85,7 @@ public class EntityUtils {
 
                 String getter = CommonConstants.MethodConstants.GET + StringUtils.toUpperCaseInitial(attrName);// 属性的get方法名
                 Method method = entity.getClass().getMethod(getter, new Class[]{});
-                Object value = method.invoke(entity, new Object[]{});// 该属性对应的值
+                Object value = ReflectUtils.getObjectAttrValue(entity, attrName);
                 column.setAttrValue(value);
 
                 String colName = ""; // 当前属性对应的字段名

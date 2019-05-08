@@ -18,7 +18,7 @@ import java.util.Map;
  * <p> Http工具类 </p>
  *
  * @author huazie
- * @version v1.0.0
+ * @version 1.0.0
  * @since 1.0.0
  */
 public class HttpUtils {
@@ -68,7 +68,7 @@ public class HttpUtils {
     }
 
     /**
-     * <p> 通过TaoBao的接口获取ip的地理地址 </p>
+     * <p> 通过TaoBao的接口获取ip所在地理地址 </p>
      *
      * @param ip ip地址
      * @return 较为精确的地理地址
@@ -119,7 +119,7 @@ public class HttpUtils {
     }
 
     /**
-     * <p> 通过Sina的接口获取ip的精确地址 </p>
+     * <p> 通过Sina的接口获取ip所在地理地址 </p>
      *
      * @param ip ip地址
      * @return 较为精确的地理地址
@@ -156,11 +156,11 @@ public class HttpUtils {
     }
 
     /**
-     * @param urlStr 获取ip精确地址的url
-     * @return
-     * @Description 获取ip精确地址
-     * @version v1.0.0
-     * @date 2017年3月2日
+     * <p> 获取ip所在地理地址相关信息 </p>
+     *
+     * @param urlStr url地址
+     * @return ip所在地理地址相关信息
+     * @since 1.0.0
      */
     private static String getAddress(String urlStr) {
         StringBuilder sb = new StringBuilder();

@@ -17,9 +17,11 @@ import java.util.Locale;
  */
 public abstract class CommonException extends Exception {
 
-    private String key;
-    private Locale locale;
-    private FleaI18nResEnum i18nResEnum;
+    private String key;                     // 国际化资源数据关键字
+
+    private Locale locale;                  // 国际化区域标识
+
+    private FleaI18nResEnum i18nResEnum;    // 国际化资源类型
 
     public CommonException(String mKey, FleaI18nResEnum mI18nResEnum) {
         this(mKey, mI18nResEnum, FleaFrameManager.getManager().getLocale());// 使用服务器当前默认的国际化区域设置
@@ -60,7 +62,7 @@ public abstract class CommonException extends Exception {
     }
 
     private static String convert(String key, String[] values, FleaI18nResEnum i18nResEnum, Locale locale) {
-        if (null == locale) {
+        if (ObjectUtils.isEmpty(locale)) {
             locale = FleaFrameManager.getManager().getLocale(); // 使用服务器当前默认的国际化区域设置
         }
         if (ArrayUtils.isNotEmpty(values) && ObjectUtils.isNotEmpty(i18nResEnum)) {

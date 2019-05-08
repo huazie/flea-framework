@@ -9,7 +9,7 @@ import java.util.Locale;
  * <p>Flea I18N 工具类</p>
  *
  * @author huazie
- * @version v1.0.0
+ * @version 1.0.0
  * @since 1.0.0
  */
 public class FleaI18nHelper {
@@ -130,7 +130,7 @@ public class FleaI18nHelper {
      *
      * @param key    资源数据编码
      * @param values 待替换字符串数组
-     * @return 18n资源数据
+     * @return i18n资源数据
      * @since 1.0.0
      */
     public static String i18nForCommon(String key, String[] values) {
@@ -142,7 +142,7 @@ public class FleaI18nHelper {
      *
      * @param key    资源数据编码
      * @param locale 国际化标识
-     * @return 18n资源数据
+     * @return i18n资源数据
      * @since 1.0.0
      */
     public static String i18nForCommon(String key, Locale locale) {
@@ -155,7 +155,7 @@ public class FleaI18nHelper {
      * @param key    资源数据编码
      * @param values 待替换字符串数组
      * @param locale 国际化标识
-     * @return 18n资源数据
+     * @return i18n资源数据
      * @since 1.0.0
      */
     public static String i18nForCommon(String key, String[] values, Locale locale) {

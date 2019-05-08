@@ -155,7 +155,7 @@ public class FleaJDBCConfig {
      */
     private static void closeConnection(Connection conn) {
         try {
-            if (null != conn) {
+            if (ObjectUtils.isNotEmpty(conn)) {
                 conn.close();
             }
         } catch (SQLException e) {
@@ -172,7 +172,7 @@ public class FleaJDBCConfig {
      */
     private static void closeStatement(Statement statement) {
         try {
-            if (null != statement) {
+            if (ObjectUtils.isNotEmpty(statement)) {
                 statement.close();
             }
         } catch (SQLException e) {
@@ -189,7 +189,7 @@ public class FleaJDBCConfig {
      */
     private static void closeResultSet(ResultSet rs) {
         try {
-            if (null != rs) {
+            if (ObjectUtils.isNotEmpty(rs)) {
                 rs.close();
             }
         } catch (SQLException e) {

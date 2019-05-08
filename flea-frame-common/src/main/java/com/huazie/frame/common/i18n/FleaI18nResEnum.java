@@ -4,7 +4,7 @@ package com.huazie.frame.common.i18n;
  * <p> Flea I18n 资源枚举 </p>
  *
  * @author huazie
- * @version v1.0.0
+ * @version 1.0.0
  * @since 1.0.0
  */
 public enum FleaI18nResEnum {
@@ -21,6 +21,7 @@ public enum FleaI18nResEnum {
      *
      * @param resName 资源名
      * @param resDesc 资源描述
+     * @since 1.0.0
      */
     FleaI18nResEnum(String resName, String resDesc) {
         this.resName = resName;

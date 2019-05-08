@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
  * <p> flea i18n 配置类 </p>
  *
  * @author huazie
- * @version v1.0.0
+ * @version 1.0.0
  * @since 1.0.0
  */
 public class FleaI18nConfig {
@@ -60,7 +60,7 @@ public class FleaI18nConfig {
     }
 
     /**
-     * <p>只允许通过getConfig()获取 flea i18n配置类实例</p>
+     * <p> 只允许通过getConfig()获取 flea i18n配置类实例 </p>
      */
     private FleaI18nConfig() {
     }
@@ -69,11 +69,12 @@ public class FleaI18nConfig {
      * <p>获取Flea i18n 配置类实例</p>
      *
      * @return Flea I18n 配置类实例
+     * @since 1.0.0
      */
     public static FleaI18nConfig getConfig() {
-        if (config == null) {
+        if (ObjectUtils.isEmpty(config)) {
             synchronized (FleaI18nConfig.class) {
-                if (config == null) {
+                if (ObjectUtils.isEmpty(config)) {
                     config = new FleaI18nConfig();
                 }
             }
@@ -82,7 +83,7 @@ public class FleaI18nConfig {
     }
 
     /**
-     * 通过国际化数据的key，获取当前系统指定资源的国际化资源
+     * <p> 通过国际化数据的key，获取当前系统指定资源的国际化资源 </p>
      *
      * @param key     国际化资源KEY
      * @param resName 资源名
@@ -95,7 +96,7 @@ public class FleaI18nConfig {
     }
 
     /**
-     * 通过国际化数据的key，获取当前系统指定资源的国际化资源数据
+     * <p> 通过国际化数据的key，获取当前系统指定资源的国际化资源数据 </p>
      *
      * @param key     国际化资源KEY
      * @param values  国际化资源数据替换内容
@@ -117,7 +118,7 @@ public class FleaI18nConfig {
     }
 
     /**
-     * <p>通过国际化数据的key，获取当前系统指定资源的国际化资源数据</p>
+     * <p> 通过国际化数据的key，获取当前系统指定资源的国际化资源数据 </p>
      *
      * @param key     国际化资源KEY
      * @param resName 资源名
@@ -148,11 +149,12 @@ public class FleaI18nConfig {
     }
 
     /**
-     * <p>根据资源名和国际化标识获取指定国际化配置ResourceBundle对象</p>
+     * <p> 根据资源名和国际化标识获取指定国际化配置ResourceBundle对象 </p>
      *
      * @param resName 资源名
      * @param locale  国际化标识
      * @return 国际化配置ResourceBundle对象
+     * @since 1.0.0
      */
     private ResourceBundle getResourceBundle(String resName, Locale locale) {
 
@@ -192,13 +194,13 @@ public class FleaI18nConfig {
     }
 
     /**
-     * <p>获取国际化资源文件KEY</p>
-     * <p>
-     * 如果资源名不为空，则资源名作为key，同时如果国际化标识不为空，则取资源名+下划线+国际化语言作为key；
+     * <p> 获取国际化资源文件KEY </p>
+     * <p> 如果资源名不为空，则资源名作为key，同时如果国际化标识不为空，则取资源名+下划线+国际化语言作为key；
      *
      * @param resName 资源名
      * @param locale  国际化标识
      * @return 国际化资源文件KEY
+     * @since 1.0.0
      */
     private String generateKey(String resName, Locale locale) {
         String key = "";

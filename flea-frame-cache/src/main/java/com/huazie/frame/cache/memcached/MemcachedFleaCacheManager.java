@@ -22,7 +22,7 @@ public class MemcachedFleaCacheManager extends AbstractFleaCacheManager {
 
     private static volatile MemcachedFleaCacheManager cacheManager;
 
-    private MemCachedClient memcachedClient;   // memcached 客户端类
+    private MemCachedClient memcachedClient;   // Memcached客户端类
 
     private MemcachedFleaCacheManager(MemCachedClient memcachedClient) {
         this.memcachedClient = memcachedClient;

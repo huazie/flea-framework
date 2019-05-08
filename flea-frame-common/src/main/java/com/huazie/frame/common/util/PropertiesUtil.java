@@ -33,13 +33,15 @@ public class PropertiesUtil {
         try {
             input = ResourcesUtil.getInputStreamFromClassPath(path);
             if (ObjectUtils.isEmpty(input)) {
-                throw new Exception("该路径下找不到指定配置文件");
+                throw new Exception("The specified configuration file could not be found under this path [" + path + "]");
             }
             reader = new BufferedReader(new InputStreamReader(input));
             prop.load(reader);
         } catch (Exception e) {
             prop = null;
-            LOGGER.error("PropertiesUtil##getProperties 读取路径为【" + path + "】的配置出错", e);
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("PropertiesUtil##getProperties 读取路径为【" + path + "】的配置出错", e);
+            }
         } finally {
             try {
                 if (ObjectUtils.isNotEmpty(reader)) {

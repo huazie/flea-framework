@@ -12,7 +12,7 @@ import java.util.Map;
  * <p> FastJson 工具类 </p>
  *
  * @author huazie
- * @version v1.0.0
+ * @version 1.0.0
  * @since 1.0.0
  */
 public class FastJsonUtils {
@@ -36,7 +36,7 @@ public class FastJsonUtils {
         try {
             t = JSON.parseObject(json, clazz);
         } catch (Exception e) {
-            if(LOGGER.isErrorEnabled()){
+            if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("FastJsonUtils#toEntity(String, Class<T>) Exception = ", e);
             }
         }
@@ -63,7 +63,7 @@ public class FastJsonUtils {
         try {
             entityList = JSON.parseArray(json, clazz);
         } catch (Exception e) {
-            if(LOGGER.isErrorEnabled()){
+            if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("FastJsonUtils#toEntityList(String, Class<T>) Exception = ", e);
             }
         }
@@ -89,7 +89,7 @@ public class FastJsonUtils {
             map = JSON.parseObject(json, new TypeReference<Map<String, Object>>() {
             });
         } catch (Exception e) {
-            if(LOGGER.isErrorEnabled()){
+            if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("FastJsonUtils#toMap(String) Exception = ", e);
             }
         }
@@ -115,7 +115,7 @@ public class FastJsonUtils {
             mapList = JSON.parseObject(json, new TypeReference<List<Map<String, Object>>>() {
             });
         } catch (Exception e) {
-            if(LOGGER.isErrorEnabled()){
+            if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("FastJsonUtils#toMapList(String) Exception = ", e);
             }
         }
@@ -132,7 +132,7 @@ public class FastJsonUtils {
      * @return json字符串
      * @since 1.0.0
      */
-    public static String toJsonString(Object obj){
+    public static String toJsonString(Object obj) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FastJsonUtils#toJsonString(String) Object = {}", obj);
         }

@@ -12,7 +12,7 @@ import java.util.UUID;
  * <p> 随机码生成公共类 </p>
  *
  * @author huazie
- * @version v1.0.0
+ * @version 1.0.0
  * @since 1.0.0
  */
 public class RandomCode {

@@ -68,9 +68,9 @@ public class MemcachedConfig {
      */
     public static MemcachedConfig getConfig() throws Exception {
 
-        if (null == config) {
+        if (ObjectUtils.isEmpty(config)) {
             synchronized (MemcachedConfig.class) {
-                if (null == config) {
+                if (ObjectUtils.isEmpty(config)) {
                     config = new MemcachedConfig();
                     int serverCount = PropertiesUtil.getIntegerValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_SERVER_COUNT);
                     if (serverCount > 0) {
@@ -78,7 +78,7 @@ public class MemcachedConfig {
                         for (int i = 0; i < serverCount; i++) {
                             String server = PropertiesUtil.getStringValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_SERVER + (i + 1));
                             if (StringUtils.isBlank(server)) {
-                                throw new Exception("请检查Memcached配置：" + CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_SERVER + (i + 1) + "不存在");
+                                throw new Exception("Please check the memcached config：" + CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_SERVER + (i + 1) + " is not exist");
                             }
                             servers[i] = server;
                         }
@@ -87,7 +87,7 @@ public class MemcachedConfig {
                         for (int i = 0; i < serverCount; i++) {
                             Integer weight = PropertiesUtil.getIntegerValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_WEIGHT + (i + 1));
                             if (ObjectUtils.isEmpty(weight)) {
-                                throw new Exception("请检查Memcached配置：" + CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_WEIGHT + (i + 1) + "不存在");
+                                throw new Exception("Please check the memcached config：" + CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_WEIGHT + (i + 1) + " is not exist");
                             }
                             weights[i] = weight;
                         }

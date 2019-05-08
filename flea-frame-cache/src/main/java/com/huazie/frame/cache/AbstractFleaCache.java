@@ -1,6 +1,7 @@
 package com.huazie.frame.cache;
 
 import com.huazie.frame.cache.common.CacheEnum;
+import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.util.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,7 +85,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
     /**
      * <p> 获取缓存值 </p>
      *
-     * @param key 缓存键
+     * @param key 缓存关键字
      * @return 缓存值
      * @since 1.0.0
      */
@@ -93,7 +94,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
     /**
      * <p> 添加缓存数据 </p>
      *
-     * @param key    缓存键
+     * @param key    缓存关键字
      * @param value  缓存值
      * @param expiry 失效时间（单位：秒）
      * @since 1.0.0
@@ -103,13 +104,19 @@ public abstract class AbstractFleaCache implements IFleaCache {
     /**
      * <p> 删除指定缓存数据 </p>
      *
-     * @param key 缓存键
+     * @param key 缓存关键字
      * @since 1.0.0
      */
     protected abstract void deleteNativeValue(String key);
 
+    /**
+     * <p> 获取实际存储的缓存键（缓存名 + 缓存关键字） </p>
+     *
+     * @param key 缓存关键字
+     * @return 实际存储的缓存键
+     */
     protected String getNativeKey(String key) {
-        return name + "_" + key;  // 可以自己定义
+        return name + CommonConstants.SymbolConstants.UNDERLINE + key;
     }
 
     public String getName() {

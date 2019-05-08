@@ -11,7 +11,7 @@ import java.lang.reflect.Method;
  * <p> 反射工具类 </p>
  *
  * @author huazie
- * @version v1.0.0
+ * @version 1.0.0
  * @since 1.0.0
  */
 public class ReflectUtils {
@@ -32,7 +32,7 @@ public class ReflectUtils {
             obj = clazz.newInstance();
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("当前类反射出错，Class={}", className, e);
+                LOGGER.error("当前类反射出错，Class={}, Exception={}", className, e);
             }
         }
         return obj;
@@ -49,12 +49,9 @@ public class ReflectUtils {
     public static Object getObjectAttrValue(Object obj, String attrName) {
         Object value = null;
         try {
-            Field field = obj.getClass().getDeclaredField(attrName);
-            if (field != null) {
-                String getter = CommonConstants.MethodConstants.GET + StringUtils.toUpperCaseInitial(attrName);// 属性的get方法名
-                Method method = obj.getClass().getMethod(getter, new Class[]{});
-                value = method.invoke(obj, new Object[]{});
-            }
+            String getter = CommonConstants.MethodConstants.GET + StringUtils.toUpperCaseInitial(attrName);// 属性的get方法名
+            Method method = obj.getClass().getMethod(getter, new Class[]{});
+            value = method.invoke(obj, new Object[]{});
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("获取对象指定属性值出错，Exception=", e);

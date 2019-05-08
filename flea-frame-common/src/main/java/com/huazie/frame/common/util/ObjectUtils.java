@@ -4,10 +4,11 @@ package com.huazie.frame.common.util;
  * <p> Object工具类 </p>
  *
  * @author huazie
- * @version v1.0.0
+ * @version 1.0.0
  * @since 1.0.0
  */
 public class ObjectUtils {
+
     /**
      * <p> 判断value是否为空 </p>
      *

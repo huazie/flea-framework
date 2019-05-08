@@ -4,7 +4,7 @@ package com.huazie.frame.common.util;
  * <p> 数据转换工具类 </p>
  *
  * @author huazie
- * @version v1.0.0
+ * @version 1.0.0
  * @since 1.0.0
  */
 public class DataConvert {
@@ -24,13 +24,13 @@ public class DataConvert {
         int byteLen;
         if (len % 2 == 1) {
             byteLen = len / 2 + 1;
-        }else{
+        } else {
             byteLen = len / 2;
         }
 
         byte[] bytes = new byte[byteLen];
         for (int i = 0; i < byteLen; i++) {
-            if( i == byteLen - 1){
+            if (i == byteLen - 1) {
                 if (len % 2 == 1) {
                     bytes[i] = (byte) Integer.parseInt(hex.substring(i * 2, i * 2 + 1), 16);
                     continue;

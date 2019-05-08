@@ -6,7 +6,7 @@ import java.sql.Timestamp;
  * <p> 时间工具类 </p>
  *
  * @author huazie
- * @version v1.0.0
+ * @version 1.0.0
  * @since 1.0.0
  */
 public class TimeUtil {

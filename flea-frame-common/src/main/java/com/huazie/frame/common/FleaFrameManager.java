@@ -27,6 +27,7 @@ public class FleaFrameManager {
      * <p> 获取一个Flea Frame管理类实例 </p>
      *
      * @return Flea Frame 管理类
+     * @since 1.0.0
      */
     public static FleaFrameManager getManager() {
         if (ObjectUtils.isEmpty(manager)) {
@@ -60,7 +61,7 @@ public class FleaFrameManager {
      * @since 1.0.0
      */
     public void setLocale(Locale locale) {
-        if(ObjectUtils.isEmpty(locale)){
+        if (ObjectUtils.isEmpty(locale)) {
             locale = Locale.getDefault();
         }
         sLocale.set(locale);
@@ -71,7 +72,7 @@ public class FleaFrameManager {
      *
      * @return 当前线程中使用JDBC连接的数据库配置前缀
      */
-    public String getDBPrefix(){
+    public String getDBPrefix() {
         return sDBLocal.get();
     }
 
@@ -79,10 +80,10 @@ public class FleaFrameManager {
      * <p> 设置当前线程中使用JDBC连接的数据库配置前缀 </p>
      *
      * @param dbSysName 数据库系统名
-     * @param dbName 数据库名
+     * @param dbName    数据库名
      */
-    public void setDBPrefix(String dbSysName, String dbName){
-        if(StringUtils.isNotBlank(dbSysName) && StringUtils.isNotBlank(dbName)){
+    public void setDBPrefix(String dbSysName, String dbName) {
+        if (StringUtils.isNotBlank(dbSysName) && StringUtils.isNotBlank(dbName)) {
             sDBLocal.set(dbSysName.toLowerCase() + CommonConstants.SymbolConstants.DOT + dbName.toLowerCase());
         }
     }

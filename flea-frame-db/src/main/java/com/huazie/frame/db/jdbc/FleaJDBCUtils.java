@@ -109,9 +109,9 @@ public class FleaJDBCUtils {
      */
     public static FleaDBOperationHandler queryWithReturnResultSet(String sql, Object... params) throws SQLException {
         FleaDBOperationHandler handler = getDBOperationHandler(sql, params);
-        if (null != handler) {
+        if (ObjectUtils.isNotEmpty(handler)) {
             PreparedStatement preparedStatement = handler.getPreparedStatement();
-            if (null != preparedStatement) {
+            if (ObjectUtils.isNotEmpty(preparedStatement)) {
                 handler.setResultSet(preparedStatement.executeQuery());
             }
         }
@@ -385,7 +385,7 @@ public class FleaJDBCUtils {
      * @since 1.0.0
      */
     public static void close(FleaDBOperationHandler handler) {
-        if (null != handler) {
+        if (ObjectUtils.isNotEmpty(handler)) {
             FleaJDBCConfig.close(handler.getConnection(), handler.getPreparedStatement(), handler.getResultSet());
         }
     }

@@ -15,7 +15,7 @@ import java.security.NoSuchAlgorithmException;
  * <p> 加密解密工具类 </p>
  *
  * @author huazie
- * @version v1.0.0
+ * @version 1.0.0
  * @since 1.0.0
  */
 public class SecurityUtils {
@@ -48,11 +48,11 @@ public class SecurityUtils {
      * <p> 信息加密 </p>
      *
      * @param algorithm 加密算法枚举
-     * @param info 待加密的信息
+     * @param info      待加密的信息
      * @return 加密后的信息
      * @since 1.0.0
      */
-    private static String encrypt(EncryptionAlgorithmEnum algorithm, String info){
+    private static String encrypt(EncryptionAlgorithmEnum algorithm, String info) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("SecurityUtils#encrypt(EncryptionAlgorithmEnum, String) Algorithm = {}", algorithm.getAlgorithm());
             LOGGER.debug("SecurityUtils#encrypt(EncryptionAlgorithmEnum, String) info = {}", info);
@@ -231,7 +231,7 @@ public class SecurityUtils {
             SecretKey secretKey = checkKey(algorithm, key);
             result = encrypt(algorithm, secretKey, info);
         } catch (Exception e) {
-            if(LOGGER.isErrorEnabled()){
+            if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("SecurityUtils#encrypt(String, String, String) Exception = ", e);
             }
         }
@@ -266,7 +266,7 @@ public class SecurityUtils {
             byte[] cipherByte = c1.doFinal(DataConvert.hex2byte(info));
             result = new String(cipherByte);
         } catch (Exception e) {
-            if(LOGGER.isErrorEnabled()){
+            if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("SecurityUtils#decrypt(String, SecretKey, String) Exception = ", e);
             }
         }
@@ -291,7 +291,7 @@ public class SecurityUtils {
             SecretKey secretKey = checkKey(algorithm, key);
             result = decrypt(algorithm, secretKey, info);
         } catch (Exception e) {
-            if(LOGGER.isErrorEnabled()){
+            if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("SecurityUtils#decrypt(String, String, String) Exception = ", e);
             }
         }
@@ -397,7 +397,7 @@ public class SecurityUtils {
         return decrypt(EncryptionAlgorithmEnum.AES.getAlgorithm(), key, info);
     }
 
-    private static SecretKey checkKey(String algorithm, String key)throws Exception{
+    private static SecretKey checkKey(String algorithm, String key) throws Exception {
         // 判断Key是否正确
         if (StringUtils.isBlank(key)) {
             throw new Exception("密钥不能为空");

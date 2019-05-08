@@ -14,7 +14,7 @@ import com.whalin.MemCached.MemCachedClient;
  */
 public class MemcachedSpringCacheManager extends AbstractSpringCacheManager {
 
-    private MemCachedClient memcachedClient;   // memcached客户端类
+    private MemCachedClient memcachedClient;   // Memcached客户端类
 
     @Override
     protected AbstractSpringCache newCache(String name, long expiry) {

@@ -4,7 +4,7 @@ package com.huazie.frame.common;
  * <p>日期格式化类型枚举</p>
  *
  * @author huazie
- * @version v1.0.0
+ * @version 1.0.0
  * @since 1.0.0
  */
 public enum DateFormatEnum {

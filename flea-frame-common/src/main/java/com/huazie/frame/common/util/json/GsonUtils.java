@@ -12,7 +12,7 @@ import java.util.Map;
  * <p> Gson 工具包 </p>
  *
  * @author huazie
- * @version v1.0.0
+ * @version 1.0.0
  * @since 1.0.0
  */
 public class GsonUtils {
@@ -37,7 +37,7 @@ public class GsonUtils {
             Gson gson = new Gson();
             t = gson.fromJson(json, clazz);
         } catch (Exception e) {
-            if(LOGGER.isErrorEnabled()){
+            if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("GsonUtils#getEntity() Exception = ", e);
             }
         }
@@ -66,7 +66,7 @@ public class GsonUtils {
             entityList = gson.fromJson(json, new TypeToken<List<T>>() {
             }.getType());
         } catch (Exception e) {
-            if(LOGGER.isErrorEnabled()){
+            if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("GsonUtils#toEntityList(String, Class<T>) Exception = ", e);
             }
         }
@@ -93,7 +93,7 @@ public class GsonUtils {
             map = gson.fromJson(json, new TypeToken<Map<String, Object>>() {
             }.getType());
         } catch (Exception e) {
-            if(LOGGER.isErrorEnabled()){
+            if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("GsonUtils#toMap(String) Exception = ", e);
             }
         }
@@ -121,7 +121,7 @@ public class GsonUtils {
             }.getType());
 
         } catch (Exception e) {
-            if(LOGGER.isErrorEnabled()){
+            if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("GsonUtils#toMapList(String) Exception = ", e);
             }
         }
@@ -138,7 +138,7 @@ public class GsonUtils {
      * @return json字符串
      * @since 1.0.0
      */
-    public static String toJsonString(Object obj){
+    public static String toJsonString(Object obj) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("GsonUtils#toJsonString(String) Object = {}", obj);
         }

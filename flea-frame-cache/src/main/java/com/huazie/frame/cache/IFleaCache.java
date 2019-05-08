@@ -10,18 +10,18 @@ package com.huazie.frame.cache;
 public interface IFleaCache {
 
     /**
-     * <p> 获取指定缓存key对应的值 </p>
+     * <p> 读缓存 </p>
      *
-     * @param key 缓存键
-     * @return 缓存key对应的值
+     * @param key 缓存关键字
+     * @return 缓存关键字对应的值
      * @since 1.0.0
      */
     Object get(String key);
 
     /**
-     * <p> 将对应键和值写入缓存中 </p>
+     * <p> 写缓存 </p>
      *
-     * @param key   缓存键
+     * @param key   缓存关键字
      * @param value 缓存值
      * @since 1.0.0
      */
@@ -35,9 +35,9 @@ public interface IFleaCache {
     void clear();
 
     /**
-     * <p> 清除指定键的缓存 </p>
+     * <p> 删除缓存 </p>
      *
-     * @param key 缓存键
+     * @param key 缓存关键字
      * @since 1.0.0
      */
     void delete(String key);

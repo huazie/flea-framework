@@ -10,7 +10,7 @@ import java.util.Map;
  * <p> 字符串相关的工具类 </p>
  *
  * @author huazie
- * @version v1.0.0
+ * @version 1.0.0
  * @since 1.0.0
  */
 public class StringUtils {
@@ -137,13 +137,13 @@ public class StringUtils {
     /**
      * <p> 从头部或从尾部截取字符串 </p>
      *
-     * @param value  待截取的字符串
-     * @param length 待截取的长度
+     * @param value    待截取的字符串
+     * @param length   待截取的长度
      * @param isBefore 如果true，则从头截取；否则则尾截取字符串
      * @return 截取后的字符串
      * @since 1.0.0
      */
-    private static String subStr(String value, int length, boolean isBefore){
+    private static String subStr(String value, int length, boolean isBefore) {
         if (isBlank(value) || length <= 0) {
             return null;
         }
@@ -151,9 +151,9 @@ public class StringUtils {
         if (strLen < length) {// 字符串长度小于 待截取长度
             return value.substring(0, strLen); // 返回与待截取字符串相同拷贝值的字符串
         }
-        if(isBefore){
+        if (isBefore) {
             return value.substring(0, length);
-        }else{
+        } else {
             return value.substring(value.length() - length);
         }
     }
@@ -193,8 +193,7 @@ public class StringUtils {
             return null;
         }
         for (int i = 0; i < objs.length; i++) {
-            Object obj = objs[i];
-            Object value = ReflectUtils.getObjectAttrValue(obj, attrName);
+            Object value = ReflectUtils.getObjectAttrValue(objs[i], attrName);
             if (i < objs.length - 1) {
                 strBuilder.append(before).append(value).append(after);
             } else {
