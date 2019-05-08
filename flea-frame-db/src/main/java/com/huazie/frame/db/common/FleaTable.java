@@ -6,7 +6,6 @@ import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-
 /**
  * <p> 自定义实体类注解，用于定义表名 </p>
  *
@@ -21,6 +20,7 @@ public @interface FleaTable {
      * <p> 定义实体对应数据库表名 </p>
      *
      * @return 表名
+     * @since 1.0.0
      */
     String name() default "";
 }

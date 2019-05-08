@@ -21,33 +21,44 @@ import java.util.Map;
 /**
  * <p> 插入SQL模板, 用于使用原生SQL实现分表; </p>
  * <p> 插入模板定义配置在<b>flea-sql-template.xml</b>; </p>
- * <p> 节点<b>{@code<insert>}</b>下即为插入SQL模板: </p>
+ * <p> 节点<b>{@code <insert>}</b>下即为插入SQL模板: </p>
  * <pre>
  * (1) 模板配置信息：
- * {@code
- *  <template id="insert" name="插入模板" desc="用于原生SQL中插入语句的使用">
- *   <property key="template" value="INSERT INTO ##table## (##columns## ) VALUES(##values## )"/>
- *   <property key="table" value="student"/>
- *   <!-- 这两个不填，表示全部使用表的字段
- *   <property key="columns" value="****"/>
- *   <property key="values" value="****"/>-->
- *  </template>} <br/>
- * (2)使用示例<br/>
+ * {@code <template id="insert" name="插入模板" desc="用于原生SQL中插入语句的使用">
+ *     <property key="template" value="INSERT INTO ##table## (##columns## ) VALUES(##values## )"/>
+ *     <property key="table" value="student"/>
+ *     <!-- 这两个不填，表示全部使用表的字段
+ *     <property key="columns" value="****"/>
+ *     <property key="values" value="****"/>-->
+ *   </template>}
+ *
+ * (2)使用示例
  *  示例1：
  *  SqlTemplate<Student> sqlTemplate = new InsertSqlTemplate<Student>();
- *  sqlTemplate.setId("insert");//这个对应{@code<template id="insert" >}
- *  sqlTemplate.setTableName("student");// 实体类对应的表名
- *  sqlTemplate.setEntity(student);// 实体类的实例对象
- *  sqlTemplate.initialize();// 模板初始化<br/>
+ *  // 这个对应{@code <template id="insert" >}
+ *  sqlTemplate.setId("insert");
+ *  // 实体类对应的表名
+ *  sqlTemplate.setTableName("student");
+ *  // 实体类的实例对象
+ *  sqlTemplate.setEntity(student);
+ *  // 模板初始化
+ *  sqlTemplate.initialize();
+ *
  *  示例2：(该方式需要在实体类被@Table或者@FleaTable修饰，能获取指定的表名)
  *  ITemplate<Student> sqlTemplate = new InsertSqlTemplate<Student>("insert", student);
- *  sqlTemplate.initialize();// 模板初始化<br/>
+ *  // 模板初始化
+ *  sqlTemplate.initialize();
+ *
  *  示例3：
  *  ITemplate<Student> sqlTemplate = new InsertSqlTemplate<Student>("insert", "student", student);
- *  sqlTemplate.initialize();// 模板初始化<br/>
- *  (3) 模板初始化后，就可以获取原生SQL和相关参数了，如下：<br/>
- *  String sql = sqlTemplate.toNativeSql();//获取原生SQL
- *  Map<String, Object> paramMap = sqlTemplate.toNativeParams();//获取相关参数
+ *  // 模板初始化
+ *  sqlTemplate.initialize();
+ *
+ *  (3) 模板初始化后，就可以获取原生SQL和相关参数了，如下：
+ *  // 获取原生SQL
+ *  String sql = sqlTemplate.toNativeSql();
+ *  // 获取相关参数
+ *  Map<String, Object> paramMap = sqlTemplate.toNativeParams();
  * </pre>
  *
  * @author huazie
@@ -58,15 +69,35 @@ public class InsertSqlTemplate<T> extends SqlTemplate<T> {
 
     private static final long serialVersionUID = 8796257687684425547L;
 
+    /**
+     * <p> INSERT模板构造方法, 参考示例1 </p>
+     *
+     * @since 1.0.0
+     */
     public InsertSqlTemplate() {
         templateType = TemplateTypeEnum.INSERT;
     }
 
+    /**
+     * <p> INSERT模板构造方法，参考示例2 </p>
+     *
+     * @param id     模板编号
+     * @param entity 实体类的实例对象
+     * @since 1.0.0
+     */
     public InsertSqlTemplate(String id, T entity) {
         super(id, entity);
         templateType = TemplateTypeEnum.INSERT;
     }
 
+    /**
+     * <p> INSERT模板构造方法，参考示例3 </p>
+     *
+     * @param id        模板编号
+     * @param tableName 表名
+     * @param entity    实体类的实例对象
+     * @since 1.0.0
+     */
     public InsertSqlTemplate(String id, String tableName, T entity) {
         super(id, tableName, entity);
         templateType = TemplateTypeEnum.INSERT;

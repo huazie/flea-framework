@@ -1,5 +1,6 @@
 package com.huazie.frame.db.common.sql.template.config;
 
+import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.db.common.XmlDigesterHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,10 +8,10 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 
 /**
- * <p> Sql模板配置工具类 </p>
+ * <p> SQL模板配置工具类 </p>
  *
  * @author huazie
- * @version v1.0.0
+ * @version 1.0.0
  * @since 1.0.0
  */
 public class SqlTemplateConfig {
@@ -22,9 +23,9 @@ public class SqlTemplateConfig {
     private Sql sql;
 
     /**
-     * <p> 只允许通过getConfig() 获取Sql模板配置类对象 </p>
+     * <p> 只允许通过getConfig() 获取SQL模板配置类对象 </p>
      *
-     * @param sql
+     * @param sql SQL模板配置父节点对象
      */
     private SqlTemplateConfig(Sql sql) {
         this.sql = sql;
@@ -33,17 +34,17 @@ public class SqlTemplateConfig {
     /**
      * <p> 获取Sql模板配置类对象 </p>
      *
-     * @return Sql模板配置类对象
+     * @return SQL模板配置类对象
      */
     public static SqlTemplateConfig getConfig() {
-        if (config == null) {
+        if (ObjectUtils.isEmpty(config)) {
             synchronized (SqlTemplateConfig.class) {
-                try {
-                    if (null == config) {
+                if (ObjectUtils.isEmpty(config)) {
+                    try {
                         config = new SqlTemplateConfig(XmlDigesterHelper.getInstance().getSqlTemplate());
+                    } catch (Exception e) {
+                        LOGGER.error("Fail to init flea-sql-template.xml ：", e);
                     }
-                } catch (Exception e) {
-                    LOGGER.error("Fail to init flea-sql-template.xml", e);
                 }
             }
         }
@@ -51,17 +52,17 @@ public class SqlTemplateConfig {
     }
 
     /**
-     * <p> 根据校验规则编号，获取指定校验规则 </p>
+     * <p> 根据校验规则编号，获取指定校验规则配置信息 </p>
      *
      * @param ruleId 校验规则编号
-     * @return 校验规则对象
+     * @return 校验规则对象配置信息
      * @since 1.0.0
      */
     public Rule getRule(String ruleId) {
         Rule rule = null;
         Map<String, Rule> rulesMap;
-        if (this.sql != null) {
-            Rules rules = this.sql.getRules();
+        if (sql != null) {
+            Rules rules = sql.getRules();
             if (rules != null) {
                 rulesMap = rules.toRulesMap();
                 if (rulesMap != null && !rulesMap.isEmpty()) {
@@ -73,17 +74,17 @@ public class SqlTemplateConfig {
     }
 
     /**
-     * <p> 根据新增模板编号，获取指定的新增模板 </p>
+     * <p> 根据新增模板编号，获取指定的新增模板配置信息 </p>
      *
-     * @param tempId Sql模板编号
-     * @return
+     * @param tempId SQL模板编号
+     * @return SQL新增模板配置信息（INSERT）
      * @since 1.0.0
      */
     public Template getInsertTemplate(String tempId) {
         Template template = null;
-        Map<String, Template> insertsMap = null;
-        if (this.sql != null) {
-            Insert insert = this.sql.getInsert();
+        Map<String, Template> insertsMap;
+        if (sql != null) {
+            Insert insert = sql.getInsert();
             if (insert != null) {
                 insertsMap = insert.toInsertsMap();
                 if (insertsMap != null && !insertsMap.isEmpty()) {
@@ -95,17 +96,17 @@ public class SqlTemplateConfig {
     }
 
     /**
-     * <p> 根据更新模板编号，获取指定的更新模板 </p>
+     * <p> 根据更新模板编号，获取指定的更新模板配置信息 </p>
      *
-     * @param tempId Sql模板编号
-     * @return
+     * @param tempId SQL模板编号
+     * @return SQL更新模板配置信息（UPDATE）
      * @since 1.0.0
      */
     public Template getUpdateTemplate(String tempId) {
         Template template = null;
         Map<String, Template> updatesMap;
-        if (this.sql != null) {
-            Update update = this.sql.getUpdate();
+        if (sql != null) {
+            Update update = sql.getUpdate();
             if (update != null) {
                 updatesMap = update.toUpdatesMap();
                 if (updatesMap != null && !updatesMap.isEmpty()) {
@@ -117,17 +118,17 @@ public class SqlTemplateConfig {
     }
 
     /**
-     * <p> 根据查询模板编号，获取指定的查询模板 </p>
+     * <p> 根据查询模板编号，获取指定的查询模板配置信息 </p>
      *
-     * @param tempId Sql模板编号
-     * @return
+     * @param tempId SQL模板编号
+     * @return SQL查询模板配置信息（SELECT）
      * @since 1.0.0
      */
     public Template getSelectTemplate(String tempId) {
         Template template = null;
         Map<String, Template> selectsMap;
-        if (this.sql != null) {
-            Select select = this.sql.getSelect();
+        if (sql != null) {
+            Select select = sql.getSelect();
             if (select != null) {
                 selectsMap = select.toSelectsMap();
                 if (selectsMap != null && !selectsMap.isEmpty()) {
@@ -139,17 +140,17 @@ public class SqlTemplateConfig {
     }
 
     /**
-     * <p> 根据删除模板编号，获取指定的删除模板 </p>
+     * <p> 根据删除模板编号，获取指定的删除模板配置信息 </p>
      *
-     * @param tempId Sql模板编号
-     * @return
+     * @param tempId SQL模板编号
+     * @return SQL删除模板配置信息（DELETE）
      * @since 1.0.0
      */
     public Template getDeleteTemplate(String tempId) {
         Template template = null;
         Map<String, Template> deletesMap;
-        if (this.sql != null) {
-            Delete delete = this.sql.getDelete();
+        if (sql != null) {
+            Delete delete = sql.getDelete();
             if (delete != null) {
                 deletesMap = delete.toDeletesMap();
                 if (deletesMap != null && !deletesMap.isEmpty()) {

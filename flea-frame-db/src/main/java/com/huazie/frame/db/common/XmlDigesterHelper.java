@@ -106,7 +106,7 @@ public class XmlDigesterHelper {
 
         InputStream input = ResourcesUtil.getInputStreamFromClassPath(fileName);
         if (ObjectUtils.isEmpty(input)) {
-            throw new TableSplitException("ERROR-DB-SQT0000000027", fileName);
+            throw new TableSplitException("ERROR-DB-SQT0000000026", fileName);
         }
 
         Digester digester = new Digester();
@@ -127,7 +127,7 @@ public class XmlDigesterHelper {
         try {
             tabs = (Tables) digester.parse(input);
         } catch (Exception e) {
-            throw new TableSplitException("ERROR-DB-SQT0000000028", e);
+            throw new TableSplitException("ERROR-DB-SQT0000000027", e);
         }
 
         if (LOGGER.isDebugEnabled()) {
@@ -177,7 +177,7 @@ public class XmlDigesterHelper {
 
         InputStream input = ResourcesUtil.getInputStreamFromClassPath(fileName);
         if (ObjectUtils.isEmpty(input)) {
-            throw new SqlTemplateException("ERROR-DB-SQT0000000027", fileName);
+            throw new SqlTemplateException("ERROR-DB-SQT0000000026", fileName);
         }
 
         Digester digester = new Digester();
@@ -254,7 +254,7 @@ public class XmlDigesterHelper {
         try {
             sqlTemplate = (Sql) digester.parse(input);
         } catch (Exception e) {
-            throw new SqlTemplateException("ERROR-DB-SQT0000000028", e);
+            throw new SqlTemplateException("ERROR-DB-SQT0000000027", e);
         }
 
         if (LOGGER.isDebugEnabled()) {

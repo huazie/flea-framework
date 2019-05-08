@@ -1,7 +1,7 @@
 package com.huazie.frame.db.jdbc;
 
 import com.huazie.frame.common.FleaFrameManager;
-import com.huazie.frame.db.common.DBEnum;
+import com.huazie.frame.db.common.DBSystemEnum;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -22,13 +22,13 @@ public class JDBCConfigTest {
 
     @Test
     public void testDBPrefix() {
-        FleaJDBCConfig.init(DBEnum.MySQL.getName(), "fleamanagement");
+        FleaJDBCConfig.init(DBSystemEnum.MySQL.getName(), "fleamanagement");
         LOGGER.debug(FleaFrameManager.getManager().getDBPrefix());
     }
 
     @Test
     public void testJDBCQuery1() {
-        FleaJDBCConfig.init(DBEnum.MySQL.getName(), "fleamarket");
+        FleaJDBCConfig.init(DBSystemEnum.MySQL.getName(), "fleamarket");
         try {
             List<Map<String, Object>> results = FleaJDBCUtils.query("SELECT * FROM flea_user");
             Assert.assertNotNull(results);
@@ -40,7 +40,7 @@ public class JDBCConfigTest {
 
     @Test
     public void testJDBCQuery2() {
-        FleaJDBCConfig.init(DBEnum.MySQL.getName(), "fleamarket");
+        FleaJDBCConfig.init(DBSystemEnum.MySQL.getName(), "fleamarket");
         try {
             Object[] params = {new Long(1L)};
             List<Map<String, Object>> results = FleaJDBCUtils.query("SELECT * FROM flea_user where user_id = ?", params);
@@ -53,7 +53,7 @@ public class JDBCConfigTest {
 
     @Test
     public void testJDBCQuery3() {
-        FleaJDBCConfig.init(DBEnum.MySQL.getName(), "fleamarket");
+        FleaJDBCConfig.init(DBSystemEnum.MySQL.getName(), "fleamarket");
         try {
             List<Object> paramList = new ArrayList<Object>();
             paramList.add(new Long(1000000012L));
@@ -67,7 +67,7 @@ public class JDBCConfigTest {
 
     @Test
     public void testJDBCSingleQuery1() {
-        FleaJDBCConfig.init(DBEnum.MySQL.getName(), "fleamarket");
+        FleaJDBCConfig.init(DBSystemEnum.MySQL.getName(), "fleamarket");
         try {
             List<Map<String, Object>> results = FleaJDBCUtils.query("SELECT user_name FROM flea_user");
             Assert.assertNotNull(results);
@@ -79,7 +79,7 @@ public class JDBCConfigTest {
 
     @Test
     public void testJDBCSingleQuery2() {
-        FleaJDBCConfig.init(DBEnum.MySQL.getName(), "fleamarket");
+        FleaJDBCConfig.init(DBSystemEnum.MySQL.getName(), "fleamarket");
         try {
             Object[] params = {new Long(1L)};
             List<Map<String, Object>> results = FleaJDBCUtils.query("SELECT user_name FROM flea_user where user_id = ?", params);
@@ -92,7 +92,7 @@ public class JDBCConfigTest {
 
     @Test
     public void testJDBCSingleQuery3() {
-        FleaJDBCConfig.init(DBEnum.MySQL.getName(), "fleamarket");
+        FleaJDBCConfig.init(DBSystemEnum.MySQL.getName(), "fleamarket");
         try {
             List<Object> paramList = new ArrayList<Object>();
             paramList.add(new Long(1000000012L));

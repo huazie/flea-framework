@@ -5,7 +5,6 @@ import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.exception.DaoException;
-import com.huazie.frame.db.common.exception.SqlTemplateException;
 import com.huazie.frame.db.common.sql.template.config.Template;
 import com.huazie.frame.db.common.table.column.Column;
 
@@ -29,10 +28,10 @@ import java.util.Map;
 public class EntityUtils {
 
     /**
-     * <p> 获取Sql模板的Map集合，便于根据id查找 </p>
+     * <p> 获取SQL模板的Map集合，便于根据id查找 </p>
      *
-     * @param templates Sql模板的List对象
-     * @return Sql模板的Map集合
+     * @param templates SQL模板的List对象
+     * @return SQL模板的Map集合
      * @since 1.0.0
      */
     public static Map<String, Template> toTemplatesMap(List<Template> templates) {
@@ -66,9 +65,10 @@ public class EntityUtils {
      * @since 1.0.0
      */
     public static List<Column> toColumnsList(Object entity) throws Exception {
-        Field[] fields = entity.getClass().getDeclaredFields();// 获取该实体类中的属性集
-        if (fields == null || fields.length <= 0) {
-            throw new Exception("请检查实体类的属性（属性不能为空）");
+        // 获取该实体类中的属性集
+        Field[] fields = entity.getClass().getDeclaredFields();
+        if (ArrayUtils.isEmpty(fields)) {
+            return null;
         }
         List<Column> columns = new ArrayList<Column>();
         for (int i = 0; i < fields.length; i++) {
@@ -96,23 +96,23 @@ public class EntityUtils {
                 if (ArrayUtils.isEmpty(annotations)) {// 表示属性上没有注解
                     annotations = method.getAnnotations();// 获取方法上的注解
                     if (ArrayUtils.isEmpty(annotations)) {// 表示方法上没有注解
-                        throw new DaoException("The Entity of " + entity.getClass().getSimpleName() + "is not be annotated");
+                        throw new DaoException("ERROR-DB-DAO0000000014", entity.getClass().getSimpleName());
                     }
                 }
                 // 遍历属性或get方法上的注解（注解一般要么全部写在属性上，要么全部写在get方法上）
                 for (Annotation an : annotations) {
                     // 兼容JPA
                     if (javax.persistence.Id.class.getName().equals(an.annotationType().getName())) {// 表示该属性是主键
-                        if (fields[i].getType() == long.class || fields[i].getType() == Long.class) {// 该实体的主键是long类型
+                        if (long.class == fields[i].getType() || Long.class == fields[i].getType()) {// 该实体的主键是long类型
                             if (Long.valueOf(value.toString()) <= 0) {
-                                throw new DaoException("The primary key '" + attrName + "' is not a positive Integer");
+                                throw new DaoException("ERROR-DB-DAO0000000009");
                             }
-                        } else if (fields[i].getType() == String.class) {// 该实体的主键是String类型
+                        } else if (String.class == fields[i].getType()) {// 该实体的主键是String类型
                             if (ObjectUtils.isEmpty(value)) {
-                                throw new DaoException("The primary key '" + attrName + "' is null or empty");
+                                throw new DaoException("ERROR-DB-DAO0000000010");
                             }
                         } else {
-                            throw new DaoException("The primary key '" + attrName + "' must be long(Long) or String type");
+                            throw new DaoException("ERROR-DB-DAO0000000011");
                         }
                         isPrimarykey = true;// true表示该字段是主键
                     }
@@ -146,14 +146,12 @@ public class EntityUtils {
      */
     public static Object getEntity(Object[] objs, String attrName, Object attrValue) throws Exception {
         Object object = null;
-        if (objs != null && objs.length > 0) {
+        if (ArrayUtils.isNotEmpty(objs)) {
             for (int i = 0; i < objs.length; i++) {
                 Object obj = objs[i];
                 Field field = obj.getClass().getDeclaredField(attrName);
-                if (ObjectUtils.isEmpty(field)) {
-                    throw new SqlTemplateException("ERROR-DB-SQT0000000026", attrName);
-                }
-                String getter = CommonConstants.MethodConstants.GET + StringUtils.toUpperCaseInitial(attrName);// 属性的get方法名
+                // 属性的get方法名
+                String getter = CommonConstants.MethodConstants.GET + StringUtils.toUpperCaseInitial(field.getName());
                 Method method = obj.getClass().getMethod(getter, new Class[]{});
                 Object value = method.invoke(obj, new Object[]{});// 该属性对应的值
                 if (value != null && value.equals(attrValue)) {
@@ -176,12 +174,12 @@ public class EntityUtils {
     public static String getTableName(Object entity) {
         String tableName = "";
         Annotation tableAnnotation = entity.getClass().getAnnotation(javax.persistence.Table.class);
-        if (tableAnnotation != null) {
+        if (ObjectUtils.isEmpty(tableAnnotation)) {
             javax.persistence.Table table = (javax.persistence.Table) tableAnnotation;
             tableName = table.name();
         } else {
             Annotation fleaTableAnnotation = entity.getClass().getAnnotation(com.huazie.frame.db.common.FleaTable.class);
-            if (fleaTableAnnotation != null) {
+            if (ObjectUtils.isEmpty(fleaTableAnnotation)) {
                 com.huazie.frame.db.common.FleaTable fleaTable = (com.huazie.frame.db.common.FleaTable) fleaTableAnnotation;
                 tableName = fleaTable.name();
             }

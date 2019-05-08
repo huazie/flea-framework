@@ -47,7 +47,7 @@ public class Properties {
      */
     public Map<String, Property> toPropMap() {
         Map<String, Property> propMap = new HashMap<String, Property>();
-        Iterator<Property> propIt = this.properties.iterator();
+        Iterator<Property> propIt = properties.iterator();
         while (propIt.hasNext()) {
             Property prop = propIt.next();
             propMap.put(prop.getKey(), prop);

@@ -26,13 +26,12 @@ public class TableSplitHelper {
     private final static Logger LOGGER = LoggerFactory.getLogger(TableSplitHelper.class);
 
     /**
-     * <p>
-     * 获取真实的表名，如是分表，则获取分表名
+     * <p> 获取真实的表名，如是分表，则获取分表名 </p>
      *
      * @param name 主表名
-     * @return
+     * @return 真实的表名，如是分表，则返回相应的分表名
      * @throws Exception
-     * @date 2018年6月3日
+     * @since 1.0.0
      */
     public static String getRealTableName(String name, Column[] entityCols) throws Exception {
         String realTableName = name;

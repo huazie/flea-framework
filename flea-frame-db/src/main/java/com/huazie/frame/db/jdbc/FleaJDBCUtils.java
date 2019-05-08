@@ -73,7 +73,7 @@ public class FleaJDBCUtils {
      *
      * @param sql    数据库sql语句
      * @param params 参数列表
-     * @return
+     * @return 查询结果数据集合
      * @throws SQLException
      * @since 1.0.0
      */

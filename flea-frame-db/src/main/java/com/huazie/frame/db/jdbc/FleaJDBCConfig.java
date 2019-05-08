@@ -2,6 +2,7 @@ package com.huazie.frame.db.jdbc;
 
 import com.huazie.frame.common.FleaFrameManager;
 import com.huazie.frame.common.util.ArrayUtils;
+import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.PropertiesUtil;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.DBConstants;
@@ -60,14 +61,13 @@ public class FleaJDBCConfig {
      */
     public static FleaJDBCConfig getConfig() {
 
-        if (null == config) {
+        if (ObjectUtils.isEmpty(config)) {
             synchronized (FleaJDBCConfig.class) {
-                if (null == config) {
+                if (ObjectUtils.isEmpty(config)) {
                     config = new FleaJDBCConfig();
                 }
             }
         }
-
         return config;
     }
 

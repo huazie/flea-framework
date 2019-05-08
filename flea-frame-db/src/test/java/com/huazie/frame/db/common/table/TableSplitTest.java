@@ -1,5 +1,6 @@
 package com.huazie.frame.db.common.table;
 
+import com.huazie.frame.common.FleaFrameManager;
 import com.huazie.frame.db.common.table.split.impl.ThreeHexTableSplitImpl;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -14,6 +15,8 @@ import com.huazie.frame.db.common.table.split.impl.YYYYMMTableSplitImpl;
 import com.huazie.frame.db.common.table.split.impl.YYYYTableSplitImpl;
 import com.huazie.frame.db.common.util.EntityUtils;
 
+import java.util.Locale;
+
 /**
  * @author huazie
  * @version v1.0.0
@@ -25,12 +28,12 @@ public class TableSplitTest {
 
     @Test
     public void testTwoHexTableSplit() {
-
+        FleaFrameManager.getManager().setLocale(Locale.US);
         ITableSplit tableSplit = new TwoHexTableSplitImpl();
         try {
             LOGGER.debug(tableSplit.convert("flea_file_info", "12312311FF"));
         } catch (Exception e) {
-            LOGGER.error("Exception={}", e);
+            LOGGER.error("Exception=", e);
         }
     }
 
@@ -40,7 +43,7 @@ public class TableSplitTest {
         try {
             LOGGER.debug(tableSplit.convert("flea_file_info", "12312311FF"));
         } catch (Exception e) {
-            LOGGER.error("Exception={}", e);
+            LOGGER.error("Exception=", e);
         }
     }
 
@@ -51,7 +54,7 @@ public class TableSplitTest {
         try {
             LOGGER.debug(tableSplit.convert("flea_file_info", ""));
         } catch (Exception e) {
-            LOGGER.error("Exception={}", e);
+            LOGGER.error("Exception=", e);
         }
     }
 
@@ -62,7 +65,7 @@ public class TableSplitTest {
         try {
             LOGGER.debug(tableSplit.convert("flea_file_info", ""));
         } catch (Exception e) {
-            LOGGER.error("Exception={}", e);
+            LOGGER.error("Exception=", e);
         }
     }
 
@@ -73,7 +76,7 @@ public class TableSplitTest {
         try {
             LOGGER.debug(tableSplit.convert("flea_file_info", ""));
         } catch (Exception e) {
-            LOGGER.error("Exception={}", e);
+            LOGGER.error("Exception=", e);
         }
     }
 
@@ -87,7 +90,7 @@ public class TableSplitTest {
         try {
             LOGGER.debug(EntityUtils.getEntity(TableSplitEnum.values(), "key", "twohex").toString());
         } catch (Exception e) {
-            LOGGER.error("Exception={}", e);
+            LOGGER.error("Exception=", e);
         }
     }
 }

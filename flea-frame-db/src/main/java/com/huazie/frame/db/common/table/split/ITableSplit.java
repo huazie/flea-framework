@@ -8,7 +8,7 @@ import java.io.Serializable;
  * <p> 分表接口类定义 </p>
  *
  * @author huazie
- * @version v1.0.0
+ * @version 1.0.0
  * @since 1.0.0
  */
 public interface ITableSplit extends Serializable {

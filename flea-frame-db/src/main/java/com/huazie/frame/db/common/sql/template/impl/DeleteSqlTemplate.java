@@ -13,33 +13,44 @@ import com.huazie.frame.db.common.table.column.Column;
 import java.util.Map;
 
 /**
- * 刪除SQL模板, 用于使用原生SQL实现分表;<br/>
- * 刪除模板定义配置在<b>flea-sql-template.xml</b>;<br/>
- * 节点<b>{@code<delete>}</b>下即为刪除SQL模板
+ * <p> 刪除SQL模板, 用于使用原生SQL实现分表; </p>
+ * <p> 刪除模板定义配置在<b>flea-sql-template.xml</b>; </p>
+ * <p> 节点<b>{@code <delete>}</b>下即为刪除SQL模板 </p>
  * <pre>
  * (1) 模板配置信息：
+ * {@code <template id="delete" ruleId="delete" name="删除模板" desc="用于原生SQL中删除语句的使用">
+ *     <property key="template" value="DELETE FROM ##table## WHERE ##conditions##" />
+ *     <property key="table" value="student"/>
+ *     <property key="conditions" value="para_id = :paraId" />
+ *   </template>}
  *
- *  {@code<template id="delete" ruleId="delete" name="删除模板" desc="用于原生SQL中删除语句的使用">
- *   <property key="template" value="DELETE FROM ##table## WHERE ##conditions##" />
- *   <property key="table" value="student"/>
- *   <property key="conditions" value="para_id = :paraId" />
- *  </template>}<br/>
- * (2)使用示例<br/>
+ * (2)使用示例
  *  示例1：
  *  SqlTemplate<Student> sqlTemplate = new DeleteSqlTemplate<Student>();
- *  sqlTemplate.setId("delete");//这个对应{@code<template id="delete" >}
- *  sqlTemplate.setTableName("student");// 实体类对应的表名
- *  sqlTemplate.setEntity(student);// 实体类的实例对象
- *  sqlTemplate.initialize();// 模板初始化<br/>
+ *  // 这个对应{@code <template id="delete">}
+ *  sqlTemplate.setId("delete");
+ *  // 实体类对应的表名
+ *  sqlTemplate.setTableName("student");
+ *  // 实体类的实例对象
+ *  sqlTemplate.setEntity(student);
+ *  // 模板初始化
+ *  sqlTemplate.initialize();
+ *
  *  示例2：(该方式需要在实体类被@Table或者@FleaTable修饰，能获取指定的表名)
  *  ITemplate<Student> sqlTemplate = new DeleteSqlTemplate<Student>("delete", student);
- *  sqlTemplate.initialize();// 模板初始化<br/>
+ *  // 模板初始化
+ *  sqlTemplate.initialize();
+ *
  *  示例3：
  *  ITemplate<Student> sqlTemplate = new DeleteSqlTemplate<Student>("delete", "student", student);
- *  sqlTemplate.initialize();// 模板初始化<br/>
- *  (3) 模板初始化后，就可以获取原生SQL和相关参数了，如下：<br/>
- *  String sql = sqlTemplate.toNativeSql();//获取原生SQL
- *  Map<String, Object> paramMap = sqlTemplate.toNativeParams();//获取相关参数
+ *  // 模板初始化
+ *  sqlTemplate.initialize();
+ *
+ *  (3) 模板初始化后，就可以获取原生SQL和相关参数了，如下：
+ *  // 获取原生SQL
+ *  String sql = sqlTemplate.toNativeSql();
+ *  // 获取相关参数
+ *  Map<String, Object> paramMap = sqlTemplate.toNativeParams();
  * </pre>
  *
  * @author huazie
@@ -50,15 +61,35 @@ public class DeleteSqlTemplate<T> extends SqlTemplate<T> {
 
     private static final long serialVersionUID = 1270557406520049504L;
 
+    /**
+     * <p> DELETE模板构造方法, 参考示例1 </p>
+     *
+     * @since 1.0.0
+     */
     public DeleteSqlTemplate() {
         templateType = TemplateTypeEnum.DELETE;
     }
 
+    /**
+     * <p> DELETE模板构造方法，参考示例2 </p>
+     *
+     * @param id     模板编号
+     * @param entity 实体类的实例对象
+     * @since 1.0.0
+     */
     public DeleteSqlTemplate(String id, T entity) {
         super(id, entity);
         templateType = TemplateTypeEnum.DELETE;
     }
 
+    /**
+     * <p> DELETE模板构造方法，参考示例3 </p>
+     *
+     * @param id        模板编号
+     * @param tableName 表名
+     * @param entity    实体类的实例对象
+     * @since 1.0.0
+     */
     public DeleteSqlTemplate(String id, String tableName, T entity) {
         super(id, tableName, entity);
         templateType = TemplateTypeEnum.DELETE;
@@ -70,8 +101,7 @@ public class DeleteSqlTemplate<T> extends SqlTemplate<T> {
     }
 
     @Override
-    protected void initSqlTemplate(StringBuilder sql, Map<String, Object> params, Column[] entityCols,
-                                   Map<String, Property> propMap) throws Exception {
+    protected void initSqlTemplate(StringBuilder sql, Map<String, Object> params, Column[] entityCols, Map<String, Property> propMap) throws Exception {
         // 获取【key=conditions】的属性，存储WHERE子句部分的内容 （para_id = :paraId and para_type = :paraType）
         Property conditions = propMap.get(SqlTemplateEnum.CONDITIONS.getKey());
 
@@ -84,7 +114,8 @@ public class DeleteSqlTemplate<T> extends SqlTemplate<T> {
 
         // 校验【key=conditions】的数据是否正确
         Column[] realEntityCols = check(entityCols, whereMap);
-        createParamMap(params, realEntityCols);// 设置SQL参数
+        // 设置SQL参数
+        createParamMap(params, realEntityCols);
 
         StringUtils.replace(sql, createPlaceHolder(SqlTemplateEnum.CONDITIONS.getKey()), condStr);
 

@@ -330,7 +330,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
      * @param sql        原声SQL
      * @param params     SQL参数
      * @param entityCols 实体类T的对象的属性列相关信息
-     * @param propMap
+     * @param propMap    模板属性配置信息
      * @throws Exception
      */
     protected abstract void initSqlTemplate(StringBuilder sql, Map<String, Object> params, final Column[] entityCols, Map<String, Property> propMap) throws Exception;

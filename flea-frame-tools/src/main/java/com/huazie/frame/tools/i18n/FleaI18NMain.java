@@ -62,12 +62,12 @@ public class FleaI18NMain extends JFrame {
 
     private final static int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
 
-    public FleaI18NMain() throws Exception {
+    public FleaI18NMain() {
         super(FleaI18nHelper.i18nForCommon("COMMON_I18N_00000"));
         init();
     }
 
-    public void init() throws Exception {
+    public void init() {
 
         setBounds(200, 20, (int) (screenHeight / 2 / 0.618), screenHeight / 2);
         int w = (screenWidth - getWidth()) / 2;
@@ -387,7 +387,7 @@ public class FleaI18NMain extends JFrame {
      *
      * @date 2018年10月10日
      */
-    private void stringUnicodeToNative(){
+    private void stringUnicodeToNative() {
         // 获取Unicode字符串
         String unicodeStr = unicodeStringText.getText();
         if (StringUtils.isNotBlank(unicodeStr)) {

@@ -6,12 +6,11 @@ import com.huazie.frame.db.common.sql.template.config.Template;
 import java.io.Serializable;
 import java.util.Map;
 
-
 /**
  * <p> 模板接口类 </p>
  *
  * @author huazie
- * @version v1.0.0
+ * @version 1.0.0
  * @since 1.0.0
  */
 public interface ITemplate<T> extends Serializable {

@@ -17,8 +17,8 @@ public enum SqlTemplateEnum {
     CONDITIONS("conditions", "条件定义关键字"),
     PLACEHOLDER("##", "替换符号");
 
-    private String key;
-    private String desc;
+    private String key;  // 模板关键字
+    private String desc; // 模板关键字描述
 
     SqlTemplateEnum(String key, String desc) {
         this.key = key;

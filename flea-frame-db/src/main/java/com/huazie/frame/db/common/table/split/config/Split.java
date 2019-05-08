@@ -15,11 +15,11 @@ public class Split implements Serializable {
 
     private static final long serialVersionUID = -5675907324751016293L;
 
-    private String key; // 分表key
+    private String key;         // 分表key
 
-    private String column; // 分表列名
+    private String column;      // 分表列名
 
-    private String implClass; // 分表转换实现类
+    private String implClass;   // 分表转换实现类
 
     public String getKey() {
         return key;

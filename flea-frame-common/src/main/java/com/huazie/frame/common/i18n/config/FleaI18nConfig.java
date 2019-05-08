@@ -171,7 +171,11 @@ public class FleaI18nConfig {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Find the fileName: {}", fileName);
+            if (ObjectUtils.isEmpty(locale)) {
+                LOGGER.debug("Find the fileName: {}.properties", fileName);
+            } else {
+                LOGGER.debug("Find the fileName: {}_{}.properties", fileName, locale);
+            }
         }
 
         // 获取资源文件
@@ -201,7 +205,7 @@ public class FleaI18nConfig {
         if (StringUtils.isNotBlank(resName)) {
             key = resName;
             if (ObjectUtils.isNotEmpty(locale)) {
-                key += CommonConstants.SymbolConstants.UNDERLINE + locale.getLanguage();
+                key += CommonConstants.SymbolConstants.UNDERLINE + locale;
             }
         }
         return key;
