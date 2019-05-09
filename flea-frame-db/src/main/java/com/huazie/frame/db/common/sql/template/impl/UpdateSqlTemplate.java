@@ -111,11 +111,11 @@ public class UpdateSqlTemplate<T> extends SqlTemplate<T> {
         Property conditions = propMap.get(SqlTemplateEnum.CONDITIONS.getKey());
 
         if (ObjectUtils.isEmpty(columns)) {
-            throw new SqlTemplateException("ERROR-DB-SQT0000000015", getId());
+            throw new SqlTemplateException("ERROR-DB-SQT0000000015", templateType.getUpperKey(), getId());
         }
 
         if (ObjectUtils.isEmpty(conditions)) {
-            throw new SqlTemplateException("ERROR-DB-SQT0000000016", getId());
+            throw new SqlTemplateException("ERROR-DB-SQT0000000016", templateType.getUpperKey(), getId());
         }
 
         String colStr = columns.getValue();
@@ -147,11 +147,11 @@ public class UpdateSqlTemplate<T> extends SqlTemplate<T> {
      */
     private Column[] check(final Column[] entityCols, Map<String, String> setMap, Map<String, String> whereMap) throws Exception {
         if (setMap == null || setMap.isEmpty()) {
-            throw new SqlTemplateException("ERROR-DB-SQT0000000017", getId());
+            throw new SqlTemplateException("ERROR-DB-SQT0000000017", templateType.getUpperKey(), getId());
         }
 
         if (whereMap == null || whereMap.isEmpty()) {
-            throw new SqlTemplateException("ERROR-DB-SQT0000000018", getId());
+            throw new SqlTemplateException("ERROR-DB-SQT0000000018", templateType.getUpperKey(), getId());
         }
 
         // 校验SET子句中的属性列和属性变量是否一一对应，并获取SET子句相关的属性列集合
@@ -165,7 +165,7 @@ public class UpdateSqlTemplate<T> extends SqlTemplate<T> {
                 for (Column whereCol : whereCols) {
                     if (setCol.getTabColumnName().equals(whereCol.getTabColumnName())
                             && setCol.getAttrName().equals(whereCol.getAttrName())) {
-                        throw new SqlTemplateException("ERROR-DB-SQT0000000019", getId(), setCol.getTabColumnName());
+                        throw new SqlTemplateException("ERROR-DB-SQT0000000019", templateType.getUpperKey(), getId(), setCol.getTabColumnName());
                     }
                 }
             }

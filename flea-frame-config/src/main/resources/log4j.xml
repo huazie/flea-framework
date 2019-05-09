@@ -35,6 +35,12 @@
 		<appender-ref ref="myConsole" />
 		<appender-ref ref="myFile"/>
 	</logger>
+
+	<logger name="org.apache">
+		<level value="WARN" />
+		<appender-ref ref="myConsole" />
+		<appender-ref ref="myFile"/>
+	</logger>
 	
 	<!-- 根logger的设置--> 
 	<root>

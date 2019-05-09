@@ -106,7 +106,7 @@ public class DeleteSqlTemplate<T> extends SqlTemplate<T> {
         Property conditions = propMap.get(SqlTemplateEnum.CONDITIONS.getKey());
 
         if (conditions == null) {
-            throw new SqlTemplateException("ERROR-DB-SQT0000000016", getId());
+            throw new SqlTemplateException("ERROR-DB-SQT0000000016", templateType.getUpperKey(), getId());
         }
 
         String condStr = conditions.getValue();
@@ -134,7 +134,7 @@ public class DeleteSqlTemplate<T> extends SqlTemplate<T> {
     private Column[] check(final Column[] entityCols, Map<String, String> whereMap) throws Exception {
 
         if (whereMap == null || whereMap.isEmpty()) {
-            throw new SqlTemplateException("ERROR-DB-SQT0000000018", getId());
+            throw new SqlTemplateException("ERROR-DB-SQT0000000018", templateType.getUpperKey(), getId());
         }
 
         // 校验WHERE子句中的属性列和属性变量是否一一对应，并获取WHERE子句相关的属性列集合

@@ -9,7 +9,7 @@ import com.huazie.frame.tools.i18n.FleaI18NMain;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class FleaI18NTest {
+public class FleaI18NMainTest {
 
     public static void main(String[] args) throws Exception{
 //        FleaFrameManager.getManager().setLocale(Locale.US);

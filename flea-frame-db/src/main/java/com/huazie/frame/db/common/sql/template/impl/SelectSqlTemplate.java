@@ -113,11 +113,11 @@ public class SelectSqlTemplate<T> extends SqlTemplate<T> {
         Property conditions = propMap.get(SqlTemplateEnum.CONDITIONS.getKey());
 
         if (ObjectUtils.isEmpty(columns)) {
-            throw new SqlTemplateException("ERROR-DB-SQT0000000015", getId());
+            throw new SqlTemplateException("ERROR-DB-SQT0000000015", templateType.getUpperKey(), getId());
         }
 
         if (ObjectUtils.isEmpty(conditions)) {
-            throw new SqlTemplateException("ERROR-DB-SQT0000000016", getId());
+            throw new SqlTemplateException("ERROR-DB-SQT0000000016", templateType.getUpperKey(), getId());
         }
 
         String colStr = columns.getValue();
@@ -153,11 +153,11 @@ public class SelectSqlTemplate<T> extends SqlTemplate<T> {
     private Column[] check(final Column[] entityCols, String[] cols, Map<String, String> whereMap) throws Exception {
 
         if (ArrayUtils.isEmpty(cols)) {
-            throw new SqlTemplateException("ERROR-DB-SQT0000000017", getId());
+            throw new SqlTemplateException("ERROR-DB-SQT0000000017", templateType.getUpperKey(), getId());
         }
 
         if (whereMap == null || whereMap.isEmpty()) {
-            throw new SqlTemplateException("ERROR-DB-SQT0000000018", getId());
+            throw new SqlTemplateException("ERROR-DB-SQT0000000018", templateType.getUpperKey(), getId());
         }
 
         for (int n = 0; n < cols.length; n++) {
@@ -165,7 +165,7 @@ public class SelectSqlTemplate<T> extends SqlTemplate<T> {
 
             Column column = (Column) EntityUtils.getEntity(entityCols, Column.COLUMN_TAB_COL_NAME, tabColumnName);
             if (ObjectUtils.isEmpty(column)) {
-                throw new SqlTemplateException("ERROR-DB-SQT0000000024", getId(), tabColumnName);
+                throw new SqlTemplateException("ERROR-DB-SQT0000000024", templateType.getUpperKey(), getId(), tabColumnName);
             }
         }
 

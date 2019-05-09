@@ -1,5 +1,6 @@
 package com.huazie.frame.db.common.sql.template;
 
+import com.huazie.frame.common.util.MapUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.DBConstants;
@@ -55,7 +56,9 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
     public SqlTemplate(String id, T entity) {
         tempId = id;
         template = getSqlTemplate(id);
-        rule = SqlTemplateConfig.getConfig().getRule(template.getRuleId());
+        if (ObjectUtils.isNotEmpty(template)) {
+            rule = SqlTemplateConfig.getConfig().getRule(template.getRuleId());
+        }
         this.entity = entity;
     }
 
@@ -67,11 +70,11 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
     @Override
     public void initialize() throws Exception {
         if (ObjectUtils.isEmpty(template)) {
-            throw new SqlTemplateException("ERROR-DB-SQT0000000001", getId(), tempId);
+            throw new SqlTemplateException("ERROR-DB-SQT0000000001", templateType.getUpperKey(), getId());
         }
         Map<String, Property> propMap = template.toPropMap();
-        if (propMap == null || propMap.isEmpty()) {
-            throw new SqlTemplateException("ERROR-DB-SQT0000000002", getId());
+        if (MapUtils.isEmpty(propMap)) {
+            throw new SqlTemplateException("ERROR-DB-SQT0000000002", templateType.getUpperKey(), getId());
         }
         // 获取key=template的属性(即SQL模板)
         Property template = propMap.get(SqlTemplateEnum.TEMPLATE.getKey());
@@ -79,11 +82,11 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
         Property table = propMap.get(SqlTemplateEnum.TABLE.getKey());
 
         if (ObjectUtils.isEmpty(template)) {
-            throw new SqlTemplateException("ERROR-DB-SQT0000000003", getId(), SqlTemplateEnum.TEMPLATE.getKey());
+            throw new SqlTemplateException("ERROR-DB-SQT0000000003", templateType.getUpperKey(), getId(), SqlTemplateEnum.TEMPLATE.getKey());
         }
 
         if (ObjectUtils.isEmpty(table)) {
-            throw new SqlTemplateException("ERROR-DB-SQT0000000003", getId(), SqlTemplateEnum.TABLE.getKey());
+            throw new SqlTemplateException("ERROR-DB-SQT0000000003", templateType.getUpperKey(), getId(), SqlTemplateEnum.TABLE.getKey());
         }
 
         // SQL模板规则校验
@@ -101,11 +104,11 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
         }
 
         if (StringUtils.isBlank(tName)) {
-            throw new SqlTemplateException("ERROR-DB-SQT0000000005", getId());
+            throw new SqlTemplateException("ERROR-DB-SQT0000000005", templateType.getUpperKey(), getId());
         }
 
         if (!tableName.equals(tName)) {
-            throw new SqlTemplateException("ERROR-DB-SQT0000000006", getId());
+            throw new SqlTemplateException("ERROR-DB-SQT0000000006", templateType.getUpperKey(), getId());
         }
 
         if (ObjectUtils.isEmpty(entity)) {
@@ -137,7 +140,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
      */
     private void checkRule(String template) throws Exception {
         if (ObjectUtils.isEmpty(rule)) {// 需要校验
-            throw new SqlTemplateException("ERROR-DB-SQT0000000009", getId());
+            throw new SqlTemplateException("ERROR-DB-SQT0000000009", templateType.getUpperKey(), getId());
         }
         // 获取其属性值
         Map<String, Property> propMap = rule.toPropMap();
@@ -145,14 +148,14 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
             // 获取指定的校验规则配置
             Property prop = propMap.get(SqlTemplateEnum.SQL.getKey());
             if (ObjectUtils.isEmpty(prop)) {
-                throw new SqlTemplateException("ERROR-DB-SQT0000000010", getId());
+                throw new SqlTemplateException("ERROR-DB-SQT0000000010", templateType.getUpperKey(), getId());
             }
             String regExp = prop.getValue();
 
             Pattern p = Pattern.compile(regExp, Pattern.CASE_INSENSITIVE);
             Matcher matcher = p.matcher(template);
             if (!matcher.matches()) { // SQL模板不满足校验规则配置
-                throw new SqlTemplateException("ERROR-DB-SQT0000000011", getId());
+                throw new SqlTemplateException("ERROR-DB-SQT0000000011", templateType.getUpperKey(), getId());
             }
         }
     }
@@ -255,17 +258,17 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
             String attrName = map.get(tabColName);
 
             if (StringUtils.isBlank(attrName)) {
-                throw new SqlTemplateException("ERROR-DB-SQT0000000012", getId(), sqlTemplateEnum.getKey(), tabColName);
+                throw new SqlTemplateException("ERROR-DB-SQT0000000012", templateType.getUpperKey(), getId(), sqlTemplateEnum.getKey(), tabColName);
             }
 
             Column column = (Column) EntityUtils.getEntity(entityCols, Column.COLUMN_TAB_COL_NAME, tabColName);
             if (ObjectUtils.isEmpty(column)) {
-                throw new SqlTemplateException("ERROR-DB-SQT0000000013", getId(), sqlTemplateEnum.getKey(), tabColName);
+                throw new SqlTemplateException("ERROR-DB-SQT0000000013", templateType.getUpperKey(), getId(), sqlTemplateEnum.getKey(), tabColName);
             }
 
             String attrN = column.getAttrName();
             if (!attrName.equals(StringUtils.strCat(DBConstants.SQLConstants.SQL_COLON, attrN))) {
-                throw new SqlTemplateException("ERROR-DB-SQT0000000014", getId(), sqlTemplateEnum.getKey(), tabColName, attrName);
+                throw new SqlTemplateException("ERROR-DB-SQT0000000014", templateType.getUpperKey(), getId(), sqlTemplateEnum.getKey(), tabColName, attrName);
             }
             cols.add(column);
         }

@@ -114,6 +114,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
      *
      * @param key 缓存关键字
      * @return 实际存储的缓存键
+     * @since 1.0.0
      */
     protected String getNativeKey(String key) {
         return name + CommonConstants.SymbolConstants.UNDERLINE + key;

@@ -175,12 +175,12 @@ public class EntityUtils {
     public static String getTableName(Object entity) {
         String tableName = "";
         Annotation tableAnnotation = entity.getClass().getAnnotation(javax.persistence.Table.class);
-        if (ObjectUtils.isEmpty(tableAnnotation)) {
+        if (ObjectUtils.isNotEmpty(tableAnnotation)) {
             javax.persistence.Table table = (javax.persistence.Table) tableAnnotation;
             tableName = table.name();
         } else {
             Annotation fleaTableAnnotation = entity.getClass().getAnnotation(com.huazie.frame.db.common.FleaTable.class);
-            if (ObjectUtils.isEmpty(fleaTableAnnotation)) {
+            if (ObjectUtils.isNotEmpty(fleaTableAnnotation)) {
                 com.huazie.frame.db.common.FleaTable fleaTable = (com.huazie.frame.db.common.FleaTable) fleaTableAnnotation;
                 tableName = fleaTable.name();
             }

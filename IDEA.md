@@ -17,7 +17,9 @@
 15. Alt + Enter          很多功能（https://www.aliyun.com/zixun/wenji/1289027.html）
 16. Ctrl + F4            关闭当前文件
 17. Ctrl + Alt + O       手动清除无用的包
-18. Ctrl+ Shift + N      快速定位文件  （文件名:行数 指定行）
+18. Ctrl + Shift + N     快速定位文件  （文件名:行数 指定行）
+19. alt + 7              查看类的字段、属性、方法，是否继承等 
+20. Ctrl + F12           查看类的字段、属性、方法，是否继承等 
 
 ## Debug调试快捷键
 1. F9               恢复程序（resume program）

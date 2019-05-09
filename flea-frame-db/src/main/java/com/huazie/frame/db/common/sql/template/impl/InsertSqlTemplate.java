@@ -134,7 +134,7 @@ public class InsertSqlTemplate<T> extends SqlTemplate<T> {
             // 设置SQL参数
             createParamMap(params, realEntityCols);
         } else {
-            throw new SqlTemplateException("ERROR-DB-SQT0000000020", getId());
+            throw new SqlTemplateException("ERROR-DB-SQT0000000020", templateType.getUpperKey(), getId());
         }
 
         StringUtils.replace(sql, createPlaceHolder(SqlTemplateEnum.COLUMNS.getKey()), colStr);
@@ -153,15 +153,15 @@ public class InsertSqlTemplate<T> extends SqlTemplate<T> {
      */
     private Column[] check(final Column[] entityCols, String[] cols, String[] values) throws Exception {
         if (ArrayUtils.isEmpty(cols)) {
-            throw new SqlTemplateException("ERROR-DB-SQT0000000017", getId());
+            throw new SqlTemplateException("ERROR-DB-SQT0000000017", templateType.getUpperKey(), getId());
         }
 
         if (ArrayUtils.isEmpty(values)) {
-            throw new SqlTemplateException("ERROR-DB-SQT0000000021", getId());
+            throw new SqlTemplateException("ERROR-DB-SQT0000000021", templateType.getUpperKey(), getId());
         }
 
         if (!ArrayUtils.isSameLength(cols, values)) {
-            throw new SqlTemplateException("ERROR-DB-SQT0000000022", getId());
+            throw new SqlTemplateException("ERROR-DB-SQT0000000022", templateType.getUpperKey(), getId());
         }
 
         List<Column> entityColsList = new ArrayList<Column>();
@@ -170,17 +170,17 @@ public class InsertSqlTemplate<T> extends SqlTemplate<T> {
             String attrName = StringUtils.trim(values[n]);//该表字段对应的属性变量值 (如 :paraId )
 
             if (StringUtils.isBlank(attrName)) {
-                throw new SqlTemplateException("ERROR-DB-SQT0000000023", getId(), tabColumnName);
+                throw new SqlTemplateException("ERROR-DB-SQT0000000023", templateType.getUpperKey(), getId(), tabColumnName);
             }
 
             Column column = (Column) EntityUtils.getEntity(entityCols, Column.COLUMN_TAB_COL_NAME, tabColumnName);
             if (ObjectUtils.isEmpty(column)) {
-                throw new SqlTemplateException("ERROR-DB-SQT0000000024", getId(), tabColumnName);
+                throw new SqlTemplateException("ERROR-DB-SQT0000000024", templateType.getUpperKey(), getId(), tabColumnName);
             }
 
             String attrN = column.getAttrName();
             if (!attrName.equals(StringUtils.strCat(DBConstants.SQLConstants.SQL_COLON, attrN))) {
-                throw new SqlTemplateException("ERROR-DB-SQT0000000025", getId(), tabColumnName, attrName);
+                throw new SqlTemplateException("ERROR-DB-SQT0000000025", templateType.getUpperKey(), getId(), tabColumnName, attrName);
             }
             entityColsList.add(column);
         }

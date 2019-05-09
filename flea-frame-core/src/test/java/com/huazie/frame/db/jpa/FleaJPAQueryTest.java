@@ -1,4 +1,4 @@
-package com.huazie.frame.core.base.cfgdata;
+package com.huazie.frame.db.jpa;
 
 import com.huazie.frame.common.FleaFrameManager;
 import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;

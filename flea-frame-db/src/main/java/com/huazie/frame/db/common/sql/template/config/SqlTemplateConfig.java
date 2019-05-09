@@ -61,9 +61,9 @@ public class SqlTemplateConfig {
     public Rule getRule(String ruleId) {
         Rule rule = null;
         Map<String, Rule> rulesMap;
-        if (sql != null) {
+        if (ObjectUtils.isNotEmpty(sql)) {
             Rules rules = sql.getRules();
-            if (rules != null) {
+            if (ObjectUtils.isNotEmpty(rules)) {
                 rulesMap = rules.toRulesMap();
                 if (rulesMap != null && !rulesMap.isEmpty()) {
                     rule = rulesMap.get(ruleId);
@@ -83,9 +83,9 @@ public class SqlTemplateConfig {
     public Template getInsertTemplate(String tempId) {
         Template template = null;
         Map<String, Template> insertsMap;
-        if (sql != null) {
+        if (ObjectUtils.isNotEmpty(sql)) {
             Insert insert = sql.getInsert();
-            if (insert != null) {
+            if (ObjectUtils.isNotEmpty(insert)) {
                 insertsMap = insert.toInsertsMap();
                 if (insertsMap != null && !insertsMap.isEmpty()) {
                     template = insertsMap.get(tempId);
@@ -105,9 +105,9 @@ public class SqlTemplateConfig {
     public Template getUpdateTemplate(String tempId) {
         Template template = null;
         Map<String, Template> updatesMap;
-        if (sql != null) {
+        if (ObjectUtils.isNotEmpty(sql)) {
             Update update = sql.getUpdate();
-            if (update != null) {
+            if (ObjectUtils.isNotEmpty(update)) {
                 updatesMap = update.toUpdatesMap();
                 if (updatesMap != null && !updatesMap.isEmpty()) {
                     template = updatesMap.get(tempId);
@@ -127,9 +127,9 @@ public class SqlTemplateConfig {
     public Template getSelectTemplate(String tempId) {
         Template template = null;
         Map<String, Template> selectsMap;
-        if (sql != null) {
+        if (ObjectUtils.isNotEmpty(sql)) {
             Select select = sql.getSelect();
-            if (select != null) {
+            if (ObjectUtils.isNotEmpty(select)) {
                 selectsMap = select.toSelectsMap();
                 if (selectsMap != null && !selectsMap.isEmpty()) {
                     template = selectsMap.get(tempId);
@@ -149,9 +149,9 @@ public class SqlTemplateConfig {
     public Template getDeleteTemplate(String tempId) {
         Template template = null;
         Map<String, Template> deletesMap;
-        if (sql != null) {
+        if (ObjectUtils.isNotEmpty(sql)) {
             Delete delete = sql.getDelete();
-            if (delete != null) {
+            if (ObjectUtils.isNotEmpty(delete)) {
                 deletesMap = delete.toDeletesMap();
                 if (deletesMap != null && !deletesMap.isEmpty()) {
                     template = deletesMap.get(tempId);

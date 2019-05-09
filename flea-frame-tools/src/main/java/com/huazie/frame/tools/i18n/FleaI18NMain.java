@@ -182,7 +182,7 @@ public class FleaI18NMain extends JFrame {
                 }
             }
         });
-        unicodeFilePathArea = new JTextArea(6, 50);// Unicode文本域
+        unicodeFilePathArea = new JTextArea(getHeight() / 60, getWidth() / 12);// Unicode文本域
         unicodeFilePathArea.setSelectedTextColor(Color.RED);// 设置选中文本的颜色
         unicodeFilePathArea.setLineWrap(true);// 设置自动换行
         unicodeFilePathArea.setWrapStyleWord(true);// 设置换行不断字
@@ -218,7 +218,7 @@ public class FleaI18NMain extends JFrame {
                 }
             }
         });
-        nativeFilePathArea = new JTextArea(6, 50);// Unicode文本域
+        nativeFilePathArea = new JTextArea(getHeight() / 60, getWidth() / 12);// Unicode文本域
         nativeFilePathArea.setSelectedTextColor(Color.RED);// 设置选中文本的颜色
         nativeFilePathArea.setLineWrap(true);// 设置自动换行
         nativeFilePathArea.setWrapStyleWord(true);// 设置换行不断字
@@ -241,10 +241,10 @@ public class FleaI18NMain extends JFrame {
         JLabel nativeStringLabel = new JLabel(FleaI18nHelper.i18nForCommon("COMMON_I18N_00003"), JLabel.CENTER);
         nativeStringLabel.setFont(new Font("宋体", Font.PLAIN, 18)); // 设置"本地文件"字体
         nativeStringLabel.setPreferredSize(new Dimension(getWidth() / 5, getHeight() / 12));
-        nativeStringText = new JTextField(36);// 本地文件路径输入框
+        nativeStringText = new JTextField(getHeight() / 10);// 本地文件路径输入框
         nativeStringText.setPreferredSize(new Dimension(getWidth() / 3, getHeight() / 12));
         nativeStringText.setSelectedTextColor(Color.RED);
-        unicodeStringArea = new JTextArea(6, 50);// Unicode文本域
+        unicodeStringArea = new JTextArea(getHeight() / 60, getWidth() / 12);// Unicode文本域
         unicodeStringArea.setSelectedTextColor(Color.RED);// 设置选中文本的颜色
         unicodeStringArea.setLineWrap(true);// 设置自动换行
         unicodeStringArea.setWrapStyleWord(true);// 设置换行不断字
@@ -265,10 +265,10 @@ public class FleaI18NMain extends JFrame {
         JLabel unicodeStringLabel = new JLabel(FleaI18nHelper.i18nForCommon("COMMON_I18N_00004"), JLabel.CENTER);
         unicodeStringLabel.setFont(new Font("宋体", Font.PLAIN, 18)); // 设置"Unicode文件"字体
         unicodeStringLabel.setPreferredSize(new Dimension(getWidth() / 4, getHeight() / 12));
-        unicodeStringText = new JTextField(35);// Unicode文件路径输入框
+        unicodeStringText = new JTextField(getHeight() / 11);// Unicode文件路径输入框
         unicodeStringText.setPreferredSize(new Dimension(getWidth() / 3, getHeight() / 12));
         unicodeStringText.setSelectedTextColor(Color.RED);
-        nativeStringArea = new JTextArea(6, 50);// 本地文本域
+        nativeStringArea = new JTextArea(getHeight() / 60, getWidth() / 12);// 本地文本域
         nativeStringArea.setSelectedTextColor(Color.RED);// 设置选中文本的颜色
         nativeStringArea.setLineWrap(true);// 设置自动换行
         nativeStringArea.setWrapStyleWord(true);// 设置换行不断字

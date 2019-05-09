@@ -26,6 +26,10 @@ public enum TemplateTypeEnum {
         return key;
     }
 
+    public String getUpperKey() {
+        return key.toUpperCase();
+    }
+
     public String getDesc() {
         return desc;
     }

@@ -101,7 +101,8 @@ public class XmlDigesterHelper {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("XmlDigesterHelper##newTables Start parse the flea-table-split.xml");
+            LOGGER.debug("XmlDigesterHelper##newTables() Use the current flea-sql-template.xml :" + fileName);
+            LOGGER.debug("XmlDigesterHelper##newTables() Start to parse the flea-table-split.xml");
         }
 
         InputStream input = ResourcesUtil.getInputStreamFromClassPath(fileName);
@@ -131,7 +132,7 @@ public class XmlDigesterHelper {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("XmlDigesterHelper##newTables End parse the flea-table-split.xml");
+            LOGGER.debug("XmlDigesterHelper##newTables() End to parse the flea-table-split.xml");
         }
 
         return tabs;
@@ -171,8 +172,8 @@ public class XmlDigesterHelper {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("XmlDigesterHelper##newSqlTemplate Use the current flea-sql-template.xml :" + fileName);
-            LOGGER.debug("XmlDigesterHelper##newTables Start parse the flea-sql-template.xml");
+            LOGGER.debug("XmlDigesterHelper##newSqlTemplate() Use the current flea-sql-template.xml :" + fileName);
+            LOGGER.debug("XmlDigesterHelper##newSqlTemplate() Start to parse the flea-sql-template.xml");
         }
 
         InputStream input = ResourcesUtil.getInputStreamFromClassPath(fileName);
@@ -258,7 +259,7 @@ public class XmlDigesterHelper {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("XmlDigesterHelper##newTables End parse the flea-sql-template.xml");
+            LOGGER.debug("XmlDigesterHelper##newSqlTemplate() End to parse the flea-sql-template.xml");
         }
 
         return sqlTemplate;
