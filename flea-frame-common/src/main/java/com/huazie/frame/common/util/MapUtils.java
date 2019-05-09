@@ -16,6 +16,7 @@ public class MapUtils {
      *
      * @param map Map集合
      * @return true : Map集合为空; false : Map集合非空
+     * @since 1.0.0
      */
     public static boolean isEmpty(Map map) {
         if (null == map || map.isEmpty()) {
@@ -29,6 +30,7 @@ public class MapUtils {
      *
      * @param map Map集合
      * @return true : Map集合非空; false : Map集合为空
+     * @since 1.0.0
      */
     public static boolean isNotEmpty(Map map) {
         return !isEmpty(map);

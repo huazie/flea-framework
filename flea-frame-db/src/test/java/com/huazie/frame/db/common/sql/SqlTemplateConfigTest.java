@@ -85,8 +85,8 @@ public class SqlTemplateConfigTest {
 	@Test
 	public void testUpdateTemplateRule(){
 		
-//		String template = " UPDATE ##table## SET ##columns## WHERE ##conditions## ";
-		String template = " update ##table## set ##columns## where ##conditions## ";
+//		String template = " UPDATE ##table## SET ##sets## WHERE ##conditions## ";
+		String template = " update ##table## set ##sets## where ##conditions## ";
 
 		LOGGER.debug("======UPDATE规则校验开始======");
 		

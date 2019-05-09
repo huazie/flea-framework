@@ -125,6 +125,7 @@ public class SelectSqlTemplate<T> extends SqlTemplate<T> {
 
         if (DBConstants.SQLConstants.SQL_ASTERISK.equals(StringUtils.trim(colStr))) {
             colStr = StringUtils.strCombined(entityCols, Column.COLUMN_TAB_COL_NAME, DBConstants.SQLConstants.SQL_BLANK, DBConstants.SQLConstants.SQL_COMMA);
+            colStr = colStr.substring(1); // 将第一个空格去除
         }
 
         String[] cols = StringUtils.split(StringUtils.trim(colStr), DBConstants.SQLConstants.SQL_COMMA);

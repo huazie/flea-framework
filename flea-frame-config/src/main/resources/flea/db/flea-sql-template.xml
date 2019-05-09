@@ -6,7 +6,7 @@
 			<property key="sql" value="[ ]*(INSERT)[ ]+(INTO)[ ]+##table##[ ]+\([ ]*##columns##[ ]+\)[ ]+(VALUES)[ ]+\([ ]*##values##[ ]+\)[ ]*" />
 		</rule>
 		<rule id="update" name="更新模板的校验规则配置">
-			<property key="sql" value="[ ]*(UPDATE)[ ]+##table##[ ]+(SET)[ ]+##columns##[ ]+(WHERE)[ ]+##conditions##[ ]*" />
+			<property key="sql" value="[ ]*(UPDATE)[ ]+##table##[ ]+(SET)[ ]+##sets##[ ]+(WHERE)[ ]+##conditions##[ ]*" />
 		</rule>
 		<rule id="select" name="查询模板的校验规则配置">
 			<property key="sql" value="[ ]*(SELECT)[ ]+##columns##[ ]+(FROM)[ ]+##table##[ ]+(WHERE)[ ]+##conditions##[ ]*" />
@@ -19,16 +19,16 @@
 		<template id="insert" ruleId="insert" name="插入模板" desc="用于原生SQL中插入语句的使用">
 			<property key="template" value="INSERT INTO ##table## (##columns## ) VALUES (##values## )" />
 			<property key="table" value="flea_para_detail" />
-			<!-- 这两个不填，表示表的字段全部使用 -->
+			<!-- 这两个不填，表示表的字段全部使用
 			<property key="columns" value="para_id, para_type, para_code, para_name, para1, para_state" />
-			<property key="values" value=":paraId, :paraType, :paraCode, :paraName, :para1, :paraState" />
+			<property key="values" value=":paraId, :paraType, :paraCode, :paraName, :para1, :paraState" />-->
 		</template>
 	</insert>
 	<update>
 		<template id="update" ruleId="update" name="更新模板" desc="用于原生SQL中更新语句的使用">
-			<property key="template" value="UPDATE ##table## SET ##columns## WHERE ##conditions##" />
+			<property key="template" value="UPDATE ##table## SET ##sets## WHERE ##conditions##" />
 			<property key="table" value="flea_para_detail" />
-			<property key="columns" value="para1 = :para1, para2 = :para2" />
+			<property key="sets" value="para1 = :para1, para2 = :para2" />
 			<property key="conditions" value="para_id = :paraId and ( para_type = :paraType or para_type = 'nihao') and para_code in ( :paraCode) or para_name like :paraName" />
 		</template>
 	</update>

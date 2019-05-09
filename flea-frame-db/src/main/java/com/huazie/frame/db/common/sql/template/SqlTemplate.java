@@ -283,7 +283,9 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
     public void setId(String id) {
         tempId = id;
         template = getSqlTemplate(id);
-        rule = SqlTemplateConfig.getConfig().getRule(template.getRuleId());
+        if (ObjectUtils.isNotEmpty(template)) {
+            rule = SqlTemplateConfig.getConfig().getRule(template.getRuleId());
+        }
     }
 
     @Override

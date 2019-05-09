@@ -105,30 +105,32 @@ public class UpdateSqlTemplate<T> extends SqlTemplate<T> {
 
     @Override
     protected void initSqlTemplate(StringBuilder sql, Map<String, Object> params, Column[] entityCols, Map<String, Property> propMap) throws Exception {
-        // 获取【key=columns】的属性， 存储SET子句的内容（ para1 = :para1, para2 = :para2）
-        Property columns = propMap.get(SqlTemplateEnum.COLUMNS.getKey());
-        // 获取【key=conditions】的属性，存储WHERE子句的内容 （para_id = :paraId and para_type = :paraType）
-        Property conditions = propMap.get(SqlTemplateEnum.CONDITIONS.getKey());
+        // 获取【key=sets】的属性， 存储SET子句的内容（ para1 = :para1, para2 = :para2）
+        Property sets = propMap.get(SqlTemplateEnum.SETS.getKey());
 
-        if (ObjectUtils.isEmpty(columns)) {
+        if (ObjectUtils.isEmpty(sets)) {
             throw new SqlTemplateException("ERROR-DB-SQT0000000015", templateType.getUpperKey(), getId());
         }
+
+        String setStr = sets.getValue();
+
+        // 获取【key=conditions】的属性，存储WHERE子句的内容 （para_id = :paraId and para_type = :paraType）
+        Property conditions = propMap.get(SqlTemplateEnum.CONDITIONS.getKey());
 
         if (ObjectUtils.isEmpty(conditions)) {
             throw new SqlTemplateException("ERROR-DB-SQT0000000016", templateType.getUpperKey(), getId());
         }
 
-        String colStr = columns.getValue();
         String condStr = conditions.getValue();
 
-        Map<String, String> setMap = StringUtils.split(StringUtils.split(colStr, DBConstants.SQLConstants.SQL_COMMA), DBConstants.SQLConstants.SQL_EQUAL);
+        Map<String, String> setMap = StringUtils.split(StringUtils.split(setStr, DBConstants.SQLConstants.SQL_COMMA), DBConstants.SQLConstants.SQL_EQUAL);
         Map<String, String> whereMap = createConditionMap(condStr);
 
         // 校验【key=columns】 和 【key=conditions】的数据是否正确
         Column[] realEntityCols = check(entityCols, setMap, whereMap);
         createParamMap(params, realEntityCols);// 设置SQL参数
 
-        StringUtils.replace(sql, createPlaceHolder(SqlTemplateEnum.COLUMNS.getKey()), colStr);
+        StringUtils.replace(sql, createPlaceHolder(SqlTemplateEnum.SETS.getKey()), setStr);
         StringUtils.replace(sql, createPlaceHolder(SqlTemplateEnum.CONDITIONS.getKey()), condStr);
 
     }

@@ -14,6 +14,7 @@ public enum SqlTemplateEnum {
     TABLE("table", "表名定义关键字"),
     COLUMNS("columns", "列定义关键字"),
     VALUES("values", "值定义关键字"),
+    SETS("sets", "SET定义关键字"),
     CONDITIONS("conditions", "条件定义关键字"),
     PLACEHOLDER("##", "替换符号");
 
