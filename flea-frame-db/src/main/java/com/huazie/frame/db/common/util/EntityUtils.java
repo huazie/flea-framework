@@ -6,6 +6,8 @@ import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.ReflectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.exception.DaoException;
+import com.huazie.frame.db.common.sql.template.config.Param;
+import com.huazie.frame.db.common.sql.template.config.Relation;
 import com.huazie.frame.db.common.sql.template.config.Template;
 import com.huazie.frame.db.common.table.column.Column;
 
@@ -29,7 +31,7 @@ import java.util.Map;
 public class EntityUtils {
 
     /**
-     * <p> 获取SQL模板的Map集合，便于根据id查找 </p>
+     * <p> 获取SQL模板的Map集合，便于根据SQL模板id查找 </p>
      *
      * @param templates SQL模板的List对象
      * @return SQL模板的Map集合
@@ -43,6 +45,40 @@ public class EntityUtils {
             templatesMap.put(template.getId(), template);
         }
         return templatesMap;
+    }
+
+    /**
+     * <p> 获取SQL模板参数的Map集合，便于根据SQL模板参数id查找 </p>
+     *
+     * @param params SQL模板参数的List对象
+     * @return SQL模板参数的Map集合
+     * @since 1.0.0
+     */
+    public static Map<String, Param> toParamsMap(List<Param> params) {
+        Map<String, Param> paramsMap = new HashMap<String, Param>();
+        Iterator<Param> paramsIt = params.iterator();
+        while (paramsIt.hasNext()) {
+            Param param = paramsIt.next();
+            paramsMap.put(param.getId(), param);
+        }
+        return paramsMap;
+    }
+
+    /**
+     * <p> 获取SQL模板和模板参数关联关系的Map集合，便于根据关系id查找 </p>
+     *
+     * @param relations SQL模板和模板参数关联关系的List对象
+     * @return SQL模板和模板参数关联关系的Map集合
+     * @since 1.0.0
+     */
+    public static Map<String, Relation> toRelationsMap(List<Relation> relations) {
+        Map<String, Relation> relationsMap = new HashMap<String, Relation>();
+        Iterator<Relation> relationsIt = relations.iterator();
+        while (relationsIt.hasNext()) {
+            Relation relation = relationsIt.next();
+            relationsMap.put(relation.getId(), relation);
+        }
+        return relationsMap;
     }
 
     /**

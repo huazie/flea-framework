@@ -11,15 +11,21 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  */
 public class Sql {
 
-    private Rules rules;    // 规则校验集合
+    private Rules rules;        // 规则校验集合
 
-    private Insert insert;    // 插入模板集合
+    private Templates templates;// SQL模板集合
 
-    private Update update;    // 更新模板集合
+    private Params params;      // SQL模板参数集合
 
-    private Select select;    // 查询模板集合
+    private Relations relations;// SQL模板和模板参数关联关系集合
 
-    private Delete delete;    // 删除模板集合
+    private Insert insert;      // 插入模板集合
+
+    private Update update;      // 更新模板集合
+
+    private Select select;      // 查询模板集合
+
+    private Delete delete;      // 删除模板集合
 
     public Rules getRules() {
         return rules;
@@ -27,6 +33,30 @@ public class Sql {
 
     public void setRules(Rules rules) {
         this.rules = rules;
+    }
+
+    public Templates getTemplates() {
+        return templates;
+    }
+
+    public void setTemplates(Templates templates) {
+        this.templates = templates;
+    }
+
+    public Params getParams() {
+        return params;
+    }
+
+    public void setParams(Params params) {
+        this.params = params;
+    }
+
+    public Relations getRelations() {
+        return relations;
+    }
+
+    public void setRelations(Relations relations) {
+        this.relations = relations;
     }
 
     public Insert getInsert() {

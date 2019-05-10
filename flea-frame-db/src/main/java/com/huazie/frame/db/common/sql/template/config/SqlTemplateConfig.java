@@ -74,6 +74,18 @@ public class SqlTemplateConfig {
         return rule;
     }
 
+    public Template getTemplate(String templateId) {
+        Template template = null;
+        Map<String, Template> templatesMap;
+        if(ObjectUtils.isNotEmpty(sql)){
+            Templates templates = sql.getTemplates();
+            if(ObjectUtils.isNotEmpty(templates)){
+                
+            }
+        }
+        return template;
+    }
+
     /**
      * <p> 根据新增模板编号，获取指定的新增模板配置信息 </p>
      *
