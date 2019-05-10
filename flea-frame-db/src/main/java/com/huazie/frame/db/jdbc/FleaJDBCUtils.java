@@ -1,6 +1,7 @@
 package com.huazie.frame.db.jdbc;
 
 import com.huazie.frame.common.util.ArrayUtils;
+import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.db.jdbc.pojo.FleaDBOperationHandler;
 import org.slf4j.Logger;
@@ -79,7 +80,7 @@ public class FleaJDBCUtils {
      */
     public static List<Map<String, Object>> query(String sql, List<Object> params) throws SQLException {
         List<Map<String, Object>> datas = null;
-        if (null != params && !params.isEmpty()) {
+        if (CollectionUtils.isNotEmpty(params)) {
             Object[] paramArr = params.toArray(new Object[0]);
             datas = query(sql, paramArr);
         }

@@ -1,6 +1,7 @@
 package com.huazie.frame.db.jpa.dao.impl;
 
 import com.huazie.frame.common.CommonConstants;
+import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.DBConstants;
@@ -76,7 +77,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     public List<T> query(Map<String, Object> paramterMap, String attrName, String orderBy) throws Exception {
         FleaJPAQuery query = getQuery(null);
         query.equal(paramterMap);
-        query.addOrder(attrName, orderBy);
+        query.addOrderby(attrName, orderBy);
         List<T> ts = query.getResultList();
         return ts;
     }
@@ -94,7 +95,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
             throws Exception {
         FleaJPAQuery query = getQuery(null);
         query.equal(paramterMap);
-        query.addOrder(attrName, orderBy);
+        query.addOrderby(attrName, orderBy);
         List<T> ts = query.getResultList(start, max);
         return ts;
     }
@@ -109,7 +110,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     @Override
     public List<T> queryAll(String attrName, String orderBy) throws Exception {
         FleaJPAQuery query = getQuery(null);
-        query.addOrder(attrName, orderBy);
+        query.addOrderby(attrName, orderBy);
         List<T> ts = query.getResultList();
         return ts;
     }
@@ -124,7 +125,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     @Override
     public List<T> queryAll(String attrName, String orderBy, int start, int max) throws Exception {
         FleaJPAQuery query = getQuery(null);
-        query.addOrder(attrName, orderBy);
+        query.addOrderby(attrName, orderBy);
         List<T> ts = query.getResultList(start, max);
         return ts;
     }
@@ -174,7 +175,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 
     @Override
     public T update(T entity) throws Exception {
-        if (entity == null) {
+        if (ObjectUtils.isEmpty(entity)) {
             throw new DaoException("ERROR-DB-DAO0000000012");
         }
         T t = getEntityManager().merge(entity);
@@ -183,7 +184,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 
     @Override
     public List<T> batchUpdate(List<T> entitys) throws Exception {
-        if (entitys == null || entitys.isEmpty()) {
+        if (CollectionUtils.isEmpty(entitys)) {
             throw new DaoException("ERROR-DB-DAO0000000013");
         }
         for (int i = 0; i < entitys.size(); i++) {
@@ -194,7 +195,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 
     @Override
     public void save(T entity) throws Exception {
-        if (entity == null) {
+        if (ObjectUtils.isEmpty(entity)) {
             throw new DaoException("ERROR-DB-DAO0000000012");
         }
         getEntityManager().persist(entity);
@@ -202,7 +203,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 
     @Override
     public void batchSave(List<T> entitys) throws Exception {
-        if (entitys == null || entitys.isEmpty()) {
+        if (CollectionUtils.isEmpty(entitys)) {
             throw new DaoException("ERROR-DB-DAO0000000013");
         }
         for (int i = 0; i < entitys.size(); i++) {

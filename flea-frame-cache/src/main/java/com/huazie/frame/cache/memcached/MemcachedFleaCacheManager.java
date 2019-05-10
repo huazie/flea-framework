@@ -4,6 +4,7 @@ import com.huazie.frame.cache.AbstractFleaCache;
 import com.huazie.frame.cache.AbstractFleaCacheManager;
 import com.huazie.frame.cache.memcached.config.MemcachedConfig;
 import com.huazie.frame.cache.memcached.impl.MemcachedFleaCache;
+import com.huazie.frame.common.util.ObjectUtils;
 import com.whalin.MemCached.MemCachedClient;
 import com.whalin.MemCached.SockIOPool;
 import org.slf4j.Logger;
@@ -35,9 +36,9 @@ public class MemcachedFleaCacheManager extends AbstractFleaCacheManager {
      * @since 1.0.0
      */
     public static MemcachedFleaCacheManager getInstance() {
-        if (null == cacheManager) {
+        if (ObjectUtils.isEmpty(cacheManager)) {
             synchronized (MemcachedFleaCacheManager.class) {
-                if (null == cacheManager) {
+                if (ObjectUtils.isEmpty(cacheManager)) {
                     cacheManager = new MemcachedFleaCacheManager(new MemCachedClient());
                     cacheManager.initSockIOPool();
                 }

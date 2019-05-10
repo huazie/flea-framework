@@ -1,5 +1,7 @@
 package com.huazie.frame.db.common.sql.template.impl;
 
+import com.huazie.frame.common.util.MapUtils;
+import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.exception.SqlTemplateException;
 import com.huazie.frame.db.common.sql.template.SqlTemplate;
@@ -105,7 +107,7 @@ public class DeleteSqlTemplate<T> extends SqlTemplate<T> {
         // 获取【key=conditions】的属性，存储WHERE子句部分的内容 （para_id = :paraId and para_type = :paraType）
         Property conditions = propMap.get(SqlTemplateEnum.CONDITIONS.getKey());
 
-        if (conditions == null) {
+        if (ObjectUtils.isEmpty(conditions)) {
             throw new SqlTemplateException("ERROR-DB-SQT0000000016", templateType.getUpperKey(), getId());
         }
 
@@ -133,7 +135,7 @@ public class DeleteSqlTemplate<T> extends SqlTemplate<T> {
      */
     private Column[] check(final Column[] entityCols, Map<String, String> whereMap) throws Exception {
 
-        if (whereMap == null || whereMap.isEmpty()) {
+        if (MapUtils.isEmpty(whereMap)) {
             throw new SqlTemplateException("ERROR-DB-SQT0000000018", templateType.getUpperKey(), getId());
         }
 

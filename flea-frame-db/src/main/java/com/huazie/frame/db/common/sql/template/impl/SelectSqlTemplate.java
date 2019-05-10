@@ -1,5 +1,6 @@
 package com.huazie.frame.db.common.sql.template.impl;
 
+import com.huazie.frame.common.util.MapUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.DBConstants;
@@ -157,13 +158,12 @@ public class SelectSqlTemplate<T> extends SqlTemplate<T> {
             throw new SqlTemplateException("ERROR-DB-SQT0000000017", templateType.getUpperKey(), getId());
         }
 
-        if (whereMap == null || whereMap.isEmpty()) {
+        if (MapUtils.isEmpty(whereMap)) {
             throw new SqlTemplateException("ERROR-DB-SQT0000000018", templateType.getUpperKey(), getId());
         }
 
         for (int n = 0; n < cols.length; n++) {
             String tabColumnName = StringUtils.trim(cols[n]);//表字段名
-
             Column column = (Column) EntityUtils.getEntity(entityCols, Column.COLUMN_TAB_COL_NAME, tabColumnName);
             if (ObjectUtils.isEmpty(column)) {
                 throw new SqlTemplateException("ERROR-DB-SQT0000000024", templateType.getUpperKey(), getId(), tabColumnName);

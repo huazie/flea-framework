@@ -41,6 +41,7 @@ public class SqlTemplateTest {
 
     @Test
     public void testDeleteSqlTemplate1() {
+        FleaFrameManager.getManager().setLocale(Locale.US);
         try {
             SqlTemplate<FleaParaDetail> sqlTemplate = new DeleteSqlTemplate<FleaParaDetail>();
             // 这个对应<template id="delete">
@@ -61,6 +62,7 @@ public class SqlTemplateTest {
 
     @Test
     public void testDeleteSqlTemplate2() {
+        FleaFrameManager.getManager().setLocale(Locale.US);
         try {
             ITemplate<FleaParaDetail> sqlTemplate = new DeleteSqlTemplate<FleaParaDetail>("delete", (FleaParaDetail) fleaParaDetail);
             // 模板初始化
@@ -75,6 +77,7 @@ public class SqlTemplateTest {
 
     @Test
     public void testDeleteSqlTemplate3() {
+        FleaFrameManager.getManager().setLocale(Locale.US);
         try {
             ITemplate<FleaParaDetail> sqlTemplate = new DeleteSqlTemplate<FleaParaDetail>("delete", "flea_para_detail", (FleaParaDetail) fleaParaDetail);
             // 模板初始化
@@ -89,6 +92,7 @@ public class SqlTemplateTest {
 
     @Test
     public void testInsertSqlTemplate1() {
+        FleaFrameManager.getManager().setLocale(Locale.US);
         try {
             SqlTemplate<FleaParaDetail> sqlTemplate = new InsertSqlTemplate<FleaParaDetail>();
             // 这个对应<template id="insert">
@@ -109,6 +113,7 @@ public class SqlTemplateTest {
 
     @Test
     public void testInsertSqlTemplate2() {
+        FleaFrameManager.getManager().setLocale(Locale.US);
         try {
             ITemplate<FleaParaDetail> sqlTemplate = new InsertSqlTemplate<FleaParaDetail>("insert", (FleaParaDetail) fleaParaDetail);
             // 模板初始化
@@ -138,6 +143,7 @@ public class SqlTemplateTest {
 
     @Test
     public void testSelectSqlTemplate1() {
+        FleaFrameManager.getManager().setLocale(Locale.US);
         try {
             SqlTemplate<FleaParaDetail> sqlTemplate = new SelectSqlTemplate<FleaParaDetail>();
             // 这个对应<template id="select">
@@ -158,6 +164,7 @@ public class SqlTemplateTest {
 
     @Test
     public void testSelectSqlTemplate2() {
+        FleaFrameManager.getManager().setLocale(Locale.US);
         try {
             ITemplate<FleaParaDetail> sqlTemplate = new SelectSqlTemplate<FleaParaDetail>("select", (FleaParaDetail) fleaParaDetail);
             // 模板初始化
@@ -187,6 +194,7 @@ public class SqlTemplateTest {
 
     @Test
     public void testUpdateSqlTemplate1() {
+        FleaFrameManager.getManager().setLocale(Locale.US);
         try {
             SqlTemplate<FleaParaDetail> sqlTemplate = new UpdateSqlTemplate<FleaParaDetail>();
             // 这个对应<template id="update">
@@ -207,6 +215,7 @@ public class SqlTemplateTest {
 
     @Test
     public void testUpdateSqlTemplate2() {
+        FleaFrameManager.getManager().setLocale(Locale.US);
         try {
             ITemplate<FleaParaDetail> sqlTemplate = new UpdateSqlTemplate<FleaParaDetail>("update", (FleaParaDetail) fleaParaDetail);
             // 模板初始化

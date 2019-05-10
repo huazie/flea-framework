@@ -1,5 +1,6 @@
 package com.huazie.frame.db.common.sql.template.config;
 
+import com.huazie.frame.common.util.MapUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.db.common.XmlDigesterHelper;
 import org.slf4j.Logger;
@@ -65,7 +66,7 @@ public class SqlTemplateConfig {
             Rules rules = sql.getRules();
             if (ObjectUtils.isNotEmpty(rules)) {
                 rulesMap = rules.toRulesMap();
-                if (rulesMap != null && !rulesMap.isEmpty()) {
+                if (MapUtils.isNotEmpty(rulesMap)) {
                     rule = rulesMap.get(ruleId);
                 }
             }
@@ -87,7 +88,7 @@ public class SqlTemplateConfig {
             Insert insert = sql.getInsert();
             if (ObjectUtils.isNotEmpty(insert)) {
                 insertsMap = insert.toInsertsMap();
-                if (insertsMap != null && !insertsMap.isEmpty()) {
+                if (MapUtils.isNotEmpty(insertsMap)) {
                     template = insertsMap.get(tempId);
                 }
             }
@@ -109,7 +110,7 @@ public class SqlTemplateConfig {
             Update update = sql.getUpdate();
             if (ObjectUtils.isNotEmpty(update)) {
                 updatesMap = update.toUpdatesMap();
-                if (updatesMap != null && !updatesMap.isEmpty()) {
+                if (MapUtils.isNotEmpty(updatesMap)) {
                     template = updatesMap.get(tempId);
                 }
             }
@@ -131,7 +132,7 @@ public class SqlTemplateConfig {
             Select select = sql.getSelect();
             if (ObjectUtils.isNotEmpty(select)) {
                 selectsMap = select.toSelectsMap();
-                if (selectsMap != null && !selectsMap.isEmpty()) {
+                if (MapUtils.isNotEmpty(selectsMap)) {
                     template = selectsMap.get(tempId);
                 }
             }
@@ -153,7 +154,7 @@ public class SqlTemplateConfig {
             Delete delete = sql.getDelete();
             if (ObjectUtils.isNotEmpty(delete)) {
                 deletesMap = delete.toDeletesMap();
-                if (deletesMap != null && !deletesMap.isEmpty()) {
+                if (MapUtils.isNotEmpty(deletesMap)) {
                     template = deletesMap.get(tempId);
                 }
             }

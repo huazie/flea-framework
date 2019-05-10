@@ -6,8 +6,6 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Map;
-
 /**
  * <p> 分表配置信息 </p>
  *
@@ -56,9 +54,7 @@ public class TableSplitConfig {
      * @since 1.0.0
      */
     public Table getTable(String name) {
-        Map<String, Table> tableMap = tables.toTableMap();
-        Table table = tableMap.get(name);
-        return table;
+        return tables.toTableMap().get(name);
     }
 
     public Tables getTables() {

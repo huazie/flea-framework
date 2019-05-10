@@ -36,6 +36,7 @@
 		<appender-ref ref="myFile"/>
 	</logger>
 
+	<!-- -->
 	<logger name="org.apache">
 		<level value="WARN" />
 		<appender-ref ref="myConsole" />

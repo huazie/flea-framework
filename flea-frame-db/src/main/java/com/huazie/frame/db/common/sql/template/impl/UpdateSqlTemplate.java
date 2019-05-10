@@ -1,5 +1,6 @@
 package com.huazie.frame.db.common.sql.template.impl;
 
+import com.huazie.frame.common.util.MapUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.DBConstants;
@@ -148,11 +149,11 @@ public class UpdateSqlTemplate<T> extends SqlTemplate<T> {
      * @since 1.0.0
      */
     private Column[] check(final Column[] entityCols, Map<String, String> setMap, Map<String, String> whereMap) throws Exception {
-        if (setMap == null || setMap.isEmpty()) {
+        if (MapUtils.isEmpty(setMap)) {
             throw new SqlTemplateException("ERROR-DB-SQT0000000017", templateType.getUpperKey(), getId());
         }
 
-        if (whereMap == null || whereMap.isEmpty()) {
+        if (MapUtils.isEmpty(whereMap)) {
             throw new SqlTemplateException("ERROR-DB-SQT0000000018", templateType.getUpperKey(), getId());
         }
 

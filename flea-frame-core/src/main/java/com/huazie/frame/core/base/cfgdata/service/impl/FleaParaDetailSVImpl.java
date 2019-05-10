@@ -1,5 +1,6 @@
 package com.huazie.frame.core.base.cfgdata.service.impl;
 
+import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.core.base.cfgdata.dao.interfaces.IFleaParaDetailDAO;
 import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
 import com.huazie.frame.core.base.cfgdata.ivalues.IFleaParaDetailValue;
@@ -42,7 +43,7 @@ public class FleaParaDetailSVImpl extends AbstractFleaJPASVImpl<FleaParaDetail> 
         List<IFleaParaDetailValue> fleaParaDetailValues = fleaParaDetailDao.getParaDetail(paraType, paraCode);
         IFleaParaDetailValue fleaParaDetailValue = null;
 
-        if (null != fleaParaDetailValues && !fleaParaDetailValues.isEmpty()) {
+        if (CollectionUtils.isNotEmpty(fleaParaDetailValues)) {
             fleaParaDetailValue = fleaParaDetailValues.get(0);
         }
 

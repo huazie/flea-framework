@@ -144,7 +144,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
         }
         // 获取其属性值
         Map<String, Property> propMap = rule.toPropMap();
-        if (propMap != null && !propMap.isEmpty()) {
+        if (MapUtils.isNotEmpty(propMap)) {
             // 获取指定的校验规则配置
             Property prop = propMap.get(SqlTemplateEnum.SQL.getKey());
             if (ObjectUtils.isEmpty(prop)) {
@@ -207,6 +207,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
 
         // 根据 and 和 or 进行分组
         String[] singleConnAttr = StringUtils.split(newConn, DBConstants.SQLConstants.SQL_AND, DBConstants.SQLConstants.SQL_LOWER_AND, DBConstants.SQLConstants.SQL_OR, DBConstants.SQLConstants.SQL_LOWER_OR);
+
         if (!ArrayUtils.isEmpty(singleConnAttr)) {
 
             map = new HashMap<String, String>();
@@ -245,7 +246,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
      */
     protected Column[] checkOneByOne(final Column[] entityCols, Map<String, String> map, SqlTemplateEnum sqlTemplateEnum) throws Exception {
 
-        if (null == map || map.isEmpty()) {
+        if (MapUtils.isEmpty(map)) {
             return null;
         }
 
@@ -337,6 +338,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
      * @param entityCols 实体类T的对象的属性列相关信息
      * @param propMap    模板属性配置信息
      * @throws Exception
+     * @since 1.0.0
      */
     protected abstract void initSqlTemplate(StringBuilder sql, Map<String, Object> params, final Column[] entityCols, Map<String, Property> propMap) throws Exception;
 

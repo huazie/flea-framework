@@ -1,5 +1,7 @@
 package com.huazie.frame.db.jpa.common;
 
+import com.huazie.frame.common.util.CollectionUtils;
+import com.huazie.frame.common.util.MapUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.DBConstants;
@@ -12,6 +14,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -56,7 +59,7 @@ public final class FleaJPAQuery implements Serializable {
 
     private List<Order> orders; // 排序
 
-    private String groupBy; // 分组
+    private List<Expression> groups; //分组
 
     private FleaJPAQuery() {
     }
@@ -82,7 +85,6 @@ public final class FleaJPAQuery implements Serializable {
         }
         root = criteriaQuery.from(sourceClazz);
         predicates = new ArrayList<Predicate>();
-        orders = new ArrayList<Order>();
     }
 
     /**
@@ -187,7 +189,7 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     private void newEqualExpression(Map<String, Object> paramMap, boolean isEqual) throws DaoException {
-        if (paramMap == null || paramMap.isEmpty()) {
+        if (MapUtils.isEmpty(paramMap)) {
             throw new DaoException("ERROR-DB-DAO0000000003");
         }
         if (LOGGER.isDebugEnabled()) {
@@ -294,7 +296,7 @@ public final class FleaJPAQuery implements Serializable {
         if (StringUtils.isBlank(attrName)) {
             throw new DaoException("ERROR-DB-DAO0000000001");
         }
-        if (ObjectUtils.isEmpty(value) || value.isEmpty()) {
+        if (CollectionUtils.isEmpty(value)) {
             throw new DaoException("ERROR-DB-DAO0000000004");
         }
         if (LOGGER.isDebugEnabled()) {
@@ -665,25 +667,25 @@ public final class FleaJPAQuery implements Serializable {
             throw new DaoException("ERROR-DB-DAO0000000001");
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FMJPAQuery##sumAsDouble(attrName) -->> AttrName={}", attrName);
+            LOGGER.debug("FMJPAQuery##distinct(attrName) -->> AttrName={}", attrName);
         }
         criteriaQuery.select(root.get(attrName)).distinct(true);
     }
 
     /**
-     * <p> 添加order by的属性 </p>
+     * <p> 添加order by子句 </p>
      *
      * @param attrName 属性名
      * @param orderBy  排序顺序
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void addOrder(String attrName, String orderBy) throws DaoException {
+    public void addOrderby(String attrName, String orderBy) throws DaoException {
         if (StringUtils.isBlank(attrName)) {
             throw new DaoException("ERROR-DB-DAO0000000001");
         }
-        if (ObjectUtils.isEmpty(orders)) {
-            orders = new ArrayList();
+        if (CollectionUtils.isEmpty(orders)) {
+            orders = new ArrayList<Order>();
         }
         if (orderBy.equalsIgnoreCase(DBConstants.SQLConstants.SQL_ORDER_ASC)) {
             orders.add(criteriaBuilder.asc(root.get(attrName)));
@@ -693,8 +695,31 @@ public final class FleaJPAQuery implements Serializable {
             throw new DaoException("ERROR-DB-DAO0000000007", orderBy);
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FMJPAQuery##addOrder(attrName, orderBy) -->> AttrName={}, OrderBy={}", attrName, orderBy);
+            LOGGER.debug("FMJPAQuery##addOrderby(attrName, orderBy) -->> AttrName={}, OrderBy={}", attrName, orderBy);
         }
+    }
+
+    /**
+     * <p> 添加group by子句 </p>
+     *
+     * @param attrName 属性名
+     * @throws DaoException 数据操作层异常类
+     * @since 1.0.0
+     */
+    public void addGroupBy(String attrName) throws DaoException {
+        if (StringUtils.isBlank(attrName)) {
+            throw new DaoException("ERROR-DB-DAO0000000001");
+        }
+        if (CollectionUtils.isEmpty(groups)) {
+            groups = new ArrayList<Expression>();
+        }
+
+        groups.add(root.get(attrName));
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("FMJPAQuery##addGroupBy(attrName) -->> AttrName={}, GroupBy={}", attrName);
+        }
+
     }
 
     /**
@@ -780,16 +805,17 @@ public final class FleaJPAQuery implements Serializable {
         if (!isSingle) {
             criteriaQuery.select(root);
         }
-        if (predicates != null && !predicates.isEmpty()) {
+        if (CollectionUtils.isNotEmpty(predicates)) {
             // 将所有条件用 and 联合起来
             criteriaQuery.where(criteriaBuilder.and(predicates.toArray(new Predicate[0])));
         }
-        if (orders != null && !orders.isEmpty()) {
+        if (CollectionUtils.isNotEmpty(orders)) {
             // 将order by 添加到查询语句中
             criteriaQuery.orderBy(orders);
         }
-        if (groupBy != null && !groupBy.isEmpty()) { // 有待修改
-            criteriaQuery.groupBy(root.get(groupBy));
+        if (CollectionUtils.isNotEmpty(groups)) {
+            // 将group by 添加到查询语句中
+            criteriaQuery.groupBy(groups);
         }
         return entityManager.createQuery(criteriaQuery);
     }
@@ -826,8 +852,7 @@ public final class FleaJPAQuery implements Serializable {
         return orders;
     }
 
-    public String getGroupBy() {
-        return groupBy;
+    public List<Expression> getGroups() {
+        return groups;
     }
-
 }
