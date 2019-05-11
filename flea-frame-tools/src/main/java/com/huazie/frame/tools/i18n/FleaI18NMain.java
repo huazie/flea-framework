@@ -56,7 +56,7 @@ public class FleaI18NMain extends JFrame {
 
     private int currTab = 1;                    // 当前TAB页
 
-    private static String EXE_PATH_DEFAULT = "F:\\FileRecv\\ubuntu\\Java\\bin\\Unicode\\jdk1.7.0_17\\bin\\native2ascii.exe";
+    private static String EXE_PATH_DEFAULT = "C:\\Java\\jdk1.7.0_55\\bin\\native2ascii.exe";
 
     private final static int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
 

@@ -11,7 +11,7 @@ import com.huazie.frame.tools.i18n.FleaI18NMain;
  */
 public class FleaI18NMainTest {
 
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args){
 //        FleaFrameManager.getManager().setLocale(Locale.US);
         FleaI18NMain main = new FleaI18NMain();
         main.setVisible(true);

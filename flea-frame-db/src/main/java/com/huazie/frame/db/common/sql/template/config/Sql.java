@@ -19,14 +19,6 @@ public class Sql {
 
     private Relations relations;// SQL模板和模板参数关联关系集合
 
-    private Insert insert;      // 插入模板集合
-
-    private Update update;      // 更新模板集合
-
-    private Select select;      // 查询模板集合
-
-    private Delete delete;      // 删除模板集合
-
     public Rules getRules() {
         return rules;
     }
@@ -57,38 +49,6 @@ public class Sql {
 
     public void setRelations(Relations relations) {
         this.relations = relations;
-    }
-
-    public Insert getInsert() {
-        return insert;
-    }
-
-    public void setInsert(Insert insert) {
-        this.insert = insert;
-    }
-
-    public Update getUpdate() {
-        return update;
-    }
-
-    public void setUpdate(Update update) {
-        this.update = update;
-    }
-
-    public Select getSelect() {
-        return select;
-    }
-
-    public void setSelect(Select select) {
-        this.select = select;
-    }
-
-    public Delete getDelete() {
-        return delete;
-    }
-
-    public void setDelete(Delete delete) {
-        this.delete = delete;
     }
 
     @Override

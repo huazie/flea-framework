@@ -5,15 +5,16 @@ import com.huazie.frame.common.util.ResourcesUtil;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.exception.SqlTemplateException;
 import com.huazie.frame.db.common.exception.TableSplitException;
-import com.huazie.frame.db.common.sql.template.config.Delete;
-import com.huazie.frame.db.common.sql.template.config.Insert;
+import com.huazie.frame.db.common.sql.template.config.Param;
+import com.huazie.frame.db.common.sql.template.config.Params;
 import com.huazie.frame.db.common.sql.template.config.Property;
+import com.huazie.frame.db.common.sql.template.config.Relation;
+import com.huazie.frame.db.common.sql.template.config.Relations;
 import com.huazie.frame.db.common.sql.template.config.Rule;
 import com.huazie.frame.db.common.sql.template.config.Rules;
-import com.huazie.frame.db.common.sql.template.config.Select;
 import com.huazie.frame.db.common.sql.template.config.Sql;
 import com.huazie.frame.db.common.sql.template.config.Template;
-import com.huazie.frame.db.common.sql.template.config.Update;
+import com.huazie.frame.db.common.sql.template.config.Templates;
 import com.huazie.frame.db.common.table.split.config.Split;
 import com.huazie.frame.db.common.table.split.config.Table;
 import com.huazie.frame.db.common.table.split.config.Tables;
@@ -107,7 +108,7 @@ public class XmlDigesterHelper {
 
         InputStream input = ResourcesUtil.getInputStreamFromClassPath(fileName);
         if (ObjectUtils.isEmpty(input)) {
-            throw new TableSplitException("ERROR-DB-SQT0000000026", fileName);
+            throw new TableSplitException("ERROR-DB-SQT0000000030", fileName);
         }
 
         Digester digester = new Digester();
@@ -128,7 +129,7 @@ public class XmlDigesterHelper {
         try {
             tabs = (Tables) digester.parse(input);
         } catch (Exception e) {
-            throw new TableSplitException("ERROR-DB-SQT0000000027", e);
+            throw new TableSplitException("ERROR-DB-SQT0000000031", e);
         }
 
         if (LOGGER.isDebugEnabled()) {
@@ -178,7 +179,7 @@ public class XmlDigesterHelper {
 
         InputStream input = ResourcesUtil.getInputStreamFromClassPath(fileName);
         if (ObjectUtils.isEmpty(input)) {
-            throw new SqlTemplateException("ERROR-DB-SQT0000000026", fileName);
+            throw new SqlTemplateException("ERROR-DB-SQT0000000030", fileName);
         }
 
         Digester digester = new Digester();
@@ -186,7 +187,7 @@ public class XmlDigesterHelper {
 
         digester.addObjectCreate("sql", Sql.class.getName());
         digester.addSetProperties("sql");
-
+        // SQL模板校验规则
         digester.addObjectCreate("sql/rules", Rules.class.getName());
         digester.addSetProperties("sql/rules");
 
@@ -195,67 +196,54 @@ public class XmlDigesterHelper {
 
         digester.addObjectCreate("sql/rules/rule/property", Property.class.getName());
         digester.addSetProperties("sql/rules/rule/property");
+        // SQL模板
+        digester.addObjectCreate("sql/templates", Templates.class.getName());
+        digester.addSetProperties("sql/templates");
 
-        digester.addObjectCreate("sql/insert", Insert.class.getName());
-        digester.addSetProperties("sql/insert");
+        digester.addObjectCreate("sql/templates/template", Template.class.getName());
+        digester.addSetProperties("sql/templates/template");
 
-        digester.addObjectCreate("sql/insert/template", Template.class.getName());
-        digester.addSetProperties("sql/insert/template");
+        digester.addObjectCreate("sql/templates/template/property", Property.class.getName());
+        digester.addSetProperties("sql/templates/template/property");
+        // SQL模板参数
+        digester.addObjectCreate("sql/params", Params.class.getName());
+        digester.addSetProperties("sql/params");
 
-        digester.addObjectCreate("sql/insert/template/property", Property.class.getName());
-        digester.addSetProperties("sql/insert/template/property");
+        digester.addObjectCreate("sql/params/param", Param.class.getName());
+        digester.addSetProperties("sql/params/param");
 
-        digester.addObjectCreate("sql/update", Update.class.getName());
-        digester.addSetProperties("sql/update");
+        digester.addObjectCreate("sql/params/param/property", Property.class.getName());
+        digester.addSetProperties("sql/params/param/property");
+        // SQL关系
+        digester.addObjectCreate("sql/relations", Relations.class.getName());
+        digester.addSetProperties("sql/relations");
 
-        digester.addObjectCreate("sql/update/template", Template.class.getName());
-        digester.addSetProperties("sql/update/template");
+        digester.addObjectCreate("sql/relations/relation", Relation.class.getName());
+        digester.addSetProperties("sql/relations/relation");
 
-        digester.addObjectCreate("sql/update/template/property", Property.class.getName());
-        digester.addSetProperties("sql/update/template/property");
-
-        digester.addObjectCreate("sql/select", Select.class.getName());
-        digester.addSetProperties("sql/select");
-
-        digester.addObjectCreate("sql/select/template", Template.class.getName());
-        digester.addSetProperties("sql/select/template");
-
-        digester.addObjectCreate("sql/select/template/property", Property.class.getName());
-        digester.addSetProperties("sql/select/template/property");
-
-        digester.addObjectCreate("sql/delete", Delete.class.getName());
-        digester.addSetProperties("sql/delete");
-
-        digester.addObjectCreate("sql/delete/template", Template.class.getName());
-        digester.addSetProperties("sql/delete/template");
-
-        digester.addObjectCreate("sql/delete/template/property", Property.class.getName());
-        digester.addSetProperties("sql/delete/template/property");
+        digester.addObjectCreate("sql/relations/relation/property", Property.class.getName());
+        digester.addSetProperties("sql/relations/relation/property");
 
         digester.addSetNext("sql/rules", "setRules", Rules.class.getName());
         digester.addSetNext("sql/rules/rule", "addRule", Rule.class.getName());
         digester.addSetNext("sql/rules/rule/property", "addProperty", Property.class.getName());
 
-        digester.addSetNext("sql/insert", "setInsert", Insert.class.getName());
-        digester.addSetNext("sql/insert/template", "addTemplate", Template.class.getName());
-        digester.addSetNext("sql/insert/template/property", "addProperty", Property.class.getName());
+        digester.addSetNext("sql/templates", "setTemplates", Templates.class.getName());
+        digester.addSetNext("sql/templates/template", "addTemplate", Template.class.getName());
+        digester.addSetNext("sql/templates/template/property", "addProperty", Property.class.getName());
 
-        digester.addSetNext("sql/update", "setUpdate", Update.class.getName());
-        digester.addSetNext("sql/update/template", "addTemplate", Template.class.getName());
-        digester.addSetNext("sql/update/template/property", "addProperty", Property.class.getName());
+        digester.addSetNext("sql/params", "setParams", Params.class.getName());
+        digester.addSetNext("sql/params/param", "addParam", Param.class.getName());
+        digester.addSetNext("sql/params/param/property", "addProperty", Property.class.getName());
 
-        digester.addSetNext("sql/select", "setSelect", Select.class.getName());
-        digester.addSetNext("sql/select/template", "addTemplate", Template.class.getName());
-        digester.addSetNext("sql/select/template/property", "addProperty", Property.class.getName());
-
-        digester.addSetNext("sql/delete", "setDelete", Delete.class.getName());
-        digester.addSetNext("sql/delete/template", "addTemplate", Template.class.getName());
-        digester.addSetNext("sql/delete/template/property", "addProperty", Property.class.getName());
+        digester.addSetNext("sql/relations", "setRelations", Relations.class.getName());
+        digester.addSetNext("sql/relations/relation", "addRelation", Relation.class.getName());
+        digester.addSetNext("sql/relations/relation/property", "addProperty", Property.class.getName());
 
         try {
             sqlTemplate = (Sql) digester.parse(input);
         } catch (Exception e) {
-            throw new SqlTemplateException("ERROR-DB-SQT0000000027", e);
+            throw new SqlTemplateException("ERROR-DB-SQT0000000031", e);
         }
 
         if (LOGGER.isDebugEnabled()) {

@@ -8,6 +8,7 @@ import com.huazie.frame.db.common.sql.template.SqlTemplate;
 import com.huazie.frame.db.common.sql.template.SqlTemplateEnum;
 import com.huazie.frame.db.common.sql.template.TemplateTypeEnum;
 import com.huazie.frame.db.common.sql.template.config.Property;
+import com.huazie.frame.db.common.sql.template.config.Relation;
 import com.huazie.frame.db.common.sql.template.config.SqlTemplateConfig;
 import com.huazie.frame.db.common.sql.template.config.Template;
 import com.huazie.frame.db.common.table.column.Column;
@@ -15,21 +16,35 @@ import com.huazie.frame.db.common.table.column.Column;
 import java.util.Map;
 
 /**
- * <p> 刪除SQL模板, 用于使用原生SQL实现分表; </p>
- * <p> 刪除模板定义配置在<b>flea-sql-template.xml</b>; </p>
- * <p> 节点<b>{@code <delete>}</b>下即为刪除SQL模板 </p>
+ * <p> DELETE SQL模板, 用于使用原生SQL实现分表; </p>
+ * <p> DELETE SQL模板定义配置在<b>flea-sql-template.xml</b>; </p>
  * <pre>
  * (1) 模板配置信息：
- * {@code <template id="delete" ruleId="delete" name="删除模板" desc="用于原生SQL中删除语句的使用">
- *     <property key="template" value="DELETE FROM ##table## WHERE ##conditions##" />
- *     <property key="table" value="student"/>
- *     <property key="conditions" value="para_id = :paraId" />
- *   </template>}
+ * {@code
+ *   <!-- SQL模板配置 -->
+ *   <templates>
+ *     <template id="delete" ruleId="delete" name="删除模板" desc="用于原生SQL中删除语句的使用">
+ *       <property key="template" value="DELETE FROM ##table## WHERE ##conditions##" />
+ *       <property key="type" value="delete"/>
+ *     </template>
+ *   </templates>
+ *   <!-- SQL模板参数配置 -->
+ *   <params>
+ *     <param id="delete" name="SQL模板參數" desc="用于定义SQL模板中的替换参数">
+ *       <property key="table" value="flea_para_detail" />
+ *       <property key="conditions" value="para_id = :paraId or (para_name like :paraName and paraState = 1)" />
+ *     </param>
+ *   </params>
+ *   <!-- SQL模板和模板参数关联关系配置（简称 SQL关系配置）-->
+ *   <relations>
+ *     <relation id="delete" templateId="delete" paramId="delete" name="SQL关系"/>
+ *   </relations>
+ * 	}
  *
  * (2)使用示例
  *  示例1：
  *  SqlTemplate<Student> sqlTemplate = new DeleteSqlTemplate<Student>();
- *  // 这个对应{@code <template id="delete">}
+ *  // 这个对应{@code <relation id="delete" .../>}
  *  sqlTemplate.setId("delete");
  *  // 实体类对应的表名
  *  sqlTemplate.setTableName("student");
@@ -75,7 +90,7 @@ public class DeleteSqlTemplate<T> extends SqlTemplate<T> {
     /**
      * <p> DELETE模板构造方法，参考示例2 </p>
      *
-     * @param id     模板编号
+     * @param id     关系编号
      * @param entity 实体类的实例对象
      * @since 1.0.0
      */
@@ -87,7 +102,7 @@ public class DeleteSqlTemplate<T> extends SqlTemplate<T> {
     /**
      * <p> DELETE模板构造方法，参考示例3 </p>
      *
-     * @param id        模板编号
+     * @param id        关系编号
      * @param tableName 表名
      * @param entity    实体类的实例对象
      * @since 1.0.0
@@ -98,29 +113,17 @@ public class DeleteSqlTemplate<T> extends SqlTemplate<T> {
     }
 
     @Override
-    protected Template getSqlTemplate(String id) {
-        return SqlTemplateConfig.getConfig().getDeleteTemplate(id);
-    }
-
-    @Override
     protected void initSqlTemplate(StringBuilder sql, Map<String, Object> params, Column[] entityCols, Map<String, Property> propMap) throws Exception {
         // 获取【key=conditions】的属性，存储WHERE子句部分的内容 （para_id = :paraId and para_type = :paraType）
-        Property conditions = propMap.get(SqlTemplateEnum.CONDITIONS.getKey());
-
-        if (ObjectUtils.isEmpty(conditions)) {
-            throw new SqlTemplateException("ERROR-DB-SQT0000000016", templateType.getUpperKey(), getId());
-        }
-
-        String condStr = conditions.getValue();
+        String condStr = checkProperty(propMap, SqlTemplateEnum.CONDITIONS);
+        // 构建条件Map集合
         Map<String, String> whereMap = createConditionMap(condStr);
-
         // 校验【key=conditions】的数据是否正确
         Column[] realEntityCols = check(entityCols, whereMap);
         // 设置SQL参数
         createParamMap(params, realEntityCols);
-
+        // 替换SQL模板中的conditions关键字内容
         StringUtils.replace(sql, createPlaceHolder(SqlTemplateEnum.CONDITIONS.getKey()), condStr);
-
     }
 
     /**
@@ -136,7 +139,8 @@ public class DeleteSqlTemplate<T> extends SqlTemplate<T> {
     private Column[] check(final Column[] entityCols, Map<String, String> whereMap) throws Exception {
 
         if (MapUtils.isEmpty(whereMap)) {
-            throw new SqlTemplateException("ERROR-DB-SQT0000000018", templateType.getUpperKey(), getId());
+            // 请检查SQL模板参数【id="{0}"】配置(属性【key="{1}"】中的【value】不能为空)
+            throw new SqlTemplateException("ERROR-DB-SQT0000000013", paramId, SqlTemplateEnum.CONDITIONS.getKey());
         }
 
         // 校验WHERE子句中的属性列和属性变量是否一一对应，并获取WHERE子句相关的属性列集合

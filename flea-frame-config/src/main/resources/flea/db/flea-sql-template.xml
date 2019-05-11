@@ -2,7 +2,7 @@
 <sql version="1.0">
 	<!-- 这边的规则为固定写法，一般不做修改 -->
 	<rules>
-		<rule id="insert" name="插入模板的校验规则配置">
+		<rule id="insert" name="INSERT SQL模板的校验规则配置">
 			<property key="sql" value="[ ]*(INSERT)[ ]+(INTO)[ ]+##table##[ ]+\([ ]*##columns##[ ]+\)[ ]+(VALUES)[ ]+\([ ]*##values##[ ]+\)[ ]*" />
 		</rule>
 		<rule id="update" name="更新模板的校验规则配置">
@@ -16,86 +16,55 @@
 		</rule>
 	</rules>
 
+	<!-- SQL模板配置 -->
 	<templates>
-		<template id="insert" ruleId="insert" name="插入模板" desc="用于原生SQL中插入语句的使用">
+		<template id="insert" ruleId="insert" name="INSERT SQL模板" desc="用于原生SQL中INSERT语句的使用">
 			<property key="template" value="INSERT INTO ##table## (##columns## ) VALUES (##values## )" />
-			<property key="class" value="com.huazie.frame.db.common.sql.template.impl.InsertSqlTemplate" />
+			<property key="type" value="insert"/>
 		</template>
-		<template id="update" ruleId="update" name="更新模板" desc="用于原生SQL中更新语句的使用">
+		<template id="update" ruleId="update" name="UPDATE SQL模板" desc="用于原生SQL中UPDATE语句的使用">
 			<property key="template" value="UPDATE ##table## SET ##sets## WHERE ##conditions##" />
-			<property key="class" value="com.huazie.frame.db.common.sql.template.impl.UpdateSqlTemplate" />
+			<property key="type" value="update"/>
 		</template>
-		<template id="select" ruleId="select" name="查询模板" desc="用于原生SQL中查询语句的使用, 如需查询全部，则设置key=columns的属性值为 *，即可">
+		<template id="select" ruleId="select" name="SELECT SQL模板" desc="用于原生SQL中SELECT语句的使用">
 			<property key="template" value="SELECT ##columns## FROM ##table## WHERE ##conditions##" />
-			<property key="class" value="com.huazie.frame.db.common.sql.template.impl.SelectSqlTemplate" />
+			<property key="type" value="select"/>
 		</template>
-		<template id="delete" ruleId="delete" name="删除模板" desc="用于原生SQL中删除语句的使用">
+		<template id="delete" ruleId="delete" name="DELETE SQL模板" desc="用于原生SQL中DELETE语句的使用">
 			<property key="template" value="DELETE FROM ##table## WHERE ##conditions##" />
-			<property key="class" value="com.huazie.frame.db.common.sql.template.impl.DeleteSqlTemplate" />
+			<property key="type" value="delete"/>
 		</template>
 	</templates>
 
-	<!-- 模板参数列表 -->
+	<!-- SQL模板参数配置 -->
 	<params>
-		<param id="insert" name="模板參數" desc="用于SQL模板中替换参数">
+		<param id="insert" name="SQL模板參數" desc="用于定义SQL模板中的替换参数">
 			<property key="table" value="flea_para_detail" />
 			<!-- 这两个不填，表示表的字段全部使用
             <property key="columns" value="para_id, para_type, para_code, para_name, para1, para_state" />
             <property key="values" value=":paraId, :paraType, :paraCode, :paraName, :para1, :paraState" />-->
 		</param>
-		<param id="update" name="模板參數" desc="用于SQL模板中替换参数">
+		<param id="update" name="SQL模板參數" desc="用于定义SQL模板中的替换参数">
 			<property key="table" value="flea_para_detail" />
 			<property key="sets" value="para1 = :para1, para2 = :para2" />
 			<property key="conditions" value="para_id = :paraId and ( para_type = :paraType or para_type = 'nihao') and para_code in ( :paraCode) or para_name like :paraName" />
 		</param>
-		<param id="select" name="模板參數" desc="用于SQL模板中替换参数">
+		<param id="select" name="SQL模板參數" desc="用于定义SQL模板中的替换参数; 如需查询全部，则设置key=columns的属性值为 *，即可">
 			<property key="table" value="flea_para_detail" />
 			<property key="columns" value="*" />
 			<property key="conditions" value="para_id = :paraId and ( para_type = :paraType or para_type = 'CERT') and para_code in ( :paraCode) or para_name like :paraName" />
 		</param>
-		<param id="delete" name="模板參數" desc="用于SQL模板中替换参数">
+		<param id="delete" name="SQL模板參數" desc="用于定义SQL模板中的替换参数">
 			<property key="table" value="flea_para_detail" />
 			<property key="conditions" value="para_id = :paraId or (para_name like :paraName and paraState = 1)" />
 		</param>
 	</params>
-
+	<!-- SQL模板和模板参数关联关系配置（简称 SQL关系配置）-->
 	<relations>
-		<relation id="insert" templateId="insert" paramId="insert" name="插入模板和模板参数关联关系配置"/>
-		<relation id="update" templateId="update" paramId="update" name="更新模板和模板参数关联关系配置"/>
-		<relation id="select" templateId="select" paramId="select" name="查询模板和模板参数关联关系配置"/>
-		<relation id="delete" templateId="delete" paramId="delete" name="删除模板和模板参数关联关系配置"/>
+		<relation id="insert" templateId="insert" paramId="insert" name="SQL关系"/>
+		<relation id="update" templateId="update" paramId="update" name="SQL关系"/>
+		<relation id="select" templateId="select" paramId="select" name="SQL关系"/>
+		<relation id="delete" templateId="delete" paramId="delete" name="SQL关系"/>
 	</relations>
 
-	<insert>
-		<template id="insert" ruleId="insert" name="插入模板" desc="用于原生SQL中插入语句的使用">
-			<property key="template" value="INSERT INTO ##table## (##columns## ) VALUES (##values## )" />
-			<property key="table" value="flea_para_detail" />
-			<!-- 这两个不填，表示表的字段全部使用
-			<property key="columns" value="para_id, para_type, para_code, para_name, para1, para_state" />
-			<property key="values" value=":paraId, :paraType, :paraCode, :paraName, :para1, :paraState" />-->
-		</template>
-	</insert>
-	<update>
-		<template id="update" ruleId="update" name="更新模板" desc="用于原生SQL中更新语句的使用">
-			<property key="template" value="UPDATE ##table## SET ##sets## WHERE ##conditions##" />
-			<property key="table" value="flea_para_detail" />
-			<property key="sets" value="para1 = :para1, para2 = :para2" />
-			<property key="conditions" value="para_id = :paraId and ( para_type = :paraType or para_type = 'nihao') and para_code in ( :paraCode) or para_name like :paraName" />
-		</template>
-	</update>
-	<select>
-		<template id="select" ruleId="select" name="查询模板" desc="用于原生SQL中查询语句的使用, 如需查询全部，则设置key=columns的属性值为 *，即可">
-			<property key="template" value="SELECT ##columns## FROM ##table## WHERE ##conditions##" />
-			<property key="table" value="flea_para_detail" />
-			<property key="columns" value="*" />
-			<property key="conditions" value="para_id = :paraId and ( para_type = :paraType or para_type = 'CERT') and para_code in ( :paraCode) or para_name like :paraName" />
-		</template>
-	</select>
-	<delete>
-		<template id="delete" ruleId="delete" name="删除模板" desc="用于原生SQL中删除语句的使用">
-			<property key="template" value="DELETE FROM ##table## WHERE ##conditions##" />
-			<property key="table" value="flea_para_detail" />
-			<property key="conditions" value="para_id = :paraId or (para_name like :paraName and paraState = 1)" />
-		</template>
-	</delete>
 </sql>

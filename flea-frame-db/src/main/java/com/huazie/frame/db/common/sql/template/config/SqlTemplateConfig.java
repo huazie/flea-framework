@@ -74,34 +74,22 @@ public class SqlTemplateConfig {
         return rule;
     }
 
+    /**
+     * <p> 根据SQL模板编号，获取指定的SQL模板配置信息 </p>
+     *
+     * @param templateId SQL模板编号
+     * @return SQL模板配置信息
+     * @since 1.0.0
+     */
     public Template getTemplate(String templateId) {
         Template template = null;
         Map<String, Template> templatesMap;
-        if(ObjectUtils.isNotEmpty(sql)){
+        if (ObjectUtils.isNotEmpty(sql)) {
             Templates templates = sql.getTemplates();
-            if(ObjectUtils.isNotEmpty(templates)){
-                
-            }
-        }
-        return template;
-    }
-
-    /**
-     * <p> 根据新增模板编号，获取指定的新增模板配置信息 </p>
-     *
-     * @param tempId SQL模板编号
-     * @return SQL新增模板配置信息（INSERT）
-     * @since 1.0.0
-     */
-    public Template getInsertTemplate(String tempId) {
-        Template template = null;
-        Map<String, Template> insertsMap;
-        if (ObjectUtils.isNotEmpty(sql)) {
-            Insert insert = sql.getInsert();
-            if (ObjectUtils.isNotEmpty(insert)) {
-                insertsMap = insert.toInsertsMap();
-                if (MapUtils.isNotEmpty(insertsMap)) {
-                    template = insertsMap.get(tempId);
+            if (ObjectUtils.isNotEmpty(templates)) {
+                templatesMap = templates.toTemplatesMap();
+                if (MapUtils.isNotEmpty(templatesMap)) {
+                    template = templatesMap.get(templateId);
                 }
             }
         }
@@ -109,69 +97,48 @@ public class SqlTemplateConfig {
     }
 
     /**
-     * <p> 根据更新模板编号，获取指定的更新模板配置信息 </p>
+     * <p> 根据SQL模板参数编号，获取指定的SQL模板参数配置信息 </p>
      *
-     * @param tempId SQL模板编号
-     * @return SQL更新模板配置信息（UPDATE）
+     * @param paramId SQL模板参数编号
+     * @return SQL模板参数配置信息
      * @since 1.0.0
      */
-    public Template getUpdateTemplate(String tempId) {
-        Template template = null;
-        Map<String, Template> updatesMap;
+    public Param getParam(String paramId) {
+        Param param = null;
+        Map<String, Param> paramsMap;
         if (ObjectUtils.isNotEmpty(sql)) {
-            Update update = sql.getUpdate();
-            if (ObjectUtils.isNotEmpty(update)) {
-                updatesMap = update.toUpdatesMap();
-                if (MapUtils.isNotEmpty(updatesMap)) {
-                    template = updatesMap.get(tempId);
+            Params params = sql.getParams();
+            if (ObjectUtils.isNotEmpty(params)) {
+                paramsMap = params.toParamsMap();
+                if (MapUtils.isNotEmpty(paramsMap)) {
+                    param = paramsMap.get(paramId);
                 }
             }
         }
-        return template;
+        return param;
     }
 
     /**
-     * <p> 根据查询模板编号，获取指定的查询模板配置信息 </p>
+     * <p> 根据关系编号，获取指定的关系配置信息 </p>
+     * <p> SQL模板和模板参数关联关系（简称：关系）</p>
      *
-     * @param tempId SQL模板编号
-     * @return SQL查询模板配置信息（SELECT）
+     * @param relationId 关系编号
+     * @return 关系配置信息
      * @since 1.0.0
      */
-    public Template getSelectTemplate(String tempId) {
-        Template template = null;
-        Map<String, Template> selectsMap;
+    public Relation getRelation(String relationId) {
+        Relation relation = null;
+        Map<String, Relation> relationsMap;
         if (ObjectUtils.isNotEmpty(sql)) {
-            Select select = sql.getSelect();
-            if (ObjectUtils.isNotEmpty(select)) {
-                selectsMap = select.toSelectsMap();
-                if (MapUtils.isNotEmpty(selectsMap)) {
-                    template = selectsMap.get(tempId);
+            Relations relations = sql.getRelations();
+            if (ObjectUtils.isNotEmpty(relations)) {
+                relationsMap = relations.toRelationsMap();
+                if (MapUtils.isNotEmpty(relationsMap)) {
+                    relation = relationsMap.get(relationId);
                 }
             }
         }
-        return template;
-    }
-
-    /**
-     * <p> 根据删除模板编号，获取指定的删除模板配置信息 </p>
-     *
-     * @param tempId SQL模板编号
-     * @return SQL删除模板配置信息（DELETE）
-     * @since 1.0.0
-     */
-    public Template getDeleteTemplate(String tempId) {
-        Template template = null;
-        Map<String, Template> deletesMap;
-        if (ObjectUtils.isNotEmpty(sql)) {
-            Delete delete = sql.getDelete();
-            if (ObjectUtils.isNotEmpty(delete)) {
-                deletesMap = delete.toDeletesMap();
-                if (MapUtils.isNotEmpty(deletesMap)) {
-                    template = deletesMap.get(tempId);
-                }
-            }
-        }
-        return template;
+        return relation;
     }
 
     public Sql getSql() {

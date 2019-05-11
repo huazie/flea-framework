@@ -27,6 +27,9 @@ public class SqlTemplateConfigTest {
 	@Test
 	public void testSqlTemplate(){
 		LOGGER.debug(SqlTemplateConfig.getConfig().getSql().toString());
+		LOGGER.debug(SqlTemplateConfig.getConfig().getSql().getTemplates().toString());
+		LOGGER.debug(SqlTemplateConfig.getConfig().getSql().getParams().toString());
+		LOGGER.debug(SqlTemplateConfig.getConfig().getSql().getRelations().toString());
 	}
 	
 	@Test
@@ -36,27 +39,7 @@ public class SqlTemplateConfigTest {
 		LOGGER.debug(SqlTemplateConfig.getConfig().getRule("delete").toString());
 		LOGGER.debug(SqlTemplateConfig.getConfig().getRule("select").toString());
 	}
-	
-	@Test
-	public void testInsertSqlTemplate(){
-		LOGGER.debug(SqlTemplateConfig.getConfig().getInsertTemplate("insert").toString());
-	}
-	
-	@Test
-	public void testUpdateSqlTemplate(){
-		LOGGER.debug(SqlTemplateConfig.getConfig().getUpdateTemplate("update").toString());
-	}
-	
-	@Test
-	public void testSelectSqlTemplate(){
-		LOGGER.debug(SqlTemplateConfig.getConfig().getSelectTemplate("select").toString());
-	}
-	
-	@Test
-	public void testDeleteSqlTemplate(){
-		LOGGER.debug(SqlTemplateConfig.getConfig().getDeleteTemplate("delete").toString());
-	}
-	
+
 	@Test
 	public void testInsertTemplateRule(){
 		

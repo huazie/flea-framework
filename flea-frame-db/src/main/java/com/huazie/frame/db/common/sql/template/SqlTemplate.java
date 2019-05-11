@@ -5,7 +5,9 @@ import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.DBConstants;
 import com.huazie.frame.db.common.exception.SqlTemplateException;
+import com.huazie.frame.db.common.sql.template.config.Param;
 import com.huazie.frame.db.common.sql.template.config.Property;
+import com.huazie.frame.db.common.sql.template.config.Relation;
 import com.huazie.frame.db.common.sql.template.config.Rule;
 import com.huazie.frame.db.common.sql.template.config.SqlTemplateConfig;
 import com.huazie.frame.db.common.sql.template.config.Template;
@@ -36,17 +38,25 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
 
     private Map<String, Object> params = new HashMap<String, Object>(); // SQL参数
 
-    private String tableName; // 主表名
+    private String tableName;       // 主表名
 
-    private String realTableName; // 分表名
+    private String realTableName;   // 分表名
 
-    private T entity; // 实体类
+    private T entity;               // 实体类
 
-    private String tempId; // 模板编号
+    private String relationId;      // SQL模板和模板参数关联关系编号（以下称关系编号）
 
-    private Template template; // SQL模板
+    private Relation relation;      // SQL模板和模板参数关联关系（以下简称关系）
 
-    private Rule rule; // 校验规则
+    protected String templateId;      // 模板编号
+
+    protected Template template;      // SQL模板
+
+    protected String paramId;         // SQL模板参数编号
+
+    protected Param param;            // SQL模板参数
+
+    private Rule rule;              // 校验规则
 
     protected TemplateTypeEnum templateType; // 模板类型
 
@@ -54,10 +64,16 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
     }
 
     public SqlTemplate(String id, T entity) {
-        tempId = id;
-        template = getSqlTemplate(id);
-        if (ObjectUtils.isNotEmpty(template)) {
-            rule = SqlTemplateConfig.getConfig().getRule(template.getRuleId());
+        relationId = id;
+        relation = getSqlRelation(id);
+        if (ObjectUtils.isNotEmpty(relation)) {
+            paramId = relation.getParamId();
+            param = getSqlTemplateParam(paramId);
+            templateId = relation.getTemplateId();
+            template = getSqlTemplate(templateId);
+            if (ObjectUtils.isNotEmpty(template)) {
+                rule = SqlTemplateConfig.getConfig().getRule(template.getRuleId());
+            }
         }
         this.entity = entity;
     }
@@ -69,57 +85,121 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
 
     @Override
     public void initialize() throws Exception {
-        if (ObjectUtils.isEmpty(template)) {
-            throw new SqlTemplateException("ERROR-DB-SQT0000000001", templateType.getUpperKey(), getId());
-        }
-        Map<String, Property> propMap = template.toPropMap();
-        if (MapUtils.isEmpty(propMap)) {
-            throw new SqlTemplateException("ERROR-DB-SQT0000000002", templateType.getUpperKey(), getId());
-        }
-        // 获取key=template的属性(即SQL模板)
-        Property template = propMap.get(SqlTemplateEnum.TEMPLATE.getKey());
-        // 获取key=table的属性(即表名)
-        Property table = propMap.get(SqlTemplateEnum.TABLE.getKey());
-
-        if (ObjectUtils.isEmpty(template)) {
-            throw new SqlTemplateException("ERROR-DB-SQT0000000003", templateType.getUpperKey(), getId(), SqlTemplateEnum.TEMPLATE.getKey());
+        if (ObjectUtils.isEmpty(relation)) {
+            // 请检查SQL关系配置（没有找到指定关系编号【id="{0}"】的SQL关系配置信息）
+            throw new SqlTemplateException("ERROR-DB-SQT0000000001", getId());
         }
 
-        if (ObjectUtils.isEmpty(table)) {
-            throw new SqlTemplateException("ERROR-DB-SQT0000000003", templateType.getUpperKey(), getId(), SqlTemplateEnum.TABLE.getKey());
+        if (StringUtils.isBlank(templateId)) {
+            // 请检查SQL关系【id="{0}"】配置（SQL关系配置的SQL模板编号【templateId】不能为空）
+            throw new SqlTemplateException("ERROR-DB-SQT0000000002", getId());
+        }
+
+        if (StringUtils.isBlank(paramId)) {
+            // 请检查SQL关系【id="{0}"】配置（SQL关系配置的SQL模板参数编号【paramId】不能为空）
+            throw new SqlTemplateException("ERROR-DB-SQT0000000003", getId());
+        }
+
+        if (ObjectUtils.isEmpty(template)) {
+            // 请检查SQL模板配置（没有找到指定模板编号【id="{0}"】的SQL模板配置信息）
+            throw new SqlTemplateException("ERROR-DB-SQT0000000004", templateId);
+        }
+
+        if (ObjectUtils.isEmpty(params)) {
+            // 请检查SQL模板参数配置（没有找到指定模板参数编号【id="{0}"】的SQL模板参数配置信息）
+            throw new SqlTemplateException("ERROR-DB-SQT0000000005", paramId);
+        }
+
+        // 获取SQL模板配置的属性信息
+        Map<String, Property> templatePropMap = template.toPropMap();
+        if (MapUtils.isEmpty(templatePropMap)) {
+            // 请检查SQL模板【id="{0}"】配置（该SQL模板没有配置相关属性）
+            throw new SqlTemplateException("ERROR-DB-SQT0000000006", templateId);
+        }
+
+        // 获取key="template"的属性(即SQL模板原始值)
+        Property templateProp = templatePropMap.get(SqlTemplateEnum.TEMPLATE.getKey());
+        if (ObjectUtils.isEmpty(templateProp)) {
+            // 请检查SQL模板【id="{0}"】配置（该SQL模板没有配置【key="{1}"】的模板属性）
+            throw new SqlTemplateException("ERROR-DB-SQT0000000007", templateId, SqlTemplateEnum.TEMPLATE.getKey());
+        }
+
+        String templateValue = templateProp.getValue();
+        if (StringUtils.isBlank(templateValue)) {
+            // 请检查SQL模板【id="{0}"】配置（属性【key="{1}"】中的【value】不能为空）
+            throw new SqlTemplateException("ERROR-DB-SQT0000000008", templateId, SqlTemplateEnum.TEMPLATE.getKey());
         }
 
         // SQL模板规则校验
-        checkRule(template.getValue());
+        checkRule(templateValue);
+
+        // 获取key="type"的属性(即SQL模板类型)
+        Property typeProp = templatePropMap.get(SqlTemplateEnum.TYPE.getKey());
+        if (ObjectUtils.isEmpty(typeProp)) {
+            // 请检查SQL模板【id="{0}"】配置（该SQL模板没有配置【key="{1}"】的模板属性）
+            throw new SqlTemplateException("ERROR-DB-SQT0000000007", templateId, SqlTemplateEnum.TYPE.getKey());
+        }
+
+        String typeValue = typeProp.getValue(); // 模板类型
+        if (StringUtils.isBlank(typeValue)) {
+            // 请检查SQL模板【id="{0}"】配置（属性【key="{1}"】中的【value】不能为空）
+            throw new SqlTemplateException("ERROR-DB-SQT0000000008", templateId, SqlTemplateEnum.TYPE.getKey());
+        }
+
+        // 校验配置的模板类型和初始化的模板类型是否一致
+        if (!templateType.getKey().equalsIgnoreCase(typeProp.getValue())) {
+            // 请检查SQL模板【id="{0}"】配置（属性【key="type"】的值【value="{1}"】和初始化的模板类型【{2}】不一致）
+            throw new SqlTemplateException("ERROR-DB-SQT0000000009", templateId, typeProp.getValue(), templateType.getKey());
+        }
+
+        // 获取SQL模板参数的配置属性
+        Map<String, Property> paramPropMap = param.toPropMap();
+        if (MapUtils.isEmpty(paramPropMap)) {
+            // 请检查SQL模板参数【id="{0}"】配置（该SQL模板参数没有配置相关属性）
+            throw new SqlTemplateException("ERROR-DB-SQT0000000010", paramId);
+        }
+
+        // 获取key=table的属性(即表名)
+        Property tableProp = paramPropMap.get(SqlTemplateEnum.TABLE.getKey());
+        if (ObjectUtils.isEmpty(tableProp)) {
+            // 请检查SQL模板参数【id="{0}"】配置（该SQL模板参数没有配置【key="{1}"】的模板参数属性）
+            throw new SqlTemplateException("ERROR-DB-SQT0000000011", paramId, SqlTemplateEnum.TABLE.getKey());
+        }
+
         // 初始化模板
-        sql.append(template.getValue());
-        // 获取配置的SQL模板的表名
-        String tName = table.getValue();
+        sql.append(templateProp.getValue());
+        // 获取SQL模板参数配置的对应表名
+        String tName = tableProp.getValue();
 
         if (StringUtils.isBlank(tableName)) {
             tableName = EntityUtils.getTableName(entity);// 从实体类上获取表名
             if (StringUtils.isBlank(tableName)) {
-                throw new SqlTemplateException("ERROR-DB-SQT0000000004");
+                // 请检查初始实体类(其上的注解@Table或者@FleaTable对应的表名不能为空)
+                throw new SqlTemplateException("ERROR-DB-SQT0000000012");
             }
         }
 
         if (StringUtils.isBlank(tName)) {
-            throw new SqlTemplateException("ERROR-DB-SQT0000000005", templateType.getUpperKey(), getId());
+            // 请检查SQL模板参数【id="{0}"】配置(属性【key="{1}"】中的【value】不能为空)
+            throw new SqlTemplateException("ERROR-DB-SQT0000000013", paramId, SqlTemplateEnum.TABLE.getKey());
         }
 
         if (!tableName.equals(tName)) {
-            throw new SqlTemplateException("ERROR-DB-SQT0000000006", templateType.getUpperKey(), getId());
+            // 请检查SQL模板参数【id="{0}"】配置(【key="table"】属性值【{1}】和初始化的表名【{2}】两者不一致)
+            throw new SqlTemplateException("ERROR-DB-SQT0000000014", paramId, tName, tableName);
         }
 
         if (ObjectUtils.isEmpty(entity)) {
-            throw new SqlTemplateException("ERROR-DB-SQT0000000007");
+            // 请检查初始实体类（该实体类对象没有被初始化）
+            throw new SqlTemplateException("ERROR-DB-SQT0000000015");
         }
 
         // 获取实体类T的对象的属性列相关信息
         Column[] entityCols = EntityUtils.toColumnsArray(entity);
 
         if (ArrayUtils.isEmpty(entityCols)) {
-            throw new SqlTemplateException("ERROR-DB-SQT0000000008");
+            // 请检查初始实体类（实体类的属性列相关信息不存在）
+            throw new SqlTemplateException("ERROR-DB-SQT0000000016");
         }
 
         // 获取真实表名，如是分表，则获取分表名
@@ -127,41 +207,48 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
         // 替换真实表名N
         StringUtils.replace(sql, createPlaceHolder(SqlTemplateEnum.TABLE.getKey()), realTableName);
         // 特殊处理初始化
-        initSqlTemplate(sql, params, entityCols, propMap);
+        initSqlTemplate(sql, params, entityCols, paramPropMap);
 
     }
 
     /**
-     * SQL模板校验规则
+     * <p> SQL模板校验规则 </p>
      *
-     * @param template
+     * @param templateValue SQL模板原始值
      * @throws Exception
-     * @date 2018年6月24日
+     * @since 1.0.0
      */
-    private void checkRule(String template) throws Exception {
-        if (ObjectUtils.isEmpty(rule)) {// 需要校验
-            throw new SqlTemplateException("ERROR-DB-SQT0000000009", templateType.getUpperKey(), getId());
+    private void checkRule(String templateValue) throws Exception {
+        if (ObjectUtils.isEmpty(rule)) {
+            // 请检查SQL模板【id="{0}"】配置（未找到指定的校验规则【ruleId="{1}"】）
+            throw new SqlTemplateException("ERROR-DB-SQT0000000017", templateId, template.getRuleId());
         }
-        // 获取其属性值
+        // 获取校验规则的属性值
         Map<String, Property> propMap = rule.toPropMap();
         if (MapUtils.isNotEmpty(propMap)) {
             // 获取指定的校验规则配置
             Property prop = propMap.get(SqlTemplateEnum.SQL.getKey());
             if (ObjectUtils.isEmpty(prop)) {
-                throw new SqlTemplateException("ERROR-DB-SQT0000000010", templateType.getUpperKey(), getId());
+                // 请检查SQL模板【id="{0}"】配置（其关联的校验规则【id="{1}"】未找到【key="{2}"】的属性）
+                throw new SqlTemplateException("ERROR-DB-SQT0000000018", templateId, template.getRuleId(), SqlTemplateEnum.SQL.getKey());
             }
+            // 获取校验规则模式匹配正则表达式
             String regExp = prop.getValue();
-
+            if (StringUtils.isBlank(regExp)) {
+                // 请检查SQL模板【id="{0}"】配置（其关联的校验规则【id="{1}"】的属性【key="{2}"】中的【value】不能为空）
+                throw new SqlTemplateException("ERROR-DB-SQT0000000019", templateId, template.getRuleId(), SqlTemplateEnum.SQL.getKey());
+            }
             Pattern p = Pattern.compile(regExp, Pattern.CASE_INSENSITIVE);
-            Matcher matcher = p.matcher(template);
+            Matcher matcher = p.matcher(templateValue);
             if (!matcher.matches()) { // SQL模板不满足校验规则配置
-                throw new SqlTemplateException("ERROR-DB-SQT0000000011", templateType.getUpperKey(), getId());
+                // 请检查SQL模板【id="{0}"】配置（属性【key="{1}"】中的【value】配置有误）
+                throw new SqlTemplateException("ERROR-DB-SQT0000000020", templateId, SqlTemplateEnum.TEMPLATE.getKey());
             }
         }
     }
 
     /**
-     * 生成SQL模板中的占位符
+     * <p> 生成SQL模板中的占位符 </p>
      *
      * @param str 模板替换参数
      * @return SQL模板中的占位符
@@ -172,7 +259,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
     }
 
     /**
-     * 获取SQL语句中的参数Map集合
+     * <p> 获取SQL语句中的参数Map集合 </p>
      *
      * @param paramMap   SQL语句中的参数Map集合
      * @param entityCols 实体类中属性列集合
@@ -237,6 +324,43 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
     }
 
     /**
+     * <p> 判断指定关键字的模板参数属性配置是否存在，如果存在，返回相应的值 </p>
+     *
+     * @param propMap         模板参数属性Map集合
+     * @param sqlTemplateEnum SQL模板关键字枚举
+     * @return 指定关键字的模板参数属性值
+     * @throws Exception
+     * @since 1.0.0
+     */
+    protected String checkProperty(Map<String, Property> propMap, SqlTemplateEnum sqlTemplateEnum) throws Exception {
+        Property property = propMap.get(sqlTemplateEnum.getKey());
+
+        if (ObjectUtils.isEmpty(property)) {
+            // 请检查SQL模板参数【id="{0}"】配置(属性【key="{1}"】中的【value】不能为空)
+            throw new SqlTemplateException("ERROR-DB-SQT0000000013", paramId, sqlTemplateEnum.getKey());
+        }
+
+        return property.getValue();
+    }
+
+    /**
+     * <p> 校验是否存在指定属性列名<code>tabColumnName</code>的属性列对象<code>Column</code>, 如果存在则返回指定的属性列对象<code>Column</code> </p>
+     *
+     * @param entityCols    属性列数组
+     * @param tabColumnName 属性列名
+     * @return 指定的属性列对象
+     * @throws Exception
+     */
+    protected Column checkColumn(final Column[] entityCols, String tabColumnName) throws Exception {
+        Column column = (Column) EntityUtils.getEntity(entityCols, Column.COLUMN_TAB_COL_NAME, tabColumnName);
+        if (ObjectUtils.isEmpty(column)) {
+            // 请检查SQL模板参数【id="{0}"】配置（属性【key="columns"】中的字段【{1}】在实体类【{2}】中不存在)
+            throw new SqlTemplateException("ERROR-DB-SQT0000000027", paramId, tabColumnName, entity.getClass().getName());
+        }
+        return column;
+    }
+
+    /**
      * <p> 校验 表字段列和变量是否一一对应（如para_id = :paraId）</p>
      *
      * @param entityCols 实体类的属性列数组
@@ -259,17 +383,20 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
             String attrName = map.get(tabColName);
 
             if (StringUtils.isBlank(attrName)) {
-                throw new SqlTemplateException("ERROR-DB-SQT0000000012", templateType.getUpperKey(), getId(), sqlTemplateEnum.getKey(), tabColName);
+                // 请检查SQL模板参数【id="{0}"】配置（属性【key="{1}"】中的字段{2}对应的属性变量为空）
+                throw new SqlTemplateException("ERROR-DB-SQT0000000021", paramId, sqlTemplateEnum.getKey(), tabColName);
             }
 
             Column column = (Column) EntityUtils.getEntity(entityCols, Column.COLUMN_TAB_COL_NAME, tabColName);
             if (ObjectUtils.isEmpty(column)) {
-                throw new SqlTemplateException("ERROR-DB-SQT0000000013", templateType.getUpperKey(), getId(), sqlTemplateEnum.getKey(), tabColName);
+                // 请检查SQL模板参数【id="{0}"】配置（属性【key="{1}"】中的字段【{2}】在实体类【{3}】中不存在）
+                throw new SqlTemplateException("ERROR-DB-SQT0000000022", paramId, sqlTemplateEnum.getKey(), tabColName, entity.getClass().getName());
             }
 
             String attrN = column.getAttrName();
             if (!attrName.equals(StringUtils.strCat(DBConstants.SQLConstants.SQL_COLON, attrN))) {
-                throw new SqlTemplateException("ERROR-DB-SQT0000000014", templateType.getUpperKey(), getId(), sqlTemplateEnum.getKey(), tabColName, attrName);
+                // 请检查SQL模板参数【id="{0}"】配置（属性【key="{1}"】中的属性列{2}与属性变量{3}不一一对应）
+                throw new SqlTemplateException("ERROR-DB-SQT0000000023", paramId, sqlTemplateEnum.getKey(), tabColName, attrName);
             }
             cols.add(column);
         }
@@ -278,14 +405,20 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
 
     @Override
     public String getId() {
-        return tempId;
+        return relationId;
     }
 
     public void setId(String id) {
-        tempId = id;
-        template = getSqlTemplate(id);
-        if (ObjectUtils.isNotEmpty(template)) {
-            rule = SqlTemplateConfig.getConfig().getRule(template.getRuleId());
+        relationId = id;
+        relation = getSqlRelation(id);
+        if (ObjectUtils.isNotEmpty(relation)) {
+            paramId = relation.getParamId();
+            param = getSqlTemplateParam(paramId);
+            templateId = relation.getTemplateId();
+            template = getSqlTemplate(templateId);
+            if (ObjectUtils.isNotEmpty(template)) {
+                rule = SqlTemplateConfig.getConfig().getRule(template.getRuleId());
+            }
         }
     }
 
@@ -322,13 +455,37 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
     }
 
     /**
+     * <p> 根据关系编号，获取对应关系配置信息 </p>
+     *
+     * @param relationId 关系编号
+     * @return 关系配置信息
+     * @since 1.0.0
+     */
+    protected Relation getSqlRelation(String relationId) {
+        return SqlTemplateConfig.getConfig().getRelation(relationId);
+    }
+
+    /**
      * <p> 根据模板编号，获取对应SQL模板 </p>
      *
-     * @param id 模板编号
+     * @param templateId SQL模板编号
      * @return SQL模板
      * @since 1.0.0
      */
-    protected abstract Template getSqlTemplate(String id);
+    protected Template getSqlTemplate(String templateId) {
+        return SqlTemplateConfig.getConfig().getTemplate(templateId);
+    }
+
+    /**
+     * <p> 根据模板参数编号，获取对应SQL模板参数配置信息 </p>
+     *
+     * @param paramId SQL模板参数编号
+     * @return SQL模板参数配置
+     * @since 1.0.0
+     */
+    protected Param getSqlTemplateParam(String paramId) {
+        return SqlTemplateConfig.getConfig().getParam(paramId);
+    }
 
     /**
      * <p> 用于特殊处理SQL模板的初始化工作 </p>
