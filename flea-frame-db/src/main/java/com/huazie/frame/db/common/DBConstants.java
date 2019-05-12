@@ -15,9 +15,10 @@ public interface DBConstants {
      * @since 1.0.0
      */
     interface TableSplitConstants {
-        int TWO = 2;    // 两位分表
-        int THREE = 3;  // 三位分表
-        String KEY = "key"; // 分表枚举key变量名
+        int TWO = 2;            // 两位分表
+        int THREE = 3;          // 三位分表
+        String KEY = "key";     // 分表后缀类型枚举key变量名
+        String FLEA_TABLE_NAME = "FLEA_TABLE_NAME"; // 分表表达式表名替换变量
     }
 
     /**

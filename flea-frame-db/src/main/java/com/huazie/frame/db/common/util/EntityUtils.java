@@ -133,6 +133,7 @@ public class EntityUtils {
                 if (ArrayUtils.isEmpty(annotations)) {// 表示属性上没有注解
                     annotations = method.getAnnotations();// 获取方法上的注解
                     if (ArrayUtils.isEmpty(annotations)) {// 表示方法上没有注解
+                        // 实体类上 [{0}] 没有注解
                         throw new DaoException("ERROR-DB-DAO0000000014", entity.getClass().getSimpleName());
                     }
                 }
@@ -142,13 +143,16 @@ public class EntityUtils {
                     if (javax.persistence.Id.class.getName().equals(an.annotationType().getName())) {// 表示该属性是主键
                         if (long.class == fields[i].getType() || Long.class == fields[i].getType()) {// 该实体的主键是long类型
                             if (Long.valueOf(value.toString()) <= 0) {
+                                // 主键字段必须是正整数
                                 throw new DaoException("ERROR-DB-DAO0000000009");
                             }
                         } else if (String.class == fields[i].getType()) {// 该实体的主键是String类型
                             if (ObjectUtils.isEmpty(value)) {
+                                // 主键字段不能为空
                                 throw new DaoException("ERROR-DB-DAO0000000010");
                             }
                         } else {
+                            // 主键必须是long(Long) 或 String
                             throw new DaoException("ERROR-DB-DAO0000000011");
                         }
                         isPrimarykey = true;// true表示该字段是主键

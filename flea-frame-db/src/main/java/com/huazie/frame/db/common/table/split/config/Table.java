@@ -11,25 +11,13 @@ import java.io.Serializable;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class Table implements Serializable {
+public class Table {
 
-    private static final long serialVersionUID = 6269688704177325112L;
+    private String name;    // 分表对应的主表名
 
-    private String id;          //分表定义编码
+    private String exp;     // 分表名表达式
 
-    private String name;        //分表定义名
-
-    private String entityClass; //主表实体类
-
-    private Split split;        //分表后缀配置类
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
+    private Splits splits;  // 分表后缀配置列表
 
     public String getName() {
         return name;
@@ -39,20 +27,20 @@ public class Table implements Serializable {
         this.name = name;
     }
 
-    public String getEntityClass() {
-        return entityClass;
+    public String getExp() {
+        return exp;
     }
 
-    public void setEntityClass(String entityClass) {
-        this.entityClass = entityClass;
+    public void setExp(String exp) {
+        this.exp = exp;
     }
 
-    public Split getSplit() {
-        return split;
+    public Splits getSplits() {
+        return splits;
     }
 
-    public void setSplit(Split split) {
-        this.split = split;
+    public void setSplits(Splits splits) {
+        this.splits = splits;
     }
 
     @Override

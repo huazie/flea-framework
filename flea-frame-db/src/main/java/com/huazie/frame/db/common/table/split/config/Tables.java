@@ -10,15 +10,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <p> 分表集合类 </p>
+ * <p> 分表配置集合类 </p>
  *
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0
  */
-public class Tables implements Serializable {
-
-    private static final long serialVersionUID = 3209329482179720497L;
+public class Tables {
 
     private List<Table> tableList = new ArrayList<Table>();
 
@@ -31,9 +29,9 @@ public class Tables implements Serializable {
     }
 
     /**
-     * <p> 获取分表定义相关属性集合 </p>
+     * <p> 获取各分表配置 </p>
      *
-     * @return 分表定义相关属性集合
+     * @return 各分表配置集合
      * @since 1.0.0
      */
     public Map<String, Table> toTableMap() {

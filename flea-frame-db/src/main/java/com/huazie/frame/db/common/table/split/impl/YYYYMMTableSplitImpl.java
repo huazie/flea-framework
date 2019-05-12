@@ -15,8 +15,8 @@ public class YYYYMMTableSplitImpl extends AbstractTableSplitImpl {
     private static final long serialVersionUID = -5650362256544321307L;
 
     @Override
-    public String convert(String tableName, Object tableSplitColumn) throws TableSplitException {
-        return convert(tableName, tableSplitColumn, DateFormatEnum.YYYYMM);
+    public String convert(Object tableSplitColumn) throws TableSplitException {
+        return convert(tableSplitColumn, DateFormatEnum.YYYYMM);
     }
 
 }

@@ -15,8 +15,8 @@ public final class ThreeHexTableSplitImpl extends AbstractTableSplitImpl {
     private static final long serialVersionUID = -3748910333438155964L;
 
     @Override
-    public String convert(String tableName, Object tableSplitColumn) throws TableSplitException {
-        return convert(tableName, tableSplitColumn, DBConstants.TableSplitConstants.THREE);
+    public String convert(Object tableSplitColumn) throws TableSplitException {
+        return convert(tableSplitColumn, DBConstants.TableSplitConstants.THREE);
     }
 
 }

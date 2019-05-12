@@ -11,11 +11,9 @@ import java.io.Serializable;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class Split implements Serializable {
+public class Split {
 
-    private static final long serialVersionUID = -5675907324751016293L;
-
-    private String key;         // 分表key
+    private String key;         // 表类型关键字
 
     private String column;      // 分表列名
 

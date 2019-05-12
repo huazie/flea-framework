@@ -15,8 +15,8 @@ public final class TwoHexTableSplitImpl extends AbstractTableSplitImpl {
     private static final long serialVersionUID = 142194326684219859L;
 
     @Override
-    public String convert(String tableName, Object tableSplitColumn) throws TableSplitException {
-        return convert(tableName, tableSplitColumn, DBConstants.TableSplitConstants.TWO);
+    public String convert(Object tableSplitColumn) throws TableSplitException {
+        return convert(tableSplitColumn, DBConstants.TableSplitConstants.TWO);
     }
 
 }

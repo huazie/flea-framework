@@ -24,13 +24,12 @@ public abstract class AbstractTableSplitImpl implements ITableSplit {
     /**
      * <p> 分表转换(指定日期格式化分表字段获取分表后缀) </p>
      *
-     * @param tableName        分表对应主表名
      * @param tableSplitColumn 分表字段
      * @param dateFormatEnum   日期格式化类型枚举
-     * @return 分表名
+     * @return 分表后缀名
      * @throws TableSplitException 分表转换异常类
      */
-    protected String convert(String tableName, Object tableSplitColumn, DateFormatEnum dateFormatEnum) throws TableSplitException {
+    protected String convert(Object tableSplitColumn, DateFormatEnum dateFormatEnum) throws TableSplitException {
         String tSplitPrefix = null;
         if (ObjectUtils.isEmpty(tableSplitColumn)) {
             tSplitPrefix = DateUtils.date2String(null, dateFormatEnum);
@@ -39,32 +38,31 @@ public abstract class AbstractTableSplitImpl implements ITableSplit {
             tSplitPrefix = DateUtils.date2String((Date) tableSplitColumn, dateFormatEnum);
         }
         if (StringUtils.isBlank(tSplitPrefix)) {
+            // 获取【{0}】分表后缀异常
             throw new TableSplitException("ERROR-DB-TSP0000000001", dateFormatEnum.getFormat());
         }
-        return StringUtils.strCat(tableName, DBConstants.SQLConstants.SQL_UNDERLINE, tSplitPrefix);
+        return tSplitPrefix;
     }
 
     /**
-     * <p> 分表转换(截取分表字段后len位得到) </p>
+     * <p> 分表后缀转换(截取分表字段后len位得到) </p>
      *
-     * @param tableName        分表对应主表名
      * @param tableSplitColumn 分表字段
      * @param len              分表后缀长度
-     * @return 分表名
+     * @return 分表后缀名
      * @throws TableSplitException 分表转换异常类
      */
-    protected String convert(String tableName, Object tableSplitColumn, int len) throws TableSplitException {
-        if (StringUtils.isBlank(tableName)) {
-            throw new TableSplitException("ERROR-DB-TSP0000000002");
-        }
+    protected String convert(Object tableSplitColumn, int len) throws TableSplitException {
         if (ObjectUtils.isEmpty(tableSplitColumn)) {
+            // 分表列名字段不能为空
             throw new TableSplitException("ERROR-DB-TSP0000000003");
         }
         String tSplitCol = tableSplitColumn.toString();
         if (StringUtils.isBlank(tSplitCol)) {
+            // 分表列名字段不能为空
             throw new TableSplitException("ERROR-DB-TSP0000000003");
         }
         String tSplitPrefix = StringUtils.subStrLast(tSplitCol, len);
-        return StringUtils.strCat(tableName, DBConstants.SQLConstants.SQL_UNDERLINE, tSplitPrefix.toLowerCase());
+        return tSplitPrefix.toLowerCase();
     }
 }

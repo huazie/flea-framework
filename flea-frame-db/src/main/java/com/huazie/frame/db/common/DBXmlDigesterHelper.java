@@ -16,6 +16,7 @@ import com.huazie.frame.db.common.sql.template.config.Sql;
 import com.huazie.frame.db.common.sql.template.config.Template;
 import com.huazie.frame.db.common.sql.template.config.Templates;
 import com.huazie.frame.db.common.table.split.config.Split;
+import com.huazie.frame.db.common.table.split.config.Splits;
 import com.huazie.frame.db.common.table.split.config.Table;
 import com.huazie.frame.db.common.table.split.config.Tables;
 import org.apache.commons.digester.Digester;
@@ -31,11 +32,11 @@ import java.io.InputStream;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class XmlDigesterHelper {
+public class DBXmlDigesterHelper {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(XmlDigesterHelper.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(DBXmlDigesterHelper.class);
 
-    private static volatile XmlDigesterHelper xmlDigester;
+    private static volatile DBXmlDigesterHelper xmlDigester;
 
     private static Boolean isInit = Boolean.FALSE;
     private static Boolean isTablesInit = Boolean.FALSE;
@@ -48,7 +49,7 @@ public class XmlDigesterHelper {
     /**
      * <p> 只允许通过getInstance()获取 XML解析类 </p>
      */
-    private XmlDigesterHelper() {
+    private DBXmlDigesterHelper() {
     }
 
     /**
@@ -57,12 +58,12 @@ public class XmlDigesterHelper {
      * @return XML解析工具类对象
      * @since 1.0.0
      */
-    public static XmlDigesterHelper getInstance() {
+    public static DBXmlDigesterHelper getInstance() {
         if (isInit.equals(Boolean.FALSE)) {
             synchronized (isInit) {
                 if (isInit.equals(Boolean.FALSE)) {
                     isInit = Boolean.TRUE;
-                    xmlDigester = new XmlDigesterHelper();
+                    xmlDigester = new DBXmlDigesterHelper();
                 }
             }
         }
@@ -97,13 +98,13 @@ public class XmlDigesterHelper {
         if (StringUtils.isNotBlank(System.getProperty("fleaframe.db.table.split.filename"))) {
             fileName = StringUtils.trim(System.getProperty("fleaframe.db.table.split.filename"));
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("XmlDigesterHelper##newTables Use the specified flea-table-split.xml :" + fileName);
+                LOGGER.debug("DBXmlDigesterHelper##newTables Use the specified flea-table-split.xml :" + fileName);
             }
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("XmlDigesterHelper##newTables() Use the current flea-sql-template.xml :" + fileName);
-            LOGGER.debug("XmlDigesterHelper##newTables() Start to parse the flea-table-split.xml");
+            LOGGER.debug("DBXmlDigesterHelper##newTables() Use the current flea-sql-template.xml :" + fileName);
+            LOGGER.debug("DBXmlDigesterHelper##newTables() Start to parse the flea-table-split.xml");
         }
 
         InputStream input = ResourcesUtil.getInputStreamFromClassPath(fileName);
@@ -120,11 +121,15 @@ public class XmlDigesterHelper {
         digester.addObjectCreate("tables/table", Table.class.getName());
         digester.addSetProperties("tables/table");
 
-        digester.addObjectCreate("tables/table/split", Split.class.getName());
-        digester.addSetProperties("tables/table/split");
+        digester.addObjectCreate("tables/table/splits", Splits.class.getName());
+        digester.addSetProperties("tables/table/splits");
+
+        digester.addObjectCreate("tables/table/splits/split", Split.class.getName());
+        digester.addSetProperties("tables/table/splits/split");
 
         digester.addSetNext("tables/table", "addTable", Table.class.getName());
-        digester.addSetNext("tables/table/split", "setSplit", Split.class.getName());
+        digester.addSetNext("tables/table/splits", "setSplits", Splits.class.getName());
+        digester.addSetNext("tables/table/splits/split", "addSplit", Split.class.getName());
 
         try {
             tabs = (Tables) digester.parse(input);
@@ -133,7 +138,7 @@ public class XmlDigesterHelper {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("XmlDigesterHelper##newTables() End to parse the flea-table-split.xml");
+            LOGGER.debug("DBXmlDigesterHelper##newTables() End to parse the flea-table-split.xml");
         }
 
         return tabs;
@@ -168,13 +173,13 @@ public class XmlDigesterHelper {
         if (StringUtils.isNotBlank(System.getProperty("fleaframe.db.sql.template.filename"))) {
             fileName = StringUtils.trim(System.getProperty("fleaframe.db.sql.template.filename"));
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("XmlDigesterHelper##newSqlTemplate Use the specified flea-sql-template.xml :" + fileName);
+                LOGGER.debug("DBXmlDigesterHelper##newSqlTemplate Use the specified flea-sql-template.xml :" + fileName);
             }
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("XmlDigesterHelper##newSqlTemplate() Use the current flea-sql-template.xml :" + fileName);
-            LOGGER.debug("XmlDigesterHelper##newSqlTemplate() Start to parse the flea-sql-template.xml");
+            LOGGER.debug("DBXmlDigesterHelper##newSqlTemplate() Use the current flea-sql-template.xml :" + fileName);
+            LOGGER.debug("DBXmlDigesterHelper##newSqlTemplate() Start to parse the flea-sql-template.xml");
         }
 
         InputStream input = ResourcesUtil.getInputStreamFromClassPath(fileName);
@@ -247,7 +252,7 @@ public class XmlDigesterHelper {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("XmlDigesterHelper##newSqlTemplate() End to parse the flea-sql-template.xml");
+            LOGGER.debug("DBXmlDigesterHelper##newSqlTemplate() End to parse the flea-sql-template.xml");
         }
 
         return sqlTemplate;

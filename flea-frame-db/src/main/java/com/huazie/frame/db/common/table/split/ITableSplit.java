@@ -14,12 +14,11 @@ import java.io.Serializable;
 public interface ITableSplit extends Serializable {
 
     /**
-     * <p> 分表转换 </p>
+     * <p> 分表后缀转换 </p>
      *
-     * @param tableName 分表对应主表名
      * @param tableSplitColumn 分表字段
-     * @return 分表名
+     * @return 分表后缀名
      * @throws TableSplitException 分表实现异常类
      */
-    String convert(String tableName, Object tableSplitColumn) throws TableSplitException;
+    String convert(Object tableSplitColumn) throws TableSplitException;
 }

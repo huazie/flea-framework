@@ -2,7 +2,7 @@ package com.huazie.frame.db.common.sql.template.config;
 
 import com.huazie.frame.common.util.MapUtils;
 import com.huazie.frame.common.util.ObjectUtils;
-import com.huazie.frame.db.common.XmlDigesterHelper;
+import com.huazie.frame.db.common.DBXmlDigesterHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,7 +42,7 @@ public class SqlTemplateConfig {
             synchronized (SqlTemplateConfig.class) {
                 if (ObjectUtils.isEmpty(config)) {
                     try {
-                        config = new SqlTemplateConfig(XmlDigesterHelper.getInstance().getSqlTemplate());
+                        config = new SqlTemplateConfig(DBXmlDigesterHelper.getInstance().getSqlTemplate());
                     } catch (Exception e) {
                         LOGGER.error("Fail to init flea-sql-template.xml ：", e);
                     }

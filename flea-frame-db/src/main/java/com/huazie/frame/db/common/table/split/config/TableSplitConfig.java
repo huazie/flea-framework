@@ -1,7 +1,7 @@
 package com.huazie.frame.db.common.table.split.config;
 
 import com.huazie.frame.common.util.ObjectUtils;
-import com.huazie.frame.db.common.XmlDigesterHelper;
+import com.huazie.frame.db.common.DBXmlDigesterHelper;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +35,7 @@ public class TableSplitConfig {
             synchronized (TableSplitConfig.class){
                 if(ObjectUtils.isEmpty(config)){
                     try {
-                        config = new TableSplitConfig(XmlDigesterHelper.getInstance().getTables());
+                        config = new TableSplitConfig(DBXmlDigesterHelper.getInstance().getTables());
                     } catch (Exception e) {
                         LOGGER.debug("Fail to init flea-table-split.xml");
                     }

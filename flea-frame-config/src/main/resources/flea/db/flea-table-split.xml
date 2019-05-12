@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tables>
 
-	<table id="fleaFileInfo" name="flea_file_info" entityClass="com.huazie.ffs.entity.FleaFileInfo" >
-		<split key="twohex" column="file_id" implClass="com.huazie.frame.db.common.table.split.impl.TwoHexTableSplitImpl"/>
+	<!-- 定义分表配置
+		name : 分表对应的主表名
+		exp  : 分表名表达式 (FLEA_TABLE_NAME)_(列名大写)_(列名大写)
+	-->
+	<table name="flea_file_info" exp="(FLEA_TABLE_NAME)_(FILE_ID)">
+		<splits>
+			<!-- 定义分表后缀
+				key : 分表类型关键字
+				column : 分表列名字段
+				implClass : 分表后缀转换实现类
+			-->
+			<split key="twohex" column="file_id" implClass="com.huazie.frame.db.common.table.split.impl.TwoHexTableSplitImpl"/>
+		</splits>
 	</table>
-	
+
 </tables>

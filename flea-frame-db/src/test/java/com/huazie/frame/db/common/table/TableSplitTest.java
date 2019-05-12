@@ -31,7 +31,7 @@ public class TableSplitTest {
         FleaFrameManager.getManager().setLocale(Locale.US);
         ITableSplit tableSplit = new TwoHexTableSplitImpl();
         try {
-            LOGGER.debug(tableSplit.convert("flea_file_info", "12312311FF"));
+            LOGGER.debug(tableSplit.convert("12312311FF"));
         } catch (Exception e) {
             LOGGER.error("Exception=", e);
         }
@@ -41,7 +41,7 @@ public class TableSplitTest {
     public void testThreeHexTableSplit() {
         ITableSplit tableSplit = new ThreeHexTableSplitImpl();
         try {
-            LOGGER.debug(tableSplit.convert("flea_file_info", "12312311FF"));
+            LOGGER.debug(tableSplit.convert("12312311FF"));
         } catch (Exception e) {
             LOGGER.error("Exception=", e);
         }
@@ -52,7 +52,7 @@ public class TableSplitTest {
 
         ITableSplit tableSplit = new YYYYTableSplitImpl();
         try {
-            LOGGER.debug(tableSplit.convert("flea_file_info", ""));
+            LOGGER.debug(tableSplit.convert(""));
         } catch (Exception e) {
             LOGGER.error("Exception=", e);
         }
@@ -63,7 +63,7 @@ public class TableSplitTest {
 
         ITableSplit tableSplit = new YYYYMMTableSplitImpl();
         try {
-            LOGGER.debug(tableSplit.convert("flea_file_info", ""));
+            LOGGER.debug(tableSplit.convert(""));
         } catch (Exception e) {
             LOGGER.error("Exception=", e);
         }
@@ -74,7 +74,7 @@ public class TableSplitTest {
 
         ITableSplit tableSplit = new YYYYMMDDTableSplitImpl();
         try {
-            LOGGER.debug(tableSplit.convert("flea_file_info", ""));
+            LOGGER.debug(tableSplit.convert(""));
         } catch (Exception e) {
             LOGGER.error("Exception=", e);
         }

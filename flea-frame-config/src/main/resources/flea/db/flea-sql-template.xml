@@ -19,19 +19,27 @@
 	<!-- SQL模板配置 -->
 	<templates>
 		<template id="insert" ruleId="insert" name="INSERT SQL模板" desc="用于原生SQL中INSERT语句的使用">
+			<!-- SQL模板数据 -->
 			<property key="template" value="INSERT INTO ##table## (##columns## ) VALUES (##values## )" />
+			<!-- SQL模板类型 -->
 			<property key="type" value="insert"/>
 		</template>
 		<template id="update" ruleId="update" name="UPDATE SQL模板" desc="用于原生SQL中UPDATE语句的使用">
+			<!-- SQL模板数据 -->
 			<property key="template" value="UPDATE ##table## SET ##sets## WHERE ##conditions##" />
+			<!-- SQL模板类型 -->
 			<property key="type" value="update"/>
 		</template>
 		<template id="select" ruleId="select" name="SELECT SQL模板" desc="用于原生SQL中SELECT语句的使用">
+			<!-- SQL模板数据 -->
 			<property key="template" value="SELECT ##columns## FROM ##table## WHERE ##conditions##" />
+			<!-- SQL模板类型 -->
 			<property key="type" value="select"/>
 		</template>
 		<template id="delete" ruleId="delete" name="DELETE SQL模板" desc="用于原生SQL中DELETE语句的使用">
+			<!-- SQL模板数据 -->
 			<property key="template" value="DELETE FROM ##table## WHERE ##conditions##" />
+			<!-- SQL模板类型 -->
 			<property key="type" value="delete"/>
 		</template>
 	</templates>
@@ -39,28 +47,42 @@
 	<!-- SQL模板参数配置 -->
 	<params>
 		<param id="insert" name="SQL模板參數" desc="用于定义SQL模板中的替换参数">
+			<!-- 表名 -->
 			<property key="table" value="flea_para_detail" />
 			<!-- 这两个不填，表示表的字段全部使用
             <property key="columns" value="para_id, para_type, para_code, para_name, para1, para_state" />
             <property key="values" value=":paraId, :paraType, :paraCode, :paraName, :para1, :paraState" />-->
 		</param>
 		<param id="update" name="SQL模板參數" desc="用于定义SQL模板中的替换参数">
+			<!-- 表名 -->
 			<property key="table" value="flea_para_detail" />
+			<!-- SET 子句 -->
 			<property key="sets" value="para1 = :para1, para2 = :para2" />
+			<!-- WHERE 子句 -->
 			<property key="conditions" value="para_id = :paraId and ( para_type = :paraType or para_type = 'nihao') and para_code in ( :paraCode) or para_name like :paraName" />
 		</param>
 		<param id="select" name="SQL模板參數" desc="用于定义SQL模板中的替换参数; 如需查询全部，则设置key=columns的属性值为 *，即可">
+			<!-- 表名 -->
 			<property key="table" value="flea_para_detail" />
+			<!-- SELECT 显示列 -->
 			<property key="columns" value="*" />
+			<!-- WHERE 子句 -->
 			<property key="conditions" value="para_id = :paraId and ( para_type = :paraType or para_type = 'CERT') and para_code in ( :paraCode) or para_name like :paraName" />
 		</param>
 		<param id="delete" name="SQL模板參數" desc="用于定义SQL模板中的替换参数">
+			<!-- 表名 -->
 			<property key="table" value="flea_para_detail" />
+			<!-- WHERE 子句 -->
 			<property key="conditions" value="para_id = :paraId or (para_name like :paraName and paraState = 1)" />
 		</param>
 	</params>
 	<!-- SQL模板和模板参数关联关系配置（简称 SQL关系配置）-->
 	<relations>
+		<!-- 定义一条SQL关系配置
+			id		   : SQL关系编号
+			templateId : SQL模板编号
+			paramId    : SQL模板参数编号
+		-->
 		<relation id="insert" templateId="insert" paramId="insert" name="SQL关系"/>
 		<relation id="update" templateId="update" paramId="update" name="SQL关系"/>
 		<relation id="select" templateId="select" paramId="select" name="SQL关系"/>
