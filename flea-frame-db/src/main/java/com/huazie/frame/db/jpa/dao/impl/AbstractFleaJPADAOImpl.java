@@ -53,48 +53,57 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 
     @Override
     public T query(long entityId) throws Exception {
-        checkPrimaryKey(entityId);
-        T t = getEntityManager().find(clazz, entityId);
-        return t;
+        return queryById(entityId);
     }
 
     @Override
     public T query(String entityId) throws Exception {
+        return queryById(entityId);
+    }
+
+    /**
+     * <p> 根据主键编号查询数据行对应的实体类信息 </p>
+     *
+     * @param entityId 主键编号
+     * @return 数据行对应的实体类信息
+     * @throws Exception
+     */
+    protected T queryById(Object entityId) throws Exception {
         checkPrimaryKey(entityId);
         T t = getEntityManager().find(clazz, entityId);
         return t;
     }
 
     @Override
-    public List<T> query(Map<String, Object> paramterMap) throws Exception {
+    public List<T> query(Map<String, Object> paramMap) throws Exception {
         FleaJPAQuery query = getQuery(null);
-        query.equal(paramterMap);
+        query.equal(paramMap);
         List<T> ts = query.getResultList();
         return ts;
     }
 
     @Override
-    public List<T> query(Map<String, Object> paramterMap, String attrName, String orderBy) throws Exception {
+    public List<T> query(Map<String, Object> paramMap, String attrName, String orderBy) throws Exception {
         FleaJPAQuery query = getQuery(null);
-        query.equal(paramterMap);
+        query.equal(paramMap);
         query.addOrderby(attrName, orderBy);
         List<T> ts = query.getResultList();
         return ts;
     }
 
     @Override
-    public List<T> query(Map<String, Object> paramterMap, int start, int max) throws Exception {
+    public List<T> query(Map<String, Object> paramMap, int start, int max) throws Exception {
         FleaJPAQuery query = getQuery(null);
-        query.equal(paramterMap);
+        query.equal(paramMap);
         List<T> ts = query.getResultList(start, max);
         return ts;
     }
 
     @Override
-    public List<T> query(Map<String, Object> paramterMap, String attrName, String orderBy, int start, int max)
+    public List<T> query(Map<String, Object> paramMap, String attrName, String orderBy, int start, int max)
             throws Exception {
         FleaJPAQuery query = getQuery(null);
-        query.equal(paramterMap);
+        query.equal(paramMap);
         query.addOrderby(attrName, orderBy);
         List<T> ts = query.getResultList(start, max);
         return ts;
@@ -139,10 +148,10 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     }
 
     @Override
-    public long queryCount(Map<String, Object> paramterMap) throws Exception {
+    public long queryCount(Map<String, Object> paramMap) throws Exception {
         FleaJPAQuery query = getQuery(Long.class);
         // 添加Where子句查询条件
-        query.equal(paramterMap);
+        query.equal(paramMap);
         // 设置调用SQL的COUNT函数统计数目
         query.countDistinct();
         long count = ((Long) query.getSingleResult());
@@ -151,20 +160,24 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 
     @Override
     public boolean remove(long entityId) throws Exception {
-        checkPrimaryKey(entityId);
-        final T old = query(entityId);
-        if (ObjectUtils.isNotEmpty(old)) {
-            getEntityManager().remove(old);
-            return true;
-        } else {
-            return false;
-        }
+        return removeById(entityId);
     }
 
     @Override
     public boolean remove(String entityId) throws Exception {
+        return removeById(entityId);
+    }
+
+    /**
+     * <p> 根据主键编号删除指定行数据 </p>
+     *
+     * @param entityId 主键数据
+     * @return true : 删除成功; false : 删除失败
+     * @throws Exception
+     */
+    protected boolean removeById(Object entityId) throws Exception {
         checkPrimaryKey(entityId);
-        final T old = query(entityId);
+        final T old = queryById(entityId);
         if (ObjectUtils.isNotEmpty(old)) {
             getEntityManager().remove(old);
             return true;
@@ -183,14 +196,14 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     }
 
     @Override
-    public List<T> batchUpdate(List<T> entitys) throws Exception {
-        if (CollectionUtils.isEmpty(entitys)) {
+    public List<T> batchUpdate(List<T> entities) throws Exception {
+        if (CollectionUtils.isEmpty(entities)) {
             throw new DaoException("ERROR-DB-DAO0000000013");
         }
-        for (int i = 0; i < entitys.size(); i++) {
-            getEntityManager().merge(entitys.get(i));
+        for (T t : entities) {
+            getEntityManager().merge(t);
         }
-        return entitys;
+        return entities;
     }
 
     @Override
@@ -202,16 +215,16 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     }
 
     @Override
-    public void batchSave(List<T> entitys) throws Exception {
-        if (CollectionUtils.isEmpty(entitys)) {
+    public void batchSave(List<T> entities) throws Exception {
+        if (CollectionUtils.isEmpty(entities)) {
             throw new DaoException("ERROR-DB-DAO0000000013");
         }
-        for (int i = 0; i < entitys.size(); i++) {
-            getEntityManager().persist(entitys.get(i));
+        for (T t : entities) {
+            getEntityManager().persist(t);
         }
     }
 
-    public boolean update(T entity,String a) throws Exception {
+    public boolean update(T entity, String a) throws Exception {
         if (entity == null) {
             throw new DaoException("The entity need to be updated is null");
         }
@@ -306,6 +319,12 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         }
     }
 
+    @Override
+    public List<T> query(String relationId, T t) throws Exception {
+
+        return null;
+    }
+
     /**
      * <p> 获取指定的查询对象 </p>
      *
@@ -326,15 +345,18 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
      * @since 1.0.0
      */
     private void checkPrimaryKey(Object entityId) throws DaoException {
-        if (entityId.getClass() == long.class || entityId.getClass() == Long.class) {// 该实体的主键是long类型
+        if (entityId.getClass() == long.class || entityId.getClass() == Long.class) {
             if (Long.valueOf(entityId.toString()) <= 0) {
+                // 主键字段必须是正整数
                 throw new DaoException("ERROR-DB-DAO0000000009");
             }
-        } else if (entityId.getClass() == String.class) {// 该实体的主键是String类型
+        } else if (entityId.getClass() == String.class) {
             if (ObjectUtils.isEmpty(entityId)) {
+                // 主键字段不能为空
                 throw new DaoException("ERROR-DB-DAO0000000010");
             }
         } else {
+            // 主键必须是long(Long) 或 String
             throw new DaoException("ERROR-DB-DAO0000000011");
         }
     }

@@ -30,6 +30,16 @@ public class FleaParaDetailSVImplTest {
     }
 
     @Test
+    public void getParaDetailById() {
+        IFleaParaDetailSV sv = (IFleaParaDetailSV) applicationContext.getBean("fleaParaDetailSVImpl");
+        try {
+            LOGGER.debug(sv.query(2L).toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
     public void getParaDetails() {
         IFleaParaDetailSV sv = (IFleaParaDetailSV) applicationContext.getBean("fleaParaDetailSVImpl");
         try {

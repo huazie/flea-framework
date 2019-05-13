@@ -92,8 +92,8 @@ public abstract class AbstractFleaJPASVImpl<T> implements IAbstractFleaJPASV<T> 
     }
 
     @Override
-    public List<T> batchUpdate(List<T> entityList) throws Exception {
-        return getDAO().batchUpdate(entityList);
+    public List<T> batchUpdate(List<T> entities) throws Exception {
+        return getDAO().batchUpdate(entities);
     }
 
     @Override
@@ -102,8 +102,13 @@ public abstract class AbstractFleaJPASVImpl<T> implements IAbstractFleaJPASV<T> 
     }
 
     @Override
-    public void batchSave(List<T> entityList) throws Exception {
-        getDAO().batchSave(entityList);
+    public void batchSave(List<T> entities) throws Exception {
+        getDAO().batchSave(entities);
+    }
+
+    @Override
+    public List<T> query(String relationId, T t) throws Exception {
+        return getDAO().query(relationId, t);
     }
 
     /**

@@ -40,8 +40,8 @@ public class FleaConfigDAOImpl<T> extends AbstractFleaJPADAOImpl<T> {
 	
 	@Override
 	@Transactional("fleaConfigTransactionManager")
-	public List<T> batchUpdate(List<T> entitys) throws Exception {
-		return super.batchUpdate(entitys);
+	public List<T> batchUpdate(List<T> entities) throws Exception {
+		return super.batchUpdate(entities);
 	}
 
 	@Override
@@ -52,8 +52,14 @@ public class FleaConfigDAOImpl<T> extends AbstractFleaJPADAOImpl<T> {
 	
 	@Override
 	@Transactional("fleaConfigTransactionManager")
-	public void batchSave(List<T> entitys) throws Exception {
-		super.batchSave(entitys);
+	public void batchSave(List<T> entities) throws Exception {
+		super.batchSave(entities);
+	}
+
+	@Override
+	@Transactional("fleaConfigTransactionManager")
+	public List<T> query(String relationId, T t) throws Exception {
+		return super.query(relationId, t);
 	}
 
 	@Override

@@ -35,41 +35,41 @@ public interface IFleaJPABaseDataHandler<T> {
     /**
      * <p> 多条件查询 </p>
      *
-     * @param paramterMap 多条件参数
+     * @param paramMap 多条件参数
      * @return 实体对象集合
      * @throws Exception
      * @since 1.0.0
      */
-    List<T> query(Map<String, Object> paramterMap) throws Exception;
+    List<T> query(Map<String, Object> paramMap) throws Exception;
 
     /**
      * <p> 多条件排序查询 </p>
      *
-     * @param paramterMap 多条件参数
+     * @param paramMap 多条件参数
      * @param attrName    属性名
      * @param orderBy     排序方式（desc：降序，asc：升序）
      * @return 实体对象集合
      * @throws Exception
      * @since 1.0.0
      */
-    List<T> query(Map<String, Object> paramterMap, String attrName, String orderBy) throws Exception;
+    List<T> query(Map<String, Object> paramMap, String attrName, String orderBy) throws Exception;
 
     /**
      * <p> 多条件分页查询 </p>
      *
-     * @param paramterMap 多条件参数
+     * @param paramMap 多条件参数
      * @param start       开始查询记录行
      * @param max         一次最大查询数量
      * @return 实体对象集合
      * @throws Exception
      * @since 1.0.0
      */
-    List<T> query(Map<String, Object> paramterMap, int start, int max) throws Exception;
+    List<T> query(Map<String, Object> paramMap, int start, int max) throws Exception;
 
     /**
      * <p> 多条件分页排序查询 </p>
      *
-     * @param paramterMap 多条件参数
+     * @param paramMap 多条件参数
      * @param attrName    属性名
      * @param orderBy     排序方式（desc：降序，asc：升序）
      * @param start       开始查询记录行
@@ -78,7 +78,7 @@ public interface IFleaJPABaseDataHandler<T> {
      * @throws Exception
      * @since 1.0.0
      */
-    List<T> query(Map<String, Object> paramterMap, String attrName, String orderBy, int start, int max) throws Exception;
+    List<T> query(Map<String, Object> paramMap, String attrName, String orderBy, int start, int max) throws Exception;
 
     /**
      * <p> 查询所有数据 </p>
@@ -136,12 +136,12 @@ public interface IFleaJPABaseDataHandler<T> {
     /**
      * <p> 带条件查询表中数据的总数 </p>
      *
-     * @param paramterMap 多条件参数
+     * @param paramMap 多条件参数
      * @return 带条件的总数据量
      * @throws Exception
      * @since 1.0.0
      */
-    long queryCount(Map<String, Object> paramterMap) throws Exception;
+    long queryCount(Map<String, Object> paramMap) throws Exception;
 
     /**
      * <p> 删除某条数据 </p>
@@ -176,12 +176,12 @@ public interface IFleaJPABaseDataHandler<T> {
     /**
      * <p> 批量更新 </p>
      *
-     * @param entitys 待更新的实体集合
+     * @param entities 待更新的实体集合
      * @return 批量更新后的实体集合
      * @throws Exception
      * @since 1.0.0
      */
-    List<T> batchUpdate(List<T> entitys) throws Exception;
+    List<T> batchUpdate(List<T> entities) throws Exception;
 
     /**
      * <p> 保存一条记录 </p>
@@ -195,10 +195,20 @@ public interface IFleaJPABaseDataHandler<T> {
     /**
      * <p> 批量保存 </p>
      *
-     * @param entitys 待保存的实体集合
+     * @param entities 待保存的实体集合
      * @throws Exception
      * @since 1.0.0
      */
-    void batchSave(List<T> entitys) throws Exception;
+    void batchSave(List<T> entities) throws Exception;
+
+    /**
+     * <p> 通过查询SQL模板，查询数据（其中<code>relationId</code>为SQL关系编号） </p>
+     *
+     * @param relationId 关系编号
+     * @param t 实体类
+     * @return 实体类数据集合
+     * @throws Exception
+     */
+    List<T> query(String relationId, T t) throws Exception;
 
 }
