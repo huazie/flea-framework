@@ -1,8 +1,6 @@
 package com.huazie.frame.db.jpa;
 
-import com.huazie.frame.common.FleaFrameManager;
 import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
-import com.huazie.frame.core.base.cfgdata.ivalues.IFleaParaDetailValue;
 import com.huazie.frame.db.common.exception.DaoException;
 import com.huazie.frame.db.jpa.common.FleaJPAQuery;
 import org.junit.AfterClass;
@@ -18,7 +16,6 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 public class FleaJPAQueryTest {
@@ -54,11 +51,11 @@ public class FleaJPAQueryTest {
 
     @Test
     public void testFleaJPAQuery() {
-        FleaFrameManager.getManager().setLocale(Locale.US);
+        //FleaFrameManager.getManager().setLocale(Locale.US);
         try {
             FleaJPAQuery query = FleaJPAQuery.getQuery();
             query.init(em, FleaParaDetail.class, null);
-            query.distinct(IFleaParaDetailValue.S_PARA_TYPE);
+            query.distinct("");
             List<FleaParaDetail> list = query.getSingleResultList();
             LOGGER.debug("list:{}", list);
         } catch (DaoException e) {

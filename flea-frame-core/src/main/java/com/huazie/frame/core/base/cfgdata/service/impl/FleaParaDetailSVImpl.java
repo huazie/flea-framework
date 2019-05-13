@@ -3,7 +3,6 @@ package com.huazie.frame.core.base.cfgdata.service.impl;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.core.base.cfgdata.dao.interfaces.IFleaParaDetailDAO;
 import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
-import com.huazie.frame.core.base.cfgdata.ivalues.IFleaParaDetailValue;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaParaDetailSV;
 import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import com.huazie.frame.db.jpa.service.impl.AbstractFleaJPASVImpl;
@@ -30,21 +29,21 @@ public class FleaParaDetailSVImpl extends AbstractFleaJPASVImpl<FleaParaDetail> 
 
     @Override
     @Cacheable(value = "fleaparadetail", key = "#paraType")
-    public List<IFleaParaDetailValue> getParaDetails(String paraType, String paraCode) throws Exception {
+    public List<FleaParaDetail> getParaDetails(String paraType, String paraCode) throws Exception {
 
-        List<IFleaParaDetailValue> fleaParaDetailValues = fleaParaDetailDao.getParaDetail(paraType, paraCode);
+        List<FleaParaDetail> fleaParaDetailValues = fleaParaDetailDao.getParaDetail(paraType, paraCode);
         return fleaParaDetailValues;
     }
 
     @Override
     @Cacheable(value = "fleaparadetail", key = "#paraType + '_' + #paraCode")
-    public IFleaParaDetailValue getParaDetail(String paraType, String paraCode) throws Exception {
+    public FleaParaDetail getParaDetail(String paraType, String paraCode) throws Exception {
 
-        List<IFleaParaDetailValue> fleaParaDetailValues = fleaParaDetailDao.getParaDetail(paraType, paraCode);
-        IFleaParaDetailValue fleaParaDetailValue = null;
+        List<FleaParaDetail> fleaParaDetails = fleaParaDetailDao.getParaDetail(paraType, paraCode);
+        FleaParaDetail fleaParaDetailValue = null;
 
-        if (CollectionUtils.isNotEmpty(fleaParaDetailValues)) {
-            fleaParaDetailValue = fleaParaDetailValues.get(0);
+        if (CollectionUtils.isNotEmpty(fleaParaDetails)) {
+            fleaParaDetailValue = fleaParaDetails.get(0);
         }
 
         return fleaParaDetailValue;

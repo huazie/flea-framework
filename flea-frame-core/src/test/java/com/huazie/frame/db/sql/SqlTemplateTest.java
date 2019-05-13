@@ -2,7 +2,6 @@ package com.huazie.frame.db.sql;
 
 import com.huazie.frame.common.FleaFrameManager;
 import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
-import com.huazie.frame.core.base.cfgdata.ivalues.IFleaParaDetailValue;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaParaDetailSV;
 import com.huazie.frame.db.common.sql.template.ITemplate;
 import com.huazie.frame.db.common.sql.template.SqlTemplate;
@@ -24,7 +23,7 @@ public class SqlTemplateTest {
     private final static Logger LOGGER = LoggerFactory.getLogger(SqlTemplateTest.class);
 
     private ApplicationContext applicationContext;
-    private IFleaParaDetailValue fleaParaDetail;
+    private FleaParaDetail fleaParaDetail;
 
     @Before
     public void init() {
@@ -64,7 +63,7 @@ public class SqlTemplateTest {
     public void testDeleteSqlTemplate2() {
         FleaFrameManager.getManager().setLocale(Locale.US);
         try {
-            ITemplate<FleaParaDetail> sqlTemplate = new DeleteSqlTemplate<FleaParaDetail>("delete", (FleaParaDetail) fleaParaDetail);
+            ITemplate<FleaParaDetail> sqlTemplate = new DeleteSqlTemplate<FleaParaDetail>("delete", fleaParaDetail);
             // 模板初始化
             sqlTemplate.initialize();
             LOGGER.debug("testDeleteSqlTemplate2 --> NativeSql={}", sqlTemplate.toNativeSql());
@@ -79,7 +78,7 @@ public class SqlTemplateTest {
     public void testDeleteSqlTemplate3() {
         FleaFrameManager.getManager().setLocale(Locale.US);
         try {
-            ITemplate<FleaParaDetail> sqlTemplate = new DeleteSqlTemplate<FleaParaDetail>("delete", "flea_para_detail", (FleaParaDetail) fleaParaDetail);
+            ITemplate<FleaParaDetail> sqlTemplate = new DeleteSqlTemplate<FleaParaDetail>("delete", "flea_para_detail", fleaParaDetail);
             // 模板初始化
             sqlTemplate.initialize();
             LOGGER.debug("testDeleteSqlTemplate3 --> NativeSql={}", sqlTemplate.toNativeSql());
@@ -100,7 +99,7 @@ public class SqlTemplateTest {
             // 实体类对应的表名
             sqlTemplate.setTableName("flea_para_detail");
             // 实体类的实例对象
-            sqlTemplate.setEntity((FleaParaDetail) fleaParaDetail);
+            sqlTemplate.setEntity(fleaParaDetail);
             // 模板初始化
             sqlTemplate.initialize();
             LOGGER.debug("testInsertSqlTemplate1 --> NativeSql={}", sqlTemplate.toNativeSql());
@@ -115,7 +114,7 @@ public class SqlTemplateTest {
     public void testInsertSqlTemplate2() {
         FleaFrameManager.getManager().setLocale(Locale.US);
         try {
-            ITemplate<FleaParaDetail> sqlTemplate = new InsertSqlTemplate<FleaParaDetail>("insert", (FleaParaDetail) fleaParaDetail);
+            ITemplate<FleaParaDetail> sqlTemplate = new InsertSqlTemplate<FleaParaDetail>("insert", fleaParaDetail);
             // 模板初始化
             sqlTemplate.initialize();
             LOGGER.debug("testInsertSqlTemplate2 --> NativeSql={}", sqlTemplate.toNativeSql());
@@ -130,7 +129,7 @@ public class SqlTemplateTest {
     public void testInsertSqlTemplate3() {
 //        FleaFrameManager.getManager().setLocale(Locale.US);
         try {
-            ITemplate<FleaParaDetail> sqlTemplate = new InsertSqlTemplate<FleaParaDetail>("insert", "flea_para_detail", (FleaParaDetail) fleaParaDetail);
+            ITemplate<FleaParaDetail> sqlTemplate = new InsertSqlTemplate<FleaParaDetail>("insert", "flea_para_detail", fleaParaDetail);
             // 模板初始化
             sqlTemplate.initialize();
             LOGGER.debug("testInsertSqlTemplate3 --> NativeSql={}", sqlTemplate.toNativeSql());
@@ -151,7 +150,7 @@ public class SqlTemplateTest {
             // 实体类对应的表名
             sqlTemplate.setTableName("flea_para_detail");
             // 实体类的实例对象
-            sqlTemplate.setEntity((FleaParaDetail) fleaParaDetail);
+            sqlTemplate.setEntity(fleaParaDetail);
             // 模板初始化
             sqlTemplate.initialize();
             LOGGER.debug("testSelectSqlTemplate1 --> NativeSql={}", sqlTemplate.toNativeSql());
@@ -166,7 +165,7 @@ public class SqlTemplateTest {
     public void testSelectSqlTemplate2() {
         FleaFrameManager.getManager().setLocale(Locale.US);
         try {
-            ITemplate<FleaParaDetail> sqlTemplate = new SelectSqlTemplate<FleaParaDetail>("select", (FleaParaDetail) fleaParaDetail);
+            ITemplate<FleaParaDetail> sqlTemplate = new SelectSqlTemplate<FleaParaDetail>("select", fleaParaDetail);
             // 模板初始化
             sqlTemplate.initialize();
             LOGGER.debug("testSelectSqlTemplate2 --> NativeSql={}", sqlTemplate.toNativeSql());
@@ -181,7 +180,7 @@ public class SqlTemplateTest {
     public void testSelectSqlTemplate3() {
         FleaFrameManager.getManager().setLocale(Locale.US);
         try {
-            ITemplate<FleaParaDetail> sqlTemplate = new SelectSqlTemplate<FleaParaDetail>("select", "flea_para_detail", (FleaParaDetail) fleaParaDetail);
+            ITemplate<FleaParaDetail> sqlTemplate = new SelectSqlTemplate<FleaParaDetail>("select", "flea_para_detail", fleaParaDetail);
             // 模板初始化
             sqlTemplate.initialize();
             LOGGER.debug("testSelectSqlTemplate3 --> NativeSql={}", sqlTemplate.toNativeSql());
@@ -202,7 +201,7 @@ public class SqlTemplateTest {
             // 实体类对应的表名
             //sqlTemplate.setTableName("flea_para_detail");
             // 实体类的实例对象
-            sqlTemplate.setEntity((FleaParaDetail) fleaParaDetail);
+            sqlTemplate.setEntity(fleaParaDetail);
             // 模板初始化
             sqlTemplate.initialize();
             LOGGER.debug("testUpdateSqlTemplate1 --> NativeSql={}", sqlTemplate.toNativeSql());
@@ -217,7 +216,7 @@ public class SqlTemplateTest {
     public void testUpdateSqlTemplate2() {
         FleaFrameManager.getManager().setLocale(Locale.US);
         try {
-            ITemplate<FleaParaDetail> sqlTemplate = new UpdateSqlTemplate<FleaParaDetail>("update", (FleaParaDetail) fleaParaDetail);
+            ITemplate<FleaParaDetail> sqlTemplate = new UpdateSqlTemplate<FleaParaDetail>("update", fleaParaDetail);
             // 模板初始化
             sqlTemplate.initialize();
             LOGGER.debug("testUpdateSqlTemplate2 --> NativeSql={}", sqlTemplate.toNativeSql());
@@ -232,7 +231,7 @@ public class SqlTemplateTest {
     public void testUpdateSqlTemplate3() {
         FleaFrameManager.getManager().setLocale(Locale.US);
         try {
-            ITemplate<FleaParaDetail> sqlTemplate = new UpdateSqlTemplate<FleaParaDetail>("update", "flea_para_detail", (FleaParaDetail) fleaParaDetail);
+            ITemplate<FleaParaDetail> sqlTemplate = new UpdateSqlTemplate<FleaParaDetail>("update", "flea_para_detail", fleaParaDetail);
             // 模板初始化
             sqlTemplate.initialize();
             LOGGER.debug("testUpdateSqlTemplate3 --> NativeSql={}", sqlTemplate.toNativeSql());

@@ -1,7 +1,6 @@
 package com.huazie.frame.core.base.cfgdata.dao.interfaces;
 
 import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
-import com.huazie.frame.core.base.cfgdata.ivalues.IFleaParaDetailValue;
 import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 
 import java.util.List;
@@ -24,6 +23,6 @@ public interface IFleaParaDetailDAO extends IAbstractFleaJPADAO<FleaParaDetail> 
      * @throws Exception
      * @since 1.0.0
      */
-    List<IFleaParaDetailValue> getParaDetail(String paraType, String paraCode) throws Exception;
+    List<FleaParaDetail> getParaDetail(String paraType, String paraCode) throws Exception;
 
 }

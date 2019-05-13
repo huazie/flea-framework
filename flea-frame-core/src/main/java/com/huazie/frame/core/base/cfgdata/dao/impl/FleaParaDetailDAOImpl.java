@@ -3,7 +3,7 @@ package com.huazie.frame.core.base.cfgdata.dao.impl;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.core.base.cfgdata.dao.interfaces.IFleaParaDetailDAO;
 import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
-import com.huazie.frame.core.base.cfgdata.ivalues.IFleaParaDetailValue;
+import com.huazie.frame.core.common.FleaEntityConstants;
 import com.huazie.frame.db.jpa.common.FleaJPAQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,21 +24,21 @@ public class FleaParaDetailDAOImpl extends FleaConfigDAOImpl<FleaParaDetail> imp
     private final static Logger LOGGER = LoggerFactory.getLogger(FleaParaDetailDAOImpl.class);
 
     @Override
-    public List<IFleaParaDetailValue> getParaDetail(String paraType, String paraCode) throws Exception {
+    public List<FleaParaDetail> getParaDetail(String paraType, String paraCode) throws Exception {
 
         FleaJPAQuery query = getQuery(null);
 
         if (StringUtils.isNotBlank(paraType)) {
-            query.equal(IFleaParaDetailValue.S_PARA_TYPE, paraType);
+            query.equal(FleaEntityConstants.FleaParaDetailConstants.S_PARA_TYPE, paraType);
         }
 
         if (StringUtils.isNotBlank(paraCode)) {
-            query.equal(IFleaParaDetailValue.S_PARA_CODE, paraCode);
+            query.equal(FleaEntityConstants.FleaParaDetailConstants.S_PARA_CODE, paraCode);
         }
 
-        query.equal(IFleaParaDetailValue.S_PARA_STATE, IFleaParaDetailValue.PARA_STATE_IN_USE);
+        query.equal(FleaEntityConstants.FleaParaDetailConstants.S_PARA_STATE, FleaEntityConstants.FleaParaDetailConstants.PARA_STATE_IN_USE);
 
-        List<IFleaParaDetailValue> fleaParaDetailList = query.getResultList();
+        List<FleaParaDetail> fleaParaDetailList = query.getResultList();
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FleaParaDetailDAOImpl##getParaDetail(String, String) FleaParaDetailList={}", fleaParaDetailList);

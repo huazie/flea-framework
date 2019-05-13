@@ -1,21 +1,17 @@
 package com.huazie.frame.db.common.table;
 
-import com.huazie.frame.common.FleaFrameManager;
-import com.huazie.frame.db.common.table.split.impl.ThreeHexTableSplitImpl;
-import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.huazie.frame.db.common.table.split.ITableSplit;
 import com.huazie.frame.db.common.table.split.TableSplitEnum;
 import com.huazie.frame.db.common.table.split.config.TableSplitConfig;
+import com.huazie.frame.db.common.table.split.impl.ThreeHexTableSplitImpl;
 import com.huazie.frame.db.common.table.split.impl.TwoHexTableSplitImpl;
 import com.huazie.frame.db.common.table.split.impl.YYYYMMDDTableSplitImpl;
 import com.huazie.frame.db.common.table.split.impl.YYYYMMTableSplitImpl;
 import com.huazie.frame.db.common.table.split.impl.YYYYTableSplitImpl;
 import com.huazie.frame.db.common.util.EntityUtils;
-
-import java.util.Locale;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author huazie
@@ -28,10 +24,10 @@ public class TableSplitTest {
 
     @Test
     public void testTwoHexTableSplit() {
-        FleaFrameManager.getManager().setLocale(Locale.US);
+        //FleaFrameManager.getManager().setLocale(Locale.US);
         ITableSplit tableSplit = new TwoHexTableSplitImpl();
         try {
-            LOGGER.debug(tableSplit.convert("12312311FF"));
+            LOGGER.debug(tableSplit.convert(""));
         } catch (Exception e) {
             LOGGER.error("Exception=", e);
         }
@@ -52,7 +48,7 @@ public class TableSplitTest {
 
         ITableSplit tableSplit = new YYYYTableSplitImpl();
         try {
-            LOGGER.debug(tableSplit.convert(""));
+            LOGGER.debug(tableSplit.convert("123"));
         } catch (Exception e) {
             LOGGER.error("Exception=", e);
         }

@@ -1,7 +1,6 @@
 package com.huazie.frame.core.base.cfgdata.service.interfaces;
 
 import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
-import com.huazie.frame.core.base.cfgdata.ivalues.IFleaParaDetailValue;
 import com.huazie.frame.db.jpa.service.interfaces.IAbstractFleaJPASV;
 
 import java.util.List;
@@ -25,7 +24,7 @@ public interface IFleaParaDetailSV extends IAbstractFleaJPASV<FleaParaDetail> {
      * @throws Exception
      * @since 1.0.0
      */
-    List<IFleaParaDetailValue> getParaDetails(String paraType, String paraCode) throws Exception;
+    List<FleaParaDetail> getParaDetails(String paraType, String paraCode) throws Exception;
 
     /**
      * <p> 获取单个参数配置数据 </p>
@@ -36,5 +35,5 @@ public interface IFleaParaDetailSV extends IAbstractFleaJPASV<FleaParaDetail> {
      * @throws Exception
      * @since 1.0.0
      */
-    IFleaParaDetailValue getParaDetail(String paraType, String paraCode) throws Exception;
+    FleaParaDetail getParaDetail(String paraType, String paraCode) throws Exception;
 }

@@ -160,10 +160,11 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     private void newEqualExpression(String attrName, Object value, boolean isEqual) throws DaoException {
-        if (StringUtils.isBlank(attrName)) {
-            throw new DaoException("ERROR-DB-DAO0000000001");
-        }
+        // 属性列名非空校验
+        checkAttrName(attrName);
+
         if (ObjectUtils.isEmpty(value)) {
+            // 属性列【{0}】对应的值为空
             throw new DaoException("ERROR-DB-DAO0000000002", attrName);
         }
         if (LOGGER.isDebugEnabled()) {
@@ -190,6 +191,7 @@ public final class FleaJPAQuery implements Serializable {
      */
     private void newEqualExpression(Map<String, Object> paramMap, boolean isEqual) throws DaoException {
         if (MapUtils.isEmpty(paramMap)) {
+            // 条件参数Map不能为空
             throw new DaoException("ERROR-DB-DAO0000000003");
         }
         if (LOGGER.isDebugEnabled()) {
@@ -243,9 +245,9 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     private void newIsNullExpression(String attrName, boolean isNull) throws DaoException {
-        if (StringUtils.isBlank(attrName)) {
-            throw new DaoException("ERROR-DB-DAO0000000001");
-        }
+        // 属性列名非空校验
+        checkAttrName(attrName);
+
         if (LOGGER.isDebugEnabled()) {
             if (isNull) {
                 LOGGER.debug("FMJPAQuery##isNull(attrName) -->> AttrName={}, Value={}", attrName);
@@ -293,10 +295,11 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     private void newInExpression(String attrName, Collection value, boolean isIn) throws DaoException {
-        if (StringUtils.isBlank(attrName)) {
-            throw new DaoException("ERROR-DB-DAO0000000001");
-        }
+        // 属性列名非空校验
+        checkAttrName(attrName);
+
         if (CollectionUtils.isEmpty(value)) {
+            // 条件参数Collection不能为空
             throw new DaoException("ERROR-DB-DAO0000000004");
         }
         if (LOGGER.isDebugEnabled()) {
@@ -327,10 +330,11 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void like(String attrName, String value) throws DaoException {
-        if (StringUtils.isBlank(attrName)) {
-            throw new DaoException("ERROR-DB-DAO0000000001");
-        }
+        // 属性列名非空校验
+        checkAttrName(attrName);
+
         if (ObjectUtils.isEmpty(value)) {
+            // 属性列【{0}】对应的值为空
             throw new DaoException("ERROR-DB-DAO0000000002", attrName);
         }
         if (LOGGER.isDebugEnabled()) {
@@ -351,10 +355,11 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void le(String attrName, Number value) throws DaoException {
-        if (StringUtils.isBlank(attrName)) {
-            throw new DaoException("ERROR-DB-DAO0000000001");
-        }
+        // 属性列名非空校验
+        checkAttrName(attrName);
+
         if (ObjectUtils.isEmpty(value)) {
+            // 属性列【{0}】对应的值为空
             throw new DaoException("ERROR-DB-DAO0000000002", attrName);
         }
         if (LOGGER.isDebugEnabled()) {
@@ -372,10 +377,11 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void lt(String attrName, Number value) throws DaoException {
-        if (StringUtils.isBlank(attrName)) {
-            throw new DaoException("ERROR-DB-DAO0000000001");
-        }
+        // 属性列名非空校验
+        checkAttrName(attrName);
+
         if (ObjectUtils.isEmpty(value)) {
+            // 属性列【{0}】对应的值为空
             throw new DaoException("ERROR-DB-DAO0000000002", attrName);
         }
         if (LOGGER.isDebugEnabled()) {
@@ -393,10 +399,11 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void ge(String attrName, Number value) throws DaoException {
-        if (StringUtils.isBlank(attrName)) {
-            throw new DaoException("ERROR-DB-DAO0000000001");
-        }
+        // 属性列名非空校验
+        checkAttrName(attrName);
+
         if (ObjectUtils.isEmpty(value)) {
+            // 属性列【{0}】对应的值为空
             throw new DaoException("ERROR-DB-DAO0000000002", attrName);
         }
         if (LOGGER.isDebugEnabled()) {
@@ -414,10 +421,11 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void gt(String attrName, Number value) throws DaoException {
-        if (StringUtils.isBlank(attrName)) {
-            throw new DaoException("ERROR-DB-DAO0000000001");
-        }
+        // 属性列名非空校验
+        checkAttrName(attrName);
+
         if (ObjectUtils.isEmpty(value)) {
+            // 属性列【{0}】对应的值为空
             throw new DaoException("ERROR-DB-DAO0000000002", attrName);
         }
         if (LOGGER.isDebugEnabled()) {
@@ -436,13 +444,15 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void between(String attrName, Date startTime, Date endTime) throws DaoException {
-        if (StringUtils.isBlank(attrName)) {
-            throw new DaoException("ERROR-DB-DAO0000000001");
-        }
+        // 属性列名非空校验
+        checkAttrName(attrName);
+
         if (ObjectUtils.isEmpty(startTime) || ObjectUtils.isEmpty(endTime)) {
+            // 开始时间或结束时间为空
             throw new DaoException("ERROR-DB-DAO0000000005");
         }
         if (startTime.after(endTime)) {
+            // 开始时间必须小于结束时间
             throw new DaoException("ERROR-DB-DAO0000000006");
         }
         if (LOGGER.isDebugEnabled()) {
@@ -460,10 +470,11 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void greaterThan(String attrName, Date value) throws DaoException {
-        if (StringUtils.isBlank(attrName)) {
-            throw new DaoException("ERROR-DB-DAO0000000001");
-        }
+        // 属性列名非空校验
+        checkAttrName(attrName);
+
         if (ObjectUtils.isEmpty(value)) {
+            // 属性列【{0}】对应的值为空
             throw new DaoException("ERROR-DB-DAO0000000002", attrName);
         }
         if (LOGGER.isDebugEnabled()) {
@@ -481,10 +492,11 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void greaterThanOrEqualTo(String attrName, Date value) throws DaoException {
-        if (StringUtils.isBlank(attrName)) {
-            throw new DaoException("ERROR-DB-DAO0000000001");
-        }
+        // 属性列名非空校验
+        checkAttrName(attrName);
+
         if (ObjectUtils.isEmpty(value)) {
+            // 属性列【{0}】对应的值为空
             throw new DaoException("ERROR-DB-DAO0000000002", attrName);
         }
         if (LOGGER.isDebugEnabled()) {
@@ -502,10 +514,11 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void lessThan(String attrName, Date value) throws DaoException {
-        if (StringUtils.isBlank(attrName)) {
-            throw new DaoException("ERROR-DB-DAO0000000001");
-        }
+        // 属性列名非空校验
+        checkAttrName(attrName);
+
         if (ObjectUtils.isEmpty(value)) {
+            // 属性列【{0}】对应的值为空
             throw new DaoException("ERROR-DB-DAO0000000002", attrName);
         }
         if (LOGGER.isDebugEnabled()) {
@@ -523,10 +536,11 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void lessThanOrEqualTo(String attrName, Date value) throws DaoException {
-        if (StringUtils.isBlank(attrName)) {
-            throw new DaoException("ERROR-DB-DAO0000000001");
-        }
+        // 属性列名非空校验
+        checkAttrName(attrName);
+
         if (ObjectUtils.isEmpty(value)) {
+            // 属性列【{0}】对应的值为空
             throw new DaoException("ERROR-DB-DAO0000000002", attrName);
         }
         if (LOGGER.isDebugEnabled()) {
@@ -561,9 +575,9 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void max(String attrName) throws DaoException {
-        if (StringUtils.isBlank(attrName)) {
-            throw new DaoException("ERROR-DB-DAO0000000001");
-        }
+        // 属性列名非空校验
+        checkAttrName(attrName);
+
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FMJPAQuery##max(attrName) -->> AttrName={}", attrName);
         }
@@ -578,9 +592,9 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void min(String attrName) throws DaoException {
-        if (StringUtils.isBlank(attrName)) {
-            throw new DaoException("ERROR-DB-DAO0000000001");
-        }
+        // 属性列名非空校验
+        checkAttrName(attrName);
+
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FMJPAQuery##min(attrName) -->> AttrName={}", attrName);
         }
@@ -595,9 +609,9 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void avg(String attrName) throws DaoException {
-        if (StringUtils.isBlank(attrName)) {
-            throw new DaoException("ERROR-DB-DAO0000000001");
-        }
+        // 属性列名非空校验
+        checkAttrName(attrName);
+
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FMJPAQuery##avg(attrName) -->> AttrName={}", attrName);
         }
@@ -612,9 +626,9 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void sum(String attrName) throws DaoException {
-        if (StringUtils.isBlank(attrName)) {
-            throw new DaoException("ERROR-DB-DAO0000000001");
-        }
+        // 属性列名非空校验
+        checkAttrName(attrName);
+
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FMJPAQuery##sum(attrName) -->> AttrName={}", attrName);
         }
@@ -629,9 +643,9 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void sumAsLong(String attrName) throws DaoException {
-        if (StringUtils.isBlank(attrName)) {
-            throw new DaoException("ERROR-DB-DAO0000000001");
-        }
+        // 属性列名非空校验
+        checkAttrName(attrName);
+
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FMJPAQuery##sumAsLong(attrName) -->> AttrName={}", attrName);
         }
@@ -646,9 +660,9 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void sumAsDouble(String attrName) throws DaoException {
-        if (StringUtils.isBlank(attrName)) {
-            throw new DaoException("ERROR-DB-DAO0000000001");
-        }
+        // 属性列名非空校验
+        checkAttrName(attrName);
+
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FMJPAQuery##sumAsDouble(attrName) -->> AttrName={}", attrName);
         }
@@ -663,9 +677,9 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void distinct(String attrName) throws DaoException {
-        if (StringUtils.isBlank(attrName)) {
-            throw new DaoException("ERROR-DB-DAO0000000001");
-        }
+        // 属性列名非空校验
+        checkAttrName(attrName);
+
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FMJPAQuery##distinct(attrName) -->> AttrName={}", attrName);
         }
@@ -681,9 +695,9 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void addOrderby(String attrName, String orderBy) throws DaoException {
-        if (StringUtils.isBlank(attrName)) {
-            throw new DaoException("ERROR-DB-DAO0000000001");
-        }
+        // 属性列名非空校验
+        checkAttrName(attrName);
+
         if (CollectionUtils.isEmpty(orders)) {
             orders = new ArrayList<Order>();
         }
@@ -692,6 +706,7 @@ public final class FleaJPAQuery implements Serializable {
         } else if (orderBy.equalsIgnoreCase(DBConstants.SQLConstants.SQL_ORDER_DESC)) {
             orders.add(criteriaBuilder.desc(root.get(attrName)));
         } else {
+            // 排序关键字【{0}】非法, 必须是【asc, ASC】 或【desc, DESC】
             throw new DaoException("ERROR-DB-DAO0000000007", orderBy);
         }
         if (LOGGER.isDebugEnabled()) {
@@ -707,9 +722,9 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public void addGroupBy(String attrName) throws DaoException {
-        if (StringUtils.isBlank(attrName)) {
-            throw new DaoException("ERROR-DB-DAO0000000001");
-        }
+        // 属性列名非空校验
+        checkAttrName(attrName);
+
         if (CollectionUtils.isEmpty(groups)) {
             groups = new ArrayList<Expression>();
         }
@@ -796,10 +811,11 @@ public final class FleaJPAQuery implements Serializable {
      * <p> 创建查询对象 </p>
      *
      * @return 查询对象
-     * @throws DaoException
+     * @throws DaoException 数据操作层异常类
      */
     private TypedQuery createQuery(boolean isSingle) throws DaoException {
         if (ObjectUtils.isEmpty(sourceClazz)) {
+            // 查询非法，实体类类对象为空
             throw new DaoException("ERROR-DB-DAO0000000008");
         }
         if (!isSingle) {
@@ -818,6 +834,19 @@ public final class FleaJPAQuery implements Serializable {
             criteriaQuery.groupBy(groups);
         }
         return entityManager.createQuery(criteriaQuery);
+    }
+
+    /**
+     * <p> 属性列名非空校验 </p>
+     *
+     * @param attrName 属性列名
+     * @throws DaoException 数据操作层异常类
+     */
+    private void checkAttrName(String attrName) throws DaoException {
+        if (StringUtils.isBlank(attrName)) {
+            // 属性列名不能为空
+            throw new DaoException("ERROR-DB-DAO0000000001");
+        }
     }
 
     public EntityManager getEntityManager() {

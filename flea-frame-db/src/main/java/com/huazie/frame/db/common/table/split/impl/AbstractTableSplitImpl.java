@@ -4,7 +4,6 @@ import com.huazie.frame.common.DateFormatEnum;
 import com.huazie.frame.common.util.DateUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
-import com.huazie.frame.db.common.DBConstants;
 import com.huazie.frame.db.common.exception.TableSplitException;
 import com.huazie.frame.db.common.table.split.ITableSplit;
 
@@ -30,12 +29,15 @@ public abstract class AbstractTableSplitImpl implements ITableSplit {
      * @throws TableSplitException 分表转换异常类
      */
     protected String convert(Object tableSplitColumn, DateFormatEnum dateFormatEnum) throws TableSplitException {
-        String tSplitPrefix = null;
+        String tSplitPrefix = "";
         if (ObjectUtils.isEmpty(tableSplitColumn)) {
             tSplitPrefix = DateUtils.date2String(null, dateFormatEnum);
         }
-        if (tableSplitColumn instanceof Date) {
+        if (StringUtils.isBlank(tSplitPrefix) && tableSplitColumn instanceof Date) {
             tSplitPrefix = DateUtils.date2String((Date) tableSplitColumn, dateFormatEnum);
+        } else {
+            // 分表属性列必须是日期类型
+            throw new TableSplitException("ERROR-DB-TSP0000000002");
         }
         if (StringUtils.isBlank(tSplitPrefix)) {
             // 获取【{0}】分表后缀异常
@@ -54,12 +56,12 @@ public abstract class AbstractTableSplitImpl implements ITableSplit {
      */
     protected String convert(Object tableSplitColumn, int len) throws TableSplitException {
         if (ObjectUtils.isEmpty(tableSplitColumn)) {
-            // 分表列名字段不能为空
+            // 分表属性列值不能为空
             throw new TableSplitException("ERROR-DB-TSP0000000003");
         }
         String tSplitCol = tableSplitColumn.toString();
         if (StringUtils.isBlank(tSplitCol)) {
-            // 分表列名字段不能为空
+            // 分表属性列值不能为空
             throw new TableSplitException("ERROR-DB-TSP0000000003");
         }
         String tSplitPrefix = StringUtils.subStrLast(tSplitCol, len);
