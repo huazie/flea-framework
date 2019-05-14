@@ -46,8 +46,8 @@ public interface IFleaJPABaseDataHandler<T> {
      * <p> 多条件排序查询 </p>
      *
      * @param paramMap 多条件参数
-     * @param attrName    属性名
-     * @param orderBy     排序方式（desc：降序，asc：升序）
+     * @param attrName 属性名
+     * @param orderBy  排序方式（desc：降序，asc：升序）
      * @return 实体对象集合
      * @throws Exception
      * @since 1.0.0
@@ -58,8 +58,8 @@ public interface IFleaJPABaseDataHandler<T> {
      * <p> 多条件分页查询 </p>
      *
      * @param paramMap 多条件参数
-     * @param start       开始查询记录行
-     * @param max         一次最大查询数量
+     * @param start    开始查询记录行
+     * @param max      一次最大查询数量
      * @return 实体对象集合
      * @throws Exception
      * @since 1.0.0
@@ -70,10 +70,10 @@ public interface IFleaJPABaseDataHandler<T> {
      * <p> 多条件分页排序查询 </p>
      *
      * @param paramMap 多条件参数
-     * @param attrName    属性名
-     * @param orderBy     排序方式（desc：降序，asc：升序）
-     * @param start       开始查询记录行
-     * @param max         一次最大查询数量
+     * @param attrName 属性名
+     * @param orderBy  排序方式（desc：降序，asc：升序）
+     * @param start    开始查询记录行
+     * @param max      一次最大查询数量
      * @return 实体对象集合
      * @throws Exception
      * @since 1.0.0
@@ -205,10 +205,21 @@ public interface IFleaJPABaseDataHandler<T> {
      * <p> 通过SELECT SQL模板，查询数据（其中<code>relationId</code>为SQL关系编号） </p>
      *
      * @param relationId 关系编号
-     * @param t 实体类
+     * @param entity     实体类
      * @return 实体类数据集合
      * @throws Exception
+     * @since 1.0.0
      */
-    List<T> query(String relationId, T t) throws Exception;
+    List<T> query(String relationId, T entity) throws Exception;
+
+    /**
+     * <p> 通过INSERT SQL模板，保存数据（其中<code>relationId</code>为SQL关系编号） </p>
+     *
+     * @param relationId 关系编号
+     * @param entity     实体类
+     * @throws Exception
+     * @since 1.0.0
+     */
+    void save(String relationId, T entity) throws Exception;
 
 }

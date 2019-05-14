@@ -8,6 +8,7 @@ import com.huazie.frame.db.common.DBConstants;
 import com.huazie.frame.db.common.exception.DaoException;
 import com.huazie.frame.db.common.sql.pojo.SqlParam;
 import com.huazie.frame.db.common.sql.template.ITemplate;
+import com.huazie.frame.db.common.sql.template.impl.InsertSqlTemplate;
 import com.huazie.frame.db.common.sql.template.impl.SelectSqlTemplate;
 import com.huazie.frame.db.jpa.common.FleaJPAQuery;
 import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
@@ -352,6 +353,32 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         }
 
         return query.getResultList();
+    }
+
+    @Override
+    public void save(String relationId, T entity) throws Exception {
+
+        // 构建INSERT SQL模板
+        // 构建 SELECT SQL模板
+        ITemplate<T> insertSqlTemplate = new InsertSqlTemplate<T>(relationId, entity);
+        insertSqlTemplate.initialize();
+        String nativeSql = insertSqlTemplate.toNativeSql();
+        List<SqlParam> nativeParam = insertSqlTemplate.toNativeParams();
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("AbstractFleaJPADAOImpl##save(String, T) Native SQL   = {}", nativeSql);
+            LOGGER.debug("AbstractFleaJPADAOImpl##save(String, T) Native PARAM = {}", nativeParam);
+        }
+
+        Query query = getEntityManager().createNativeQuery(nativeSql);
+        if (CollectionUtils.isNotEmpty(nativeParam)) {
+            for(SqlParam sqlParam : nativeParam) {
+                query.setParameter(sqlParam.getIndex(), sqlParam.getAttrValue());
+            }
+        }
+        // 执行保存操作
+        query.executeUpdate();
+
     }
 
     /**

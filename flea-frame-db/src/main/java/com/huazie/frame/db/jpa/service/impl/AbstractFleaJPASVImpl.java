@@ -111,6 +111,11 @@ public abstract class AbstractFleaJPASVImpl<T> implements IAbstractFleaJPASV<T> 
         return getDAO().query(relationId, entity);
     }
 
+    @Override
+    public void save(String relationId, T entity) throws Exception {
+        getDAO().save(relationId, entity);
+    }
+
     /**
      * <p> 获取DAO层实现 </p>
      *

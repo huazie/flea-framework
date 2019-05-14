@@ -7,6 +7,7 @@ import com.huazie.frame.cache.memcached.MemcachedSpringCacheManager;
 import com.huazie.frame.common.FleaFrameManager;
 import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaParaDetailSV;
+import com.huazie.frame.core.common.FleaEntityConstants;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -137,6 +138,25 @@ public class FleaParaDetailSVImplTest {
             List<FleaParaDetail> list = sv.query("select", fleaParaDetail);
             LOGGER.debug("list={}", list);
             LOGGER.debug("count={}", list.size());
+        } catch (Exception e) {
+            LOGGER.error("Exception:", e);
+        }
+    }
+
+    @Test
+    public void testFleaJPASqlTemplateInsert() {
+        FleaFrameManager.getManager().setLocale(Locale.US);
+        IFleaParaDetailSV sv = (IFleaParaDetailSV) applicationContext.getBean("fleaParaDetailSVImpl");
+        FleaParaDetail fleaParaDetail = new FleaParaDetail();
+        fleaParaDetail.setParaId(13L);
+        fleaParaDetail.setParaType("huazie");
+        fleaParaDetail.setParaCode("huazie");
+        fleaParaDetail.setParaName("这是测试INSERT SQL 模板");
+        fleaParaDetail.setPara1("hello world");
+        fleaParaDetail.setParaState(FleaEntityConstants.FleaParaDetailConstants.PARA_STATE_IN_USE);
+        fleaParaDetail.setParaDesc("Test");
+        try {
+            sv.save("insert", fleaParaDetail);
         } catch (Exception e) {
             LOGGER.error("Exception:", e);
         }
