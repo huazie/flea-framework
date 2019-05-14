@@ -5,18 +5,21 @@ import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.DBConstants;
 import com.huazie.frame.db.common.exception.SqlTemplateException;
+import com.huazie.frame.db.common.sql.pojo.SqlParam;
 import com.huazie.frame.db.common.sql.template.config.Param;
 import com.huazie.frame.db.common.sql.template.config.Property;
 import com.huazie.frame.db.common.sql.template.config.Relation;
 import com.huazie.frame.db.common.sql.template.config.Rule;
 import com.huazie.frame.db.common.sql.template.config.SqlTemplateConfig;
 import com.huazie.frame.db.common.sql.template.config.Template;
-import com.huazie.frame.db.common.table.column.Column;
+import com.huazie.frame.db.common.table.pojo.Column;
 import com.huazie.frame.db.common.table.split.TableSplitHelper;
 import com.huazie.frame.db.common.util.EntityUtils;
 import org.apache.commons.lang.ArrayUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -36,7 +39,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
 
     private StringBuilder sql = new StringBuilder();
 
-    private Map<String, Object> params = new HashMap<String, Object>(); // SQL参数
+    private List<SqlParam> sqlParams = new ArrayList<SqlParam>(); // 原生SQL参数
 
     private String tableName;       // 主表名
 
@@ -48,13 +51,13 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
 
     private Relation relation;      // SQL模板和模板参数关联关系（以下简称关系）
 
-    protected String templateId;      // 模板编号
+    protected String templateId;    // 模板编号
 
-    protected Template template;      // SQL模板
+    protected Template template;    // SQL模板
 
-    protected String paramId;         // SQL模板参数编号
+    protected String paramId;       // SQL模板参数编号
 
-    protected Param param;            // SQL模板参数
+    protected Param param;          // SQL模板参数
 
     private Rule rule;              // 校验规则
 
@@ -105,7 +108,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
             throw new SqlTemplateException("ERROR-DB-SQT0000000004", templateId);
         }
 
-        if (ObjectUtils.isEmpty(params)) {
+        if (ObjectUtils.isEmpty(param)) {
             // 请检查SQL模板参数配置（没有找到指定模板参数编号【id="{0}"】的SQL模板参数配置信息）
             throw new SqlTemplateException("ERROR-DB-SQT0000000005", paramId);
         }
@@ -206,8 +209,11 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
         realTableName = TableSplitHelper.getRealTableName(tableName, entityCols);
         // 替换真实表名N
         StringUtils.replace(sql, createPlaceHolder(SqlTemplateEnum.TABLE.getKey()), realTableName);
-        // 特殊处理初始化
+        Map<String, Object> params = new HashMap<String, Object>(); // SQL参数, K ：实体属性变量名 V : 参数值
+        // 特殊处理，初始化由具体模板实现
         initSqlTemplate(sql, params, entityCols, paramPropMap);
+        // 最终处理，生成原生SQL和对应参数
+        finalSqlTemplate(params, entityCols);
 
     }
 
@@ -403,6 +409,57 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
         return cols.toArray(new Column[0]);
     }
 
+    /**
+     * <p> 原生SQL和对应参数的二次处理 </p>
+     *
+     * @param params SQL参数Map集合(K ：实体属性变量名 V : 参数值)
+     * @since 1.0.0
+     */
+    protected void finalSqlTemplate(Map<String, Object> params, Column[] entityCols) throws Exception {
+        // 根据SQL参数Map集合从SQL模板上sql获取自定义SQL模板参数List<SqlParam>集合
+        if (MapUtils.isNotEmpty(params)) {
+            Set<String> keySet = params.keySet();
+            Iterator<String> keyIt = keySet.iterator();
+            while (keyIt.hasNext()) {
+                String key = keyIt.next();
+
+                // 从sql中获取指定实体属性变量名 所在的起始位置
+                int index = sql.indexOf(DBConstants.SQLConstants.SQL_COLON + key);
+                Column column = (Column) EntityUtils.getEntity(entityCols, Column.COLUMN_ATTR_NAME, key);
+                if (ObjectUtils.isNotEmpty(column)) {
+                    SqlParam sqlParam = new SqlParam();
+                    sqlParam.setAttrName(column.getAttrName());
+                    sqlParam.setAttrValue(column.getAttrValue());
+                    sqlParam.setTabColName(column.getTabColumnName());
+                    // 设置参数索引为起始位置，暂时这样处理，后面需要重新根据这个排序确定
+                    sqlParam.setIndex(index);
+                    // 添加SQL参数
+                    sqlParams.add(sqlParam);
+                    // 将sql中的 :实体属性变量名 替换为 ?
+                    StringUtils.replace(sql, DBConstants.SQLConstants.SQL_COLON + key, DBConstants.SQLConstants.SQL_PLACEHOLDER);
+                }
+            }
+        }
+
+        // 重新排序sqlParams， 依据SqlParam中的index值
+        Collections.sort(sqlParams, new Comparator<SqlParam>() {
+            @Override
+            public int compare(SqlParam o1, SqlParam o2) {
+                // 按照index升序
+                return o1.getIndex() - o2.getIndex();
+            }
+        });
+
+        // 重新设置 参数索引
+        for (int i = 0; i < sqlParams.size(); i++) {
+            SqlParam sqlParam = sqlParams.get(i);
+            if (ObjectUtils.isNotEmpty(sqlParam)) {
+                sqlParam.setIndex(i + 1);
+            }
+        }
+
+    }
+
     @Override
     public String getId() {
         return relationId;
@@ -505,8 +562,8 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
     }
 
     @Override
-    public Map<String, Object> toNativeParams() {
-        return params;
+    public List<SqlParam> toNativeParams() {
+        return sqlParams;
     }
 
 }

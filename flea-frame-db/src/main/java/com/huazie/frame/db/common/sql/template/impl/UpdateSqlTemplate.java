@@ -1,7 +1,6 @@
 package com.huazie.frame.db.common.sql.template.impl;
 
 import com.huazie.frame.common.util.MapUtils;
-import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.DBConstants;
 import com.huazie.frame.db.common.exception.SqlTemplateException;
@@ -9,10 +8,7 @@ import com.huazie.frame.db.common.sql.template.SqlTemplate;
 import com.huazie.frame.db.common.sql.template.SqlTemplateEnum;
 import com.huazie.frame.db.common.sql.template.TemplateTypeEnum;
 import com.huazie.frame.db.common.sql.template.config.Property;
-import com.huazie.frame.db.common.sql.template.config.Relation;
-import com.huazie.frame.db.common.sql.template.config.SqlTemplateConfig;
-import com.huazie.frame.db.common.sql.template.config.Template;
-import com.huazie.frame.db.common.table.column.Column;
+import com.huazie.frame.db.common.table.pojo.Column;
 import org.apache.commons.lang.ArrayUtils;
 
 import java.util.Map;

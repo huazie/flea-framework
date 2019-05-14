@@ -107,8 +107,8 @@ public abstract class AbstractFleaJPASVImpl<T> implements IAbstractFleaJPASV<T> 
     }
 
     @Override
-    public List<T> query(String relationId, T t) throws Exception {
-        return getDAO().query(relationId, t);
+    public List<T> query(String relationId, T entity) throws Exception {
+        return getDAO().query(relationId, entity);
     }
 
     /**

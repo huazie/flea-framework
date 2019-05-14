@@ -1,10 +1,11 @@
 package com.huazie.frame.db.common.sql.template;
 
+import com.huazie.frame.db.common.sql.pojo.SqlParam;
 import com.huazie.frame.db.common.sql.template.config.Rule;
 import com.huazie.frame.db.common.sql.template.config.Template;
 
 import java.io.Serializable;
-import java.util.Map;
+import java.util.List;
 
 /**
  * <p> 模板接口类 </p>
@@ -84,5 +85,5 @@ public interface ITemplate<T> extends Serializable {
      * @return 获取原生SQL的参数
      * @since 1.0.0
      */
-    Map<String, Object> toNativeParams();
+    List<SqlParam> toNativeParams();
 }

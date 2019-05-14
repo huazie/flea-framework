@@ -115,10 +115,28 @@ public class FleaParaDetailSVImplTest {
         FleaFrameManager.getManager().setLocale(Locale.US);
         IFleaParaDetailSV sv = (IFleaParaDetailSV) applicationContext.getBean("fleaParaDetailSVImpl");
         try {
+            FleaParaDetail fleaParaDetail = sv.query(2L);
+            LOGGER.debug("row:{}", fleaParaDetail);
             List<FleaParaDetail> list = sv.queryAll();
             LOGGER.debug("list:{}", list);
             long count = sv.queryCount();
             LOGGER.debug("count:{}", count);
+        } catch (Exception e) {
+            LOGGER.error("Exception:", e);
+        }
+    }
+
+    @Test
+    public void testFleaJPASqlTemplateQuery() {
+        FleaFrameManager.getManager().setLocale(Locale.US);
+        IFleaParaDetailSV sv = (IFleaParaDetailSV) applicationContext.getBean("fleaParaDetailSVImpl");
+        FleaParaDetail fleaParaDetail = new FleaParaDetail();
+        fleaParaDetail.setParaType("FLEA_RES_STATE");
+        fleaParaDetail.setParaName("物品状态");
+        try {
+            List<FleaParaDetail> list = sv.query("select", fleaParaDetail);
+            LOGGER.debug("list={}", list);
+            LOGGER.debug("count={}", list.size());
         } catch (Exception e) {
             LOGGER.error("Exception:", e);
         }

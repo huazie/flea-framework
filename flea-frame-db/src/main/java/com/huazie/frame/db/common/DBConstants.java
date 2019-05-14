@@ -66,6 +66,7 @@ public interface DBConstants {
         String SQL_LEFT_ROUND_BRACKETS = "(";
         String SQL_RIGHT_ROUND_BRACKETS = ")";
         String SQL_VERTICALLINE = "|";
+        String SQL_PLACEHOLDER = "?";
     }
 
     /**

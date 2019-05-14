@@ -20,6 +20,7 @@
 18. Ctrl + Shift + N     快速定位文件  （文件名:行数 指定行）
 19. alt + 7              查看类的字段、属性、方法，是否继承等 
 20. Ctrl + F12           查看类的字段、属性、方法，是否继承等 
+21. Double Shift         搜索任何地方 （Search Everywhere）
 
 ## Debug调试快捷键
 1. F9               恢复程序（resume program）

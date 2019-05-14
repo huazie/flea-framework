@@ -202,7 +202,7 @@ public interface IFleaJPABaseDataHandler<T> {
     void batchSave(List<T> entities) throws Exception;
 
     /**
-     * <p> 通过查询SQL模板，查询数据（其中<code>relationId</code>为SQL关系编号） </p>
+     * <p> 通过SELECT SQL模板，查询数据（其中<code>relationId</code>为SQL关系编号） </p>
      *
      * @param relationId 关系编号
      * @param t 实体类

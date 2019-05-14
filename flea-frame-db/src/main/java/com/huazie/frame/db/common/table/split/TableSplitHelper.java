@@ -6,7 +6,7 @@ import com.huazie.frame.common.util.ReflectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.DBConstants;
 import com.huazie.frame.db.common.exception.TableSplitException;
-import com.huazie.frame.db.common.table.column.Column;
+import com.huazie.frame.db.common.table.pojo.Column;
 import com.huazie.frame.db.common.table.split.config.Split;
 import com.huazie.frame.db.common.table.split.config.Splits;
 import com.huazie.frame.db.common.table.split.config.Table;
@@ -80,7 +80,7 @@ public class TableSplitHelper {
                         }
 
                         if (StringUtils.isBlank(column)) {
-                            // 请检查分表配置信息（分表属性列【column】不能为空）
+                            // 请检查分表配置信息（分表属性列【pojo】不能为空）
                             throw new TableSplitException("ERROR-DB-TSP0000000005");
                         }
 
@@ -98,7 +98,7 @@ public class TableSplitHelper {
 
                         Column entityCol = (Column) EntityUtils.getEntity(entityCols, Column.COLUMN_TAB_COL_NAME, column);
                         if (ObjectUtils.isEmpty(entityCol)) {
-                            // 请检查分表配置信息（分表属性列【column】不存在）
+                            // 请检查分表配置信息（分表属性列【pojo】不存在）
                             throw new TableSplitException("ERROR-DB-TSP0000000008");
                         }
                         // 获取分表后缀转换实现类

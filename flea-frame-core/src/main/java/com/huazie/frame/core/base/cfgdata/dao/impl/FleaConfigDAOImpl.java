@@ -58,8 +58,8 @@ public class FleaConfigDAOImpl<T> extends AbstractFleaJPADAOImpl<T> {
 
 	@Override
 	@Transactional("fleaConfigTransactionManager")
-	public List<T> query(String relationId, T t) throws Exception {
-		return super.query(relationId, t);
+	public List<T> query(String relationId, T entity) throws Exception {
+		return super.query(relationId, entity);
 	}
 
 	@Override

@@ -6,6 +6,9 @@ import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.DBConstants;
 import com.huazie.frame.db.common.exception.DaoException;
+import com.huazie.frame.db.common.sql.pojo.SqlParam;
+import com.huazie.frame.db.common.sql.template.ITemplate;
+import com.huazie.frame.db.common.sql.template.impl.SelectSqlTemplate;
 import com.huazie.frame.db.jpa.common.FleaJPAQuery;
 import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import org.slf4j.Logger;
@@ -14,8 +17,16 @@ import org.slf4j.LoggerFactory;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.*;
-import java.util.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * <p> 抽象Dao层实现类，该类实现了基本的增删改查功能，可以自行拓展 </p>
@@ -320,9 +331,27 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     }
 
     @Override
-    public List<T> query(String relationId, T t) throws Exception {
+    public List<T> query(String relationId, T entity) throws Exception {
 
-        return null;
+        // 构建 SELECT SQL模板
+        ITemplate<T> selectSqlTemplate = new SelectSqlTemplate<T>(relationId, entity);
+        selectSqlTemplate.initialize();
+        String nativeSql = selectSqlTemplate.toNativeSql();
+        List<SqlParam> nativeParam = selectSqlTemplate.toNativeParams();
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("AbstractFleaJPADAOImpl##query(String, T) Native SQL   = {}", nativeSql);
+            LOGGER.debug("AbstractFleaJPADAOImpl##query(String, T) Native PARAM = {}", nativeParam);
+        }
+
+        Query query = getEntityManager().createNativeQuery(nativeSql, entity.getClass());
+        if (CollectionUtils.isNotEmpty(nativeParam)) {
+            for(SqlParam sqlParam : nativeParam) {
+                query.setParameter(sqlParam.getIndex(), sqlParam.getAttrValue());
+            }
+        }
+
+        return query.getResultList();
     }
 
     /**

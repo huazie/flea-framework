@@ -25,7 +25,7 @@ public class FleaParaDetail extends FleaCommonEntity {
 
     private static final long serialVersionUID = -1711370793670889694L;
 
-    private long paraId;        // 参数编号
+    private Long paraId;        // 参数编号
     private String paraType;    // 参数类型
     private String paraCode;    // 参数编码
     private String paraName;    // 参数名称
@@ -34,18 +34,18 @@ public class FleaParaDetail extends FleaCommonEntity {
     private String para3;       // 参数3
     private String para4;       // 参数4
     private String para5;       // 参数5
-    private int paraState;      // 参数状态
+    private Integer paraState;      // 参数状态
     private String paraDesc;    // 参数描述
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "PARA_DETAIL_SEQ")
     @SequenceGenerator(name = "PARA_DETAIL_SEQ")
     @Column(name = "para_id", unique = true, nullable = false)
-    public long getParaId() {
+    public Long getParaId() {
         return paraId;
     }
 
-    public void setParaId(long paraId) {
+    public void setParaId(Long paraId) {
         this.paraId = paraId;
     }
 
@@ -122,11 +122,11 @@ public class FleaParaDetail extends FleaCommonEntity {
     }
 
     @Column(name = "para_state", nullable = false)
-    public int getParaState() {
+    public Integer getParaState() {
         return paraState;
     }
 
-    public void setParaState(int paraState) {
+    public void setParaState(Integer paraState) {
         this.paraState = paraState;
     }
 
