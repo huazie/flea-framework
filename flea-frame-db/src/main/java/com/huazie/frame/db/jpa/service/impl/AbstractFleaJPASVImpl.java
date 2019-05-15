@@ -112,8 +112,18 @@ public abstract class AbstractFleaJPASVImpl<T> implements IAbstractFleaJPASV<T> 
     }
 
     @Override
-    public void save(String relationId, T entity) throws Exception {
-        getDAO().save(relationId, entity);
+    public void insert(String relationId, T entity) throws Exception {
+        getDAO().insert(relationId, entity);
+    }
+
+    @Override
+    public void update(String relationId, T entity) throws Exception {
+        getDAO().update(relationId, entity);
+    }
+
+    @Override
+    public void delete(String relationId, T entity) throws Exception {
+        getDAO().delete(relationId, entity);
     }
 
     /**

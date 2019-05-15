@@ -132,8 +132,8 @@ public class FleaParaDetailSVImplTest {
         FleaFrameManager.getManager().setLocale(Locale.US);
         IFleaParaDetailSV sv = (IFleaParaDetailSV) applicationContext.getBean("fleaParaDetailSVImpl");
         FleaParaDetail fleaParaDetail = new FleaParaDetail();
-        fleaParaDetail.setParaType("FLEA_RES_STATE");
-        fleaParaDetail.setParaName("物品状态");
+        fleaParaDetail.setParaType("huazie1");
+        fleaParaDetail.setParaCode("huazie1");
         try {
             List<FleaParaDetail> list = sv.query("select", fleaParaDetail);
             LOGGER.debug("list={}", list);
@@ -156,7 +156,36 @@ public class FleaParaDetailSVImplTest {
         fleaParaDetail.setParaState(FleaEntityConstants.FleaParaDetailConstants.PARA_STATE_IN_USE);
         fleaParaDetail.setParaDesc("Test");
         try {
-            sv.save("insert", fleaParaDetail);
+            sv.insert("insert", fleaParaDetail);
+        } catch (Exception e) {
+            LOGGER.error("Exception:", e);
+        }
+    }
+
+    @Test
+    public void testFleaJPASqlTemplateUpdate() {
+        FleaFrameManager.getManager().setLocale(Locale.US);
+        IFleaParaDetailSV sv = (IFleaParaDetailSV) applicationContext.getBean("fleaParaDetailSVImpl");
+        FleaParaDetail fleaParaDetail = new FleaParaDetail();
+        fleaParaDetail.setParaId(13L);
+        fleaParaDetail.setParaType("huazie1");
+        fleaParaDetail.setParaCode("huazie1");
+        try {
+            sv.update("update", fleaParaDetail);
+        } catch (Exception e) {
+            LOGGER.error("Exception:", e);
+        }
+    }
+
+    @Test
+    public void testFleaJPASqlTemplateDelete() {
+        FleaFrameManager.getManager().setLocale(Locale.US);
+        IFleaParaDetailSV sv = (IFleaParaDetailSV) applicationContext.getBean("fleaParaDetailSVImpl");
+        FleaParaDetail fleaParaDetail = new FleaParaDetail();
+        fleaParaDetail.setParaId(13L);
+        fleaParaDetail.setParaState(FleaEntityConstants.FleaParaDetailConstants.PARA_STATE_IN_USE);
+        try {
+            sv.delete("delete", fleaParaDetail);
         } catch (Exception e) {
             LOGGER.error("Exception:", e);
         }

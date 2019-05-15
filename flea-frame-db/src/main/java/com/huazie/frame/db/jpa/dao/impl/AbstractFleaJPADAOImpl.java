@@ -1,15 +1,14 @@
 package com.huazie.frame.db.jpa.dao.impl;
 
-import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
-import com.huazie.frame.common.util.StringUtils;
-import com.huazie.frame.db.common.DBConstants;
 import com.huazie.frame.db.common.exception.DaoException;
 import com.huazie.frame.db.common.sql.pojo.SqlParam;
 import com.huazie.frame.db.common.sql.template.ITemplate;
+import com.huazie.frame.db.common.sql.template.impl.DeleteSqlTemplate;
 import com.huazie.frame.db.common.sql.template.impl.InsertSqlTemplate;
 import com.huazie.frame.db.common.sql.template.impl.SelectSqlTemplate;
+import com.huazie.frame.db.common.sql.template.impl.UpdateSqlTemplate;
 import com.huazie.frame.db.jpa.common.FleaJPAQuery;
 import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import org.slf4j.Logger;
@@ -17,17 +16,10 @@ import org.slf4j.LoggerFactory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * <p> 抽象Dao层实现类，该类实现了基本的增删改查功能，可以自行拓展 </p>
@@ -236,104 +228,8 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         }
     }
 
-    public boolean update(T entity, String a) throws Exception {
-        if (entity == null) {
-            throw new DaoException("The entity need to be updated is null");
-        }
-        String entityName = StringUtils.toLowerCaseInitial(clazz.getSimpleName());
-        StringBuilder sql = new StringBuilder(
-                DBConstants.SQLConstants.SQL_UPDATE + DBConstants.SQLConstants.SQL_BLANK + clazz.getSimpleName() + DBConstants.SQLConstants.SQL_BLANK
-                        + entityName + DBConstants.SQLConstants.SQL_BLANK + DBConstants.SQLConstants.SQL_SET);
-        StringBuilder whereSql = new StringBuilder(DBConstants.SQLConstants.SQL_WHERE + DBConstants.SQLConstants.SQL_BLANK);//where子句
-        Field[] fields = entity.getClass().getDeclaredFields();//获取该实体类中的属性集
-        Map<String, Object> map = new HashMap<String, Object>();//用于存储更新需要的参数
-        boolean isFoundPrimaryKey = false;//实体中是否存在主键
-        for (int i = 0; i < fields.length; i++) {
-            // 2 表示private修饰的属性，可以过滤掉定义的静态变量等
-            if (fields[i].getModifiers() != Modifier.PRIVATE) {
-                continue;
-            } else {
-                String attrName = fields[i].getName();// 属性的字段名称
-                String getter = CommonConstants.MethodConstants.GET + StringUtils.toUpperCaseInitial(attrName);// 属性的get方法名
-                Method method = entity.getClass().getMethod(getter, new Class[]{});
-                Object value = method.invoke(entity, new Object[]{});//该属性对应的值
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("type={},name={},value={}", fields[i].getType().toString(),
-                            fields[i].getName(), value);
-                }
-                boolean isPrimarykey = false;//判断当前的属性是否是主键
-                if (!isFoundPrimaryKey) {
-                    Annotation[] annotations = fields[i].getAnnotations();//获取属性上的注解
-                    if (annotations == null || annotations.length == 0) {//表示属性上没有注解
-                        annotations = method.getAnnotations();//获取方法上的注解
-                        if (annotations == null || annotations.length == 0) {//表示方法上没有注解
-                            throw new DaoException("The Entity of " + clazz.getSimpleName() + "is not be annotated");
-                        }
-                    }
-                    for (Annotation an : annotations) {//遍历属性或get方法上的注解（注解一般要么全部写在属性上，要么全部写在get方法上）
-                        if (javax.persistence.Id.class.getName().equals(an.annotationType().getName())) {// 表示该属性是主键
-                            if (fields[i].getType() == long.class || fields[i].getType() == Long.class) {// 该实体的主键是long类型
-                                if (Long.valueOf(value.toString()) <= 0) {
-                                    throw new DaoException("The primary key '" + attrName + "' is not a positive Integer");
-                                }
-                            } else if (fields[i].getType() == String.class) {// 该实体的主键是String类型
-                                if (ObjectUtils.isEmpty(value)) {
-                                    throw new DaoException("The primary key '" + attrName + "' is null or empty");
-                                }
-                            } else {
-                                throw new DaoException("The primary key '" + attrName + "' must be long(Long) or String type");
-                            }
-                            whereSql.append(entityName).append(DBConstants.SQLConstants.SQL_DOT).append(attrName)
-                                    .append(DBConstants.SQLConstants.SQL_BLANK).append(DBConstants.SQLConstants.SQL_EQUAL)
-                                    .append(DBConstants.SQLConstants.SQL_BLANK).append(DBConstants.SQLConstants.SQL_COLON).append(attrName);
-                            isPrimarykey = true;// true表示该字段是主键
-                            isFoundPrimaryKey = true;// 表示找到了主键
-                            break;
-                        }
-                    }
-                }
-
-                if (value == null) {//值为空，直接跳过，继续下一个属性
-                    continue;
-                } else {
-                    map.put(attrName, value);//添加不为空的数据（基本数据类型有默认值，这个需要关注）
-                    if (!isPrimarykey) {// 不是主键才可以添加在SET子句中
-                        sql.append(DBConstants.SQLConstants.SQL_BLANK).append(entityName).append(DBConstants.SQLConstants.SQL_DOT)
-                                .append(attrName).append(DBConstants.SQLConstants.SQL_BLANK).append(DBConstants.SQLConstants.SQL_EQUAL)
-                                .append(DBConstants.SQLConstants.SQL_BLANK).append(DBConstants.SQLConstants.SQL_COLON).append(attrName)
-                                .append(DBConstants.SQLConstants.SQL_COMMA);
-                    }
-                }
-            }
-        }
-        if (isFoundPrimaryKey) {//只有存在主键的实体，才能去执行更新操作
-            sql.deleteCharAt(sql.length() - 1);// 去掉最后的逗号
-            sql.append(DBConstants.SQLConstants.SQL_BLANK).append(whereSql);
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("SQL = {}", sql);
-            }
-            Query query = getEntityManager().createQuery(sql.toString());
-            Set<String> keySet = map.keySet();
-            Iterator<String> it = keySet.iterator();
-            while (it.hasNext()) {
-                String key = it.next();
-                Object value = map.get(key);
-                query.setParameter(key, value);// 设置参数
-            }
-            int row = query.executeUpdate();// 执行更新语句
-            if (row == 1) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            throw new DaoException("The primary key of " + clazz.getSimpleName() + " is not exist");
-        }
-    }
-
     @Override
     public List<T> query(String relationId, T entity) throws Exception {
-
         // 构建 SELECT SQL模板
         ITemplate<T> selectSqlTemplate = new SelectSqlTemplate<T>(relationId, entity);
         selectSqlTemplate.initialize();
@@ -346,23 +242,40 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         }
 
         Query query = getEntityManager().createNativeQuery(nativeSql, entity.getClass());
-        if (CollectionUtils.isNotEmpty(nativeParam)) {
-            for(SqlParam sqlParam : nativeParam) {
-                query.setParameter(sqlParam.getIndex(), sqlParam.getAttrValue());
-            }
-        }
+        setParameter(query, nativeParam);
 
         return query.getResultList();
     }
 
     @Override
-    public void save(String relationId, T entity) throws Exception {
+    public void insert(String relationId, T entity) throws Exception {
+        // 构建并执行INSERT SQL模板
+        save(new InsertSqlTemplate<T>(relationId, entity));
+    }
 
-        // 构建INSERT SQL模板
-        ITemplate<T> insertSqlTemplate = new InsertSqlTemplate<T>(relationId, entity);
-        insertSqlTemplate.initialize();
-        String nativeSql = insertSqlTemplate.toNativeSql();
-        List<SqlParam> nativeParam = insertSqlTemplate.toNativeParams();
+    @Override
+    public void update(String relationId, T entity) throws Exception {
+        // 构建并执行UPDATE SQL模板
+        save(new UpdateSqlTemplate<T>(relationId, entity));
+    }
+
+    @Override
+    public void delete(String relationId, T entity) throws Exception {
+        // 构建并执行DELETE SQL模板
+        save(new DeleteSqlTemplate<T>(relationId, entity));
+    }
+
+    /**
+     * <p> 处理INSERT,UPDATE,DELETE SQL模板 </p>
+     *
+     * @param sqlTemplate SQL模板（包含 INSERT,UPDATE,DELETE）
+     * @throws Exception
+     * @since 1.0.0
+     */
+    private void save(ITemplate<T> sqlTemplate) throws Exception {
+        sqlTemplate.initialize();
+        String nativeSql = sqlTemplate.toNativeSql();
+        List<SqlParam> nativeParam = sqlTemplate.toNativeParams();
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("AbstractFleaJPADAOImpl##save(String, T) Native SQL   = {}", nativeSql);
@@ -370,14 +283,9 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         }
 
         Query query = getEntityManager().createNativeQuery(nativeSql);
-        if (CollectionUtils.isNotEmpty(nativeParam)) {
-            for(SqlParam sqlParam : nativeParam) {
-                query.setParameter(sqlParam.getIndex(), sqlParam.getAttrValue());
-            }
-        }
-        // 执行保存操作
+        setParameter(query, nativeParam);
+        // 执行原生SQL语句（可能包含 INSERT, UPDATE, DELETE）
         query.executeUpdate();
-
     }
 
     /**
@@ -413,6 +321,21 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         } else {
             // 主键必须是long(Long) 或 String
             throw new DaoException("ERROR-DB-DAO0000000011");
+        }
+    }
+
+    /**
+     * <p> 为<code>Query</code>对象设置参数 </p>
+     *
+     * @param query     <code>Query</code>对象
+     * @param sqlParams 原生Sql参数
+     * @since 1.0.0
+     */
+    private void setParameter(Query query, List<SqlParam> sqlParams) {
+        if (CollectionUtils.isNotEmpty(sqlParams)) {
+            for (SqlParam sqlParam : sqlParams) {
+                query.setParameter(sqlParam.getIndex(), sqlParam.getAttrValue());
+            }
         }
     }
 
