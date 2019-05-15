@@ -112,7 +112,7 @@ public class UpdateSqlTemplate<T> extends SqlTemplate<T> {
     }
 
     @Override
-    protected void initSqlTemplate(StringBuilder sql, Map<String, Object> params, Column[] entityCols, Map<String, Property> propMap) throws Exception {
+    protected void initSqlTemplate(StringBuilder sql, Map<String, Object> params, Column[] entityCols, Map<String, Property> propMap) throws SqlTemplateException {
         // 获取【key=sets】的属性， 存储SET子句的内容（ para1 = :para1, para2 = :para2）
         String setStr = checkProperty(propMap, SqlTemplateEnum.SETS);
 
@@ -135,18 +135,18 @@ public class UpdateSqlTemplate<T> extends SqlTemplate<T> {
     }
 
     /**
-     * 校验【key=columns】和【key=conditions】的数据是否正确 <br/>
-     * 注意： （1）set子句【key=columns】的属性列 和 where子句【key=columns】的属性列，一般来说应该不一样
-     * （2）set子句【key=columns】的属性列和属性变量一一对应，where子句【key=conditions】的属性列和属性变量一一对应
+     * <p> 校验【key=columns】和【key=conditions】的数据是否正确 </p>
+     * <p> 注意：(1) set子句【key=columns】的属性列 和 where子句【key=columns】的属性列，一般来说应该不一样;
+     * (2) set子句【key=columns】的属性列和属性变量一一对应，where子句【key=conditions】的属性列和属性变量一一对应 </p>
      *
      * @param entityCols 实体类对象的属性数组
      * @param setMap     SET子句的map集合（key：属性列， map：属性列变量）
      * @param whereMap   WHERE子句的map集合（key：属性列， map：属性列变量）
      * @return set 和 where子句对应的实体类对象的属性数组
-     * @throws Exception
+     * @throws SqlTemplateException SQL模板异常类
      * @since 1.0.0
      */
-    private Column[] check(final Column[] entityCols, Map<String, String> setMap, Map<String, String> whereMap) throws Exception {
+    private Column[] check(final Column[] entityCols, Map<String, String> setMap, Map<String, String> whereMap) throws SqlTemplateException {
         if (MapUtils.isEmpty(setMap)) {
             // 请检查SQL模板参数【id="{0}"】配置(属性【key="{1}"】中的【value】不能为空)
             throw new SqlTemplateException("ERROR-DB-SQT0000000013", paramId, SqlTemplateEnum.SETS.getKey());

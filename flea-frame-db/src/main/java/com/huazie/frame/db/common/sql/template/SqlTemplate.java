@@ -221,10 +221,10 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
      * <p> SQL模板校验规则 </p>
      *
      * @param templateValue SQL模板原始值
-     * @throws Exception
+     * @throws SqlTemplateException SQL模板异常类
      * @since 1.0.0
      */
-    private void checkRule(String templateValue) throws Exception {
+    private void checkRule(String templateValue) throws SqlTemplateException {
         if (ObjectUtils.isEmpty(rule)) {
             // 请检查SQL模板【id="{0}"】配置（未找到指定的校验规则【ruleId="{1}"】）
             throw new SqlTemplateException("ERROR-DB-SQT0000000017", templateId, template.getRuleId());
@@ -335,10 +335,10 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
      * @param propMap         模板参数属性Map集合
      * @param sqlTemplateEnum SQL模板关键字枚举
      * @return 指定关键字的模板参数属性值
-     * @throws Exception
+     * @throws SqlTemplateException SQL模板异常类
      * @since 1.0.0
      */
-    protected String checkProperty(Map<String, Property> propMap, SqlTemplateEnum sqlTemplateEnum) throws Exception {
+    protected String checkProperty(Map<String, Property> propMap, SqlTemplateEnum sqlTemplateEnum) throws SqlTemplateException {
         Property property = propMap.get(sqlTemplateEnum.getKey());
 
         if (ObjectUtils.isEmpty(property)) {
@@ -355,9 +355,10 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
      * @param entityCols    属性列数组
      * @param tabColumnName 属性列名
      * @return 指定的属性列对象
-     * @throws Exception
+     * @throws SqlTemplateException SQL模板异常类
+     * @since 1.0.0
      */
-    protected Column checkColumn(final Column[] entityCols, String tabColumnName) throws Exception {
+    protected Column checkColumn(final Column[] entityCols, String tabColumnName) throws SqlTemplateException {
         Column column = (Column) EntityUtils.getEntity(entityCols, Column.COLUMN_TAB_COL_NAME, tabColumnName);
         if (ObjectUtils.isEmpty(column)) {
             // 请检查SQL模板参数【id="{0}"】配置（属性【key="columns"】中的字段【{1}】在实体类【{2}】中不存在)
@@ -371,10 +372,11 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
      *
      * @param entityCols 实体类的属性列数组
      * @param map        map的key存表字段列，value存变量
-     * @throws Exception
-     * @date 2018年1月31日
+     * @return 校验通过的属性列数组
+     * @throws SqlTemplateException SQL模板异常类
+     * @since 1.0.0
      */
-    protected Column[] checkOneByOne(final Column[] entityCols, Map<String, String> map, SqlTemplateEnum sqlTemplateEnum) throws Exception {
+    protected Column[] checkOneByOne(final Column[] entityCols, Map<String, String> map, SqlTemplateEnum sqlTemplateEnum) throws SqlTemplateException {
 
         if (MapUtils.isEmpty(map)) {
             return null;
@@ -415,7 +417,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
      * @param params SQL参数Map集合(K ：实体属性变量名 V : 参数值)
      * @since 1.0.0
      */
-    protected void finalSqlTemplate(Map<String, Object> params, Column[] entityCols) throws Exception {
+    private void finalSqlTemplate(Map<String, Object> params, Column[] entityCols) {
         // 根据SQL参数Map集合从SQL模板上sql获取自定义SQL模板参数List<SqlParam>集合
         if (MapUtils.isNotEmpty(params)) {
             Set<String> keySet = params.keySet();
@@ -431,7 +433,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
                     sqlParam.setAttrName(column.getAttrName());
                     sqlParam.setAttrValue(column.getAttrValue());
                     sqlParam.setTabColName(column.getTabColumnName());
-                    // 设置参数索引为起始位置，暂时这样处理，后面需要重新根据这个排序确定
+                    // 设置参数索引为起始位置，后面需要重新根据这个排序确定
                     sqlParam.setIndex(index);
                     // 添加SQL参数
                     sqlParams.add(sqlParam);
@@ -460,11 +462,62 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
 
     }
 
+    /**
+     * <p> 根据关系编号，获取对应关系配置信息 </p>
+     *
+     * @param relationId 关系编号
+     * @return 关系配置信息
+     * @since 1.0.0
+     */
+    protected Relation getSqlRelation(String relationId) {
+        return SqlTemplateConfig.getConfig().getRelation(relationId);
+    }
+
+    /**
+     * <p> 根据模板编号，获取对应SQL模板 </p>
+     *
+     * @param templateId SQL模板编号
+     * @return SQL模板
+     * @since 1.0.0
+     */
+    protected Template getSqlTemplate(String templateId) {
+        return SqlTemplateConfig.getConfig().getTemplate(templateId);
+    }
+
+    /**
+     * <p> 根据模板参数编号，获取对应SQL模板参数配置信息 </p>
+     *
+     * @param paramId SQL模板参数编号
+     * @return SQL模板参数配置
+     * @since 1.0.0
+     */
+    protected Param getSqlTemplateParam(String paramId) {
+        return SqlTemplateConfig.getConfig().getParam(paramId);
+    }
+
+    /**
+     * <p> 特殊处理，初始化由具体模板实现 </p>
+     *
+     * @param sql        原声SQL
+     * @param params     SQL参数
+     * @param entityCols 实体类T的对象的属性列相关信息
+     * @param propMap    模板属性配置信息
+     * @throws SqlTemplateException SQL模板异常类
+     * @since 1.0.0
+     */
+    protected abstract void initSqlTemplate(StringBuilder sql, Map<String, Object> params, final Column[] entityCols, Map<String, Property> propMap) throws SqlTemplateException;
+
     @Override
     public String getId() {
         return relationId;
     }
 
+    /**
+     * <p> 初始化关系配置（SQL模板和模板参数） </p>
+     *
+     * @param id 关系编号
+     * @since 1.0.0
+     */
     public void setId(String id) {
         relationId = id;
         relation = getSqlRelation(id);
@@ -510,51 +563,6 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
     public Rule getRule() {
         return rule;
     }
-
-    /**
-     * <p> 根据关系编号，获取对应关系配置信息 </p>
-     *
-     * @param relationId 关系编号
-     * @return 关系配置信息
-     * @since 1.0.0
-     */
-    protected Relation getSqlRelation(String relationId) {
-        return SqlTemplateConfig.getConfig().getRelation(relationId);
-    }
-
-    /**
-     * <p> 根据模板编号，获取对应SQL模板 </p>
-     *
-     * @param templateId SQL模板编号
-     * @return SQL模板
-     * @since 1.0.0
-     */
-    protected Template getSqlTemplate(String templateId) {
-        return SqlTemplateConfig.getConfig().getTemplate(templateId);
-    }
-
-    /**
-     * <p> 根据模板参数编号，获取对应SQL模板参数配置信息 </p>
-     *
-     * @param paramId SQL模板参数编号
-     * @return SQL模板参数配置
-     * @since 1.0.0
-     */
-    protected Param getSqlTemplateParam(String paramId) {
-        return SqlTemplateConfig.getConfig().getParam(paramId);
-    }
-
-    /**
-     * <p> 用于特殊处理SQL模板的初始化工作 </p>
-     *
-     * @param sql        原声SQL
-     * @param params     SQL参数
-     * @param entityCols 实体类T的对象的属性列相关信息
-     * @param propMap    模板属性配置信息
-     * @throws Exception
-     * @since 1.0.0
-     */
-    protected abstract void initSqlTemplate(StringBuilder sql, Map<String, Object> params, final Column[] entityCols, Map<String, Property> propMap) throws Exception;
 
     @Override
     public String toNativeSql() {

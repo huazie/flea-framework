@@ -1,10 +1,8 @@
 package com.huazie.frame.db.common.util;
 
-import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.ReflectUtils;
-import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.exception.DaoException;
 import com.huazie.frame.db.common.sql.template.config.Param;
 import com.huazie.frame.db.common.sql.template.config.Relation;
@@ -119,8 +117,6 @@ public class EntityUtils {
                 String attrName = fields[i].getName();
                 column.setAttrName(fields[i].getName());// 属性的字段名称
 
-                String getter = CommonConstants.MethodConstants.GET + StringUtils.toUpperCaseInitial(attrName);// 属性的get方法名
-                Method method = entity.getClass().getMethod(getter, new Class[]{});
                 Object value = ReflectUtils.getObjectAttrValue(entity, attrName);
                 column.setAttrValue(value);
 
@@ -131,10 +127,13 @@ public class EntityUtils {
 
                 Annotation[] annotations = fields[i].getAnnotations();// 获取属性上的注解
                 if (ArrayUtils.isEmpty(annotations)) {// 表示属性上没有注解
-                    annotations = method.getAnnotations();// 获取方法上的注解
-                    if (ArrayUtils.isEmpty(annotations)) {// 表示方法上没有注解
-                        // 实体类上 [{0}] 没有注解
-                        throw new DaoException("ERROR-DB-DAO0000000014", entity.getClass().getSimpleName());
+                    Method method = ReflectUtils.getObjectAttrMethod(entity, attrName);
+                    if (ObjectUtils.isNotEmpty(method)) {
+                        annotations = ReflectUtils.getObjectAttrMethod(entity, attrName).getAnnotations();// 获取方法上的注解
+                        if (ArrayUtils.isEmpty(annotations)) {// 表示方法上没有注解
+                            // 实体类上 [{0}] 没有注解
+                            throw new DaoException("ERROR-DB-DAO0000000014", entity.getClass().getSimpleName());
+                        }
                     }
                 }
                 // 遍历属性或get方法上的注解（注解一般要么全部写在属性上，要么全部写在get方法上）
@@ -187,16 +186,12 @@ public class EntityUtils {
      * @return 实体对象
      * @since 1.0.0
      */
-    public static Object getEntity(Object[] objs, String attrName, Object attrValue) throws Exception {
+    public static Object getEntity(Object[] objs, String attrName, Object attrValue) {
         Object object = null;
         if (ArrayUtils.isNotEmpty(objs)) {
             for (int i = 0; i < objs.length; i++) {
                 Object obj = objs[i];
-                Field field = obj.getClass().getDeclaredField(attrName);
-                // 属性的get方法名
-                String getter = CommonConstants.MethodConstants.GET + StringUtils.toUpperCaseInitial(field.getName());
-                Method method = obj.getClass().getMethod(getter, new Class[]{});
-                Object value = method.invoke(obj, new Object[]{});// 该属性对应的值
+                Object value = ReflectUtils.getObjectAttrValue(obj, attrName); // 该属性对应的值
                 if (value != null && value.equals(attrValue)) {
                     object = obj;
                     break;

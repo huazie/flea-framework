@@ -4,7 +4,7 @@ import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.i18n.FleaI18nResEnum;
 
 /**
- * <p> 处理SQL模板 异常实现类 </p>
+ * <p> SQL模板异常类 </p>
  *
  * @author huazie
  * @version 1.0.0

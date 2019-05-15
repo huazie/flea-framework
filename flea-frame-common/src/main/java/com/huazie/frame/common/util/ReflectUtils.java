@@ -4,7 +4,6 @@ import com.huazie.frame.common.CommonConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
@@ -49,8 +48,7 @@ public class ReflectUtils {
     public static Object getObjectAttrValue(Object obj, String attrName) {
         Object value = null;
         try {
-            String getter = CommonConstants.MethodConstants.GET + StringUtils.toUpperCaseInitial(attrName);// 属性的get方法名
-            Method method = obj.getClass().getMethod(getter, new Class[]{});
+            Method method = getObjectAttrMethod(obj, attrName);
             value = method.invoke(obj, new Object[]{});
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
@@ -58,6 +56,27 @@ public class ReflectUtils {
             }
         }
         return value;
+    }
+
+    /**
+     * <p> 获取对象<code>obj</code>中指定<code>attrName</code>属性的get方法 </p>
+     *
+     * @param obj      指定对象
+     * @param attrName 指定属性变量名
+     * @return <code>Method</code>对象
+     * @since 1.0.0
+     */
+    public static Method getObjectAttrMethod(Object obj, String attrName) {
+        Method method = null;
+        try {
+            String getter = CommonConstants.MethodConstants.GET + StringUtils.toUpperCaseInitial(attrName); // 属性的get方法名
+            method = obj.getClass().getMethod(getter, new Class[]{});
+        } catch (Exception e) {
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("获取对象指定属性对应get方法出错，Exception=", e);
+            }
+        }
+        return method;
     }
 
 }

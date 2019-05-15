@@ -359,7 +359,6 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     public void save(String relationId, T entity) throws Exception {
 
         // 构建INSERT SQL模板
-        // 构建 SELECT SQL模板
         ITemplate<T> insertSqlTemplate = new InsertSqlTemplate<T>(relationId, entity);
         insertSqlTemplate.initialize();
         String nativeSql = insertSqlTemplate.toNativeSql();

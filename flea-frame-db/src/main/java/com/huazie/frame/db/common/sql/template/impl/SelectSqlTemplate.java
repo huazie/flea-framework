@@ -115,7 +115,7 @@ public class SelectSqlTemplate<T> extends SqlTemplate<T> {
     }
 
     @Override
-    protected void initSqlTemplate(StringBuilder sql, Map<String, Object> params, Column[] entityCols, Map<String, Property> propMap) throws Exception {
+    protected void initSqlTemplate(StringBuilder sql, Map<String, Object> params, Column[] entityCols, Map<String, Property> propMap) throws SqlTemplateException {
 
         // 获取【key="columns"】的属性， 存储SELECT子句的内容（ para_id, para_type, para_code等等）
         String colStr = checkProperty(propMap, SqlTemplateEnum.COLUMNS);
@@ -155,10 +155,10 @@ public class SelectSqlTemplate<T> extends SqlTemplate<T> {
      * @param cols       查询显示列数组
      * @param whereMap   WHERE子句的map集合（key：属性列， map：属性列变量）
      * @return where子句对应的实体类对象的属性数组
-     * @throws Exception
+     * @throws SqlTemplateException SQL模板异常类
      * @since 1.0.0
      */
-    private Column[] check(final Column[] entityCols, String[] cols, Map<String, String> whereMap) throws Exception {
+    private Column[] check(final Column[] entityCols, String[] cols, Map<String, String> whereMap) throws SqlTemplateException {
 
         if (ArrayUtils.isEmpty(cols)) {
             // 请检查SQL模板参数【id="{0}"】配置(属性【key="{1}"】中的【value】不能为空)

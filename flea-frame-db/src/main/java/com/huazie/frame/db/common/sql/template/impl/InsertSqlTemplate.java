@@ -116,7 +116,7 @@ public class InsertSqlTemplate<T> extends SqlTemplate<T> {
     }
 
     @Override
-    protected void initSqlTemplate(StringBuilder sql, Map<String, Object> params, final Column[] entityCols, Map<String, Property> propMap) throws Exception {
+    protected void initSqlTemplate(StringBuilder sql, Map<String, Object> params, final Column[] entityCols, Map<String, Property> propMap) throws SqlTemplateException {
 
         // 获取【key=columns】的属性, 建议将表的字段都加上，以逗号分隔(类似  id, name)
         Property columns = propMap.get(SqlTemplateEnum.COLUMNS.getKey());
@@ -158,10 +158,10 @@ public class InsertSqlTemplate<T> extends SqlTemplate<T> {
      * @param cols       表属性列数组
      * @param values     表属性列对应值数组
      * @return 模板配置中对应的实体类对象的属性数组
-     * @throws Exception
+     * @throws SqlTemplateException SQL模板异常类
      * @since 1.0.0
      */
-    private Column[] check(final Column[] entityCols, String[] cols, String[] values) throws Exception {
+    private Column[] check(final Column[] entityCols, String[] cols, String[] values) throws SqlTemplateException {
         if (ArrayUtils.isEmpty(cols)) {
             // 请检查SQL模板参数【id="{0}"】配置(属性【key="{1}"】中的【value】不能为空)
             throw new SqlTemplateException("ERROR-DB-SQT0000000013", paramId, SqlTemplateEnum.COLUMNS.getKey());
