@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 /**
- * <p> Flea 一次数据库操作处理 </p>
+ * <p> Flea一次数据库操作处理类 </p>
  *
  * @author huazie
  * @version 1.0.0

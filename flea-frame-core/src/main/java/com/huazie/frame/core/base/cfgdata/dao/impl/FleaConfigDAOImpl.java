@@ -63,20 +63,20 @@ public class FleaConfigDAOImpl<T> extends AbstractFleaJPADAOImpl<T> {
 
 	@Override
 	@Transactional("fleaConfigTransactionManager")
-	public void insert(String relationId, T entity) throws Exception {
-		super.insert(relationId, entity);
+	public int insert(String relationId, T entity) throws Exception {
+		return super.insert(relationId, entity);
 	}
 
 	@Override
 	@Transactional("fleaConfigTransactionManager")
-	public void update(String relationId, T entity) throws Exception {
-		super.update(relationId, entity);
+	public int update(String relationId, T entity) throws Exception {
+		return super.update(relationId, entity);
 	}
 
 	@Override
 	@Transactional("fleaConfigTransactionManager")
-	public void delete(String relationId, T entity) throws Exception {
-		super.delete(relationId, entity);
+	public int delete(String relationId, T entity) throws Exception {
+		return super.delete(relationId, entity);
 	}
 
 	@Override

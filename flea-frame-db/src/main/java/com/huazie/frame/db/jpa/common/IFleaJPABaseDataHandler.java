@@ -217,29 +217,32 @@ public interface IFleaJPABaseDataHandler<T> {
      *
      * @param relationId 关系编号
      * @param entity     实体类
+     * @return 新增的记录数
      * @throws Exception
      * @since 1.0.0
      */
-    void insert(String relationId, T entity) throws Exception;
+    int insert(String relationId, T entity) throws Exception;
 
     /**
      * <p> 通过UPDATE SQL模板，更新数据（其中<code>relationId</code>为SQL关系编号）</p>
      *
      * @param relationId 关系编号
      * @param entity     实体类
+     * @return 更新的记录数
      * @throws Exception
      * @since 1.0.0
      */
-    void update(String relationId, T entity) throws Exception;
+    int update(String relationId, T entity) throws Exception;
 
     /**
      * <p> 通过DELETE SQL模板，删除数据（其中<code>relationId</code>为SQL关系编号）</p>
      *
      * @param relationId 关系编号
      * @param entity     实体类
+     * @return 删除的记录数
      * @throws Exception
      * @since 1.0.0
      */
-    void delete(String relationId, T entity) throws Exception;
+    int delete(String relationId, T entity) throws Exception;
 
 }

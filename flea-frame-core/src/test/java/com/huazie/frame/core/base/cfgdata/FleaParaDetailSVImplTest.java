@@ -8,6 +8,10 @@ import com.huazie.frame.common.FleaFrameManager;
 import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaParaDetailSV;
 import com.huazie.frame.core.common.FleaEntityConstants;
+import com.huazie.frame.db.common.DBSystemEnum;
+import com.huazie.frame.db.jdbc.FleaJDBCHelper;
+import com.huazie.frame.db.jdbc.config.FleaJDBCConfig;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -17,6 +21,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class FleaParaDetailSVImplTest {
 
@@ -132,8 +137,8 @@ public class FleaParaDetailSVImplTest {
         FleaFrameManager.getManager().setLocale(Locale.US);
         IFleaParaDetailSV sv = (IFleaParaDetailSV) applicationContext.getBean("fleaParaDetailSVImpl");
         FleaParaDetail fleaParaDetail = new FleaParaDetail();
-        fleaParaDetail.setParaType("huazie1");
-        fleaParaDetail.setParaCode("huazie1");
+        fleaParaDetail.setParaType("huazie");
+        fleaParaDetail.setParaCode("huazie");
         try {
             List<FleaParaDetail> list = sv.query("select", fleaParaDetail);
             LOGGER.debug("list={}", list);
@@ -156,7 +161,8 @@ public class FleaParaDetailSVImplTest {
         fleaParaDetail.setParaState(FleaEntityConstants.FleaParaDetailConstants.PARA_STATE_IN_USE);
         fleaParaDetail.setParaDesc("Test");
         try {
-            sv.insert("insert", fleaParaDetail);
+            int ret = sv.insert("insert", fleaParaDetail);
+            LOGGER.debug("ret={}", ret);
         } catch (Exception e) {
             LOGGER.error("Exception:", e);
         }
@@ -171,7 +177,8 @@ public class FleaParaDetailSVImplTest {
         fleaParaDetail.setParaType("huazie1");
         fleaParaDetail.setParaCode("huazie1");
         try {
-            sv.update("update", fleaParaDetail);
+            int ret = sv.update("update", fleaParaDetail);
+            LOGGER.debug("ret={}", ret);
         } catch (Exception e) {
             LOGGER.error("Exception:", e);
         }
@@ -185,10 +192,28 @@ public class FleaParaDetailSVImplTest {
         fleaParaDetail.setParaId(13L);
         fleaParaDetail.setParaState(FleaEntityConstants.FleaParaDetailConstants.PARA_STATE_IN_USE);
         try {
-            sv.delete("delete", fleaParaDetail);
+            int ret = sv.delete("delete", fleaParaDetail);
+            LOGGER.debug("ret={}", ret);
         } catch (Exception e) {
             LOGGER.error("Exception:", e);
         }
+    }
+
+    @Test
+    public void testJDBCSqlTemplateQuery() {
+        // 测试 JDBC 接入 SELECT SQL 模板
+        FleaJDBCConfig.init(DBSystemEnum.MySQL.getName(), "fleaconfig");
+        FleaParaDetail fleaParaDetail = new FleaParaDetail();
+        fleaParaDetail.setParaType("huazie");
+        fleaParaDetail.setParaCode("huazie");
+        try {
+            List<Map<String, Object>> results = FleaJDBCHelper.query("select", fleaParaDetail);
+            Assert.assertNotNull(results);
+            LOGGER.debug(results.toString());
+        } catch (Exception e) {
+            LOGGER.error("Exception:", e);
+        }
+
     }
 
 }

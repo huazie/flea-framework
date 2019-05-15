@@ -183,8 +183,8 @@ public class InsertSqlTemplate<T> extends SqlTemplate<T> {
             String attrName = StringUtils.trim(values[n]);//该表字段对应的属性变量值 (如 :paraId )
 
             if (StringUtils.isBlank(attrName)) {
-                // 请检查SQL模板参数【id="{1}"】配置（属性【key="columns"】中的字段【{1}】对应属性【key="values"】中的字段不存在）
-                throw new SqlTemplateException("ERROR-DB-SQT0000000026", templateType.getUpperKey(), getId(), tabColumnName);
+                // 请检查SQL模板参数【id="{0}"】配置（属性【key="columns"】中的字段【{1}】对应属性【key="values"】中的字段不存在）
+                throw new SqlTemplateException("ERROR-DB-SQT0000000026", paramId, tabColumnName);
             }
             // 校验是否存在指定属性列名的属性列对象
             Column column = checkColumn(entityCols, tabColumnName);

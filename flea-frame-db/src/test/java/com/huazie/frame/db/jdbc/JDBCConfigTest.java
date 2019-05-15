@@ -2,6 +2,7 @@ package com.huazie.frame.db.jdbc;
 
 import com.huazie.frame.common.FleaFrameManager;
 import com.huazie.frame.db.common.DBSystemEnum;
+import com.huazie.frame.db.jdbc.config.FleaJDBCConfig;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -13,7 +14,7 @@ import java.util.Map;
 
 /**
  * @author huazie
- * @version v1.0.0
+ * @version 1.0.0
  * @date 2018年1月23日
  */
 public class JDBCConfigTest {
@@ -30,7 +31,7 @@ public class JDBCConfigTest {
     public void testJDBCQuery1() {
         FleaJDBCConfig.init(DBSystemEnum.MySQL.getName(), "fleamarket");
         try {
-            List<Map<String, Object>> results = FleaJDBCUtils.query("SELECT * FROM flea_user");
+            List<Map<String, Object>> results = FleaJDBCHelper.query("SELECT * FROM flea_user");
             Assert.assertNotNull(results);
             LOGGER.debug(results.toString());
         } catch (Exception e) {
@@ -43,7 +44,7 @@ public class JDBCConfigTest {
         FleaJDBCConfig.init(DBSystemEnum.MySQL.getName(), "fleamarket");
         try {
             Object[] params = {new Long(1L)};
-            List<Map<String, Object>> results = FleaJDBCUtils.query("SELECT * FROM flea_user where user_id = ?", params);
+            List<Map<String, Object>> results = FleaJDBCHelper.query("SELECT * FROM flea_user where user_id = ?", params);
             Assert.assertNotNull(results);
             LOGGER.debug(results.toString());
         } catch (Exception e) {
@@ -57,7 +58,7 @@ public class JDBCConfigTest {
         try {
             List<Object> paramList = new ArrayList<Object>();
             paramList.add(new Long(1000000012L));
-            List<Map<String, Object>> results = FleaJDBCUtils.query("SELECT * FROM flea_user where user_id = ?", paramList);
+            List<Map<String, Object>> results = FleaJDBCHelper.query("SELECT * FROM flea_user where user_id = ?", paramList);
             Assert.assertNotNull(results);
             LOGGER.debug(results.toString());
         } catch (Exception e) {
@@ -69,7 +70,7 @@ public class JDBCConfigTest {
     public void testJDBCSingleQuery1() {
         FleaJDBCConfig.init(DBSystemEnum.MySQL.getName(), "fleamarket");
         try {
-            List<Map<String, Object>> results = FleaJDBCUtils.query("SELECT user_name FROM flea_user");
+            List<Map<String, Object>> results = FleaJDBCHelper.query("SELECT user_name FROM flea_user");
             Assert.assertNotNull(results);
             LOGGER.debug(results.toString());
         } catch (Exception e) {
@@ -82,7 +83,7 @@ public class JDBCConfigTest {
         FleaJDBCConfig.init(DBSystemEnum.MySQL.getName(), "fleamarket");
         try {
             Object[] params = {new Long(1L)};
-            List<Map<String, Object>> results = FleaJDBCUtils.query("SELECT user_name FROM flea_user where user_id = ?", params);
+            List<Map<String, Object>> results = FleaJDBCHelper.query("SELECT user_name FROM flea_user where user_id = ?", params);
             Assert.assertNotNull(results);
             LOGGER.debug(results.toString());
         } catch (Exception e) {
@@ -97,11 +98,12 @@ public class JDBCConfigTest {
             List<Object> paramList = new ArrayList<Object>();
             paramList.add(new Long(1000000012L));
             paramList.add(new Long(1L));
-            List<Map<String, Object>> results = FleaJDBCUtils.query("SELECT user_name FROM flea_user where user_id in (?, ?)", paramList);
+            List<Map<String, Object>> results = FleaJDBCHelper.query("SELECT user_name FROM flea_user where user_id in (?, ?)", paramList);
             Assert.assertNotNull(results);
             LOGGER.debug(results.toString());
         } catch (Exception e) {
             LOGGER.error("Exception={}", e);
         }
     }
+
 }

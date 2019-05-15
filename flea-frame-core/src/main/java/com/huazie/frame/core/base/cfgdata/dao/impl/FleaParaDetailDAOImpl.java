@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * <p> 静态参数配置DAO层实现 </p>
+ * <p> 静态参数配置DAO层实现类 </p>
  *
  * @author huazie
  * @version 1.0.0
@@ -41,8 +41,8 @@ public class FleaParaDetailDAOImpl extends FleaConfigDAOImpl<FleaParaDetail> imp
         List<FleaParaDetail> fleaParaDetailList = query.getResultList();
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaParaDetailDAOImpl##getParaDetail(String, String) FleaParaDetailList={}", fleaParaDetailList);
-            LOGGER.debug("FleaParaDetailDAOImpl##getParaDetail(String, String) The Number of FleaParaDetailList={}", fleaParaDetailList.size());
+            LOGGER.debug("FleaParaDetailDAOImpl##getParaDetail(String, String) List={}", fleaParaDetailList);
+            LOGGER.debug("FleaParaDetailDAOImpl##getParaDetail(String, String) Count={}", fleaParaDetailList.size());
         }
 
         return fleaParaDetailList;

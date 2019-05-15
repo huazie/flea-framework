@@ -1,4 +1,4 @@
-package com.huazie.frame.db.jdbc;
+package com.huazie.frame.db.jdbc.config;
 
 import com.huazie.frame.common.FleaFrameManager;
 import com.huazie.frame.common.util.ArrayUtils;

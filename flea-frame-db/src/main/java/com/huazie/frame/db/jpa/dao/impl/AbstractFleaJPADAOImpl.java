@@ -5,6 +5,8 @@ import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.db.common.exception.DaoException;
 import com.huazie.frame.db.common.sql.pojo.SqlParam;
 import com.huazie.frame.db.common.sql.template.ITemplate;
+import com.huazie.frame.db.common.sql.template.TemplateTypeEnum;
+import com.huazie.frame.db.common.sql.template.config.Template;
 import com.huazie.frame.db.common.sql.template.impl.DeleteSqlTemplate;
 import com.huazie.frame.db.common.sql.template.impl.InsertSqlTemplate;
 import com.huazie.frame.db.common.sql.template.impl.SelectSqlTemplate;
@@ -230,39 +232,38 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 
     @Override
     public List<T> query(String relationId, T entity) throws Exception {
-        // 构建 SELECT SQL模板
+        // 构建并执行 SELECT SQL模板
         ITemplate<T> selectSqlTemplate = new SelectSqlTemplate<T>(relationId, entity);
         selectSqlTemplate.initialize();
         String nativeSql = selectSqlTemplate.toNativeSql();
         List<SqlParam> nativeParam = selectSqlTemplate.toNativeParams();
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("AbstractFleaJPADAOImpl##query(String, T) Native SQL   = {}", nativeSql);
-            LOGGER.debug("AbstractFleaJPADAOImpl##query(String, T) Native PARAM = {}", nativeParam);
+            LOGGER.debug("AbstractFleaJPADAOImpl##query(String, T) SQL = {}", nativeSql);
         }
 
         Query query = getEntityManager().createNativeQuery(nativeSql, entity.getClass());
-        setParameter(query, nativeParam);
+        setParameter(query, nativeParam, TemplateTypeEnum.SELECT.getKey());
 
         return query.getResultList();
     }
 
     @Override
-    public void insert(String relationId, T entity) throws Exception {
+    public int insert(String relationId, T entity) throws Exception {
         // 构建并执行INSERT SQL模板
-        save(new InsertSqlTemplate<T>(relationId, entity));
+        return save(new InsertSqlTemplate<T>(relationId, entity), TemplateTypeEnum.INSERT.getKey());
     }
 
     @Override
-    public void update(String relationId, T entity) throws Exception {
+    public int update(String relationId, T entity) throws Exception {
         // 构建并执行UPDATE SQL模板
-        save(new UpdateSqlTemplate<T>(relationId, entity));
+        return save(new UpdateSqlTemplate<T>(relationId, entity), TemplateTypeEnum.UPDATE.getKey());
     }
 
     @Override
-    public void delete(String relationId, T entity) throws Exception {
+    public int delete(String relationId, T entity) throws Exception {
         // 构建并执行DELETE SQL模板
-        save(new DeleteSqlTemplate<T>(relationId, entity));
+        return save(new DeleteSqlTemplate<T>(relationId, entity), TemplateTypeEnum.DELETE.getKey());
     }
 
     /**
@@ -272,20 +273,25 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
      * @throws Exception
      * @since 1.0.0
      */
-    private void save(ITemplate<T> sqlTemplate) throws Exception {
+    private int save(ITemplate<T> sqlTemplate, String templateType) throws Exception {
         sqlTemplate.initialize();
         String nativeSql = sqlTemplate.toNativeSql();
         List<SqlParam> nativeParam = sqlTemplate.toNativeParams();
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("AbstractFleaJPADAOImpl##save(String, T) Native SQL   = {}", nativeSql);
-            LOGGER.debug("AbstractFleaJPADAOImpl##save(String, T) Native PARAM = {}", nativeParam);
+            if(TemplateTypeEnum.INSERT.getKey().equals(templateType)) {
+                LOGGER.debug("AbstractFleaJPADAOImpl##insert(String, T) SQL = {}", nativeSql);
+            } else if(TemplateTypeEnum.UPDATE.getKey().equals(templateType)) {
+                LOGGER.debug("AbstractFleaJPADAOImpl##update(String, T) SQL = {}", nativeSql);
+            } else if(TemplateTypeEnum.DELETE.getKey().equals(templateType)) {
+                LOGGER.debug("AbstractFleaJPADAOImpl##delete(String, T) SQL = {}", nativeSql);
+            }
         }
 
         Query query = getEntityManager().createNativeQuery(nativeSql);
-        setParameter(query, nativeParam);
+        setParameter(query, nativeParam, templateType);
         // 执行原生SQL语句（可能包含 INSERT, UPDATE, DELETE）
-        query.executeUpdate();
+        return query.executeUpdate();
     }
 
     /**
@@ -331,9 +337,18 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
      * @param sqlParams 原生Sql参数
      * @since 1.0.0
      */
-    private void setParameter(Query query, List<SqlParam> sqlParams) {
+    private void setParameter(Query query, List<SqlParam> sqlParams, String templateType) {
         if (CollectionUtils.isNotEmpty(sqlParams)) {
             for (SqlParam sqlParam : sqlParams) {
+                if(TemplateTypeEnum.INSERT.getKey().equals(templateType)) {
+                    LOGGER.debug("AbstractFleaJPADAOImpl##insert(String, T) PARAM{} = {} , COL{} = {}", sqlParam.getIndex(), sqlParam.getAttrValue(), sqlParam.getIndex(), sqlParam.getTabColName());
+                } else if(TemplateTypeEnum.UPDATE.getKey().equals(templateType)) {
+                    LOGGER.debug("AbstractFleaJPADAOImpl##update(String, T) PARAM{} = {} , COL{} = {}", sqlParam.getIndex(), sqlParam.getAttrValue(), sqlParam.getIndex(), sqlParam.getTabColName());
+                } else if(TemplateTypeEnum.DELETE.getKey().equals(templateType)) {
+                    LOGGER.debug("AbstractFleaJPADAOImpl##delete(String, T) PARAM{} = {} , COL{} = {}", sqlParam.getIndex(), sqlParam.getAttrValue(), sqlParam.getIndex(), sqlParam.getTabColName());
+                } else if(TemplateTypeEnum.SELECT.getKey().equals(templateType)) {
+                    LOGGER.debug("AbstractFleaJPADAOImpl##query(String, T) PARAM{} = {} , COL{} = {}", sqlParam.getIndex(), sqlParam.getAttrValue(), sqlParam.getIndex(), sqlParam.getTabColName());
+                }
                 query.setParameter(sqlParam.getIndex(), sqlParam.getAttrValue());
             }
         }
