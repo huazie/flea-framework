@@ -240,7 +240,7 @@ public class FleaParaDetailSVImplTest {
     public void testJDBCSqlTemplateUpdate() {
 //        FleaFrameManager.getManager().setLocale(Locale.US);
         // 初始化
-        //FleaJDBCConfig.init(DBSystemEnum.MySQL.getName(), "fleaconfig");
+        FleaJDBCConfig.init(DBSystemEnum.MySQL.getName(), "fleaconfig");
         FleaParaDetail fleaParaDetail = new FleaParaDetail();
         fleaParaDetail.setParaId(13L);
         fleaParaDetail.setParaType("huazie1");
