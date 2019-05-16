@@ -6,7 +6,6 @@ import com.huazie.frame.db.common.exception.DaoException;
 import com.huazie.frame.db.common.sql.pojo.SqlParam;
 import com.huazie.frame.db.common.sql.template.ITemplate;
 import com.huazie.frame.db.common.sql.template.TemplateTypeEnum;
-import com.huazie.frame.db.common.sql.template.config.Template;
 import com.huazie.frame.db.common.sql.template.impl.DeleteSqlTemplate;
 import com.huazie.frame.db.common.sql.template.impl.InsertSqlTemplate;
 import com.huazie.frame.db.common.sql.template.impl.SelectSqlTemplate;
@@ -341,13 +340,13 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         if (CollectionUtils.isNotEmpty(sqlParams)) {
             for (SqlParam sqlParam : sqlParams) {
                 if(TemplateTypeEnum.INSERT.getKey().equals(templateType)) {
-                    LOGGER.debug("AbstractFleaJPADAOImpl##insert(String, T) PARAM{} = {} , COL{} = {}", sqlParam.getIndex(), sqlParam.getAttrValue(), sqlParam.getIndex(), sqlParam.getTabColName());
+                    LOGGER.debug("AbstractFleaJPADAOImpl##insert(String, T) COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
                 } else if(TemplateTypeEnum.UPDATE.getKey().equals(templateType)) {
-                    LOGGER.debug("AbstractFleaJPADAOImpl##update(String, T) PARAM{} = {} , COL{} = {}", sqlParam.getIndex(), sqlParam.getAttrValue(), sqlParam.getIndex(), sqlParam.getTabColName());
+                    LOGGER.debug("AbstractFleaJPADAOImpl##update(String, T) COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
                 } else if(TemplateTypeEnum.DELETE.getKey().equals(templateType)) {
-                    LOGGER.debug("AbstractFleaJPADAOImpl##delete(String, T) PARAM{} = {} , COL{} = {}", sqlParam.getIndex(), sqlParam.getAttrValue(), sqlParam.getIndex(), sqlParam.getTabColName());
+                    LOGGER.debug("AbstractFleaJPADAOImpl##delete(String, T) COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
                 } else if(TemplateTypeEnum.SELECT.getKey().equals(templateType)) {
-                    LOGGER.debug("AbstractFleaJPADAOImpl##query(String, T) PARAM{} = {} , COL{} = {}", sqlParam.getIndex(), sqlParam.getAttrValue(), sqlParam.getIndex(), sqlParam.getTabColName());
+                    LOGGER.debug("AbstractFleaJPADAOImpl##query(String, T) COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
                 }
                 query.setParameter(sqlParam.getIndex(), sqlParam.getAttrValue());
             }

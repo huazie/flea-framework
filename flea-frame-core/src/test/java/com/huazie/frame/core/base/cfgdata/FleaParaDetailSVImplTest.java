@@ -204,8 +204,8 @@ public class FleaParaDetailSVImplTest {
         // 测试 JDBC 接入 SELECT SQL 模板
         FleaJDBCConfig.init(DBSystemEnum.MySQL.getName(), "fleaconfig");
         FleaParaDetail fleaParaDetail = new FleaParaDetail();
-        fleaParaDetail.setParaType("huazie");
-        fleaParaDetail.setParaCode("huazie");
+        fleaParaDetail.setParaType("huazie1");
+        fleaParaDetail.setParaCode("huazie1");
         try {
             List<Map<String, Object>> results = FleaJDBCHelper.query("select", fleaParaDetail);
             Assert.assertNotNull(results);
@@ -213,7 +213,59 @@ public class FleaParaDetailSVImplTest {
         } catch (Exception e) {
             LOGGER.error("Exception:", e);
         }
+    }
 
+    @Test
+    public void testJDBCSqlTemplateInsert() {
+        FleaFrameManager.getManager().setLocale(Locale.US);
+        // 测试 JDBC 接入 SELECT SQL 模板
+        FleaJDBCConfig.init(DBSystemEnum.MySQL.getName(), "fleaconfig");
+        FleaParaDetail fleaParaDetail = new FleaParaDetail();
+        fleaParaDetail.setParaId(13L);
+        fleaParaDetail.setParaType("huazie");
+        fleaParaDetail.setParaCode("huazie");
+        fleaParaDetail.setParaName("这是测试INSERT SQL 模板");
+        fleaParaDetail.setPara1("hello world");
+        fleaParaDetail.setParaState(FleaEntityConstants.FleaParaDetailConstants.PARA_STATE_IN_USE);
+        fleaParaDetail.setParaDesc("Test");
+        try {
+            int ret = FleaJDBCHelper.insert("insert", fleaParaDetail);
+            LOGGER.debug("ret={}", ret);
+        } catch (Exception e) {
+            LOGGER.error("Exception:", e);
+        }
+    }
+
+    @Test
+    public void testJDBCSqlTemplateUpdate() {
+//        FleaFrameManager.getManager().setLocale(Locale.US);
+        // 初始化
+        //FleaJDBCConfig.init(DBSystemEnum.MySQL.getName(), "fleaconfig");
+        FleaParaDetail fleaParaDetail = new FleaParaDetail();
+        fleaParaDetail.setParaId(13L);
+        fleaParaDetail.setParaType("huazie1");
+        fleaParaDetail.setParaCode("huazie1");
+        try {
+            int ret = FleaJDBCHelper.update("update", fleaParaDetail);
+            LOGGER.debug("ret={}", ret);
+        } catch (Exception e) {
+            LOGGER.error("Exception:", e);
+        }
+    }
+
+    @Test
+    public void testJDBCSqlTemplateDelete() {
+        FleaFrameManager.getManager().setLocale(Locale.US);
+        FleaJDBCConfig.init(DBSystemEnum.MySQL.getName(), "fleaconfig");
+        FleaParaDetail fleaParaDetail = new FleaParaDetail();
+        fleaParaDetail.setParaId(13L);
+        fleaParaDetail.setParaState(FleaEntityConstants.FleaParaDetailConstants.PARA_STATE_IN_USE);
+        try {
+            int ret = FleaJDBCHelper.delete("delete", fleaParaDetail);
+            LOGGER.debug("ret={}", ret);
+        } catch (Exception e) {
+            LOGGER.error("Exception:", e);
+        }
     }
 
 }

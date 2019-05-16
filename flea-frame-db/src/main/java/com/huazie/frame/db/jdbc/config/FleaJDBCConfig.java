@@ -6,6 +6,7 @@ import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.PropertiesUtil;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.DBConstants;
+import com.huazie.frame.db.common.exception.DaoException;
 import com.huazie.frame.db.jdbc.pojo.FleaDBUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +46,7 @@ public class FleaJDBCConfig {
             }
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("JDBCConfig Use the current memcached.properties：{}", fileName);
+            LOGGER.debug("JDBCConfig Use the current flea-db-config.properties：{}", fileName);
         }
         prop = PropertiesUtil.getProperties(fileName);
     }
@@ -107,18 +108,24 @@ public class FleaJDBCConfig {
             }
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("JDBCConfig##getConnection() 数据库驱动名称：{}", fleaDBUnit.getDriver());
-            LOGGER.debug("JDBCConfig##getConnection() 数据库连接地址：{}", fleaDBUnit.getUrl());
-            LOGGER.debug("JDBCConfig##getConnection() 数据库登录用户：{}", fleaDBUnit.getUser());
-            LOGGER.debug("JDBCConfig##getConnection() 数据库登录密码：{}", fleaDBUnit.getPassword());
-        }
-
         try {
+
+            if (ObjectUtils.isEmpty(fleaDBUnit)) {
+                // 请正确初始化数据库管理系统和数据库（或数据库用户）
+                throw new DaoException("ERROR-DB-DAO0000000015");
+            }
+
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("JDBCConfig##getConnection() 数据库驱动名称：{}", fleaDBUnit.getDriver());
+                LOGGER.debug("JDBCConfig##getConnection() 数据库连接地址：{}", fleaDBUnit.getUrl());
+                LOGGER.debug("JDBCConfig##getConnection() 数据库登录用户：{}", fleaDBUnit.getUser());
+                LOGGER.debug("JDBCConfig##getConnection() 数据库登录密码：{}", fleaDBUnit.getPassword());
+            }
+
             Class.forName(fleaDBUnit.getDriver());
             conn = DriverManager.getConnection(fleaDBUnit.getUrl(), fleaDBUnit.getUser(), fleaDBUnit.getPassword());
         } catch (Exception e) {
-            LOGGER.error("JDBCConfig##getConnection 获取数据库连接异常 ：", e);
+            LOGGER.error("JDBCConfig##getConnection() 获取数据库连接异常 ：{}", e.getMessage());
         }
         return conn;
     }
