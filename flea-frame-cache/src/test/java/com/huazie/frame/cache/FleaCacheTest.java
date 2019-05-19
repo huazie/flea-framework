@@ -2,6 +2,7 @@ package com.huazie.frame.cache;
 
 import com.huazie.frame.cache.memcached.MemcachedFleaCacheManager;
 import com.huazie.frame.cache.memcached.config.MemcachedConfig;
+import com.huazie.frame.cache.redis.config.RedisConfig;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +40,9 @@ public class FleaCacheTest {
     @Test
     public void testProperties() throws Exception {
         MemcachedConfig config = MemcachedConfig.getConfig();
-        LOGGER.debug(config.toString());
+        LOGGER.debug("MemcachedConfig={}", config.toString());
+        RedisConfig redisConfig = RedisConfig.getConfig();
+        LOGGER.debug("RedisConfig={}", redisConfig.toString());
     }
 
     @Test
@@ -50,13 +53,13 @@ public class FleaCacheTest {
     }
 
     @Test
-    public void testRedis() throws Exception {
+    public void testRedis() {
         Jedis jedis = new Jedis("127.0.0.1", 10001);
         //查看服务是否运行
         LOGGER.debug("服务正在运行: {} ", jedis.ping());
 
         // #1. redis 字符串数据
-//        jedis.set("huazie", "hello world");
+        //jedis.set("huazie", "hello world");
 
         // #2. 获取redis字符串
         String msg = jedis.get("huazie");
@@ -81,7 +84,7 @@ public class FleaCacheTest {
         }
 
         // #6. 删除数据
-        LOGGER.debug("del ret = {}", jedis.del("huazie"));
+        //LOGGER.debug("del ret = {}", jedis.del("huazie"));
 
     }
 }

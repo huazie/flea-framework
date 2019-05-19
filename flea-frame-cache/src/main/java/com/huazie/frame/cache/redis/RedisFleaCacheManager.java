@@ -4,7 +4,7 @@ import com.huazie.frame.cache.AbstractSpringCache;
 import com.huazie.frame.cache.AbstractSpringCacheManager;
 
 /**
- * <p> MemcachedCacheManager管理类 </p>
+ * <p> Redis Flea缓存管理类 </p>
  *
  * @author huazie
  * @version 1.0.0

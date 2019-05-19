@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <p> Memcached的Flea缓存管理类 </p>
+ * <p> Memcached Flea缓存管理类 </p>
  *
  * @author huazie
  * @version 1.0.0

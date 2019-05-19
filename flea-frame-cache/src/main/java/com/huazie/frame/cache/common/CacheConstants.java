@@ -16,7 +16,7 @@ public interface CacheConstants {
      */
     interface MemcachedConfigConstants {
         /**
-         * Memcached 文件名
+         * Memcached 配置文件名
          */
         String MEMCACHE_FILE_NAME = "flea/cache/memcached.properties";
         /**
@@ -56,13 +56,32 @@ public interface CacheConstants {
          */
         String MEMCACHED_CONFIG_SOCKETCONNECTTO = "memcached.socketConnectTO";
         /**
-         * Memcached服务器权重分配
+         * Memcached 服务器权重分配
          */
         String MEMCACHED_CONFIG_WEIGHT = "memcached.weight";
         /**
-         * Memcached分布式hash算法
+         * Memcached 一致性hash算法
          */
         String MEMCACHED_CONFIG_HASHINGALG = "memcached.hashingAlg";
+    }
+
+    interface RedisConfigConstants {
+        /**
+         * Redis 配置文件名
+         */
+        String REDIS_FILE_NAME = "flea/cache/redis.properties";
+        /**
+         * Redis 服务器地址总数
+         */
+        String REDIS_CONFIG_SERVER_COUNT = "redis.server.count";
+        /**
+         * Redis 服务器地址
+         */
+        String REDIS_CONFIG_SERVER = "redis.server";
+        /**
+         * Redis 一致性hash算法
+         */
+        String REDIS_CONFIG_HASHINGALG = "redis.hashingAlg";
     }
 
 }

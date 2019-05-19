@@ -45,7 +45,7 @@
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
-            <version>3.1.0-m1</version>
+            <version>3.0.1</version>
         </dependency>
 
         <!-- Spring相关 -->
