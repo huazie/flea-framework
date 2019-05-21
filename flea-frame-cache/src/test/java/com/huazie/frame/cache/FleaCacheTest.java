@@ -6,8 +6,14 @@ import com.huazie.frame.cache.redis.config.RedisConfig;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import redis.clients.jedis.Client;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPoolConfig;
+import redis.clients.jedis.JedisShardInfo;
+import redis.clients.jedis.ShardedJedis;
+import redis.clients.jedis.ShardedJedisPool;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -40,9 +46,9 @@ public class FleaCacheTest {
     @Test
     public void testProperties() throws Exception {
         MemcachedConfig config = MemcachedConfig.getConfig();
-        LOGGER.debug("MemcachedConfig={}", config.toString());
+        LOGGER.debug("MemcachedConfig={}", config);
         RedisConfig redisConfig = RedisConfig.getConfig();
-        LOGGER.debug("RedisConfig={}", redisConfig.toString());
+        LOGGER.debug("RedisConfig={}", redisConfig);
     }
 
     @Test
@@ -85,6 +91,54 @@ public class FleaCacheTest {
 
         // #6. 删除数据
         //LOGGER.debug("del ret = {}", jedis.del("huazie"));
+
+    }
+
+    @Test
+    public void testShardedJedis() throws Exception {
+
+        // #1. 设置连接池的相关配置
+        JedisPoolConfig poolConfig = new JedisPoolConfig();
+        poolConfig.setMaxTotal(2);
+        poolConfig.setMaxIdle(1);
+        poolConfig.setMaxWaitMillis(2000);
+        poolConfig.setTestOnBorrow(false);
+        poolConfig.setTestOnReturn(false);
+
+        // #2.设置redis信息
+        JedisShardInfo shardInfo1 = new JedisShardInfo("127.0.0.1", 10001, 500);
+        shardInfo1.setPassword("huazie123");
+        JedisShardInfo shardInfo2 = new JedisShardInfo("127.0.0.1", 10002, 500);
+        shardInfo2.setPassword("huazie123");
+        JedisShardInfo shardInfo3 = new JedisShardInfo("127.0.0.1", 10003, 500);
+        shardInfo3.setPassword("huazie123");
+
+        //初始化ShardedJedisPool
+        List<JedisShardInfo> infoList = Arrays.asList(shardInfo1, shardInfo2, shardInfo3);
+        ShardedJedisPool jedisPool = new ShardedJedisPool(poolConfig, infoList);
+
+        //进行查询等其他操作
+        ShardedJedis jedis = null;
+
+        try {
+            jedis = jedisPool.getResource();
+
+            // 设置数据
+            // jedis.set("huazie", "hello world");
+            // jedis.set("huazie1", "我是谁，我在哪");
+
+            // 获取数据
+            Client client1 = jedis.getShard("huazie").getClient();
+            Client client2 = jedis.getShard("huazie1").getClient();
+            LOGGER.debug("value = {}, ip = {}:{}", jedis.get("huazie"), client1.getHost(), client1.getPort());
+            LOGGER.debug("value = {}, ip = {}:{}", jedis.get("huazie1"), client2.getHost(), client2.getPort());
+
+        } finally {
+            //使用后一定关闭，还给连接池
+            if(jedis != null) {
+                jedis.close();
+            }
+        }
 
     }
 }

@@ -71,17 +71,13 @@ public interface CacheConstants {
          */
         String REDIS_FILE_NAME = "flea/cache/redis.properties";
         /**
-         * Redis 服务器地址总数
-         */
-        String REDIS_CONFIG_SERVER_COUNT = "redis.server.count";
-        /**
          * Redis 服务器地址
          */
         String REDIS_CONFIG_SERVER = "redis.server";
         /**
-         * Redis 一致性hash算法
+         * Redis 授权密码
          */
-        String REDIS_CONFIG_HASHINGALG = "redis.hashingAlg";
+        String REDIS_CONFIG_PASSWORD = "redis.password";
     }
 
 }

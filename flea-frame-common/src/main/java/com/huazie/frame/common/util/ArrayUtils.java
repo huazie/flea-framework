@@ -234,4 +234,26 @@ public class ArrayUtils {
         return !isEmpty(values);
     }
 
+    /**
+     * <p> 判断两个数组长度是否相等 </p>
+     *
+     * @param valueArr1 数组1
+     * @param valueArr2 数组2
+     * @return true: 两个数组长度相等；false : 两个数组长度不相等
+     * @since 1.0.0
+     */
+    public static boolean isSameLength(Object[] valueArr1, Object[] valueArr2) {
+        if (isEmpty(valueArr1) && isEmpty(valueArr2)) {
+            return true;
+        }
+
+        if (isNotEmpty(valueArr1) && isNotEmpty(valueArr2)) {
+            if (valueArr1.length == valueArr2.length) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }

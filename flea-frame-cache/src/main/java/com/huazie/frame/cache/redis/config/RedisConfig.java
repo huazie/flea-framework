@@ -2,6 +2,9 @@ package com.huazie.frame.cache.redis.config;
 
 import com.huazie.frame.cache.common.CacheConstants;
 import com.huazie.frame.cache.memcached.config.MemcachedConfig;
+import com.huazie.frame.cache.redis.pojo.FleaRedisServerInfo;
+import com.huazie.frame.common.CommonConstants;
+import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.PropertiesUtil;
 import com.huazie.frame.common.util.StringUtils;
@@ -9,6 +12,8 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -26,9 +31,7 @@ public class RedisConfig {
 
     private static Properties prop;
 
-    private String[] servers;   // 服务器地址
-
-    private int hashingAlg;     // 一致性hash算法, 用于计算缓存的归属
+    private List<FleaRedisServerInfo> servers; // 服务器信息 （ host + port + password）
 
     static {
         String fileName = CacheConstants.RedisConfigConstants.REDIS_FILE_NAME;
@@ -56,40 +59,46 @@ public class RedisConfig {
             synchronized (MemcachedConfig.class) {
                 if (ObjectUtils.isEmpty(config)) {
                     config = new RedisConfig();
-                    int serverCount = PropertiesUtil.getIntegerValue(prop, CacheConstants.RedisConfigConstants.REDIS_CONFIG_SERVER_COUNT);
-                    if (serverCount > 0) {
-                        String[] servers = new String[serverCount];
-                        for (int i = 0; i < serverCount; i++) {
-                            String server = PropertiesUtil.getStringValue(prop, CacheConstants.RedisConfigConstants.REDIS_CONFIG_SERVER + (i + 1));
-                            if (StringUtils.isBlank(server)) {
-                                throw new Exception("Please check the redis config：" + CacheConstants.RedisConfigConstants.REDIS_CONFIG_SERVER + (i + 1) + " is not exist");
-                            }
-                            servers[i] = server;
-                        }
+                    List<FleaRedisServerInfo> fleaRedisServerInfos = null;
+                    String servers = PropertiesUtil.getStringValue(prop, CacheConstants.RedisConfigConstants.REDIS_CONFIG_SERVER);
+                    String passwords = PropertiesUtil.getStringValue(prop, CacheConstants.RedisConfigConstants.REDIS_CONFIG_PASSWORD);
+                    if (StringUtils.isNotBlank(servers) && StringUtils.isNotBlank(passwords)) {
+                        // 取逗号分隔的服务器地址列表
+                        String[] serverArr = StringUtils.split(servers, CommonConstants.SymbolConstants.SQL_COMMA);
+                        String[] passwordArr = StringUtils.split(passwords, CommonConstants.SymbolConstants.SQL_COMMA);
+                        if (ArrayUtils.isNotEmpty(serverArr)) {
+                            fleaRedisServerInfos = new ArrayList<FleaRedisServerInfo>();
+                            for (int i = 0; i < serverArr.length; i++) {
+                                String ip = serverArr[i];
+                                FleaRedisServerInfo redisServerInfo = new FleaRedisServerInfo();
+                                if (StringUtils.isNotBlank(ip)) {
+                                    String[] ipArr = StringUtils.split(ip, CommonConstants.SymbolConstants.SQL_COLON);
+                                    if (ArrayUtils.isNotEmpty(ipArr) && CommonConstants.NumeralConstants.INT_TWO == ipArr.length) {
+                                        redisServerInfo.setHost(ipArr[CommonConstants.NumeralConstants.INT_ZERO]);
+                                        redisServerInfo.setPort(Integer.parseInt(ipArr[CommonConstants.NumeralConstants.INT_ONE]));
+                                    }
+                                }
 
-                        config.setServers(servers);
-                        config.setHashingAlg(PropertiesUtil.getIntegerValue(prop, CacheConstants.RedisConfigConstants.REDIS_CONFIG_HASHINGALG));
+                                if (ArrayUtils.isSameLength(serverArr, passwordArr)) {
+                                    redisServerInfo.setPassword(passwordArr[i]);
+                                }
+                                fleaRedisServerInfos.add(redisServerInfo);
+                            }
+                        }
                     }
+                    config.setServers(fleaRedisServerInfos);
                 }
             }
         }
         return config;
     }
 
-    public String[] getServers() {
+    public List<FleaRedisServerInfo> getServers() {
         return servers;
     }
 
-    public void setServers(String[] servers) {
+    public void setServers(List<FleaRedisServerInfo> servers) {
         this.servers = servers;
-    }
-
-    public int getHashingAlg() {
-        return hashingAlg;
-    }
-
-    public void setHashingAlg(int hashingAlg) {
-        this.hashingAlg = hashingAlg;
     }
 
     @Override

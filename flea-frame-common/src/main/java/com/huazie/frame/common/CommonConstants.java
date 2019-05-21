@@ -29,6 +29,18 @@ public interface CommonConstants {
          * <p> 整数 0 , long类型 </p>
          */
         long ZERO = 0L;
+        /**
+         * <p> 整数 0 , int类型 </p>
+         */
+        int INT_ZERO = 0;
+        /**
+         * <p> 整数 1 , int类型 </p>
+         */
+        int INT_ONE = 1;
+        /**
+         * <p> 整数 2 , int类型 </p>
+         */
+        int INT_TWO = 2;
     }
 
     /**
@@ -65,6 +77,14 @@ public interface CommonConstants {
          * <p> 斜杠 </p>
          */
         String SLASH = "/";
+        /**
+         * <p> 逗号 </p>
+         */
+        String SQL_COMMA = ",";
+        /**
+         * <p> 冒号 </p>
+         */
+        String SQL_COLON = ":";
     }
 
     /**
