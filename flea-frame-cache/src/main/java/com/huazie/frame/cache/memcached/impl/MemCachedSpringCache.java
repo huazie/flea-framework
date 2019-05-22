@@ -11,14 +11,14 @@ import com.whalin.MemCached.MemCachedClient;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class MemcachedSpringCache extends AbstractSpringCache {
+public class MemCachedSpringCache extends AbstractSpringCache {
 
-    public MemcachedSpringCache(String name, IFleaCache fleaCache) {
+    public MemCachedSpringCache(String name, IFleaCache fleaCache) {
         super(name, fleaCache);
     }
 
-    public MemcachedSpringCache(String name, long expiry, MemCachedClient memcachedClient) {
-        super(name, new MemcachedFleaCache(name, expiry, memcachedClient));
+    public MemCachedSpringCache(String name, long expiry, MemCachedClient memcachedClient) {
+        super(name, new MemCachedFleaCache(name, expiry, memcachedClient));
     }
 
 }

@@ -1,7 +1,7 @@
 package com.huazie.frame.cache;
 
-import com.huazie.frame.cache.memcached.MemcachedFleaCacheManager;
-import com.huazie.frame.cache.memcached.config.MemcachedConfig;
+import com.huazie.frame.cache.memcached.MemCachedFleaCacheManager;
+import com.huazie.frame.cache.memcached.config.MemCachedConfig;
 import com.huazie.frame.cache.redis.config.RedisConfig;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -31,8 +31,8 @@ public class FleaCacheTest {
     @Test
     public void testFleaCache() {
 
-        MemcachedFleaCacheManager manager = MemcachedFleaCacheManager.getInstance();
-
+        MemCachedFleaCacheManager manager = MemCachedFleaCacheManager.getInstance();
+        manager.initPool();
         AbstractFleaCache cache = manager.getCache("fleaparadetail");
         LOGGER.debug("Cache={}", cache);
 
@@ -45,8 +45,8 @@ public class FleaCacheTest {
 
     @Test
     public void testProperties() throws Exception {
-        MemcachedConfig config = MemcachedConfig.getConfig();
-        LOGGER.debug("MemcachedConfig={}", config);
+        MemCachedConfig config = MemCachedConfig.getConfig();
+        LOGGER.debug("MemCachedConfig={}", config);
         RedisConfig redisConfig = RedisConfig.getConfig();
         LOGGER.debug("RedisConfig={}", redisConfig);
     }

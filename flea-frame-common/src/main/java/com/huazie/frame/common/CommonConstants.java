@@ -80,11 +80,11 @@ public interface CommonConstants {
         /**
          * <p> 逗号 </p>
          */
-        String SQL_COMMA = ",";
+        String COMMA = ",";
         /**
          * <p> 冒号 </p>
          */
-        String SQL_COLON = ":";
+        String COLON = ":";
     }
 
     /**

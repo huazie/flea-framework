@@ -2,8 +2,8 @@ package com.huazie.frame.core.base.cfgdata;
 
 import com.huazie.frame.cache.AbstractFleaCache;
 import com.huazie.frame.cache.AbstractSpringCache;
-import com.huazie.frame.cache.memcached.MemcachedFleaCacheManager;
-import com.huazie.frame.cache.memcached.MemcachedSpringCacheManager;
+import com.huazie.frame.cache.memcached.MemCachedFleaCacheManager;
+import com.huazie.frame.cache.memcached.MemCachedSpringCacheManager;
 import com.huazie.frame.common.FleaFrameManager;
 import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaParaDetailSV;
@@ -68,8 +68,8 @@ public class FleaParaDetailSVImplTest {
     @Test
     public void testFleaCache() {
         try {
-            MemcachedFleaCacheManager manager = MemcachedFleaCacheManager.getInstance();
-
+            MemCachedFleaCacheManager manager = MemCachedFleaCacheManager.getInstance();
+            manager.initPool();
             AbstractFleaCache cache = manager.getCache("fleaparadetail");
             LOGGER.debug("Cache={}", cache);
 
@@ -87,7 +87,7 @@ public class FleaParaDetailSVImplTest {
     @Test
     public void testSpringCache() {
         try {
-            MemcachedSpringCacheManager memcachedCacheManager = (MemcachedSpringCacheManager) applicationContext.getBean("cacheManager");
+            MemCachedSpringCacheManager memcachedCacheManager = (MemCachedSpringCacheManager) applicationContext.getBean("cacheManager");
             LOGGER.debug("MemcachedCacheManager={}", memcachedCacheManager);
 
             AbstractSpringCache cache = memcachedCacheManager.getCache("fleaparadetail");

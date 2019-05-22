@@ -1,7 +1,6 @@
 package com.huazie.frame.cache.redis.config;
 
 import com.huazie.frame.cache.common.CacheConstants;
-import com.huazie.frame.cache.memcached.config.MemcachedConfig;
 import com.huazie.frame.cache.redis.pojo.FleaRedisServerInfo;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.util.ArrayUtils;
@@ -54,9 +53,9 @@ public class RedisConfig {
      * @return Redis缓存配置类实例
      * @since 1.0.0
      */
-    public static RedisConfig getConfig() throws Exception {
+    public static RedisConfig getConfig() {
         if (ObjectUtils.isEmpty(config)) {
-            synchronized (MemcachedConfig.class) {
+            synchronized (RedisConfig.class) {
                 if (ObjectUtils.isEmpty(config)) {
                     config = new RedisConfig();
                     List<FleaRedisServerInfo> fleaRedisServerInfos = null;
@@ -64,15 +63,15 @@ public class RedisConfig {
                     String passwords = PropertiesUtil.getStringValue(prop, CacheConstants.RedisConfigConstants.REDIS_CONFIG_PASSWORD);
                     if (StringUtils.isNotBlank(servers) && StringUtils.isNotBlank(passwords)) {
                         // 取逗号分隔的服务器地址列表
-                        String[] serverArr = StringUtils.split(servers, CommonConstants.SymbolConstants.SQL_COMMA);
-                        String[] passwordArr = StringUtils.split(passwords, CommonConstants.SymbolConstants.SQL_COMMA);
+                        String[] serverArr = StringUtils.split(servers, CommonConstants.SymbolConstants.COMMA);
+                        String[] passwordArr = StringUtils.split(passwords, CommonConstants.SymbolConstants.COMMA);
                         if (ArrayUtils.isNotEmpty(serverArr)) {
                             fleaRedisServerInfos = new ArrayList<FleaRedisServerInfo>();
                             for (int i = 0; i < serverArr.length; i++) {
                                 String ip = serverArr[i];
                                 FleaRedisServerInfo redisServerInfo = new FleaRedisServerInfo();
                                 if (StringUtils.isNotBlank(ip)) {
-                                    String[] ipArr = StringUtils.split(ip, CommonConstants.SymbolConstants.SQL_COLON);
+                                    String[] ipArr = StringUtils.split(ip, CommonConstants.SymbolConstants.COLON);
                                     if (ArrayUtils.isNotEmpty(ipArr) && CommonConstants.NumeralConstants.INT_TWO == ipArr.length) {
                                         redisServerInfo.setHost(ipArr[CommonConstants.NumeralConstants.INT_ZERO]);
                                         redisServerInfo.setPort(Integer.parseInt(ipArr[CommonConstants.NumeralConstants.INT_ONE]));

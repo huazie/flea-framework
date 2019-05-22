@@ -20,7 +20,6 @@
         <property name="locations"><!-- 单个配置文件使用location，且不用使用list，多个配置文件使用locations -->
             <list>
                 <value>classpath:flea/db/flea-db-config.properties</value>
-                <value>classpath:flea/cache/memcached.properties</value>
             </list>
         </property>
         <property name="fileEncoding" value="UTF-8"/>
@@ -80,59 +79,13 @@
     <tx:annotation-driven transaction-manager="fleaConfigTransactionManager"/>
 
     <!-- 配置Memcached -->
-    <bean id="memcachedPool" class="com.whalin.MemCached.SockIOPool"
-          factory-method="getInstance" init-method="initialize" lazy-init="false"
-          destroy-method="shutDown">
-        <constructor-arg>
-            <value>memcachedPool</value>
-        </constructor-arg>
-        <property name="servers">
-            <list>
-                <value>${memcached.server1}</value>
-                <value>${memcached.server2}</value>
-            </list>
-        </property>
-        <property name="weights">
-            <list>
-                <value>${memcached.weight1}</value>
-                <value>${memcached.weight2}</value>
-            </list>
-        </property>
-        <property name="initConn">
-            <value>${memcached.initConn}</value>
-        </property>
-        <property name="minConn">
-            <value>${memcached.minConn}</value>
-        </property>
-        <property name="maxConn">
-            <value>${memcached.maxConn}</value>
-        </property>
-        <property name="maintSleep">
-            <value>${memcached.maintSleep}</value>
-        </property>
-        <property name="nagle">
-            <value>${memcached.nagle}</value>
-        </property>
-        <property name="socketTO">
-            <value>${memcached.socketTO}</value>
-        </property>
-        <property name="socketConnectTO">
-            <value>${memcached.socketConnectTO}</value>
-        </property>
-        <property name="hashingAlg">
-            <value>${memcached.hashingAlg}</value>
-        </property>
-    </bean>
+    <bean id="memcachedPool" class="com.huazie.frame.cache.memcached.MemCachedPool" factory-method="getInstance" init-method="initialize" lazy-init="false" destroy-method="shutDown" />
 
     <!-- 配置MemcachedClient -->
-    <bean id="memcachedClient" class="com.whalin.MemCached.MemCachedClient">
-        <constructor-arg>
-            <value>memcachedPool</value>
-        </constructor-arg>
-    </bean>
+    <bean id="memcachedClient" class="com.whalin.MemCached.MemCachedClient" />
 
     <!-- 配置缓存管理 -->
-    <bean id="cacheManager" class="com.huazie.frame.cache.memcached.MemcachedSpringCacheManager">
+    <bean id="cacheManager" class="com.huazie.frame.cache.memcached.MemCachedSpringCacheManager">
         <property name="memcachedClient" ref="memcachedClient"/>
         <!-- 配置缓存时间 -->
         <property name="configMap">

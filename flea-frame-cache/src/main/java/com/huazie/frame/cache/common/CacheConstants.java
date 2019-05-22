@@ -20,13 +20,13 @@ public interface CacheConstants {
          */
         String MEMCACHE_FILE_NAME = "flea/cache/memcached.properties";
         /**
-         * Memcached 服务器地址总数
-         */
-        String MEMCACHED_CONFIG_SERVER_COUNT = "memcached.server.count";
-        /**
          * Memcached 服务器地址
          */
         String MEMCACHED_CONFIG_SERVER = "memcached.server";
+        /**
+         * Memcached 服务器权重分配
+         */
+        String MEMCACHED_CONFIG_WEIGHT = "memcached.weight";
         /**
          * 初始化时对每个服务器建立的连接数目
          */
@@ -55,10 +55,6 @@ public interface CacheConstants {
          * Socket连接超时时间
          */
         String MEMCACHED_CONFIG_SOCKETCONNECTTO = "memcached.socketConnectTO";
-        /**
-         * Memcached 服务器权重分配
-         */
-        String MEMCACHED_CONFIG_WEIGHT = "memcached.weight";
         /**
          * Memcached 一致性hash算法
          */
