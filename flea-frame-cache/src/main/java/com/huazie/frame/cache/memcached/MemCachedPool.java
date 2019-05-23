@@ -22,7 +22,7 @@ public class MemCachedPool {
     /**
      * <p> 获取MemCached连接池实例 </p>
      *
-     * @return Memcached连接池实例对象
+     * @return MemCached连接池实例对象
      * @since 1.0.0
      */
     public static MemCachedPool getInstance() {

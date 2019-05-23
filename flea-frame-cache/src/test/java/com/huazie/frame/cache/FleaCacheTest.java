@@ -2,18 +2,16 @@ package com.huazie.frame.cache;
 
 import com.huazie.frame.cache.memcached.MemCachedFleaCacheManager;
 import com.huazie.frame.cache.memcached.config.MemCachedConfig;
+import com.huazie.frame.cache.redis.RedisPool;
 import com.huazie.frame.cache.redis.config.RedisConfig;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Client;
 import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPoolConfig;
-import redis.clients.jedis.JedisShardInfo;
 import redis.clients.jedis.ShardedJedis;
 import redis.clients.jedis.ShardedJedisPool;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -44,7 +42,7 @@ public class FleaCacheTest {
     }
 
     @Test
-    public void testProperties() throws Exception {
+    public void testProperties() {
         MemCachedConfig config = MemCachedConfig.getConfig();
         LOGGER.debug("MemCachedConfig={}", config);
         RedisConfig redisConfig = RedisConfig.getConfig();
@@ -95,27 +93,10 @@ public class FleaCacheTest {
     }
 
     @Test
-    public void testShardedJedis() throws Exception {
-
-        // #1. 设置连接池的相关配置
-        JedisPoolConfig poolConfig = new JedisPoolConfig();
-        poolConfig.setMaxTotal(2);
-        poolConfig.setMaxIdle(1);
-        poolConfig.setMaxWaitMillis(2000);
-        poolConfig.setTestOnBorrow(false);
-        poolConfig.setTestOnReturn(false);
-
-        // #2.设置redis信息
-        JedisShardInfo shardInfo1 = new JedisShardInfo("127.0.0.1", 10001, 500);
-        shardInfo1.setPassword("huazie123");
-        JedisShardInfo shardInfo2 = new JedisShardInfo("127.0.0.1", 10002, 500);
-        shardInfo2.setPassword("huazie123");
-        JedisShardInfo shardInfo3 = new JedisShardInfo("127.0.0.1", 10003, 500);
-        shardInfo3.setPassword("huazie123");
+    public void testShardedJedis(){
 
         //初始化ShardedJedisPool
-        List<JedisShardInfo> infoList = Arrays.asList(shardInfo1, shardInfo2, shardInfo3);
-        ShardedJedisPool jedisPool = new ShardedJedisPool(poolConfig, infoList);
+        ShardedJedisPool jedisPool = RedisPool.getInstance().getJedisPool();
 
         //进行查询等其他操作
         ShardedJedis jedis = null;

@@ -10,70 +10,118 @@ package com.huazie.frame.cache.common;
 public interface CacheConstants {
 
     /**
-     * <p> Memcached配置数据常量 </p>
+     * <p> MemCached配置数据常量 </p>
      *
      * @since 1.0.0
      */
-    interface MemcachedConfigConstants {
+    interface MemCachedConfigConstants {
         /**
-         * Memcached 配置文件名
+         * <p> MemCached 配置文件名 </p>
          */
         String MEMCACHE_FILE_NAME = "flea/cache/memcached.properties";
         /**
-         * Memcached 服务器地址
+         * <p> MemCached 服务器地址 </p>
          */
         String MEMCACHED_CONFIG_SERVER = "memcached.server";
         /**
-         * Memcached 服务器权重分配
+         * <p> MemCached 服务器权重分配 </p>
          */
         String MEMCACHED_CONFIG_WEIGHT = "memcached.weight";
         /**
-         * 初始化时对每个服务器建立的连接数目
+         * <p> 初始化时对每个服务器建立的连接数目 </p>
          */
         String MEMCACHED_CONFIG_INITCONN = "memcached.initConn";
         /**
-         * 每个服务器建立最小的连接数
+         * <p> 每个服务器建立最小的连接数 </p>
          */
         String MEMCACHED_CONFIG_MINCONN = "memcached.minConn";
         /**
-         * 每个服务器建立最大的连接数
+         * <p> 每个服务器建立最大的连接数 </p>
          */
         String MEMCACHED_CONFIG_MAXCONN = "memcached.maxConn";
         /**
-         * 自查线程周期进行工作，其每次休眠时间
+         * <p> 自查线程周期进行工作，其每次休眠时间 </p>
          */
         String MEMCACHED_CONFIG_MAINTSLEEP = "memcached.maintSleep";
         /**
-         * Socket的参数，如果是true在写数据时不缓冲，立即发送出去
+         * <p> Socket的参数，如果是true在写数据时不缓冲，立即发送出去 </p>
          */
         String MEMCACHED_CONFIG_NAGLE = "memcached.nagle";
         /**
-         * Socket阻塞读取数据的超时时间
+         * <p> Socket阻塞读取数据的超时时间 </p>
          */
         String MEMCACHED_CONFIG_SOCKETTO = "memcached.socketTO";
         /**
-         * Socket连接超时时间
+         * <p> Socket连接超时时间 </p>
          */
         String MEMCACHED_CONFIG_SOCKETCONNECTTO = "memcached.socketConnectTO";
         /**
-         * Memcached 一致性hash算法
+         * <p> MemCached 一致性hash算法 </p>
          */
         String MEMCACHED_CONFIG_HASHINGALG = "memcached.hashingAlg";
     }
 
+    /**
+     * <p> Redis配置数据常量 </p>
+     *
+     * @since 1.0.0
+     */
     interface RedisConfigConstants {
         /**
-         * Redis 配置文件名
+         * <p> Redis 配置文件名 </p>
          */
         String REDIS_FILE_NAME = "flea/cache/redis.properties";
         /**
-         * Redis 服务器地址
+         * <p> Redis 服务器地址 </p>
          */
         String REDIS_CONFIG_SERVER = "redis.server";
         /**
-         * Redis 授权密码
+         * <p> Redis 授权密码 </p>
          */
         String REDIS_CONFIG_PASSWORD = "redis.password";
+        /**
+         * <p> Redis 服务器权重配置 </p>
+         */
+        String REDIS_CONFIG_WEIGHT = "redis.weight";
+        /**
+         * <p> Redis 客户端socket连接超时时间 </p>
+         */
+        String REDIS_CONFIG_CONNECTIONTIMEOUT = "redis.connectionTimeout";
+        /**
+         * <p> Redis 客户端socket连接超时时间 </p>
+         */
+        String REDIS_CONFIG_SOTIMEOUT = "redis.soTimeout";
+        /**
+         * <p> Redis 分布式hash算法 </p>
+         * <p> 1 : MURMUR_HASH </p>
+         * <p> 2 : MD5 </p>
+         */
+        String REDIS_CONFIG_HASHINGALG = "redis.hashingAlg";
+        /**
+         * <p> MURMUR_HASH 分布式hash算法 </p>
+         */
+        int REDIS_CONFIG_HASHINGALG_MURMUR_HASH = 1;
+        /**
+         * <p> MD5 分布式hash算法 </p>
+         */
+        int REDIS_CONFIG_HASHINGALG_MD5 = 2;
+        /**
+         * <p> Redis客户端Jedis连接池最大连接数 </p>
+         */
+        String REDIS_CONFIG_POOL_MAXTOTAL = "redis.pool.maxTotal";
+        /**
+         * <p> Redis客户端Jedis连接池最大空闲连接数 </p>
+         */
+        String REDIS_CONFIG_POOL_MAXIDLE = "redis.pool.maxIdle";
+        /**
+         * <p> Redis客户端Jedis连接池最小空闲连接数 </p>
+         */
+        String REDIS_CONFIG_POOL_MINIDLE = "redis.pool.minIdle";
+        /**
+         * <p> Redis客户端Jedis连接池获取连接时的最大等待毫秒数 </p>
+         */
+        String REDIS_CONFIG_POOL_MAXWAITMILLIS = "redis.pool.maxWaitMillis";
+
     }
 
 }

@@ -50,7 +50,7 @@ public class MemCachedConfig {
     private int hashingAlg;     // 一致性hash算法
 
     static {
-        String fileName = CacheConstants.MemcachedConfigConstants.MEMCACHE_FILE_NAME;
+        String fileName = CacheConstants.MemCachedConfigConstants.MEMCACHE_FILE_NAME;
         if (StringUtils.isNotBlank(System.getProperty("fleaframe.cache.memcached.config.filename"))) {
             fileName = StringUtils.trim(System.getProperty("fleaframe.cache.memcached.config.filename"));
             if (LOGGER.isDebugEnabled()) {
@@ -79,16 +79,16 @@ public class MemCachedConfig {
                     try {
 
                         // 获取MemCached服务器地址
-                        String allServer = PropertiesUtil.getStringValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_SERVER);
+                        String allServer = PropertiesUtil.getStringValue(prop, CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_SERVER);
                         if (StringUtils.isBlank(allServer)) {
-                            throw new Exception("The configuration attribute [" + CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_SERVER + "] is not exist");
+                            throw new Exception("The configuration attribute [" + CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_SERVER + "] is not exist");
                         }
                         String[] serverArr = StringUtils.split(allServer, CommonConstants.SymbolConstants.COMMA);
                         if (ArrayUtils.isEmpty(serverArr)) {
-                            throw new Exception("The value of configuration attribute [" + CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_SERVER + "] is empty");
+                            throw new Exception("The value of configuration attribute [" + CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_SERVER + "] is empty");
                         }
 
-                        String allWeight = PropertiesUtil.getStringValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_WEIGHT);
+                        String allWeight = PropertiesUtil.getStringValue(prop, CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_WEIGHT);
                         List<Integer> weightList = new ArrayList<Integer>();
                         if (StringUtils.isNotBlank(allWeight)) {
                             String[] weightStrArr = StringUtils.split(allWeight, CommonConstants.SymbolConstants.COMMA);
@@ -102,14 +102,14 @@ public class MemCachedConfig {
 
                         config.setServers(serverArr);
                         config.setWeights(weightList.toArray(new Integer[0]));
-                        config.setInitConn(PropertiesUtil.getIntegerValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_INITCONN));
-                        config.setMinConn(PropertiesUtil.getIntegerValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_MINCONN));
-                        config.setMaxConn(PropertiesUtil.getIntegerValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_MAXCONN));
-                        config.setMaintSleep(PropertiesUtil.getIntegerValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_MAINTSLEEP));
-                        config.setNagle(PropertiesUtil.getBooleanValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_NAGLE));
-                        config.setSocketTO(PropertiesUtil.getIntegerValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_SOCKETTO));
-                        config.setSocketConnectTO(PropertiesUtil.getIntegerValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_SOCKETCONNECTTO));
-                        config.setHashingAlg(PropertiesUtil.getIntegerValue(prop, CacheConstants.MemcachedConfigConstants.MEMCACHED_CONFIG_HASHINGALG));
+                        config.setInitConn(PropertiesUtil.getIntegerValue(prop, CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_INITCONN));
+                        config.setMinConn(PropertiesUtil.getIntegerValue(prop, CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_MINCONN));
+                        config.setMaxConn(PropertiesUtil.getIntegerValue(prop, CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_MAXCONN));
+                        config.setMaintSleep(PropertiesUtil.getIntegerValue(prop, CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_MAINTSLEEP));
+                        config.setNagle(PropertiesUtil.getBooleanValue(prop, CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_NAGLE));
+                        config.setSocketTO(PropertiesUtil.getIntegerValue(prop, CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_SOCKETTO));
+                        config.setSocketConnectTO(PropertiesUtil.getIntegerValue(prop, CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_SOCKETCONNECTTO));
+                        config.setHashingAlg(PropertiesUtil.getIntegerValue(prop, CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_HASHINGALG));
                     } catch (Exception e) {
                         if (LOGGER.isErrorEnabled()) {
                             LOGGER.error("Please check the MemCached config :", e);
