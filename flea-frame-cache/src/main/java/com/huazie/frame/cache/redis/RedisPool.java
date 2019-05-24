@@ -30,9 +30,9 @@ public class RedisPool {
      * @since 1.0.0
      */
     public static RedisPool getInstance() {
-        if (isInit.equals(Boolean.FALSE)) {
+        if (Boolean.FALSE.equals(isInit)) {
             synchronized (isInit) {
-                if (isInit.equals(Boolean.FALSE)) {
+                if (Boolean.FALSE.equals(isInit)) {
                     isInit = Boolean.TRUE;
                     redisPool = new RedisPool();
                     redisPool.redisConfig = RedisConfig.getConfig();
@@ -43,11 +43,24 @@ public class RedisPool {
         return redisPool;
     }
 
+    /**
+     * <p> Redis服务器配置信息 </p>
+     *
+     * @return Redis服务器配置信息
+     * @since 1.0.0
+     */
     public RedisConfig getRedisConfig() {
         return redisConfig;
     }
 
+    /**
+     * <p> 分布式Redis集群客户端连接池 </p>
+     *
+     * @return 分布式Redis集群客户端连接池
+     * @since 1.0.0
+     */
     public ShardedJedisPool getJedisPool() {
         return jedisPool;
     }
+
 }

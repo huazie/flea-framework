@@ -2,15 +2,12 @@ package com.huazie.frame.cache;
 
 import com.huazie.frame.cache.memcached.MemCachedFleaCacheManager;
 import com.huazie.frame.cache.memcached.config.MemCachedConfig;
-import com.huazie.frame.cache.redis.RedisPool;
+import com.huazie.frame.cache.redis.RedisClient;
 import com.huazie.frame.cache.redis.config.RedisConfig;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import redis.clients.jedis.Client;
 import redis.clients.jedis.Jedis;
-import redis.clients.jedis.ShardedJedis;
-import redis.clients.jedis.ShardedJedisPool;
 
 import java.util.Date;
 import java.util.Iterator;
@@ -75,14 +72,14 @@ public class FleaCacheTest {
 //        jedis.lpush("huazie-list", "Hangzhou");
 
         // #4. 获取列表数据输出
-        List<String> list = jedis.lrange("huazie-list", 0 ,2);
+        List<String> list = jedis.lrange("huazie-list", 0, 2);
         LOGGER.debug("list = {}", list);
 
         // #5. 获取数据并输出
         Set<String> keys = jedis.keys("*");
-        Iterator<String> it=keys.iterator();
+        Iterator<String> it = keys.iterator();
         int i = 1;
-        while(it.hasNext()){
+        while (it.hasNext()) {
             String key = it.next();
             LOGGER.debug("key{} = {}", i++, key);
         }
@@ -93,33 +90,17 @@ public class FleaCacheTest {
     }
 
     @Test
-    public void testShardedJedis(){
+    public void testShardedJedis() {
 
-        //初始化ShardedJedisPool
-        ShardedJedisPool jedisPool = RedisPool.getInstance().getJedisPool();
+        RedisClient client = new RedisClient();
 
-        //进行查询等其他操作
-        ShardedJedis jedis = null;
+        // 设置数据
+        LOGGER.debug(client.set("huazie", "hello world"));
+        LOGGER.debug(client.set("huazie1", "我是谁，我在哪"));
 
-        try {
-            jedis = jedisPool.getResource();
-
-            // 设置数据
-            // jedis.set("huazie", "hello world");
-            // jedis.set("huazie1", "我是谁，我在哪");
-
-            // 获取数据
-            Client client1 = jedis.getShard("huazie").getClient();
-            Client client2 = jedis.getShard("huazie1").getClient();
-            LOGGER.debug("value = {}, ip = {}:{}", jedis.get("huazie"), client1.getHost(), client1.getPort());
-            LOGGER.debug("value = {}, ip = {}:{}", jedis.get("huazie1"), client2.getHost(), client2.getPort());
-
-        } finally {
-            //使用后一定关闭，还给连接池
-            if(jedis != null) {
-                jedis.close();
-            }
-        }
+        // 获取数据
+        LOGGER.debug("value = {}, ip = {}, host = {}, port = {}", client.get("huazie"), client.getLocation("huazie"), client.getHost("huazie"), client.getPort("huazie"));
+        LOGGER.debug("value = {}, ip = {}, host = {}, port = {}", client.get("huazie1"), client.getLocation("huazie1"), client.getHost("huazie1"), client.getPort("huazie1"));
 
     }
 }

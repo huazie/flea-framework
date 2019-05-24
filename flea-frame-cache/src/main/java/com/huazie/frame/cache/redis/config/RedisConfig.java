@@ -67,7 +67,7 @@ public class RedisConfig {
                 if (ObjectUtils.isEmpty(config)) {
                     config = new RedisConfig();
                     try {
-                        List<JedisShardInfo> fleaRedisServerInfos = null;
+                        List<JedisShardInfo> jedisRedisInfos = null;
                         String servers = PropertiesUtil.getStringValue(prop, CacheConstants.RedisConfigConstants.REDIS_CONFIG_SERVER);
                         String passwords = PropertiesUtil.getStringValue(prop, CacheConstants.RedisConfigConstants.REDIS_CONFIG_PASSWORD);
                         String weights = PropertiesUtil.getStringValue(prop, CacheConstants.RedisConfigConstants.REDIS_CONFIG_WEIGHT);
@@ -89,7 +89,7 @@ public class RedisConfig {
                             }
 
                             if (ArrayUtils.isNotEmpty(serverArr)) {
-                                fleaRedisServerInfos = new ArrayList<JedisShardInfo>();
+                                jedisRedisInfos = new ArrayList<JedisShardInfo>();
                                 for (int i = 0; i < serverArr.length; i++) {
                                     String ip = serverArr[i];
 
@@ -134,11 +134,11 @@ public class RedisConfig {
                                         jedisShardInfo.setPassword(passwordArr[i]);
                                     }
 
-                                    fleaRedisServerInfos.add(jedisShardInfo);
+                                    jedisRedisInfos.add(jedisShardInfo);
                                 }
                             }
                         }
-                        config.setServers(fleaRedisServerInfos);
+                        config.setServers(jedisRedisInfos);
 
                         // 获取Redis分布式hash算法
                         Integer alg = PropertiesUtil.getIntegerValue(prop, CacheConstants.RedisConfigConstants.REDIS_CONFIG_HASHINGALG);
