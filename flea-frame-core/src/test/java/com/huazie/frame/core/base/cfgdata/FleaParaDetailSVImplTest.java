@@ -1,9 +1,13 @@
 package com.huazie.frame.core.base.cfgdata;
 
 import com.huazie.frame.cache.AbstractFleaCache;
+import com.huazie.frame.cache.AbstractFleaCacheManager;
 import com.huazie.frame.cache.AbstractSpringCache;
-import com.huazie.frame.cache.memcached.MemCachedFleaCacheManager;
+import com.huazie.frame.cache.AbstractSpringCacheManager;
+import com.huazie.frame.cache.FleaCacheManagerFactory;
+import com.huazie.frame.cache.common.CacheEnum;
 import com.huazie.frame.cache.memcached.MemCachedSpringCacheManager;
+import com.huazie.frame.cache.redis.RedisSpringCacheManager;
 import com.huazie.frame.common.FleaFrameManager;
 import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaParaDetailSV;
@@ -19,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.sql.Time;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -50,6 +55,7 @@ public class FleaParaDetailSVImplTest {
         IFleaParaDetailSV sv = (IFleaParaDetailSV) applicationContext.getBean("fleaParaDetailSVImpl");
         try {
             sv.getParaDetails("FLEA_RES_STATE", "");
+            Thread.sleep(1000000);
         } catch (Exception e) {
             LOGGER.error("Exception:", e);
         }
@@ -60,24 +66,24 @@ public class FleaParaDetailSVImplTest {
         IFleaParaDetailSV sv = (IFleaParaDetailSV) applicationContext.getBean("fleaParaDetailSVImpl");
         try {
             sv.getParaDetail("FLEAER_CERT_TYPE", "1");
+            Thread.sleep(1000000);
         } catch (Exception e) {
             LOGGER.error("Exception:", e);
         }
     }
 
     @Test
-    public void testFleaCache() {
+    public void testMemCachedFleaCache() {
         try {
-            MemCachedFleaCacheManager manager = MemCachedFleaCacheManager.getInstance();
-            manager.initPool();
+            AbstractFleaCacheManager manager = FleaCacheManagerFactory.getFleaCacheManager(CacheEnum.MemCached.getName());
+            LOGGER.debug("MemCachedCacheManager={}", manager);
+
             AbstractFleaCache cache = manager.getCache("fleaparadetail");
             LOGGER.debug("Cache={}", cache);
 
             //#### 复杂配置参数
-//		    cache.put("menu1", "huazie");
-//            cache.get("menu1");
-            cache.get("FLEAER_CERT_TYPE_1");
-//            cache.get("FLEA_RES_STATE");
+            cache.get("FLEA_RES_STATE");
+//            cache.delete("FLEA_RES_STATE");
             LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
         } catch (Exception e) {
             LOGGER.error("Exception:", e);
@@ -85,12 +91,30 @@ public class FleaParaDetailSVImplTest {
     }
 
     @Test
-    public void testSpringCache() {
+    public void testRedisFleaCache() {
         try {
-            MemCachedSpringCacheManager memcachedCacheManager = (MemCachedSpringCacheManager) applicationContext.getBean("cacheManager");
-            LOGGER.debug("MemcachedCacheManager={}", memcachedCacheManager);
+            AbstractFleaCacheManager manager = FleaCacheManagerFactory.getFleaCacheManager(CacheEnum.Redis.getName());
+            LOGGER.debug("RedisCacheManager={}", manager);
+            AbstractFleaCache cache = manager.getCache("fleaparadetail");
+            LOGGER.debug("Cache={}", cache);
 
-            AbstractSpringCache cache = memcachedCacheManager.getCache("fleaparadetail");
+            //#### 复杂配置参数
+//            cache.get("FLEA_RES_STATE");
+            cache.delete("FLEA_RES_STATE");
+            cache.delete("FLEAER_CERT_TYPE_1");
+            LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
+        } catch (Exception e) {
+            LOGGER.error("Exception:", e);
+        }
+    }
+
+    @Test
+    public void testMemCachedSpringCache() {
+        try {
+            AbstractSpringCacheManager manager = (MemCachedSpringCacheManager) applicationContext.getBean("memCachedSpringCacheManager");
+            LOGGER.debug("MemCachedCacheManager={}", manager);
+
+            AbstractSpringCache cache = manager.getCache("fleaparadetail");
             LOGGER.debug("Cache={}", cache);
 
             //#### 1.  简单字符串
@@ -101,7 +125,7 @@ public class FleaParaDetailSVImplTest {
             //#### 2.  简单对象(要是可以序列化的对象)
 //			String user = new String("huazie");
 //			cache.put("user", user);
-//			TestCache.LOGGER.debug(cache.get("user", String.class));
+//			LOGGER.debug(cache.get("user", String.class));
 
             //#### 3.  List塞对象
 //			List<String> userList = new ArrayList<String>();
@@ -109,7 +133,41 @@ public class FleaParaDetailSVImplTest {
 //			userList.add("lgh");
 //			cache.put("user_list", userList);
 
-//			TestCache.LOGGER.debug(cache.get("user_list",userList.getClass()).toString());
+//			LOGGER.debug(cache.get("user_list",userList.getClass()).toString());
+
+        } catch (Exception e) {
+            LOGGER.error("Exception:", e);
+        }
+    }
+
+    @Test
+    public void testRedisSpringCache() {
+        try {
+            AbstractSpringCacheManager manager = (RedisSpringCacheManager) applicationContext.getBean("redisSpringCacheManager");
+            LOGGER.debug("RedisCacheManager={}", manager);
+
+            AbstractSpringCache cache = manager.getCache("fleaparadetail");
+            LOGGER.debug("Cache={}", cache);
+
+            //#### 1.  简单字符串
+//			cache.put("menu1", "huazie");
+//            cache.get("menu1");
+//            cache.get("menu1", String.class);
+
+            //#### 2.  简单对象(要是可以序列化的对象)
+//			String user = new String("huazie");
+//			cache.put("user", user);
+//			LOGGER.debug(cache.get("user", String.class));
+//            cache.get("FLEA_RES_STATE");
+            cache.clear();
+
+            //#### 3.  List塞对象
+//			List<String> userList = new ArrayList<String>();
+//			userList.add("huazie");
+//			userList.add("lgh");
+//			cache.put("user_list", userList);
+
+//			LOGGER.debug(cache.get("user_list",userList.getClass()).toString());
 
         } catch (Exception e) {
             LOGGER.error("Exception:", e);

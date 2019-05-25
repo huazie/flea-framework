@@ -1,7 +1,11 @@
 package com.huazie.frame.cache.redis;
 
+import com.huazie.frame.cache.AbstractFleaCache;
+import com.huazie.frame.cache.AbstractFleaCacheManager;
 import com.huazie.frame.cache.AbstractSpringCache;
 import com.huazie.frame.cache.AbstractSpringCacheManager;
+import com.huazie.frame.cache.redis.impl.RedisFleaCache;
+import org.springframework.cache.support.AbstractCacheManager;
 
 /**
  * <p> Redis Flea缓存管理类 </p>
@@ -10,11 +14,11 @@ import com.huazie.frame.cache.AbstractSpringCacheManager;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class RedisFleaCacheManager extends AbstractSpringCacheManager {
+public class RedisFleaCacheManager extends AbstractFleaCacheManager {
 
     @Override
-    protected AbstractSpringCache newCache(String name, long expiry) {
-        return null;
+    protected AbstractFleaCache newCache(String name, long expiry) {
+        return new RedisFleaCache(name, expiry);
     }
 
 }

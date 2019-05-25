@@ -30,14 +30,16 @@ public abstract class AbstractSpringCacheManager extends AbstractTransactionSupp
 
     @Override
     public AbstractSpringCache getCache(String name) {
-        synchronized (cacheMap) {
-            if (!cacheMap.containsKey(name)) {
-                Long expiry = configMap.get(name);
-                if (expiry == null) {
-                    expiry = CommonConstants.NumeralConstants.ZERO; // 表示永久
-                    configMap.put(name, expiry);
+        if(!cacheMap.containsKey(name)) {
+            synchronized (cacheMap) {
+                if (!cacheMap.containsKey(name)) {
+                    Long expiry = configMap.get(name);
+                    if (expiry == null) {
+                        expiry = CommonConstants.NumeralConstants.ZERO; // 表示永久
+                        configMap.put(name, expiry);
+                    }
+                    cacheMap.put(name, newCache(name, expiry));
                 }
-                cacheMap.put(name, newCache(name, expiry));
             }
         }
         return cacheMap.get(name);

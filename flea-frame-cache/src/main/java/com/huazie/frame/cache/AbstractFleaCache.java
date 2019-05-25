@@ -21,7 +21,9 @@ public abstract class AbstractFleaCache implements IFleaCache {
     private final static Logger LOGGER = LoggerFactory.getLogger(AbstractFleaCache.class);
 
     private Set<String> keySet = new HashSet<String>();
+
     private final String name;  // 缓存主要关键字（用于区分）
+
     private final long expiry;  // 有效期(单位：秒)
 
     protected CacheEnum cache;  // 缓存类型
@@ -66,6 +68,9 @@ public abstract class AbstractFleaCache implements IFleaCache {
 
     @Override
     public void clear() {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("AbstractFleaCache##get(String) KEYS={}", keySet);
+        }
         for (String key : keySet) {
             delete(key);
         }

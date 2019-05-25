@@ -24,7 +24,7 @@ public class MemCachedFleaCache extends AbstractFleaCache {
     public MemCachedFleaCache(String name, long expiry, MemCachedClient memcachedClient) {
         super(name, expiry);
         this.memcachedClient = memcachedClient;
-        cache = CacheEnum.Memcached;
+        cache = CacheEnum.MemCached;
     }
 
     @Override
@@ -41,7 +41,6 @@ public class MemCachedFleaCache extends AbstractFleaCache {
             LOGGER.debug("MemCachedFleaCache##putNativeValue(String, Object, long) KEY={}", key);
             LOGGER.debug("MemCachedFleaCache##putNativeValue(String, Object, long) VALUE={}", value);
             LOGGER.debug("MemCachedFleaCache##putNativeValue(String, Object, long) EXPIRY={}s", expiry);
-
         }
         memcachedClient.set(key, value, new Date(expiry * 1000));
     }

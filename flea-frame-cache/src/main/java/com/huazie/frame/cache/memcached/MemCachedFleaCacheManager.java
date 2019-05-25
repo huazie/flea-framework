@@ -7,7 +7,7 @@ import com.huazie.frame.common.util.ObjectUtils;
 import com.whalin.MemCached.MemCachedClient;
 
 /**
- * <p> Memcached Flea缓存管理类 </p>
+ * <p> MemCached Flea缓存管理类 </p>
  *
  * @author huazie
  * @version 1.0.0
@@ -19,25 +19,9 @@ public class MemCachedFleaCacheManager extends AbstractFleaCacheManager {
 
     private MemCachedClient memcachedClient;   // Memcached客户端类
 
-    private MemCachedFleaCacheManager(MemCachedClient memcachedClient) {
+    public MemCachedFleaCacheManager(MemCachedClient memcachedClient) {
         this.memcachedClient = memcachedClient;
-    }
-
-    /**
-     * <p> 获取Flea缓存管理类 </p>
-     *
-     * @return Memcached的Flea缓存管理类实例对象
-     * @since 1.0.0
-     */
-    public static MemCachedFleaCacheManager getInstance() {
-        if (ObjectUtils.isEmpty(cacheManager)) {
-            synchronized (MemCachedFleaCacheManager.class) {
-                if (ObjectUtils.isEmpty(cacheManager)) {
-                    cacheManager = new MemCachedFleaCacheManager(new MemCachedClient());
-                }
-            }
-        }
-        return cacheManager;
+        initPool();
     }
 
     /**
@@ -45,7 +29,7 @@ public class MemCachedFleaCacheManager extends AbstractFleaCacheManager {
      *
      * @since 1.0.0
      */
-    public void initPool() {
+    private void initPool() {
         MemCachedPool pool = MemCachedPool.getInstance();
         pool.initialize();
     }

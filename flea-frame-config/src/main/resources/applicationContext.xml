@@ -78,26 +78,42 @@
 
     <tx:annotation-driven transaction-manager="fleaConfigTransactionManager"/>
 
-    <!-- 配置Memcached -->
+
+    <!-- 配置MemCachedPool -->
     <bean id="memcachedPool" class="com.huazie.frame.cache.memcached.MemCachedPool" factory-method="getInstance" init-method="initialize" lazy-init="false" destroy-method="shutDown" />
 
-    <!-- 配置MemcachedClient -->
+    <!-- 配置MemCachedClient-->
     <bean id="memcachedClient" class="com.whalin.MemCached.MemCachedClient" />
 
-    <!-- 配置缓存管理 -->
-    <bean id="cacheManager" class="com.huazie.frame.cache.memcached.MemCachedSpringCacheManager">
+    <!--
+        配置缓存管理MemCachedSpringCacheManager
+        配置缓存时间 configMap (key缓存对象名称 value缓存过期时间)
+    -->
+    <bean id="memCachedSpringCacheManager" class="com.huazie.frame.cache.memcached.MemCachedSpringCacheManager">
         <property name="memcachedClient" ref="memcachedClient"/>
-        <!-- 配置缓存时间 -->
         <property name="configMap">
             <map>
-                <!-- key缓存对象名称 value缓存过期时间 这个要定好 -->
                 <entry key="fleaparadetail" value="0"/>
             </map>
         </property>
     </bean>
 
+
+    <!--
+        配置缓存管理RedisSpringCacheManager
+        配置缓存时间 configMap (key缓存对象名称 value缓存过期时间)
+    -->
+    <bean id="redisSpringCacheManager" class="com.huazie.frame.cache.redis.RedisSpringCacheManager">
+        <property name="configMap">
+            <map>
+                <entry key="fleaparadetail" value="0"/>
+            </map>
+        </property>
+    </bean>
+
+
     <!-- 开启缓存 -->
-    <cache:annotation-driven cache-manager="cacheManager" proxy-target-class="true"/>
+    <cache:annotation-driven cache-manager="redisSpringCacheManager" proxy-target-class="true"/>
 
     <!-- 导入调度任务 -->
     <!-- <import resource="spring-quartz.xml" /> -->
