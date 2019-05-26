@@ -17,7 +17,7 @@ public class RedisSpringCache extends AbstractSpringCache {
     }
 
     public RedisSpringCache(String name, long expiry) {
-        super(name, new RedisFleaCache(name, expiry));
+        this(name, new RedisFleaCache(name, expiry));
     }
 
 }

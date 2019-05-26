@@ -65,7 +65,7 @@ public class ObjectUtils {
             return byteArrayOutputStream.toByteArray();
         } catch (IOException e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("Exception occurs in the process of object serialization : ", e);
+                LOGGER.error("Exception occurs in the process of object serialization : {}", e.getMessage());
             }
         }
         return null;
@@ -90,7 +90,7 @@ public class ObjectUtils {
             return objectInputStream.readObject();
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("Exception occurs in the process of object deserialization : ", e);
+                LOGGER.error("Exception occurs in the process of object deserialization : {}", e.getMessage());
             }
         }
         return null;

@@ -2,6 +2,7 @@ package com.huazie.frame.cache;
 
 import com.huazie.frame.cache.common.CacheEnum;
 import com.huazie.frame.common.CommonConstants;
+import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,8 +21,6 @@ public abstract class AbstractFleaCache implements IFleaCache {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(AbstractFleaCache.class);
 
-    private Set<String> keySet = new HashSet<String>();
-
     private final String name;  // 缓存主要关键字（用于区分）
 
     private final long expiry;  // 有效期(单位：秒)
@@ -38,11 +37,11 @@ public abstract class AbstractFleaCache implements IFleaCache {
         Object value = null;
         try {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("AbstractFleaCache##get(String) KEY={}", key);
+                LOGGER.debug("AbstractFleaCache##get(String) KEY = {}", key);
             }
             value = getNativeValue(getNativeKey(key));
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("AbstractFleaCache##get(String) VALUE={}", value);
+                LOGGER.debug("AbstractFleaCache##get(String) VALUE = {}", value);
             }
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
@@ -58,7 +57,8 @@ public abstract class AbstractFleaCache implements IFleaCache {
             return;
         try {
             putNativeValue(getNativeKey(key), value, expiry);
-            keySet.add(key);
+            // 将指定Cache的key添加到Set集合，并存于缓存中
+            addCacheKey(key);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("The action of adding [" + cache.getName() + "] cache occurs exception ：", e);
@@ -68,23 +68,100 @@ public abstract class AbstractFleaCache implements IFleaCache {
 
     @Override
     public void clear() {
+        Set<String> keySet = getCacheKey();
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("AbstractFleaCache##get(String) KEYS={}", keySet);
+            LOGGER.debug("AbstractFleaCache##clear() KEYS = {}", keySet);
         }
-        for (String key : keySet) {
-            delete(key);
+        if (CollectionUtils.isNotEmpty(keySet)) {
+            for (String key : keySet) {
+                deleteNativeValue(getNativeKey(key));
+            }
+            // 删除 记录当前Cache所有数据键关键字 的缓存
+            deleteCacheAllKey();
         }
     }
 
     @Override
     public void delete(String key) {
         try {
+
             deleteNativeValue(getNativeKey(key));
+            // 从 记录当前Cache所有数据键关键字 的缓存中 删除指定数据键关键字key
+            deleteCacheKey(key);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("The action of deleting [" + cache.getName() + "] cache occurs exception ：", e);
             }
         }
+    }
+
+    /**
+     * <p> 将指定数据键关键字{@code key}记录到当前Cache所有数据键关键字的缓存中 </p>
+     *
+     * @param key 指定Cache的数据键关键字
+     * @since 1.0.0
+     */
+    private void addCacheKey(String key) {
+        Set<String> keySet = getCacheKey();
+        if (CollectionUtils.isEmpty(keySet)) {
+            keySet = new HashSet<>();
+        }
+        keySet.add(key);
+        putNativeValue(name, keySet, CommonConstants.NumeralConstants.ZERO);
+    }
+
+    /**
+     * <p> 从 记录当前Cache所有数据键关键字 的缓存中 删除指定数据键关键字{@code key} </p>
+     *
+     * @param key 指定Cache的数据键关键字
+     * @since 1.0.0
+     */
+    private void deleteCacheKey(String key) {
+        Set<String> keySet = getCacheKey();
+        if (CollectionUtils.isNotEmpty(keySet)) {
+            // 存在待删除的数据键关键字
+            if (keySet.contains(key)) {
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("AbstractFleaCache##deleteCacheKey() Delete cache of recording all key, KEY = {}", key);
+                }
+                if (CommonConstants.NumeralConstants.INT_ONE == keySet.size()) {
+                    deleteCacheAllKey(); // 直接将记录当前Cache所有数据键关键字的缓存从Redis中清空
+                } else {
+                    // 将数据键关键字从Set集合中删除
+                    keySet.remove(key);
+                    // 重新覆盖当前Cache所有数据键关键字的缓存信息
+                    putNativeValue(name, keySet, CommonConstants.NumeralConstants.ZERO);
+                }
+            }
+        }
+    }
+
+    /**
+     * <p> 删除 记录当前Cache所有数据键关键字 的缓存 </p>
+     *
+     * @since 1.0.0
+     */
+    private void deleteCacheAllKey() {
+        try {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("AbstractFleaCache##deleteCacheAllKey() Delete cache of recording all key");
+            }
+            deleteNativeValue(name);
+        } catch (Exception e) {
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("The action of deleting [" + cache.getName() + "] cache occurs exception ：", e);
+            }
+        }
+    }
+
+    @Override
+    public Set<String> getCacheKey() {
+        Set<String> keySet = null;
+        Object keySetObj = getNativeValue(name);
+        if (ObjectUtils.isNotEmpty(keySetObj) && keySetObj instanceof Set) {
+            keySet = (Set<String>) keySetObj;
+        }
+        return keySet;
     }
 
     /**

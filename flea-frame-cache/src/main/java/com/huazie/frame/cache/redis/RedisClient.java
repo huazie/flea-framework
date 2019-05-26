@@ -1,5 +1,6 @@
 package com.huazie.frame.cache.redis;
 
+import redis.clients.jedis.Client;
 import redis.clients.jedis.ShardedJedis;
 import redis.clients.jedis.ShardedJedisPool;
 import redis.clients.jedis.params.SetParams;
@@ -140,6 +141,15 @@ public interface RedisClient {
     String getLocation(final String key);
 
     /**
+     * <p> 获取数据所在的Redis服务器ip(主机地址+端口) </p>
+     *
+     * @param key 数据键(字节数组)
+     * @return 当前数据所在的Redis服务器ip
+     * @since 1.0.0
+     */
+    String getLocation(final byte[] key);
+
+    /**
      * <p> 获取数据所在的Redis服务器主机 </p>
      *
      * @param key 数据键
@@ -149,6 +159,15 @@ public interface RedisClient {
     String getHost(final String key);
 
     /**
+     * <p> 获取数据所在的Redis服务器主机 </p>
+     *
+     * @param key 数据键(字节数组)
+     * @return 数据所在的Redis服务器主机
+     * @since 1.0.0
+     */
+    String getHost(final byte[] key);
+
+    /**
      * <p> 获取数据所在的Redis服务器主机端口 </p>
      *
      * @param key 数据键
@@ -156,6 +175,33 @@ public interface RedisClient {
      * @since 1.0.0
      */
     Integer getPort(final String key);
+
+    /**
+     * <p> 获取数据所在的Redis服务器主机端口 </p>
+     *
+     * @param key 数据键(字节数组)
+     * @return 数据所在的Redis服务器主机端口
+     * @since 1.0.0
+     */
+    Integer getPort(final byte[] key);
+
+    /**
+     * <p> 获取数据所在的客户端类 </p>
+     *
+     * @param key 数据键
+     * @return 数据所在的客户端类
+     * @since 1.0.0
+     */
+    Client getClient(final String key);
+
+    /**
+     * <p> 获取数据所在的客户端类 </p>
+     *
+     * @param key 数据键
+     * @return 数据所在的客户端类
+     * @since 1.0.0
+     */
+    Client getClient(final byte[] key);
 
     /**
      * <p> 获取分布式Redis集群客户端连接池 </p>

@@ -21,7 +21,7 @@ public abstract class AbstractSpringCache implements Cache {
 
     protected final String name;  // 缓存主要关键字（用于区分）
 
-    protected final IFleaCache fleaCache;
+    private final IFleaCache fleaCache;
 
     public AbstractSpringCache(String name, IFleaCache fleaCache) {
         this.name = name;

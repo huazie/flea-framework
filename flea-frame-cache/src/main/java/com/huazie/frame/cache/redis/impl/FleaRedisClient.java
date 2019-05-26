@@ -88,30 +88,107 @@ public class FleaRedisClient implements RedisClient {
 
     @Override
     public String getLocation(final String key) {
-        StringBuilder ip = new StringBuilder();
-        Client client = shardedJedis.getShard(key).getClient();
-        if (ObjectUtils.isNotEmpty(client)) {
-            ip.append(client.getHost()).append(CommonConstants.SymbolConstants.COLON).append(client.getPort());
-        }
-        return ip.toString();
+        return getLocationByKey(key);
+    }
+
+    @Override
+    public String getLocation(byte[] key) {
+        return getLocationByKey(key);
     }
 
     @Override
     public String getHost(final String key) {
-        Client client = shardedJedis.getShard(key).getClient();
+        return getHostByKey(key);
+    }
+
+    @Override
+    public String getHost(byte[] key) {
+        return getHostByKey(key);
+    }
+
+    @Override
+    public Integer getPort(final String key) {
+        return getPortByKey(key);
+    }
+
+    @Override
+    public Integer getPort(byte[] key) {
+        return getPortByKey(key);
+    }
+
+    @Override
+    public Client getClient(String key) {
+        return getClientByKey(key);
+    }
+
+    @Override
+    public Client getClient(byte[] key) {
+        return getClientByKey(key);
+    }
+
+    /**
+     * <p> 获取数据所在的Redis服务器ip(主机地址+端口) </p>
+     *
+     * @param key 数据键
+     * @return 当前数据所在的Redis服务器ip
+     * @since 1.0.0
+     */
+    private String getLocationByKey(Object key) {
+        StringBuilder location = new StringBuilder();
+        Client client = getClientByKey(key);
+        if (ObjectUtils.isNotEmpty(client)) {
+            location.append(client.getHost()).append(CommonConstants.SymbolConstants.COLON).append(client.getPort());
+        }
+        return location.toString();
+    }
+
+    /**
+     * <p> 获取数据所在的Redis服务器主机 </p>
+     *
+     * @param key 数据键
+     * @return 数据所在的Redis服务器主机
+     * @since 1.0.0
+     */
+    private String getHostByKey(Object key) {
+        Client client = getClientByKey(key);
         if (ObjectUtils.isNotEmpty(client)) {
             return client.getHost();
         }
         return null;
     }
 
-    @Override
-    public Integer getPort(final String key) {
-        Client client = shardedJedis.getShard(key).getClient();
+    /**
+     * <p> 获取数据所在的Redis服务器主机端口 </p>
+     *
+     * @param key 数据键
+     * @return 数据所在的Redis服务器主机端口
+     * @since 1.0.0
+     */
+    private Integer getPortByKey(Object key) {
+        Client client = getClientByKey(key);
         if (ObjectUtils.isNotEmpty(client)) {
             return client.getPort();
         }
         return null;
+    }
+
+    /**
+     * <p> 获取客户端类 </p>
+     *
+     * @param key 数据键
+     * @return 客户端类
+     * @since 1.0.0
+     */
+    private Client getClientByKey(Object key) {
+        Client client = null;
+        if (ObjectUtils.isNotEmpty(key)) {
+            if (key instanceof String) {
+                client = shardedJedis.getShard(key.toString()).getClient();
+            } else if (key instanceof byte[]) {
+                client = shardedJedis.getShard((byte[]) key).getClient();
+            }
+        }
+        return client;
     }
 
     @Override

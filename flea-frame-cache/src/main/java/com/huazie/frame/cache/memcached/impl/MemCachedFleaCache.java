@@ -19,7 +19,7 @@ public class MemCachedFleaCache extends AbstractFleaCache {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MemCachedFleaCache.class);
 
-    private final MemCachedClient memcachedClient;  // Memcached客户端类
+    private final MemCachedClient memcachedClient;  // MemCached客户端类
 
     public MemCachedFleaCache(String name, long expiry, MemCachedClient memcachedClient) {
         super(name, expiry);
@@ -28,27 +28,27 @@ public class MemCachedFleaCache extends AbstractFleaCache {
     }
 
     @Override
-    protected Object getNativeValue(String key){
+    protected Object getNativeValue(String key) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("MemCachedFleaCache##getNativeValue(String) KEY={}", key);
+            LOGGER.debug("MemCachedFleaCache##getNativeValue(String) KEY = {}", key);
         }
         return memcachedClient.get(key);
     }
 
     @Override
-    protected void putNativeValue(String key, Object value, long expiry){
+    protected void putNativeValue(String key, Object value, long expiry) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("MemCachedFleaCache##putNativeValue(String, Object, long) KEY={}", key);
-            LOGGER.debug("MemCachedFleaCache##putNativeValue(String, Object, long) VALUE={}", value);
-            LOGGER.debug("MemCachedFleaCache##putNativeValue(String, Object, long) EXPIRY={}s", expiry);
+            LOGGER.debug("MemCachedFleaCache##putNativeValue(String, Object, long) KEY = {}", key);
+            LOGGER.debug("MemCachedFleaCache##putNativeValue(String, Object, long) VALUE = {}", value);
+            LOGGER.debug("MemCachedFleaCache##putNativeValue(String, Object, long) EXPIRY = {}s", expiry);
         }
         memcachedClient.set(key, value, new Date(expiry * 1000));
     }
 
     @Override
-    protected void deleteNativeValue(String key){
+    protected void deleteNativeValue(String key) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("MemCachedFleaCache##deleteNativeValue(String) KEY=" + key);
+            LOGGER.debug("MemCachedFleaCache##deleteNativeValue(String) KEY = {}", key);
         }
         memcachedClient.delete(key);
     }

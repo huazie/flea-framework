@@ -9,6 +9,7 @@ import com.huazie.frame.cache.common.CacheEnum;
 import com.huazie.frame.cache.memcached.MemCachedSpringCacheManager;
 import com.huazie.frame.cache.redis.RedisSpringCacheManager;
 import com.huazie.frame.common.FleaFrameManager;
+import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaParaDetailSV;
 import com.huazie.frame.core.common.FleaEntityConstants;
@@ -27,6 +28,7 @@ import java.sql.Time;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 public class FleaParaDetailSVImplTest {
 
@@ -55,7 +57,6 @@ public class FleaParaDetailSVImplTest {
         IFleaParaDetailSV sv = (IFleaParaDetailSV) applicationContext.getBean("fleaParaDetailSVImpl");
         try {
             sv.getParaDetails("FLEA_RES_STATE", "");
-            Thread.sleep(1000000);
         } catch (Exception e) {
             LOGGER.error("Exception:", e);
         }
@@ -66,7 +67,6 @@ public class FleaParaDetailSVImplTest {
         IFleaParaDetailSV sv = (IFleaParaDetailSV) applicationContext.getBean("fleaParaDetailSVImpl");
         try {
             sv.getParaDetail("FLEAER_CERT_TYPE", "1");
-            Thread.sleep(1000000);
         } catch (Exception e) {
             LOGGER.error("Exception:", e);
         }
@@ -99,9 +99,13 @@ public class FleaParaDetailSVImplTest {
             LOGGER.debug("Cache={}", cache);
 
             //#### 复杂配置参数
-//            cache.get("FLEA_RES_STATE");
-            cache.delete("FLEA_RES_STATE");
-            cache.delete("FLEAER_CERT_TYPE_1");
+            Set<String> cacheKey = cache.getCacheKey();
+            LOGGER.debug("CacheKey = {}", cacheKey);
+            cache.get("FLEA_RES_STATE");
+            cache.get("FLEAER_CERT_TYPE_1");
+//            cache.delete("FLEA_RES_STATE");
+//            cache.delete("FLEAER_CERT_TYPE_1");
+//            cache.clear();
             LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
         } catch (Exception e) {
             LOGGER.error("Exception:", e);
