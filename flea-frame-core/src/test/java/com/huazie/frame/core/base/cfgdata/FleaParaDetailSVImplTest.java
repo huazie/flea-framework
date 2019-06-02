@@ -82,8 +82,10 @@ public class FleaParaDetailSVImplTest {
             LOGGER.debug("Cache={}", cache);
 
             //#### 复杂配置参数
-            cache.get("FLEA_RES_STATE");
-//            cache.delete("FLEA_RES_STATE");
+//            cache.get("FLEA_RES_STATE");
+//            cache.get("FLEAER_CERT_TYPE_1");
+            LOGGER.debug("CacheKey={}", cache.getCacheKey());
+            cache.delete("FLEA_RES_STATE");
             LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
         } catch (Exception e) {
             LOGGER.error("Exception:", e);
@@ -121,9 +123,14 @@ public class FleaParaDetailSVImplTest {
             AbstractSpringCache cache = manager.getCache("fleaparadetail");
             LOGGER.debug("Cache={}", cache);
 
+            //#### 复杂配置参数
+//            cache.get("FLEA_RES_STATE");
+//            cache.get("FLEAER_CERT_TYPE_1");
+//            cache.delete("FLEA_RES_STATE");
+
             //#### 1.  简单字符串
 //			cache.put("menu1", "huazie");
-            cache.get("menu1");
+//            cache.get("menu1");
 //            cache.get("menu1", String.class);
 
             //#### 2.  简单对象(要是可以序列化的对象)

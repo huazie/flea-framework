@@ -31,7 +31,7 @@ public class FleaCacheManagerFactory {
                 if (!managerMap.containsKey(name)) {
                     AbstractFleaCacheManager manager;
                     if (CacheEnum.MemCached.getName().equals(name)) {
-                        manager = new MemCachedFleaCacheManager(new MemCachedClient());
+                        manager = new MemCachedFleaCacheManager();
                     } else if (CacheEnum.Redis.getName().equals(name)) {
                         manager = new RedisFleaCacheManager();
                     } else {

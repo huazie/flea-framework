@@ -3,7 +3,6 @@ package com.huazie.frame.cache.memcached;
 import com.huazie.frame.cache.AbstractFleaCache;
 import com.huazie.frame.cache.AbstractFleaCacheManager;
 import com.huazie.frame.cache.memcached.impl.MemCachedFleaCache;
-import com.huazie.frame.common.util.ObjectUtils;
 import com.whalin.MemCached.MemCachedClient;
 
 /**
@@ -17,10 +16,26 @@ public class MemCachedFleaCacheManager extends AbstractFleaCacheManager {
 
     private static volatile MemCachedFleaCacheManager cacheManager;
 
-    private MemCachedClient memcachedClient;   // Memcached客户端类
+    private MemCachedClient memCachedClient;   // Memcached客户端类
 
+    /**
+     * <p> 新建一个MemCached客户端 </p>
+     *
+     * @since 1.0.0
+     */
+    public MemCachedFleaCacheManager() {
+        memCachedClient = new MemCachedClient();
+        initPool();
+    }
+
+    /**
+     * <p> 新建一个MemCached客户端 </p>
+     *
+     * @param memcachedClient MemCached客户端
+     * @since 1.0.0
+     */
     public MemCachedFleaCacheManager(MemCachedClient memcachedClient) {
-        this.memcachedClient = memcachedClient;
+        this.memCachedClient = memcachedClient;
         initPool();
     }
 
@@ -36,11 +51,11 @@ public class MemCachedFleaCacheManager extends AbstractFleaCacheManager {
 
     @Override
     protected AbstractFleaCache newCache(String name, long expiry) {
-        return new MemCachedFleaCache(name, expiry, memcachedClient);
+        return new MemCachedFleaCache(name, expiry, memCachedClient);
     }
 
-    public void setMemcachedClient(MemCachedClient memcachedClient) {
-        this.memcachedClient = memcachedClient;
+    public void setMemCachedClient(MemCachedClient memCachedClient) {
+        this.memCachedClient = memCachedClient;
     }
 
 }

@@ -132,6 +132,10 @@ public abstract class AbstractFleaCache implements IFleaCache {
                     // 重新覆盖当前Cache所有数据键关键字的缓存信息
                     putNativeValue(name, keySet, CommonConstants.NumeralConstants.ZERO);
                 }
+            } else {
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("AbstractFleaCache##deleteCacheKey() The CacheKey of [{}] is not exist", key);
+                }
             }
         }
     }

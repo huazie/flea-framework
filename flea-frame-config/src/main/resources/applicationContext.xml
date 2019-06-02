@@ -85,15 +85,11 @@
     <!-- 配置MemCachedPool -->
     <bean id="memcachedPool" class="com.huazie.frame.cache.memcached.MemCachedPool" factory-method="getInstance" init-method="initialize" lazy-init="false" destroy-method="shutDown" />
 
-    <!-- 配置MemCachedClient-->
-    <bean id="memcachedClient" class="com.whalin.MemCached.MemCachedClient" />
-
     <!--
         配置缓存管理MemCachedSpringCacheManager
         配置缓存时间 configMap (key缓存对象名称 value缓存过期时间)
     -->
     <bean id="memCachedSpringCacheManager" class="com.huazie.frame.cache.memcached.MemCachedSpringCacheManager">
-        <property name="memcachedClient" ref="memcachedClient"/>
         <property name="configMap">
             <map>
                 <entry key="fleaparadetail" value="0"/>

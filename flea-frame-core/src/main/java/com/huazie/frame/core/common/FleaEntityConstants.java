@@ -1,7 +1,7 @@
 package com.huazie.frame.core.common;
 
 /**
- * <p></p>
+ * <p> 实体类常量 </p>
  *
  * @author huazie
  * @version 1.0.0
