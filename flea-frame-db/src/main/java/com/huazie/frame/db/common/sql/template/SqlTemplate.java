@@ -422,11 +422,16 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
         if (MapUtils.isNotEmpty(params)) {
             Set<String> keySet = params.keySet();
             Iterator<String> keyIt = keySet.iterator();
+
+            // 这边需要暂存， 因为下面替换了指定的元素 为 "?", 导致字段所在位置发生变化
+            String sqlStr = sql.toString();
+
             while (keyIt.hasNext()) {
                 String key = keyIt.next();
 
                 // 从sql中获取指定实体属性变量名 所在的起始位置
-                int index = sql.indexOf(DBConstants.SQLConstants.SQL_COLON + key);
+                int index = sqlStr.indexOf(DBConstants.SQLConstants.SQL_COLON + key);
+
                 Column column = (Column) EntityUtils.getEntity(entityCols, Column.COLUMN_ATTR_NAME, key);
                 if (ObjectUtils.isNotEmpty(column)) {
                     SqlParam sqlParam = new SqlParam();

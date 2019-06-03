@@ -70,6 +70,7 @@ public abstract class AbstractSpringCache implements Cache {
     }
 
     @Override
+    @SuppressWarnings(value = "unchecked")
     public <T> T get(Object key, Class<T> type) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("AbstractSpringCache##get(Object) KEY={}", key);

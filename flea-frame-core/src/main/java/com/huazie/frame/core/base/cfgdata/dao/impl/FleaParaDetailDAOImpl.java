@@ -24,6 +24,7 @@ public class FleaParaDetailDAOImpl extends FleaConfigDAOImpl<FleaParaDetail> imp
     private final static Logger LOGGER = LoggerFactory.getLogger(FleaParaDetailDAOImpl.class);
 
     @Override
+    @SuppressWarnings(value = "unchecked")
     public List<FleaParaDetail> getParaDetail(String paraType, String paraCode) throws Exception {
 
         FleaJPAQuery query = getQuery(null);

@@ -36,10 +36,10 @@ public class FleaJPAQueryTest {
 
     @AfterClass
     public static void closeEntityManager() {
-        if(null != em) {
+        if (null != em) {
             em.close();
         }
-        if(null != emf) {
+        if (null != emf) {
             emf.close();
         }
     }
@@ -50,6 +50,7 @@ public class FleaJPAQueryTest {
     }
 
     @Test
+    @SuppressWarnings(value = "unchecked")
     public void testFleaJPAQuery() {
         //FleaFrameManager.getManager().setLocale(Locale.US);
         try {

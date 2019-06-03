@@ -159,6 +159,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
     }
 
     @Override
+    @SuppressWarnings(value = "unchecked")
     public Set<String> getCacheKey() {
         Set<String> keySet = null;
         Object keySetObj = getNativeValue(name);

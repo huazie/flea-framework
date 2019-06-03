@@ -56,7 +56,7 @@ public class HttpUtils {
             ip = request.getHeader("HTTP_X_FORWARDED_FOR");
         }
         //如果是多级代理，那么取第一个ip为客户ip
-        if (StringUtils.isNotBlank(ip) && ip.indexOf(",") != -1) {
+        if (StringUtils.isNotBlank(ip) && ip.contains(",")) {
             ip = ip.substring(ip.lastIndexOf(",") + 1).trim();
         }
 
@@ -74,6 +74,7 @@ public class HttpUtils {
      * @return 较为精确的地理地址
      * @since 1.0.0
      */
+    @SuppressWarnings(value = "unchecked")
     public static String getAddressByTaoBao(String ip) {
         StringBuilder sb = new StringBuilder();
         try {
@@ -125,6 +126,7 @@ public class HttpUtils {
      * @return 较为精确的地理地址
      * @since 1.0.0
      */
+    @SuppressWarnings(value = "unchecked")
     public static String getAddressBySina(String ip) {
         StringBuilder sb = new StringBuilder();
         try {
@@ -141,15 +143,18 @@ public class HttpUtils {
                 LOGGER.debug("HttpUtils##getAddressBySina() Map={}", map);
             }
 
-            sb.append(map.get(CommonConstants.IPAddressConstants.COUNTRY));
-            sb.append(map.get(CommonConstants.IPAddressConstants.PROVINCE) + "\u7701");
-            sb.append(map.get(CommonConstants.IPAddressConstants.CITY));
+            sb.append(map.get(CommonConstants.IPAddressConstants.COUNTRY))
+                    .append(map.get(CommonConstants.IPAddressConstants.PROVINCE) + "\u7701")
+                    .append(map.get(CommonConstants.IPAddressConstants.CITY));
 
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("HttpUtils##getAddressBySina() Address={}", sb);
             }
+            
         } catch (Exception e) {
-            LOGGER.error("HttpUtils##getAddressBySina() Exception=", e);
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("HttpUtils##getAddressBySina() Exception=", e);
+            }
         }
 
         return sb.toString();

@@ -43,13 +43,9 @@ public class FleaParaDetailSVImplTest {
     }
 
     @Test
-    public void getParaDetailById() {
+    public void getParaDetailById() throws Exception {
         IFleaParaDetailSV sv = (IFleaParaDetailSV) applicationContext.getBean("fleaParaDetailSVImpl");
-        try {
-            LOGGER.debug(sv.query(2L).toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        LOGGER.debug(sv.query(2L).toString());
     }
 
     @Test
@@ -103,8 +99,8 @@ public class FleaParaDetailSVImplTest {
             //#### 复杂配置参数
             Set<String> cacheKey = cache.getCacheKey();
             LOGGER.debug("CacheKey = {}", cacheKey);
-            cache.get("FLEA_RES_STATE");
-            cache.get("FLEAER_CERT_TYPE_1");
+//            cache.get("FLEA_RES_STATE");
+//            cache.get("FLEAER_CERT_TYPE_1");
 //            cache.delete("FLEA_RES_STATE");
 //            cache.delete("FLEAER_CERT_TYPE_1");
 //            cache.clear();

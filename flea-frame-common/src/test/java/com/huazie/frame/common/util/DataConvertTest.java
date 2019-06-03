@@ -21,7 +21,7 @@ public class DataConvertTest {
 
     @Test
     public void byte2hex() {
-        String hex = "ABC";
+        String hex = "ABCD";
         byte[] bytes = DataConvert.hex2byte(hex);
         String hex1 = DataConvert.byte2hex(bytes);
         LOGGER.debug("byte2hex = " + hex1);

@@ -64,7 +64,18 @@ public class FleaInvocationHandler implements InvocationHandler {
         }
         Object result = method.invoke(proxyObject, args);
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaInvocationHandler##invoke(Object, Method, Object[]) Result = {}", result);
+            if (result instanceof byte[]) {
+                LOGGER.debug("FleaInvocationHandler##invoke(Object, Method, Object[]) OriginResult = {}", result);
+                // 字节数组可能是对象序列化的
+                Object mResult = ObjectUtils.deserialize((byte[]) result);
+                if (ObjectUtils.isEmpty(mResult)) {
+                    // 字节数组可能是String##getBytes()获取的
+                    mResult = new String((byte[]) result);
+                }
+                LOGGER.debug("FleaInvocationHandler##invoke(Object, Method, Object[]) Result = {}", mResult);
+            } else {
+                LOGGER.debug("FleaInvocationHandler##invoke(Object, Method, Object[]) Result = {}", result);
+            }
         }
         return result;
     }

@@ -21,6 +21,7 @@ public class FleaProxy<T> {
      * @param <T>
      * @return
      */
+    @SuppressWarnings(value = "unchecked")
     public static <T> T newProxyInstance(ClassLoader loader, Class<?>[] interfaces, InvocationHandler handler) {
 
         // 前置处理

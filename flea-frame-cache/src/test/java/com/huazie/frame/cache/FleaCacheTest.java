@@ -33,8 +33,8 @@ public class FleaCacheTest {
             LOGGER.debug("Cache={}", cache);
             //#### 1.  简单字符串
 //            cache.put("menu1", "huazie");
-            cache.get("menu1");
-//        cache.delete("menu1");
+//            cache.get("menu1");
+//            cache.delete("menu1");
             LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
         } catch (Exception e) {
             LOGGER.error("Exception:", e);
@@ -49,7 +49,9 @@ public class FleaCacheTest {
             LOGGER.debug("Cache={}", cache);
             //#### 1.  简单字符串
 //            cache.put("menu1", "huazie");
-            cache.get("menu1");
+//            cache.get("menu1");
+//            LOGGER.debug("CacheKey={}", cache.getCacheKey());
+            cache.delete("menu1");
             LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
         } catch (Exception e) {
             LOGGER.error("Exception:", e);
@@ -58,8 +60,8 @@ public class FleaCacheTest {
 
     @Test
     public void testProperties() {
-        MemCachedConfig config = MemCachedConfig.getConfig();
-        LOGGER.debug("MemCachedConfig={}", config);
+        MemCachedConfig memCachedConfig = MemCachedConfig.getConfig();
+        LOGGER.debug("MemCachedConfig={}", memCachedConfig);
         RedisConfig redisConfig = RedisConfig.getConfig();
         LOGGER.debug("RedisConfig={}", redisConfig);
     }
@@ -104,7 +106,7 @@ public class FleaCacheTest {
         }
 
         // #6. 删除数据
-        //LOGGER.debug("del ret = {}", jedis.del("huazie"));
+        LOGGER.debug("del ret = {}", jedis.del("huazie-list"));
 
     }
 

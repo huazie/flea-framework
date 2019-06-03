@@ -3,7 +3,6 @@ package com.huazie.frame.cache;
 import com.huazie.frame.cache.common.CacheEnum;
 import com.huazie.frame.cache.memcached.MemCachedFleaCacheManager;
 import com.huazie.frame.cache.redis.RedisFleaCacheManager;
-import com.whalin.MemCached.MemCachedClient;
 
 import java.util.HashMap;
 import java.util.Map;
