@@ -1,5 +1,6 @@
 package com.huazie.frame.jersey;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,19 +22,23 @@ public class JerseyTest {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(JerseyTest.class);
 
+    private WebTarget target;
+
+    @Before
+    public void init() {
+        Client client = ClientBuilder.newClient();
+        target = client.target("http://localhost:8080/fleafs");
+    }
 
     @Test
-    public void TestJersey() {
+    public void testJerseyByParam() {
 
-        Client client = ClientBuilder.newClient();
-
-        WebTarget target = client.target("http://localhost:8080/fleafs");
-
-        String responseMsg = target.path("resource").request().get(String.class);
+        String responseMsg = target.queryParam("id", "huazie").path("resource").request().get(String.class);
 
         LOGGER.debug("result = {}", responseMsg);
 
-        assertEquals("Hello Wrold !!!", responseMsg);
+        assertEquals("This is huazie !!!", responseMsg);
+
     }
 
 }

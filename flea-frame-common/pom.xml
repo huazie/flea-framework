@@ -53,7 +53,7 @@
         <dependency>
             <groupId>com.huazie.frame</groupId>
             <artifactId>flea-frame-config</artifactId>
-            <version>1.0.0</version>
+            <version>${parent.version}</version>
             <scope>test</scope>
         </dependency>
 

@@ -35,36 +35,39 @@
 
     <dependencies>
 
-        <!-- Grizzly Http服务器 -->
-        <dependency>
-            <groupId>org.glassfish.jersey.containers</groupId>
-            <artifactId>jersey-container-grizzly2-http</artifactId>
-        </dependency>
-
         <!-- Spring相关 -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
         </dependency>
 
-        <!-- flea frame 配置文件 -->
+        <!-- FLEA FRAME 配置文件 -->
         <dependency>
             <groupId>com.huazie.frame</groupId>
             <artifactId>flea-frame-config</artifactId>
-            <version>1.0.0</version>
+            <version>${parent.version}</version>
             <scope>test</scope>
         </dependency>
 
+        <!-- FLEA FRAME DB -->
         <dependency>
             <groupId>com.huazie.frame</groupId>
             <artifactId>flea-frame-db</artifactId>
-            <version>1.0.0</version>
+            <version>${parent.version}</version>
         </dependency>
 
+        <!-- FLEA FRAME CACHE -->
         <dependency>
             <groupId>com.huazie.frame</groupId>
             <artifactId>flea-frame-cache</artifactId>
-            <version>1.0.0</version>
+            <version>${parent.version}</version>
+        </dependency>
+
+        <!-- FLEA FRAME JERSEY -->
+        <dependency>
+            <groupId>com.huazie.frame</groupId>
+            <artifactId>flea-frame-jersey</artifactId>
+            <version>${parent.version}</version>
         </dependency>
 
     </dependencies>
