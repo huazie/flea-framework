@@ -19,7 +19,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <!-- 单独执行单元测试 -->
                 <configuration>
-                    <skipTests>false</skipTests>
+                    <skipTests>true</skipTests>
                 </configuration>
             </plugin>
             <plugin>
