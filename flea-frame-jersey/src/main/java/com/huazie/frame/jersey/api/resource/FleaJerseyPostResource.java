@@ -1,10 +1,14 @@
 package com.huazie.frame.jersey.api.resource;
 
+import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.jersey.api.data.FleaJerseyRequestData;
 import com.huazie.frame.jersey.api.data.FleaJerseyResponseData;
 import com.huazie.frame.jersey.api.data.RequestBusinessData;
 import com.huazie.frame.jersey.api.data.RequestPublicData;
+import com.huazie.frame.jersey.api.data.ResponseBusinessData;
+import com.huazie.frame.jersey.api.data.ResponsePublicData;
+import com.huazie.frame.jersey.common.exception.FleaResourceException;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -25,26 +29,36 @@ public abstract class FleaJerseyPostResource {
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public FleaJerseyResponseData doPostResource(FleaJerseyRequestData requestData) {
 
-        FleaJerseyResponseData responseData = null;
+        FleaJerseyResponseData responseData = new FleaJerseyResponseData();
+        ResponsePublicData responsePublicData = new ResponsePublicData();
+        responseData.setPublicData(responsePublicData);
         try {
             if (ObjectUtils.isEmpty(requestData)) {
-                // 抛异常
+                // 请求报文不能为空
+                throw new FleaResourceException("");
             }
 
             // 前置事件
 
-            responseData = doPost(requestData.getPublicData(), requestData.getBusinessData());
+            ResponseBusinessData responseBusinessData = doPost(requestData.getBusinessData());
+            if (ObjectUtils.isNotEmpty(responseBusinessData)) {
+                responseData.setBusinessData(responseBusinessData);
+            }
 
             // 后置事件
         } catch (Exception e) {
+            // 获取异常描述
+            if (e instanceof CommonException) {
+                CommonException exp = (CommonException) e;
 
+            }
         }
 
         return responseData;
     }
 
 
-    protected abstract FleaJerseyResponseData doPost(RequestPublicData publicData, RequestBusinessData businessData) throws Exception;
+    protected abstract ResponseBusinessData doPost(RequestBusinessData requestBusinessData) throws Exception;
 
 
 }

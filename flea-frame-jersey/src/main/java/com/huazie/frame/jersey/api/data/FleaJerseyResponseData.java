@@ -1,5 +1,9 @@
 package com.huazie.frame.jersey.api.data;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
@@ -12,6 +16,7 @@ import java.io.Serializable;
  * @since 1.0.0
  */
 @XmlRootElement(name = "RESPONSE")
+@XmlAccessorType(XmlAccessType.FIELD)
 public final class FleaJerseyResponseData implements Serializable {
 
     @XmlElement(name = "PUBLIC")
@@ -34,5 +39,10 @@ public final class FleaJerseyResponseData implements Serializable {
 
     public void setBusinessData(ResponseBusinessData businessData) {
         this.businessData = businessData;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 }
