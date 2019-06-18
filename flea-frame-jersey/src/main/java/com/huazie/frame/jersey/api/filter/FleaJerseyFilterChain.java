@@ -5,6 +5,7 @@ import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.jersey.api.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.api.data.FleaJerseyResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,28 +17,28 @@ import java.util.List;
  */
 public class FleaJerseyFilterChain {
 
-    private List<IFleaJerseyFilter> beforeFilters;
+    private List<IFleaJerseyFilter> beforeFilters = new ArrayList<IFleaJerseyFilter>();
 
-    private List<IFleaJerseyFilter> serviceFilters;
+    private List<IFleaJerseyFilter> serviceFilters = new ArrayList<IFleaJerseyFilter>();
 
-    private List<IFleaJerseyFilter> afterFilters;
+    private List<IFleaJerseyFilter> afterFilters = new ArrayList<IFleaJerseyFilter>();
 
-    private List<IFleaJerseyErrorFilter> errorFilters;
+    private List<IFleaJerseyErrorFilter> errorFilters = new ArrayList<IFleaJerseyErrorFilter>();
 
     /**
      * <p> 执行过滤器 </p>
      *
-     * @param request  请求对象
-     * @param response 响应对象
+     * @param request 请求对象
      * @throws Exception
      * @since 1.0.0
      */
-    public void doFilter(FleaJerseyRequest request, FleaJerseyResponse response) throws Exception {
+    public FleaJerseyResponse doFilter(FleaJerseyRequest request) {
+        FleaJerseyResponse response = new FleaJerseyResponse();
         try {
             // 执行前置过滤器
             doBeforeFilter(request, response);
 
-            // 执行服务过滤器
+            // 执行业务服务过滤器
             doServiceFilter(request, response);
 
             // 执行后置过滤器
@@ -45,6 +46,43 @@ public class FleaJerseyFilterChain {
         } catch (Exception e) {
             // 执行异常过滤器
             doErrorFilter(response, e);
+        }
+        return response;
+    }
+
+    /**
+     * <p> 添加前置过滤器 </p>
+     *
+     * @param filter 过滤器类
+     * @since 1.0.0
+     */
+    public void addBeforeFilter(IFleaJerseyFilter filter) {
+        if (ObjectUtils.isNotEmpty(filter)) {
+            beforeFilters.add(filter);
+        }
+    }
+
+    /**
+     * <p> 添加业务服务过滤器 </p>
+     *
+     * @param filter 过滤器类
+     * @since 1.0.0
+     */
+    public void addServiceFilter(IFleaJerseyFilter filter) {
+        if (ObjectUtils.isNotEmpty(filter)) {
+            serviceFilters.add(filter);
+        }
+    }
+
+    /**
+     * <p> 添加后置过滤器 </p>
+     *
+     * @param filter 过滤器类
+     * @since 1.0.0
+     */
+    public void addAfterFilter(IFleaJerseyFilter filter) {
+        if (ObjectUtils.isNotEmpty(filter)) {
+            afterFilters.add(filter);
         }
     }
 
@@ -114,7 +152,9 @@ public class FleaJerseyFilterChain {
     private void doFilter(List<IFleaJerseyFilter> filters, FleaJerseyRequest request, FleaJerseyResponse response) throws Exception {
         if (CollectionUtils.isNotEmpty(filters)) {
             for (IFleaJerseyFilter filter : filters) {
-                filter.doFilter(request, response);
+                if (ObjectUtils.isNotEmpty(filter)) {
+                    filter.doFilter(request, response);
+                }
             }
         }
     }

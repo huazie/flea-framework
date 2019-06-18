@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <filters>
+    <befores></befores>
 
+    <services></services>
 
+    <afters></afters>
 
+    <errors></errors>
 </filters>
