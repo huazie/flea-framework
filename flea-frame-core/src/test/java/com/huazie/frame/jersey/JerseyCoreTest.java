@@ -1,6 +1,8 @@
 package com.huazie.frame.jersey;
 
+import com.huazie.frame.jersey.api.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.api.data.FleaJerseyRequestData;
+import com.huazie.frame.jersey.api.data.FleaJerseyResponse;
 import com.huazie.frame.jersey.api.data.FleaJerseyResponseData;
 import com.huazie.frame.jersey.api.data.RequestPublicData;
 import org.junit.Before;
@@ -49,6 +51,7 @@ public class JerseyCoreTest {
     @Test
     public void testUpload() {
 
+        FleaJerseyRequest request = new FleaJerseyRequest();
         FleaJerseyRequestData requestData = new FleaJerseyRequestData();
 
         RequestPublicData publicData = new RequestPublicData();
@@ -58,10 +61,12 @@ public class JerseyCoreTest {
 
         requestData.setPublicData(publicData);
 
-        Entity<FleaJerseyRequestData> entity = Entity.entity(requestData, MediaType.APPLICATION_XML_TYPE);
-        FleaJerseyResponseData responseData = target.path("upload").request().post(entity, FleaJerseyResponseData.class);
+        request.setRequestData(requestData);
 
-        LOGGER.debug("result = {}", responseData.toString());
+        Entity<FleaJerseyRequest> entity = Entity.entity(request, MediaType.APPLICATION_XML_TYPE);
+        FleaJerseyResponse response = target.path("upload").request().post(entity, FleaJerseyResponse.class);
+
+        LOGGER.debug("result = {}", response.toString());
     }
 
 

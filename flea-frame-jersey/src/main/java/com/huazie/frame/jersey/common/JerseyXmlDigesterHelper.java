@@ -88,12 +88,12 @@ public class JerseyXmlDigesterHelper {
         if (StringUtils.isNotBlank(System.getProperty(FleaJerseyConstants.JerseyFilterConstants.JERSEY_FILTER_FILE_SYSTEM_KEY))) {
             fileName = StringUtils.trim(System.getProperty(FleaJerseyConstants.JerseyFilterConstants.JERSEY_FILTER_FILE_SYSTEM_KEY));
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("JerseyXmlDigesterHelper##newJerseyFilter Use the specified flea-jersey-filter.xml :" + fileName);
+                LOGGER.debug("JerseyXmlDigesterHelper##newJerseyFilter Use the specified flea-jersey-filter.xml : " + fileName);
             }
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("JerseyXmlDigesterHelper##newJerseyFilter() Use the current flea-jersey-filter.xml :" + fileName);
+            LOGGER.debug("JerseyXmlDigesterHelper##newJerseyFilter() Use the current flea-jersey-filter.xml : " + fileName);
             LOGGER.debug("JerseyXmlDigesterHelper##newJerseyFilter() Start to parse the flea-jersey-filter.xml");
         }
 

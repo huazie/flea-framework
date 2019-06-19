@@ -3,6 +3,8 @@ package com.huazie.frame.jersey.api.filter.impl;
 import com.huazie.frame.jersey.api.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.api.data.FleaJerseyResponse;
 import com.huazie.frame.jersey.api.filter.IFleaJerseyFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p> Jersey 日志记录过滤器 </p>
@@ -13,9 +15,17 @@ import com.huazie.frame.jersey.api.filter.IFleaJerseyFilter;
  */
 public class JerseyLoggerFilter implements IFleaJerseyFilter {
 
+    private final static Logger LOGGER = LoggerFactory.getLogger(JerseyLoggerFilter.class);
+
     @Override
     public void doFilter(FleaJerseyRequest request, FleaJerseyResponse response) throws Exception {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("JerseyLoggerFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) Start");
+        }
 
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("JerseyLoggerFilter#doFilter(FleaJerseyRequest, FleaJerseyResponse) End");
+        }
     }
 
 }

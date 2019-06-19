@@ -10,6 +10,8 @@ import com.huazie.frame.jersey.api.data.RequestPublicData;
 import com.huazie.frame.jersey.api.data.ResponsePublicData;
 import com.huazie.frame.jersey.api.filter.IFleaJerseyFilter;
 import com.huazie.frame.jersey.common.exception.FleaJerseyException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p> 数据预校验过滤器 </p>
@@ -20,8 +22,15 @@ import com.huazie.frame.jersey.common.exception.FleaJerseyException;
  */
 public class DataPreCheckFilter implements IFleaJerseyFilter {
 
+    private final static Logger LOGGER = LoggerFactory.getLogger(DataPreCheckFilter.class);
+
     @Override
     public void doFilter(FleaJerseyRequest request, FleaJerseyResponse response) throws Exception {
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("DataPreCheckFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) Start");
+        }
+
         if (ObjectUtils.isEmpty(response)) {
             response = new FleaJerseyResponse();
         }
@@ -36,28 +45,30 @@ public class DataPreCheckFilter implements IFleaJerseyFilter {
 
         if (ObjectUtils.isEmpty(request)) {
             // 请求报文不能为空
-            throw new FleaJerseyException("");
+            throw new FleaJerseyException("请求报文不能为空");
         }
 
         FleaJerseyRequestData requestData = request.getRequestData();
         if (ObjectUtils.isEmpty(requestData)) {
             // 请求报文不能为空
-            throw new FleaJerseyException("");
+            throw new FleaJerseyException("请求报文不能为空");
         }
 
         RequestPublicData requestPublicData = requestData.getPublicData();
         if (ObjectUtils.isEmpty(requestPublicData)) {
             // 请求公共报文不能为空
-            throw new FleaJerseyException("");
+            throw new FleaJerseyException("请求公共报文不能为空");
         }
 
         RequestBusinessData requestBusinessData = requestData.getBusinessData();
         if (ObjectUtils.isEmpty(requestBusinessData)) {
             // 请求业务报文不能为空
-            throw new FleaJerseyException("");
+            throw new FleaJerseyException("请求业务报文不能为空");
         }
 
-
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("DataPreCheckFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) end");
+        }
     }
 
 }
