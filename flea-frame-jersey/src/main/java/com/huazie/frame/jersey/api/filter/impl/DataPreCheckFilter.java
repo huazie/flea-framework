@@ -9,7 +9,7 @@ import com.huazie.frame.jersey.api.data.RequestBusinessData;
 import com.huazie.frame.jersey.api.data.RequestPublicData;
 import com.huazie.frame.jersey.api.data.ResponsePublicData;
 import com.huazie.frame.jersey.api.filter.IFleaJerseyFilter;
-import com.huazie.frame.jersey.common.exception.FleaResourceException;
+import com.huazie.frame.jersey.common.exception.FleaJerseyException;
 
 /**
  * <p> 数据预校验过滤器 </p>
@@ -36,25 +36,25 @@ public class DataPreCheckFilter implements IFleaJerseyFilter {
 
         if (ObjectUtils.isEmpty(request)) {
             // 请求报文不能为空
-            throw new FleaResourceException("");
+            throw new FleaJerseyException("");
         }
 
         FleaJerseyRequestData requestData = request.getRequestData();
         if (ObjectUtils.isEmpty(requestData)) {
             // 请求报文不能为空
-            throw new FleaResourceException("");
+            throw new FleaJerseyException("");
         }
 
         RequestPublicData requestPublicData = requestData.getPublicData();
         if (ObjectUtils.isEmpty(requestPublicData)) {
             // 请求公共报文不能为空
-            throw new FleaResourceException("");
+            throw new FleaJerseyException("");
         }
 
         RequestBusinessData requestBusinessData = requestData.getBusinessData();
         if (ObjectUtils.isEmpty(requestBusinessData)) {
             // 请求业务报文不能为空
-            throw new FleaResourceException("");
+            throw new FleaJerseyException("");
         }
 
 

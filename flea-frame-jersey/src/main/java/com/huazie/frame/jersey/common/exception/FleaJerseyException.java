@@ -10,21 +10,21 @@ import com.huazie.frame.common.i18n.FleaI18nResEnum;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class FleaResourceException extends CommonException {
+public class FleaJerseyException extends CommonException {
 
-    public FleaResourceException(String key) {
+    public FleaJerseyException(String key) {
         super(key, FleaI18nResEnum.ERROR);
     }
 
-    public FleaResourceException(String key, String... values) {
+    public FleaJerseyException(String key, String... values) {
         super(key, FleaI18nResEnum.ERROR, values);
     }
 
-    public FleaResourceException(String key, Throwable cause) {
+    public FleaJerseyException(String key, Throwable cause) {
         super(key, FleaI18nResEnum.ERROR, cause);
     }
 
-    public FleaResourceException(String key, Throwable cause, String... values) {
+    public FleaJerseyException(String key, Throwable cause, String... values) {
         super(key, FleaI18nResEnum.ERROR, cause, values);
     }
 

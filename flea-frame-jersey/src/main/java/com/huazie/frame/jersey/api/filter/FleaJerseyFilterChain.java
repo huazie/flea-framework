@@ -5,7 +5,6 @@ import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.jersey.api.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.api.data.FleaJerseyResponse;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,13 +16,13 @@ import java.util.List;
  */
 public class FleaJerseyFilterChain {
 
-    private List<IFleaJerseyFilter> beforeFilters = new ArrayList<IFleaJerseyFilter>();
+    private List<IFleaJerseyFilter> beforeFilters;
 
-    private List<IFleaJerseyFilter> serviceFilters = new ArrayList<IFleaJerseyFilter>();
+    private List<IFleaJerseyFilter> serviceFilters;
 
-    private List<IFleaJerseyFilter> afterFilters = new ArrayList<IFleaJerseyFilter>();
+    private List<IFleaJerseyFilter> afterFilters;
 
-    private List<IFleaJerseyErrorFilter> errorFilters = new ArrayList<IFleaJerseyErrorFilter>();
+    private List<IFleaJerseyErrorFilter> errorFilters;
 
     /**
      * <p> 执行过滤器 </p>
@@ -51,39 +50,43 @@ public class FleaJerseyFilterChain {
     }
 
     /**
-     * <p> 添加前置过滤器 </p>
+     * <p> 设置前置过滤器链 </p>
      *
-     * @param filter 过滤器类
+     * @param filters 过滤器链
      * @since 1.0.0
      */
-    public void addBeforeFilter(IFleaJerseyFilter filter) {
-        if (ObjectUtils.isNotEmpty(filter)) {
-            beforeFilters.add(filter);
-        }
+    public void setBeforeFilters(List<IFleaJerseyFilter> filters) {
+        beforeFilters = filters;
     }
 
     /**
-     * <p> 添加业务服务过滤器 </p>
+     * <p> 设置业务服务过滤器链 </p>
      *
-     * @param filter 过滤器类
+     * @param filters 过滤器链
      * @since 1.0.0
      */
-    public void addServiceFilter(IFleaJerseyFilter filter) {
-        if (ObjectUtils.isNotEmpty(filter)) {
-            serviceFilters.add(filter);
-        }
+    public void setServiceFilters(List<IFleaJerseyFilter> filters) {
+        serviceFilters = filters;
     }
 
     /**
-     * <p> 添加后置过滤器 </p>
+     * <p> 设置后置过滤器链 </p>
      *
-     * @param filter 过滤器类
+     * @param filters 过滤器链
      * @since 1.0.0
      */
-    public void addAfterFilter(IFleaJerseyFilter filter) {
-        if (ObjectUtils.isNotEmpty(filter)) {
-            afterFilters.add(filter);
-        }
+    public void setAfterFilters(List<IFleaJerseyFilter> filters) {
+        afterFilters = filters;
+    }
+
+    /**
+     * <p> 设置异常过滤器链 </p>
+     *
+     * @param filters 过滤器链
+     * @since 1.0.0
+     */
+    public void setErrorFilters(List<IFleaJerseyErrorFilter> filters) {
+        errorFilters = filters;
     }
 
     /**

@@ -5,10 +5,9 @@ import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.jersey.api.data.FleaJerseyRequestData;
 import com.huazie.frame.jersey.api.data.FleaJerseyResponseData;
 import com.huazie.frame.jersey.api.data.RequestBusinessData;
-import com.huazie.frame.jersey.api.data.RequestPublicData;
 import com.huazie.frame.jersey.api.data.ResponseBusinessData;
 import com.huazie.frame.jersey.api.data.ResponsePublicData;
-import com.huazie.frame.jersey.common.exception.FleaResourceException;
+import com.huazie.frame.jersey.common.exception.FleaJerseyException;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -35,7 +34,7 @@ public abstract class FleaJerseyPostResource {
         try {
             if (ObjectUtils.isEmpty(requestData)) {
                 // 请求报文不能为空
-                throw new FleaResourceException("");
+                throw new FleaJerseyException("");
             }
 
             // 前置事件

@@ -10,6 +10,22 @@ package com.huazie.frame.jersey.common;
 public interface FleaJerseyConstants {
 
     /**
+     * <p> Jersey 过滤器常量 </p>
+     *
+     * @since 1.0.0
+     */
+    interface JerseyFilterConstants {
+        /**
+         * <p> Jersey 过滤器链配置文件路径 </p>
+         */
+        String JSERSY_FILTER_FILE_PATH = "flea/jersey/flea-jersey-filter.xml";
+        /**
+         * <p> Jersey 过滤器链配置文件系统属性键 </p>
+         */
+        String JERSEY_FILTER_FILE_SYSTEM_KEY = "fleaframe.jersey.filter.filename";
+    }
+
+    /**
      * <p> 响应结果常量 </p>
      *
      * @since 1.0.0

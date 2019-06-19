@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <p> 系统授权校验 </p>
+ * <p> 系统授权校验过滤器 </p>
  *
  * @author huazie
  * @version 1.0.0
