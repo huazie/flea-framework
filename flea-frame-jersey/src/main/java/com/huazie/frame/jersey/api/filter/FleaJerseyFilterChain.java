@@ -8,7 +8,6 @@ import com.huazie.frame.jersey.api.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.api.data.FleaJerseyResponse;
 import com.huazie.frame.jersey.api.filter.config.Filter;
 import com.huazie.frame.jersey.api.filter.config.FleaJerseyFilterConfig;
-import com.huazie.frame.jersey.api.filter.impl.DataPreCheckFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -92,7 +91,7 @@ public class FleaJerseyFilterChain {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJerseyFilterChain##doFilter(FleaJerseyRequest) Step={}", doFilterStep);
+            LOGGER.debug("FleaJerseyFilterChain##doFilter(FleaJerseyRequest) Filter = {}", doFilterStep);
         }
 
         return response;
@@ -146,8 +145,8 @@ public class FleaJerseyFilterChain {
         if (CollectionUtils.isNotEmpty(errorFilters)) {
             for (IFleaJerseyErrorFilter errorFilter : errorFilters) {
                 if (ObjectUtils.isNotEmpty(errorFilter)) {
-                    errorFilter.doFilter(response, throwable);
                     addStep(errorFilter.getClass().getName());
+                    errorFilter.doFilter(response, throwable);
                 }
             }
         }
@@ -166,8 +165,8 @@ public class FleaJerseyFilterChain {
         if (CollectionUtils.isNotEmpty(filters)) {
             for (IFleaJerseyFilter filter : filters) {
                 if (ObjectUtils.isNotEmpty(filter)) {
-                    filter.doFilter(request, response);
                     addStep(filter.getClass().getName());
+                    filter.doFilter(request, response);
                 }
             }
         }

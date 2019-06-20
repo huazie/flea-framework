@@ -10,7 +10,7 @@ import com.huazie.frame.jersey.api.filter.config.Filter;
 import com.huazie.frame.jersey.api.filter.config.FilterChain;
 import com.huazie.frame.jersey.api.filter.config.Jersey;
 import com.huazie.frame.jersey.api.filter.config.Service;
-import com.huazie.frame.jersey.common.exception.FleaJerseyException;
+import com.huazie.frame.jersey.common.exception.FleaJerseyFilterException;
 import org.apache.commons.digester.Digester;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -102,7 +102,7 @@ public class JerseyXmlDigesterHelper {
             InputStream input = ResourcesUtil.getInputStreamFromClassPath(fileName);
             if (ObjectUtils.isEmpty(input)) {
                 // 该路径下【0】找不到指定配置文件
-                throw new FleaJerseyException("", fileName);
+                throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000001", fileName);
             }
 
             Digester digester = new Digester();
@@ -158,7 +158,7 @@ public class JerseyXmlDigesterHelper {
 
         } catch (Exception e) {
             // XML转化异常：
-            throw new FleaJerseyException("XML Transformation occurs exception:", e);
+            throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000002", e);
         }
 
         if (LOGGER.isDebugEnabled()) {

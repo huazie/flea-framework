@@ -1,5 +1,7 @@
 package com.huazie.frame.jersey.api.data;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -25,5 +27,10 @@ public class FleaJerseyRequest {
 
     public void setRequestData(FleaJerseyRequestData requestData) {
         this.requestData = requestData;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 }

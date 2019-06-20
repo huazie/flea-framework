@@ -17,6 +17,13 @@ import javax.ws.rs.core.MediaType;
  */
 public class FleaJerseyGetResource extends FleaJerseyResource {
 
+    /**
+     * <p> 处理GET资源数据 </p>
+     *
+     * @param request 请求对象
+     * @return 响应对象
+     * @since 1.0.0
+     */
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})

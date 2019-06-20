@@ -111,6 +111,7 @@ public class DBXmlDigesterHelper {
 
             InputStream input = ResourcesUtil.getInputStreamFromClassPath(fileName);
             if (ObjectUtils.isEmpty(input)) {
+                // 该路径下【0】找不到指定配置文件
                 throw new TableSplitException("ERROR-DB-SQT0000000030", fileName);
             }
 
@@ -136,6 +137,7 @@ public class DBXmlDigesterHelper {
 
             tabs = (Tables) digester.parse(input);
         } catch (Exception e) {
+            // XML转化异常：
             throw new TableSplitException("ERROR-DB-SQT0000000031", e);
         }
 
@@ -188,6 +190,7 @@ public class DBXmlDigesterHelper {
 
             InputStream input = ResourcesUtil.getInputStreamFromClassPath(fileName);
             if (ObjectUtils.isEmpty(input)) {
+                // 该路径下【0】找不到指定配置文件
                 throw new SqlTemplateException("ERROR-DB-SQT0000000030", fileName);
             }
 
@@ -252,6 +255,7 @@ public class DBXmlDigesterHelper {
 
             sqlTemplate = (Sql) digester.parse(input);
         } catch (Exception e) {
+            // XML转化异常：
             throw new SqlTemplateException("ERROR-DB-SQT0000000031", e);
         }
 

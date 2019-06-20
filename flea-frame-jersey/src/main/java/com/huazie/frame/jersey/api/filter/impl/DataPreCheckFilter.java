@@ -9,7 +9,7 @@ import com.huazie.frame.jersey.api.data.RequestBusinessData;
 import com.huazie.frame.jersey.api.data.RequestPublicData;
 import com.huazie.frame.jersey.api.data.ResponsePublicData;
 import com.huazie.frame.jersey.api.filter.IFleaJerseyFilter;
-import com.huazie.frame.jersey.common.exception.FleaJerseyException;
+import com.huazie.frame.jersey.common.exception.FleaJerseyFilterException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,6 +38,7 @@ public class DataPreCheckFilter implements IFleaJerseyFilter {
         FleaJerseyResponseData responseData = response.getResponseData();
         if (ObjectUtils.isEmpty(responseData)) {
             responseData = new FleaJerseyResponseData();
+            response.setResponseData(responseData);
         }
 
         ResponsePublicData responsePublicData = new ResponsePublicData();
@@ -45,25 +46,25 @@ public class DataPreCheckFilter implements IFleaJerseyFilter {
 
         if (ObjectUtils.isEmpty(request)) {
             // 请求报文不能为空
-            throw new FleaJerseyException("请求报文不能为空");
+            throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000003");
         }
 
         FleaJerseyRequestData requestData = request.getRequestData();
         if (ObjectUtils.isEmpty(requestData)) {
             // 请求报文不能为空
-            throw new FleaJerseyException("请求报文不能为空");
+            throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000003");
         }
 
         RequestPublicData requestPublicData = requestData.getPublicData();
         if (ObjectUtils.isEmpty(requestPublicData)) {
             // 请求公共报文不能为空
-            throw new FleaJerseyException("请求公共报文不能为空");
+            throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000004");
         }
 
         RequestBusinessData requestBusinessData = requestData.getBusinessData();
         if (ObjectUtils.isEmpty(requestBusinessData)) {
             // 请求业务报文不能为空
-            throw new FleaJerseyException("请求业务报文不能为空");
+            throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000005");
         }
 
         if (LOGGER.isDebugEnabled()) {

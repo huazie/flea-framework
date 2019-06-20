@@ -20,8 +20,10 @@ public class ErrorFilter implements IFleaJerseyErrorFilter {
     public void doFilter(FleaJerseyResponse response, Throwable throwable) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("ErrorFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) Start");
-            LOGGER.debug("ErrorFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) Exception : {}", throwable.getCause() == null ? throwable.getMessage() : throwable.getCause().getMessage());
+            LOGGER.debug("ErrorFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) Exception : ", throwable);
         }
+
+
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("ErrorFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) End");

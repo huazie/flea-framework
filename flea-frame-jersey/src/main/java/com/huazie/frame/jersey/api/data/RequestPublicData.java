@@ -28,6 +28,9 @@ public final class RequestPublicData implements Serializable {
     @XmlElement(name = "RESOURCE_PATH")
     private String resourcePath; // 资源路径
 
+    @XmlElement(name = "SERVICE_ID")
+    private String serviceId; // 服务编号
+
     public String getSystemUserId() {
         return systemUserId;
     }
@@ -50,6 +53,14 @@ public final class RequestPublicData implements Serializable {
 
     public void setResourcePath(String resourcePath) {
         this.resourcePath = resourcePath;
+    }
+
+    public String getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(String serviceId) {
+        this.serviceId = serviceId;
     }
 
     @Override
