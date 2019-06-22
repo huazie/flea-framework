@@ -10,52 +10,12 @@
     <name>FLEA FRAME JERSEY</name>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>flea-frame-jersey</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <!-- 单独执行单元测试 -->
-                <configuration>
-                    <skipTests>true</skipTests>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
-
-    <dependencies>
-
-        <!-- Grizzly Http服务器 -->
-        <dependency>
-            <groupId>org.glassfish.jersey.containers</groupId>
-            <artifactId>jersey-container-grizzly2-http</artifactId>
-        </dependency>
-
-        <!-- FLEA FRAME CONFIG -->
-        <dependency>
-            <groupId>com.huazie.frame</groupId>
-            <artifactId>flea-frame-config</artifactId>
-            <version>${parent.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- FLEA FRAME COMMON -->
-        <dependency>
-            <groupId>com.huazie.frame</groupId>
-            <artifactId>flea-frame-common</artifactId>
-            <version>${parent.version}</version>
-        </dependency>
-
-    </dependencies>
+    <modules>
+        <module>flea-frame-jersey-client</module>
+        <module>flea-frame-jersey-server</module>
+		<module>flea-frame-jersey-common</module>
+    </modules>
 
 </project>

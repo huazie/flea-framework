@@ -6,23 +6,23 @@
 
         <!-- 前置过滤器链 -->
         <before>
-            <filter clazz="com.huazie.frame.jersey.api.filter.impl.DataPreCheckFilter" order="1" desc="数据预校验过滤器"/>
-            <filter clazz="com.huazie.frame.jersey.api.filter.impl.SystemAuthCheckFilter" order="2" desc="系统授权校验过滤器"/>
+            <filter clazz="com.huazie.frame.jersey.server.filter.impl.DataPreCheckFilter" order="1" desc="数据预校验过滤器"/>
+            <filter clazz="com.huazie.frame.jersey.server.filter.impl.SystemAuthCheckFilter" order="2" desc="系统授权校验过滤器"/>
         </before>
 
         <!-- 业务服务过滤器链 -->
         <service>
-            <filter clazz="com.huazie.frame.jersey.api.filter.impl.InvokeServiceFilter" order="1" desc="服务调用过滤器"/>
+            <filter clazz="com.huazie.frame.jersey.server.filter.impl.InvokeServiceFilter" order="1" desc="服务调用过滤器"/>
         </service>
 
         <!-- 后置过滤器链 -->
         <after>
-            <filter clazz="com.huazie.frame.jersey.api.filter.impl.JerseyLoggerFilter" order="1" desc="Jersey日志记录过滤器"/>
+            <filter clazz="com.huazie.frame.jersey.server.filter.impl.JerseyLoggerFilter" order="1" desc="Jersey日志记录过滤器"/>
         </after>
 
         <!-- 异常过滤器链 -->
         <error>
-            <filter clazz="com.huazie.frame.jersey.api.filter.impl.ErrorFilter" order="1" desc="异常过滤器"/>
+            <filter clazz="com.huazie.frame.jersey.server.filter.impl.ErrorFilter" order="1" desc="异常过滤器"/>
         </error>
 
     </filterchain>

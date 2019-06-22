@@ -3,13 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>flea-frame</artifactId>
+        <artifactId>flea-frame-jersey</artifactId>
         <groupId>com.huazie.frame</groupId>
         <version>1.0.0</version>
     </parent>
-    <name>FLEA FRAME CORE</name>
+    <name>FLEA FRAME JERSEY COMMON</name>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>flea-frame-core</artifactId>
+    <artifactId>flea-frame-jersey-common</artifactId>
     <packaging>jar</packaging>
 
     <build>
@@ -35,13 +35,7 @@
 
     <dependencies>
 
-        <!-- Spring相关 -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-orm</artifactId>
-        </dependency>
-
-        <!-- FLEA FRAME 配置文件 -->
+        <!-- FLEA FRAME CONFIG -->
         <dependency>
             <groupId>com.huazie.frame</groupId>
             <artifactId>flea-frame-config</artifactId>
@@ -49,17 +43,10 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- FLEA FRAME DB -->
+        <!-- FLEA FRAME CORE -->
         <dependency>
             <groupId>com.huazie.frame</groupId>
-            <artifactId>flea-frame-db</artifactId>
-            <version>${parent.version}</version>
-        </dependency>
-
-        <!-- FLEA FRAME CACHE -->
-        <dependency>
-            <groupId>com.huazie.frame</groupId>
-            <artifactId>flea-frame-cache</artifactId>
+            <artifactId>flea-frame-common</artifactId>
             <version>${parent.version}</version>
         </dependency>
 
