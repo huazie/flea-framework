@@ -1,8 +1,12 @@
 package com.huazie.frame.jersey.server.resource;
 
+import com.huazie.frame.common.util.ObjectUtils;
+import com.huazie.frame.core.base.cfgdata.bean.FleaConfigDataSpringBean;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
 import com.huazie.frame.jersey.server.filter.FilterChainManager;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
  * <p> Flea Jersey 资源父类 </p>
@@ -13,6 +17,9 @@ import com.huazie.frame.jersey.server.filter.FilterChainManager;
  */
 public class FleaJerseyResource {
 
+    @Autowired
+    protected FleaConfigDataSpringBean fleaConfigDataSpringBean;
+
     /**
      * <p> 处理资源数据 </p>
      *
@@ -21,6 +28,9 @@ public class FleaJerseyResource {
      * @since 1.0.0
      */
     protected FleaJerseyResponse doResource(FleaJerseyRequest request) {
+        if (ObjectUtils.isNotEmpty(request)) {
+            request.setFleaConfigDataSpringBean(fleaConfigDataSpringBean);
+        }
         return FilterChainManager.getManager().doFilter(request);
     }
 

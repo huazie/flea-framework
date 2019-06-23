@@ -12,6 +12,7 @@ import com.huazie.frame.common.FleaFrameManager;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaParaDetailSV;
+import com.huazie.frame.core.common.EntityStateEnum;
 import com.huazie.frame.core.common.FleaEntityConstants;
 import com.huazie.frame.db.common.DBSystemEnum;
 import com.huazie.frame.db.jdbc.FleaJDBCHelper;
@@ -223,7 +224,7 @@ public class FleaParaDetailSVImplTest {
         fleaParaDetail.setParaCode("huazie");
         fleaParaDetail.setParaName("这是测试INSERT SQL 模板");
         fleaParaDetail.setPara1("hello world");
-        fleaParaDetail.setParaState(FleaEntityConstants.FleaParaDetailConstants.PARA_STATE_IN_USE);
+        fleaParaDetail.setParaState(EntityStateEnum.IN_USE.getValue());
         fleaParaDetail.setParaDesc("Test");
         try {
             int ret = sv.insert("insert", fleaParaDetail);
@@ -255,7 +256,7 @@ public class FleaParaDetailSVImplTest {
         IFleaParaDetailSV sv = (IFleaParaDetailSV) applicationContext.getBean("fleaParaDetailSVImpl");
         FleaParaDetail fleaParaDetail = new FleaParaDetail();
         fleaParaDetail.setParaId(13L);
-        fleaParaDetail.setParaState(FleaEntityConstants.FleaParaDetailConstants.PARA_STATE_IN_USE);
+        fleaParaDetail.setParaState(EntityStateEnum.IN_USE.getValue());
         try {
             int ret = sv.delete("delete", fleaParaDetail);
             LOGGER.debug("ret={}", ret);
@@ -291,7 +292,7 @@ public class FleaParaDetailSVImplTest {
         fleaParaDetail.setParaCode("huazie");
         fleaParaDetail.setParaName("这是测试INSERT SQL 模板");
         fleaParaDetail.setPara1("hello world");
-        fleaParaDetail.setParaState(FleaEntityConstants.FleaParaDetailConstants.PARA_STATE_IN_USE);
+        fleaParaDetail.setParaState(EntityStateEnum.IN_USE.getValue());
         fleaParaDetail.setParaDesc("Test");
         try {
             int ret = FleaJDBCHelper.insert("insert", fleaParaDetail);
@@ -324,7 +325,7 @@ public class FleaParaDetailSVImplTest {
         FleaJDBCConfig.init(DBSystemEnum.MySQL.getName(), "fleaconfig");
         FleaParaDetail fleaParaDetail = new FleaParaDetail();
         fleaParaDetail.setParaId(13L);
-        fleaParaDetail.setParaState(FleaEntityConstants.FleaParaDetailConstants.PARA_STATE_IN_USE);
+        fleaParaDetail.setParaState(EntityStateEnum.IN_USE.getValue());
         try {
             int ret = FleaJDBCHelper.delete("delete", fleaParaDetail);
             LOGGER.debug("ret={}", ret);

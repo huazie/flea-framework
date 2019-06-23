@@ -35,18 +35,22 @@
 
     <dependencies>
 
-        <!-- FLEA FRAME CONFIG -->
+        <!-- servlet 3.x -->
         <dependency>
-            <groupId>com.huazie.frame</groupId>
-            <artifactId>flea-frame-config</artifactId>
-            <version>${parent.version}</version>
-            <scope>test</scope>
+            <groupId>org.glassfish.jersey.containers</groupId>
+            <artifactId>jersey-container-servlet</artifactId>
+        </dependency>
+
+        <!-- Jersey对Spring的依赖 -->
+        <dependency>
+            <groupId>org.glassfish.jersey.ext</groupId>
+            <artifactId>jersey-spring3</artifactId>
         </dependency>
 
         <!-- FLEA FRAME CORE -->
         <dependency>
             <groupId>com.huazie.frame</groupId>
-            <artifactId>flea-frame-common</artifactId>
+            <artifactId>flea-frame-core</artifactId>
             <version>${parent.version}</version>
         </dependency>
 

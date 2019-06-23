@@ -25,11 +25,11 @@ public final class RequestPublicData implements Serializable {
     @XmlElement(name = "SYSTEM_USER_PASSWORD")
     private String systemUserPassword; // 系统用户密码
 
-    @XmlElement(name = "RESOURCE_PATH")
-    private String resourcePath; // 资源路径
+    @XmlElement(name = "RESOURCE_CODE")
+    private String resourceCode; // 资源编码
 
-    @XmlElement(name = "SERVICE_ID")
-    private String serviceId; // 服务编号
+    @XmlElement(name = "SERVICE_CODE")
+    private String serviceCode; // 服务编码
 
     public String getSystemUserId() {
         return systemUserId;
@@ -47,20 +47,20 @@ public final class RequestPublicData implements Serializable {
         this.systemUserPassword = systemUserPassword;
     }
 
-    public String getResourcePath() {
-        return resourcePath;
+    public String getResourceCode() {
+        return resourceCode;
     }
 
-    public void setResourcePath(String resourcePath) {
-        this.resourcePath = resourcePath;
+    public void setResourceCode(String resourceCode) {
+        this.resourceCode = resourceCode;
     }
 
-    public String getServiceId() {
-        return serviceId;
+    public String getServiceCode() {
+        return serviceCode;
     }
 
-    public void setServiceId(String serviceId) {
-        this.serviceId = serviceId;
+    public void setServiceCode(String serviceCode) {
+        this.serviceCode = serviceCode;
     }
 
     @Override

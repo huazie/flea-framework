@@ -18,4 +18,16 @@
 		<module>flea-frame-jersey-common</module>
     </modules>
 
+    <dependencies>
+
+        <!-- FLEA FRAME CONFIG -->
+        <dependency>
+            <groupId>com.huazie.frame</groupId>
+            <artifactId>flea-frame-config</artifactId>
+            <version>${parent.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
 </project>

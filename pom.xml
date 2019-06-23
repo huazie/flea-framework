@@ -88,6 +88,12 @@
                 <scope>import</scope>
             </dependency>
 
+            <dependency>
+                <groupId>org.glassfish.jersey.ext</groupId>
+                <artifactId>jersey-spring3</artifactId>
+                <version>${jersey.version}</version>
+            </dependency>
+
             <!-- 日志相关, 此处使用log4j -->
             <dependency>
                 <groupId>log4j</groupId>
