@@ -3,6 +3,7 @@ package com.huazie.frame.jersey.server.resource;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequestData;
 import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
+import com.huazie.frame.jersey.common.data.RequestBusinessData;
 import com.huazie.frame.jersey.common.data.RequestPublicData;
 import org.junit.Before;
 import org.junit.Test;
@@ -59,7 +60,7 @@ public class JerseyTest {
         publicData.setResourceCode("upload");
 
         requestData.setPublicData(publicData);
-        //requestData.setBusinessData(new RequestBusinessData());
+        requestData.setBusinessData(new RequestBusinessData());
 
         request.setRequestData(requestData);
 

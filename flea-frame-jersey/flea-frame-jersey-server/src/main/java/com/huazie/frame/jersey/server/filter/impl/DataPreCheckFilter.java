@@ -1,6 +1,8 @@
 package com.huazie.frame.jersey.server.filter.impl;
 
 import com.huazie.frame.common.util.ObjectUtils;
+import com.huazie.frame.common.util.StringUtils;
+import com.huazie.frame.jersey.common.FleaJerseyConstants;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequestData;
 import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
@@ -65,6 +67,30 @@ public class DataPreCheckFilter implements IFleaJerseyFilter {
         if (ObjectUtils.isEmpty(requestBusinessData)) {
             // 请求业务报文不能为空
             throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000005");
+        }
+
+        String systemUserId = requestPublicData.getSystemUserId();
+        if (StringUtils.isBlank(systemUserId)) {
+            // 请求公共报文入参【{0}】不能为空
+            throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000006", FleaJerseyConstants.RequestPublicDataConstants.SYSTEM_USER_ID);
+        }
+
+        String systemUserPwd = requestPublicData.getSystemUserPassword();
+        if (StringUtils.isBlank(systemUserPwd)) {
+            // 请求公共报文入参【{0}】不能为空
+            throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000006", FleaJerseyConstants.RequestPublicDataConstants.SYSTEM_USER_PWD);
+        }
+
+        String resourceCode = requestPublicData.getResourceCode();
+        if (StringUtils.isBlank(resourceCode)) {
+            // 请求公共报文入参【{0}】不能为空
+            throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000006", FleaJerseyConstants.RequestPublicDataConstants.RESOURCE_CODE);
+        }
+
+        String serviceCode = requestPublicData.getServiceCode();
+        if (StringUtils.isBlank(serviceCode)) {
+            // 请求公共报文入参【{0}】不能为空
+            throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000006", FleaJerseyConstants.RequestPublicDataConstants.SERVICE_CODE);
         }
 
         if (LOGGER.isDebugEnabled()) {

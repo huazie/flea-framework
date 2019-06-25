@@ -68,14 +68,14 @@ public class ErrorFilter implements IFleaJerseyErrorFilter {
                     mapping = fleaConfigDataSpringBean.getMapping(resourceCode, serviceCode, key);
                     if (ObjectUtils.isEmpty(mapping)) {
                         responsePublicData.setResultCode(FleaJerseyConstants.ResponseResultConstants.RESULT_CODE_NOT_CONFIG);
-                        responsePublicData.setResultMess(FleaI18nHelper.i18n("ERROR-JERSEY-FILTER0000000006", new String[]{errMsg}, FleaI18nResEnum.ERROR_JERSEY.getResName()));
+                        responsePublicData.setResultMess(FleaI18nHelper.i18n("ERROR-JERSEY-FILTER0000000007", new String[]{errMsg}, FleaI18nResEnum.ERROR_JERSEY.getResName()));
                     } else {
                         responsePublicData.setResultCode(mapping.getErrorCode());
                     }
                 }
             } catch (Exception e) {
                 if (LOGGER.isErrorEnabled()) {
-                    LOGGER.error("ErrorFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) Exception : ", e);
+                    LOGGER.error("ErrorFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) Exception : ", ObjectUtils.isEmpty(e.getCause()) ? e.getMessage() : e.getCause().getMessage());
                 }
                 responsePublicData.setResultCode(FleaJerseyConstants.ResponseResultConstants.RESULT_CODE_OTHER);
             }

@@ -58,4 +58,31 @@ public interface FleaJerseyConstants {
         String RESULT_CODE_NOT_CONFIG = "88888888";
     }
 
+    /**
+     * <p> 请求公共报文常量 </p>
+     *
+     * @since 1.0.0
+     */
+    interface RequestPublicDataConstants {
+        /**
+         * <p> 系统用户编号 </p>
+         */
+        String SYSTEM_USER_ID = "SYSTEM_USER_ID";
+
+        /**
+         * <p> 系统用户密码（加密） </p>
+         */
+        String SYSTEM_USER_PWD = "SYSTEM_USER_PASSWORD";
+
+        /**
+         * <p> 资源编码 </p>
+         */
+        String RESOURCE_CODE = "RESOURCE_CODE";
+
+        /**
+         * <p> 服务编码 </p>
+         */
+        String SERVICE_CODE = "SERVICE_CODE";
+    }
+
 }
