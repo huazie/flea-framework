@@ -31,7 +31,10 @@ public interface FleaJerseyConstants {
          * <p> Jersey 过滤器服务编码 </p>
          */
         String SERVICE_CODE_FILTER = "jersey-filter-service";
-
+        /**
+         * <p> Jersey Filter 国际码前缀 </p>
+         */
+        String PREFIX_ERROR_JERSEY_FILTER = "ERROR-JERSEY-FILTER";
     }
 
     /**

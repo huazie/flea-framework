@@ -58,6 +58,7 @@ public class JerseyTest {
         publicData.setSystemUserId("1000");
         publicData.setSystemUserPassword("asd123");
         publicData.setResourceCode("upload");
+        publicData.setServiceCode("xxx");
 
         requestData.setPublicData(publicData);
         requestData.setBusinessData(new RequestBusinessData());

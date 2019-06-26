@@ -59,6 +59,12 @@ public class ErrorFilter implements IFleaJerseyErrorFilter {
                 if (ObjectUtils.isNotEmpty(mapping)) {
                     responsePublicData.setResultCode(mapping.getErrorCode());
                 } else {
+                    // 过滤器中的国际码和错误码映射，应该由上面分支获取，如果上面没有查到，可以认为 错误码未配置
+                    if (ObjectUtils.isNotEmpty(key) && key.startsWith(FleaJerseyConstants.JerseyFilterConstants.PREFIX_ERROR_JERSEY_FILTER)) {
+                        responsePublicData.setResultCode(FleaJerseyConstants.ResponseResultConstants.RESULT_CODE_NOT_CONFIG);
+                        responsePublicData.setResultMess(FleaI18nHelper.i18n("ERROR-JERSEY-FILTER0000000007", new String[]{errMsg}, FleaI18nResEnum.ERROR_JERSEY.getResName()));
+                        return;
+                    }
                     // 获取请求公共报文
                     RequestPublicData requestPublicData = request.getRequestData().getPublicData();
                     // 获取资源编码
