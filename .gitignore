@@ -29,3 +29,6 @@ flea-frame-config/target/
 flea-frame-core/target/
 flea-frame-tools/target/
 flea-frame-jersey/target/
+flea-frame-jersey/flea-frame-jersey-server/target/
+flea-frame-jersey/flea-frame-jersey-client/target/
+flea-frame-jersey/flea-frame-jersey-common/target/

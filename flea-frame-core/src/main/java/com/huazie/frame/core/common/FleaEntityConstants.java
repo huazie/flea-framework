@@ -9,21 +9,27 @@ package com.huazie.frame.core.common;
  */
 public interface FleaEntityConstants {
 
+    /**
+     * <p> Flea 静态配置数据常量 </p>
+     *
+     * @since 1.0.0
+     */
     interface FleaParaDetailConstants {
-        String S_PARA_ID = "paraId";
         String S_PARA_TYPE = "paraType";
         String S_PARA_CODE = "paraCode";
-        String S_PARA_NAME = "paraName";
-        String S_PARA1 = "para1";
-        String S_PARA2 = "para2";
-        String S_PARA3 = "para3";
-        String S_PARA4 = "para4";
-        String S_PARA5 = "para5";
         String S_PARA_STATE = "paraState";
-        String S_PARA_DESC = "paraDesc";
+    }
 
-        int PARA_STATE_BE_DELETED = 0;    // 删除
-        int PARA_STATE_IN_USE = 1;        // 在用
+    /**
+     * <p> Flea Jersey 国际码和错误码映射常量 </p>
+     *
+     * @since 1.0.0
+     */
+    interface I18nErrorMappingConstants {
+        String S_RESOURCE_CODE = "resourceCode";
+        String S_SERVICE_CODE = "serviceCode";
+        String S_I18N_CODE = "i18nCode";
+        String S_STATE = "state";
     }
 
 }

@@ -60,6 +60,18 @@ public class StringUtils {
     }
 
     /**
+     * <p> 清除字符串内容 </p>
+     *
+     * @param value {@code StringBuilder}对象
+     * @since 1.0.0
+     */
+    public static void clear(StringBuilder value) {
+        if (ObjectUtils.isNotEmpty(value) && StringUtils.isNotBlank(value.toString())) {
+            value.delete(0, value.length());
+        }
+    }
+
+    /**
      * <p> 首字母转小写 </p>
      *
      * @param value 待处理的字符串

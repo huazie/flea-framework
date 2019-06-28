@@ -31,7 +31,7 @@ public class ReflectUtils {
             obj = clazz.newInstance();
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("当前类反射出错，Class={}, Exception={}", className, e);
+                LOGGER.error("当前类反射出错，Class={}, Exception={}", className, e.getMessage());
             }
         }
         return obj;
