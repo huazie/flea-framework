@@ -129,7 +129,7 @@ public class EntityUtils {
                 if (ArrayUtils.isEmpty(annotations)) {// 表示属性上没有注解
                     Method method = ReflectUtils.getObjectAttrMethod(entity, attrName);
                     if (ObjectUtils.isNotEmpty(method)) {
-                        annotations = ReflectUtils.getObjectAttrMethod(entity, attrName).getAnnotations();// 获取方法上的注解
+                        annotations = method.getAnnotations();// 获取方法上的注解
                         if (ArrayUtils.isEmpty(annotations)) {// 表示方法上没有注解
                             // 实体类上 [{0}] 没有注解
                             throw new DaoException("ERROR-DB-DAO0000000014", entity.getClass().getSimpleName());

@@ -8,6 +8,7 @@
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<!-- Connection JDBC -->
 		<class>com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail</class>
+		<class>com.huazie.frame.core.base.cfgdata.entity.FleaJerseyI18nErrorMapping</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		
 		<properties>

@@ -13,7 +13,7 @@
        default-autowire="byName" default-lazy-init="false">
 
     <!-- 自动扫描-->
-    <context:component-scan base-package="com.huazie.**.dao.impl,com.huazie.**.service.impl,com.huazie.**.web"/>
+    <context:component-scan base-package="com.huazie.**.dao.impl,com.huazie.**.service.impl,com.huazie.**.web,com.huazie.**.bean"/>
 
     <!--
         读取的配置文件
@@ -93,6 +93,7 @@
         <property name="configMap">
             <map>
                 <entry key="fleaparadetail" value="0"/>
+                <entry key="fleajerseyi18nerrormapping" value="0" />
             </map>
         </property>
     </bean>
@@ -106,6 +107,7 @@
         <property name="configMap">
             <map>
                 <entry key="fleaparadetail" value="0"/>
+                <entry key="fleajerseyi18nerrormapping" value="0" />
             </map>
         </property>
     </bean>

@@ -3,6 +3,7 @@ package com.huazie.frame.core.base.cfgdata.dao.impl;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.core.base.cfgdata.dao.interfaces.IFleaParaDetailDAO;
 import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
+import com.huazie.frame.core.common.EntityStateEnum;
 import com.huazie.frame.core.common.FleaEntityConstants;
 import com.huazie.frame.db.jpa.common.FleaJPAQuery;
 import org.slf4j.Logger;
@@ -36,8 +37,8 @@ public class FleaParaDetailDAOImpl extends FleaConfigDAOImpl<FleaParaDetail> imp
         if (StringUtils.isNotBlank(paraCode)) {
             query.equal(FleaEntityConstants.FleaParaDetailConstants.S_PARA_CODE, paraCode);
         }
-
-        query.equal(FleaEntityConstants.FleaParaDetailConstants.S_PARA_STATE, FleaEntityConstants.FleaParaDetailConstants.PARA_STATE_IN_USE);
+        // 查正常状态的数据
+        query.equal(FleaEntityConstants.FleaParaDetailConstants.S_PARA_STATE, EntityStateEnum.IN_USE.getValue());
 
         List<FleaParaDetail> fleaParaDetailList = query.getResultList();
 

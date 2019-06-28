@@ -94,9 +94,9 @@ public class DBXmlDigesterHelper {
 
     private Tables newTables() throws TableSplitException {
         Tables tabs;
-        String fileName = "flea/db/flea-table-split.xml";
-        if (StringUtils.isNotBlank(System.getProperty("fleaframe.db.table.split.filename"))) {
-            fileName = StringUtils.trim(System.getProperty("fleaframe.db.table.split.filename"));
+        String fileName = DBConstants.TableSplitConstants.TABLE_SPLIT_FILE_PATH;
+        if (StringUtils.isNotBlank(System.getProperty(DBConstants.TableSplitConstants.TABLE_SPLIT_FILE_SYSTEM_KEY))) {
+            fileName = StringUtils.trim(System.getProperty(DBConstants.TableSplitConstants.TABLE_SPLIT_FILE_SYSTEM_KEY));
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("DBXmlDigesterHelper##newTables Use the specified flea-table-split.xml :" + fileName);
             }
@@ -107,33 +107,37 @@ public class DBXmlDigesterHelper {
             LOGGER.debug("DBXmlDigesterHelper##newTables() Start to parse the flea-table-split.xml");
         }
 
-        InputStream input = ResourcesUtil.getInputStreamFromClassPath(fileName);
-        if (ObjectUtils.isEmpty(input)) {
-            throw new TableSplitException("ERROR-DB-SQT0000000030", fileName);
-        }
-
-        Digester digester = new Digester();
-        digester.setValidating(false);
-
-        digester.addObjectCreate("tables", Tables.class.getName());
-        digester.addSetProperties("tables");
-
-        digester.addObjectCreate("tables/table", Table.class.getName());
-        digester.addSetProperties("tables/table");
-
-        digester.addObjectCreate("tables/table/splits", Splits.class.getName());
-        digester.addSetProperties("tables/table/splits");
-
-        digester.addObjectCreate("tables/table/splits/split", Split.class.getName());
-        digester.addSetProperties("tables/table/splits/split");
-
-        digester.addSetNext("tables/table", "addTable", Table.class.getName());
-        digester.addSetNext("tables/table/splits", "setSplits", Splits.class.getName());
-        digester.addSetNext("tables/table/splits/split", "addSplit", Split.class.getName());
-
         try {
+
+            InputStream input = ResourcesUtil.getInputStreamFromClassPath(fileName);
+            if (ObjectUtils.isEmpty(input)) {
+                // 该路径下【0】找不到指定配置文件
+                throw new TableSplitException("ERROR-DB-SQT0000000030", fileName);
+            }
+
+            Digester digester = new Digester();
+            digester.setValidating(false);
+
+            digester.addObjectCreate("tables", Tables.class.getName());
+            digester.addSetProperties("tables");
+
+            digester.addObjectCreate("tables/table", Table.class.getName());
+            digester.addSetProperties("tables/table");
+
+            digester.addObjectCreate("tables/table/splits", Splits.class.getName());
+            digester.addSetProperties("tables/table/splits");
+
+            digester.addObjectCreate("tables/table/splits/split", Split.class.getName());
+            digester.addSetProperties("tables/table/splits/split");
+
+            digester.addSetNext("tables/table", "addTable", Table.class.getName());
+            digester.addSetNext("tables/table/splits", "setSplits", Splits.class.getName());
+            digester.addSetNext("tables/table/splits/split", "addSplit", Split.class.getName());
+
+
             tabs = (Tables) digester.parse(input);
         } catch (Exception e) {
+            // XML转化异常：
             throw new TableSplitException("ERROR-DB-SQT0000000031", e);
         }
 
@@ -169,9 +173,9 @@ public class DBXmlDigesterHelper {
     private Sql newSqlTemplate() throws SqlTemplateException {
         Sql sqlTemplate;
 
-        String fileName = "flea/db/flea-sql-template.xml";
-        if (StringUtils.isNotBlank(System.getProperty("fleaframe.db.sql.template.filename"))) {
-            fileName = StringUtils.trim(System.getProperty("fleaframe.db.sql.template.filename"));
+        String fileName = DBConstants.SqlTemplateConstants.SQL_TEMPLATE_FILE_PATH;
+        if (StringUtils.isNotBlank(System.getProperty(DBConstants.SqlTemplateConstants.SQL_TEMPLATE_FILE_SYSTEM_KEY))) {
+            fileName = StringUtils.trim(System.getProperty(DBConstants.SqlTemplateConstants.SQL_TEMPLATE_FILE_SYSTEM_KEY));
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("DBXmlDigesterHelper##newSqlTemplate Use the specified flea-sql-template.xml :" + fileName);
             }
@@ -182,72 +186,76 @@ public class DBXmlDigesterHelper {
             LOGGER.debug("DBXmlDigesterHelper##newSqlTemplate() Start to parse the flea-sql-template.xml");
         }
 
-        InputStream input = ResourcesUtil.getInputStreamFromClassPath(fileName);
-        if (ObjectUtils.isEmpty(input)) {
-            throw new SqlTemplateException("ERROR-DB-SQT0000000030", fileName);
-        }
-
-        Digester digester = new Digester();
-        digester.setValidating(false);
-
-        digester.addObjectCreate("sql", Sql.class.getName());
-        digester.addSetProperties("sql");
-        // SQL模板校验规则
-        digester.addObjectCreate("sql/rules", Rules.class.getName());
-        digester.addSetProperties("sql/rules");
-
-        digester.addObjectCreate("sql/rules/rule", Rule.class.getName());
-        digester.addSetProperties("sql/rules/rule");
-
-        digester.addObjectCreate("sql/rules/rule/property", Property.class.getName());
-        digester.addSetProperties("sql/rules/rule/property");
-        // SQL模板
-        digester.addObjectCreate("sql/templates", Templates.class.getName());
-        digester.addSetProperties("sql/templates");
-
-        digester.addObjectCreate("sql/templates/template", Template.class.getName());
-        digester.addSetProperties("sql/templates/template");
-
-        digester.addObjectCreate("sql/templates/template/property", Property.class.getName());
-        digester.addSetProperties("sql/templates/template/property");
-        // SQL模板参数
-        digester.addObjectCreate("sql/params", Params.class.getName());
-        digester.addSetProperties("sql/params");
-
-        digester.addObjectCreate("sql/params/param", Param.class.getName());
-        digester.addSetProperties("sql/params/param");
-
-        digester.addObjectCreate("sql/params/param/property", Property.class.getName());
-        digester.addSetProperties("sql/params/param/property");
-        // SQL关系
-        digester.addObjectCreate("sql/relations", Relations.class.getName());
-        digester.addSetProperties("sql/relations");
-
-        digester.addObjectCreate("sql/relations/relation", Relation.class.getName());
-        digester.addSetProperties("sql/relations/relation");
-
-        digester.addObjectCreate("sql/relations/relation/property", Property.class.getName());
-        digester.addSetProperties("sql/relations/relation/property");
-
-        digester.addSetNext("sql/rules", "setRules", Rules.class.getName());
-        digester.addSetNext("sql/rules/rule", "addRule", Rule.class.getName());
-        digester.addSetNext("sql/rules/rule/property", "addProperty", Property.class.getName());
-
-        digester.addSetNext("sql/templates", "setTemplates", Templates.class.getName());
-        digester.addSetNext("sql/templates/template", "addTemplate", Template.class.getName());
-        digester.addSetNext("sql/templates/template/property", "addProperty", Property.class.getName());
-
-        digester.addSetNext("sql/params", "setParams", Params.class.getName());
-        digester.addSetNext("sql/params/param", "addParam", Param.class.getName());
-        digester.addSetNext("sql/params/param/property", "addProperty", Property.class.getName());
-
-        digester.addSetNext("sql/relations", "setRelations", Relations.class.getName());
-        digester.addSetNext("sql/relations/relation", "addRelation", Relation.class.getName());
-        digester.addSetNext("sql/relations/relation/property", "addProperty", Property.class.getName());
-
         try {
+
+            InputStream input = ResourcesUtil.getInputStreamFromClassPath(fileName);
+            if (ObjectUtils.isEmpty(input)) {
+                // 该路径下【0】找不到指定配置文件
+                throw new SqlTemplateException("ERROR-DB-SQT0000000030", fileName);
+            }
+
+            Digester digester = new Digester();
+            digester.setValidating(false);
+
+            digester.addObjectCreate("sql", Sql.class.getName());
+            digester.addSetProperties("sql");
+            // SQL模板校验规则
+            digester.addObjectCreate("sql/rules", Rules.class.getName());
+            digester.addSetProperties("sql/rules");
+
+            digester.addObjectCreate("sql/rules/rule", Rule.class.getName());
+            digester.addSetProperties("sql/rules/rule");
+
+            digester.addObjectCreate("sql/rules/rule/property", Property.class.getName());
+            digester.addSetProperties("sql/rules/rule/property");
+            // SQL模板
+            digester.addObjectCreate("sql/templates", Templates.class.getName());
+            digester.addSetProperties("sql/templates");
+
+            digester.addObjectCreate("sql/templates/template", Template.class.getName());
+            digester.addSetProperties("sql/templates/template");
+
+            digester.addObjectCreate("sql/templates/template/property", Property.class.getName());
+            digester.addSetProperties("sql/templates/template/property");
+            // SQL模板参数
+            digester.addObjectCreate("sql/params", Params.class.getName());
+            digester.addSetProperties("sql/params");
+
+            digester.addObjectCreate("sql/params/param", Param.class.getName());
+            digester.addSetProperties("sql/params/param");
+
+            digester.addObjectCreate("sql/params/param/property", Property.class.getName());
+            digester.addSetProperties("sql/params/param/property");
+            // SQL关系
+            digester.addObjectCreate("sql/relations", Relations.class.getName());
+            digester.addSetProperties("sql/relations");
+
+            digester.addObjectCreate("sql/relations/relation", Relation.class.getName());
+            digester.addSetProperties("sql/relations/relation");
+
+            digester.addObjectCreate("sql/relations/relation/property", Property.class.getName());
+            digester.addSetProperties("sql/relations/relation/property");
+
+            digester.addSetNext("sql/rules", "setRules", Rules.class.getName());
+            digester.addSetNext("sql/rules/rule", "addRule", Rule.class.getName());
+            digester.addSetNext("sql/rules/rule/property", "addProperty", Property.class.getName());
+
+            digester.addSetNext("sql/templates", "setTemplates", Templates.class.getName());
+            digester.addSetNext("sql/templates/template", "addTemplate", Template.class.getName());
+            digester.addSetNext("sql/templates/template/property", "addProperty", Property.class.getName());
+
+            digester.addSetNext("sql/params", "setParams", Params.class.getName());
+            digester.addSetNext("sql/params/param", "addParam", Param.class.getName());
+            digester.addSetNext("sql/params/param/property", "addProperty", Property.class.getName());
+
+            digester.addSetNext("sql/relations", "setRelations", Relations.class.getName());
+            digester.addSetNext("sql/relations/relation", "addRelation", Relation.class.getName());
+            digester.addSetNext("sql/relations/relation/property", "addProperty", Property.class.getName());
+
+
             sqlTemplate = (Sql) digester.parse(input);
         } catch (Exception e) {
+            // XML转化异常：
             throw new SqlTemplateException("ERROR-DB-SQT0000000031", e);
         }
 

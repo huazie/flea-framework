@@ -37,9 +37,9 @@ public abstract class CommonException extends Exception {
 
     public CommonException(String mKey, FleaI18nResEnum mI18nResEnum, Locale mLocale, String... mValues) {
         super(convert(mKey, mValues, mI18nResEnum, mLocale)); // 使用指定的国际化区域设置
-        this.key = mKey;
-        this.locale = mLocale;
-        this.i18nResEnum = mI18nResEnum;
+        key = mKey;
+        locale = mLocale;
+        i18nResEnum = mI18nResEnum;
     }
 
     public CommonException(String mKey, FleaI18nResEnum mI18nResEnum, Throwable cause) {
@@ -56,9 +56,9 @@ public abstract class CommonException extends Exception {
 
     public CommonException(String mKey, FleaI18nResEnum mI18nResEnum, Locale mLocale, Throwable cause, String... mValues) {
         super(convert(mKey, mValues, mI18nResEnum, mLocale), cause); // 使用指定的国际化区域设置
-        this.key = mKey;
-        this.locale = mLocale;
-        this.i18nResEnum = mI18nResEnum;
+        key = mKey;
+        locale = mLocale;
+        i18nResEnum = mI18nResEnum;
     }
 
     private static String convert(String key, String[] values, FleaI18nResEnum i18nResEnum, Locale locale) {
@@ -73,11 +73,11 @@ public abstract class CommonException extends Exception {
     }
 
     public String getKey() {
-        return this.key;
+        return key;
     }
 
     public Locale getLocale() {
-        return this.locale;
+        return locale;
     }
 
     public FleaI18nResEnum getI18nResEnum() {

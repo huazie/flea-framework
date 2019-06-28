@@ -10,6 +10,22 @@ package com.huazie.frame.db.common;
 public interface DBConstants {
 
     /**
+     * <p> SQL模板常量类 </p>
+     *
+     * @since 1.0.0
+     */
+    interface SqlTemplateConstants {
+        /**
+         * SQL模板文件路径
+         */
+        String SQL_TEMPLATE_FILE_PATH = "flea/db/flea-sql-template.xml";
+        /**
+         * SQL模板文件系统属性键
+         */
+        String SQL_TEMPLATE_FILE_SYSTEM_KEY = "fleaframe.db.sql.template.filename";
+    }
+
+    /**
      * <p> 分表常量类 </p>
      *
      * @since 1.0.0
@@ -19,6 +35,15 @@ public interface DBConstants {
         int THREE = 3;          // 三位分表
         String KEY = "key";     // 分表后缀类型枚举key变量名
         String FLEA_TABLE_NAME = "FLEA_TABLE_NAME"; // 分表表达式表名替换变量
+
+        /**
+         * 分表配置文件路径
+         */
+        String TABLE_SPLIT_FILE_PATH = "flea/db/flea-table-split.xml";
+        /**
+         * 分表配置文件系统属性键
+         */
+        String TABLE_SPLIT_FILE_SYSTEM_KEY = "fleaframe.db.table.split.filename";
     }
 
     /**
@@ -70,7 +95,7 @@ public interface DBConstants {
     }
 
     /**
-     * <p> JDBC数据库配置常量 </p>
+     * <p> 数据库相关配置常量 </p>
      *
      * @since 1.0.0
      */
@@ -91,5 +116,6 @@ public interface DBConstants {
          * 数据库用户密码
          */
         String DB_CONFIG_PASSWORD = "password";
+
     }
 }

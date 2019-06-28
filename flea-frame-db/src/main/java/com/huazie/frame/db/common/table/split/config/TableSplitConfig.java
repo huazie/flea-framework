@@ -27,17 +27,20 @@ public class TableSplitConfig {
 
     /**
      * <p> 获取分表配置信息实例对象 </p>
+     *
      * @return 分表配置信息实例对象
      * @since 1.0.0
      */
     public static TableSplitConfig getConfig() {
         if (ObjectUtils.isEmpty(config)) {
-            synchronized (TableSplitConfig.class){
-                if(ObjectUtils.isEmpty(config)){
+            synchronized (TableSplitConfig.class) {
+                if (ObjectUtils.isEmpty(config)) {
                     try {
                         config = new TableSplitConfig(DBXmlDigesterHelper.getInstance().getTables());
                     } catch (Exception e) {
-                        LOGGER.debug("Fail to init flea-table-split.xml");
+                        if (LOGGER.isErrorEnabled()) {
+                            LOGGER.error("Fail to init flea-table-split.xml");
+                        }
                     }
                 }
             }
