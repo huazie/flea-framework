@@ -1,6 +1,5 @@
 package com.huazie.frame.jersey.common.data;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 
 /**
@@ -10,6 +9,5 @@ import java.io.Serializable;
  * @version 1.0.0
  * @since 1.0.0
  */
-@XmlRootElement(name = "BUSINESS")
 public class ResponseBusinessData implements Serializable {
 }

@@ -6,7 +6,6 @@ import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
 import com.huazie.frame.jersey.server.filter.FilterChainManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
  * <p> Flea Jersey 资源父类 </p>

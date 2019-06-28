@@ -14,8 +14,6 @@ import com.huazie.frame.jersey.common.data.ResponsePublicData;
 import com.huazie.frame.jersey.server.filter.IFleaJerseyErrorFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
  * <p> 异常过滤器实现 </p>
@@ -44,54 +42,67 @@ public class ErrorFilter implements IFleaJerseyErrorFilter {
         if (throwable instanceof CommonException) { // 自定义异常
             CommonException exception = (CommonException) throwable;
             // 异常国际码
-            String key = exception.getKey();
-            try {
-
-                FleaConfigDataSpringBean fleaConfigDataSpringBean = request.getFleaConfigDataSpringBean();
-
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("ErrorFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) FleaConfigDataSpringBean = {}", fleaConfigDataSpringBean);
-                }
-
-                // 首先获取过滤器国际码和错误码映射配置
-                FleaJerseyI18nErrorMapping mapping = fleaConfigDataSpringBean.getMapping(FleaJerseyConstants.JerseyFilterConstants.RESOURCE_CODE_FILTER,
-                        FleaJerseyConstants.JerseyFilterConstants.SERVICE_CODE_FILTER, key);
-                if (ObjectUtils.isNotEmpty(mapping)) {
-                    responsePublicData.setResultCode(mapping.getErrorCode());
-                } else {
-                    // 过滤器中的国际码和错误码映射，应该由上面分支获取，如果上面没有查到，可以认为 错误码未配置
-                    if (ObjectUtils.isNotEmpty(key) && key.startsWith(FleaJerseyConstants.JerseyFilterConstants.PREFIX_ERROR_JERSEY_FILTER)) {
-                        responsePublicData.setResultCode(FleaJerseyConstants.ResponseResultConstants.RESULT_CODE_NOT_CONFIG);
-                        responsePublicData.setResultMess(FleaI18nHelper.i18n("ERROR-JERSEY-FILTER0000000007", new String[]{errMsg}, FleaI18nResEnum.ERROR_JERSEY.getResName()));
-                        return;
-                    }
-                    // 获取请求公共报文
-                    RequestPublicData requestPublicData = request.getRequestData().getPublicData();
-                    // 获取资源编码
-                    String resourceCode = requestPublicData.getResourceCode();
-                    // 获取服务编码
-                    String serviceCode = requestPublicData.getServiceCode();
-                    mapping = fleaConfigDataSpringBean.getMapping(resourceCode, serviceCode, key);
-                    if (ObjectUtils.isEmpty(mapping)) {
-                        responsePublicData.setResultCode(FleaJerseyConstants.ResponseResultConstants.RESULT_CODE_NOT_CONFIG);
-                        responsePublicData.setResultMess(FleaI18nHelper.i18n("ERROR-JERSEY-FILTER0000000007", new String[]{errMsg}, FleaI18nResEnum.ERROR_JERSEY.getResName()));
-                    } else {
-                        responsePublicData.setResultCode(mapping.getErrorCode());
-                    }
-                }
-            } catch (Exception e) {
-                if (LOGGER.isErrorEnabled()) {
-                    LOGGER.error("ErrorFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) Exception : ", ObjectUtils.isEmpty(e.getCause()) ? e.getMessage() : e.getCause().getMessage());
-                }
-                responsePublicData.setResultCode(FleaJerseyConstants.ResponseResultConstants.RESULT_CODE_OTHER);
-            }
-
+            String i18nKey = exception.getKey();
+            dealCommonException(request, responsePublicData, i18nKey, errMsg);
         } else { // 其他异常
             responsePublicData.setResultCode(FleaJerseyConstants.ResponseResultConstants.RESULT_CODE_OTHER);
         }
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("ErrorFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) End");
+        }
+    }
+
+    /**
+     * <p> 处理自定义异常，设置响应公共报文信息 </p>
+     *
+     * @param request            请求报文
+     * @param responsePublicData 响应公共报文
+     * @param i18nKey            国际码键
+     * @param errMsg             错误信息
+     * @since 1.0.0
+     */
+    private void dealCommonException(FleaJerseyRequest request, ResponsePublicData responsePublicData, String i18nKey, String errMsg) {
+
+        try {
+            FleaConfigDataSpringBean fleaConfigDataSpringBean = request.getFleaConfigDataSpringBean();
+
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("ErrorFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) FleaConfigDataSpringBean = {}", fleaConfigDataSpringBean);
+            }
+
+            // 首先获取过滤器国际码和错误码映射配置
+            FleaJerseyI18nErrorMapping mapping = fleaConfigDataSpringBean.getMapping(FleaJerseyConstants.JerseyFilterConstants.RESOURCE_CODE_FILTER,
+                    FleaJerseyConstants.JerseyFilterConstants.SERVICE_CODE_FILTER, i18nKey);
+            if (ObjectUtils.isNotEmpty(mapping)) {
+                responsePublicData.setResultCode(mapping.getErrorCode());
+            } else {
+                // 过滤器中的国际码和错误码映射，应该由上面分支获取，如果上面没有查到，可以认为 错误码未配置
+                if (ObjectUtils.isNotEmpty(i18nKey) && i18nKey.startsWith(FleaJerseyConstants.JerseyFilterConstants.PREFIX_ERROR_JERSEY_FILTER)) {
+                    responsePublicData.setResultCode(FleaJerseyConstants.ResponseResultConstants.RESULT_CODE_NOT_CONFIG);
+                    responsePublicData.setResultMess(FleaI18nHelper.i18n("ERROR-JERSEY-FILTER0000000007", new String[]{errMsg}, FleaI18nResEnum.ERROR_JERSEY.getResName()));
+                    return;
+                }
+                // 获取请求公共报文
+                RequestPublicData requestPublicData = request.getRequestData().getPublicData();
+                // 获取资源编码
+                String resourceCode = requestPublicData.getResourceCode();
+                // 获取服务编码
+                String serviceCode = requestPublicData.getServiceCode();
+                // 获取资源服务下的国际码和错误码映射配置
+                mapping = fleaConfigDataSpringBean.getMapping(resourceCode, serviceCode, i18nKey);
+                if (ObjectUtils.isEmpty(mapping)) {
+                    responsePublicData.setResultCode(FleaJerseyConstants.ResponseResultConstants.RESULT_CODE_NOT_CONFIG);
+                    responsePublicData.setResultMess(FleaI18nHelper.i18n("ERROR-JERSEY-FILTER0000000007", new String[]{errMsg}, FleaI18nResEnum.ERROR_JERSEY.getResName()));
+                } else {
+                    responsePublicData.setResultCode(mapping.getErrorCode());
+                }
+            }
+        } catch (Exception e) {
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("ErrorFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) Exception : ", ObjectUtils.isEmpty(e.getCause()) ? e.getMessage() : e.getCause().getMessage());
+            }
+            responsePublicData.setResultCode(FleaJerseyConstants.ResponseResultConstants.RESULT_CODE_OTHER);
         }
     }
 
