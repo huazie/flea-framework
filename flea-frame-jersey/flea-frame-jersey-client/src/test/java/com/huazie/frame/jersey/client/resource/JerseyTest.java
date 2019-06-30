@@ -1,5 +1,7 @@
-package com.huazie.frame.jersey.server.resource;
+package com.huazie.frame.jersey.client.resource;
 
+import com.huazie.ffs.pojo.upload.input.InputUploadAuthInfo;
+import com.huazie.frame.common.util.json.GsonUtils;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequestData;
 import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
@@ -60,8 +62,16 @@ public class JerseyTest {
         publicData.setResourceCode("upload");
         publicData.setServiceCode("xxx");
 
+        RequestBusinessData businessData = new RequestBusinessData();
+
+        InputUploadAuthInfo uploadAuthInfo = new InputUploadAuthInfo();
+        uploadAuthInfo.setFileName("美丽的风景.png");
+
+        String inputJson = GsonUtils.toJsonString(uploadAuthInfo);
+        businessData.setInput(inputJson);
+
         requestData.setPublicData(publicData);
-        requestData.setBusinessData(new RequestBusinessData());
+        requestData.setBusinessData(businessData);
 
         request.setRequestData(requestData);
 
