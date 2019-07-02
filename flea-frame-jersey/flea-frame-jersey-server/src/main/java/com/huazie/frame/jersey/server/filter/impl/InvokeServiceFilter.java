@@ -50,8 +50,9 @@ public class InvokeServiceFilter implements IFleaJerseyFilter {
         // 获取Web应用上下文对象
         WebApplicationContext webApplicationContext = ContextLoader.getCurrentWebApplicationContext();
 
-        // 根据资源编码 和 服务编码 获取 资源服务配置数据
+        // Flea Config 配置数据Bean
         FleaConfigDataSpringBean fleaConfigDataSpringBean = webApplicationContext.getBean(FleaConfigDataSpringBean.class);
+        // 根据资源编码 和 服务编码 获取 资源服务配置数据
         FleaJerseyResService resService = fleaConfigDataSpringBean.getResService(serviceCode, resourceCode);
         if (ObjectUtils.isEmpty(resService)) {
             // 未能找到指定资源服务配置数据【service_code = {0} , resource_code = {1}】
