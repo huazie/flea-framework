@@ -1,6 +1,6 @@
 package com.huazie.frame.core.base.cfgdata.entity;
 
-import com.huazie.frame.common.pojo.FleaCommonEntity;
+import com.huazie.frame.common.pojo.FleaEntity;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import javax.persistence.Column;
@@ -12,7 +12,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -24,7 +23,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "flea_jersey_i18n_error_mapping")
-public class FleaJerseyI18nErrorMapping extends FleaCommonEntity {
+public class FleaJerseyI18nErrorMapping implements FleaEntity {
 
     private static final long serialVersionUID = -3499450136118740002L;
 
@@ -50,7 +49,7 @@ public class FleaJerseyI18nErrorMapping extends FleaCommonEntity {
     private String returnMess;      // 返回信息
 
     @Column(name = "state", nullable = false)
-    private Integer state;          // 状态(0：删除 1：正常 ）
+    private Integer state;     // 状态(0：删除 1：正常 ）
 
     @Column(name = "create_date")
     @Temporal(TemporalType.TIMESTAMP)
@@ -61,7 +60,7 @@ public class FleaJerseyI18nErrorMapping extends FleaCommonEntity {
     private Date doneDate;     // 修改日期
 
     @Column(name = "remarks")
-    private String remarks;         // 备注
+    private String remarks;    // 备注
 
     public Long getMappingId() {
         return mappingId;

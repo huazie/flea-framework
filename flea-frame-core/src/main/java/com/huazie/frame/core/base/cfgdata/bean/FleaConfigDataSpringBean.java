@@ -1,8 +1,10 @@
 package com.huazie.frame.core.base.cfgdata.bean;
 
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyI18nErrorMapping;
+import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResService;
 import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaJerseyI18nErrorMappingSV;
+import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaJerseyResServiceSV;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaParaDetailSV;
 import org.springframework.stereotype.Component;
 
@@ -19,11 +21,14 @@ import java.util.List;
 @Component
 public class FleaConfigDataSpringBean {
 
-    @Resource(name = "fleaJerseyI18nErrorMappingSVImpl")
+    @Resource(name = "i18nErrorMappingSV")
     private IFleaJerseyI18nErrorMappingSV mappingSV;
 
-    @Resource(name = "fleaParaDetailSVImpl")
+    @Resource(name = "fleaParaDetailSV")
     private IFleaParaDetailSV paraDetailSV;
+
+    @Resource(name = "resServiceSV")
+    private IFleaJerseyResServiceSV resServiceSV;
 
     /**
      * <p> 获取国际码和错误码映射数据 </p>
@@ -63,5 +68,18 @@ public class FleaConfigDataSpringBean {
      */
     public FleaParaDetail getParaDetail(String paraType, String paraCode) throws Exception {
         return paraDetailSV.getParaDetail(paraType, paraCode);
+    }
+
+    /**
+     * <p> 获取资源服务 </p>
+     *
+     * @param serviceCode  服务编码
+     * @param resourceCode 资源编码
+     * @return 资源服务
+     * @throws Exception
+     * @since 1.0.0
+     */
+    public FleaJerseyResService getResService(String serviceCode, String resourceCode) throws Exception {
+        return resServiceSV.getResService(serviceCode, resourceCode);
     }
 }

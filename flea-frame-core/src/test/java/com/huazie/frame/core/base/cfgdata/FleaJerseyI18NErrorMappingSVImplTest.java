@@ -33,7 +33,7 @@ public class FleaJerseyI18NErrorMappingSVImplTest {
 
     @Test
     public void testInsertMapping() {
-        IFleaJerseyI18nErrorMappingSV fleaJerseyI18nErrorMappingSV = (IFleaJerseyI18nErrorMappingSV) applicationContext.getBean("fleaJerseyI18nErrorMappingSVImpl");
+        IFleaJerseyI18nErrorMappingSV fleaJerseyI18nErrorMappingSV = (IFleaJerseyI18nErrorMappingSV) applicationContext.getBean("i18nErrorMappingSV");
         FleaJerseyI18nErrorMapping mapping = new FleaJerseyI18nErrorMapping();
         mapping.setResourceCode("jersey-filter-resource");
         mapping.setServiceCode("jersey-filter-service");
@@ -51,7 +51,7 @@ public class FleaJerseyI18NErrorMappingSVImplTest {
 
     @Test
     public void testGetMappings() {
-        IFleaJerseyI18nErrorMappingSV fleaJerseyI18nErrorMappingSV = (IFleaJerseyI18nErrorMappingSV) applicationContext.getBean("fleaJerseyI18nErrorMappingSVImpl");
+        IFleaJerseyI18nErrorMappingSV fleaJerseyI18nErrorMappingSV = (IFleaJerseyI18nErrorMappingSV) applicationContext.getBean("i18nErrorMappingSV");
 
         try {
             fleaJerseyI18nErrorMappingSV.getMappings("jersey-filter-resource", "jersey-filter-service");
@@ -62,7 +62,7 @@ public class FleaJerseyI18NErrorMappingSVImplTest {
 
     @Test
     public void testGetMapping() {
-        IFleaJerseyI18nErrorMappingSV fleaJerseyI18nErrorMappingSV = (IFleaJerseyI18nErrorMappingSV) applicationContext.getBean("fleaJerseyI18nErrorMappingSVImpl");
+        IFleaJerseyI18nErrorMappingSV fleaJerseyI18nErrorMappingSV = (IFleaJerseyI18nErrorMappingSV) applicationContext.getBean("i18nErrorMappingSV");
 
         try {
             fleaJerseyI18nErrorMappingSV.getMapping("jersey-filter-resource", "jersey-filter-service", "ERROR-JERSEY-FILTER0000000005");

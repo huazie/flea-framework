@@ -94,6 +94,7 @@
             <map>
                 <entry key="fleaparadetail" value="0"/>
                 <entry key="fleajerseyi18nerrormapping" value="0" />
+                <entry key="fleajerseyresservice" value="0" />
             </map>
         </property>
     </bean>
@@ -108,6 +109,7 @@
             <map>
                 <entry key="fleaparadetail" value="0"/>
                 <entry key="fleajerseyi18nerrormapping" value="0" />
+                <entry key="fleajerseyresservice" value="0" />
             </map>
         </property>
     </bean>

@@ -14,6 +14,8 @@ import com.huazie.frame.jersey.common.data.ResponsePublicData;
 import com.huazie.frame.jersey.server.filter.IFleaJerseyErrorFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * <p> 异常过滤器实现 </p>
@@ -65,7 +67,9 @@ public class ErrorFilter implements IFleaJerseyErrorFilter {
     private void dealCommonException(FleaJerseyRequest request, ResponsePublicData responsePublicData, String i18nKey, String errMsg) {
 
         try {
-            FleaConfigDataSpringBean fleaConfigDataSpringBean = request.getFleaConfigDataSpringBean();
+            // 获取Web应用上下文对象
+            WebApplicationContext webApplicationContext = ContextLoader.getCurrentWebApplicationContext();
+            FleaConfigDataSpringBean fleaConfigDataSpringBean = webApplicationContext.getBean(FleaConfigDataSpringBean.class);
 
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("ErrorFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) FleaConfigDataSpringBean = {}", fleaConfigDataSpringBean);

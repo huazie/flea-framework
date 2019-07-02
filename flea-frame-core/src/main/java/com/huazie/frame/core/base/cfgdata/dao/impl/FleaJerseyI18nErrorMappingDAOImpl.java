@@ -20,7 +20,7 @@ import java.util.List;
  * @version 1.0.0
  * @since 1.0.0
  */
-@Repository("fleaJerseyI18nErrorMappingDAOImpl")
+@Repository("i18nErrorMappingDAO")
 public class FleaJerseyI18nErrorMappingDAOImpl extends FleaConfigDAOImpl<FleaJerseyI18nErrorMapping> implements IFleaJerseyI18nErrorMappingDAO {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(FleaJerseyI18nErrorMappingDAOImpl.class);

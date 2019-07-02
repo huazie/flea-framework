@@ -19,7 +19,7 @@ import java.util.List;
  * @version 1.0.0
  * @since 1.0.0
  */
-@Repository("fleaParaDetailDAOImpl")
+@Repository("fleaParaDetailDAO")
 public class FleaParaDetailDAOImpl extends FleaConfigDAOImpl<FleaParaDetail> implements IFleaParaDetailDAO {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(FleaParaDetailDAOImpl.class);

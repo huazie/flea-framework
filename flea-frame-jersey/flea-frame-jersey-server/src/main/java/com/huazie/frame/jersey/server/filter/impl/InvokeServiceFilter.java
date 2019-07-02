@@ -1,6 +1,9 @@
 package com.huazie.frame.jersey.server.filter.impl;
 
+import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.json.GsonUtils;
+import com.huazie.frame.core.base.cfgdata.bean.FleaConfigDataSpringBean;
+import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResService;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
 import com.huazie.frame.jersey.common.data.RequestBusinessData;
@@ -44,34 +47,38 @@ public class InvokeServiceFilter implements IFleaJerseyFilter {
         // 获取服务编码
         String serviceCode = requestPublicData.getServiceCode();
 
-        // 根据资源编码 和 服务编码 获取 资源服务配置数据
-
-        // 获取资源服务接口
-        String serviceInterfaces = "com.huazie.ffs.module.upload.service.interfaces.IFleaUploadSV";
-        // 获取资源服务方法
-        String serviceMethod = "uploadAuth";
-        // 获取资源服务bean值
-        String serviceBeanValue = "fleaUploadSVImpl";
-
-        // 获取资源服务业务入参
-        String inputParam = "com.huazie.ffs.pojo.upload.input.InputUploadAuthInfo";
-        // 获取资源服务业务出参
-        String outputParam = "com.huazie.ffs.pojo.upload.output.OutputUploadAuthInfo";
-
         // 获取Web应用上下文对象
         WebApplicationContext webApplicationContext = ContextLoader.getCurrentWebApplicationContext();
 
-        Object obj = webApplicationContext.getBean(serviceBeanValue);
+        // 根据资源编码 和 服务编码 获取 资源服务配置数据
+        FleaConfigDataSpringBean fleaConfigDataSpringBean = webApplicationContext.getBean(FleaConfigDataSpringBean.class);
+        FleaJerseyResService resService = fleaConfigDataSpringBean.getResService(serviceCode, resourceCode);
+        if (ObjectUtils.isEmpty(resService)) {
+            // 未能找到指定资源服务配置数据【service_code = {0} , resource_code = {1}】
+            throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000008", serviceCode, resourceCode);
+        }
+
+        // 获取资源服务接口
+        String serviceInterfaces = resService.getServiceInterfaces();
+        // 获取资源服务方法
+        String serviceMethod = resService.getServiceMethod();
+        // 获取资源服务业务入参
+        String inputParam = resService.getServiceInput();
+        // 获取资源服务业务出参
+        String outputParam = resService.getServiceOutput();
+        // 根据服务接口，从Web应用上下文中获取Spring注入的服务
+        Object obj = webApplicationContext.getBean(Class.forName(serviceInterfaces));
+
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("InvokeServiceFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) Impl = {}", obj);
         }
 
         Class inputClazz = Class.forName(inputParam);
-
         Method method = obj.getClass().getMethod(serviceMethod, inputClazz);
 
         String inputJson = requestBusinessData.getInput();
         Object inputObj = GsonUtils.toEntity(inputJson, inputClazz);
+
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("InvokeServiceFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) INPUT JSON  = {}", inputJson);
             LOGGER.debug("InvokeServiceFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) INPUT CLASS = {}", inputClazz);
@@ -82,15 +89,16 @@ public class InvokeServiceFilter implements IFleaJerseyFilter {
         Class outputClazz = Class.forName(outputParam);
         if (!outputClazz.isInstance(outputObj)) {
             // 资源【{0}】下的服务【{1}】请求异常：配置的出参【{2}】与服务方法【{3}】出参【{4}】类型不一致
-            throw new FleaJerseyFilterException("");
+            throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000009", resourceCode, serviceCode, outputParam, serviceMethod, outputObj.getClass().getName());
         }
+
         String outputJson = GsonUtils.toJsonString(outputObj);
         responseBusinessData.setOutput(outputJson);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("InvokeServiceFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) OUTPUT JSON  = {}", outputJson);
-            LOGGER.debug("InvokeServiceFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) OUTPUT CLASS = {}", outputClazz);
             LOGGER.debug("InvokeServiceFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) OUTPUT OBJ   = {}", outputObj);
+            LOGGER.debug("InvokeServiceFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) OUTPUT CLASS = {}", outputClazz);
+            LOGGER.debug("InvokeServiceFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) OUTPUT JSON  = {}", outputJson);
             LOGGER.debug("InvokeServiceFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) End");
         }
     }

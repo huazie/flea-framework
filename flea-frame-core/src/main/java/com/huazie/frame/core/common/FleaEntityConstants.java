@@ -32,4 +32,15 @@ public interface FleaEntityConstants {
         String S_STATE = "state";
     }
 
+    /**
+     * <p> Flea Jersey 国际码和错误码映射常量 </p>
+     *
+     * @since 1.0.0
+     */
+    interface ResServiceConstants {
+        String S_SERVICE_CODE = "serviceCode";
+        String S_RESOURCE_CODE = "resourceCode";
+        String S_STATE = "state";
+    }
+
 }
