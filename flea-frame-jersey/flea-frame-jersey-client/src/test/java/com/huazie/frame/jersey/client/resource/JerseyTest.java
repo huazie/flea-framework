@@ -18,8 +18,6 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
-import static org.junit.Assert.assertEquals;
-
 /**
  * <p>  </p>
  *
@@ -37,17 +35,6 @@ public class JerseyTest {
     public void init() {
         Client client = ClientBuilder.newClient();
         target = client.target("http://localhost:8080/fleafs");
-    }
-
-    @Test
-    public void testJerseyByParam() {
-
-        String responseMsg = target.queryParam("id", "huazie").path("resource").request().get(String.class);
-
-        LOGGER.debug("result = {}", responseMsg);
-
-        assertEquals("This is huazie !!!", responseMsg);
-
     }
 
     @Test

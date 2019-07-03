@@ -4,7 +4,7 @@ import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.i18n.FleaI18nResEnum;
 
 /**
- * <p> Flea Resource 异常类 </p>
+ * <p> Flea Jersey 服务端过滤器异常处理类 </p>
  *
  * @author huazie
  * @version 1.0.0
