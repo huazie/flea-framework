@@ -1,6 +1,6 @@
 package com.huazie.frame.core.base.cfgdata.entity;
 
-import com.huazie.frame.core.common.FleaCommonEntity;
+import com.huazie.frame.common.pojo.FleaEntity;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import javax.persistence.Column;
@@ -20,7 +20,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "flea_jersey_res_service")
-public class FleaJerseyResService extends FleaCommonEntity {
+public class FleaJerseyResService implements FleaEntity {
 
     private static final long serialVersionUID = -7397724960762187081L;
 

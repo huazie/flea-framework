@@ -59,7 +59,7 @@ public final class ResponsePublicData implements Serializable {
      * @since 1.0.0
      */
     public boolean isSuccess() {
-        return resultCode == FleaJerseyConstants.ResponseResultConstants.RESULT_CODE_SUCCESS ? true : false;
+        return FleaJerseyConstants.ResponseResultConstants.RESULT_CODE_SUCCESS.equals(resultCode);
     }
 
     @Override

@@ -1,7 +1,10 @@
 package com.huazie.frame.jersey.client.resource;
 
 import com.huazie.ffs.pojo.upload.input.InputUploadAuthInfo;
+import com.huazie.ffs.pojo.upload.output.OutputUploadAuthInfo;
 import com.huazie.frame.common.util.json.GsonUtils;
+import com.huazie.frame.jersey.client.FleaJerseyClient;
+import com.huazie.frame.jersey.client.ResponseResult;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequestData;
 import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
@@ -66,6 +69,19 @@ public class JerseyTest {
         FleaJerseyResponse response = target.path("upload").request().post(entity, FleaJerseyResponse.class);
 
         LOGGER.debug("result = {}", response);
+    }
+
+    @Test
+    public void testFleaJerseyClient() throws Exception{
+
+        String clientCode = "FLEA_JERSEY_UPLOAD_AUTH";
+
+        InputUploadAuthInfo uploadAuthInfo = new InputUploadAuthInfo();
+        uploadAuthInfo.setFileName("美丽的风景.png");
+
+        ResponseResult<OutputUploadAuthInfo> responseResult = FleaJerseyClient.invoke(clientCode, uploadAuthInfo, OutputUploadAuthInfo.class);
+
+        LOGGER.debug("result = {}", responseResult);
     }
 
 }
