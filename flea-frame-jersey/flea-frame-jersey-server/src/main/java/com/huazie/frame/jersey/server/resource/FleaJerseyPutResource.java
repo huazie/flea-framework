@@ -15,7 +15,7 @@ import javax.ws.rs.core.MediaType;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class FleaJerseyPutResource extends FleaJerseyResource {
+public abstract class FleaJerseyPutResource extends FleaJerseyResource {
 
     /**
      * <p> 处理PUT资源数据 </p>

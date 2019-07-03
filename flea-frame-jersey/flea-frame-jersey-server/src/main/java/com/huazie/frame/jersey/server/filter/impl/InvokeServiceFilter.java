@@ -35,9 +35,6 @@ public class InvokeServiceFilter implements IFleaJerseyFilter {
             LOGGER.debug("InvokeServiceFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) Start");
         }
 
-        // 获取响应业务报文
-        ResponseBusinessData responseBusinessData = response.getResponseData().getBusinessData();
-
         // 获取请求公共报文
         RequestPublicData requestPublicData = request.getRequestData().getPublicData();
         RequestBusinessData requestBusinessData = request.getRequestData().getBusinessData();
@@ -92,6 +89,9 @@ public class InvokeServiceFilter implements IFleaJerseyFilter {
             // 资源【{0}】下的服务【{1}】请求异常：配置的出参【{2}】与服务方法【{3}】出参【{4}】类型不一致
             throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000009", resourceCode, serviceCode, outputParam, serviceMethod, outputObj.getClass().getName());
         }
+
+        // 获取响应业务报文
+        ResponseBusinessData responseBusinessData = response.getResponseData().getBusinessData();
 
         String outputJson = GsonUtils.toJsonString(outputObj);
         responseBusinessData.setOutput(outputJson);

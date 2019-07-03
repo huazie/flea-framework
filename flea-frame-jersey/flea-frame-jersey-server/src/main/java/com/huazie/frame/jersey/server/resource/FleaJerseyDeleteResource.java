@@ -15,7 +15,7 @@ import javax.ws.rs.core.MediaType;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class FleaJerseyDeleteResource extends FleaJerseyResource {
+public abstract class FleaJerseyDeleteResource extends FleaJerseyResource {
 
     /**
      * <p> 处理DELETE资源数据 </p>

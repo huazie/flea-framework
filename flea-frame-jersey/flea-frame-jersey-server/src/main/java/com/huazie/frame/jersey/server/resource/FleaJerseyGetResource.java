@@ -15,7 +15,7 @@ import javax.ws.rs.core.MediaType;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class FleaJerseyGetResource extends FleaJerseyResource {
+public abstract class FleaJerseyGetResource extends FleaJerseyResource {
 
     /**
      * <p> 处理GET资源数据 </p>
