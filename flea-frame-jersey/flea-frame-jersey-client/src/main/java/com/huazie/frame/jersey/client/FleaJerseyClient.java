@@ -3,7 +3,6 @@ package com.huazie.frame.jersey.client;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.common.util.json.GsonUtils;
-import com.huazie.frame.jersey.common.FleaJerseyConstants;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequestData;
 import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
@@ -44,17 +43,17 @@ public class FleaJerseyClient {
 
         if (StringUtils.isBlank(clientCode)) {
             // 客户端编码不能为空
-            throw new FleaJerseyClientException("");
+            throw new FleaJerseyClientException("ERROR-JERSEY-CLIENT0000000001");
         }
 
         if (ObjectUtils.isEmpty(input)) {
             // 业务入参不能为空
-            throw new FleaJerseyClientException("");
+            throw new FleaJerseyClientException("ERROR-JERSEY-CLIENT0000000002");
         }
 
         if (ObjectUtils.isEmpty(outputClazz)) {
             // 业务出参类不能为空
-            throw new FleaJerseyClientException("");
+            throw new FleaJerseyClientException("ERROR-JERSEY-CLIENT0000000003");
         }
 
         // 获取Jersey客户端配置
@@ -70,8 +69,8 @@ public class FleaJerseyClient {
 
         Class inputClazz = Class.forName(inputParam);
         if (!inputClazz.isInstance(input)) {
-            // 请检查客户端配置(客户端编码【{0}】) ：
-            throw new FleaJerseyClientException("");
+            // 请检查客户端配置【client_code = {0}】：配置的入参【{1}】类型和实际传入的入参【{2}】类型不一致
+            throw new FleaJerseyClientException("ERROR-JERSEY-CLIENT0000000004", clientCode, inputParam, input.getClass().getName());
         }
 
         Client client = ClientBuilder.newClient();
@@ -84,22 +83,26 @@ public class FleaJerseyClient {
 
         if (ObjectUtils.isEmpty(response)) {
             // 资源服务请求异常：响应报文为空
-            throw new FleaJerseyClientException("");
+            throw new FleaJerseyClientException("ERROR-JERSEY-CLIENT0000000005");
         }
 
         FleaJerseyResponseData responseData = response.getResponseData();
-        ResponsePublicData publicData = responseData.getPublicData();
+        if (ObjectUtils.isEmpty(responseData)) {
+            // 资源服务请求异常：响应报文为空
+            throw new FleaJerseyClientException("ERROR-JERSEY-CLIENT0000000005");
+        }
 
-        if (ObjectUtils.isEmpty(publicData)) {
+        ResponsePublicData responsePublicData = responseData.getPublicData();
+        if (ObjectUtils.isEmpty(responsePublicData)) {
             // 资源服务请求异常：响应公共报文为空
-            throw new FleaJerseyClientException("");
+            throw new FleaJerseyClientException("ERROR-JERSEY-CLIENT0000000006");
         }
 
         ResponseResult<T> responseResult = new ResponseResult<T>();
         T output = null;
 
         // 判断资源服务是否请求成功
-        if (publicData.isSuccess()) {
+        if (responsePublicData.isSuccess()) {
             // 获取资源服务响应业务报文
             ResponseBusinessData businessData = responseData.getBusinessData();
             if (ObjectUtils.isNotEmpty(businessData)) {
@@ -107,15 +110,15 @@ public class FleaJerseyClient {
             }
         } else {
             // 错误码
-            responseResult.setRetCode(publicData.getResultCode());
+            responseResult.setRetCode(responsePublicData.getResultCode());
             // 错误信息
-            responseResult.setRetMess(publicData.getResultMess());
+            responseResult.setRetMess(responsePublicData.getResultMess());
         }
 
         Class mClazz = Class.forName(outputParam);
-        if (!mClazz.isInstance(output)) {
-            // 请检查客户端配置(客户端编码【{0}】) ：
-            throw new FleaJerseyClientException("");
+        if (ObjectUtils.isNotEmpty(output) && !mClazz.isInstance(output)) {
+            // 请检查客户端配置【client_code = {0}】：配置的出参【{1}】类型和实际需要返回的出参【{2}】类型不一致
+            throw new FleaJerseyClientException("ERROR-JERSEY-CLIENT0000000007", clientCode, outputParam, output.getClass().getName());
         }
 
         // 设置业务出参
