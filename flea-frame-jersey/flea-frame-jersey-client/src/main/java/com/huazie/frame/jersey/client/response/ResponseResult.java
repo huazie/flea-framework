@@ -1,4 +1,4 @@
-package com.huazie.frame.jersey.client;
+package com.huazie.frame.jersey.client.response;
 
 import com.huazie.frame.common.pojo.OutputCommonData;
 import com.huazie.frame.jersey.common.FleaJerseyConstants;

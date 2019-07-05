@@ -1,6 +1,6 @@
 package com.huazie.frame.core.base.cfgdata.entity;
 
-import com.huazie.frame.common.pojo.FleaEntity;
+import com.huazie.frame.common.FleaEntity;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import javax.persistence.Column;

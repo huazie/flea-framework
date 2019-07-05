@@ -4,7 +4,7 @@ import com.huazie.ffs.pojo.upload.input.InputUploadAuthInfo;
 import com.huazie.ffs.pojo.upload.output.OutputUploadAuthInfo;
 import com.huazie.frame.common.util.json.GsonUtils;
 import com.huazie.frame.jersey.client.FleaJerseyClient;
-import com.huazie.frame.jersey.client.ResponseResult;
+import com.huazie.frame.jersey.client.response.ResponseResult;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequestData;
 import com.huazie.frame.jersey.common.data.FleaJerseyResponse;

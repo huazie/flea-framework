@@ -3,6 +3,7 @@ package com.huazie.frame.jersey.client;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.common.util.json.GsonUtils;
+import com.huazie.frame.jersey.client.response.ResponseResult;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequestData;
 import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
