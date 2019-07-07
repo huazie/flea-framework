@@ -3,7 +3,6 @@ package com.huazie.frame.core.base.cfgdata.dao.impl;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.core.base.cfgdata.dao.interfaces.IFleaJerseyResServiceDAO;
-import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyI18nErrorMapping;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResService;
 import com.huazie.frame.core.common.EntityStateEnum;
 import com.huazie.frame.core.common.FleaEntityConstants;
@@ -32,14 +31,14 @@ public class FleaJerseyResServiceDAOImpl extends FleaConfigDAOImpl<FleaJerseyRes
         FleaJPAQuery query = getQuery(null);
 
         if (StringUtils.isNotBlank(serviceCode)) {
-            query.equal(FleaEntityConstants.ResServiceConstants.S_SERVICE_CODE, serviceCode);
+            query.equal(FleaEntityConstants.S_SERVICE_CODE, serviceCode);
         }
 
         if (StringUtils.isNotBlank(resourceCode)) {
-            query.equal(FleaEntityConstants.ResServiceConstants.S_RESOURCE_CODE, resourceCode);
+            query.equal(FleaEntityConstants.S_RESOURCE_CODE, resourceCode);
         }
 
-        query.equal(FleaEntityConstants.ResServiceConstants.S_STATE, EntityStateEnum.IN_USE.getValue());
+        query.equal(FleaEntityConstants.S_STATE, EntityStateEnum.IN_USE.getValue());
 
         List<FleaJerseyResService> resServiceList = query.getResultList();
 

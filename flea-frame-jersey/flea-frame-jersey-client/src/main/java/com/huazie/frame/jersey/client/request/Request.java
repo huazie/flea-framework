@@ -1,6 +1,6 @@
 package com.huazie.frame.jersey.client.request;
 
-import com.huazie.frame.jersey.client.response.ResponseResult;
+import com.huazie.frame.jersey.client.response.Response;
 
 /**
  * <p> Flea Request 接口 </p>
@@ -9,7 +9,7 @@ import com.huazie.frame.jersey.client.response.ResponseResult;
  * @version 1.0.0
  * @since 1.0.0
  */
-public interface Request<T> {
+public interface Request {
 
     /**
      * <p> 执行请求 </p>
@@ -18,6 +18,6 @@ public interface Request<T> {
      * @throws Exception
      * @since 1.0.0
      */
-    ResponseResult<T> doRequest() throws Exception;
+    <T> Response<T> doRequest(Class<T> clazz) throws Exception;
 
 }

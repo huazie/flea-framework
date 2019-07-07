@@ -11,13 +11,13 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class ResponseResult<T> extends OutputCommonData {
+public class Response<T> extends OutputCommonData {
 
     private static final long serialVersionUID = 2498307147680858074L;
 
     private T output; // 业务出参
 
-    public ResponseResult() {
+    public Response() {
         super(FleaJerseyConstants.ResponseResultConstants.RESULT_CODE_SUCCESS, FleaJerseyConstants.ResponseResultConstants.RESULT_MESS_SUCCESS);
     }
 

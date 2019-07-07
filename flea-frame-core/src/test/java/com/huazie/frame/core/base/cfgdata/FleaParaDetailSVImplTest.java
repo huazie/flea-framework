@@ -94,15 +94,15 @@ public class FleaParaDetailSVImplTest {
         try {
             AbstractFleaCacheManager manager = FleaCacheManagerFactory.getFleaCacheManager(CacheEnum.Redis.getName());
             LOGGER.debug("RedisCacheManager={}", manager);
-            AbstractFleaCache cache = manager.getCache("fleajerseyi18nerrormapping");
+            AbstractFleaCache cache = manager.getCache("fleajerseyresclient");
             LOGGER.debug("Cache={}", cache);
 
             //cache.delete("jersey-filter-resource_jersey-filter-service");
-            cache.clear();
+//            cache.clear();
             //#### 复杂配置参数
             Set<String> cacheKey = cache.getCacheKey();
             LOGGER.debug("CacheKey = {}", cacheKey);
-//            cache.get("FLEA_RES_STATE");
+//            cache.get("FLEA_CLIENT_UPLOAD_AUTH");
 //            cache.get("FLEAER_CERT_TYPE_1");
 //            cache.delete("FLEA_RES_STATE");
 
@@ -122,6 +122,10 @@ public class FleaParaDetailSVImplTest {
             AbstractSpringCache cache = manager.getCache("fleaparadetail");
             LOGGER.debug("Cache={}", cache);
 
+            Set<String> cacheKey = cache.getCacheKey();
+            LOGGER.debug("CacheKey = {}", cacheKey);
+
+//            cache.clear();
             //#### 复杂配置参数
 //            cache.get("FLEA_RES_STATE");
 //            cache.get("FLEAER_CERT_TYPE_1");

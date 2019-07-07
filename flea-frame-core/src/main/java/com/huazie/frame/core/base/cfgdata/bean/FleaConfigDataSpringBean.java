@@ -1,9 +1,11 @@
 package com.huazie.frame.core.base.cfgdata.bean;
 
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyI18nErrorMapping;
+import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResClient;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResService;
 import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaJerseyI18nErrorMappingSV;
+import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaJerseyResClientSV;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaJerseyResServiceSV;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaParaDetailSV;
 import org.springframework.stereotype.Component;
@@ -29,6 +31,9 @@ public class FleaConfigDataSpringBean {
 
     @Resource(name = "resServiceSV")
     private IFleaJerseyResServiceSV resServiceSV;
+
+    @Resource(name = "resClientSV")
+    private IFleaJerseyResClientSV resClientSV;
 
     /**
      * <p> 获取国际码和错误码映射数据 </p>
@@ -81,5 +86,17 @@ public class FleaConfigDataSpringBean {
      */
     public FleaJerseyResService getResService(String serviceCode, String resourceCode) throws Exception {
         return resServiceSV.getResService(serviceCode, resourceCode);
+    }
+
+    /**
+     * <p> 获取资源客户端配置数据 </p>
+     *
+     * @param clientCode 客户端编码
+     * @return 资源客户端配置数据
+     * @throws Exception
+     * @since 1.0.0
+     */
+    public FleaJerseyResClient getResClient(String clientCode) throws Exception {
+        return resClientSV.getResClient(clientCode);
     }
 }

@@ -12,39 +12,42 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 /**
- * <p> Flea Jersey 资源服务实体类 </p>
+ * <p> Flea Jersey 资源客户端实体类 </p>
  *
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0
  */
 @Entity
-@Table(name = "flea_jersey_res_service")
-public class FleaJerseyResService implements FleaEntity {
+@Table(name = "flea_jersey_res_client")
+public class FleaJerseyResClient implements FleaEntity {
 
-    private static final long serialVersionUID = -7397724960762187081L;
+    private static final long serialVersionUID = 3734700474530351711L;
 
     @Id
-    @Column(name = "service_code", unique = true, nullable = false)
-    private String serviceCode;
+    @Column(name = "client_code", unique = true, nullable = false)
+    private String clientCode;
+
+    @Column(name = "resource_url", nullable = false)
+    private String resourceUrl;
 
     @Column(name = "resource_code", nullable = false)
     private String resourceCode;
 
-    @Column(name = "service_name", nullable = false)
-    private String serviceName;
+    @Column(name = "service_code", nullable = false)
+    private String serviceCode;
 
-    @Column(name = "service_interfaces", nullable = false)
-    private String serviceInterfaces;
+    @Column(name = "request_mode", nullable = false)
+    private String requestMode;
 
-    @Column(name = "service_method", nullable = false)
-    private String serviceMethod;
+    @Column(name = "media_type", nullable = false)
+    private String mediaType;
 
-    @Column(name = "service_input", nullable = false)
-    private String serviceInput;
+    @Column(name = "client_input", nullable = false)
+    private String clientInput;
 
-    @Column(name = "service_output", nullable = false)
-    private String serviceOutput;
+    @Column(name = "client_output", nullable = false)
+    private String clientOutput;
 
     @Column(name = "state", nullable = false)
     private Integer state;     // 状态(0：删除 1：正常 ）
@@ -60,12 +63,20 @@ public class FleaJerseyResService implements FleaEntity {
     @Column(name = "remarks")
     private String remarks;    // 备注
 
-    public String getServiceCode() {
-        return serviceCode;
+    public String getClientCode() {
+        return clientCode;
     }
 
-    public void setServiceCode(String serviceCode) {
-        this.serviceCode = serviceCode;
+    public void setClientCode(String clientCode) {
+        this.clientCode = clientCode;
+    }
+
+    public String getResourceUrl() {
+        return resourceUrl;
+    }
+
+    public void setResourceUrl(String resourceUrl) {
+        this.resourceUrl = resourceUrl;
     }
 
     public String getResourceCode() {
@@ -76,44 +87,44 @@ public class FleaJerseyResService implements FleaEntity {
         this.resourceCode = resourceCode;
     }
 
-    public String getServiceName() {
-        return serviceName;
+    public String getServiceCode() {
+        return serviceCode;
     }
 
-    public void setServiceName(String serviceName) {
-        this.serviceName = serviceName;
+    public void setServiceCode(String serviceCode) {
+        this.serviceCode = serviceCode;
     }
 
-    public String getServiceInterfaces() {
-        return serviceInterfaces;
+    public String getRequestMode() {
+        return requestMode;
     }
 
-    public void setServiceInterfaces(String serviceInterfaces) {
-        this.serviceInterfaces = serviceInterfaces;
+    public void setRequestMode(String requestMode) {
+        this.requestMode = requestMode;
     }
 
-    public String getServiceMethod() {
-        return serviceMethod;
+    public String getMediaType() {
+        return mediaType;
     }
 
-    public void setServiceMethod(String serviceMethod) {
-        this.serviceMethod = serviceMethod;
+    public void setMediaType(String mediaType) {
+        this.mediaType = mediaType;
     }
 
-    public String getServiceInput() {
-        return serviceInput;
+    public String getClientInput() {
+        return clientInput;
     }
 
-    public void setServiceInput(String serviceInput) {
-        this.serviceInput = serviceInput;
+    public void setClientInput(String clientInput) {
+        this.clientInput = clientInput;
     }
 
-    public String getServiceOutput() {
-        return serviceOutput;
+    public String getClientOutput() {
+        return clientOutput;
     }
 
-    public void setServiceOutput(String serviceOutput) {
-        this.serviceOutput = serviceOutput;
+    public void setClientOutput(String clientOutput) {
+        this.clientOutput = clientOutput;
     }
 
     public Integer getState() {

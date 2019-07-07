@@ -116,6 +116,9 @@ public interface DBConstants {
          * 数据库用户密码
          */
         String DB_CONFIG_PASSWORD = "password";
-
+        /**
+         * 分表配置文件路径
+         */
+        String DB_FILE_PATH = "flea/db/flea-db-config.properties";
     }
 }

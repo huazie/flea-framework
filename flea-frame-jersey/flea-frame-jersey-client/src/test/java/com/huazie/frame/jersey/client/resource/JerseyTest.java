@@ -4,7 +4,8 @@ import com.huazie.ffs.pojo.upload.input.InputUploadAuthInfo;
 import com.huazie.ffs.pojo.upload.output.OutputUploadAuthInfo;
 import com.huazie.frame.common.util.json.GsonUtils;
 import com.huazie.frame.jersey.client.FleaJerseyClient;
-import com.huazie.frame.jersey.client.response.ResponseResult;
+import com.huazie.frame.jersey.client.request.RequestModeEnum;
+import com.huazie.frame.jersey.client.response.Response;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequestData;
 import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
@@ -14,6 +15,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -34,10 +37,15 @@ public class JerseyTest {
 
     private WebTarget target;
 
+    private ApplicationContext applicationContext;
+
     @Before
     public void init() {
         Client client = ClientBuilder.newClient();
         target = client.target("http://localhost:8080/fleafs");
+
+        applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+        LOGGER.debug("ApplicationContext={}", applicationContext);
     }
 
     @Test
@@ -72,16 +80,36 @@ public class JerseyTest {
     }
 
     @Test
-    public void testFleaJerseyClient() throws Exception{
+    public void testFleaJerseyClient() throws Exception {
 
-        String clientCode = "FLEA_JERSEY_UPLOAD_AUTH";
+        String clientCode = "FLEA_CLIENT_UPLOAD_AUTH";
 
         InputUploadAuthInfo uploadAuthInfo = new InputUploadAuthInfo();
         uploadAuthInfo.setFileName("美丽的风景.png");
 
-        ResponseResult<OutputUploadAuthInfo> responseResult = FleaJerseyClient.invoke(clientCode, uploadAuthInfo, OutputUploadAuthInfo.class);
+        FleaJerseyClient client = applicationContext.getBean(FleaJerseyClient.class);
 
-        LOGGER.debug("result = {}", responseResult);
+        Response<OutputUploadAuthInfo> response = client.invoke(clientCode, uploadAuthInfo, OutputUploadAuthInfo.class);
+
+        LOGGER.debug("result = {}", response);
     }
 
+    @Test
+    public void testMediaType() {
+
+        String mediaTypeStr = "xml";
+
+        MediaType mediaType = MediaType.valueOf(mediaTypeStr);
+
+        LOGGER.debug("MediaType = {}", mediaType);
+
+    }
+
+    @Test
+    public void testEnum() {
+
+        RequestModeEnum modeEnum = RequestModeEnum.valueOf("GET1");
+
+        LOGGER.debug("RequestModeEnum = {}", modeEnum.getMode());
+    }
 }

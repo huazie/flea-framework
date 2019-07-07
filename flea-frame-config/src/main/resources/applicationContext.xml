@@ -81,10 +81,6 @@
 
     <tx:annotation-driven transaction-manager="fleaConfigTransactionManager"/>
 
-
-    <!-- 配置MemCachedPool -->
-    <bean id="memcachedPool" class="com.huazie.frame.cache.memcached.MemCachedPool" factory-method="getInstance" init-method="initialize" lazy-init="false" destroy-method="shutDown" />
-
     <!--
         配置缓存管理MemCachedSpringCacheManager
         配置缓存时间 configMap (key缓存对象名称 value缓存过期时间)
@@ -92,13 +88,13 @@
     <bean id="memCachedSpringCacheManager" class="com.huazie.frame.cache.memcached.MemCachedSpringCacheManager">
         <property name="configMap">
             <map>
-                <entry key="fleaparadetail" value="0"/>
-                <entry key="fleajerseyi18nerrormapping" value="0" />
-                <entry key="fleajerseyresservice" value="0" />
+                <entry key="fleaparadetail" value="86400"/>
+                <entry key="fleajerseyi18nerrormapping" value="86400" />
+                <entry key="fleajerseyresservice" value="86400" />
+                <entry key="fleajerseyresclient" value="86400" />
             </map>
         </property>
     </bean>
-
 
     <!--
         配置缓存管理RedisSpringCacheManager
@@ -107,16 +103,19 @@
     <bean id="redisSpringCacheManager" class="com.huazie.frame.cache.redis.RedisSpringCacheManager">
         <property name="configMap">
             <map>
-                <entry key="fleaparadetail" value="0"/>
-                <entry key="fleajerseyi18nerrormapping" value="0" />
-                <entry key="fleajerseyresservice" value="0" />
+                <entry key="fleaparadetail" value="86400"/>
+                <entry key="fleajerseyi18nerrormapping" value="86400" />
+                <entry key="fleajerseyresservice" value="86400" />
+                <entry key="fleajerseyresclient" value="86400" />
             </map>
         </property>
     </bean>
 
-
     <!-- 开启缓存 -->
     <cache:annotation-driven cache-manager="redisSpringCacheManager" proxy-target-class="true"/>
+
+    <!-- 添加 Flea Jersey 客户端 Bean -->
+    <bean id="fleaJerseyClient" class="com.huazie.frame.jersey.client.FleaJerseyClient"/>
 
     <!-- 导入调度任务 -->
     <!-- <import resource="spring-quartz.xml" /> -->

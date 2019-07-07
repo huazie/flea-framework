@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<flea-config>
+    <config-items key="flea-jersey-client" desc="Flea Jersey 客户端配置">
+        <config-item key="system_user_id">1000</config-item>
+        <config-item key="system_user_pwd">123ASD</config-item>
+    </config-items>
+</flea-config>

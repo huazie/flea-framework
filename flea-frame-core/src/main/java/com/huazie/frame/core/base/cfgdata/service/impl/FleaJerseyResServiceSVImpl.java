@@ -2,7 +2,6 @@ package com.huazie.frame.core.base.cfgdata.service.impl;
 
 import com.huazie.frame.core.base.cfgdata.dao.interfaces.IFleaJerseyResServiceDAO;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResService;
-import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaJerseyI18nErrorMappingSV;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaJerseyResServiceSV;
 import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import com.huazie.frame.db.jpa.service.impl.AbstractFleaJPASVImpl;
@@ -12,7 +11,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 /**
- * <p>  </p>
+ * <p> Flea Jersey资源服务 服务层实现类 </p>
  *
  * @author huazie
  * @version 1.0.0

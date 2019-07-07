@@ -1,6 +1,5 @@
 package com.huazie.frame.core.base.cfgdata.dao.interfaces;
 
-import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyI18nErrorMapping;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResService;
 import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 

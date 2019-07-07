@@ -38,7 +38,7 @@ public class FleaJDBCConfig {
     private static Properties prop;
 
     static {
-        String fileName = "flea/db/flea-db-config.properties"; // 数据库配置文件名
+        String fileName = DBConstants.DBConfigConstants.DB_FILE_PATH; // 数据库配置文件名
         if (StringUtils.isNotBlank(System.getProperty("fleaframe.db.jdbc.config.filename"))) {
             fileName = StringUtils.trim(System.getProperty("fleaframe.db.jdbc.config.filename"));
             if (LOGGER.isDebugEnabled()) {

@@ -10,6 +10,22 @@ package com.huazie.frame.jersey.common;
 public interface FleaJerseyConstants {
 
     /**
+     * <p> Jersey 客户端常量 </p>
+     *
+     * @since 1.0.0
+     */
+    interface JerseyClientConstants {
+        /**
+         * 系统用户
+         */
+        String SYSTEM_USER_ID = "system_user_id";
+        /**
+         * 系统用户密码
+         */
+        String SYSTEM_USER_PWD = "system_user_pwd";
+    }
+
+    /**
      * <p> Jersey 过滤器常量 </p>
      *
      * @since 1.0.0
