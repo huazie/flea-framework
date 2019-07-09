@@ -134,8 +134,8 @@ public class DBXmlDigesterHelper {
             digester.addSetNext("tables/table/splits", "setSplits", Splits.class.getName());
             digester.addSetNext("tables/table/splits/split", "addSplit", Split.class.getName());
 
-
             tabs = (Tables) digester.parse(input);
+
         } catch (Exception e) {
             // XML转化异常：
             throw new TableSplitException("ERROR-DB-SQT0000000031", e);
@@ -252,8 +252,8 @@ public class DBXmlDigesterHelper {
             digester.addSetNext("sql/relations/relation", "addRelation", Relation.class.getName());
             digester.addSetNext("sql/relations/relation/property", "addProperty", Property.class.getName());
 
-
             sqlTemplate = (Sql) digester.parse(input);
+
         } catch (Exception e) {
             // XML转化异常：
             throw new SqlTemplateException("ERROR-DB-SQT0000000031", e);

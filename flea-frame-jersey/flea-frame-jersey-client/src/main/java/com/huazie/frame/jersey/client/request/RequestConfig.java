@@ -1,10 +1,7 @@
 package com.huazie.frame.jersey.client.request;
 
-import com.huazie.frame.common.FleaConfig;
-import com.huazie.frame.common.util.ObjectUtils;
+import com.huazie.frame.common.FleaCommonConfig;
 import com.huazie.frame.common.util.StringUtils;
-
-import javax.ws.rs.core.MediaType;
 
 /**
  * <p> 请求配置 </p>
@@ -13,7 +10,7 @@ import javax.ws.rs.core.MediaType;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class RequestConfig extends FleaConfig {
+public class RequestConfig extends FleaCommonConfig {
 
     /**
      * <p> 添加 客户端编码 配置 </p>

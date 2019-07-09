@@ -213,21 +213,36 @@ public abstract class FleaRequest implements Request {
         this.config = config;
     }
 
+    /**
+     * <p> 创建FleaJerseyRequest对象 </p>
+     *
+     * @param resourceCode 资源编码
+     * @param serviceCode  服务编码
+     * @param input        业务入参
+     * @return FleaJerseyRequest对象
+     * @since 1.0.0
+     */
     private FleaJerseyRequest createFleaJerseyRequest(String resourceCode, String serviceCode, Object input) {
         FleaJerseyRequest request = new FleaJerseyRequest();
-
         FleaJerseyRequestData requestData = new FleaJerseyRequestData();
-
+        // 创建请求公共报文
         RequestPublicData publicData = createRequestPublicData(resourceCode, serviceCode);
+        // 创建请求业务报文
         RequestBusinessData businessData = createRequestBusinessData(input);
-
         requestData.setPublicData(publicData);
         requestData.setBusinessData(businessData);
-
         request.setRequestData(requestData);
         return request;
     }
 
+    /**
+     * <p> 创建请求公共报文 </p>
+     *
+     * @param resourceCode 资源编码
+     * @param serviceCode  服务编码
+     * @return 请求公共报文
+     * @since 1.0.0
+     */
     private static RequestPublicData createRequestPublicData(String resourceCode, String serviceCode) {
         RequestPublicData publicData = new RequestPublicData();
         FleaJerseyClientConfig config = FleaJerseyClientConfig.getConfig();
@@ -238,6 +253,13 @@ public abstract class FleaRequest implements Request {
         return publicData;
     }
 
+    /**
+     * <p> 创建请求业务报文 </p>
+     *
+     * @param input 业务入参
+     * @return 请求业务报文
+     * @since 1.0.0
+     */
     private static RequestBusinessData createRequestBusinessData(Object input) {
         RequestBusinessData businessData = new RequestBusinessData();
         String inputJson = GsonUtils.toJsonString(input);

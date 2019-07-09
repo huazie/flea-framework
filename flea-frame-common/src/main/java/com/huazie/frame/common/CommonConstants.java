@@ -88,7 +88,7 @@ public interface CommonConstants {
     }
 
     /**
-     * <p>Flea I18N 常量</p>
+     * <p> Flea I18N 常量 </p>
      *
      * @since 1.0.0
      */
@@ -101,7 +101,7 @@ public interface CommonConstants {
     }
 
     /**
-     * <p>IP地址常量</p>
+     * <p> IP地址常量 </p>
      *
      * @since 1.0.0
      */
@@ -126,5 +126,21 @@ public interface CommonConstants {
          * <p>互联网服务提供商</p>
          */
         String ISP = "isp";
+    }
+
+    /**
+     * <p> Flea Config 常量 </p>
+     *
+     * @since 1.0.0
+     */
+    interface FleaConfigConstants {
+        /**
+         * <p> Flea Config 默认文件路径 </p>
+         */
+        String FLEA_CONFIG_FILE_NAME = "flea/flea-config.xml";
+        /**
+         * <p> Flea Config 系统环境变量 </p>
+         */
+        String FLEA_CONFIG_FILE_SYSTEM_KEY = "fleaframe.flea.config.filename";
     }
 }

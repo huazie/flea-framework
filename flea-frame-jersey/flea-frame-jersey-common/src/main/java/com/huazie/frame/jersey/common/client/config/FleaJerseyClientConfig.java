@@ -1,6 +1,10 @@
 package com.huazie.frame.jersey.common.client.config;
 
+import com.huazie.frame.common.FleaConfigManager;
+import com.huazie.frame.common.FleaConfigXmlDigesterHelper;
+import com.huazie.frame.common.config.FleaConfig;
 import com.huazie.frame.common.util.ObjectUtils;
+import com.huazie.frame.jersey.common.FleaJerseyConstants;
 
 /**
  * <p> Flea Jersey 客户端配置 </p>
@@ -27,12 +31,26 @@ public class FleaJerseyClientConfig {
         return config;
     }
 
+    /**
+     * <p> 获取系统用户编号 </p>
+     *
+     * @return 系统用户编号
+     * @since 1.0.0
+     */
     public String getSystemUserId() {
-        return "1000";
+        return FleaConfigManager.getConfigItemValue(FleaJerseyConstants.JerseyClientConstants.CONFIG_ITEMS_KEY,
+                FleaJerseyConstants.JerseyClientConstants.CONFIG_ITEM_SYSTEM_USER_ID);
     }
 
+    /**
+     * <p> 获取系统用户密码 </p>
+     *
+     * @return 系统用户密码
+     * @since 1.0.0
+     */
     public String getSystemUserPwd() {
-        return "123ASD";
+        return FleaConfigManager.getConfigItemValue(FleaJerseyConstants.JerseyClientConstants.CONFIG_ITEMS_KEY,
+                FleaJerseyConstants.JerseyClientConstants.CONFIG_ITEM_SYSTEM_USER_PWD);
     }
 
 }

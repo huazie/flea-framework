@@ -16,13 +16,17 @@ public interface FleaJerseyConstants {
      */
     interface JerseyClientConstants {
         /**
-         * 系统用户
+         * <p> Flea Jersey 客户端 配置项列表key </p>
          */
-        String SYSTEM_USER_ID = "system_user_id";
+        String CONFIG_ITEMS_KEY = "flea-jersey-client";
         /**
-         * 系统用户密码
+         * <p> 系统用户 </p>
          */
-        String SYSTEM_USER_PWD = "system_user_pwd";
+        String CONFIG_ITEM_SYSTEM_USER_ID = "system_user_id";
+        /**
+         * <p> 系统用户密码 </p>
+         */
+        String CONFIG_ITEM_SYSTEM_USER_PWD = "system_user_pwd";
     }
 
     /**

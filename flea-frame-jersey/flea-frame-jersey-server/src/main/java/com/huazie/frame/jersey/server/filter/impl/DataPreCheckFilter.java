@@ -93,16 +93,24 @@ public class DataPreCheckFilter implements IFleaJerseyFilter {
             throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000006", FleaJerseyConstants.RequestPublicDataConstants.SERVICE_CODE);
         }
 
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("DataPreCheckFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) RequestPublicData = {}", requestPublicData);
+        }
+
         RequestBusinessData requestBusinessData = requestData.getBusinessData();
         if (ObjectUtils.isEmpty(requestBusinessData)) {
             // 请求业务报文不能为空
             throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000005");
         }
 
-        Object input = requestBusinessData.getInput();
-        if (ObjectUtils.isEmpty(input)) {
+        String input = requestBusinessData.getInput();
+        if (StringUtils.isBlank(input)) {
             // 请求业务报文不能为空
             throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000005");
+        }
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("DataPreCheckFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) RequestBusinessData = {}", requestBusinessData);
         }
 
         if (LOGGER.isDebugEnabled()) {
