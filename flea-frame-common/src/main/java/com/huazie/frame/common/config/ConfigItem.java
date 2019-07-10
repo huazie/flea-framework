@@ -11,9 +11,11 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  */
 public class ConfigItem {
 
-    private String key;
+    private String key; // 配置项键
 
-    private String value;
+    private String desc; // 配置项描述
+
+    private String value; // 配置项值
 
     public String getKey() {
         return key;
@@ -21,6 +23,14 @@ public class ConfigItem {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
     public String getValue() {

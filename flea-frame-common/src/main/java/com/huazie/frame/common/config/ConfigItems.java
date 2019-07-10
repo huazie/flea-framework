@@ -18,11 +18,11 @@ import java.util.Map;
  */
 public class ConfigItems {
 
-    private String key;
+    private String key; // 配置项列表键
 
-    private String desc;
+    private String desc; // 配置项列表值
 
-    private List<ConfigItem> configItemList = new ArrayList<ConfigItem>();
+    private List<ConfigItem> configItemList = new ArrayList<ConfigItem>(); // 配置项列表中的各个配置项
 
     public String getKey() {
         return key;

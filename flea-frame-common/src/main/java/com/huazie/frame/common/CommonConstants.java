@@ -95,9 +95,9 @@ public interface CommonConstants {
     interface FleaI18NConstants {
         String FLEA_I18N_FILE_PATH = "flea/i18n/";
         String FLEA_I18N_FILE_NAME_PREFIX = "flea_i18n";
-        String FLEA_I18N_CONFIG_FILE_NAME = "flea/i18n/flea_i18n_config.properties";
-        String FLEA_I18N_CONFIG_KEY_FILE_NAME_PREFIX = "file_name_prefix";
-        String FLEA_I18N_CONFIG_KEY_FILE_PATH = "file_path";
+        String FLEA_I18N_CONFIG_ITEMS_KEY = "flea-i18n-config";
+        String FLEA_I18N_CONFIG_ITEM_KEY_FILE_NAME_PREFIX = "file_name_prefix";
+        String FLEA_I18N_CONFIG_ITEM_KEY_FILE_PATH = "file_path";
     }
 
     /**

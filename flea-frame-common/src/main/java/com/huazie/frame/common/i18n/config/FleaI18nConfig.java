@@ -1,10 +1,11 @@
 package com.huazie.frame.common.i18n.config;
 
 import com.huazie.frame.common.CommonConstants;
+import com.huazie.frame.common.FleaConfigManager;
+import com.huazie.frame.common.config.ConfigItems;
 import com.huazie.frame.common.i18n.pojo.FleaI18nData;
 import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.ObjectUtils;
-import com.huazie.frame.common.util.PropertiesUtil;
 import com.huazie.frame.common.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Properties;
 import java.util.ResourceBundle;
 
 /**
@@ -28,36 +28,10 @@ public class FleaI18nConfig {
 
     private static volatile FleaI18nConfig config;
 
-    private static String RES_FILE_NAME = CommonConstants.FleaI18NConstants.FLEA_I18N_FILE_PATH + CommonConstants.FleaI18NConstants.FLEA_I18N_FILE_NAME_PREFIX;
+    private String RES_FILE_NAME = CommonConstants.FleaI18NConstants.FLEA_I18N_FILE_PATH +
+            CommonConstants.FleaI18NConstants.FLEA_I18N_FILE_NAME_PREFIX; // 默认资源文件路径（仅包含公共的部分）
 
-    private static Map<String, ResourceBundle> resources = new HashMap<String, ResourceBundle>();//资源集合
-
-    static {
-        // Flea i18n config
-        String fileName = CommonConstants.FleaI18NConstants.FLEA_I18N_CONFIG_FILE_NAME;
-        if (StringUtils.isNotBlank(System.getProperty("fleaframe.i18n.config.filename"))) {
-            fileName = StringUtils.trim(System.getProperty("fleaframe.i18n.config.filename"));
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("FleaI18nConfig Use the specified flea_i18n_config.properties：{}", fileName);
-            }
-        }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaI18nConfig Use the current flea_i18n_config.properties：{}", fileName);
-        }
-        Properties fleaI18nProp = PropertiesUtil.getProperties(fileName);
-        if (ObjectUtils.isNotEmpty(fleaI18nProp)) {
-            // 获取资源文件路径
-            String filePath = PropertiesUtil.getStringValue(fleaI18nProp, CommonConstants.FleaI18NConstants.FLEA_I18N_CONFIG_KEY_FILE_PATH);
-            // 获取资源文件前缀
-            String fileNamePrefix = PropertiesUtil.getStringValue(fleaI18nProp, CommonConstants.FleaI18NConstants.FLEA_I18N_CONFIG_KEY_FILE_NAME_PREFIX);
-            // 如果资源文件路径最后没有 "/"，自动添加
-            if (CommonConstants.SymbolConstants.SLASH.equals(StringUtils.subStrLast(filePath, 1))) {
-                RES_FILE_NAME = filePath + fileNamePrefix;
-            } else {
-                RES_FILE_NAME = filePath + CommonConstants.SymbolConstants.SLASH + fileNamePrefix;
-            }
-        }
-    }
+    private Map<String, ResourceBundle> resources = new HashMap<String, ResourceBundle>(); // 资源集合
 
     /**
      * <p> 只允许通过getConfig()获取 flea i18n配置类实例 </p>
@@ -76,10 +50,32 @@ public class FleaI18nConfig {
             synchronized (FleaI18nConfig.class) {
                 if (ObjectUtils.isEmpty(config)) {
                     config = new FleaI18nConfig();
+                    config.init(); // 初始化资源文件相关属性
                 }
             }
         }
         return config;
+    }
+
+    /**
+     * <p> 初始化资源文件相关属性 </p>
+     *
+     * @since 1.0.0
+     */
+    private void init() {
+        ConfigItems fleaI18nItems = FleaConfigManager.getConfigItems(CommonConstants.FleaI18NConstants.FLEA_I18N_CONFIG_ITEMS_KEY);
+        if (ObjectUtils.isNotEmpty(fleaI18nItems)) {
+            // 获取资源文件路径
+            String filePath = FleaConfigManager.getConfigItemValue(CommonConstants.FleaI18NConstants.FLEA_I18N_CONFIG_ITEM_KEY_FILE_PATH, fleaI18nItems);
+            // 获取资源文件前缀
+            String fileNamePrefix = FleaConfigManager.getConfigItemValue(CommonConstants.FleaI18NConstants.FLEA_I18N_CONFIG_ITEM_KEY_FILE_NAME_PREFIX, fleaI18nItems);
+            // 如果资源文件路径最后没有 "/"，自动添加
+            if (CommonConstants.SymbolConstants.SLASH.equals(StringUtils.subStrLast(filePath, 1))) {
+                RES_FILE_NAME = filePath + fileNamePrefix;
+            } else {
+                RES_FILE_NAME = filePath + CommonConstants.SymbolConstants.SLASH + fileNamePrefix;
+            }
+        }
     }
 
     /**
