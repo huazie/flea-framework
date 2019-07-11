@@ -2,18 +2,24 @@ package com.huazie.frame.common.i18n.config;
 
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.FleaConfigManager;
+import com.huazie.frame.common.config.ConfigItem;
 import com.huazie.frame.common.config.ConfigItems;
 import com.huazie.frame.common.i18n.pojo.FleaI18nData;
 import com.huazie.frame.common.util.ArrayUtils;
+import com.huazie.frame.common.util.CollectionUtils;
+import com.huazie.frame.common.util.MapUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sun.security.krb5.Config;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 /**
  * <p> flea i18n 配置类 </p>
@@ -28,8 +34,10 @@ public class FleaI18nConfig {
 
     private static volatile FleaI18nConfig config;
 
-    private String RES_FILE_NAME = CommonConstants.FleaI18NConstants.FLEA_I18N_FILE_PATH +
+    private String defaultResFilePath = CommonConstants.FleaI18NConstants.FLEA_I18N_FILE_PATH +
             CommonConstants.FleaI18NConstants.FLEA_I18N_FILE_NAME_PREFIX; // 默认资源文件路径（仅包含公共的部分）
+
+    private Map<String, String> resFilePath = new HashMap<String, String>(); // 资源文件路径集，默认取defaultResFilePath
 
     private Map<String, ResourceBundle> resources = new HashMap<String, ResourceBundle>(); // 资源集合
 
@@ -65,17 +73,41 @@ public class FleaI18nConfig {
     private void init() {
         ConfigItems fleaI18nItems = FleaConfigManager.getConfigItems(CommonConstants.FleaI18NConstants.FLEA_I18N_CONFIG_ITEMS_KEY);
         if (ObjectUtils.isNotEmpty(fleaI18nItems)) {
-            // 获取资源文件路径
-            String filePath = FleaConfigManager.getConfigItemValue(CommonConstants.FleaI18NConstants.FLEA_I18N_CONFIG_ITEM_KEY_FILE_PATH, fleaI18nItems);
-            // 获取资源文件前缀
-            String fileNamePrefix = FleaConfigManager.getConfigItemValue(CommonConstants.FleaI18NConstants.FLEA_I18N_CONFIG_ITEM_KEY_FILE_NAME_PREFIX, fleaI18nItems);
-            // 如果资源文件路径最后没有 "/"，自动添加
-            if (CommonConstants.SymbolConstants.SLASH.equals(StringUtils.subStrLast(filePath, 1))) {
-                RES_FILE_NAME = filePath + fileNamePrefix;
-            } else {
-                RES_FILE_NAME = filePath + CommonConstants.SymbolConstants.SLASH + fileNamePrefix;
+            // 获取资源名的相关配置
+            Map<String, ConfigItem> configItemMap = fleaI18nItems.toConfigItemMap();
+            if (MapUtils.isNotEmpty(configItemMap)) {
+                Set<String> configItemKeySet = configItemMap.keySet();
+                if (CollectionUtils.isNotEmpty(configItemKeySet)) {
+                    for (String configItemKey : configItemKeySet) {
+                        ConfigItem configItem = configItemMap.get(configItemKey);
+                        if (ObjectUtils.isNotEmpty(configItem)) {
+                            String configItemValue = configItem.getValue();
+                            if (ObjectUtils.isNotEmpty(configItemValue)) {
+                                String[] valueArr = StringUtils.split(configItemValue, CommonConstants.SymbolConstants.COMMA);
+                                if (ArrayUtils.isNotEmpty(valueArr) && CommonConstants.NumeralConstants.INT_TWO == valueArr.length) {
+                                    // 获取资源文件路径
+                                    String filePath = StringUtils.trim(valueArr[0]);
+                                    // 获取资源文件前缀
+                                    String fileNamePrefix = StringUtils.trim(valueArr[1]);
+                                    if (ObjectUtils.isNotEmpty(filePath) && ObjectUtils.isNotEmpty(fileNamePrefix)) {
+                                        String configResFilePath;
+                                        // 如果资源文件路径最后没有 "/"，自动添加
+                                        if (CommonConstants.SymbolConstants.SLASH.equals(StringUtils.subStrLast(filePath, 1))) {
+                                            configResFilePath = filePath + fileNamePrefix;
+                                        } else {
+                                            configResFilePath = filePath + CommonConstants.SymbolConstants.SLASH + fileNamePrefix;
+                                        }
+                                        resFilePath.put(configItemKey, configResFilePath);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
+        // 添加默认资源文件路径
+        resFilePath.put(CommonConstants.SymbolConstants.ASTERISK, defaultResFilePath);
     }
 
     /**
@@ -163,7 +195,7 @@ public class FleaI18nConfig {
         ResourceBundle resource = resources.get(key);
 
         // 获取资源文件名
-        StringBuilder fileName = new StringBuilder(RES_FILE_NAME);
+        StringBuilder fileName = new StringBuilder(getResFilePath(resName));
         if (StringUtils.isNotBlank(resName)) {
             fileName.append(CommonConstants.SymbolConstants.UNDERLINE).append(resName);
         }
@@ -207,6 +239,23 @@ public class FleaI18nConfig {
             }
         }
         return key;
+    }
+
+    /**
+     * <p> 根据资源名，获取资源文件路径 </p>
+     *
+     * @param resName 资源名
+     * @return 资源文件路径
+     * @since 1.0.0
+     */
+    private String getResFilePath(String resName) {
+        // 首先根据资源名，从 资源文件路径集中获取
+        String resFilePathStr = resFilePath.get(resName);
+        if (ObjectUtils.isEmpty(resFilePathStr)) {
+            // 取默认资源文件路径
+            resFilePathStr = resFilePath.get(CommonConstants.SymbolConstants.ASTERISK);
+        }
+        return resFilePathStr;
     }
 
 }

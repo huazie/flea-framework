@@ -85,6 +85,10 @@ public interface CommonConstants {
          * <p> 冒号 </p>
          */
         String COLON = ":";
+        /**
+         * <p> 星号 </p>
+         */
+        String ASTERISK = "*";
     }
 
     /**
@@ -96,8 +100,6 @@ public interface CommonConstants {
         String FLEA_I18N_FILE_PATH = "flea/i18n/";
         String FLEA_I18N_FILE_NAME_PREFIX = "flea_i18n";
         String FLEA_I18N_CONFIG_ITEMS_KEY = "flea-i18n-config";
-        String FLEA_I18N_CONFIG_ITEM_KEY_FILE_NAME_PREFIX = "file_name_prefix";
-        String FLEA_I18N_CONFIG_ITEM_KEY_FILE_PATH = "file_path";
     }
 
     /**

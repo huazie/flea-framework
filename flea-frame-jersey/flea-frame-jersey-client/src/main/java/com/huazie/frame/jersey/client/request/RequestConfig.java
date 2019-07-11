@@ -2,6 +2,7 @@ package com.huazie.frame.jersey.client.request;
 
 import com.huazie.frame.common.FleaCommonConfig;
 import com.huazie.frame.common.util.StringUtils;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
  * <p> 请求配置 </p>
@@ -203,4 +204,5 @@ public class RequestConfig extends FleaCommonConfig {
     public String getClientOutput() {
         return get(RequestConfigEnum.CLIENT_OUTPUT.getKey(), String.class);
     }
+
 }

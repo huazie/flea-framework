@@ -51,6 +51,7 @@ public class FleaJerseyRequestFactory {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FleaJerseyRequestFactory##buildFleaRequest(RequestConfig) Start");
+            LOGGER.debug("FleaJerseyRequestFactory##buildFleaRequest(RequestConfig) RequestConfig = {}", config.getConfig());
         }
 
         if (ObjectUtils.isEmpty(config) || config.isEmpty()) {
@@ -86,7 +87,7 @@ public class FleaJerseyRequestFactory {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJerseyRequestFactory##buildFleaRequest(RequestConfig) Request = {}", request);
+            LOGGER.debug("FleaJerseyRequestFactory##buildFleaRequest(RequestConfig) Request = {}", request.getClass().getName());
             LOGGER.debug("FleaJerseyRequestFactory##buildFleaRequest(RequestConfig) End");
         }
 

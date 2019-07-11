@@ -7,7 +7,6 @@
     </config-items>
 
     <config-items key="flea-i18n-config" desc="Flea I18N 相关配置">
-        <config-item key="file_path" desc="Flea国际化文件路径">flea/i18n</config-item>
-        <config-item key="file_name_prefix" desc="Flea国际化文件前缀">flea_i18n</config-item>
+        <config-item key="error" desc="Flea国际化文件特殊指定路径和Flea国际化文件特殊指定前缀，逗号分隔">flea/i18n,flea_i18n</config-item>
     </config-items>
 </flea-config>

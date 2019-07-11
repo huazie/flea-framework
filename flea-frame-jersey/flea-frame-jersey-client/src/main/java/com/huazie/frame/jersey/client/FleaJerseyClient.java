@@ -61,6 +61,11 @@ public class FleaJerseyClient {
             throw new FleaJerseyClientException("ERROR-JERSEY-CLIENT0000000003");
         }
 
+        // 未注入Bean，直接返回null
+        if (ObjectUtils.isEmpty(springBean)) {
+            return null;
+        }
+
         // 获取Jersey客户端配置
         FleaJerseyResClient resClient = springBean.getResClient(clientCode);
         if (ObjectUtils.isEmpty(resClient)) {

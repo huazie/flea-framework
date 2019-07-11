@@ -1,8 +1,6 @@
 package com.huazie.frame.jersey.common.client.config;
 
 import com.huazie.frame.common.FleaConfigManager;
-import com.huazie.frame.common.FleaConfigXmlDigesterHelper;
-import com.huazie.frame.common.config.FleaConfig;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.jersey.common.FleaJerseyConstants;
 

@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class FleaCommonConfig {
 
-    protected Map<String, Object> config = new HashMap<String, Object>();
+    private Map<String, Object> config = new HashMap<String, Object>();
 
     /**
      * <p> 添加配置数据 </p>
@@ -54,6 +54,16 @@ public class FleaCommonConfig {
             value = clazz.cast(obj);
         }
         return value;
+    }
+
+    /**
+     * <p> 获取配置数据集 </p>
+     *
+     * @return 配置数据Map集合
+     * @since 1.0.0
+     */
+    public Map<String, Object> getConfig() {
+        return config;
     }
 
     /**
