@@ -2,6 +2,8 @@ package com.huazie.frame.jersey.client.resource;
 
 import com.huazie.ffs.pojo.upload.input.InputUploadAuthInfo;
 import com.huazie.ffs.pojo.upload.output.OutputUploadAuthInfo;
+import com.huazie.frame.common.FleaFrameManager;
+import com.huazie.frame.common.i18n.FleaI18nHelper;
 import com.huazie.frame.common.util.json.GsonUtils;
 import com.huazie.frame.jersey.client.FleaJerseyClient;
 import com.huazie.frame.jersey.client.request.RequestModeEnum;
@@ -23,6 +25,7 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import java.util.Locale;
 
 /**
  * <p>  </p>
@@ -111,5 +114,16 @@ public class JerseyTest {
         RequestModeEnum modeEnum = RequestModeEnum.valueOf("GET1");
 
         LOGGER.debug("RequestModeEnum = {}", modeEnum.getMode());
+    }
+
+    @Test
+    public void fleaI18NHelperTest() {
+        FleaFrameManager.getManager().setLocale(Locale.CHINESE);
+        try {
+            FleaI18nHelper.i18n("ERROR0000000001", "error");
+            FleaI18nHelper.i18n("ERROR-JERSEY-CLIENT0000000000", "error_jersey");
+        } catch (Exception e) {
+            LOGGER.error("Exception={}", e);
+        }
     }
 }
