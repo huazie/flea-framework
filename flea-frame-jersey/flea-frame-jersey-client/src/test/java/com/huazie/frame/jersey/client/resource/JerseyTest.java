@@ -1,16 +1,20 @@
 package com.huazie.frame.jersey.client.resource;
 
+import com.huazie.ffs.pojo.download.input.InputFileDownloadInfo;
+import com.huazie.ffs.pojo.download.output.OutputFileDownloadInfo;
 import com.huazie.ffs.pojo.upload.input.InputUploadAuthInfo;
 import com.huazie.ffs.pojo.upload.output.OutputUploadAuthInfo;
 import com.huazie.frame.common.FleaFrameManager;
 import com.huazie.frame.common.i18n.FleaI18nHelper;
+import com.huazie.frame.common.util.ObjectUtils;
+import com.huazie.frame.common.util.RandomCode;
 import com.huazie.frame.common.util.json.GsonUtils;
-import com.huazie.frame.jersey.client.FleaJerseyClient;
+import com.huazie.frame.common.util.xml.JABXUtils;
+import com.huazie.frame.jersey.client.core.FleaJerseyClient;
 import com.huazie.frame.jersey.client.request.RequestModeEnum;
 import com.huazie.frame.jersey.client.response.Response;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequestData;
-import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
 import com.huazie.frame.jersey.common.data.RequestBusinessData;
 import com.huazie.frame.jersey.common.data.RequestPublicData;
 import org.junit.Before;
@@ -20,11 +24,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import java.io.InputStream;
 import java.util.Locale;
 
 /**
@@ -38,22 +39,76 @@ public class JerseyTest {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(JerseyTest.class);
 
-    private WebTarget target;
-
     private ApplicationContext applicationContext;
 
     @Before
     public void init() {
-        Client client = ClientBuilder.newClient();
-        target = client.target("http://localhost:8080/fleafs");
-
         applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
         LOGGER.debug("ApplicationContext={}", applicationContext);
     }
 
     @Test
-    public void testUpload() {
+    public void testUploadAuth() {
+        try {
+            String clientCode = "FLEA_CLIENT_UPLOAD_AUTH";
 
+            InputUploadAuthInfo uploadAuthInfo = new InputUploadAuthInfo();
+            uploadAuthInfo.setFileName("美丽的风景.png");
+
+            FleaJerseyClient client = applicationContext.getBean(FleaJerseyClient.class);
+
+            Response<OutputUploadAuthInfo> response = client.invoke(clientCode, uploadAuthInfo, OutputUploadAuthInfo.class);
+
+            LOGGER.debug("result = {}", response);
+        } catch (Exception e) {
+            LOGGER.debug("Exception = ", e);
+        }
+    }
+
+    @Test
+    public void testDownloadAuth() {
+        try {
+            String clientCode = "FLEA_CLIENT_DOWNLOAD_AUTH";
+
+            InputUploadAuthInfo uploadAuthInfo = new InputUploadAuthInfo();
+            uploadAuthInfo.setFileName("美丽的风景.png");
+
+            FleaJerseyClient client = applicationContext.getBean(FleaJerseyClient.class);
+
+            Response<OutputUploadAuthInfo> response = client.invoke(clientCode, uploadAuthInfo, OutputUploadAuthInfo.class);
+
+            LOGGER.debug("result = {}", response);
+        } catch (Exception e) {
+            LOGGER.debug("Exception = ", e);
+        }
+    }
+
+    @Test
+    public void testFileDownload() {
+        try {
+            String clientCode = "FLEA_CLIENT_FILE_DOWNLOAD";
+
+            InputFileDownloadInfo input = new InputFileDownloadInfo();
+            input.setToken(RandomCode.toUUID());
+
+            FleaJerseyClient client = applicationContext.getBean(FleaJerseyClient.class);
+
+            Response<OutputFileDownloadInfo> response = client.invoke(clientCode, input, OutputFileDownloadInfo.class);
+
+            if(ObjectUtils.isNotEmpty(response.getOutput())) {
+                String fileName = response.getOutput().getFileName();
+                InputStream inputStream = response.getOutput().getFileInputStream();
+                LOGGER.debug("FILE_NAME = {}", fileName);
+                LOGGER.debug("FILE = {}", inputStream);
+            }
+
+        } catch (Exception e) {
+            LOGGER.debug("Exception = ", e);
+        }
+    }
+
+    @Test
+    public void testGetFleaRequest() throws Exception {
         FleaJerseyRequest request = new FleaJerseyRequest();
         FleaJerseyRequestData requestData = new FleaJerseyRequestData();
 
@@ -65,10 +120,10 @@ public class JerseyTest {
 
         RequestBusinessData businessData = new RequestBusinessData();
 
-        InputUploadAuthInfo uploadAuthInfo = new InputUploadAuthInfo();
-        uploadAuthInfo.setFileName("美丽的风景.png");
+        InputFileDownloadInfo input = new InputFileDownloadInfo();
+        input.setToken("39b6b9cfd3da4675a01c7d159517bb1d");
 
-        String inputJson = GsonUtils.toJsonString(uploadAuthInfo);
+        String inputJson = GsonUtils.toJsonString(input);
         businessData.setInput(inputJson);
 
         requestData.setPublicData(publicData);
@@ -76,25 +131,11 @@ public class JerseyTest {
 
         request.setRequestData(requestData);
 
-        Entity<FleaJerseyRequest> entity = Entity.entity(request, MediaType.APPLICATION_XML_TYPE);
-        FleaJerseyResponse response = target.path("upload").request().post(entity, FleaJerseyResponse.class);
+        String inputStr = JABXUtils.toXml(request, false);
+        LOGGER.debug("Input = {}", inputStr);
 
-        LOGGER.debug("result = {}", response);
-    }
-
-    @Test
-    public void testFleaJerseyClient() throws Exception {
-
-        String clientCode = "FLEA_CLIENT_UPLOAD_AUTH";
-
-        InputUploadAuthInfo uploadAuthInfo = new InputUploadAuthInfo();
-        uploadAuthInfo.setFileName("美丽的风景.png");
-
-        FleaJerseyClient client = applicationContext.getBean(FleaJerseyClient.class);
-
-        Response<OutputUploadAuthInfo> response = client.invoke(clientCode, uploadAuthInfo, OutputUploadAuthInfo.class);
-
-        LOGGER.debug("result = {}", response);
+        FleaJerseyRequest request1 = JABXUtils.fromXml(inputStr, FleaJerseyRequest.class);
+        LOGGER.debug("FleaJerseyRequest = {}", request1);
     }
 
     @Test

@@ -42,10 +42,22 @@ public class FilterChainManager {
      * <p> 执行过滤器 </p>
      *
      * @param request 请求对象
+     * @return 响应对象
      * @since 1.0.0
      */
     public FleaJerseyResponse doFilter(FleaJerseyRequest request) {
         return filterChain.doFilter(request);
+    }
+
+    /**
+     * <p> 执行过滤器 </p>
+     *
+     * @param requestXml 请求XML字符串
+     * @return 响应对象
+     * @since 1.0.0
+     */
+    public FleaJerseyResponse doFilter(String requestXml) {
+        return filterChain.doFilter(requestXml);
     }
 
 }

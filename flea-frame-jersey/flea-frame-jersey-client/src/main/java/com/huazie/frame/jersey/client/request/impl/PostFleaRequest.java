@@ -1,6 +1,7 @@
 package com.huazie.frame.jersey.client.request.impl;
 
 import com.huazie.frame.jersey.client.request.RequestConfig;
+import com.huazie.frame.jersey.client.request.RequestModeEnum;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
 import org.slf4j.Logger;
@@ -10,7 +11,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 
 /**
- * <p> Post 请求 </p>
+ * <p> POST 请求 </p>
  *
  * @author huazie
  * @version 1.0.0
@@ -26,6 +27,7 @@ public class PostFleaRequest extends FleaRequest {
      * @since 1.0.0
      */
     public PostFleaRequest() {
+        super();
     }
 
     /**
@@ -39,15 +41,20 @@ public class PostFleaRequest extends FleaRequest {
     }
 
     @Override
+    protected void init() {
+        modeEnum = RequestModeEnum.POST;
+    }
+
+    @Override
     protected FleaJerseyResponse request(WebTarget target, FleaJerseyRequest request) throws Exception {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("PostFleaRequest##request(WebTarget, FleaJerseyRequest) Start");
         }
 
-        Entity<FleaJerseyRequest> entity = Entity.entity(request, getMediaType());
+        Entity<FleaJerseyRequest> entity = Entity.entity(request, toMediaType());
 
-        FleaJerseyResponse response = target.request().post(entity, FleaJerseyResponse.class);
+        FleaJerseyResponse response = target.request(toMediaType()).post(entity, FleaJerseyResponse.class);
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("PostFleaRequest##request(WebTarget, FleaJerseyRequest) FleaJerseyResponse = {}", response);

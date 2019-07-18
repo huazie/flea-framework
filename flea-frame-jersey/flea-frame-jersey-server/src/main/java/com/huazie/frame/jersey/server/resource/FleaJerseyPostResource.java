@@ -25,8 +25,8 @@ public abstract class FleaJerseyPostResource extends FleaJerseyResource {
      * @since 1.0.0
      */
     @POST
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_XML})
     public FleaJerseyResponse doPostResource(FleaJerseyRequest request) {
         return doResource(request);
     }

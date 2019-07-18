@@ -1,10 +1,10 @@
-package com.huazie.frame.jersey.client;
+package com.huazie.frame.jersey.client.core;
 
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.core.base.cfgdata.bean.FleaConfigDataSpringBean;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResClient;
-import com.huazie.frame.jersey.client.request.FleaJerseyRequestFactory;
+import com.huazie.frame.jersey.client.request.RequestFactory;
 import com.huazie.frame.jersey.client.request.Request;
 import com.huazie.frame.jersey.client.request.RequestConfig;
 import com.huazie.frame.jersey.client.response.Response;
@@ -12,6 +12,7 @@ import com.huazie.frame.jersey.common.exception.FleaJerseyClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * <p> Flea Jersey 客户端 </p>
@@ -20,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @version 1.0.0
  * @since 1.0.0
  */
+@Component
 public class FleaJerseyClient {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(FleaJerseyClient.class);
@@ -93,7 +95,7 @@ public class FleaJerseyClient {
         config.addClientOutput(resClient.getClientOutput());
 
         // 传入请求配置，让请求工厂生产一个Flea Jersey请求
-        Request request = FleaJerseyRequestFactory.getInstance().buildFleaRequest(config);
+        Request request = RequestFactory.getInstance().buildFleaRequest(config);
         Response<T> response = null;
         if (ObjectUtils.isNotEmpty(request)) {
             response = request.doRequest(outputClazz);

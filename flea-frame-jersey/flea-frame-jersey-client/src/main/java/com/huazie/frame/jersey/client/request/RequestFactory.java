@@ -8,31 +8,32 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <p> Flea Jersey 请求工厂 </p>
+ * <p> Flea Jersey请求工厂 </p>
  *
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0
  */
-public class FleaJerseyRequestFactory {
+public class RequestFactory {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(FleaJerseyRequestFactory.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(RequestFactory.class);
 
-    private static volatile FleaJerseyRequestFactory factory;
+    private static volatile RequestFactory factory;
 
-    private FleaJerseyRequestFactory() {
+    private RequestFactory() {
     }
 
     /**
      * <p> 获取请求工厂实例 </p>
      *
-     * @return
+     * @return 请求工厂实例
+     * @since 1.0.0
      */
-    public static FleaJerseyRequestFactory getInstance() {
+    public static RequestFactory getInstance() {
         if (ObjectUtils.isEmpty(factory)) {
-            synchronized (FleaJerseyRequestFactory.class) {
+            synchronized (RequestFactory.class) {
                 if (ObjectUtils.isEmpty(factory)) {
-                    factory = new FleaJerseyRequestFactory();
+                    factory = new RequestFactory();
                 }
             }
         }
@@ -50,8 +51,8 @@ public class FleaJerseyRequestFactory {
     public Request buildFleaRequest(RequestConfig config) throws Exception {
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJerseyRequestFactory##buildFleaRequest(RequestConfig) Start");
-            LOGGER.debug("FleaJerseyRequestFactory##buildFleaRequest(RequestConfig) RequestConfig = {}", config.getConfig());
+            LOGGER.debug("RequestFactory##buildFleaRequest(RequestConfig) Start");
+            LOGGER.debug("RequestFactory##buildFleaRequest(RequestConfig) RequestConfig = {}", config.getConfig());
         }
 
         if (ObjectUtils.isEmpty(config) || config.isEmpty()) {
@@ -73,7 +74,7 @@ public class FleaJerseyRequestFactory {
             requestModeEnum = RequestModeEnum.valueOf(requestMode.toUpperCase());
         } catch (IllegalArgumentException e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("FleaJerseyRequestFactory##buildFleaRequest(RequestConfig) Exception = {}", e.getMessage());
+                LOGGER.error("RequestFactory##buildFleaRequest(RequestConfig) Exception = {}", e.getMessage());
             }
         }
 
@@ -87,8 +88,11 @@ public class FleaJerseyRequestFactory {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJerseyRequestFactory##buildFleaRequest(RequestConfig) Request = {}", request.getClass().getName());
-            LOGGER.debug("FleaJerseyRequestFactory##buildFleaRequest(RequestConfig) End");
+            if (ObjectUtils.isNotEmpty(request)) {
+                LOGGER.debug("RequestFactory##buildFleaRequest(RequestConfig) Request = {}", request.getClass().getName());
+                LOGGER.debug("RequestFactory##buildFleaRequest(RequestConfig) RequestMode = {}", request.getRequestMode().getMode());
+            }
+            LOGGER.debug("RequestFactory##buildFleaRequest(RequestConfig) End");
         }
 
         return request;

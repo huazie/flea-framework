@@ -32,7 +32,7 @@ public class FleaJerseyResClientTest {
     }
 
     @Test
-    public void testInsertResClient() {
+    public void testInsertClientUploadAuth() {
         IFleaJerseyResClientSV fleaJerseyResClientSV = (IFleaJerseyResClientSV) applicationContext.getBean("resClientSV");
         FleaJerseyResClient resClient = new FleaJerseyResClient();
         resClient.setClientCode("FLEA_CLIENT_UPLOAD_AUTH");
@@ -45,7 +45,51 @@ public class FleaJerseyResClientTest {
         resClient.setClientOutput("com.huazie.ffs.pojo.upload.output.OutputUploadAuthInfo");
         resClient.setState(EntityStateEnum.IN_USE.getValue());
         resClient.setCreateDate(DateUtils.getCurrentTime());
-        resClient.setRemarks("第一个资源客户端测试配置");
+        resClient.setRemarks("上传鉴权服务");
+        try {
+            fleaJerseyResClientSV.save(resClient);
+        } catch (Exception e) {
+            LOGGER.error("Exception:", e);
+        }
+    }
+
+    @Test
+    public void testInsertClientDownloadAuth() {
+        IFleaJerseyResClientSV fleaJerseyResClientSV = (IFleaJerseyResClientSV) applicationContext.getBean("resClientSV");
+        FleaJerseyResClient resClient = new FleaJerseyResClient();
+        resClient.setClientCode("FLEA_CLIENT_DOWNLOAD_AUTH");
+        resClient.setResourceUrl("http://localhost:8080/fleafs");
+        resClient.setResourceCode("download");
+        resClient.setServiceCode("FLEA_SERVICE_DOWNLOAD_AUTH");
+        resClient.setRequestMode("post");
+        resClient.setMediaType("application/xml");
+        resClient.setClientInput("com.huazie.ffs.pojo.download.input.InputDownloadAuthInfo");
+        resClient.setClientOutput("com.huazie.ffs.pojo.download.output.OutputDownloadAuthInfo");
+        resClient.setState(EntityStateEnum.IN_USE.getValue());
+        resClient.setCreateDate(DateUtils.getCurrentTime());
+        resClient.setRemarks("下载鉴权服务");
+        try {
+            fleaJerseyResClientSV.save(resClient);
+        } catch (Exception e) {
+            LOGGER.error("Exception:", e);
+        }
+    }
+
+    @Test
+    public void testInsertClientFileDownload() {
+        IFleaJerseyResClientSV fleaJerseyResClientSV = (IFleaJerseyResClientSV) applicationContext.getBean("resClientSV");
+        FleaJerseyResClient resClient = new FleaJerseyResClient();
+        resClient.setClientCode("FLEA_CLIENT_FILE_DOWNLOAD");
+        resClient.setResourceUrl("http://localhost:8080/fleafs");
+        resClient.setResourceCode("download");
+        resClient.setServiceCode("FLEA_SERVICE_FILE_DOWNLOAD");
+        resClient.setRequestMode("get");
+        resClient.setMediaType("application/xml");
+        resClient.setClientInput("com.huazie.ffs.pojo.download.input.InputFileDownloadInfo");
+        resClient.setClientOutput("com.huazie.ffs.pojo.download.output.OutputFileDownloadInfo");
+        resClient.setState(EntityStateEnum.IN_USE.getValue());
+        resClient.setCreateDate(DateUtils.getCurrentTime());
+        resClient.setRemarks("文件下载服务");
         try {
             fleaJerseyResClientSV.save(resClient);
         } catch (Exception e) {

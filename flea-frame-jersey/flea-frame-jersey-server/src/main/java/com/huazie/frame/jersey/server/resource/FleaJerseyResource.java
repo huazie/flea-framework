@@ -24,4 +24,15 @@ public abstract class FleaJerseyResource {
         return FilterChainManager.getManager().doFilter(request);
     }
 
+    /**
+     * <p> 处理资源数据 </p>
+     *
+     * @param requestXml 请求XMl字符串
+     * @return 响应对象
+     * @since 1.0.0
+     */
+    protected FleaJerseyResponse doResource(String requestXml) {
+        return FilterChainManager.getManager().doFilter(requestXml);
+    }
+
 }

@@ -2,9 +2,7 @@ package com.huazie.frame.core.base.cfgdata;
 
 import com.huazie.frame.common.util.DateUtils;
 import com.huazie.frame.core.base.cfgdata.bean.FleaConfigDataSpringBean;
-import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyI18nErrorMapping;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResService;
-import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaJerseyI18nErrorMappingSV;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaJerseyResServiceSV;
 import com.huazie.frame.core.common.EntityStateEnum;
 import org.junit.Before;
@@ -34,7 +32,7 @@ public class FleaJerseyResServiceTest {
     }
 
     @Test
-    public void testInsertResService() {
+    public void testInsertUploadAuth() {
         IFleaJerseyResServiceSV fleaJerseyResServiceSV = (IFleaJerseyResServiceSV) applicationContext.getBean("resServiceSV");
         FleaJerseyResService resService = new FleaJerseyResService();
         resService.setServiceCode("FLEA_SERVICE_UPLOAD_AUTH");
@@ -54,10 +52,50 @@ public class FleaJerseyResServiceTest {
     }
 
     @Test
+    public void testInsertFileDownload() {
+        IFleaJerseyResServiceSV fleaJerseyResServiceSV = (IFleaJerseyResServiceSV) applicationContext.getBean("resServiceSV");
+        FleaJerseyResService resService = new FleaJerseyResService();
+        resService.setServiceCode("FLEA_SERVICE_FILE_DOWNLOAD");
+        resService.setResourceCode("download");
+        resService.setServiceName("文件下载服务");
+        resService.setServiceInterfaces("com.huazie.ffs.module.download.service.interfaces.IFleaDownloadSV");
+        resService.setServiceMethod("fileDownload");
+        resService.setServiceInput("com.huazie.ffs.pojo.download.input.InputFileDownloadInfo");
+        resService.setServiceOutput("com.huazie.ffs.pojo.download.output.OutputFileDownloadInfo");
+        resService.setState(EntityStateEnum.IN_USE.getValue());
+        resService.setCreateDate(DateUtils.getCurrentTime());
+        try {
+            fleaJerseyResServiceSV.save(resService);
+        } catch (Exception e) {
+            LOGGER.error("Exception:", e);
+        }
+    }
+
+    @Test
+    public void testInsertDownloadAuth() {
+        IFleaJerseyResServiceSV fleaJerseyResServiceSV = (IFleaJerseyResServiceSV) applicationContext.getBean("resServiceSV");
+        FleaJerseyResService resService = new FleaJerseyResService();
+        resService.setServiceCode("FLEA_SERVICE_DOWNLOAD_AUTH");
+        resService.setResourceCode("download");
+        resService.setServiceName("下载鉴权服务");
+        resService.setServiceInterfaces("com.huazie.ffs.module.download.service.interfaces.IFleaDownloadSV");
+        resService.setServiceMethod("downloadAuth");
+        resService.setServiceInput("com.huazie.ffs.pojo.download.input.InputDownloadAuthInfo");
+        resService.setServiceOutput("com.huazie.ffs.pojo.download.output.OutputDownloadAuthInfo");
+        resService.setState(EntityStateEnum.IN_USE.getValue());
+        resService.setCreateDate(DateUtils.getCurrentTime());
+        try {
+            fleaJerseyResServiceSV.save(resService);
+        } catch (Exception e) {
+            LOGGER.error("Exception:", e);
+        }
+    }
+
+    @Test
     public void testFleaConfigDataSpringBean() {
         FleaConfigDataSpringBean bean = (FleaConfigDataSpringBean) applicationContext.getBean("fleaConfigDataSpringBean");
         try {
-            bean.getResService("FLEA_SERVICE_UPLOAD_AUTH", "upload");
+            bean.getResService("FLEA_SERVICE_FILE_DOWNLOAD", "download");
         } catch (Exception e) {
             LOGGER.error("Exception:", e);
         }

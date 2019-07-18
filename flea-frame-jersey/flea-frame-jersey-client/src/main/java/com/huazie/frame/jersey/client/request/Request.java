@@ -20,4 +20,10 @@ public interface Request {
      */
     <T> Response<T> doRequest(Class<T> clazz) throws Exception;
 
+    /**
+     * <p> 获取请求方式 </p>
+     *
+     * @return
+     */
+    RequestModeEnum getRequestMode();
 }

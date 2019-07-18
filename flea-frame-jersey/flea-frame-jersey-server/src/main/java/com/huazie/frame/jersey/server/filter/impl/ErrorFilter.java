@@ -9,6 +9,7 @@ import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyI18nErrorMapping;
 import com.huazie.frame.jersey.common.FleaJerseyConstants;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
+import com.huazie.frame.jersey.common.data.FleaJerseyResponseData;
 import com.huazie.frame.jersey.common.data.RequestPublicData;
 import com.huazie.frame.jersey.common.data.ResponsePublicData;
 import com.huazie.frame.jersey.server.filter.IFleaJerseyErrorFilter;
@@ -35,7 +36,17 @@ public class ErrorFilter implements IFleaJerseyErrorFilter {
             LOGGER.debug("ErrorFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) Exception : ", throwable);
         }
 
-        ResponsePublicData responsePublicData = response.getResponseData().getPublicData();
+        FleaJerseyResponseData responseData = response.getResponseData();
+        if (ObjectUtils.isEmpty(responseData)) {
+            responseData = new FleaJerseyResponseData();
+            response.setResponseData(responseData);
+        }
+
+        ResponsePublicData responsePublicData = responseData.getPublicData();
+        if (ObjectUtils.isEmpty(responsePublicData)) {
+            responsePublicData = new ResponsePublicData();
+            responseData.setPublicData(responsePublicData);
+        }
 
         // 获取异常描述，并设置响应返回信息
         String errMsg = ObjectUtils.isEmpty(throwable.getCause()) ? throwable.getMessage() : throwable.getCause().getMessage();

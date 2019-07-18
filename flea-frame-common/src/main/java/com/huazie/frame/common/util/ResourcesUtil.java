@@ -3,7 +3,7 @@ package com.huazie.frame.common.util;
 import java.io.InputStream;
 
 /**
- * <p> 资源文件获取工具类 </p>
+ * <p> 资源文件处理工具类 </p>
  *
  * @author huazie
  * @version 1.0.0

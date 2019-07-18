@@ -25,8 +25,8 @@ public abstract class FleaJerseyPutResource extends FleaJerseyResource {
      * @since 1.0.0
      */
     @PUT
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_XML})
     public FleaJerseyResponse doPutResource(FleaJerseyRequest request) {
         return doResource(request);
     }

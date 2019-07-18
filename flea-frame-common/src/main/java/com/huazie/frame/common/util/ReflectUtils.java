@@ -97,7 +97,7 @@ public class ReflectUtils {
         Object value = null;
         try {
             Method method = getObjectAttrMethod(obj, attrName);
-            value = method.invoke(obj, new Object[]{});
+            value = method.invoke(obj);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("获取对象指定属性值出错，Exception=", e);
@@ -118,7 +118,7 @@ public class ReflectUtils {
         Method method = null;
         try {
             String getter = CommonConstants.MethodConstants.GET + StringUtils.toUpperCaseInitial(attrName); // 属性的get方法名
-            method = obj.getClass().getMethod(getter, new Class[]{});
+            method = obj.getClass().getMethod(getter);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("获取对象指定属性对应get方法出错，Exception=", e);

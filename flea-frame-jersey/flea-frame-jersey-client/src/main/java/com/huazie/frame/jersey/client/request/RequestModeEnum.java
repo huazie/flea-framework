@@ -9,10 +9,10 @@ package com.huazie.frame.jersey.client.request;
  */
 public enum RequestModeEnum {
 
-    GET("get", "com.huazie.frame.jersey.client.request.impl.GetFleaRequest", "Get请求"),
-    POST("post", "com.huazie.frame.jersey.client.request.impl.PostFleaRequest", "Post请求"),
-    PUT("put", "com.huazie.frame.jersey.client.request.impl.PutFleaRequest", "Put请求"),
-    DELETE("delete", "com.huazie.frame.jersey.client.request.impl.DeleteFleaRequest", "Delete请求");
+    GET("GET", "com.huazie.frame.jersey.client.request.impl.GetFleaRequest", "GET请求"),
+    POST("POST", "com.huazie.frame.jersey.client.request.impl.PostFleaRequest", "POST请求"),
+    PUT("PUT", "com.huazie.frame.jersey.client.request.impl.PutFleaRequest", "PUT请求"),
+    DELETE("DELETE", "com.huazie.frame.jersey.client.request.impl.DeleteFleaRequest", "DELETE请求");
 
     private String mode; // 请求方式
 

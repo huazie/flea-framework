@@ -9,11 +9,9 @@ import com.huazie.frame.cache.common.CacheEnum;
 import com.huazie.frame.cache.memcached.MemCachedSpringCacheManager;
 import com.huazie.frame.cache.redis.RedisSpringCacheManager;
 import com.huazie.frame.common.FleaFrameManager;
-import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaParaDetailSV;
 import com.huazie.frame.core.common.EntityStateEnum;
-import com.huazie.frame.core.common.FleaEntityConstants;
 import com.huazie.frame.db.common.DBSystemEnum;
 import com.huazie.frame.db.jdbc.FleaJDBCHelper;
 import com.huazie.frame.db.jdbc.config.FleaJDBCConfig;
@@ -25,7 +23,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.sql.Time;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -94,10 +91,10 @@ public class FleaParaDetailSVImplTest {
         try {
             AbstractFleaCacheManager manager = FleaCacheManagerFactory.getFleaCacheManager(CacheEnum.Redis.getName());
             LOGGER.debug("RedisCacheManager={}", manager);
-            AbstractFleaCache cache = manager.getCache("fleajerseyresclient");
+            AbstractFleaCache cache = manager.getCache("fleajerseyresservice");
             LOGGER.debug("Cache={}", cache);
 
-            //cache.delete("jersey-filter-resource_jersey-filter-service");
+            cache.delete("FLEA_SERVICE_FILE_DOWNLOAD_download");
 //            cache.clear();
             //#### 复杂配置参数
             Set<String> cacheKey = cache.getCacheKey();

@@ -4,9 +4,11 @@ import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.ReflectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.common.util.json.GsonUtils;
+import com.huazie.frame.common.util.xml.JABXUtils;
 import com.huazie.frame.jersey.client.request.Request;
 import com.huazie.frame.jersey.client.request.RequestConfig;
 import com.huazie.frame.jersey.client.request.RequestConfigEnum;
+import com.huazie.frame.jersey.client.request.RequestModeEnum;
 import com.huazie.frame.jersey.client.response.Response;
 import com.huazie.frame.jersey.common.client.config.FleaJerseyClientConfig;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
@@ -24,6 +26,7 @@ import org.slf4j.LoggerFactory;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import java.net.URLEncoder;
 
 /**
  * <p> Flea 抽象请求 </p>
@@ -38,12 +41,15 @@ public abstract class FleaRequest implements Request {
 
     private RequestConfig config; // 请求配置
 
+    protected RequestModeEnum modeEnum; // 请求方式
+
     /**
      * <p> 不带参数的构造方法 </p>
      *
      * @since 1.0.0
      */
     public FleaRequest() {
+        init();
     }
 
     /**
@@ -54,6 +60,7 @@ public abstract class FleaRequest implements Request {
      */
     public FleaRequest(RequestConfig config) {
         this.config = config;
+        init();
     }
 
     @Override
@@ -183,7 +190,7 @@ public abstract class FleaRequest implements Request {
      * @throws Exception
      * @since 1.0.0
      */
-    protected MediaType getMediaType() throws Exception {
+    protected MediaType toMediaType() throws Exception {
         // 媒体类型
         String mediaTypeStr = config.getMediaType();
         if (StringUtils.isBlank(mediaTypeStr)) {
@@ -203,6 +210,40 @@ public abstract class FleaRequest implements Request {
 
     }
 
+    /**
+     * <p> 将请求报文 转换为 XML字符串 </p>
+     *
+     * @param request 请求报文对象
+     * @return 请求XML字符串
+     * @throws Exception
+     * @since 1.0.0
+     */
+    protected String toRequestXml(FleaJerseyRequest request) throws Exception {
+        String input = request.getRequestData().getBusinessData().getInput();
+        if (ObjectUtils.isNotEmpty(input)) {
+            input = URLEncoder.encode(input, "UTF-8");
+        }
+        request.getRequestData().getBusinessData().setInput(input); // 重新设置入参
+        // 将请求报文转换成xml
+        return JABXUtils.toXml(request, false);
+    }
+
+    /**
+     * <p> 请求方式初始化 </p>
+     *
+     * @since 1.0.0
+     */
+    protected abstract void init();
+
+    /**
+     * <p> 实际请求处理 </p>
+     *
+     * @param target  WebTarget对象
+     * @param request Flea Jersey请求对象
+     * @return Flea Jersey响应对象
+     * @throws Exception
+     * @since 1.0.0
+     */
     protected abstract FleaJerseyResponse request(WebTarget target, FleaJerseyRequest request) throws Exception;
 
     public RequestConfig getConfig() {
@@ -211,6 +252,11 @@ public abstract class FleaRequest implements Request {
 
     public void setConfig(RequestConfig config) {
         this.config = config;
+    }
+
+    @Override
+    public RequestModeEnum getRequestMode() {
+        return modeEnum;
     }
 
     /**
