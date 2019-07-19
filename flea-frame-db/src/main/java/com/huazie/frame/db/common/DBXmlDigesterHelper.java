@@ -1,7 +1,7 @@
 package com.huazie.frame.db.common;
 
 import com.huazie.frame.common.util.ObjectUtils;
-import com.huazie.frame.common.util.ResourcesUtil;
+import com.huazie.frame.common.util.IOUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.exception.SqlTemplateException;
 import com.huazie.frame.db.common.exception.TableSplitException;
@@ -107,9 +107,11 @@ public class DBXmlDigesterHelper {
             LOGGER.debug("DBXmlDigesterHelper##newTables() Start to parse the flea-table-split.xml");
         }
 
+        InputStream input = null;
+
         try {
 
-            InputStream input = ResourcesUtil.getInputStreamFromClassPath(fileName);
+            input = IOUtils.getInputStreamFromClassPath(fileName);
             if (ObjectUtils.isEmpty(input)) {
                 // 该路径下【0】找不到指定配置文件
                 throw new TableSplitException("ERROR-DB-SQT0000000030", fileName);
@@ -139,6 +141,8 @@ public class DBXmlDigesterHelper {
         } catch (Exception e) {
             // XML转化异常：
             throw new TableSplitException("ERROR-DB-SQT0000000031", e);
+        } finally {
+            IOUtils.close(input);
         }
 
         if (LOGGER.isDebugEnabled()) {
@@ -186,9 +190,11 @@ public class DBXmlDigesterHelper {
             LOGGER.debug("DBXmlDigesterHelper##newSqlTemplate() Start to parse the flea-sql-template.xml");
         }
 
+        InputStream input = null;
+
         try {
 
-            InputStream input = ResourcesUtil.getInputStreamFromClassPath(fileName);
+            input = IOUtils.getInputStreamFromClassPath(fileName);
             if (ObjectUtils.isEmpty(input)) {
                 // 该路径下【0】找不到指定配置文件
                 throw new SqlTemplateException("ERROR-DB-SQT0000000030", fileName);
@@ -257,6 +263,8 @@ public class DBXmlDigesterHelper {
         } catch (Exception e) {
             // XML转化异常：
             throw new SqlTemplateException("ERROR-DB-SQT0000000031", e);
+        } finally {
+            IOUtils.close(input);
         }
 
         if (LOGGER.isDebugEnabled()) {

@@ -31,7 +31,7 @@ public class PropertiesUtil {
         InputStream input = null;
         BufferedReader reader = null;
         try {
-            input = ResourcesUtil.getInputStreamFromClassPath(path);
+            input = IOUtils.getInputStreamFromClassPath(path);
             if (ObjectUtils.isEmpty(input)) {
                 throw new Exception("The specified configuration file could not be found under this path [" + path + "]");
             }

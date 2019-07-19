@@ -4,7 +4,7 @@ import com.huazie.frame.common.config.ConfigItem;
 import com.huazie.frame.common.config.ConfigItems;
 import com.huazie.frame.common.config.FleaConfig;
 import com.huazie.frame.common.util.ObjectUtils;
-import com.huazie.frame.common.util.ResourcesUtil;
+import com.huazie.frame.common.util.IOUtils;
 import com.huazie.frame.common.util.StringUtils;
 import org.apache.commons.digester.Digester;
 import org.slf4j.Logger;
@@ -92,9 +92,11 @@ public class FleaConfigXmlDigesterHelper {
             LOGGER.debug("FleaConfigXmlDigesterHelper##newFleaConfig() Start to parse the flea-config.xml");
         }
 
+        InputStream input = null;
+
         try {
 
-            InputStream input = ResourcesUtil.getInputStreamFromClassPath(fileName);
+            input = IOUtils.getInputStreamFromClassPath(fileName);
             if (ObjectUtils.isNotEmpty(input)) {
 
                 Digester digester = new Digester();
@@ -124,6 +126,8 @@ public class FleaConfigXmlDigesterHelper {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("FleaConfigXmlDigesterHelper##newFleaConfig() Exception = ", e);
             }
+        } finally {
+            IOUtils.close(input);
         }
 
         if (LOGGER.isDebugEnabled()) {
