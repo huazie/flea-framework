@@ -66,4 +66,11 @@ public class IOUtilsTest {
         File file = IOUtils.toFile(input, "E:\\flea-config.xml");
         LOGGER.debug("FILE : {}", file);
     }
+
+    @Test
+    public void testOtherFile() {
+        File file = new File("E:\\IMG.jpg");
+        String input = IOUtils.toString(file);
+        IOUtils.toFile(input, "D:\\IMG_1.jpg");
+    }
 }

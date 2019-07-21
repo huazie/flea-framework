@@ -11,6 +11,7 @@
 		<class>com.huazie.frame.core.base.cfgdata.entity.FleaJerseyI18nErrorMapping</class>
 		<class>com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResService</class>
 		<class>com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResClient</class>
+		<class>com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResource</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		
 		<properties>

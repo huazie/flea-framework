@@ -92,6 +92,7 @@
                 <entry key="fleajerseyi18nerrormapping" value="86400" />
                 <entry key="fleajerseyresservice" value="86400" />
                 <entry key="fleajerseyresclient" value="86400" />
+                <entry key="fleajerseyresource" value="86400" />
             </map>
         </property>
     </bean>
@@ -107,6 +108,7 @@
                 <entry key="fleajerseyi18nerrormapping" value="86400" />
                 <entry key="fleajerseyresservice" value="86400" />
                 <entry key="fleajerseyresclient" value="86400" />
+                <entry key="fleajerseyresource" value="86400" />
             </map>
         </property>
     </bean>

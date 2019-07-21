@@ -10,7 +10,7 @@ import com.huazie.frame.jersey.client.request.RequestConfig;
 import com.huazie.frame.jersey.client.request.RequestConfigEnum;
 import com.huazie.frame.jersey.client.request.RequestModeEnum;
 import com.huazie.frame.jersey.client.response.Response;
-import com.huazie.frame.jersey.common.client.config.FleaJerseyClientConfig;
+import com.huazie.frame.jersey.client.core.FleaJerseyClientConfig;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequestData;
 import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
@@ -291,9 +291,8 @@ public abstract class FleaRequest implements Request {
      */
     private static RequestPublicData createRequestPublicData(String resourceCode, String serviceCode) {
         RequestPublicData publicData = new RequestPublicData();
-        FleaJerseyClientConfig config = FleaJerseyClientConfig.getConfig();
-        publicData.setSystemUserId(config.getSystemUserId());
-        publicData.setSystemUserPassword(config.getSystemUserPwd());
+        publicData.setSystemUserId(FleaJerseyClientConfig.getSystemUserId());
+        publicData.setSystemUserPassword(FleaJerseyClientConfig.getSystemUserPwd());
         publicData.setResourceCode(resourceCode);
         publicData.setServiceCode(serviceCode);
         return publicData;

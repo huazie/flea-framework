@@ -52,6 +52,9 @@ public class IOUtils {
         if (ArrayUtils.isNotEmpty(bytes)) {
             input = encoder.encodeBuffer(bytes);
         }
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("IOUtils##toString(File) input : \n{}", input);
+        }
         return input;
     }
 
@@ -74,6 +77,9 @@ public class IOUtils {
             }
         } finally {
             close(inputStream);
+        }
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("IOUtils##toString(File) input : \n{}", input);
         }
         return input;
     }

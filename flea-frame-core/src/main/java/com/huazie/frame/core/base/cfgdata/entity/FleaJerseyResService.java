@@ -26,25 +26,25 @@ public class FleaJerseyResService implements FleaEntity {
 
     @Id
     @Column(name = "service_code", unique = true, nullable = false)
-    private String serviceCode;
+    private String serviceCode; // 服务编码
 
     @Column(name = "resource_code", nullable = false)
-    private String resourceCode;
+    private String resourceCode; // 资源编码
 
     @Column(name = "service_name", nullable = false)
-    private String serviceName;
+    private String serviceName; // 服务名称
 
     @Column(name = "service_interfaces", nullable = false)
-    private String serviceInterfaces;
+    private String serviceInterfaces; // 服务接口类
 
     @Column(name = "service_method", nullable = false)
-    private String serviceMethod;
+    private String serviceMethod; // 服务方法
 
     @Column(name = "service_input", nullable = false)
-    private String serviceInput;
+    private String serviceInput; // 服务入参类
 
     @Column(name = "service_output", nullable = false)
-    private String serviceOutput;
+    private String serviceOutput; // 服务出参类
 
     @Column(name = "state", nullable = false)
     private Integer state;     // 状态(0：删除 1：正常 ）

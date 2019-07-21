@@ -38,6 +38,7 @@ public class FleaJerseyResServiceDAOImpl extends FleaConfigDAOImpl<FleaJerseyRes
             query.equal(FleaEntityConstants.S_RESOURCE_CODE, resourceCode);
         }
 
+        // 查询在用状态的资源服务
         query.equal(FleaEntityConstants.S_STATE, EntityStateEnum.IN_USE.getValue());
 
         List<FleaJerseyResService> resServiceList = query.getResultList();

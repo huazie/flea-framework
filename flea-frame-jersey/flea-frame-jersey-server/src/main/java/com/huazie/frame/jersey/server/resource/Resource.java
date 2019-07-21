@@ -11,7 +11,7 @@ import com.huazie.frame.jersey.server.filter.FilterChainManager;
  * @version 1.0.0
  * @since 1.0.0
  */
-public abstract class FleaJerseyResource {
+public abstract class Resource {
 
     /**
      * <p> 处理资源数据 </p>

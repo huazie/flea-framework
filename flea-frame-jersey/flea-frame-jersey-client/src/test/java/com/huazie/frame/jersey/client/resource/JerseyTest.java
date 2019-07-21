@@ -1,11 +1,14 @@
 package com.huazie.frame.jersey.client.resource;
 
+import com.huazie.ffs.pojo.download.input.InputDownloadAuthInfo;
 import com.huazie.ffs.pojo.download.input.InputFileDownloadInfo;
+import com.huazie.ffs.pojo.download.output.OutputDownloadAuthInfo;
 import com.huazie.ffs.pojo.download.output.OutputFileDownloadInfo;
 import com.huazie.ffs.pojo.upload.input.InputUploadAuthInfo;
 import com.huazie.ffs.pojo.upload.output.OutputUploadAuthInfo;
 import com.huazie.frame.common.FleaFrameManager;
 import com.huazie.frame.common.i18n.FleaI18nHelper;
+import com.huazie.frame.common.util.IOUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.RandomCode;
 import com.huazie.frame.common.util.json.GsonUtils;
@@ -25,7 +28,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.ws.rs.core.MediaType;
-import java.io.InputStream;
 import java.util.Locale;
 
 /**
@@ -70,12 +72,12 @@ public class JerseyTest {
         try {
             String clientCode = "FLEA_CLIENT_DOWNLOAD_AUTH";
 
-            InputUploadAuthInfo uploadAuthInfo = new InputUploadAuthInfo();
-            uploadAuthInfo.setFileName("美丽的风景.png");
+            InputDownloadAuthInfo downloadAuthInfo = new InputDownloadAuthInfo();
+            downloadAuthInfo.setFileId("123123123123123123123");
 
             FleaJerseyClient client = applicationContext.getBean(FleaJerseyClient.class);
 
-            Response<OutputUploadAuthInfo> response = client.invoke(clientCode, uploadAuthInfo, OutputUploadAuthInfo.class);
+            Response<OutputDownloadAuthInfo> response = client.invoke(clientCode, downloadAuthInfo, OutputDownloadAuthInfo.class);
 
             LOGGER.debug("result = {}", response);
         } catch (Exception e) {
@@ -97,9 +99,10 @@ public class JerseyTest {
 
             if(ObjectUtils.isNotEmpty(response.getOutput())) {
                 String fileName = response.getOutput().getFileName();
-                InputStream inputStream = response.getOutput().getFileInputStream();
+                String fileInput = response.getOutput().getFileInput();
                 LOGGER.debug("FILE_NAME = {}", fileName);
-                LOGGER.debug("FILE = {}", inputStream);
+                LOGGER.debug("FILE = \n{}", fileInput);
+                IOUtils.toFile(fileInput, "E:\\" + fileName);
             }
 
         } catch (Exception e) {

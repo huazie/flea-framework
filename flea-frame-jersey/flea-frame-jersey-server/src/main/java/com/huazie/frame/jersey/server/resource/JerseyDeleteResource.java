@@ -1,34 +1,32 @@
 package com.huazie.frame.jersey.server.resource;
 
-import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 /**
- * <p> Flea Jersey Post Resource </p>
+ * <p> Jersey DELETE资源接口 </p>
  *
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0
  */
-public abstract class FleaJerseyPostResource extends FleaJerseyResource {
+public interface JerseyDeleteResource {
 
     /**
-     * <p> 处理POST资源数据 </p>
+     * <p> 处理DELETE资源数据 </p>
      *
-     * @param request 请求对象
+     * @param requestXml 请求XMl字符串
      * @return 响应对象
      * @since 1.0.0
      */
-    @POST
+    @DELETE
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({MediaType.APPLICATION_XML})
-    public FleaJerseyResponse doPostResource(FleaJerseyRequest request) {
-        return doResource(request);
-    }
+    FleaJerseyResponse doDeleteResource(@QueryParam("REQUEST") String requestXml);
 
 }
