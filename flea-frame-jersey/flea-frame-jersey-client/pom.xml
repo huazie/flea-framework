@@ -47,6 +47,7 @@
             <groupId>com.huazie.ffs</groupId>
             <artifactId>fleafs-pojo</artifactId>
             <version>1.0.0</version>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>

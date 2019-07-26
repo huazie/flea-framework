@@ -94,7 +94,7 @@ public class FleaParaDetailSVImplTest {
             AbstractFleaCache cache = manager.getCache("fleajerseyresservice");
             LOGGER.debug("Cache={}", cache);
 
-            cache.delete("FLEA_SERVICE_FILE_DOWNLOAD_download");
+            cache.delete("FLEA_SERVICE_UPLOAD_AUTH_upload");
 //            cache.clear();
             //#### 复杂配置参数
             Set<String> cacheKey = cache.getCacheKey();
