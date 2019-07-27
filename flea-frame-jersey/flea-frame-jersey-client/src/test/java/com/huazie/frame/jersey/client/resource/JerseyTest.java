@@ -7,6 +7,7 @@ import com.huazie.ffs.pojo.download.output.OutputFileDownloadInfo;
 import com.huazie.ffs.pojo.upload.input.InputUploadAuthInfo;
 import com.huazie.ffs.pojo.upload.output.OutputUploadAuthInfo;
 import com.huazie.frame.common.FleaFrameManager;
+import com.huazie.frame.common.IFleaUser;
 import com.huazie.frame.common.i18n.FleaI18nHelper;
 import com.huazie.frame.common.util.IOUtils;
 import com.huazie.frame.common.util.ObjectUtils;
@@ -16,6 +17,7 @@ import com.huazie.frame.common.util.xml.JABXUtils;
 import com.huazie.frame.jersey.client.core.FleaJerseyClient;
 import com.huazie.frame.jersey.client.request.RequestModeEnum;
 import com.huazie.frame.jersey.client.response.Response;
+import com.huazie.frame.jersey.common.FleaUserImpl;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequestData;
 import com.huazie.frame.jersey.common.data.RequestBusinessData;
@@ -47,6 +49,9 @@ public class JerseyTest {
     public void init() {
         applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
         LOGGER.debug("ApplicationContext={}", applicationContext);
+        IFleaUser fleaUser = new FleaUserImpl();
+        fleaUser.setAcctId(10000001L);
+        FleaFrameManager.getManager().setUserInfo(fleaUser);
     }
 
     @Test
@@ -97,7 +102,7 @@ public class JerseyTest {
 
             Response<OutputFileDownloadInfo> response = client.invoke(clientCode, input, OutputFileDownloadInfo.class);
 
-            if(ObjectUtils.isNotEmpty(response.getOutput())) {
+            if (ObjectUtils.isNotEmpty(response.getOutput())) {
                 String fileName = response.getOutput().getFileName();
                 String fileInput = response.getOutput().getFileInput();
                 LOGGER.debug("FILE_NAME = {}", fileName);
@@ -116,8 +121,8 @@ public class JerseyTest {
         FleaJerseyRequestData requestData = new FleaJerseyRequestData();
 
         RequestPublicData publicData = new RequestPublicData();
-        publicData.setSystemUserId("1000");
-        publicData.setSystemUserPassword("asd123");
+        publicData.setSystemAccountId("1000");
+        publicData.setSystemAccountPassword("asd123");
         publicData.setResourceCode("upload");
         publicData.setServiceCode("FLEA_SERVICE_UPLOAD_AUTH");
 

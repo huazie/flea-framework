@@ -137,6 +137,9 @@ public abstract class FleaRequest implements Request {
         WebTarget target = ClientBuilder.newClient().target(resourceUrl).path(resourceCode);
 
         FleaJerseyRequest request = createFleaJerseyRequest(resourceCode, serviceCode, input);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("FleaRequest##doRequest(Class<T>) FleaJerseyRequest = \n{}", JABXUtils.toXml(request, true));
+        }
 
         FleaJerseyResponse response = request(target, request);
 
@@ -291,8 +294,12 @@ public abstract class FleaRequest implements Request {
      */
     private static RequestPublicData createRequestPublicData(String resourceCode, String serviceCode) {
         RequestPublicData publicData = new RequestPublicData();
-        publicData.setSystemUserId(FleaJerseyClientConfig.getSystemUserId());
-        publicData.setSystemUserPassword(FleaJerseyClientConfig.getSystemUserPwd());
+        // 当前客户端的系统账户编号
+        publicData.setSystemAccountId(FleaJerseyClientConfig.getSystemAcctId());
+        // 当前客户端的系统账户密码
+        publicData.setSystemAccountPassword(FleaJerseyClientConfig.getSystemAcctPwd());
+        // 当前操作的账户编号
+        publicData.setAccountId(FleaJerseyClientConfig.getAcctId());
         publicData.setResourceCode(resourceCode);
         publicData.setServiceCode(serviceCode);
         return publicData;

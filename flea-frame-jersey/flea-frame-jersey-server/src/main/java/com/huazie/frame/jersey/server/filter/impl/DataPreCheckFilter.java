@@ -69,16 +69,22 @@ public class DataPreCheckFilter implements IFleaJerseyFilter {
             throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000004");
         }
 
-        String systemUserId = requestPublicData.getSystemUserId();
-        if (StringUtils.isBlank(systemUserId)) {
+        String systemAcctId = requestPublicData.getSystemAccountId();
+        if (StringUtils.isBlank(systemAcctId)) {
             // 请求公共报文入参【{0}】不能为空
-            throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000006", FleaJerseyConstants.RequestPublicDataConstants.SYSTEM_USER_ID);
+            throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000006", FleaJerseyConstants.RequestPublicDataConstants.SYSTEM_ACCT_ID);
         }
 
-        String systemUserPwd = requestPublicData.getSystemUserPassword();
-        if (StringUtils.isBlank(systemUserPwd)) {
+        String systemAcctPwd = requestPublicData.getSystemAccountPassword();
+        if (StringUtils.isBlank(systemAcctPwd)) {
             // 请求公共报文入参【{0}】不能为空
-            throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000006", FleaJerseyConstants.RequestPublicDataConstants.SYSTEM_USER_PWD);
+            throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000006", FleaJerseyConstants.RequestPublicDataConstants.SYSTEM_ACCT_PWD);
+        }
+
+        String acctId = requestPublicData.getAccountId();
+        if (StringUtils.isBlank(acctId)) {
+            // 请求公共报文入参【{0}】不能为空
+            throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000006", FleaJerseyConstants.RequestPublicDataConstants.ACCT_ID);
         }
 
         String resourceCode = requestPublicData.getResourceCode();

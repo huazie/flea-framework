@@ -20,13 +20,13 @@ public interface FleaJerseyConstants {
          */
         String CONFIG_ITEMS_KEY = "flea-jersey-client";
         /**
-         * <p> 系统用户 </p>
+         * <p> 系统账户编号 </p>
          */
-        String CONFIG_ITEM_SYSTEM_USER_ID = "system_user_id";
+        String CONFIG_ITEM_SYSTEM_ACCT_ID = "system_acct_id";
         /**
-         * <p> 系统用户密码 </p>
+         * <p> 系统账户密码 </p>
          */
-        String CONFIG_ITEM_SYSTEM_USER_PWD = "system_user_pwd";
+        String CONFIG_ITEM_SYSTEM_ACCT_PWD = "system_acct_pwd";
     }
 
     /**
@@ -88,14 +88,19 @@ public interface FleaJerseyConstants {
      */
     interface RequestPublicDataConstants {
         /**
-         * <p> 系统用户编号 </p>
+         * <p> 系统账户编号 </p>
          */
-        String SYSTEM_USER_ID = "SYSTEM_USER_ID";
+        String SYSTEM_ACCT_ID = "SYSTEM_ACCT_ID";
 
         /**
-         * <p> 系统用户密码（加密） </p>
+         * <p> 系统账户密码（加密） </p>
          */
-        String SYSTEM_USER_PWD = "SYSTEM_USER_PASSWORD";
+        String SYSTEM_ACCT_PWD = "SYSTEM_ACCT_PWD";
+
+        /**
+         * <p> 账户编号 </p>
+         */
+        String ACCT_ID = "ACCT_ID";
 
         /**
          * <p> 资源编码 </p>

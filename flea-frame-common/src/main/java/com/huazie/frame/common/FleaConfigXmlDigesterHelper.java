@@ -116,13 +116,11 @@ public class FleaConfigXmlDigesterHelper {
 
                 digester.addSetNext("flea-config/config-items/config-item", "addConfigItem", ConfigItem.class.getName());
 
-
                 fleaConfig = (FleaConfig) digester.parse(input);
 
             }
 
         } catch (Exception e) {
-            // XML转化异常：
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("FleaConfigXmlDigesterHelper##newFleaConfig() Exception = ", e);
             }

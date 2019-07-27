@@ -1,6 +1,10 @@
 package com.huazie.frame.jersey.client.core;
 
 import com.huazie.frame.common.FleaConfigManager;
+import com.huazie.frame.common.FleaFrameManager;
+import com.huazie.frame.common.IFleaUser;
+import com.huazie.frame.common.util.ObjectUtils;
+import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.jersey.common.FleaJerseyConstants;
 
 /**
@@ -13,25 +17,39 @@ import com.huazie.frame.jersey.common.FleaJerseyConstants;
 public class FleaJerseyClientConfig {
 
     /**
-     * <p> 获取系统用户编号 </p>
+     * <p> 获取系统账户编号 </p>
      *
-     * @return 系统用户编号
+     * @return 系统账户编号
      * @since 1.0.0
      */
-    public static String getSystemUserId() {
+    public static String getSystemAcctId() {
         return FleaConfigManager.getConfigItemValue(FleaJerseyConstants.JerseyClientConstants.CONFIG_ITEMS_KEY,
-                FleaJerseyConstants.JerseyClientConstants.CONFIG_ITEM_SYSTEM_USER_ID);
+                FleaJerseyConstants.JerseyClientConstants.CONFIG_ITEM_SYSTEM_ACCT_ID);
     }
 
     /**
-     * <p> 获取系统用户密码 </p>
+     * <p> 获取系统账户密码 </p>
      *
-     * @return 系统用户密码
+     * @return 系统账户密码
      * @since 1.0.0
      */
-    public static String getSystemUserPwd() {
+    public static String getSystemAcctPwd() {
         return FleaConfigManager.getConfigItemValue(FleaJerseyConstants.JerseyClientConstants.CONFIG_ITEMS_KEY,
-                FleaJerseyConstants.JerseyClientConstants.CONFIG_ITEM_SYSTEM_USER_PWD);
+                FleaJerseyConstants.JerseyClientConstants.CONFIG_ITEM_SYSTEM_ACCT_PWD);
+    }
+
+    /**
+     * <p> 获取当前操作账户编号 </p>
+     *
+     * @return 当前操作账户编号
+     */
+    public static String getAcctId() {
+        String acctId = "";
+        IFleaUser fleaUser = FleaFrameManager.getManager().getUserInfo();
+        if (ObjectUtils.isNotEmpty(fleaUser)) {
+            acctId = StringUtils.valueOf(fleaUser.getAcctId());
+        }
+        return acctId;
     }
 
 }

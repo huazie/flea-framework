@@ -232,8 +232,7 @@ public class FleaJerseyFilterChain {
             jerseyFilters = new ArrayList<IFleaJerseyFilter>();
             for (Filter filter : filters) {
                 if (ObjectUtils.isNotEmpty(filter)) {
-                    String className = filter.getClazz();
-                    IFleaJerseyFilter jerseyFilter = (IFleaJerseyFilter) ReflectUtils.newInstance(className);
+                    IFleaJerseyFilter jerseyFilter = (IFleaJerseyFilter) ReflectUtils.newInstance(filter.getClazz());
                     if (ObjectUtils.isNotEmpty(jerseyFilter)) {
                         jerseyFilters.add(jerseyFilter);
                     }
@@ -256,8 +255,7 @@ public class FleaJerseyFilterChain {
             jerseyErrorFilters = new ArrayList<IFleaJerseyErrorFilter>();
             for (Filter filter : filters) {
                 if (ObjectUtils.isNotEmpty(filter)) {
-                    String className = filter.getClazz();
-                    IFleaJerseyErrorFilter jerseyErrorFilter = (IFleaJerseyErrorFilter) ReflectUtils.newInstance(className);
+                    IFleaJerseyErrorFilter jerseyErrorFilter = (IFleaJerseyErrorFilter) ReflectUtils.newInstance(filter.getClazz());
                     if (ObjectUtils.isNotEmpty(jerseyErrorFilter)) {
                         jerseyErrorFilters.add(jerseyErrorFilter);
                     }

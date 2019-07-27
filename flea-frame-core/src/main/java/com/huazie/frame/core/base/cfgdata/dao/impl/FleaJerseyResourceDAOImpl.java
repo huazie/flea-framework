@@ -81,7 +81,7 @@ public class FleaJerseyResourceDAOImpl extends FleaConfigDAOImpl<FleaJerseyResou
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FleaJerseyResourceDAOImpl##getResourcePackages() Resource Package List={}", resPackageList);
-            LOGGER.debug("FleaJerseyResourceDAOImpl##getResourcePackages() Resource Package Count={}", resPackageList.size());
+            LOGGER.debug("FleaJerseyResourceDAOImpl##getResourcePackages() Resource Package Count={}", resPackageList == null ? 0 : resourceList.size());
         }
 
         return resPackageList;

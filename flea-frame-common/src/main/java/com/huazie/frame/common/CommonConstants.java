@@ -145,4 +145,16 @@ public interface CommonConstants {
          */
         String FLEA_CONFIG_FILE_SYSTEM_KEY = "fleaframe.flea.config.filename";
     }
+
+    /**
+     * <p> Flea用户信息常量 </p>
+     *
+     * @since 1.0.0
+     */
+    interface FleaUserInfoConstants {
+        /**
+         * <p> 用户编号 </p>
+         */
+        String USER_ID = "USER_ID";
+    }
 }
