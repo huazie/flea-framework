@@ -20,11 +20,11 @@ import java.util.List;
  * @version 1.0.0
  * @since 1.0.0
  */
-@Service("fleaParaDetailSVImpl")
+@Service("fleaParaDetailSV")
 public class FleaParaDetailSVImpl extends AbstractFleaJPASVImpl<FleaParaDetail> implements IFleaParaDetailSV {
 
     @Autowired
-    @Qualifier("fleaParaDetailDAOImpl")
+    @Qualifier("fleaParaDetailDAO")
     private IFleaParaDetailDAO fleaParaDetailDao;
 
     @Override

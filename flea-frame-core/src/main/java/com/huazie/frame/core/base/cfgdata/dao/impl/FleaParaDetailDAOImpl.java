@@ -19,7 +19,7 @@ import java.util.List;
  * @version 1.0.0
  * @since 1.0.0
  */
-@Repository("fleaParaDetailDAOImpl")
+@Repository("fleaParaDetailDAO")
 public class FleaParaDetailDAOImpl extends FleaConfigDAOImpl<FleaParaDetail> implements IFleaParaDetailDAO {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(FleaParaDetailDAOImpl.class);
@@ -31,14 +31,14 @@ public class FleaParaDetailDAOImpl extends FleaConfigDAOImpl<FleaParaDetail> imp
         FleaJPAQuery query = getQuery(null);
 
         if (StringUtils.isNotBlank(paraType)) {
-            query.equal(FleaEntityConstants.FleaParaDetailConstants.S_PARA_TYPE, paraType);
+            query.equal(FleaEntityConstants.S_PARA_TYPE, paraType);
         }
 
         if (StringUtils.isNotBlank(paraCode)) {
-            query.equal(FleaEntityConstants.FleaParaDetailConstants.S_PARA_CODE, paraCode);
+            query.equal(FleaEntityConstants.S_PARA_CODE, paraCode);
         }
         // 查正常状态的数据
-        query.equal(FleaEntityConstants.FleaParaDetailConstants.S_PARA_STATE, EntityStateEnum.IN_USE.getValue());
+        query.equal(FleaEntityConstants.S_PARA_STATE, EntityStateEnum.IN_USE.getValue());
 
         List<FleaParaDetail> fleaParaDetailList = query.getResultList();
 

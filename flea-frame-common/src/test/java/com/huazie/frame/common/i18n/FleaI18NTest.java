@@ -39,7 +39,7 @@ public class FleaI18NTest {
     @Test
     public void nativeToUnicodeTest() {
         try {
-            System.out.println(UnicodeUtils.nativeToUnicode("你好，我是huazie"));
+            LOGGER.debug(UnicodeUtils.nativeToUnicode("你好，我是huazie"));
         } catch (Exception e) {
             LOGGER.error("Exception={}", e);
         }
@@ -48,7 +48,7 @@ public class FleaI18NTest {
     @Test
     public void unicodeToNativeTest() {
         try {
-            System.out.println(UnicodeUtils.unicodeToNative("\\u68\\u75\\u61\\u7a\\u69\\u65"));
+            LOGGER.debug(UnicodeUtils.unicodeToNative("\\u68\\u75\\u61\\u7a\\u69\\u65"));
         } catch (Exception e) {
             LOGGER.error("Exception={}", e);
         }
@@ -61,7 +61,7 @@ public class FleaI18NTest {
         try {
             StringUtils.replace(strBuilder, "{" + 0 + "}", "huazie");
             StringUtils.replace(strBuilder, "{" + 1 + "}", "china");
-            System.out.println(strBuilder.toString());
+            LOGGER.debug(strBuilder.toString());
         } catch (Exception e) {
             LOGGER.error("Exception={}", e);
         }

@@ -19,11 +19,14 @@ import java.io.Serializable;
 @XmlAccessorType(XmlAccessType.FIELD)
 public final class RequestPublicData implements Serializable {
 
-    @XmlElement(name = "SYSTEM_USER_ID")
-    private String systemUserId; // 系统用户编号
+    @XmlElement(name = "SYSTEM_ACCT_ID")
+    private String systemAccountId; // 系统账户编号
 
-    @XmlElement(name = "SYSTEM_USER_PASSWORD")
-    private String systemUserPassword; // 系统用户密码
+    @XmlElement(name = "SYSTEM_ACCT_PWD")
+    private String systemAccountPassword; // 系统账户密码
+
+    @XmlElement(name = "ACCT_ID")
+    private String accountId; // 账户编号
 
     @XmlElement(name = "RESOURCE_CODE")
     private String resourceCode; // 资源编码
@@ -31,20 +34,28 @@ public final class RequestPublicData implements Serializable {
     @XmlElement(name = "SERVICE_CODE")
     private String serviceCode; // 服务编码
 
-    public String getSystemUserId() {
-        return systemUserId;
+    public String getSystemAccountId() {
+        return systemAccountId;
     }
 
-    public void setSystemUserId(String systemUserId) {
-        this.systemUserId = systemUserId;
+    public void setSystemAccountId(String systemAccountId) {
+        this.systemAccountId = systemAccountId;
     }
 
-    public String getSystemUserPassword() {
-        return systemUserPassword;
+    public String getSystemAccountPassword() {
+        return systemAccountPassword;
     }
 
-    public void setSystemUserPassword(String systemUserPassword) {
-        this.systemUserPassword = systemUserPassword;
+    public void setSystemAccountPassword(String systemAccountPassword) {
+        this.systemAccountPassword = systemAccountPassword;
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
     }
 
     public String getResourceCode() {

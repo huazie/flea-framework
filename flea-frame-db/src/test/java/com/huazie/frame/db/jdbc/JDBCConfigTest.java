@@ -23,15 +23,15 @@ public class JDBCConfigTest {
 
     @Test
     public void testDBPrefix() {
-        FleaJDBCConfig.init(DBSystemEnum.MySQL.getName(), "fleamanagement");
-        LOGGER.debug(FleaFrameManager.getManager().getDBPrefix());
+        FleaJDBCConfig.init(DBSystemEnum.MySQL.getName(), "fleaconfig");
+        LOGGER.debug(FleaFrameManager.getManager().getDBConfigKey());
     }
 
     @Test
     public void testJDBCQuery1() {
-        FleaJDBCConfig.init(DBSystemEnum.MySQL.getName(), "fleamarket");
+        FleaJDBCConfig.init(DBSystemEnum.MySQL.getName(), "fleaconfig");
         try {
-            List<Map<String, Object>> results = FleaJDBCHelper.query("SELECT * FROM flea_user");
+            List<Map<String, Object>> results = FleaJDBCHelper.query("SELECT * FROM flea_jersey_i18n_error_mapping");
             Assert.assertNotNull(results);
             LOGGER.debug(results.toString());
         } catch (Exception e) {

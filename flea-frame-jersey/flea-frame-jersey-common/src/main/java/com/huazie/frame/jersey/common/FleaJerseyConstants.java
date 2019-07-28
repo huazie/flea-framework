@@ -10,6 +10,26 @@ package com.huazie.frame.jersey.common;
 public interface FleaJerseyConstants {
 
     /**
+     * <p> Jersey 客户端常量 </p>
+     *
+     * @since 1.0.0
+     */
+    interface JerseyClientConstants {
+        /**
+         * <p> Flea Jersey 客户端 配置项列表key </p>
+         */
+        String CONFIG_ITEMS_KEY = "flea-jersey-client";
+        /**
+         * <p> 系统账户编号 </p>
+         */
+        String CONFIG_ITEM_SYSTEM_ACCT_ID = "system_acct_id";
+        /**
+         * <p> 系统账户密码 </p>
+         */
+        String CONFIG_ITEM_SYSTEM_ACCT_PWD = "system_acct_pwd";
+    }
+
+    /**
      * <p> Jersey 过滤器常量 </p>
      *
      * @since 1.0.0
@@ -68,14 +88,19 @@ public interface FleaJerseyConstants {
      */
     interface RequestPublicDataConstants {
         /**
-         * <p> 系统用户编号 </p>
+         * <p> 系统账户编号 </p>
          */
-        String SYSTEM_USER_ID = "SYSTEM_USER_ID";
+        String SYSTEM_ACCT_ID = "SYSTEM_ACCT_ID";
 
         /**
-         * <p> 系统用户密码（加密） </p>
+         * <p> 系统账户密码（加密） </p>
          */
-        String SYSTEM_USER_PWD = "SYSTEM_USER_PASSWORD";
+        String SYSTEM_ACCT_PWD = "SYSTEM_ACCT_PWD";
+
+        /**
+         * <p> 账户编号 </p>
+         */
+        String ACCT_ID = "ACCT_ID";
 
         /**
          * <p> 资源编码 </p>

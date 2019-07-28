@@ -1,7 +1,11 @@
 package com.huazie.frame.db.jdbc.config;
 
+import com.huazie.frame.common.CommonConstants;
+import com.huazie.frame.common.FleaConfigManager;
 import com.huazie.frame.common.FleaFrameManager;
+import com.huazie.frame.common.config.ConfigItems;
 import com.huazie.frame.common.util.ArrayUtils;
+import com.huazie.frame.common.util.MapUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.PropertiesUtil;
 import com.huazie.frame.common.util.StringUtils;
@@ -33,23 +37,7 @@ public class FleaJDBCConfig {
 
     private static volatile FleaJDBCConfig config;
 
-    private static Map<String, FleaDBUnit> fleaDBUnits = new HashMap<String, FleaDBUnit>();
-
-    private static Properties prop;
-
-    static {
-        String fileName = "flea/db/flea-db-config.properties"; // 数据库配置文件名
-        if (StringUtils.isNotBlank(System.getProperty("fleaframe.db.jdbc.config.filename"))) {
-            fileName = StringUtils.trim(System.getProperty("fleaframe.db.jdbc.config.filename"));
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("JDBCConfig Use the specified flea-db-config.properties：{}", fileName);
-            }
-        }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("JDBCConfig Use the current flea-db-config.properties：{}", fileName);
-        }
-        prop = PropertiesUtil.getProperties(fileName);
-    }
+    private Map<String, FleaDBUnit> fleaDBUnits = new HashMap<String, FleaDBUnit>();
 
     private FleaJDBCConfig() {
     }
@@ -80,7 +68,7 @@ public class FleaJDBCConfig {
      * @since 1.0.0
      */
     public static void init(String mDatabase, String mName) {
-        FleaFrameManager.getManager().setDBPrefix(mDatabase, mName);
+        FleaFrameManager.getManager().setDBConfigKey(mDatabase, mName);
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("JDBCConfig##init(String, String) 关系数据库管理系统名：{}", mDatabase);
             LOGGER.debug("JDBCConfig##init(String, String) 数据库名或数据库用户：{}", mName);
@@ -96,15 +84,17 @@ public class FleaJDBCConfig {
     public Connection getConnection() {
         Connection conn = null;
         FleaDBUnit fleaDBUnit;
-        String dbPrefix = FleaFrameManager.getManager().getDBPrefix();
-        if (fleaDBUnits.isEmpty()) {
-            fleaDBUnit = getFleaDBUnit(dbPrefix);
-            fleaDBUnits.put(dbPrefix, fleaDBUnit);
+
+        String dbConfigKey = FleaFrameManager.getManager().getDBConfigKey();
+
+        if (MapUtils.isEmpty(fleaDBUnits)) {
+            fleaDBUnit = getFleaDBUnit(dbConfigKey);
+            fleaDBUnits.put(dbConfigKey, fleaDBUnit);
         } else {
-            fleaDBUnit = fleaDBUnits.get(dbPrefix);
-            if (null == fleaDBUnit) {
-                fleaDBUnit = getFleaDBUnit(dbPrefix);
-                fleaDBUnits.put(dbPrefix, fleaDBUnit);
+            fleaDBUnit = fleaDBUnits.get(dbConfigKey);
+            if (ObjectUtils.isEmpty(fleaDBUnit)) {
+                fleaDBUnit = getFleaDBUnit(dbConfigKey);
+                fleaDBUnits.put(dbConfigKey, fleaDBUnit);
             }
         }
 
@@ -116,6 +106,7 @@ public class FleaJDBCConfig {
             }
 
             if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("JDBCConfig##getConnection() 数据库配置键名：{}", dbConfigKey);
                 LOGGER.debug("JDBCConfig##getConnection() 数据库驱动名称：{}", fleaDBUnit.getDriver());
                 LOGGER.debug("JDBCConfig##getConnection() 数据库连接地址：{}", fleaDBUnit.getUrl());
                 LOGGER.debug("JDBCConfig##getConnection() 数据库登录用户：{}", fleaDBUnit.getUser());
@@ -131,25 +122,25 @@ public class FleaJDBCConfig {
     }
 
     /**
-     * <p> 读取指定前缀的数据库相关配置信息 </p>
+     * <p> 读取指定配置键的数据库相关配置信息 </p>
      *
-     * @param dbPrefix 数据库配置前缀标识
+     * @param dbConfigKey 数据库配置键
      * @return 数据库配置信息类对象
      * @since 1.0.0
      */
-    private FleaDBUnit getFleaDBUnit(String dbPrefix) {
+    private FleaDBUnit getFleaDBUnit(String dbConfigKey) {
         FleaDBUnit fDBUnit = null;
-        if (StringUtils.isNotBlank(dbPrefix)) {
+        if (StringUtils.isNotBlank(dbConfigKey)) {
             fDBUnit = new FleaDBUnit();
-            String[] strs = StringUtils.split(dbPrefix, DBConstants.SQLConstants.SQL_DOT);
-            if (ArrayUtils.isNotEmpty(strs) && strs.length == 2) {
-                fDBUnit.setDatabase(strs[0]);
-                fDBUnit.setName(strs[1]);
+            String[] dbConfigKeyArr = StringUtils.split(dbConfigKey, CommonConstants.SymbolConstants.HYPHEN);
+            if (ArrayUtils.isNotEmpty(dbConfigKeyArr) && CommonConstants.NumeralConstants.INT_TWO == dbConfigKeyArr.length) {
+                fDBUnit.setDatabase(dbConfigKeyArr[0]);
+                fDBUnit.setName(dbConfigKeyArr[1]);
             }
-            fDBUnit.setDriver(PropertiesUtil.getStringValue(prop, dbPrefix + DBConstants.SQLConstants.SQL_DOT + DBConstants.DBConfigConstants.DB_CONFIG_DRIVER));
-            fDBUnit.setUrl(PropertiesUtil.getStringValue(prop, dbPrefix + DBConstants.SQLConstants.SQL_DOT + DBConstants.DBConfigConstants.DB_CONFIG_URL));
-            fDBUnit.setUser(PropertiesUtil.getStringValue(prop, dbPrefix + DBConstants.SQLConstants.SQL_DOT + DBConstants.DBConfigConstants.DB_CONFIG_USER));
-            fDBUnit.setPassword(PropertiesUtil.getStringValue(prop, dbPrefix + DBConstants.SQLConstants.SQL_DOT + DBConstants.DBConfigConstants.DB_CONFIG_PASSWORD));
+            fDBUnit.setDriver(FleaConfigManager.getConfigItemValue(dbConfigKey, DBConstants.DBConfigConstants.DB_CONFIG_DRIVER));
+            fDBUnit.setUrl(FleaConfigManager.getConfigItemValue(dbConfigKey, DBConstants.DBConfigConstants.DB_CONFIG_URL));
+            fDBUnit.setUser(FleaConfigManager.getConfigItemValue(dbConfigKey, DBConstants.DBConfigConstants.DB_CONFIG_USER));
+            fDBUnit.setPassword(FleaConfigManager.getConfigItemValue(dbConfigKey, DBConstants.DBConfigConstants.DB_CONFIG_PASSWORD));
         }
 
         return fDBUnit;

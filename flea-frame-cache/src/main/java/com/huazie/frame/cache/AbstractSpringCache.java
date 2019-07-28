@@ -6,16 +6,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.cache.Cache;
 import org.springframework.cache.support.SimpleValueWrapper;
 
+import java.util.Set;
 import java.util.concurrent.Callable;
 
 /**
- * <p> 抽象缓存类，实现Spring的Cache </p>
+ * <p> 抽象Spring缓存类，实现Spring的Cache 和 自定义的 IFleaCache接口 </p>
  *
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0
  */
-public abstract class AbstractSpringCache implements Cache {
+public abstract class AbstractSpringCache implements Cache, IFleaCache {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(AbstractSpringCache.class);
 
@@ -108,4 +109,23 @@ public abstract class AbstractSpringCache implements Cache {
         return null;
     }
 
+    @Override
+    public Object get(String key) {
+        return fleaCache.get(key);
+    }
+
+    @Override
+    public void put(String key, Object value) {
+        fleaCache.put(key, value);
+    }
+
+    @Override
+    public void delete(String key) {
+        fleaCache.delete(key);
+    }
+
+    @Override
+    public Set<String> getCacheKey() {
+        return fleaCache.getCacheKey();
+    }
 }

@@ -9,11 +9,14 @@ import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyI18nErrorMapping;
 import com.huazie.frame.jersey.common.FleaJerseyConstants;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
+import com.huazie.frame.jersey.common.data.FleaJerseyResponseData;
 import com.huazie.frame.jersey.common.data.RequestPublicData;
 import com.huazie.frame.jersey.common.data.ResponsePublicData;
 import com.huazie.frame.jersey.server.filter.IFleaJerseyErrorFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * <p> 异常过滤器实现 </p>
@@ -33,7 +36,17 @@ public class ErrorFilter implements IFleaJerseyErrorFilter {
             LOGGER.debug("ErrorFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) Exception : ", throwable);
         }
 
-        ResponsePublicData responsePublicData = response.getResponseData().getPublicData();
+        FleaJerseyResponseData responseData = response.getResponseData();
+        if (ObjectUtils.isEmpty(responseData)) {
+            responseData = new FleaJerseyResponseData();
+            response.setResponseData(responseData);
+        }
+
+        ResponsePublicData responsePublicData = responseData.getPublicData();
+        if (ObjectUtils.isEmpty(responsePublicData)) {
+            responsePublicData = new ResponsePublicData();
+            responseData.setPublicData(responsePublicData);
+        }
 
         // 获取异常描述，并设置响应返回信息
         String errMsg = ObjectUtils.isEmpty(throwable.getCause()) ? throwable.getMessage() : throwable.getCause().getMessage();
@@ -65,7 +78,9 @@ public class ErrorFilter implements IFleaJerseyErrorFilter {
     private void dealCommonException(FleaJerseyRequest request, ResponsePublicData responsePublicData, String i18nKey, String errMsg) {
 
         try {
-            FleaConfigDataSpringBean fleaConfigDataSpringBean = request.getFleaConfigDataSpringBean();
+            // 获取Web应用上下文对象
+            WebApplicationContext webApplicationContext = ContextLoader.getCurrentWebApplicationContext();
+            FleaConfigDataSpringBean fleaConfigDataSpringBean = webApplicationContext.getBean(FleaConfigDataSpringBean.class);
 
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("ErrorFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) FleaConfigDataSpringBean = {}", fleaConfigDataSpringBean);

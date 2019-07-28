@@ -5,7 +5,7 @@ import com.huazie.frame.cache.AbstractSpringCacheManager;
 import com.huazie.frame.cache.redis.impl.RedisSpringCache;
 
 /**
- * <p>  </p>
+ * <p> Redis Spring缓存管理类 </p>
  *
  * @author huazie
  * @version 1.0.0

@@ -14,12 +14,10 @@ import com.whalin.MemCached.MemCachedClient;
  */
 public class MemCachedFleaCacheManager extends AbstractFleaCacheManager {
 
-    private static volatile MemCachedFleaCacheManager cacheManager;
-
     private MemCachedClient memCachedClient;   // Memcached客户端类
 
     /**
-     * <p> 新建一个MemCached客户端 </p>
+     * <p> 新建一个MemCached Flea缓存管理类 </p>
      *
      * @since 1.0.0
      */
@@ -29,18 +27,18 @@ public class MemCachedFleaCacheManager extends AbstractFleaCacheManager {
     }
 
     /**
-     * <p> 新建一个MemCached客户端 </p>
+     * <p> 新建一个MemCached Flea缓存管理类 </p>
      *
-     * @param memcachedClient MemCached客户端
+     * @param memCachedClient MemCached客户端
      * @since 1.0.0
      */
-    public MemCachedFleaCacheManager(MemCachedClient memcachedClient) {
-        this.memCachedClient = memcachedClient;
+    public MemCachedFleaCacheManager(MemCachedClient memCachedClient) {
+        this.memCachedClient = memCachedClient;
         initPool();
     }
 
     /**
-     * 初始化Memcached连接池
+     * 初始化MemCached连接池
      *
      * @since 1.0.0
      */

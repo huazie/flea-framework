@@ -106,8 +106,10 @@ public abstract class AbstractFleaCache implements IFleaCache {
         if (CollectionUtils.isEmpty(keySet)) {
             keySet = new HashSet<>();
         }
-        keySet.add(key);
-        putNativeValue(name, keySet, CommonConstants.NumeralConstants.ZERO);
+        if (!keySet.contains(key)) { // 只有其中不存在，才重新设置
+            keySet.add(key);
+            putNativeValue(name, keySet, CommonConstants.NumeralConstants.ZERO);
+        }
     }
 
     /**
