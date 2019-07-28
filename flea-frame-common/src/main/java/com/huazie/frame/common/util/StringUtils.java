@@ -46,6 +46,17 @@ public class StringUtils {
     }
 
     /**
+     * <p> 将对象值转换为字符串 </p>
+     *
+     * @param value 指定对象
+     * @return 对象值对应的字符串
+     * @since 1.0.0
+     */
+    public static String valueOf(Object value) {
+        return (value == null) ? "" : value.toString();
+    }
+
+    /**
      * <p> 将str字符串两边空格去掉 </p>
      *
      * @param value 待处理的字符串

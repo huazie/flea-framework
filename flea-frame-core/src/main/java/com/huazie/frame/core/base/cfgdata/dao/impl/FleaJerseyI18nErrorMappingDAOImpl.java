@@ -20,7 +20,7 @@ import java.util.List;
  * @version 1.0.0
  * @since 1.0.0
  */
-@Repository("fleaJerseyI18nErrorMappingDAOImpl")
+@Repository("i18nErrorMappingDAO")
 public class FleaJerseyI18nErrorMappingDAOImpl extends FleaConfigDAOImpl<FleaJerseyI18nErrorMapping> implements IFleaJerseyI18nErrorMappingDAO {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(FleaJerseyI18nErrorMappingDAOImpl.class);
@@ -30,7 +30,7 @@ public class FleaJerseyI18nErrorMappingDAOImpl extends FleaConfigDAOImpl<FleaJer
     public List<FleaJerseyI18nErrorMapping> getMappings(String resourceCode, String serviceCode) throws Exception {
         FleaJPAQuery query = initQuery(resourceCode, serviceCode);
 
-        query.equal(FleaEntityConstants.I18nErrorMappingConstants.S_STATE, EntityStateEnum.IN_USE.getValue());
+        query.equal(FleaEntityConstants.S_STATE, EntityStateEnum.IN_USE.getValue());
 
         List<FleaJerseyI18nErrorMapping> mappingList = query.getResultList();
 
@@ -49,10 +49,10 @@ public class FleaJerseyI18nErrorMappingDAOImpl extends FleaConfigDAOImpl<FleaJer
         FleaJPAQuery query = initQuery(resourceCode, serviceCode);
 
         if (StringUtils.isNotBlank(i18nCode)) {
-            query.equal(FleaEntityConstants.I18nErrorMappingConstants.S_I18N_CODE, i18nCode);
+            query.equal(FleaEntityConstants.S_I18N_CODE, i18nCode);
         }
 
-        query.equal(FleaEntityConstants.I18nErrorMappingConstants.S_STATE, EntityStateEnum.IN_USE.getValue());
+        query.equal(FleaEntityConstants.S_STATE, EntityStateEnum.IN_USE.getValue());
 
         List<FleaJerseyI18nErrorMapping> mappingList = query.getResultList();
 
@@ -82,11 +82,11 @@ public class FleaJerseyI18nErrorMappingDAOImpl extends FleaConfigDAOImpl<FleaJer
         FleaJPAQuery query = getQuery(null);
 
         if (StringUtils.isNotBlank(resourceCode)) {
-            query.equal(FleaEntityConstants.I18nErrorMappingConstants.S_RESOURCE_CODE, resourceCode);
+            query.equal(FleaEntityConstants.S_RESOURCE_CODE, resourceCode);
         }
 
         if (StringUtils.isNotBlank(serviceCode)) {
-            query.equal(FleaEntityConstants.I18nErrorMappingConstants.S_SERVICE_CODE, serviceCode);
+            query.equal(FleaEntityConstants.S_SERVICE_CODE, serviceCode);
         }
 
         return query;

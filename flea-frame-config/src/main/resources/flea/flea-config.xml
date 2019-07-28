@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<flea-config>
+    <config-items key="flea-jersey-client" desc="Flea Jersey 客户端配置">
+        <config-item key="system_acct_id" desc="系统账户编号">9999</config-item>
+        <config-item key="system_acct_pwd" desc="系统账户密码">E120EA280AA50693D5568D0071456460</config-item>
+    </config-items>
+
+    <config-items key="flea-i18n-config" desc="Flea国际化相关配置">
+        <config-item key="error" desc="error国际化资源特殊配置，指定路径和文件前缀，逗号分隔">flea/i18n,flea_i18n</config-item>
+    </config-items>
+
+    <config-items key="mysql-fleaconfig" desc="JDBC数据库配置【key=数据库系统-数据库或数据库用户】">
+        <config-item key="driver" desc="mysql数据库驱动名">com.mysql.jdbc.Driver</config-item>
+        <config-item key="url" desc="mysql数据库连接地址">jdbc:mysql://localhost:3306/fleaconfig?useUnicode=true&amp;characterEncoding=UTF-8</config-item>
+        <config-item key="user" desc="mysql数据库登录用户名">root</config-item>
+        <config-item key="password" desc="mysql数据库登录密码">root</config-item>
+    </config-items>
+
+    <config-items key="mysql-fleamarket" desc="JDBC数据库配置【key=数据库系统-数据库或数据库用户】">
+        <config-item key="driver" desc="mysql数据库驱动名">com.mysql.jdbc.Driver</config-item>
+        <config-item key="url" desc="mysql数据库连接地址">jdbc:mysql://localhost:3306/fleamarket?useUnicode=true&amp;characterEncoding=UTF-8</config-item>
+        <config-item key="user" desc="mysql数据库登录用户名">root</config-item>
+        <config-item key="password" desc="mysql数据库登录密码">root</config-item>
+    </config-items>
+
+    <config-items key="mysql-fleamanagement" desc="JDBC数据库配置【key=数据库系统-数据库或数据库用户】">
+        <config-item key="driver" desc="mysql数据库驱动名">com.mysql.jdbc.Driver</config-item>
+        <config-item key="url" desc="mysql数据库连接地址">jdbc:mysql://localhost:3306/fleamanagement?useUnicode=true&amp;characterEncoding=UTF-8</config-item>
+        <config-item key="user" desc="mysql数据库登录用户名">root</config-item>
+        <config-item key="password" desc="mysql数据库登录密码">root</config-item>
+    </config-items>
+
+</flea-config>

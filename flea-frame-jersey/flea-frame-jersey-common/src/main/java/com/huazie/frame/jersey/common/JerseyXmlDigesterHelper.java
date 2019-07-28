@@ -1,7 +1,7 @@
 package com.huazie.frame.jersey.common;
 
 import com.huazie.frame.common.util.ObjectUtils;
-import com.huazie.frame.common.util.ResourcesUtil;
+import com.huazie.frame.common.util.IOUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.jersey.common.exception.FleaJerseyFilterException;
 import com.huazie.frame.jersey.common.filter.config.After;
@@ -97,9 +97,11 @@ public class JerseyXmlDigesterHelper {
             LOGGER.debug("JerseyXmlDigesterHelper##newJerseyFilter() Start to parse the flea-jersey-filter.xml");
         }
 
+        InputStream input = null;
+
         try {
 
-            InputStream input = ResourcesUtil.getInputStreamFromClassPath(fileName);
+            input = IOUtils.getInputStreamFromClassPath(fileName);
             if (ObjectUtils.isEmpty(input)) {
                 // 该路径下【0】找不到指定配置文件
                 throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000001", fileName);
@@ -159,6 +161,8 @@ public class JerseyXmlDigesterHelper {
         } catch (Exception e) {
             // XML转化异常：
             throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000002", e);
+        } finally {
+            IOUtils.close(input);
         }
 
         if (LOGGER.isDebugEnabled()) {

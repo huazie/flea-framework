@@ -19,11 +19,11 @@ import java.util.List;
  * @version 1.0.0
  * @since 1.0.0
  */
-@Service("fleaJerseyI18nErrorMappingSVImpl")
+@Service("i18nErrorMappingSV")
 public class FleaJerseyI18nErrorMappingSVImpl extends AbstractFleaJPASVImpl<FleaJerseyI18nErrorMapping> implements IFleaJerseyI18nErrorMappingSV {
 
     @Autowired
-    @Qualifier("fleaJerseyI18nErrorMappingDAOImpl")
+    @Qualifier("i18nErrorMappingDAO")
     private IFleaJerseyI18nErrorMappingDAO fleaJerseyI18NErrorMappingDAO;
 
     @Override

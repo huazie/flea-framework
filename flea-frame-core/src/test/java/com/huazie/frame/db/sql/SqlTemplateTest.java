@@ -30,7 +30,7 @@ public class SqlTemplateTest {
         try {
             applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
             LOGGER.debug("ApplicationContext={}", applicationContext);
-            IFleaParaDetailSV sv = (IFleaParaDetailSV) applicationContext.getBean("fleaParaDetailSVImpl");
+            IFleaParaDetailSV sv = (IFleaParaDetailSV) applicationContext.getBean("fleaParaDetailSV");
             fleaParaDetail = sv.getParaDetail("FLEAER_CERT_TYPE", "1");
             LOGGER.debug("FleaParaDetail={}", fleaParaDetail);
         } catch (Exception e) {

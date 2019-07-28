@@ -9,11 +9,9 @@ import com.huazie.frame.cache.common.CacheEnum;
 import com.huazie.frame.cache.memcached.MemCachedSpringCacheManager;
 import com.huazie.frame.cache.redis.RedisSpringCacheManager;
 import com.huazie.frame.common.FleaFrameManager;
-import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaParaDetailSV;
 import com.huazie.frame.core.common.EntityStateEnum;
-import com.huazie.frame.core.common.FleaEntityConstants;
 import com.huazie.frame.db.common.DBSystemEnum;
 import com.huazie.frame.db.jdbc.FleaJDBCHelper;
 import com.huazie.frame.db.jdbc.config.FleaJDBCConfig;
@@ -25,7 +23,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.sql.Time;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -45,13 +42,13 @@ public class FleaParaDetailSVImplTest {
 
     @Test
     public void getParaDetailById() throws Exception {
-        IFleaParaDetailSV sv = (IFleaParaDetailSV) applicationContext.getBean("fleaParaDetailSVImpl");
+        IFleaParaDetailSV sv = (IFleaParaDetailSV) applicationContext.getBean("fleaParaDetailSV");
         LOGGER.debug(sv.query(2L).toString());
     }
 
     @Test
     public void getParaDetails() {
-        IFleaParaDetailSV sv = (IFleaParaDetailSV) applicationContext.getBean("fleaParaDetailSVImpl");
+        IFleaParaDetailSV sv = (IFleaParaDetailSV) applicationContext.getBean("fleaParaDetailSV");
         try {
             sv.getParaDetails("FLEA_RES_STATE", "");
         } catch (Exception e) {
@@ -61,7 +58,7 @@ public class FleaParaDetailSVImplTest {
 
     @Test
     public void getParaDetail() {
-        IFleaParaDetailSV sv = (IFleaParaDetailSV) applicationContext.getBean("fleaParaDetailSVImpl");
+        IFleaParaDetailSV sv = (IFleaParaDetailSV) applicationContext.getBean("fleaParaDetailSV");
         try {
             sv.getParaDetail("FLEAER_CERT_TYPE", "1");
         } catch (Exception e) {
@@ -94,15 +91,15 @@ public class FleaParaDetailSVImplTest {
         try {
             AbstractFleaCacheManager manager = FleaCacheManagerFactory.getFleaCacheManager(CacheEnum.Redis.getName());
             LOGGER.debug("RedisCacheManager={}", manager);
-            AbstractFleaCache cache = manager.getCache("fleajerseyi18nerrormapping");
+            AbstractFleaCache cache = manager.getCache("fleajerseyresservice");
             LOGGER.debug("Cache={}", cache);
 
-            cache.delete("jersey-filter-resource_jersey-filter-service");
-
+            cache.delete("FLEA_SERVICE_UPLOAD_AUTH_upload");
+//            cache.clear();
             //#### 复杂配置参数
             Set<String> cacheKey = cache.getCacheKey();
             LOGGER.debug("CacheKey = {}", cacheKey);
-//            cache.get("FLEA_RES_STATE");
+//            cache.get("FLEA_CLIENT_UPLOAD_AUTH");
 //            cache.get("FLEAER_CERT_TYPE_1");
 //            cache.delete("FLEA_RES_STATE");
 
@@ -122,6 +119,10 @@ public class FleaParaDetailSVImplTest {
             AbstractSpringCache cache = manager.getCache("fleaparadetail");
             LOGGER.debug("Cache={}", cache);
 
+            Set<String> cacheKey = cache.getCacheKey();
+            LOGGER.debug("CacheKey = {}", cacheKey);
+
+//            cache.clear();
             //#### 复杂配置参数
 //            cache.get("FLEA_RES_STATE");
 //            cache.get("FLEAER_CERT_TYPE_1");
@@ -187,7 +188,7 @@ public class FleaParaDetailSVImplTest {
     @Test
     public void testFleaJPAQuery() {
         FleaFrameManager.getManager().setLocale(Locale.US);
-        IFleaParaDetailSV sv = (IFleaParaDetailSV) applicationContext.getBean("fleaParaDetailSVImpl");
+        IFleaParaDetailSV sv = (IFleaParaDetailSV) applicationContext.getBean("fleaParaDetailSV");
         try {
             FleaParaDetail fleaParaDetail = sv.query(2L);
             LOGGER.debug("row:{}", fleaParaDetail);
@@ -203,7 +204,7 @@ public class FleaParaDetailSVImplTest {
     @Test
     public void testFleaJPASqlTemplateQuery() {
         FleaFrameManager.getManager().setLocale(Locale.US);
-        IFleaParaDetailSV sv = (IFleaParaDetailSV) applicationContext.getBean("fleaParaDetailSVImpl");
+        IFleaParaDetailSV sv = (IFleaParaDetailSV) applicationContext.getBean("fleaParaDetailSV");
         FleaParaDetail fleaParaDetail = new FleaParaDetail();
         fleaParaDetail.setParaType("huazie");
         fleaParaDetail.setParaCode("huazie");
@@ -219,7 +220,7 @@ public class FleaParaDetailSVImplTest {
     @Test
     public void testFleaJPASqlTemplateInsert() {
         FleaFrameManager.getManager().setLocale(Locale.US);
-        IFleaParaDetailSV sv = (IFleaParaDetailSV) applicationContext.getBean("fleaParaDetailSVImpl");
+        IFleaParaDetailSV sv = (IFleaParaDetailSV) applicationContext.getBean("fleaParaDetailSV");
         FleaParaDetail fleaParaDetail = new FleaParaDetail();
         fleaParaDetail.setParaId(13L);
         fleaParaDetail.setParaType("huazie");
@@ -239,7 +240,7 @@ public class FleaParaDetailSVImplTest {
     @Test
     public void testFleaJPASqlTemplateUpdate() {
         FleaFrameManager.getManager().setLocale(Locale.US);
-        IFleaParaDetailSV sv = (IFleaParaDetailSV) applicationContext.getBean("fleaParaDetailSVImpl");
+        IFleaParaDetailSV sv = (IFleaParaDetailSV) applicationContext.getBean("fleaParaDetailSV");
         FleaParaDetail fleaParaDetail = new FleaParaDetail();
         fleaParaDetail.setParaId(13L);
         fleaParaDetail.setParaType("huazie1");
@@ -255,7 +256,7 @@ public class FleaParaDetailSVImplTest {
     @Test
     public void testFleaJPASqlTemplateDelete() {
         FleaFrameManager.getManager().setLocale(Locale.US);
-        IFleaParaDetailSV sv = (IFleaParaDetailSV) applicationContext.getBean("fleaParaDetailSVImpl");
+        IFleaParaDetailSV sv = (IFleaParaDetailSV) applicationContext.getBean("fleaParaDetailSV");
         FleaParaDetail fleaParaDetail = new FleaParaDetail();
         fleaParaDetail.setParaId(13L);
         fleaParaDetail.setParaState(EntityStateEnum.IN_USE.getValue());

@@ -17,12 +17,33 @@ public class MemCachedSpringCacheManager extends AbstractSpringCacheManager {
     private MemCachedClient memCachedClient;   // Memcached客户端类
 
     /**
-     * <p> 新建一个MemCached客户端 </p>
+     * <p> 新建一个MemCached Spring缓存管理类 </p>
      *
      * @since 1.0.0
      */
     public MemCachedSpringCacheManager() {
         memCachedClient = new MemCachedClient();
+        initPool();
+    }
+
+    /**
+     * <p> 新建一个MemCached Spring缓存管理类 </p>
+     *
+     * @param memCachedClient MemCached客户端
+     */
+    public MemCachedSpringCacheManager(MemCachedClient memCachedClient) {
+        this.memCachedClient = memCachedClient;
+        initPool();
+    }
+
+    /**
+     * 初始化MemCached连接池
+     *
+     * @since 1.0.0
+     */
+    private void initPool() {
+        MemCachedPool pool = MemCachedPool.getInstance();
+        pool.initialize();
     }
 
     @Override

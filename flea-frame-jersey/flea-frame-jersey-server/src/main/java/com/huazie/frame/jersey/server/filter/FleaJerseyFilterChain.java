@@ -4,6 +4,7 @@ import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.ReflectUtils;
 import com.huazie.frame.common.util.StringUtils;
+import com.huazie.frame.common.util.xml.JABXUtils;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
 import com.huazie.frame.jersey.common.filter.config.Filter;
@@ -33,7 +34,7 @@ public class FleaJerseyFilterChain {
 
     private List<IFleaJerseyErrorFilter> errorFilters; // 异常过滤器链
 
-    private StringBuilder doFilterStep; // 过滤器执行顺序
+    private static ThreadLocal<StringBuilder> sDoFilterStep = new ThreadLocal<StringBuilder>(); // 过滤器执行顺序
 
     public FleaJerseyFilterChain() {
         initFilterChain();
@@ -64,19 +65,45 @@ public class FleaJerseyFilterChain {
      * <p> 执行过滤器 </p>
      *
      * @param request 请求对象
-     * @throws Exception
      * @since 1.0.0
      */
     public FleaJerseyResponse doFilter(FleaJerseyRequest request) {
+        return doFilter(request, null);
+    }
+
+    /**
+     * <p> 执行过滤器 </p>
+     *
+     * @param requestXml 请求XML字符串
+     * @since 1.0.0
+     */
+    public FleaJerseyResponse doFilter(String requestXml) {
         FleaJerseyResponse response = new FleaJerseyResponse();
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("FleaJerseyFilterChain##doFilter(String) RequestXml = {}", requestXml);
+        }
         try {
+            FleaJerseyRequest request = JABXUtils.fromXml(requestXml, FleaJerseyRequest.class);
+            response = doFilter(request, response);
+        } catch (Exception e) {
+            // 执行异常过滤器
+            doErrorFilter(null, response, e);
+        }
+        return response;
+    }
 
-            if (ObjectUtils.isEmpty(doFilterStep)) {
-                doFilterStep = new StringBuilder();
-            }
-            // 清空过滤步骤展示的内容
-            StringUtils.clear(doFilterStep);
-
+    /**
+     * <p> 执行过滤器 </p>
+     *
+     * @param request  请求对象
+     * @param response 响应对象
+     * @since 1.0.0
+     */
+    private FleaJerseyResponse doFilter(FleaJerseyRequest request, FleaJerseyResponse response) {
+        if (ObjectUtils.isEmpty(response)) {
+            response = new FleaJerseyResponse();
+        }
+        try {
             // 执行前置过滤器
             doBeforeFilter(request, response);
 
@@ -91,7 +118,7 @@ public class FleaJerseyFilterChain {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJerseyFilterChain##doFilter(FleaJerseyRequest) Filter = {}", doFilterStep);
+            LOGGER.debug("FleaJerseyFilterChain##doFilter(FleaJerseyRequest, FleaJerseyResponse) Filter = {}", sDoFilterStep.get());
         }
 
         return response;
@@ -105,7 +132,7 @@ public class FleaJerseyFilterChain {
      * @throws Exception
      * @since 1.0.0
      */
-    public void doBeforeFilter(FleaJerseyRequest request, FleaJerseyResponse response) throws Exception {
+    private void doBeforeFilter(FleaJerseyRequest request, FleaJerseyResponse response) throws Exception {
         doFilter(beforeFilters, request, response);
     }
 
@@ -173,17 +200,23 @@ public class FleaJerseyFilterChain {
     }
 
     /**
-     * <p> 添加过滤步骤 </p>
+     * <p> 添加过滤器执行顺序 </p>
      *
      * @param filterName 过滤器全类名
      * @since 1.0.0
      */
     private void addStep(String filterName) {
+        // 从线程变量中获取 过滤器执行顺序
+        StringBuilder doFilterStep = sDoFilterStep.get();
+        if (ObjectUtils.isEmpty(doFilterStep)) {
+            doFilterStep = new StringBuilder();
+        }
         if (StringUtils.isBlank(doFilterStep.toString())) {
             doFilterStep.append(filterName);
         } else {
             doFilterStep.append(" -> ").append(filterName);
         }
+        sDoFilterStep.set(doFilterStep);
     }
 
     /**
@@ -199,8 +232,7 @@ public class FleaJerseyFilterChain {
             jerseyFilters = new ArrayList<IFleaJerseyFilter>();
             for (Filter filter : filters) {
                 if (ObjectUtils.isNotEmpty(filter)) {
-                    String className = filter.getClazz();
-                    IFleaJerseyFilter jerseyFilter = (IFleaJerseyFilter) ReflectUtils.newInstance(className);
+                    IFleaJerseyFilter jerseyFilter = (IFleaJerseyFilter) ReflectUtils.newInstance(filter.getClazz());
                     if (ObjectUtils.isNotEmpty(jerseyFilter)) {
                         jerseyFilters.add(jerseyFilter);
                     }
@@ -223,8 +255,7 @@ public class FleaJerseyFilterChain {
             jerseyErrorFilters = new ArrayList<IFleaJerseyErrorFilter>();
             for (Filter filter : filters) {
                 if (ObjectUtils.isNotEmpty(filter)) {
-                    String className = filter.getClazz();
-                    IFleaJerseyErrorFilter jerseyErrorFilter = (IFleaJerseyErrorFilter) ReflectUtils.newInstance(className);
+                    IFleaJerseyErrorFilter jerseyErrorFilter = (IFleaJerseyErrorFilter) ReflectUtils.newInstance(filter.getClazz());
                     if (ObjectUtils.isNotEmpty(jerseyErrorFilter)) {
                         jerseyErrorFilters.add(jerseyErrorFilter);
                     }

@@ -85,23 +85,25 @@ public interface CommonConstants {
          * <p> 冒号 </p>
          */
         String COLON = ":";
+        /**
+         * <p> 星号 </p>
+         */
+        String ASTERISK = "*";
     }
 
     /**
-     * <p>Flea I18N 常量</p>
+     * <p> Flea I18N 常量 </p>
      *
      * @since 1.0.0
      */
     interface FleaI18NConstants {
         String FLEA_I18N_FILE_PATH = "flea/i18n/";
         String FLEA_I18N_FILE_NAME_PREFIX = "flea_i18n";
-        String FLEA_I18N_CONFIG_FILE_NAME = "flea/i18n/flea_i18n_config.properties";
-        String FLEA_I18N_CONFIG_KEY_FILE_NAME_PREFIX = "file_name_prefix";
-        String FLEA_I18N_CONFIG_KEY_FILE_PATH = "file_path";
+        String FLEA_I18N_CONFIG_ITEMS_KEY = "flea-i18n-config";
     }
 
     /**
-     * <p>IP地址常量</p>
+     * <p> IP地址常量 </p>
      *
      * @since 1.0.0
      */
@@ -126,5 +128,33 @@ public interface CommonConstants {
          * <p>互联网服务提供商</p>
          */
         String ISP = "isp";
+    }
+
+    /**
+     * <p> Flea Config 常量 </p>
+     *
+     * @since 1.0.0
+     */
+    interface FleaConfigConstants {
+        /**
+         * <p> Flea Config 默认文件路径 </p>
+         */
+        String FLEA_CONFIG_FILE_NAME = "flea/flea-config.xml";
+        /**
+         * <p> Flea Config 系统环境变量 </p>
+         */
+        String FLEA_CONFIG_FILE_SYSTEM_KEY = "fleaframe.flea.config.filename";
+    }
+
+    /**
+     * <p> Flea用户信息常量 </p>
+     *
+     * @since 1.0.0
+     */
+    interface FleaUserInfoConstants {
+        /**
+         * <p> 用户编号 </p>
+         */
+        String USER_ID = "USER_ID";
     }
 }

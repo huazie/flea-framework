@@ -1,6 +1,5 @@
 package com.huazie.frame.jersey.common.data;
 
-import com.huazie.frame.core.base.cfgdata.bean.FleaConfigDataSpringBean;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -22,22 +21,12 @@ public class FleaJerseyRequest {
     @XmlElement(name = "REQUEST")
     private FleaJerseyRequestData requestData;
 
-    private FleaConfigDataSpringBean fleaConfigDataSpringBean; // Flea Config 配置数据Bean
-
     public FleaJerseyRequestData getRequestData() {
         return requestData;
     }
 
     public void setRequestData(FleaJerseyRequestData requestData) {
         this.requestData = requestData;
-    }
-
-    public FleaConfigDataSpringBean getFleaConfigDataSpringBean() {
-        return fleaConfigDataSpringBean;
-    }
-
-    public void setFleaConfigDataSpringBean(FleaConfigDataSpringBean fleaConfigDataSpringBean) {
-        this.fleaConfigDataSpringBean = fleaConfigDataSpringBean;
     }
 
     @Override

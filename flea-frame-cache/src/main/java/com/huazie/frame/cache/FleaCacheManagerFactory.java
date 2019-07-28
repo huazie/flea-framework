@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * <p> Flea Cache Manager </p>
+ * <p> Flea Cache Manager工厂类 </p>
  *
  * @author huazie
  * @version 1.0.0

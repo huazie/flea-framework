@@ -52,6 +52,16 @@ public final class ResponsePublicData implements Serializable {
         this.resultMess = resultMess;
     }
 
+    /**
+     * <p> 资源服务请求是否成功 </p>
+     *
+     * @return true ：成功, false : 失败
+     * @since 1.0.0
+     */
+    public boolean isSuccess() {
+        return FleaJerseyConstants.ResponseResultConstants.RESULT_CODE_SUCCESS.equals(resultCode);
+    }
+
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);

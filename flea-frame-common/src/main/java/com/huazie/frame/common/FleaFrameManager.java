@@ -20,6 +20,8 @@ public class FleaFrameManager {
 
     private static ThreadLocal<String> sDBLocal = new ThreadLocal<String>(); // 当前线程采用JDBC连的数据库前缀配置
 
+    private static ThreadLocal<IFleaUser> sFleaUser = new ThreadLocal<IFleaUser>(); // 当前用户信息
+
     private FleaFrameManager() {
     }
 
@@ -68,23 +70,46 @@ public class FleaFrameManager {
     }
 
     /**
-     * <p> 获取当前线程中使用JDBC连接的数据库配置前缀 </p>
+     * <p> 获取当前线程中使用JDBC连接的数据库配置键 </p>
      *
-     * @return 当前线程中使用JDBC连接的数据库配置前缀
+     * @return 当前线程中使用JDBC连接的数据库配置键
+     * @since 1.0.0
      */
-    public String getDBPrefix() {
+    public String getDBConfigKey() {
         return sDBLocal.get();
     }
 
     /**
-     * <p> 设置当前线程中使用JDBC连接的数据库配置前缀 </p>
+     * <p> 设置当前线程中使用JDBC连接的数据库配置键 </p>
      *
      * @param dbSysName 数据库系统名
      * @param dbName    数据库名
+     * @since 1.0.0
      */
-    public void setDBPrefix(String dbSysName, String dbName) {
+    public void setDBConfigKey(String dbSysName, String dbName) {
         if (StringUtils.isNotBlank(dbSysName) && StringUtils.isNotBlank(dbName)) {
-            sDBLocal.set(dbSysName.toLowerCase() + CommonConstants.SymbolConstants.DOT + dbName.toLowerCase());
+            sDBLocal.set(dbSysName.toLowerCase() + CommonConstants.SymbolConstants.HYPHEN + dbName.toLowerCase());
+        }
+    }
+
+    /**
+     * <p> 获取当前线程的用户信息 </p>
+     *
+     * @return 用户信息
+     */
+    public IFleaUser getUserInfo() {
+        return sFleaUser.get();
+    }
+
+    /**
+     * <p> 设置当前线程的用户信息 </p>
+     *
+     * @param fleaUser 用户信息
+     * @since 1.0.0
+     */
+    public void setUserInfo(IFleaUser fleaUser) {
+        if (ObjectUtils.isNotEmpty(fleaUser)) {
+            sFleaUser.set(fleaUser);
         }
     }
 
