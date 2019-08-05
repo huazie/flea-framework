@@ -26,7 +26,6 @@ public class DeleteFleaRequest extends FleaRequest {
      * @since 1.0.0
      */
     public DeleteFleaRequest() {
-        super();
     }
 
     /**

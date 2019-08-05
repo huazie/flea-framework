@@ -27,7 +27,6 @@ public class PutFleaRequest extends FleaRequest {
      * @since 1.0.0
      */
     public PutFleaRequest() {
-        super();
     }
 
     /**

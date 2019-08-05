@@ -160,6 +160,10 @@ public abstract class FleaRequest implements Request {
             throw new FleaJerseyClientException("ERROR-JERSEY-CLIENT0000000006");
         }
 
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("FleaRequest##doRequest(Class<T>) FleaJerseyResponse = \n{}", JABXUtils.toXml(response, true));
+        }
+
         Response<T> responseResult = new Response<T>();
         T output = null;
 
