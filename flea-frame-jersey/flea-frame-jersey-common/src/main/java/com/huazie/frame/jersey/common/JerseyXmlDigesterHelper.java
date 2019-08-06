@@ -82,7 +82,7 @@ public class JerseyXmlDigesterHelper {
     }
 
     private Jersey newJerseyFilter() throws Exception {
-        Jersey jersey;
+        Jersey obj;
 
         String fileName = FleaJerseyConstants.JerseyFilterConstants.JSERSY_FILTER_FILE_PATH;
         if (StringUtils.isNotBlank(System.getProperty(FleaJerseyConstants.JerseyFilterConstants.JERSEY_FILTER_FILE_SYSTEM_KEY))) {
@@ -97,11 +97,8 @@ public class JerseyXmlDigesterHelper {
             LOGGER.debug("JerseyXmlDigesterHelper##newJerseyFilter() Start to parse the flea-jersey-filter.xml");
         }
 
-        InputStream input = null;
+        try (InputStream input = IOUtils.getInputStreamFromClassPath(fileName)) {
 
-        try {
-
-            input = IOUtils.getInputStreamFromClassPath(fileName);
             if (ObjectUtils.isEmpty(input)) {
                 // 该路径下【0】找不到指定配置文件
                 throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000001", fileName);
@@ -156,20 +153,18 @@ public class JerseyXmlDigesterHelper {
             digester.addSetNext("jersey/filterchain/error", "setError", Error.class.getName());
             digester.addSetNext("jersey/filterchain/error/filter", "addErrorFilter", Filter.class.getName());
 
-            jersey = (Jersey) digester.parse(input);
+            obj = (Jersey) digester.parse(input);
 
         } catch (Exception e) {
             // XML转化异常：
             throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000002", e);
-        } finally {
-            IOUtils.close(input);
         }
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("JerseyXmlDigesterHelper##newJerseyFilter() End to parse the flea-jersey-filter.xml");
         }
 
-        return jersey;
+        return obj;
     }
 
 }

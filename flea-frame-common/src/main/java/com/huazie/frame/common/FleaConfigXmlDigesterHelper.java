@@ -77,7 +77,7 @@ public class FleaConfigXmlDigesterHelper {
     }
 
     private FleaConfig newFleaConfig() {
-        FleaConfig fleaConfig = null;
+        FleaConfig obj = null;
 
         String fileName = CommonConstants.FleaConfigConstants.FLEA_CONFIG_FILE_NAME;
         if (StringUtils.isNotBlank(System.getProperty(CommonConstants.FleaConfigConstants.FLEA_CONFIG_FILE_SYSTEM_KEY))) {
@@ -92,11 +92,8 @@ public class FleaConfigXmlDigesterHelper {
             LOGGER.debug("FleaConfigXmlDigesterHelper##newFleaConfig() Start to parse the flea-config.xml");
         }
 
-        InputStream input = null;
+        try (InputStream input = IOUtils.getInputStreamFromClassPath(fileName)) {
 
-        try {
-
-            input = IOUtils.getInputStreamFromClassPath(fileName);
             if (ObjectUtils.isNotEmpty(input)) {
 
                 Digester digester = new Digester();
@@ -116,7 +113,7 @@ public class FleaConfigXmlDigesterHelper {
 
                 digester.addSetNext("flea-config/config-items/config-item", "addConfigItem", ConfigItem.class.getName());
 
-                fleaConfig = (FleaConfig) digester.parse(input);
+                obj = (FleaConfig) digester.parse(input);
 
             }
 
@@ -124,16 +121,14 @@ public class FleaConfigXmlDigesterHelper {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("FleaConfigXmlDigesterHelper##newFleaConfig() Exception = ", e);
             }
-        } finally {
-            IOUtils.close(input);
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("JerseyXmlDigesterHelper##newFleaConfig() Config = {}", fleaConfig);
+            LOGGER.debug("JerseyXmlDigesterHelper##newFleaConfig() Config = {}", obj);
             LOGGER.debug("JerseyXmlDigesterHelper##newFleaConfig() End to parse the flea-config.xml");
         }
 
-        return fleaConfig;
+        return obj;
     }
 
 

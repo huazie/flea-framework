@@ -10,8 +10,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 
 /**
  * <p> JAVA输入和输出处理工具类 </p>
@@ -67,16 +67,12 @@ public class IOUtils {
      */
     public static String toString(File file) {
         String input = "";
-        InputStream inputStream = null;
-        try {
-            inputStream = new FileInputStream(file);
+        try (InputStream inputStream = new FileInputStream(file)) {
             input = toString(inputStream);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("文件转字符串出现异常：", e);
             }
-        } finally {
-            close(inputStream);
         }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("IOUtils##toString(File) input : \n{}", input);
@@ -92,19 +88,15 @@ public class IOUtils {
      * @since 1.0.0
      */
     public static File toFile(String input, String filePath) {
-        File file = null;
-        FileOutputStream outputStream = null;
-        try {
-            file = new File(filePath);
-            byte[] bytes = toByteArray(toInputStream(input));
-            outputStream = new FileOutputStream(file);
+        File file = new File(filePath);
+        try (InputStream inputStream = toInputStream(input);
+             FileOutputStream outputStream = new FileOutputStream(file)) {
+            byte[] bytes = toByteArray(inputStream);
             outputStream.write(bytes, 0, bytes.length);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("字符串转文件出现异常：", e);
             }
-        } finally {
-            close(outputStream);
         }
         return file;
     }
@@ -116,17 +108,9 @@ public class IOUtils {
      * @return 输入流对象
      * @since 1.0.0
      */
-    public static InputStream toInputStream(String input) {
-        InputStream inputStream = null;
-        try {
-            byte[] bytes = decoder.decodeBuffer(input);
-            inputStream = new ByteArrayInputStream(bytes);
-        } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("字符串转输入流出现异常：", e);
-            }
-        }
-        return inputStream;
+    public static InputStream toInputStream(String input) throws IOException {
+        byte[] bytes = decoder.decodeBuffer(input);
+        return new ByteArrayInputStream(bytes);
     }
 
     /**
@@ -140,10 +124,9 @@ public class IOUtils {
 
         byte[] result = null;
 
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        byte[] buffer = new byte[1024 * 8];
+        byte[] buffer = new byte[1024 << 8];
 
-        try {
+        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
             int n;
             while ((n = inputStream.read(buffer)) != -1) {
                 outputStream.write(buffer, 0, n);
@@ -153,48 +136,9 @@ public class IOUtils {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("输入流转字节数组出现异常：", e);
             }
-        } finally {
-            close(outputStream);
-            close(inputStream);
         }
 
         return result;
-    }
-
-    /**
-     * <p> 关闭输入流 </p>
-     *
-     * @param inputStream 输入流对象
-     * @since 1.0.0
-     */
-    public static void close(InputStream inputStream) {
-        if (ObjectUtils.isNotEmpty(inputStream)) {
-            try {
-                inputStream.close();
-            } catch (Exception e) {
-                if (LOGGER.isErrorEnabled()) {
-                    LOGGER.error("关闭输入流出现异常：", e);
-                }
-            }
-        }
-    }
-
-    /**
-     * <p> 关闭输出流 </p>
-     *
-     * @param outputStream 输出流
-     * @since 1.0.0
-     */
-    public static void close(OutputStream outputStream) {
-        if (ObjectUtils.isNotEmpty(outputStream)) {
-            try {
-                outputStream.close();
-            } catch (Exception e) {
-                if (LOGGER.isErrorEnabled()) {
-                    LOGGER.error("关闭输出流出现异常：", e);
-                }
-            }
-        }
     }
 
 }
