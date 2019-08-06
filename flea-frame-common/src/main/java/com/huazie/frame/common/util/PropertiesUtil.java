@@ -17,7 +17,7 @@ import java.util.Properties;
  */
 public class PropertiesUtil {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(PropertiesUtil.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PropertiesUtil.class);
 
     /**
      * <p> 获取指定配置文件对象 </p>

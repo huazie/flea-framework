@@ -19,7 +19,7 @@ import java.util.Set;
  */
 public abstract class AbstractFleaCache implements IFleaCache {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(AbstractFleaCache.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractFleaCache.class);
 
     private final String name;  // 缓存主要关键字（用于区分）
 

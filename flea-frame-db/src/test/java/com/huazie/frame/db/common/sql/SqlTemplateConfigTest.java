@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
  */
 public class SqlTemplateConfigTest {
 	
-	private final static Logger LOGGER = LoggerFactory.getLogger(SqlTemplateConfigTest.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(SqlTemplateConfigTest.class);
 
 	@Test
 	public void testSqlTemplate(){

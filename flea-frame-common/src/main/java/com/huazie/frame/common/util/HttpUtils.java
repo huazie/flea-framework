@@ -25,9 +25,9 @@ public class HttpUtils {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HttpUtils.class);
 
-    private final static String TAOBAO_IP_URL = "http://ip.taobao.com/service/getIpInfo.php?ip=";
+    private static final String TAOBAO_IP_URL = "http://ip.taobao.com/service/getIpInfo.php?ip=";
 
-    private final static String SINA_IP_URL = "http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js&ip=";
+    private static final String SINA_IP_URL = "http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js&ip=";
 
     /**
      * <p> 获取Http请求的客户端IP地址 </p>

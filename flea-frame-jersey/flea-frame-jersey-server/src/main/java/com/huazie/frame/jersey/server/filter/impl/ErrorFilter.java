@@ -27,7 +27,7 @@ import org.springframework.web.context.WebApplicationContext;
  */
 public class ErrorFilter implements IFleaJerseyErrorFilter {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(ErrorFilter.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ErrorFilter.class);
 
     @Override
     public void doFilter(FleaJerseyRequest request, FleaJerseyResponse response, Throwable throwable) {

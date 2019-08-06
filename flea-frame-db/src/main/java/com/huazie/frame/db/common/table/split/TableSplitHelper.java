@@ -27,7 +27,7 @@ import java.util.List;
  */
 public class TableSplitHelper {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(TableSplitHelper.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TableSplitHelper.class);
 
     /**
      * <p> 获取真实的表名，如是分表，则获取分表名 </p>

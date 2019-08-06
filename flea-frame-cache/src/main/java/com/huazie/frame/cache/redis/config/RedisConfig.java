@@ -28,7 +28,7 @@ import java.util.Properties;
  */
 public class RedisConfig {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(RedisConfig.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RedisConfig.class);
 
     private static volatile RedisConfig config;
 

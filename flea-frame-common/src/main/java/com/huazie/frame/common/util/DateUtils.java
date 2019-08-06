@@ -16,7 +16,7 @@ import java.util.Date;
  */
 public class DateUtils {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(DateUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DateUtils.class);
 
     /**
      * <p> 获取当前系统时间 </p>

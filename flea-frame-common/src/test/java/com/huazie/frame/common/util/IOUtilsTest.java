@@ -9,7 +9,7 @@ import java.io.InputStream;
 
 public class IOUtilsTest {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(IOUtilsTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(IOUtilsTest.class);
 
     @Test
     public void testToString() {

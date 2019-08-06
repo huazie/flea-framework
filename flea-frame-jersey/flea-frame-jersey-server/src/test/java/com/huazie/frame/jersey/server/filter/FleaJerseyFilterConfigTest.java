@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  */
 public class FleaJerseyFilterConfigTest {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(FleaJerseyFilterConfigTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FleaJerseyFilterConfigTest.class);
 
     @Test
     public void testJerseyFilter() {

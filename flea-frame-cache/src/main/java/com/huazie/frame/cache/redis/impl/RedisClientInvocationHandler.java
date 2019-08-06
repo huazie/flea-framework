@@ -19,7 +19,7 @@ import java.lang.reflect.Method;
  */
 public class RedisClientInvocationHandler extends FleaInvocationHandler {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(RedisClientInvocationHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RedisClientInvocationHandler.class);
 
     public RedisClientInvocationHandler(Object proxyObject) {
         super(proxyObject);

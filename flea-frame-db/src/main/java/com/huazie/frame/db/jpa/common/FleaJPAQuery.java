@@ -39,7 +39,7 @@ public final class FleaJPAQuery implements Serializable {
 
     private static final long serialVersionUID = -4272805743956204878L;
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(FleaJPAQuery.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FleaJPAQuery.class);
 
     private static volatile FleaJPAQuery query;
 

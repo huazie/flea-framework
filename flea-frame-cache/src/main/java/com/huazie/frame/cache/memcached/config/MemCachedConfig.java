@@ -23,7 +23,7 @@ import java.util.Properties;
  */
 public class MemCachedConfig {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(MemCachedConfig.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MemCachedConfig.class);
 
     private static volatile MemCachedConfig config;
 

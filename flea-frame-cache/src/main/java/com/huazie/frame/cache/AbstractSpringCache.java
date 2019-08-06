@@ -18,7 +18,7 @@ import java.util.concurrent.Callable;
  */
 public abstract class AbstractSpringCache implements Cache, IFleaCache {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(AbstractSpringCache.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractSpringCache.class);
 
     protected final String name;  // 缓存主要关键字（用于区分）
 

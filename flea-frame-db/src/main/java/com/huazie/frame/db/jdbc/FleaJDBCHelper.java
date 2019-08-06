@@ -35,7 +35,7 @@ import java.util.Map;
  */
 public class FleaJDBCHelper {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(FleaJDBCHelper.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FleaJDBCHelper.class);
 
     /**
      * <p> 以返回List<Map>，其中Map的键为属性名，值为相应的数据 </p>

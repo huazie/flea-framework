@@ -58,9 +58,9 @@ public class FleaI18NMain extends JFrame {
 
     private static String EXE_PATH_DEFAULT = "E:\\Software\\Java\\bin\\jdk1.7.0\\bin\\native2ascii.exe";
 
-    private final static int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
+    private static final int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
 
-    private final static int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
+    private static final int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
 
     public FleaI18NMain() {
         super(FleaI18nHelper.i18nForCommon("COMMON_I18N_00000"));

@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class FleaJerseyFilterChain {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(FleaJerseyFilterChain.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FleaJerseyFilterChain.class);
 
     private List<IFleaJerseyFilter> beforeFilters; // 前置过滤器链
 

@@ -22,11 +22,11 @@ import java.io.OutputStream;
  */
 public class IOUtils {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(IOUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(IOUtils.class);
 
-    private final static BASE64Encoder encoder = new BASE64Encoder();
+    private static final BASE64Encoder encoder = new BASE64Encoder();
 
-    private final static BASE64Decoder decoder = new BASE64Decoder();
+    private static final BASE64Decoder decoder = new BASE64Decoder();
 
     /**
      * <p> 根据文件路径获取文件输入流对象 </p>

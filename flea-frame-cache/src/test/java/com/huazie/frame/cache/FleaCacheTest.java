@@ -22,7 +22,7 @@ import java.util.Set;
  */
 public class FleaCacheTest {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(FleaCacheTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FleaCacheTest.class);
 
     @Test
     public void testMemeCachedFleaCache() {

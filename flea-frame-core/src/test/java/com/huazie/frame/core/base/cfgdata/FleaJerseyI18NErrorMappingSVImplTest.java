@@ -21,7 +21,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class FleaJerseyI18NErrorMappingSVImplTest {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(FleaJerseyI18NErrorMappingSVImplTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FleaJerseyI18NErrorMappingSVImplTest.class);
 
     private ApplicationContext applicationContext;
 

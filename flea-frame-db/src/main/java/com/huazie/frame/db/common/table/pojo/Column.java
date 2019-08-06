@@ -15,9 +15,9 @@ public class Column implements Serializable {
 
     private static final long serialVersionUID = 3292859915470233725L;
 
-    public final static String COLUMN_ATTR_NAME = "attrName";
+    public static final String COLUMN_ATTR_NAME = "attrName";
 
-    public final static String COLUMN_TAB_COL_NAME = "tabColumnName";
+    public static final String COLUMN_TAB_COL_NAME = "tabColumnName";
 
     private Class<?> attrType; // 实体类属性对应类型
 

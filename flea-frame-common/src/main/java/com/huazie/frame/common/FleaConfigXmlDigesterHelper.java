@@ -21,7 +21,7 @@ import java.io.InputStream;
  */
 public class FleaConfigXmlDigesterHelper {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(FleaConfigXmlDigesterHelper.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FleaConfigXmlDigesterHelper.class);
 
     private static volatile FleaConfigXmlDigesterHelper xmlDigester;
 

@@ -33,7 +33,7 @@ import java.util.Properties;
  */
 public class FleaJDBCConfig {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(FleaJDBCConfig.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FleaJDBCConfig.class);
 
     private static volatile FleaJDBCConfig config;
 

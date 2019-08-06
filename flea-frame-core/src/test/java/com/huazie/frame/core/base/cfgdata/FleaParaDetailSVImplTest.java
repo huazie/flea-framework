@@ -30,7 +30,7 @@ import java.util.Set;
 
 public class FleaParaDetailSVImplTest {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(FleaParaDetailSVImplTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FleaParaDetailSVImplTest.class);
 
     private ApplicationContext applicationContext;
 

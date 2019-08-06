@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class FleaConfigTest {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(FleaConfigTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FleaConfigTest.class);
 
     @Test
     public void testFleaConfig() {

@@ -19,7 +19,7 @@ import java.util.List;
  */
 public abstract class FleaResourceConfig extends ResourceConfig {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(FleaResourceConfig.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FleaResourceConfig.class);
 
     /**
      * <p> 无参构造方法 </p>

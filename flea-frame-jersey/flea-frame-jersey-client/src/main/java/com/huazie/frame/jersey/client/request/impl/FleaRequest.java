@@ -37,7 +37,7 @@ import java.net.URLEncoder;
  */
 public abstract class FleaRequest implements Request {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(FleaRequest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FleaRequest.class);
 
     private RequestConfig config; // 请求配置
 

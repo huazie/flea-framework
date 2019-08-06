@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  */
 public class TableSplitTest {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(TableSplitTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TableSplitTest.class);
 
     @Test
     public void testTwoHexTableSplit() {

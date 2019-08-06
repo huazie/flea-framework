@@ -34,7 +34,7 @@ import java.io.InputStream;
  */
 public class DBXmlDigesterHelper {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(DBXmlDigesterHelper.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DBXmlDigesterHelper.class);
 
     private static volatile DBXmlDigesterHelper xmlDigester;
 
