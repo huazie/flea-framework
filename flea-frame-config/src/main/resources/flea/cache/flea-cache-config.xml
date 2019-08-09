@@ -8,13 +8,14 @@
     </cache-items>
 
     <cache-datas>
-        <cache-data key="FLEA_FRAME_AUTH" desc="缓存数据所在组配置">auth</cache-data>
-        <cache-data key="FLEA_FRAME_JERSEY" desc="缓存数据所在组配置">config</cache-data>
+        <cache-data key="auth" desc="Flea权限缓存数据所在组配置">authGroup</cache-data>
+        <cache-data key="jersey" desc="Flea Jersey缓存数据所在组配置">configGroup</cache-data>
+        <cache-data key="fleafs" desc="FleaFs配置数据所在组配置">configGroup</cache-data>
     </cache-datas>
 
     <cache-groups>
-        <cache-group key="auth" desc="Flea权限数据缓存组">memcached</cache-group>
-        <cache-group key="config" desc="Flea配置数据缓存组">redis</cache-group>
+        <cache-group key="authGroup" desc="Flea权限数据缓存组">memcached</cache-group>
+        <cache-group key="configGroup" desc="Flea配置数据缓存组">redis</cache-group>
     </cache-groups>
 
     <cache-params key="redis" desc="Redis缓存配置数据">
@@ -49,12 +50,12 @@
     </cache-params>
 
     <cache-servers>
-        <cache-server group="auth" weight="1" desc="MemCached缓存服务器配置">127.0.0.1:31113</cache-server>
-        <cache-server group="auth" weight="1" desc="MemCached缓存服务器配置">127.0.0.1:31114</cache-server>
+        <cache-server group="authGroup" weight="1" desc="MemCached缓存服务器配置">127.0.0.1:31113</cache-server>
+        <cache-server group="authGroup" weight="1" desc="MemCached缓存服务器配置">127.0.0.1:31114</cache-server>
 
-        <cache-server group="config" password="huazie123" weight="1" desc="Redis缓存服务器配置">127.0.0.1:10001</cache-server>
-        <cache-server group="config" password="huazie123" weight="1" desc="Redis缓存服务器配置">127.0.0.1:10002</cache-server>
-        <cache-server group="config" password="huazie123" weight="1" desc="Redis缓存服务器配置">127.0.0.1:10003</cache-server>
+        <cache-server group="configGroup" password="huazie123" weight="1" desc="Redis缓存服务器配置">127.0.0.1:10001</cache-server>
+        <cache-server group="configGroup" password="huazie123" weight="1" desc="Redis缓存服务器配置">127.0.0.1:10002</cache-server>
+        <cache-server group="configGroup" password="huazie123" weight="1" desc="Redis缓存服务器配置">127.0.0.1:10003</cache-server>
     </cache-servers>
 
 </flea-cache-config>

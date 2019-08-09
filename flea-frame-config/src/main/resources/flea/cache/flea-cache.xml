@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<flea-caches>
+
+    <flea-cache key="fleaparadetail" type="fleafs" desc="Flea配置数据缓存" />
+
+    <flea-cache key="fleajerseyi18nerrormapping" type="jersey" desc="Flea Jersey 国际码和错误码映射缓存" />
+    <flea-cache key="fleajerseyresservice" type="jersey" desc="Flea Jersey 资源服务缓存" />
+    <flea-cache key="fleajerseyresclient" type="jersey" desc="Flea Jersey 资源客户端缓存" />
+    <flea-cache key="fleajerseyresource" type="jersey" desc="Flea Jersey 资源缓存" />
+
+</flea-caches>
