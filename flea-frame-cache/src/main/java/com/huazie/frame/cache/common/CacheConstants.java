@@ -10,6 +10,30 @@ package com.huazie.frame.cache.common;
 public interface CacheConstants {
 
     /**
+     * <p> Flea Cache配置数据常量 </p>
+     *
+     * @since 1.0.0
+     */
+    interface FleaCacheConfigConstants {
+        /**
+         * <p> Flea Cache 默认文件路径 </p>
+         */
+        String FLEA_CACHE_FILE_NAME = "flea/cache/flea-cache.xml";
+        /**
+         * <p> Flea Cache 系统环境变量 </p
+         */
+        String FLEA_CACHE_FILE_SYSTEM_KEY = "fleaframe.flea.cache.filename";
+        /**
+         * <p> Flea Cache Config 默认文件路径 </p>
+         */
+        String FLEA_CACHE_CONFIG_FILE_NAME = "flea/cache/flea-cache-config.xml";
+        /**
+         * <p> Flea Cache Config 系统环境变量 </p
+         */
+        String FLEA_CACHE_CONFIG_FILE_SYSTEM_KEY = "fleaframe.flea.cache.config.filename";
+    }
+
+    /**
      * <p> MemCached配置数据常量 </p>
      *
      * @since 1.0.0

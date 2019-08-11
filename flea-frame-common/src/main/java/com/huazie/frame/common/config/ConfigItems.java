@@ -16,29 +16,9 @@ import java.util.Map;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class ConfigItems {
-
-    private String key; // 配置项列表键
-
-    private String desc; // 配置项列表值
+public class ConfigItems extends ConfigKey {
 
     private List<ConfigItem> configItemList = new ArrayList<ConfigItem>(); // 配置项列表中的各个配置项
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
-
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
 
     public List<ConfigItem> getConfigItemList() {
         return configItemList;
@@ -70,6 +50,13 @@ public class ConfigItems {
         return configItemMap;
     }
 
+    /**
+     * <p> 根据Key获取指定的配置项 </p>
+     *
+     * @param key 配置项键
+     * @return 配置项
+     * @since 1.0.0
+     */
     public ConfigItem getConfigItem(String key) {
         ConfigItem configItem = null;
         Map<String, ConfigItem> configItemMap = toConfigItemMap();

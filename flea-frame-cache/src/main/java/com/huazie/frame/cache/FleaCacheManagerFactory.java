@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public class FleaCacheManagerFactory {
 
-    private static Map<String, AbstractFleaCacheManager> managerMap = new HashMap<String, AbstractFleaCacheManager>();
+    private final static Map<String, AbstractFleaCacheManager> managerMap = new HashMap<String, AbstractFleaCacheManager>();
 
     /**
      * <p> 获取Flea Cache管理类对象实例 </p>
@@ -34,7 +34,7 @@ public class FleaCacheManagerFactory {
                     } else if (CacheEnum.Redis.getName().equals(name)) {
                         manager = new RedisFleaCacheManager();
                     } else {
-                        throw new Exception("'" + name + "' is invalid, it must be 'memcached' or 'redis' ");
+                        throw new Exception("'" + name + "' is invalid, it must be 'MemCached' or 'Redis' ");
                     }
                     managerMap.put(name, manager);
                 }
