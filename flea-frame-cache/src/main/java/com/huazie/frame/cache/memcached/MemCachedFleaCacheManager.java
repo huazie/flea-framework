@@ -52,8 +52,4 @@ public class MemCachedFleaCacheManager extends AbstractFleaCacheManager {
         return new MemCachedFleaCache(name, expiry, memCachedClient);
     }
 
-    public void setMemCachedClient(MemCachedClient memCachedClient) {
-        this.memCachedClient = memCachedClient;
-    }
-
 }

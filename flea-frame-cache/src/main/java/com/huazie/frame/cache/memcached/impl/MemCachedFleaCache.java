@@ -28,7 +28,7 @@ public class MemCachedFleaCache extends AbstractFleaCache {
     }
 
     @Override
-    protected Object getNativeValue(String key) {
+    public Object getNativeValue(String key) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("MemCachedFleaCache##getNativeValue(String) KEY = {}", key);
         }
@@ -36,7 +36,7 @@ public class MemCachedFleaCache extends AbstractFleaCache {
     }
 
     @Override
-    protected void putNativeValue(String key, Object value, long expiry) {
+    public void putNativeValue(String key, Object value, long expiry) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("MemCachedFleaCache##putNativeValue(String, Object, long) KEY = {}", key);
             LOGGER.debug("MemCachedFleaCache##putNativeValue(String, Object, long) VALUE = {}", value);
@@ -46,7 +46,7 @@ public class MemCachedFleaCache extends AbstractFleaCache {
     }
 
     @Override
-    protected void deleteNativeValue(String key) {
+    public void deleteNativeValue(String key) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("MemCachedFleaCache##deleteNativeValue(String) KEY = {}", key);
         }

@@ -3,7 +3,7 @@ package com.huazie.frame.cache.config;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
- * <p> Flea缓存 </p>
+ * <p> Flea缓存根节点 </p>
  *
  * @author huazie
  * @version 1.0.0

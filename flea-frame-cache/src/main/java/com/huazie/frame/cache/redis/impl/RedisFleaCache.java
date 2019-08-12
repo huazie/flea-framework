@@ -28,7 +28,7 @@ public class RedisFleaCache extends AbstractFleaCache {
     }
 
     @Override
-    protected Object getNativeValue(String key) {
+    public Object getNativeValue(String key) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("RedisFleaCache##getNativeValue(String) KEY = {}", key);
         }
@@ -37,7 +37,7 @@ public class RedisFleaCache extends AbstractFleaCache {
     }
 
     @Override
-    protected void putNativeValue(String key, Object value, long expiry) {
+    public void putNativeValue(String key, Object value, long expiry) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("RedisFleaCache##putNativeValue(String, Object, long) KEY = {}", key);
             LOGGER.debug("RedisFleaCache##putNativeValue(String, Object, long) VALUE = {}", value);
@@ -56,7 +56,7 @@ public class RedisFleaCache extends AbstractFleaCache {
     }
 
     @Override
-    protected void deleteNativeValue(String key) {
+    public void deleteNativeValue(String key) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("RedisFleaCache##deleteNativeValue(String) KEY = {}", key);
         }

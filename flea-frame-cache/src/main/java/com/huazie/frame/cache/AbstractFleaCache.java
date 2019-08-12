@@ -178,7 +178,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
      * @return 缓存值
      * @since 1.0.0
      */
-    protected abstract Object getNativeValue(String key);
+    public abstract Object getNativeValue(String key);
 
     /**
      * <p> 添加缓存数据 </p>
@@ -188,7 +188,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
      * @param expiry 失效时间（单位：秒）
      * @since 1.0.0
      */
-    protected abstract void putNativeValue(String key, Object value, long expiry);
+    public abstract void putNativeValue(String key, Object value, long expiry);
 
     /**
      * <p> 删除指定缓存数据 </p>
@@ -196,7 +196,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
      * @param key 缓存关键字
      * @since 1.0.0
      */
-    protected abstract void deleteNativeValue(String key);
+    public abstract void deleteNativeValue(String key);
 
     /**
      * <p> 获取实际存储的缓存键（缓存名 + 缓存关键字） </p>

@@ -1,6 +1,7 @@
 package com.huazie.frame.cache;
 
 import com.huazie.frame.cache.common.CacheEnum;
+import com.huazie.frame.cache.common.FleaCacheManagerFactory;
 import com.huazie.frame.cache.memcached.config.MemCachedConfig;
 import com.huazie.frame.cache.redis.RedisClient;
 import com.huazie.frame.cache.redis.config.RedisConfig;

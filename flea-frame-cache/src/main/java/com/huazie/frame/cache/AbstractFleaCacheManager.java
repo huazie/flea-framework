@@ -20,7 +20,7 @@ public abstract class AbstractFleaCacheManager {
 
     private static ConcurrentMap<String, AbstractFleaCache> cacheMap = new ConcurrentHashMap<String, AbstractFleaCache>();
 
-    protected Map<String, Long> configMap = new HashMap<String, Long>();   // 各缓存的时间Map
+    private Map<String, Long> configMap = new HashMap<String, Long>();   // 各缓存的时间Map
 
     protected Collection<? extends AbstractFleaCache> loadCaches() {
         Collection<AbstractFleaCache> values = cacheMap.values();
