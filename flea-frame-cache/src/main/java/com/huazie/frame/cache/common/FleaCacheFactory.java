@@ -93,7 +93,7 @@ public class FleaCacheFactory {
         AbstractFleaCache fleaCache;
         try {
             IFleaCacheBuilder fleaCacheBuilder = (IFleaCacheBuilder) ReflectUtils.newInstance(builder);
-            fleaCache = fleaCacheBuilder.build(cacheServerList, cacheParams);
+            fleaCache = fleaCacheBuilder.build(name, cacheServerList, cacheParams);
         } catch (Exception e) {
             throw new RuntimeException("构建Flea缓存出现异常：\n" + e);
         }
