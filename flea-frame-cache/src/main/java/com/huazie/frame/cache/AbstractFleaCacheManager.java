@@ -7,7 +7,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 /**
  * <p> 自定义抽象缓存管理类 </p>
@@ -18,7 +17,7 @@ import java.util.concurrent.ConcurrentMap;
  */
 public abstract class AbstractFleaCacheManager {
 
-    private static ConcurrentMap<String, AbstractFleaCache> cacheMap = new ConcurrentHashMap<String, AbstractFleaCache>();
+    private final static Map<String, AbstractFleaCache> cacheMap = new ConcurrentHashMap<String, AbstractFleaCache>();
 
     private Map<String, Long> configMap = new HashMap<String, Long>();   // 各缓存的时间Map
 
@@ -35,14 +34,16 @@ public abstract class AbstractFleaCacheManager {
      * @since 1.0.0
      */
     public AbstractFleaCache getCache(String name) {
-        synchronized (cacheMap) {
-            if (!cacheMap.containsKey(name)) {
-                Long expiry = configMap.get(name);
-                if (ObjectUtils.isEmpty(expiry)) {
-                    expiry = CommonConstants.NumeralConstants.ZERO; // 表示永久
-                    configMap.put(name, expiry);
+        if(!cacheMap.containsKey(name)) {
+            synchronized (cacheMap) {
+                if (!cacheMap.containsKey(name)) {
+                    Long expiry = configMap.get(name);
+                    if (ObjectUtils.isEmpty(expiry)) {
+                        expiry = CommonConstants.NumeralConstants.ZERO; // 表示永久
+                        configMap.put(name, expiry);
+                    }
+                    cacheMap.put(name, newCache(name, expiry));
                 }
-                cacheMap.put(name, newCache(name, expiry));
             }
         }
         return cacheMap.get(name);

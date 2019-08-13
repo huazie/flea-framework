@@ -31,6 +31,10 @@ public interface CacheConstants {
          * <p> Flea Cache Config 系统环境变量 </p
          */
         String FLEA_CACHE_CONFIG_FILE_SYSTEM_KEY = "fleaframe.flea.cache.config.filename";
+        /**
+         * <p> Flea缓存建造者 </p>
+         */
+        String FLEA_CACHE_BUILDER = "FleaCacheBuilder";
     }
 
     /**

@@ -13,6 +13,7 @@ import com.huazie.frame.cache.config.CacheServer;
 import com.huazie.frame.cache.config.CacheServers;
 import com.huazie.frame.cache.config.Caches;
 import com.huazie.frame.common.util.ObjectUtils;
+import com.huazie.frame.common.util.StringUtils;
 
 import java.util.List;
 
@@ -26,15 +27,31 @@ import java.util.List;
 public class CacheConfigManager {
 
     /**
-     * <p> 根据指定的缓存键，获取Flea缓存定义 </p>
+     * <p> 根据指定的缓存主关键字，获取Flea缓存定义 </p>
      *
-     * @param key 缓存键
+     * @param key 缓存主关键字
      * @return Flea缓存
      * @since 1.0.0
      */
     public static Cache getCache(String key) {
         Caches caches = CacheXmlDigesterHelper.getInstance().getFleaCache().getCaches();
         return caches.getFleaCache(key);
+    }
+
+    /**
+     * <p> 根据指定的缓存主关键字 </p>
+     *
+     * @param key 缓存主关键字
+     * @return 失效时长
+     * @since 1.0.0
+     */
+    public static long getExpiry(String key) {
+        long expiry = 0L;
+        Cache cache = getCache(key);
+        if (ObjectUtils.isNotEmpty(cache) && StringUtils.isNotBlank(cache.getExpiry())) {
+            expiry = Long.parseLong(cache.getExpiry());
+        }
+        return expiry;
     }
 
     /**

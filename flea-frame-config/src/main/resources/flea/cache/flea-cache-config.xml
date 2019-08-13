@@ -3,9 +3,9 @@
 <flea-cache-config>
 
     <!-- Flea缓存配置项集 -->
-    <cache-items key="" desc="">
-        <cache-item key="" desc=""></cache-item>
-        <cache-item key="" desc=""></cache-item>
+    <cache-items key="FleaCacheBuilder" desc="Flea缓存建造者实现">
+        <cache-item key="MemCached" desc="MemCached的Flea缓存建造者实现">com.huazie.frame.cache.memcached.MemCachedFleaCacheBuilder</cache-item>
+        <cache-item key="Redis" desc="Redis的Flea缓存建造者实现">com.huazie.frame.cache.redis.RedisFleaCacheBuilder</cache-item>
     </cache-items>
 
     <!-- Redis缓存参数集 -->
