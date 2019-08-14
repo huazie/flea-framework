@@ -225,4 +225,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
         return cache.getDesc();
     }
 
+    public CacheEnum getCache() {
+        return cache;
+    }
 }

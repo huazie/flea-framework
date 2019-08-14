@@ -2,6 +2,7 @@ package com.huazie.frame.cache.core;
 
 import com.huazie.frame.cache.AbstractFleaCache;
 import com.huazie.frame.cache.AbstractFleaCacheManager;
+import com.huazie.frame.cache.core.impl.CoreFleaCache;
 
 /**
  * <p> 核心Flea Cache 管理类 </p>
@@ -12,11 +13,8 @@ import com.huazie.frame.cache.AbstractFleaCacheManager;
  */
 public class CoreFleaCacheManager extends AbstractFleaCacheManager {
 
-    public CoreFleaCacheManager() {
-    }
-
     @Override
     protected AbstractFleaCache newCache(String name, long expiry) {
-        return null;
+        return new CoreFleaCache(name);
     }
 }
