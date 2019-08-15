@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * <p> 自定义抽象缓存管理类 </p>
@@ -17,13 +18,18 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public abstract class AbstractFleaCacheManager {
 
-    private final static Map<String, AbstractFleaCache> cacheMap = new ConcurrentHashMap<String, AbstractFleaCache>();
+    private static final ConcurrentMap<String, AbstractFleaCache> cacheMap = new ConcurrentHashMap<String, AbstractFleaCache>();
 
     private Map<String, Long> configMap = new HashMap<String, Long>();   // 各缓存的时间Map
 
+    /**
+     * <p> 获取所有的Flea缓存 </p>
+     *
+     * @return 所有的Flea缓存
+     * @since 1.0.0
+     */
     protected Collection<? extends AbstractFleaCache> loadCaches() {
-        Collection<AbstractFleaCache> values = cacheMap.values();
-        return values;
+        return cacheMap.values();
     }
 
     /**
@@ -34,7 +40,7 @@ public abstract class AbstractFleaCacheManager {
      * @since 1.0.0
      */
     public AbstractFleaCache getCache(String name) {
-        if(!cacheMap.containsKey(name)) {
+        if (!cacheMap.containsKey(name)) {
             synchronized (cacheMap) {
                 if (!cacheMap.containsKey(name)) {
                     Long expiry = configMap.get(name);

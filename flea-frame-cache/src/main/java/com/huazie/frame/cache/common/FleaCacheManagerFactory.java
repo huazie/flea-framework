@@ -1,6 +1,7 @@
 package com.huazie.frame.cache.common;
 
 import com.huazie.frame.cache.AbstractFleaCacheManager;
+import com.huazie.frame.cache.core.CoreFleaCacheManager;
 import com.huazie.frame.cache.memcached.MemCachedFleaCacheManager;
 import com.huazie.frame.cache.redis.RedisFleaCacheManager;
 
@@ -16,7 +17,7 @@ import java.util.Map;
  */
 public class FleaCacheManagerFactory {
 
-    private final static Map<String, AbstractFleaCacheManager> managerMap = new HashMap<String, AbstractFleaCacheManager>();
+    private static final Map<String, AbstractFleaCacheManager> managerMap = new HashMap<String, AbstractFleaCacheManager>();
 
     /**
      * <p> 获取Flea Cache管理类对象实例 </p>
@@ -33,8 +34,10 @@ public class FleaCacheManagerFactory {
                         manager = new MemCachedFleaCacheManager();
                     } else if (CacheEnum.Redis.getName().equals(name)) {
                         manager = new RedisFleaCacheManager();
+                    } else if (CacheConstants.FleaCacheConstants.FLEA_CACHE_NAME.equals(name)) {
+                        manager = new CoreFleaCacheManager();
                     } else {
-                        throw new Exception("'" + name + "' is invalid, it must be 'MemCached' or 'Redis' ");
+                        throw new Exception("'" + name + "' is invalid, it must be 'MemCached' or 'Redis' or 'FleaCache' ");
                     }
                     managerMap.put(name, manager);
                 }

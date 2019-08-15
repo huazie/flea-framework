@@ -113,8 +113,11 @@
         </property>
     </bean>
 
+    <!-- 配置核心Flea缓存管理类 RedisSpringCacheManager -->
+    <bean id="coreSpringCacheManager" class="com.huazie.frame.cache.core.CoreSpringCacheManager" />
+
     <!-- 开启缓存 -->
-    <cache:annotation-driven cache-manager="redisSpringCacheManager" proxy-target-class="true"/>
+    <cache:annotation-driven cache-manager="coreSpringCacheManager" proxy-target-class="true"/>
 
     <!-- 导入调度任务 -->
     <!-- <import resource="spring-quartz.xml" /> -->

@@ -31,10 +31,10 @@ public class RedisFleaCacheBuilder implements IFleaCacheBuilder {
         }
         // 获取失效时长
         long expiry = CacheConfigManager.getExpiry(name);
-
+        // 获取缓存组名
         String group = cacheServerList.get(0).getGroup();
-        RedisPool redisPool = RedisPool.getInstance(group);
-        redisPool.initialize(cacheServerList, cacheParams);
+        // 初始化连接池
+        RedisPool.getInstance(group).initialize(cacheServerList, cacheParams);
 
         RedisClient redisClient = RedisClientProxy.getProxyInstance(group);
 
