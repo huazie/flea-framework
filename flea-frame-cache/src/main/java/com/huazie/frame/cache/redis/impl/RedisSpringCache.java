@@ -2,6 +2,7 @@ package com.huazie.frame.cache.redis.impl;
 
 import com.huazie.frame.cache.AbstractSpringCache;
 import com.huazie.frame.cache.IFleaCache;
+import com.huazie.frame.cache.redis.RedisClient;
 
 /**
  * <p> Redis Spring缓存类 </p>
@@ -16,8 +17,8 @@ public class RedisSpringCache extends AbstractSpringCache {
         super(name, fleaCache);
     }
 
-    public RedisSpringCache(String name, long expiry) {
-        this(name, new RedisFleaCache(name, expiry));
+    public RedisSpringCache(String name, long expiry, RedisClient redisClient) {
+        this(name, new RedisFleaCache(name, expiry, redisClient));
     }
 
 }

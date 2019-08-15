@@ -10,6 +10,18 @@ package com.huazie.frame.cache.common;
 public interface CacheConstants {
 
     /**
+     * <p> Flea Cache 常量 </p>
+     *
+     * @since 1.0.0
+     */
+    interface FleaCacheConstants {
+        /**
+         * <p> 默认连接池名 </p>
+         */
+        String DEFAUTL_POOL_NAME = "default";
+    }
+
+    /**
      * <p> Flea Cache配置数据常量 </p>
      *
      * @since 1.0.0

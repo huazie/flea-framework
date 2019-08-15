@@ -21,10 +21,10 @@ public class RedisFleaCache extends AbstractFleaCache {
 
     private RedisClient redisClient; // Redis客户端类
 
-    public RedisFleaCache(String name, long expiry) {
+    public RedisFleaCache(String name, long expiry, RedisClient redisClient) {
         super(name, expiry);
+        this.redisClient = redisClient;
         cache = CacheEnum.Redis;
-        redisClient = RedisClientProxy.getProxyInstance();
     }
 
     @Override
