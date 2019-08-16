@@ -207,4 +207,13 @@ public class RedisPool {
         return shardedJedisPool;
     }
 
+    /**
+     * <p> 获取当前连接池名 </p>
+     *
+     * @return 连接池名
+     * @since 1.0.0
+     */
+    public String getPoolName() {
+        return poolName;
+    }
 }

@@ -42,8 +42,8 @@ public class RedisConfig {
 
     static {
         String fileName = CacheConstants.RedisConfigConstants.REDIS_FILE_NAME;
-        if (StringUtils.isNotBlank(System.getProperty("fleaframe.cache.redis.config.filename"))) {
-            fileName = StringUtils.trim(System.getProperty("fleaframe.cache.redis.config.filename"));
+        if (StringUtils.isNotBlank(System.getProperty(CacheConstants.RedisConfigConstants.REDIS_CONFIG_FILE_SYSTEM_KEY))) {
+            fileName = StringUtils.trim(System.getProperty(CacheConstants.RedisConfigConstants.REDIS_CONFIG_FILE_SYSTEM_KEY));
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("RedisConfig Use the specified redis.properties：{}", fileName);
             }
@@ -67,7 +67,7 @@ public class RedisConfig {
                 if (ObjectUtils.isEmpty(config)) {
                     config = new RedisConfig();
                     try {
-                        List<JedisShardInfo> jedisRedisInfos = null;
+                        List<JedisShardInfo> jedisShardInfos = null;
                         String servers = PropertiesUtil.getStringValue(prop, CacheConstants.RedisConfigConstants.REDIS_CONFIG_SERVER);
                         String passwords = PropertiesUtil.getStringValue(prop, CacheConstants.RedisConfigConstants.REDIS_CONFIG_PASSWORD);
                         String weights = PropertiesUtil.getStringValue(prop, CacheConstants.RedisConfigConstants.REDIS_CONFIG_WEIGHT);
@@ -89,7 +89,7 @@ public class RedisConfig {
                             }
 
                             if (ArrayUtils.isNotEmpty(serverArr)) {
-                                jedisRedisInfos = new ArrayList<JedisShardInfo>();
+                                jedisShardInfos = new ArrayList<JedisShardInfo>();
                                 for (int i = 0; i < serverArr.length; i++) {
                                     String ip = serverArr[i];
 
@@ -134,11 +134,11 @@ public class RedisConfig {
                                         jedisShardInfo.setPassword(passwordArr[i]);
                                     }
 
-                                    jedisRedisInfos.add(jedisShardInfo);
+                                    jedisShardInfos.add(jedisShardInfo);
                                 }
                             }
                         }
-                        config.setServers(jedisRedisInfos);
+                        config.setServers(jedisShardInfos);
 
                         // 获取Redis分布式hash算法
                         Integer alg = PropertiesUtil.getIntegerValue(prop, CacheConstants.RedisConfigConstants.REDIS_CONFIG_HASHINGALG);

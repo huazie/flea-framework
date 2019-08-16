@@ -50,9 +50,9 @@ public class MemCachedConfig {
     private int hashingAlg;     // 一致性hash算法
 
     static {
-        String fileName = CacheConstants.MemCachedConfigConstants.MEMCACHE_FILE_NAME;
-        if (StringUtils.isNotBlank(System.getProperty("fleaframe.cache.memcached.config.filename"))) {
-            fileName = StringUtils.trim(System.getProperty("fleaframe.cache.memcached.config.filename"));
+        String fileName = CacheConstants.MemCachedConfigConstants.MEMCACHED_FILE_NAME;
+        if (StringUtils.isNotBlank(System.getProperty(CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_FILE_SYSTEM_KEY))) {
+            fileName = StringUtils.trim(System.getProperty(CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_FILE_SYSTEM_KEY));
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("MemCachedConfig Use the specified memcached.properties：{}", fileName);
             }

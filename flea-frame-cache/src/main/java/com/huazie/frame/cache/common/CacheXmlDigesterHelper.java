@@ -74,7 +74,7 @@ public class CacheXmlDigesterHelper {
      * @since 1.0.0
      */
     public FleaCache getFleaCache() {
-        if (ObjectUtils.isEmpty(fleaCache)) {
+        if (isFleaCacheInit.equals(Boolean.FALSE)) {
             synchronized (isFleaCacheInit) {
                 if (isFleaCacheInit.equals(Boolean.FALSE)) {
                     try {
@@ -148,7 +148,7 @@ public class CacheXmlDigesterHelper {
      * @since 1.0.0
      */
     public FleaCacheConfig getFleaCacheConfig() {
-        if (ObjectUtils.isEmpty(fleaCacheConfig)) {
+        if (isFleaCacheConfigInit.equals(Boolean.FALSE)) {
             synchronized (isFleaCacheConfigInit) {
                 if (isFleaCacheConfigInit.equals(Boolean.FALSE)) {
                     try {

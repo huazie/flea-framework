@@ -16,6 +16,11 @@ public class RedisSpringCacheManager extends AbstractSpringCacheManager {
 
     private RedisClient redisClient;
 
+    /**
+     * <p> 默认构造方法，初始化Redis Flea缓存管理类 </p>
+     *
+     * @since 1.0.0
+     */
     public RedisSpringCacheManager() {
         redisClient = RedisClientProxy.getProxyInstance();
     }

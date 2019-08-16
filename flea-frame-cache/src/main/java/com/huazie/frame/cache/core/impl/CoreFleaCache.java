@@ -19,6 +19,12 @@ public class CoreFleaCache extends AbstractFleaCache {
 
     private AbstractFleaCache fleaCache; // 指定Flea缓存实现
 
+    /**
+     * <p> 带参数构造方法，初始化核心Flea缓存类 </p>
+     *
+     * @param name 缓存主关键字
+     * @since 1.0.0
+     */
     public CoreFleaCache(String name) {
         super(name, CacheConfigManager.getExpiry(name));
         // 根据缓存主关键字name获取指定Flea缓存对象

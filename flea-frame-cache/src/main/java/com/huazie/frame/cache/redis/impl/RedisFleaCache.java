@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <p> 自定义Redis缓存类 </p>
+ * <p> Redis Flea缓存类 </p>
  *
  * @author huazie
  * @version 1.0.0
@@ -19,8 +19,15 @@ public class RedisFleaCache extends AbstractFleaCache {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RedisFleaCache.class);
 
-    private RedisClient redisClient; // Redis客户端类
+    private RedisClient redisClient; // Redis客户端
 
+    /**
+     * <p> 带参数的构造方法，初始化Redis Flea缓存类 </p>
+     *
+     * @param name        缓存主关键字
+     * @param expiry      失效时长
+     * @param redisClient Redis客户端
+     */
     public RedisFleaCache(String name, long expiry, RedisClient redisClient) {
         super(name, expiry);
         this.redisClient = redisClient;

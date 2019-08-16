@@ -13,8 +13,8 @@ import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.ReflectUtils;
 
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * <p> Flea Cache 工厂类 </p>
@@ -25,7 +25,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class FleaCacheFactory {
 
-    private static final Map<String, AbstractFleaCache> fleaCacheMap = new ConcurrentHashMap<String, AbstractFleaCache>();
+    private static final ConcurrentMap<String, AbstractFleaCache> fleaCacheMap = new ConcurrentHashMap<String, AbstractFleaCache>();
 
     /**
      * <p> 根据缓存主关键字name获取指定Flea缓存对象 </p>

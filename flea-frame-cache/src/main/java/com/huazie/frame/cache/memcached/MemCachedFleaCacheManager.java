@@ -14,7 +14,7 @@ import com.whalin.MemCached.MemCachedClient;
  */
 public class MemCachedFleaCacheManager extends AbstractFleaCacheManager {
 
-    private MemCachedClient memCachedClient;   // Memcached客户端类
+    private MemCachedClient memCachedClient;   // MemCached客户端类
 
     /**
      * <p> 新建一个MemCached Flea缓存管理类 </p>

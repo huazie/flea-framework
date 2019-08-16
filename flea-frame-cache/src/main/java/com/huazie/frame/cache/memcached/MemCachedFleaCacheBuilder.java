@@ -32,14 +32,14 @@ public class MemCachedFleaCacheBuilder implements IFleaCacheBuilder {
         }
         // 获取失效时长
         long expiry = CacheConfigManager.getExpiry(name);
-
+        // 获取MemCached服务器所在组名
         String group = cacheServerList.get(0).getGroup();
-        // 通过组名来获取
+        // 通过组名来获取 MemCached客户端类
         MemCachedClient memCachedClient = new MemCachedClient(group);
-        // 初始化连接池
+        // 获取MemCachedPool，并初始化连接池
         MemCachedPool memCachedPool = MemCachedPool.getInstance(group);
         memCachedPool.initialize(cacheServerList, cacheParams);
-
+        // 创建一个MemCached Flea缓存类
         AbstractFleaCache fleaCache = new MemCachedFleaCache(name, expiry, memCachedClient);
 
         if (LOGGER.isDebugEnabled()) {

@@ -20,9 +20,9 @@ import redis.clients.jedis.params.SetParams;
  */
 public class FleaRedisClient implements RedisClient {
 
-    private ShardedJedisPool shardedJedisPool;
+    private ShardedJedisPool shardedJedisPool; // 分布式Jedis连接池
 
-    private ShardedJedis shardedJedis;
+    private ShardedJedis shardedJedis; // 分布式Jedis对象
 
     private String poolName; // 连接池名
 

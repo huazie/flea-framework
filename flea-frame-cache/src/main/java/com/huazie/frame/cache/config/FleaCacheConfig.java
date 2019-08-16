@@ -18,15 +18,15 @@ import java.util.Map;
  */
 public class FleaCacheConfig {
 
-    private List<CacheItems> cacheItemsList = new ArrayList<CacheItems>();
+    private List<CacheItems> cacheItemsList = new ArrayList<CacheItems>(); // 缓存项集列表
 
-    private List<CacheParams> cacheParamsList = new ArrayList<CacheParams>();
+    private List<CacheParams> cacheParamsList = new ArrayList<CacheParams>(); // 缓存参数集列表
 
-    private CacheDatas cacheDatas;
+    private CacheDatas cacheDatas; // 缓存数据集
 
-    private CacheGroups cacheGroups;
+    private CacheGroups cacheGroups; // 缓存组集
 
-    private CacheServers cacheServers;
+    private CacheServers cacheServers; // 缓存服务器集
 
     /**
      * <p> 获取缓存配置项集列表 </p>

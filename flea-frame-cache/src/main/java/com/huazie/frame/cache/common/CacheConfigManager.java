@@ -39,7 +39,7 @@ public class CacheConfigManager {
     }
 
     /**
-     * <p> 根据指定的缓存主关键字 </p>
+     * <p> 根据指定的缓存主关键字获取缓存失效时长 </p>
      *
      * @param key 缓存主关键字
      * @return 失效时长
@@ -76,6 +76,7 @@ public class CacheConfigManager {
      *
      * @param cache 缓存系统名
      * @return 缓存参数集
+     * @since 1.0.0
      */
     public static CacheParams getCacheParams(String cache) {
         return CacheXmlDigesterHelper.getInstance().getFleaCacheConfig().getCacheParams(cache);

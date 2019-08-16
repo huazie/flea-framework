@@ -5,8 +5,8 @@ import com.huazie.frame.cache.core.CoreFleaCacheManager;
 import com.huazie.frame.cache.memcached.MemCachedFleaCacheManager;
 import com.huazie.frame.cache.redis.RedisFleaCacheManager;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * <p> Flea Cache Manager工厂类 </p>
@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class FleaCacheManagerFactory {
 
-    private static final Map<String, AbstractFleaCacheManager> managerMap = new HashMap<String, AbstractFleaCacheManager>();
+    private static final ConcurrentMap<String, AbstractFleaCacheManager> managerMap = new ConcurrentHashMap<String, AbstractFleaCacheManager>();
 
     /**
      * <p> 获取Flea Cache管理类对象实例 </p>

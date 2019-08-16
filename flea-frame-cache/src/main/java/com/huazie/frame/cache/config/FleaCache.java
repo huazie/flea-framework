@@ -11,7 +11,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  */
 public class FleaCache {
 
-    private Caches caches;
+    private Caches caches; // Flea缓存集
 
     public Caches getCaches() {
         return caches;

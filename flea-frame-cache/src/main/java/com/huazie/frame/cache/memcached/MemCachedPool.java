@@ -25,9 +25,9 @@ public class MemCachedPool {
 
     private String poolName; // 连接池名
 
-    private MemCachedConfig memCachedConfig;
+    private MemCachedConfig memCachedConfig; // MemCached 配置信息
 
-    private SockIOPool sockIOPool;
+    private SockIOPool sockIOPool; // MemCached SockIOPool
 
     private MemCachedPool() {
     }
@@ -96,9 +96,11 @@ public class MemCachedPool {
         if (sockIOPool.isInitialized()) {
             return;
         }
+        // 缓存服务器集为空，则跳过
         if (CollectionUtils.isEmpty(cacheServerList)) {
             return;
         }
+        // 缓存参数集为空，则跳过
         if (ObjectUtils.isEmpty(cacheParams) || CollectionUtils.isEmpty(cacheParams.getCacheParamList())) {
             return;
         }
@@ -114,6 +116,7 @@ public class MemCachedPool {
                 servers.add(server);
                 String weight = cacheServer.getWeight();
                 if (StringUtils.isBlank(weight)) {
+                    // 默认权重
                     weights.add(CommonConstants.NumeralConstants.INT_ONE);
                 } else {
                     weights.add(Integer.valueOf(weight));
@@ -172,6 +175,7 @@ public class MemCachedPool {
             throw new RuntimeException("请检查flea-cache-config.xml配置,【<cache-param key=" + CacheConstants.MemCachedConfigConstants.MEMCACHED_CACHE_PARAM_HASHINGALG + " ></cache-param>】未配置或配置值为空");
         }
         sockIOPool.setHashingAlg(Integer.parseInt(hashingAlgParam.getValue()));
+        // 连接池初始化
         sockIOPool.initialize();
     }
 

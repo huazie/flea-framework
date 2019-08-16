@@ -22,7 +22,7 @@ public abstract class AbstractSpringCache implements Cache, IFleaCache {
 
     private final String name;  // 缓存主要关键字（用于区分）
 
-    private final IFleaCache fleaCache;
+    private final IFleaCache fleaCache; // 具体Flea缓存实现
 
     public AbstractSpringCache(String name, IFleaCache fleaCache) {
         this.name = name;
