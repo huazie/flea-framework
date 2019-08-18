@@ -4,8 +4,8 @@ import com.huazie.frame.cache.common.CacheConstants;
 import com.huazie.frame.cache.redis.RedisClient;
 import com.huazie.frame.common.proxy.FleaProxy;
 
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * <p> RedisClient代理类 </p>
@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class RedisClientProxy extends FleaProxy<RedisClient> {
 
-    private final static Map<String, RedisClient> redisClients = new ConcurrentHashMap<String, RedisClient>();
+    private final static ConcurrentMap<String, RedisClient> redisClients = new ConcurrentHashMap<String, RedisClient>();
 
     /**
      * <p> 获取RedisClient代理类 (默认)</p>

@@ -14,7 +14,7 @@ import com.huazie.frame.cache.redis.RedisClient;
 public class RedisSpringCache extends AbstractSpringCache {
 
     /**
-     * <p> 带参数的构造方法，初始化MemCached Spring缓存类 </p>
+     * <p> 带参数的构造方法，初始化Redis Spring缓存类 </p>
      *
      * @param name      缓存主关键字
      * @param fleaCache 具体缓存实现
@@ -25,7 +25,7 @@ public class RedisSpringCache extends AbstractSpringCache {
     }
 
     /**
-     * <p> 带参数的构造方法，初始化MemCached Spring缓存类 </p>
+     * <p> 带参数的构造方法，初始化Redis Spring缓存类 </p>
      *
      * @param name        缓存主关键字
      * @param expiry      失效时长

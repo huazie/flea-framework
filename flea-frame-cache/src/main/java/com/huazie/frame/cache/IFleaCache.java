@@ -3,7 +3,7 @@ package com.huazie.frame.cache;
 import java.util.Set;
 
 /**
- * <p> 自定义Cache接口类（主要定义了一些增删改查的方法） </p>
+ * <p> 自定义Flea Cache接口类（主要定义了一些增删改查的方法） </p>
  *
  * @author huazie
  * @version 1.0.0

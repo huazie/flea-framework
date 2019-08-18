@@ -127,7 +127,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
                     LOGGER.debug("AbstractFleaCache##deleteCacheKey() Delete cache of recording all key, KEY = {}", key);
                 }
                 if (CommonConstants.NumeralConstants.INT_ONE == keySet.size()) {
-                    deleteCacheAllKey(); // 直接将记录当前Cache所有数据键关键字的缓存从Redis中清空
+                    deleteCacheAllKey(); // 直接将记录当前Cache所有数据键关键字的缓存从缓存中清空
                 } else {
                     // 将数据键关键字从Set集合中删除
                     keySet.remove(key);
