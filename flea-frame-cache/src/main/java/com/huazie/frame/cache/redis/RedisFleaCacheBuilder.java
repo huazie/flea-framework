@@ -35,9 +35,9 @@ public class RedisFleaCacheBuilder implements IFleaCacheBuilder {
         String group = cacheServerList.get(0).getGroup();
         // 初始化连接池
         RedisPool.getInstance(group).initialize(cacheServerList, cacheParams);
-
+        // 获取Redis客户端代理类
         RedisClient redisClient = RedisClientProxy.getProxyInstance(group);
-
+        // 创建一个Redis Flea缓存
         AbstractFleaCache fleaCache = new RedisFleaCache(name, expiry, redisClient);
 
         if (LOGGER.isDebugEnabled()) {

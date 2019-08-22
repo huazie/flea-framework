@@ -5,7 +5,7 @@ import com.huazie.frame.cache.AbstractSpringCacheManager;
 import com.huazie.frame.cache.core.impl.CoreSpringCache;
 
 /**
- * <p> 核心Spring Cache管理类 </p>
+ * <p> 核心Spring缓存管理类 </p>
  *
  * @author huazie
  * @version 1.0.0

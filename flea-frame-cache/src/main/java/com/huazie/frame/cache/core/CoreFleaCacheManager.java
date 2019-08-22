@@ -5,7 +5,7 @@ import com.huazie.frame.cache.AbstractFleaCacheManager;
 import com.huazie.frame.cache.core.impl.CoreFleaCache;
 
 /**
- * <p> 核心Flea Cache 管理类 </p>
+ * <p> 核心Flea缓存管理类 </p>
  *
  * @author huazie
  * @version 1.0.0
