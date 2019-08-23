@@ -108,7 +108,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
         }
         if (!keySet.contains(key)) { // 只有其中不存在，才重新设置
             keySet.add(key);
-            putNativeValue(getNativeCacheKey(), keySet, CommonConstants.NumeralConstants.ZERO);
+            putNativeValue(getNativeCacheKey(name), keySet, CommonConstants.NumeralConstants.ZERO);
         }
     }
 
@@ -132,7 +132,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
                     // 将数据键关键字从Set集合中删除
                     keySet.remove(key);
                     // 重新覆盖当前Cache所有数据键关键字的缓存信息
-                    putNativeValue(getNativeCacheKey(), keySet, CommonConstants.NumeralConstants.ZERO);
+                    putNativeValue(getNativeCacheKey(name), keySet, CommonConstants.NumeralConstants.ZERO);
                 }
             } else {
                 if (LOGGER.isDebugEnabled()) {
@@ -152,7 +152,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("AbstractFleaCache##deleteCacheAllKey() Delete cache of recording all key");
             }
-            deleteNativeValue(getNativeCacheKey());
+            deleteNativeValue(getNativeCacheKey(name));
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("The action of deleting [" + cache.getName() + "] cache occurs exception ：", e);
@@ -164,7 +164,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
     @SuppressWarnings(value = "unchecked")
     public Set<String> getCacheKey() {
         Set<String> keySet = null;
-        Object keySetObj = getNativeValue(getNativeCacheKey());
+        Object keySetObj = getNativeValue(getNativeCacheKey(name));
         if (ObjectUtils.isNotEmpty(keySetObj) && keySetObj instanceof Set) {
             keySet = (Set<String>) keySetObj;
         }
@@ -177,7 +177,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
     /**
      * <p> 获取缓存值 </p>
      *
-     * @param key 缓存关键字
+     * @param key 缓存数据键关键字
      * @return 缓存值
      * @since 1.0.0
      */
@@ -186,7 +186,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
     /**
      * <p> 添加缓存数据 </p>
      *
-     * @param key    缓存关键字
+     * @param key    缓存数据键关键字
      * @param value  缓存值
      * @param expiry 失效时间（单位：秒）
      * @since 1.0.0
@@ -196,7 +196,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
     /**
      * <p> 删除指定缓存数据 </p>
      *
-     * @param key 缓存关键字
+     * @param key 缓存数据键关键字
      * @since 1.0.0
      */
     public abstract void deleteNativeValue(String key);
@@ -205,35 +205,47 @@ public abstract class AbstractFleaCache implements IFleaCache {
      * <p> 获取缓存所属系统名 </p>
      *
      * @return 缓存所属系统名
+     * @since 1.0.0
      */
     public abstract String getSystemName();
 
     /**
-     * <p> 获取实际存储的缓存键（缓存名 + 缓存关键字） </p>
+     * <p> 获取实际存储的缓存键（缓存所属系统名 + 缓存名（缓存主关键字） + 缓存数据键（缓存关键字）） </p>
      *
-     * @param key 缓存关键字
+     * @param key 缓存数据键关键字
      * @return 实际存储的缓存键
      * @since 1.0.0
      */
-    protected String getNativeKey(String key) {
-        StringBuilder nativeKey = new StringBuilder(getNativeCacheKey());
-        nativeKey.append(CommonConstants.SymbolConstants.UNDERLINE);
-        nativeKey.append(key);
-        return nativeKey.toString();
+    private String getNativeKey(String key) {
+        return getNativeCacheKey(name) + getNativeDataKey(key);
     }
 
     /**
-     * <p> 获取缓存主关键字对应的缓存键（包含缓存所属系统名）  </p>
+     * <p> 获取缓存主键（包含缓存所属系统名 + 缓存名（缓存主关键字））  </p>
      *
-     * @return 缓存主关键字对应的缓存键
+     * @return 缓存主键（缓存所属系统名 + 缓存名（缓存主关键字））
      * @since 1.0.0
      */
-    protected String getNativeCacheKey() {
+    protected String getNativeCacheKey(String name) {
         StringBuilder nativeCacheKey = new StringBuilder();
         nativeCacheKey.append(getSystemName());
         nativeCacheKey.append(CommonConstants.SymbolConstants.UNDERLINE);
         nativeCacheKey.append(name);
         return nativeCacheKey.toString();
+    }
+
+    /**
+     * <p> 获取缓存实际存储的数据键 </p>
+     *
+     * @param key 缓存数据键关键字
+     * @return 缓存数据键
+     * @since 1.0.0
+     */
+    protected String getNativeDataKey(String key) {
+        StringBuilder nativeDataKey = new StringBuilder();
+        nativeDataKey.append(CommonConstants.SymbolConstants.UNDERLINE);
+        nativeDataKey.append(key);
+        return nativeDataKey.toString();
     }
 
     public String getName() {
