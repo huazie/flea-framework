@@ -128,4 +128,9 @@ public abstract class AbstractSpringCache implements Cache, IFleaCache {
     public Set<String> getCacheKey() {
         return fleaCache.getCacheKey();
     }
+
+    @Override
+    public String getSystemName() {
+        return fleaCache.getSystemName();
+    }
 }

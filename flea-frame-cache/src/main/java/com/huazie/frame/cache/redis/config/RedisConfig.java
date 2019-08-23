@@ -34,6 +34,8 @@ public class RedisConfig {
 
     private static Properties prop;
 
+    private String systemName; // 缓存所属系统名
+
     private List<JedisShardInfo> servers; // 服务器信息 （ host + port + password + weight + connectionTimeout + soTimeOut）
 
     private Hashing hashingAlg; // 分布式hash算法
@@ -67,6 +69,13 @@ public class RedisConfig {
                 if (ObjectUtils.isEmpty(config)) {
                     config = new RedisConfig();
                     try {
+                        // 获取缓存所属系统名
+                        String systemName = PropertiesUtil.getStringValue(prop, CacheConstants.RedisConfigConstants.REDIS_CONFIG_SYSTEM_NAME);
+                        if (StringUtils.isBlank(systemName)) {
+                            throw new Exception("缓存归属系统名未配置，请检查");
+                        }
+                        config.setSystemName(systemName);
+
                         List<JedisShardInfo> jedisShardInfos = null;
                         String servers = PropertiesUtil.getStringValue(prop, CacheConstants.RedisConfigConstants.REDIS_CONFIG_SERVER);
                         String passwords = PropertiesUtil.getStringValue(prop, CacheConstants.RedisConfigConstants.REDIS_CONFIG_PASSWORD);
@@ -94,7 +103,7 @@ public class RedisConfig {
                                     String ip = serverArr[i];
 
                                     if (StringUtils.isBlank(ip)) {
-                                        throw new Exception("The IP Address of server is empty");
+                                        throw new Exception("服务器配置的IP地址为空，请检查");
                                     }
 
                                     String host = Protocol.DEFAULT_HOST;    // 默认主机
@@ -150,7 +159,7 @@ public class RedisConfig {
                         } else if (CacheConstants.RedisConfigConstants.REDIS_CONFIG_HASHINGALG_MD5 == alg) {
                             config.setHashingAlg(Hashing.MD5);
                         } else {
-                            throw new Exception("The config of hashingAlg [ " + alg + "] is invalid, only 1 or 2");
+                            throw new Exception("配置的分布式hash算法【" + alg + "】非法, 仅允许1和2，请检查");
                         }
 
                         // 获取客户端连接池配置信息
@@ -190,6 +199,14 @@ public class RedisConfig {
             }
         }
         return config;
+    }
+
+    public String getSystemName() {
+        return systemName;
+    }
+
+    public void setSystemName(String systemName) {
+        this.systemName = systemName;
     }
 
     public List<JedisShardInfo> getServers() {

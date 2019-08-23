@@ -2,6 +2,11 @@
 
 <flea-cache-config>
 
+    <!-- 缓存初始化配置项集 -->
+    <cache-items key="FleaCacheInit" desc="缓存初始化配置项">
+        <cache-item key="systemName" desc="缓存所属系统名">FleaFS</cache-item>
+    </cache-items>
+
     <!-- Flea缓存配置项集 -->
     <cache-items key="FleaCacheBuilder" desc="Flea缓存建造者实现">
         <cache-item key="MemCached" desc="MemCached的Flea缓存建造者实现">com.huazie.frame.cache.memcached.MemCachedFleaCacheBuilder</cache-item>

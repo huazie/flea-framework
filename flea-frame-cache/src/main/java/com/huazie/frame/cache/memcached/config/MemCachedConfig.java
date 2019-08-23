@@ -29,6 +29,8 @@ public class MemCachedConfig {
 
     private static Properties prop;
 
+    private String systemName; // 缓存所属系统名
+
     private String[] servers;   //服务器地址
 
     private Integer[] weights;  //Memcached权重分配
@@ -77,6 +79,12 @@ public class MemCachedConfig {
                 if (ObjectUtils.isEmpty(config)) {
                     config = new MemCachedConfig();
                     try {
+                        // 获取缓存所属系统名
+                        String systemName = PropertiesUtil.getStringValue(prop, CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_SYSTEM_NAME);
+                        if (StringUtils.isBlank(systemName)) {
+                            throw new Exception("缓存归属系统名未配置，请检查");
+                        }
+                        config.setSystemName(systemName);
 
                         // 获取MemCached服务器地址
                         String allServer = PropertiesUtil.getStringValue(prop, CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_SERVER);
@@ -119,6 +127,14 @@ public class MemCachedConfig {
             }
         }
         return config;
+    }
+
+    public String getSystemName() {
+        return systemName;
+    }
+
+    public void setSystemName(String systemName) {
+        this.systemName = systemName;
     }
 
     public String[] getServers() {

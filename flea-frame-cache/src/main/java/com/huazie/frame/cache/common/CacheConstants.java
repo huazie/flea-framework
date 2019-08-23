@@ -36,7 +36,7 @@ public interface CacheConstants {
          */
         String FLEA_CACHE_FILE_NAME = "flea/cache/flea-cache.xml";
         /**
-         * <p> Flea Cache 系统环境变量 </p
+         * <p> Flea Cache 系统环境变量 </p>
          */
         String FLEA_CACHE_FILE_SYSTEM_KEY = "fleaframe.flea.cache.filename";
         /**
@@ -44,13 +44,21 @@ public interface CacheConstants {
          */
         String FLEA_CACHE_CONFIG_FILE_NAME = "flea/cache/flea-cache-config.xml";
         /**
-         * <p> Flea Cache Config 系统环境变量 </p
+         * <p> Flea Cache Config 系统环境变量 </p>
          */
         String FLEA_CACHE_CONFIG_FILE_SYSTEM_KEY = "fleaframe.cache.fleacache.config.filename";
         /**
-         * <p> Flea缓存建造者 </p>
+         * <p> Flea缓存建造者配置项集 </p>
          */
         String FLEA_CACHE_BUILDER = "FleaCacheBuilder";
+        /**
+         * <p> Flea缓存初始化配置项集 </p>
+         */
+        String FLEA_CACHE_INIT = "FleaCacheInit";
+        /**
+         * <p> Flea缓存所属系统名 </p>
+         */
+        String SYSTEM_NAME = "systemName";
     }
 
     /**
@@ -67,6 +75,10 @@ public interface CacheConstants {
          * <p> MemCached 配置文件系统环境变量 </p>
          */
         String MEMCACHED_CONFIG_FILE_SYSTEM_KEY = "fleaframe.cache.memcached.config.filename";
+        /**
+         * <p> Memcached缓存所属系统名 </p>
+         */
+        String MEMCACHED_CONFIG_SYSTEM_NAME = "memcached.systemName";
         /**
          * <p> MemCached 服务器地址 </p>
          */
@@ -155,6 +167,10 @@ public interface CacheConstants {
          * <p> Redis 配置文件系统环境变量 </p>
          */
         String REDIS_CONFIG_FILE_SYSTEM_KEY = "fleaframe.cache.redis.config.filename";
+        /**
+         * <p> Redis 缓存所属系统名 </p>
+         */
+        String REDIS_CONFIG_SYSTEM_NAME = "redis.systemName";
         /**
          * <p> Redis 服务器地址 </p>
          */

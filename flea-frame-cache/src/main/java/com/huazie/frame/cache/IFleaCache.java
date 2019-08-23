@@ -52,4 +52,12 @@ public interface IFleaCache {
      */
     Set<String> getCacheKey();
 
+    /**
+     * <p> 获取缓存所属系统名 </p>
+     *
+     * @return 缓存所属系统名
+     * @since 1.0.0
+     */
+    String getSystemName();
+
 }

@@ -108,7 +108,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
         }
         if (!keySet.contains(key)) { // 只有其中不存在，才重新设置
             keySet.add(key);
-            putNativeValue(name, keySet, CommonConstants.NumeralConstants.ZERO);
+            putNativeValue(getNativeCacheKey(), keySet, CommonConstants.NumeralConstants.ZERO);
         }
     }
 
@@ -132,7 +132,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
                     // 将数据键关键字从Set集合中删除
                     keySet.remove(key);
                     // 重新覆盖当前Cache所有数据键关键字的缓存信息
-                    putNativeValue(name, keySet, CommonConstants.NumeralConstants.ZERO);
+                    putNativeValue(getNativeCacheKey(), keySet, CommonConstants.NumeralConstants.ZERO);
                 }
             } else {
                 if (LOGGER.isDebugEnabled()) {
@@ -152,7 +152,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("AbstractFleaCache##deleteCacheAllKey() Delete cache of recording all key");
             }
-            deleteNativeValue(name);
+            deleteNativeValue(getNativeCacheKey());
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("The action of deleting [" + cache.getName() + "] cache occurs exception ：", e);
@@ -164,9 +164,12 @@ public abstract class AbstractFleaCache implements IFleaCache {
     @SuppressWarnings(value = "unchecked")
     public Set<String> getCacheKey() {
         Set<String> keySet = null;
-        Object keySetObj = getNativeValue(name);
+        Object keySetObj = getNativeValue(getNativeCacheKey());
         if (ObjectUtils.isNotEmpty(keySetObj) && keySetObj instanceof Set) {
             keySet = (Set<String>) keySetObj;
+        }
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("AbstractFleaCache##getCacheKey() CacheKey = {}", keySet);
         }
         return keySet;
     }
@@ -199,6 +202,13 @@ public abstract class AbstractFleaCache implements IFleaCache {
     public abstract void deleteNativeValue(String key);
 
     /**
+     * <p> 获取缓存所属系统名 </p>
+     *
+     * @return 缓存所属系统名
+     */
+    public abstract String getSystemName();
+
+    /**
      * <p> 获取实际存储的缓存键（缓存名 + 缓存关键字） </p>
      *
      * @param key 缓存关键字
@@ -206,7 +216,24 @@ public abstract class AbstractFleaCache implements IFleaCache {
      * @since 1.0.0
      */
     protected String getNativeKey(String key) {
-        return name + CommonConstants.SymbolConstants.UNDERLINE + key;
+        StringBuilder nativeKey = new StringBuilder(getNativeCacheKey());
+        nativeKey.append(CommonConstants.SymbolConstants.UNDERLINE);
+        nativeKey.append(key);
+        return nativeKey.toString();
+    }
+
+    /**
+     * <p> 获取缓存主关键字对应的缓存键（包含缓存所属系统名）  </p>
+     *
+     * @return 缓存主关键字对应的缓存键
+     * @since 1.0.0
+     */
+    protected String getNativeCacheKey() {
+        StringBuilder nativeCacheKey = new StringBuilder();
+        nativeCacheKey.append(getSystemName());
+        nativeCacheKey.append(CommonConstants.SymbolConstants.UNDERLINE);
+        nativeCacheKey.append(name);
+        return nativeCacheKey.toString();
     }
 
     public String getName() {

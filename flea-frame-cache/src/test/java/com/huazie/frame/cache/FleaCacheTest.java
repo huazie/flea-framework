@@ -36,7 +36,8 @@ public class FleaCacheTest {
             //#### 1.  简单字符串
 //            cache.put("menu1", "huazie");
 //            cache.get("menu1");
-//            cache.delete("menu1");
+            cache.delete("menu1");
+//            cache.getCacheKey();
             LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
         } catch (Exception e) {
             LOGGER.error("Exception:", e);
@@ -51,9 +52,26 @@ public class FleaCacheTest {
             LOGGER.debug("Cache={}", cache);
             //#### 1.  简单字符串
 //            cache.put("menu1", "huazie");
+            cache.get("menu1");
+//            cache.delete("menu1");
+            cache.getCacheKey();
+            LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
+        } catch (Exception e) {
+            LOGGER.error("Exception:", e);
+        }
+    }
+
+    @Test
+    public void testCoreFleaCache() {
+        try {
+            AbstractFleaCacheManager manager = FleaCacheManagerFactory.getFleaCacheManager(CacheConstants.FleaCacheConstants.FLEA_CACHE_NAME);
+            AbstractFleaCache cache = manager.getCache("fleaparadetail");
+            LOGGER.debug("Cache={}", cache);
+            //#### 1.  简单字符串
+//            cache.put("menu1", "huazie");
 //            cache.get("menu1");
-//            LOGGER.debug("CacheKey={}", cache.getCacheKey());
-            cache.delete("menu1");
+//            cache.delete("menu1");
+//            cache.getCacheKey();
             LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
         } catch (Exception e) {
             LOGGER.error("Exception:", e);

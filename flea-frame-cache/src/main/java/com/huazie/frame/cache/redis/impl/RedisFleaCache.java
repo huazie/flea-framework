@@ -3,6 +3,7 @@ package com.huazie.frame.cache.redis.impl;
 import com.huazie.frame.cache.AbstractFleaCache;
 import com.huazie.frame.cache.common.CacheEnum;
 import com.huazie.frame.cache.redis.RedisClient;
+import com.huazie.frame.cache.redis.config.RedisConfig;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.util.ObjectUtils;
 import org.slf4j.Logger;
@@ -70,4 +71,8 @@ public class RedisFleaCache extends AbstractFleaCache {
         redisClient.del(key);
     }
 
+    @Override
+    public String getSystemName() {
+        return RedisConfig.getConfig().getSystemName();
+    }
 }

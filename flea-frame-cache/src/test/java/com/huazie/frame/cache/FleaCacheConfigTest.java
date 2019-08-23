@@ -1,9 +1,11 @@
 package com.huazie.frame.cache;
 
 import com.huazie.frame.cache.common.CacheConfigManager;
+import com.huazie.frame.cache.common.CacheConstants;
 import com.huazie.frame.cache.config.Cache;
 import com.huazie.frame.cache.config.CacheData;
 import com.huazie.frame.cache.config.CacheGroup;
+import com.huazie.frame.cache.config.CacheItem;
 import com.huazie.frame.cache.config.CacheParams;
 import com.huazie.frame.cache.config.CacheServer;
 import org.junit.Test;
@@ -35,5 +37,12 @@ public class FleaCacheConfigTest {
         LOGGER.debug("CacheParams={}", cacheParams);
         List<CacheServer> cacheServers = CacheConfigManager.getCacheServer(cacheGroup.getGroup());
         LOGGER.debug("CacheServers={}", cacheServers);
+    }
+
+    @Test
+    public void testGetCacheItem() {
+        CacheItem cacheItem = CacheConfigManager.getCacheItem(CacheConstants.FleaCacheConfigConstants.FLEA_CACHE_INIT, CacheConstants.FleaCacheConfigConstants.SYSTEM_NAME);
+        LOGGER.debug("CacheItem={}", cacheItem);
+
     }
 }

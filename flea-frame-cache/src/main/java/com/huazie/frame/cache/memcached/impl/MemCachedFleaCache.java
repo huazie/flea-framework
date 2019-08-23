@@ -2,6 +2,7 @@ package com.huazie.frame.cache.memcached.impl;
 
 import com.huazie.frame.cache.AbstractFleaCache;
 import com.huazie.frame.cache.common.CacheEnum;
+import com.huazie.frame.cache.memcached.config.MemCachedConfig;
 import com.whalin.MemCached.MemCachedClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,4 +62,8 @@ public class MemCachedFleaCache extends AbstractFleaCache {
         memCachedClient.delete(key);
     }
 
+    @Override
+    public String getSystemName() {
+        return MemCachedConfig.getConfig().getSystemName();
+    }
 }
