@@ -1,0 +1,33 @@
+
+flea_real_name_info
+	real_name_id
+	
+flea_user
+	user_id
+	
+flea_user_attr
+	attr_id
+	user_id
+	attr_code
+	attr_value
+	state
+	create_date
+	done_date
+	effective_date
+	expire_date
+	remarks
+	
+flea_account
+	
+	
+flea_login_log
+flea_login_log_YYYYMM
+
+flea_role
+flea_role_grant
+
+flea_menu
+flea_menu_favorite
+
+
+
