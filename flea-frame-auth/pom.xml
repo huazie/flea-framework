@@ -35,12 +35,39 @@
 
     <dependencies>
 
+        <!-- Spring相关 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+        </dependency>
+
         <!-- FLEA FRAME CONFIG -->
         <dependency>
             <groupId>com.huazie.frame</groupId>
             <artifactId>flea-frame-config</artifactId>
             <version>${parent.version}</version>
             <scope>test</scope>
+        </dependency>
+
+        <!-- FLEA FRAME COMMON -->
+        <dependency>
+            <groupId>com.huazie.frame</groupId>
+            <artifactId>flea-frame-common</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+
+        <!-- FLEA FRAME DB -->
+        <dependency>
+            <groupId>com.huazie.frame</groupId>
+            <artifactId>flea-frame-db</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+
+        <!-- FLEA FRAME CACHE -->
+        <dependency>
+            <groupId>com.huazie.frame</groupId>
+            <artifactId>flea-frame-cache</artifactId>
+            <version>${parent.version}</version>
         </dependency>
 
     </dependencies>

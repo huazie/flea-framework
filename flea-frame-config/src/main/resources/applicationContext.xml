@@ -34,6 +34,7 @@
             <!-- 可以配置多个持久单元 -->
             <list>
                 <value>classpath:META-INF/fleaconfig-persistence.xml</value>
+                <value>classpath:META-INF/fleaauth-persistence.xml</value>
             </list>
         </property>
     </bean>
@@ -46,8 +47,7 @@
         <property name="showSql" value="true"/>
     </bean>
 
-    <bean id="defaultJpaDialect"
-          class="org.springframework.orm.jpa.vendor.EclipseLinkJpaDialect"/>
+    <bean id="defaultJpaDialect" class="org.springframework.orm.jpa.vendor.EclipseLinkJpaDialect"/>
 
     <!-- ################################## -->
     <!-- FleaConfig TransAction Manager JPA -->
@@ -80,6 +80,29 @@
     </bean>
 
     <tx:annotation-driven transaction-manager="fleaConfigTransactionManager"/>
+
+    <!-- ################################## -->
+    <!-- FleaAuth TransAction Manager JPA -->
+    <!-- ################################## -->
+    <bean id="fleaAuthEntityManagerFactory"
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="persistenceUnitManager" ref="defaultPersistenceManager"/>
+        <property name="persistenceUnitName" value="fleaauth"/>
+        <property name="persistenceProvider" ref="defaultPersistenceProvider"/>
+        <property name="jpaVendorAdapter" ref="defaultVendorAdapter"/>
+        <property name="jpaDialect" ref="defaultJpaDialect"/>
+        <property name="jpaPropertyMap">
+            <map>
+                <entry key="eclipselink.weaving" value="false"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="fleaAuthTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="fleaAuthEntityManagerFactory"/>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="fleaAuthTransactionManager"/>
 
     <!--
         配置缓存管理MemCachedSpringCacheManager
