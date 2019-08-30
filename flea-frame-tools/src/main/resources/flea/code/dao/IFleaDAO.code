@@ -1,0 +1,14 @@
+package %CODE_PACKAGE%.dao.interfaces;
+
+import %CODE_PACKAGE%.entity.%ENTITY_CLASS_NAME%;
+import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
+
+/**
+ * <p> %TABLE_DESC%DAO层接口 </p>
+ *
+ * @author %AUTHOR%
+ * @version %VERSION%
+ * @since %VERSION%
+ */
+public interface I%ENTITY_CLASS_NAME%DAO extends IAbstractFleaJPADAO<%ENTITY_CLASS_NAME%> {
+}

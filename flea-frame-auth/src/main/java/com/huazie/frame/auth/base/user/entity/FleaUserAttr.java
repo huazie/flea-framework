@@ -3,8 +3,6 @@ package com.huazie.frame.auth.base.user.entity;
 import com.huazie.frame.common.FleaEntity;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-import javax.persistence.Access;
-import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,7 +23,6 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "flea_user_attr")
-@Access(AccessType.PROPERTY)
 public class FleaUserAttr implements FleaEntity {
 
     private static final long serialVersionUID = 5170428287063612242L;
@@ -60,9 +57,9 @@ public class FleaUserAttr implements FleaEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date effectiveDate; // 生效日期
 
-    @Column(name = "expire_date")
+    @Column(name = "expiry_date")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date expireDate;    // 失效日期
+    private Date expiryDate;    // 失效日期
 
     @Column(name = "remarks")
     private String remarks;     // 备注
@@ -131,12 +128,12 @@ public class FleaUserAttr implements FleaEntity {
         this.effectiveDate = effectiveDate;
     }
 
-    public Date getExpireDate() {
-        return expireDate;
+    public Date getExpiryDate() {
+        return this.expiryDate;
     }
 
-    public void setExpireDate(Date expireDate) {
-        this.expireDate = expireDate;
+    public void setExpiryDate(Date expiryDate) {
+        this.expiryDate = expiryDate;
     }
 
     public String getRemarks() {

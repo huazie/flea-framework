@@ -3,8 +3,6 @@ package com.huazie.frame.auth.base.user.entity;
 import com.huazie.frame.common.FleaEntity;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-import javax.persistence.Access;
-import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,7 +23,6 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "flea_user")
-@Access(AccessType.PROPERTY)
 public class FleaUser implements FleaEntity {
 
 	private static final long serialVersionUID = 6453485802859212467L;

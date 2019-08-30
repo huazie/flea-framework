@@ -1,0 +1,15 @@
+package %CODE_PACKAGE%.service.interfaces;
+
+import %CODE_PACKAGE%.entity.%ENTITY_CLASS_NAME%;
+import com.huazie.frame.db.jpa.service.interfaces.IAbstractFleaJPASV;
+
+/**
+ * <p> %TABLE_DESC%SV层接口定义 </p>
+ *
+ * @author %AUTHOR%
+ * @version %VERSION%
+ * @since %VERSION%
+ */
+public interface I%ENTITY_CLASS_NAME%SV extends IAbstractFleaJPASV<%ENTITY_CLASS_NAME%> {
+
+}

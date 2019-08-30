@@ -1,0 +1,5 @@
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "USER_ATTR_SEQ")
+    @SequenceGenerator(name = "USER_ATTR_SEQ")
+    @Column( name = "%COLUMN%", unique = true, nullable = false)
+    private Long %VARIABLE%;

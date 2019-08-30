@@ -5,11 +5,13 @@ import org.slf4j.LoggerFactory;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -138,6 +140,32 @@ public class IOUtils {
             }
         }
 
+        return result;
+    }
+
+    /**
+     * <p> 获取文件内容 </p>
+     *
+     * @param resourceName 文件路径
+     * @return
+     */
+    public static String toNatvieStringFromResource(String resourceName) {
+        String result = "";
+        File file = new File(IOUtils.class.getClassLoader().getResource(resourceName).getFile());
+
+        try (FileReader fileReader = new FileReader(file);
+             BufferedReader bufferedReader = new BufferedReader(fileReader)) {
+            String lineStr;
+            StringBuilder content = new StringBuilder();
+            while ((lineStr = bufferedReader.readLine()) != null) {
+                content.append(lineStr);
+            }
+            result = content.toString();
+        } catch (Exception e) {
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("输入流转字节数组出现异常：", e);
+            }
+        }
         return result;
     }
 
