@@ -89,6 +89,10 @@ public interface CommonConstants {
          * <p> 星号 </p>
          */
         String ASTERISK = "*";
+        /**
+         * <p> 百分号 </p>
+         */
+        String PERCENT = "%";
     }
 
     /**

@@ -8,6 +8,8 @@
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<!-- Connection JDBC -->
 		<class>com.huazie.frame.auth.base.user.entity.FleaUser</class>
+		<class>com.huazie.frame.auth.base.user.entity.FleaUserAttr</class>
+		<class>com.huazie.frame.auth.base.user.entity.FleaRealNameInfo</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		
 		<properties>

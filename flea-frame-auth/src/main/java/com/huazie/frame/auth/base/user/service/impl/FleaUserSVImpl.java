@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**
- * <p> Flea用户SV层操作实现类 </p>
+ * <p> Flea用户SV层实现类 </p>
  *
  * @author huazie
  * @version 1.0.0
@@ -27,5 +27,4 @@ public class FleaUserSVImpl extends AbstractFleaJPASVImpl<FleaUser> implements I
     protected IAbstractFleaJPADAO<FleaUser> getDAO() {
         return fleaUserDao;
     }
-
 }

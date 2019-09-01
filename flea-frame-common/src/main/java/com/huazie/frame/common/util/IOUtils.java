@@ -6,14 +6,17 @@ import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 
 /**
  * <p> JAVA输入和输出处理工具类 </p>
@@ -147,26 +150,64 @@ public class IOUtils {
      * <p> 获取文件内容 </p>
      *
      * @param resourceName 文件路径
-     * @return
+     * @return 文件内容
+     * @since 1.0.0
      */
-    public static String toNatvieStringFromResource(String resourceName) {
+    public static String toNativeStringFromResource(String resourceName) {
         String result = "";
-        File file = new File(IOUtils.class.getClassLoader().getResource(resourceName).getFile());
+        URL url = IOUtils.class.getClassLoader().getResource(resourceName);
 
-        try (FileReader fileReader = new FileReader(file);
-             BufferedReader bufferedReader = new BufferedReader(fileReader)) {
-            String lineStr;
-            StringBuilder content = new StringBuilder();
-            while ((lineStr = bufferedReader.readLine()) != null) {
-                content.append(lineStr);
-            }
-            result = content.toString();
-        } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("输入流转字节数组出现异常：", e);
+        if (ObjectUtils.isNotEmpty(url)) {
+            File file = new File(url.getFile());
+
+            try (FileReader fileReader = new FileReader(file);
+                 BufferedReader bufferedReader = new BufferedReader(fileReader)) {
+                String lineStr;
+                StringBuilder content = new StringBuilder();
+                while (null != (lineStr = bufferedReader.readLine())) {
+                    content.append(lineStr).append("\n");
+                }
+                content.deleteCharAt(content.length() - 1); // 删除最后一个换行符
+                result = content.toString();
+            } catch (Exception e) {
+                if (LOGGER.isErrorEnabled()) {
+                    LOGGER.error("获取资源文件内容出现异常：", e);
+                }
             }
         }
+
         return result;
+    }
+
+    /**
+     * <p> 将文件内容写入指定文件 </p>
+     *
+     * @param content  文件内容
+     * @param filePath 文件路径
+     * @return
+     */
+    public static File toFileFromNativeString(String content, String filePath) {
+        File file = new File(filePath);
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                if (LOGGER.isErrorEnabled()) {
+                    LOGGER.error("文件创建出现异常：", e);
+                }
+            }
+        }
+
+        try (FileWriter fileWriter = new FileWriter(file);
+             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
+            bufferedWriter.write(content);
+            bufferedWriter.flush();
+        } catch (Exception e) {
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("指定文件写内容出现异常：", e);
+            }
+        }
+        return file;
     }
 
 }

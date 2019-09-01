@@ -1,6 +1,11 @@
 package com.huazie.frame.tools.code.impl;
 
-import com.huazie.frame.tools.code.interfaces.IFleaCodeBuilder;
+import com.huazie.frame.common.util.IOUtils;
+import com.huazie.frame.common.util.StringUtils;
+import com.huazie.frame.tools.code.FleaCodeHelper;
+import com.huazie.frame.tools.common.ToolsConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
@@ -11,11 +16,35 @@ import java.util.Map;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class FleaSVImplBuilder implements IFleaCodeBuilder {
+public class FleaSVImplBuilder extends FleaCodeBuilder {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(FleaSVImplBuilder.class);
 
     @Override
-    public void build(Map<String, Object> param) throws Exception {
-
+    protected void combinedFilePath(StringBuilder fleaFilePathStrBuilder, String entityClassName, String separator) {
+        fleaFilePathStrBuilder.append("service").append(separator).append("impl").append(separator)
+                .append(entityClassName).append("SVImpl").append(".java");
     }
 
+    @Override
+    protected void code(Map<String, Object> param) {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("开始编写SV层实现类代码");
+        }
+
+        // SV层实现类代码文件路径
+        String fleaSVImplFilePathStr = StringUtils.valueOf(param.get(ToolsConstants.CodeConstants.CODE_FILE_PATH));
+        // 实体类名
+        String entityClassName = StringUtils.valueOf(param.get(ToolsConstants.CodeConstants.ENTITY_CLASS_NAME));
+
+        // 获取SV层实现类配置模板文件内容
+        String content = IOUtils.toNativeStringFromResource("flea/code/service/FleaSVImpl.code");
+        // 新建SV层实现类java文件
+        IOUtils.toFileFromNativeString(FleaCodeHelper.convert(content, param), fleaSVImplFilePathStr);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("SV层实现类 = {}", entityClassName);
+            LOGGER.debug("SV层实现类代码文件路径 = {}", fleaSVImplFilePathStr);
+            LOGGER.debug("结束编写SV层实现类代码");
+        }
+    }
 }

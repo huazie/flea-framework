@@ -25,33 +25,33 @@ import java.util.Date;
 @Table(name = "flea_user_attr")
 public class FleaUserAttr implements FleaEntity {
 
-    private static final long serialVersionUID = 5170428287063612242L;
+    private static final long serialVersionUID = 9140355487132276970L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "USER_ATTR_SEQ")
-    @SequenceGenerator(name = "USER_ATTR_SEQ")
-    @Column( name = "attr_id", unique = true, nullable = false)
-    private Long attrId;        // 属性编号
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "FLEA_USER_ATTR_SEQ")
+    @SequenceGenerator(name = "FLEA_USER_ATTR_SEQ")
+    @Column(name = "attr_id", unique = true, nullable = false)
+    private Long attrId; // 属性编号
 
-    @Column( name = "user_id", nullable = false)
-    private Long userId;	    // 用户编号
+    @Column(name = "user_id", nullable = false)
+    private Long userId; // 用户编号
 
-    @Column( name = "attr_code", nullable = false)
-    private String attrCode;    // 属性码
+    @Column(name = "attr_code", nullable = false)
+    private String attrCode; // 属性码
 
-    @Column( name = "attr_value")
-    private String attrValue;   // 属性值
+    @Column(name = "attr_value")
+    private String attrValue; // 属性值
 
     @Column(name = "state", nullable = false)
-    private Integer state;      // 状态(0：删除 1：正常)
+    private Integer state; // 属性状态
 
-    @Column(name = "create_date")
+    @Column(name = "create_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createDate;    // 创建日期
+    private Date createDate; // 创建日期
 
     @Column(name = "done_date")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date doneDate;      // 修改日期
+    private Date doneDate; // 修改日期
 
     @Column(name = "effective_date")
     @Temporal(TemporalType.TIMESTAMP)
@@ -59,10 +59,10 @@ public class FleaUserAttr implements FleaEntity {
 
     @Column(name = "expiry_date")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date expiryDate;    // 失效日期
+    private Date expiryDate; // 失效日期
 
     @Column(name = "remarks")
-    private String remarks;     // 备注
+    private String remarks; // 备注信息
 
     public Long getAttrId() {
         return attrId;
@@ -129,7 +129,7 @@ public class FleaUserAttr implements FleaEntity {
     }
 
     public Date getExpiryDate() {
-        return this.expiryDate;
+        return expiryDate;
     }
 
     public void setExpiryDate(Date expiryDate) {

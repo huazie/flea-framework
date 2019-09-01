@@ -6,7 +6,7 @@ import com.huazie.frame.auth.base.user.entity.FleaUserAttr;
 import org.springframework.stereotype.Repository;
 
 /**
- * <p> 用户属性DAO层实现类 </p>
+ * <p> Flea用户属性DAO层实现类 </p>
  *
  * @author huazie
  * @version 1.0.0

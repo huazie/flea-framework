@@ -1,7 +1,7 @@
-    public %VAR_TYPE% get%VARIABLE1%() {
+    public %VAR_TYPE% get%VARIABLE_1%() {
         return %VARIABLE%;
     }
 
-    public void set%VARIABLE1%(%VAR_TYPE% %VARIABLE%) {
+    public void set%VARIABLE_1%(%VAR_TYPE% %VARIABLE%) {
         this.%VARIABLE% = %VARIABLE%;
     }

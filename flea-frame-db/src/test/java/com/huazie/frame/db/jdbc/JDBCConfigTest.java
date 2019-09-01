@@ -106,4 +106,10 @@ public class JDBCConfigTest {
         }
     }
 
+    @Test
+    public void testQueryTableStructure() {
+        FleaJDBCConfig.init(DBSystemEnum.MySQL.getName(), "fleaconfig");
+        FleaJDBCHelper.queryTableStructure("flea_jersey_i18n_error_mapping");
+    }
+
 }

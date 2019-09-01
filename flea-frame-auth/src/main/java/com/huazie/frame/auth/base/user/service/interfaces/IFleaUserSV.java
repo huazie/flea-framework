@@ -11,5 +11,4 @@ import com.huazie.frame.db.jpa.service.interfaces.IAbstractFleaJPASV;
  * @since 1.0.0
  */
 public interface IFleaUserSV extends IAbstractFleaJPASV<FleaUser> {
-
 }

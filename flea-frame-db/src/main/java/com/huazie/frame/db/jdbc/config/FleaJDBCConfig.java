@@ -3,11 +3,9 @@ package com.huazie.frame.db.jdbc.config;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.FleaConfigManager;
 import com.huazie.frame.common.FleaFrameManager;
-import com.huazie.frame.common.config.ConfigItems;
 import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.MapUtils;
 import com.huazie.frame.common.util.ObjectUtils;
-import com.huazie.frame.common.util.PropertiesUtil;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.DBConstants;
 import com.huazie.frame.db.common.exception.DaoException;
@@ -22,7 +20,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 /**
  * <p> 读取数据库的配置信息,该信息存在于db-config.properties中 , 并获取连接对象和释放连接对象 </p>
@@ -207,6 +204,33 @@ public class FleaJDBCConfig {
     public static void close(Connection conn, Statement statement, ResultSet rs) {
         closeConnection(conn);
         closeStatement(statement);
+        closeResultSet(rs);
+    }
+
+    /**
+     * <p> 释放连接 </p>
+     *
+     * @param conn 数据库连接对象
+     */
+    public static void close(Connection conn) {
+        closeConnection(conn);
+    }
+
+    /**
+     * <p> 释放状态 </p>
+     *
+     * @param statement 数据库状态对象
+     */
+    public static void close(Statement statement) {
+        closeStatement(statement);
+    }
+
+    /**
+     * <p> 释放结果集 </p>
+     *
+     * @param rs 数据库结果集对象
+     */
+    public static void close(ResultSet rs) {
         closeResultSet(rs);
     }
 

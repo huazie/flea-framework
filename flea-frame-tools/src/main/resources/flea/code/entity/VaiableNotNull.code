@@ -1,2 +1,2 @@
-    @Column( name = "%COLUMN%", nullable = false)
-    private %VAR_TYPE% %VARIABLE%;
+    @Column( name = "%COLUMN_NAME%", nullable = false)
+    private %VAR_TYPE% %VARIABLE%; // %COLUMN_DESC%

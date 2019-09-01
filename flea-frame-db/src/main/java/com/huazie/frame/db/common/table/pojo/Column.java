@@ -25,6 +25,8 @@ public class Column implements Serializable {
 
     private String tabColumnName; // 实体类对应的表字段名
 
+    private String tabColumnDesc; // 实体类对应的表字段描述
+
     private Object attrValue; // 实体类属性值
 
     private boolean primaryKey; // 是否是主键
@@ -55,6 +57,14 @@ public class Column implements Serializable {
 
     public void setTabColumnName(String tabColumnName) {
         this.tabColumnName = tabColumnName;
+    }
+
+    public String getTabColumnDesc() {
+        return tabColumnDesc;
+    }
+
+    public void setTabColumnDesc(String tabColumnDesc) {
+        this.tabColumnDesc = tabColumnDesc;
     }
 
     public Object getAttrValue() {

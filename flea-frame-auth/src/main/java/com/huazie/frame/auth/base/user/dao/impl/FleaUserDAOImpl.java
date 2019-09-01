@@ -14,7 +14,4 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("fleaUserDAO")
 public class FleaUserDAOImpl extends FleaAuthDaoImpl<FleaUser> implements IFleaUserDAO {
-
-    //private final static Logger LOGGER = LoggerFactory.getLogger(FleaUserDAOImpl.class);
-
 }

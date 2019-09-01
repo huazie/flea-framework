@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**
- * <p> Flea用户属性SV层接口实现 </p>
+ * <p> Flea用户属性SV层实现类 </p>
  *
  * @author huazie
  * @version 1.0.0

@@ -14,9 +14,17 @@ public interface IFleaCodeBuilder {
     /**
      * <p> 生成Flea相关代码java类 </p>
      *
-     * @param param
-     * @throws Exception
+     * @param param 代码模板参数
+     * @since 1.0.0
      */
-    void build(Map<String, Object> param) throws Exception;
+    void build(Map<String, Object> param);
+
+    /**
+     * <p> 销毁Flea相关代码java类文件 </p>
+     *
+     * @param param 代码模板参数
+     * @since 1.0.0
+     */
+    void destroy(Map<String, Object> param);
 
 }

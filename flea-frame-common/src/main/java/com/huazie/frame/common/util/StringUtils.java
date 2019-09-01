@@ -111,6 +111,19 @@ public class StringUtils {
     }
 
     /**
+     * <p> 首字母转大写，其余字母转小写 </p>
+     *
+     * @param value 待处理字符串
+     * @return 首字母转大写，其余字母转小写的字符串
+     * @since 1.0.0
+     */
+    public static String toUpperCase(String value) {
+        StringBuilder newValue = new StringBuilder();
+        newValue.append(Character.toUpperCase(value.charAt(0))).append(value.substring(1).toLowerCase());
+        return newValue.toString();
+    }
+
+    /**
      * <p> 截取字符串 value中字符串start 和 字符串 end 之间的字符串 </p>
      *
      * @param value 待截取的字符串
