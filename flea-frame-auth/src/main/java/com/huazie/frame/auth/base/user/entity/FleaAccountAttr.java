@@ -15,26 +15,26 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 /**
- * <p> Flea用户属性表对应的实体类 </p>
+ * <p> Flea账户属性表对应的实体类 </p>
  *
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0
  */
 @Entity
-@Table(name = "flea_user_attr")
-public class FleaUserAttr implements FleaEntity {
+@Table(name = "flea_account_attr")
+public class FleaAccountAttr implements FleaEntity {
 
-    private static final long serialVersionUID = 9140355487132276970L;
+    private static final long serialVersionUID = 2069781941532901722L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "FLEA_USER_ATTR_SEQ")
-    @SequenceGenerator(name = "FLEA_USER_ATTR_SEQ")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "FLEA_ACCOUNT_ATTR_SEQ")
+    @SequenceGenerator(name = "FLEA_ACCOUNT_ATTR_SEQ")
     @Column(name = "attr_id", unique = true, nullable = false)
     private Long attrId; // 属性编号
 
-    @Column(name = "user_id", nullable = false)
-    private Long userId; // 用户编号
+    @Column(name = "account_id", nullable = false)
+    private Long accountId; // 账户编号
 
     @Column(name = "attr_code", nullable = false)
     private String attrCode; // 属性码
@@ -43,7 +43,7 @@ public class FleaUserAttr implements FleaEntity {
     private String attrValue; // 属性值
 
     @Column(name = "state", nullable = false)
-    private Integer state; // 属性状态(0：删除 1：正常 ）
+    private Integer state; // 属性状态(0：删除 1：在用）
 
     @Column(name = "create_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -72,12 +72,12 @@ public class FleaUserAttr implements FleaEntity {
         this.attrId = attrId;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getAccountId() {
+        return accountId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
     }
 
     public String getAttrCode() {

@@ -15,7 +15,7 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 /**
- * <p> Flea用户表对应的实体类 </p>
+ * <p> Flea用户信息表对应的实体类 </p>
  *
  * @author huazie
  * @version 1.0.0
@@ -25,37 +25,34 @@ import java.util.Date;
 @Table(name = "flea_user")
 public class FleaUser implements FleaEntity {
 
-    private static final long serialVersionUID = -6518305317944346076L;
+    private static final long serialVersionUID = 2539048894091917212L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "FLEA_USER_SEQ")
     @SequenceGenerator(name = "FLEA_USER_SEQ")
-    @Column( name = "user_id", unique = true, nullable = false)
+    @Column(name = "user_id", unique = true, nullable = false)
     private Long userId; // 用户编号
 
-    @Column( name = "user_name", nullable = false)
+    @Column(name = "user_name", nullable = false)
     private String userName; // 昵称
 
-    @Column( name = "user_sex")
+    @Column(name = "user_sex")
     private Integer userSex; // 性别（1：男 2：女 3：其他）
 
     @Column(name = "user_birthday")
     @Temporal(TemporalType.TIMESTAMP)
     private Date userBirthday; // 生日
 
-    @Column( name = "user_address")
+    @Column(name = "user_address")
     private String userAddress; // 住址
 
-    @Column( name = "user_email")
+    @Column(name = "user_email")
     private String userEmail; // 邮箱
 
-    @Column( name = "user_phone")
+    @Column(name = "user_phone")
     private String userPhone; // 手机
 
-    @Column( name = "user_level", nullable = false)
-    private Integer userLevel; // 等级(1: 普通用户，2:普通会员 ,3:高级会员)
-
-    @Column( name = "user_state", nullable = false)
+    @Column(name = "user_state", nullable = false)
     private Integer userState; // 状态（1：正常，0：禁用）
 
     @Column(name = "create_date", nullable = false)
@@ -74,13 +71,7 @@ public class FleaUser implements FleaEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date expiryDate; // 失效日期
 
-    @Column( name = "user_pic", nullable = false)
-    private String userPic; // 用户头像
-
-    @Column( name = "user_autograph")
-    private String userAutograph; // 签名
-
-    @Column( name = "remarks")
+    @Column(name = "remarks")
     private String remarks; // 备注信息
 
     public Long getUserId() {
@@ -139,14 +130,6 @@ public class FleaUser implements FleaEntity {
         this.userPhone = userPhone;
     }
 
-    public Integer getUserLevel() {
-        return userLevel;
-    }
-
-    public void setUserLevel(Integer userLevel) {
-        this.userLevel = userLevel;
-    }
-
     public Integer getUserState() {
         return userState;
     }
@@ -185,22 +168,6 @@ public class FleaUser implements FleaEntity {
 
     public void setExpiryDate(Date expiryDate) {
         this.expiryDate = expiryDate;
-    }
-
-    public String getUserPic() {
-        return userPic;
-    }
-
-    public void setUserPic(String userPic) {
-        this.userPic = userPic;
-    }
-
-    public String getUserAutograph() {
-        return userAutograph;
-    }
-
-    public void setUserAutograph(String userAutograph) {
-        this.userAutograph = userAutograph;
     }
 
     public String getRemarks() {

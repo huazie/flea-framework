@@ -15,41 +15,38 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 /**
- * <p> Flea用户实名信息表对应的实体类 </p>
+ * <p> Flea账户信息表对应的实体类 </p>
  *
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0
  */
 @Entity
-@Table(name = "flea_real_name_info")
-public class FleaRealNameInfo implements FleaEntity {
+@Table(name = "flea_account")
+public class FleaAccount implements FleaEntity {
 
-    private static final long serialVersionUID = 9217026322231505398L;
+    private static final long serialVersionUID = -3091732512807106630L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "FLEA_REAL_NAME_INFO_SEQ")
-    @SequenceGenerator(name = "FLEA_REAL_NAME_INFO_SEQ")
-    @Column( name = "real_name_id", unique = true, nullable = false)
-    private Long realNameId; // 实名编号
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "FLEA_ACCOUNT_SEQ")
+    @SequenceGenerator(name = "FLEA_ACCOUNT_SEQ")
+    @Column(name = "account_id", unique = true, nullable = false)
+    private Long accountId; // 账户编号
 
-    @Column( name = "user_id", nullable = false)
+    @Column(name = "user_id", nullable = false)
     private Long userId; // 用户编号
 
-    @Column( name = "cert_type", nullable = false)
-    private Integer certType; // 证件类型（1：身份证）
+    @Column(name = "account_code", nullable = false)
+    private String accountCode; // 账号（邮箱 或 手机）
 
-    @Column( name = "cert_code", nullable = false)
-    private String certCode; // 证件号码
+    @Column(name = "account_pwd", nullable = false)
+    private String accountPwd; // 密码
 
-    @Column( name = "cert_name", nullable = false)
-    private String certName; // 证件名称
+    @Column(name = "account_type", nullable = false)
+    private Integer accountType; // 账户类型（1：邮箱 ，2：手机）
 
-    @Column( name = "cert_address")
-    private String certAddress; // 证件地址
-
-    @Column( name = "real_name_state", nullable = false)
-    private Integer realNameState; // 实名信息状态（0：删除 1：在用）
+    @Column(name = "account_state", nullable = false)
+    private Integer accountState; // 账户状态（0：删除，1：正常 ，2：禁用，3：待审核）
 
     @Column(name = "create_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -67,15 +64,15 @@ public class FleaRealNameInfo implements FleaEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date expiryDate; // 失效日期
 
-    @Column( name = "remarks")
-    private String remarks; // 备注
+    @Column(name = "remarks")
+    private String remarks; // 备注信息
 
-    public Long getRealNameId() {
-        return realNameId;
+    public Long getAccountId() {
+        return accountId;
     }
 
-    public void setRealNameId(Long realNameId) {
-        this.realNameId = realNameId;
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
     }
 
     public Long getUserId() {
@@ -86,44 +83,36 @@ public class FleaRealNameInfo implements FleaEntity {
         this.userId = userId;
     }
 
-    public Integer getCertType() {
-        return certType;
+    public String getAccountCode() {
+        return accountCode;
     }
 
-    public void setCertType(Integer certType) {
-        this.certType = certType;
+    public void setAccountCode(String accountCode) {
+        this.accountCode = accountCode;
     }
 
-    public String getCertCode() {
-        return certCode;
+    public String getAccountPwd() {
+        return accountPwd;
     }
 
-    public void setCertCode(String certCode) {
-        this.certCode = certCode;
+    public void setAccountPwd(String accountPwd) {
+        this.accountPwd = accountPwd;
     }
 
-    public String getCertName() {
-        return certName;
+    public Integer getAccountType() {
+        return accountType;
     }
 
-    public void setCertName(String certName) {
-        this.certName = certName;
+    public void setAccountType(Integer accountType) {
+        this.accountType = accountType;
     }
 
-    public String getCertAddress() {
-        return certAddress;
+    public Integer getAccountState() {
+        return accountState;
     }
 
-    public void setCertAddress(String certAddress) {
-        this.certAddress = certAddress;
-    }
-
-    public Integer getRealNameState() {
-        return realNameState;
-    }
-
-    public void setRealNameState(Integer realNameState) {
-        this.realNameState = realNameState;
+    public void setAccountState(Integer accountState) {
+        this.accountState = accountState;
     }
 
     public Date getCreateDate() {

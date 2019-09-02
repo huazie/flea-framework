@@ -15,35 +15,41 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 /**
- * <p> Flea用户属性表对应的实体类 </p>
+ * <p> Flea用户实名信息表对应的实体类 </p>
  *
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0
  */
 @Entity
-@Table(name = "flea_user_attr")
-public class FleaUserAttr implements FleaEntity {
+@Table(name = "flea_user_real_name_info")
+public class FleaUserRealNameInfo implements FleaEntity {
 
-    private static final long serialVersionUID = 9140355487132276970L;
+    private static final long serialVersionUID = -8847538755956749882L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "FLEA_USER_ATTR_SEQ")
-    @SequenceGenerator(name = "FLEA_USER_ATTR_SEQ")
-    @Column(name = "attr_id", unique = true, nullable = false)
-    private Long attrId; // 属性编号
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "FLEA_USER_REAL_NAME_INFO_SEQ")
+    @SequenceGenerator(name = "FLEA_USER_REAL_NAME_INFO_SEQ")
+    @Column(name = "real_name_id", unique = true, nullable = false)
+    private Long realNameId; // 实名编号
 
     @Column(name = "user_id", nullable = false)
     private Long userId; // 用户编号
 
-    @Column(name = "attr_code", nullable = false)
-    private String attrCode; // 属性码
+    @Column(name = "cert_type", nullable = false)
+    private Integer certType; // 证件类型（1：身份证）
 
-    @Column(name = "attr_value")
-    private String attrValue; // 属性值
+    @Column(name = "cert_code", nullable = false)
+    private String certCode; // 证件号码
 
-    @Column(name = "state", nullable = false)
-    private Integer state; // 属性状态(0：删除 1：正常 ）
+    @Column(name = "cert_name", nullable = false)
+    private String certName; // 证件名称
+
+    @Column(name = "cert_address")
+    private String certAddress; // 证件地址
+
+    @Column(name = "real_name_state", nullable = false)
+    private Integer realNameState; // 实名信息状态（0：删除 1：在用）
 
     @Column(name = "create_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -53,23 +59,23 @@ public class FleaUserAttr implements FleaEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date doneDate; // 修改日期
 
-    @Column(name = "effective_date")
+    @Column(name = "effective_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date effectiveDate; // 生效日期
 
-    @Column(name = "expiry_date")
+    @Column(name = "expiry_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date expiryDate; // 失效日期
 
     @Column(name = "remarks")
     private String remarks; // 备注信息
 
-    public Long getAttrId() {
-        return attrId;
+    public Long getRealNameId() {
+        return realNameId;
     }
 
-    public void setAttrId(Long attrId) {
-        this.attrId = attrId;
+    public void setRealNameId(Long realNameId) {
+        this.realNameId = realNameId;
     }
 
     public Long getUserId() {
@@ -80,28 +86,44 @@ public class FleaUserAttr implements FleaEntity {
         this.userId = userId;
     }
 
-    public String getAttrCode() {
-        return attrCode;
+    public Integer getCertType() {
+        return certType;
     }
 
-    public void setAttrCode(String attrCode) {
-        this.attrCode = attrCode;
+    public void setCertType(Integer certType) {
+        this.certType = certType;
     }
 
-    public String getAttrValue() {
-        return attrValue;
+    public String getCertCode() {
+        return certCode;
     }
 
-    public void setAttrValue(String attrValue) {
-        this.attrValue = attrValue;
+    public void setCertCode(String certCode) {
+        this.certCode = certCode;
     }
 
-    public Integer getState() {
-        return state;
+    public String getCertName() {
+        return certName;
     }
 
-    public void setState(Integer state) {
-        this.state = state;
+    public void setCertName(String certName) {
+        this.certName = certName;
+    }
+
+    public String getCertAddress() {
+        return certAddress;
+    }
+
+    public void setCertAddress(String certAddress) {
+        this.certAddress = certAddress;
+    }
+
+    public Integer getRealNameState() {
+        return realNameState;
+    }
+
+    public void setRealNameState(Integer realNameState) {
+        this.realNameState = realNameState;
     }
 
     public Date getCreateDate() {

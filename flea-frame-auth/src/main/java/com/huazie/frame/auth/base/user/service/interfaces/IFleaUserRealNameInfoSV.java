@@ -1,6 +1,6 @@
 package com.huazie.frame.auth.base.user.service.interfaces;
 
-import com.huazie.frame.auth.base.user.entity.FleaRealNameInfo;
+import com.huazie.frame.auth.base.user.entity.FleaUserRealNameInfo;
 import com.huazie.frame.db.jpa.service.interfaces.IAbstractFleaJPASV;
 
 /**
@@ -10,6 +10,5 @@ import com.huazie.frame.db.jpa.service.interfaces.IAbstractFleaJPASV;
  * @version 1.0.0
  * @since 1.0.0
  */
-public interface IFleaRealNameInfoSV extends IAbstractFleaJPASV<FleaRealNameInfo> {
-
+public interface IFleaUserRealNameInfoSV extends IAbstractFleaJPASV<FleaUserRealNameInfo> {
 }

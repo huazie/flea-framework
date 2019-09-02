@@ -1,6 +1,6 @@
 package com.huazie.frame.auth.base.user.dao.interfaces;
 
-import com.huazie.frame.auth.base.user.entity.FleaRealNameInfo;
+import com.huazie.frame.auth.base.user.entity.FleaUserRealNameInfo;
 import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 
 /**
@@ -10,5 +10,5 @@ import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
  * @version 1.0.0
  * @since 1.0.0
  */
-public interface IFleaRealNameInfoDAO extends IAbstractFleaJPADAO<FleaRealNameInfo> {
+public interface IFleaUserRealNameInfoDAO extends IAbstractFleaJPADAO<FleaUserRealNameInfo> {
 }

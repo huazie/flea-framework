@@ -18,12 +18,13 @@ public class FleaCodeMain extends JFrame {
 
     private static String author = "huazie";
     private static String version = "1.0.0";
-    private static String rootPackage = "E:\\fleaworkspace\\flea-frame\\flea-frame-auth\\src\\main\\java";
+    //private static String rootPackage = "E:\\fleaworkspace\\flea-frame\\flea-frame-auth\\src\\main\\java";
+    private static String rootPackage = "F:\\FileRecv\\project\\flea-frame\\flea-frame-auth\\src\\main\\java";
 
     private static String codePackage = "com.huazie.frame.auth.base.user";
     private static String fleaPersistenceUnitDaoClassPackage = "com.huazie.frame.auth.base.FleaAuthDaoImpl";
-    private static String tableName = "flea_user";
-    private static String tableDesc = "Flea用户";
+    private static String tableName = "flea_account_attr";
+    private static String tableDesc = "Flea账户属性";
 
     private static String dbSystemName = "MySQL";
     private static String dbName = "fleaauth";
