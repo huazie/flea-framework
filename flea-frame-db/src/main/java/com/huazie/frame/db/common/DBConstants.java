@@ -22,7 +22,7 @@ public interface DBConstants {
         /**
          * SQL模板文件系统属性键
          */
-        String SQL_TEMPLATE_FILE_SYSTEM_KEY = "fleaframe.code.sql.template.filename";
+        String SQL_TEMPLATE_FILE_SYSTEM_KEY = "fleaframe.db.sql.template.filename";
     }
 
     /**
@@ -43,7 +43,7 @@ public interface DBConstants {
         /**
          * 分表配置文件系统属性键
          */
-        String TABLE_SPLIT_FILE_SYSTEM_KEY = "fleaframe.code.table.split.filename";
+        String TABLE_SPLIT_FILE_SYSTEM_KEY = "fleaframe.db.table.split.filename";
     }
 
     /**

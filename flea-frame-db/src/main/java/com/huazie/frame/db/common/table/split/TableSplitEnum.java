@@ -9,11 +9,11 @@ package com.huazie.frame.db.common.table.split;
  */
 public enum TableSplitEnum {
 
-    TWOHEX("twohex", "com.huazie.frame.code.common.table.split.impl.TwoHexTableSplitImpl", "按两位十六进制分表"),
-    THREEHEX("threehex", "com.huazie.frame.code.common.table.split.impl.ThreeHexTableSplitImpl", "按三位十六进制分表"),
-    YYYY("yyyy", "com.huazie.frame.code.common.table.split.impl.YYYYTableSplitImpl", "按年分表"),
-    YYYYMM("yyyymm", "com.huazie.frame.code.common.table.split.impl.YYYYMMTableSplitImpl", "按年月分表"),
-    YYYYMMDD("yyyymmdd", "com.huazie.frame.code.common.table.split.impl.YYYYMMDDTableSplitImpl", "按年月日分表");
+    TWOHEX("twohex", "com.huazie.frame.db.common.table.split.impl.TwoHexTableSplitImpl", "按两位十六进制分表"),
+    THREEHEX("threehex", "com.huazie.frame.db.common.table.split.impl.ThreeHexTableSplitImpl", "按三位十六进制分表"),
+    YYYY("yyyy", "com.huazie.frame.db.common.table.split.impl.YYYYTableSplitImpl", "按年分表"),
+    YYYYMM("yyyymm", "com.huazie.frame.db.common.table.split.impl.YYYYMMTableSplitImpl", "按年月分表"),
+    YYYYMMDD("yyyymmdd", "com.huazie.frame.db.common.table.split.impl.YYYYMMDDTableSplitImpl", "按年月日分表");
 
     private String key;         // 分表类型关键字
     private String implClass;   // 分表类型实现类

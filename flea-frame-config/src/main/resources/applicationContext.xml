@@ -22,7 +22,7 @@
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
-                <value>classpath:flea/code/flea-code-config.properties</value>
+                <value>classpath:flea/db/flea-db-config.properties</value>
             </list>
         </property>
         <property name="fileEncoding" value="UTF-8"/>
