@@ -6,10 +6,25 @@ import com.huazie.frame.common.i18n.FleaI18nHelper;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.common.util.UnicodeUtils;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Desktop;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -20,8 +35,8 @@ import java.util.Locale;
  * I18N 图形化转化类，将Unicode字符和本地环境相互转化
  *
  * @author huazie
- * @version v1.0.0
- * @date 2018年8月20日
+ * @version 1.0.0
+ * @since 1.0.0
  */
 @SuppressWarnings("serial")
 public class FleaI18NMain extends JFrame {

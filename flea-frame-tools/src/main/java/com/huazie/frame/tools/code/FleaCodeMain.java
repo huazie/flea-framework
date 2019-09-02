@@ -1,7 +1,9 @@
 package com.huazie.frame.tools.code;
 
+import com.huazie.frame.common.i18n.FleaI18nHelper;
 import com.huazie.frame.tools.common.ToolsConstants;
 
+import javax.swing.JFrame;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,7 +14,7 @@ import java.util.Map;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class FleaCodeMain {
+public class FleaCodeMain extends JFrame {
 
     private static String author = "huazie";
     private static String version = "1.0.0";
@@ -25,6 +27,15 @@ public class FleaCodeMain {
 
     private static String dbSystemName = "MySQL";
     private static String dbName = "fleaauth";
+
+    public FleaCodeMain() {
+        super(FleaI18nHelper.i18nForCommon("COMMON_I18N_00000"));
+        init();
+    }
+
+    private void init() {
+
+    }
 
     public void code() {
         Map<String, Object> param = new HashMap<String, Object>();

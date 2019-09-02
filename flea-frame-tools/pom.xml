@@ -42,6 +42,13 @@
             <version>${parent.version}</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.jvnet.substance/substance -->
+        <dependency>
+            <groupId>org.jvnet.substance</groupId>
+            <artifactId>substance</artifactId>
+            <version>4.3</version>
+        </dependency>
+
     </dependencies>
 
 </project>
