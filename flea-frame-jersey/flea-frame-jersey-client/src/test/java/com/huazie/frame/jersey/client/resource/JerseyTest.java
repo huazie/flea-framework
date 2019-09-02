@@ -41,7 +41,7 @@ import java.util.Locale;
  */
 public class JerseyTest {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(JerseyTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JerseyTest.class);
 
     private ApplicationContext applicationContext;
 

@@ -23,7 +23,7 @@ import java.util.List;
 @Repository("resServiceDAO")
 public class FleaJerseyResServiceDAOImpl extends FleaConfigDAOImpl<FleaJerseyResService> implements IFleaJerseyResServiceDAO {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(FleaJerseyResServiceDAOImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FleaJerseyResServiceDAOImpl.class);
 
     @Override
     @SuppressWarnings(value = "unchecked")

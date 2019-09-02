@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class SqlTemplateConfig {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(SqlTemplateConfig.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SqlTemplateConfig.class);
 
     private static volatile SqlTemplateConfig config;
 

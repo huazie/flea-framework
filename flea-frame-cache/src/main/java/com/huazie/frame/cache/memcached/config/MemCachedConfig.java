@@ -23,11 +23,13 @@ import java.util.Properties;
  */
 public class MemCachedConfig {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(MemCachedConfig.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MemCachedConfig.class);
 
     private static volatile MemCachedConfig config;
 
     private static Properties prop;
+
+    private String systemName; // 缓存所属系统名
 
     private String[] servers;   //服务器地址
 
@@ -50,9 +52,9 @@ public class MemCachedConfig {
     private int hashingAlg;     // 一致性hash算法
 
     static {
-        String fileName = CacheConstants.MemCachedConfigConstants.MEMCACHE_FILE_NAME;
-        if (StringUtils.isNotBlank(System.getProperty("fleaframe.cache.memcached.config.filename"))) {
-            fileName = StringUtils.trim(System.getProperty("fleaframe.cache.memcached.config.filename"));
+        String fileName = CacheConstants.MemCachedConfigConstants.MEMCACHED_FILE_NAME;
+        if (StringUtils.isNotBlank(System.getProperty(CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_FILE_SYSTEM_KEY))) {
+            fileName = StringUtils.trim(System.getProperty(CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_FILE_SYSTEM_KEY));
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("MemCachedConfig Use the specified memcached.properties：{}", fileName);
             }
@@ -77,6 +79,12 @@ public class MemCachedConfig {
                 if (ObjectUtils.isEmpty(config)) {
                     config = new MemCachedConfig();
                     try {
+                        // 获取缓存所属系统名
+                        String systemName = PropertiesUtil.getStringValue(prop, CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_SYSTEM_NAME);
+                        if (StringUtils.isBlank(systemName)) {
+                            throw new Exception("缓存归属系统名未配置，请检查");
+                        }
+                        config.setSystemName(systemName);
 
                         // 获取MemCached服务器地址
                         String allServer = PropertiesUtil.getStringValue(prop, CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_SERVER);
@@ -119,6 +127,14 @@ public class MemCachedConfig {
             }
         }
         return config;
+    }
+
+    public String getSystemName() {
+        return systemName;
+    }
+
+    public void setSystemName(String systemName) {
+        this.systemName = systemName;
     }
 
     public String[] getServers() {

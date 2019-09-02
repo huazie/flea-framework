@@ -53,14 +53,11 @@ public class ObjectUtils {
      * @since 1.0.0
      */
     public static byte[] serialize(Object object) {
-        ObjectOutputStream objectOutputStream;
-        ByteArrayOutputStream byteArrayOutputStream;
-        if (ObjectUtils.isEmpty(object)) {
+        if (isEmpty(object)) {
             return null;
         }
-        try {
-            byteArrayOutputStream = new ByteArrayOutputStream();
-            objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+        try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+             ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream)) {
             objectOutputStream.writeObject(object);
             return byteArrayOutputStream.toByteArray();
         } catch (IOException e) {
@@ -79,14 +76,11 @@ public class ObjectUtils {
      * @since 1.0.0
      */
     public static Object deserialize(byte[] objectBytes) {
-        ObjectInputStream objectInputStream;
-        ByteArrayInputStream byteArrayInputStream;
         if (ArrayUtils.isEmpty(objectBytes)) {
             return null;
         }
-        byteArrayInputStream = new ByteArrayInputStream(objectBytes);
-        try {
-            objectInputStream = new ObjectInputStream(byteArrayInputStream);
+        try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(objectBytes);
+             ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream)) {
             return objectInputStream.readObject();
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {

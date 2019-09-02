@@ -1,6 +1,8 @@
 package com.huazie.frame.cache;
 
+import com.huazie.frame.cache.common.CacheConstants;
 import com.huazie.frame.cache.common.CacheEnum;
+import com.huazie.frame.cache.common.FleaCacheManagerFactory;
 import com.huazie.frame.cache.memcached.config.MemCachedConfig;
 import com.huazie.frame.cache.redis.RedisClient;
 import com.huazie.frame.cache.redis.config.RedisConfig;
@@ -22,7 +24,7 @@ import java.util.Set;
  */
 public class FleaCacheTest {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(FleaCacheTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FleaCacheTest.class);
 
     @Test
     public void testMemeCachedFleaCache() {
@@ -34,7 +36,8 @@ public class FleaCacheTest {
             //#### 1.  简单字符串
 //            cache.put("menu1", "huazie");
 //            cache.get("menu1");
-//            cache.delete("menu1");
+            cache.delete("menu1");
+//            cache.getCacheKey();
             LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
         } catch (Exception e) {
             LOGGER.error("Exception:", e);
@@ -49,9 +52,26 @@ public class FleaCacheTest {
             LOGGER.debug("Cache={}", cache);
             //#### 1.  简单字符串
 //            cache.put("menu1", "huazie");
+            cache.get("menu1");
+//            cache.delete("menu1");
+            cache.getCacheKey();
+            LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
+        } catch (Exception e) {
+            LOGGER.error("Exception:", e);
+        }
+    }
+
+    @Test
+    public void testCoreFleaCache() {
+        try {
+            AbstractFleaCacheManager manager = FleaCacheManagerFactory.getFleaCacheManager(CacheConstants.FleaCacheConstants.FLEA_CACHE_NAME);
+            AbstractFleaCache cache = manager.getCache("fleaparadetail");
+            LOGGER.debug("Cache={}", cache);
+            //#### 1.  简单字符串
+//            cache.put("menu1", "huazie");
 //            cache.get("menu1");
-//            LOGGER.debug("CacheKey={}", cache.getCacheKey());
-            cache.delete("menu1");
+//            cache.delete("menu1");
+//            cache.getCacheKey();
             LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
         } catch (Exception e) {
             LOGGER.error("Exception:", e);
@@ -136,5 +156,23 @@ public class FleaCacheTest {
 //        client.getLocation("huazie1");
 //        client.getHost("huazie1");
 //        client.getPort("huazie1");
+    }
+
+    @Test
+    public void testCoreFleaCacheManager() {
+        try {
+            AbstractFleaCacheManager manager = FleaCacheManagerFactory.getFleaCacheManager(CacheConstants.FleaCacheConstants.FLEA_CACHE_NAME);
+            AbstractFleaCache cache = manager.getCache("fleaparadetail");
+            LOGGER.debug("Cache={}", cache);
+            //#### 1.  简单字符串
+//            cache.put("menu1", "huazie");
+//            cache.put("menu2", "helloworld");
+//            cache.get("menu1");
+//            cache.delete("menu2");
+            cache.getCacheKey();
+            LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
+        } catch (Exception e) {
+            LOGGER.error("Exception:", e);
+        }
     }
 }

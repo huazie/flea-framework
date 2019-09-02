@@ -32,7 +32,7 @@ import java.util.Map;
 @SuppressWarnings({"rawtypes", "unchecked"})
 public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T> {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(AbstractFleaJPADAOImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractFleaJPADAOImpl.class);
 
     private Class<T> clazz;
 

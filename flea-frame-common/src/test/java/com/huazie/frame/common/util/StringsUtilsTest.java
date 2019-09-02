@@ -1,5 +1,6 @@
 package com.huazie.frame.common.util;
 
+import com.huazie.frame.common.CommonConstants;
 import org.apache.commons.lang.ArrayUtils;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -22,6 +23,11 @@ public class StringsUtilsTest {
 		LOGGER.debug(StringUtils.subStrBefore("asda", -1));
 		LOGGER.debug(StringUtils.subStrBefore("asda", 2));
 		LOGGER.debug(StringUtils.subStrBefore("asda", 5));
+		String server = "127.0.0.1:10001";
+		String host = StringUtils.subStrBefore(server, server.indexOf(CommonConstants.SymbolConstants.COLON));
+		String port = StringUtils.subStrLast(server, server.length() - server.indexOf(CommonConstants.SymbolConstants.COLON) - 1);
+		LOGGER.debug("HOST={}", host);
+		LOGGER.debug("PORT={}", port);
 	}
 	
 	@Test

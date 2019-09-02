@@ -9,8 +9,8 @@ package com.huazie.frame.common.util;
  */
 public class UnicodeUtils {
 
-    private final static int LENGTH_OF_SINGLE_UNICODE = 4;
-    private final static String COMPLEMENT_UNICODE_STRING = "0";
+    private static final int LENGTH_OF_SINGLE_UNICODE = 4;
+    private static final String COMPLEMENT_UNICODE_STRING = "0";
 
     /**
      * <p> 本地字符串转换为Unicode字符串 </p>

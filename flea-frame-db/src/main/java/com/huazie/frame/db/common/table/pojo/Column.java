@@ -15,15 +15,17 @@ public class Column implements Serializable {
 
     private static final long serialVersionUID = 3292859915470233725L;
 
-    public final static String COLUMN_ATTR_NAME = "attrName";
+    public static final String COLUMN_ATTR_NAME = "attrName";
 
-    public final static String COLUMN_TAB_COL_NAME = "tabColumnName";
+    public static final String COLUMN_TAB_COL_NAME = "tabColumnName";
 
     private Class<?> attrType; // 实体类属性对应类型
 
     private String attrName; // 实体类属性变量名
 
     private String tabColumnName; // 实体类对应的表字段名
+
+    private String tabColumnDesc; // 实体类对应的表字段描述
 
     private Object attrValue; // 实体类属性值
 
@@ -55,6 +57,14 @@ public class Column implements Serializable {
 
     public void setTabColumnName(String tabColumnName) {
         this.tabColumnName = tabColumnName;
+    }
+
+    public String getTabColumnDesc() {
+        return tabColumnDesc;
+    }
+
+    public void setTabColumnDesc(String tabColumnDesc) {
+        this.tabColumnDesc = tabColumnDesc;
     }
 
     public Object getAttrValue() {

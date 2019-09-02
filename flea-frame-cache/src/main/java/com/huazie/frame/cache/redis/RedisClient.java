@@ -227,4 +227,19 @@ public interface RedisClient {
      */
     ShardedJedis getShardedJedis();
 
+    /**
+     * <p> 获取连接池名 </p>
+     *
+     * @return 连接池名
+     * @since 1.0.0
+     */
+    String getPoolName();
+
+    /**
+     * <p> 设置连接池名 </p>
+     *
+     * @param poolName 连接池名
+     * @since 1.0.0
+     */
+    void setPoolName(String poolName);
 }

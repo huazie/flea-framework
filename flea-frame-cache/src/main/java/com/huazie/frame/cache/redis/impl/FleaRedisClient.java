@@ -1,9 +1,11 @@
 package com.huazie.frame.cache.redis.impl;
 
+import com.huazie.frame.cache.common.CacheConstants;
 import com.huazie.frame.cache.redis.RedisClient;
 import com.huazie.frame.cache.redis.RedisPool;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.util.ObjectUtils;
+import com.huazie.frame.common.util.StringUtils;
 import redis.clients.jedis.Client;
 import redis.clients.jedis.ShardedJedis;
 import redis.clients.jedis.ShardedJedisPool;
@@ -18,17 +20,47 @@ import redis.clients.jedis.params.SetParams;
  */
 public class FleaRedisClient implements RedisClient {
 
-    private ShardedJedisPool shardedJedisPool;
+    private ShardedJedisPool shardedJedisPool; // 分布式Jedis连接池
 
-    private ShardedJedis shardedJedis;
+    private ShardedJedis shardedJedis; // 分布式Jedis对象
+
+    private String poolName; // 连接池名
 
     /**
-     * <p> Redis客户端构造方法 </p>
+     * <p> Redis客户端构造方法 (默认) </p>
      *
      * @since 1.0.0
      */
     public FleaRedisClient() {
-        shardedJedisPool = RedisPool.getInstance().getJedisPool();
+        this(null);
+    }
+
+    /**
+     * <p> Redis客户端构造方法 </p>
+     *
+     * @param poolName 连接池名
+     * @since 1.0.0
+     */
+    public FleaRedisClient(String poolName) {
+        this.poolName = poolName;
+        init();
+    }
+
+    /**
+     * <p> 初始化 </p>
+     *
+     * @since 1.0.0
+     */
+    private void init() {
+        if (StringUtils.isBlank(poolName)) {
+            poolName = CacheConstants.FleaCacheConstants.DEFAUTL_POOL_NAME;
+            RedisPool redisPool = RedisPool.getInstance();
+            redisPool.initialize(); // 先初始化
+            shardedJedisPool = redisPool.getJedisPool();
+        } else {
+            shardedJedisPool = RedisPool.getInstance(poolName).getJedisPool();
+        }
+
     }
 
     @Override
@@ -204,5 +236,16 @@ public class FleaRedisClient implements RedisClient {
     @Override
     public ShardedJedis getShardedJedis() {
         return shardedJedis;
+    }
+
+    @Override
+    public String getPoolName() {
+        return poolName;
+    }
+
+    @Override
+    public void setPoolName(String poolName) {
+        this.poolName = poolName;
+        init();
     }
 }

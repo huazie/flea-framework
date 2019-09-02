@@ -27,7 +27,7 @@ import java.util.List;
 @Repository("resourceDAO")
 public class FleaJerseyResourceDAOImpl extends FleaConfigDAOImpl<FleaJerseyResource> implements IFleaJerseyResourceDAO {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(FleaJerseyResourceDAOImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FleaJerseyResourceDAOImpl.class);
 
     @Override
     @SuppressWarnings(value = "unchecked")

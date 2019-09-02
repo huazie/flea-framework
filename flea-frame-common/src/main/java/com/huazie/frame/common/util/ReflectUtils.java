@@ -16,7 +16,7 @@ import java.lang.reflect.Method;
  */
 public class ReflectUtils {
 
-    public final static Logger LOGGER = LoggerFactory.getLogger(ReflectUtils.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(ReflectUtils.class);
 
     /**
      * <p> 获取类Class </p>

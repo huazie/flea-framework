@@ -34,7 +34,7 @@ import java.io.InputStream;
  */
 public class DBXmlDigesterHelper {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(DBXmlDigesterHelper.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DBXmlDigesterHelper.class);
 
     private static volatile DBXmlDigesterHelper xmlDigester;
 
@@ -107,11 +107,8 @@ public class DBXmlDigesterHelper {
             LOGGER.debug("DBXmlDigesterHelper##newTables() Start to parse the flea-table-split.xml");
         }
 
-        InputStream input = null;
+        try (InputStream input = IOUtils.getInputStreamFromClassPath(fileName)) {
 
-        try {
-
-            input = IOUtils.getInputStreamFromClassPath(fileName);
             if (ObjectUtils.isEmpty(input)) {
                 // 该路径下【0】找不到指定配置文件
                 throw new TableSplitException("ERROR-DB-SQT0000000030", fileName);
@@ -141,8 +138,6 @@ public class DBXmlDigesterHelper {
         } catch (Exception e) {
             // XML转化异常：
             throw new TableSplitException("ERROR-DB-SQT0000000031", e);
-        } finally {
-            IOUtils.close(input);
         }
 
         if (LOGGER.isDebugEnabled()) {
@@ -190,11 +185,8 @@ public class DBXmlDigesterHelper {
             LOGGER.debug("DBXmlDigesterHelper##newSqlTemplate() Start to parse the flea-sql-template.xml");
         }
 
-        InputStream input = null;
+        try (InputStream input = IOUtils.getInputStreamFromClassPath(fileName)) {
 
-        try {
-
-            input = IOUtils.getInputStreamFromClassPath(fileName);
             if (ObjectUtils.isEmpty(input)) {
                 // 该路径下【0】找不到指定配置文件
                 throw new SqlTemplateException("ERROR-DB-SQT0000000030", fileName);
@@ -263,8 +255,6 @@ public class DBXmlDigesterHelper {
         } catch (Exception e) {
             // XML转化异常：
             throw new SqlTemplateException("ERROR-DB-SQT0000000031", e);
-        } finally {
-            IOUtils.close(input);
         }
 
         if (LOGGER.isDebugEnabled()) {

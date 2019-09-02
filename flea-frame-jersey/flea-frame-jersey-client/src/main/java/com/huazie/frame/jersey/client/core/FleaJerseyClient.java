@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class FleaJerseyClient {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(FleaJerseyClient.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FleaJerseyClient.class);
 
     @Autowired
     private FleaConfigDataSpringBean springBean;

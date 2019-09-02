@@ -19,7 +19,7 @@ import javax.ws.rs.client.WebTarget;
  */
 public class PutFleaRequest extends FleaRequest {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(PutFleaRequest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PutFleaRequest.class);
 
     /**
      * <p> 不带参数的构造方法 </p>
@@ -27,7 +27,6 @@ public class PutFleaRequest extends FleaRequest {
      * @since 1.0.0
      */
     public PutFleaRequest() {
-        super();
     }
 
     /**

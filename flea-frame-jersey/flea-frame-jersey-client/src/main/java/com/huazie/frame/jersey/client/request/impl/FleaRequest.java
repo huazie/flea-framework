@@ -37,7 +37,7 @@ import java.net.URLEncoder;
  */
 public abstract class FleaRequest implements Request {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(FleaRequest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FleaRequest.class);
 
     private RequestConfig config; // 请求配置
 
@@ -158,6 +158,10 @@ public abstract class FleaRequest implements Request {
         if (ObjectUtils.isEmpty(responsePublicData)) {
             // 资源服务请求异常：响应公共报文为空
             throw new FleaJerseyClientException("ERROR-JERSEY-CLIENT0000000006");
+        }
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("FleaRequest##doRequest(Class<T>) FleaJerseyResponse = \n{}", JABXUtils.toXml(response, true));
         }
 
         Response<T> responseResult = new Response<T>();

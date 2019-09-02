@@ -18,7 +18,7 @@ import javax.ws.rs.client.WebTarget;
  */
 public class DeleteFleaRequest extends FleaRequest {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(DeleteFleaRequest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DeleteFleaRequest.class);
 
     /**
      * <p> 不带参数的构造方法 </p>
@@ -26,7 +26,6 @@ public class DeleteFleaRequest extends FleaRequest {
      * @since 1.0.0
      */
     public DeleteFleaRequest() {
-        super();
     }
 
     /**

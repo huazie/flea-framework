@@ -12,10 +12,8 @@ import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.security.krb5.Config;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -30,7 +28,7 @@ import java.util.Set;
  */
 public class FleaI18nConfig {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(FleaI18nConfig.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FleaI18nConfig.class);
 
     private static volatile FleaI18nConfig config;
 

@@ -1,0 +1,17 @@
+package %CODE_PACKAGE%.dao.impl;
+
+import %FLEA_PERSISTENCE_UNIT_DAO_CLASS_PACKAGE%.%FLEA_PERSISTENCE_UNIT_DAO_CLASS_NAME%;
+import %CODE_PACKAGE%.dao.interfaces.I%ENTITY_CLASS_NAME%DAO;
+import %CODE_PACKAGE%.entity.%ENTITY_CLASS_NAME%;
+import org.springframework.stereotype.Repository;
+
+/**
+ * <p> %TABLE_DESC%DAO层实现类 </p>
+ *
+ * @author %AUTHOR%
+ * @version %VERSION%
+ * @since %VERSION%
+ */
+@Repository("%ENTITY_CLASS_NAME_1%DAO")
+public class %ENTITY_CLASS_NAME%DAOImpl extends %FLEA_PERSISTENCE_UNIT_DAO_CLASS_NAME%<%ENTITY_CLASS_NAME%> implements I%ENTITY_CLASS_NAME%DAO {
+}

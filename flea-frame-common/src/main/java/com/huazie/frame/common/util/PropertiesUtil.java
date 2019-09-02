@@ -17,7 +17,7 @@ import java.util.Properties;
  */
 public class PropertiesUtil {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(PropertiesUtil.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PropertiesUtil.class);
 
     /**
      * <p> 获取指定配置文件对象 </p>
@@ -28,31 +28,14 @@ public class PropertiesUtil {
      */
     public static Properties getProperties(String path) {
         Properties prop = new Properties();
-        InputStream input = null;
-        BufferedReader reader = null;
-        try {
-            input = IOUtils.getInputStreamFromClassPath(path);
-            if (ObjectUtils.isEmpty(input)) {
-                throw new Exception("The specified configuration file could not be found under this path [" + path + "]");
-            }
-            reader = new BufferedReader(new InputStreamReader(input));
+        try (InputStream input = IOUtils.getInputStreamFromClassPath(path);
+             InputStreamReader inputStreamReader = new InputStreamReader(input);
+             BufferedReader reader = new BufferedReader(inputStreamReader)) {
             prop.load(reader);
         } catch (Exception e) {
             prop = null;
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("PropertiesUtil##getProperties 读取路径为【" + path + "】的配置出错", e);
-            }
-        } finally {
-            try {
-                if (ObjectUtils.isNotEmpty(reader)) {
-                    reader.close();
-                }
-                if (ObjectUtils.isNotEmpty(input)) {
-                    input.close();
-                }
-            } catch (Exception e) {
-                prop = null;
-                LOGGER.error("PropertiesUtil##getProperties 读取路径为【" + path + "】的配置出错", e);
+                LOGGER.error("PropertiesUtil##getProperties(String) 读取路径为【" + path + "】的配置出错", e);
             }
         }
         return prop;

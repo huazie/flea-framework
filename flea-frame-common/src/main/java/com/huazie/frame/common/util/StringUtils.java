@@ -77,7 +77,7 @@ public class StringUtils {
      * @since 1.0.0
      */
     public static void clear(StringBuilder value) {
-        if (ObjectUtils.isNotEmpty(value) && StringUtils.isNotBlank(value.toString())) {
+        if (ObjectUtils.isNotEmpty(value) && isNotBlank(value.toString())) {
             value.delete(0, value.length());
         }
     }
@@ -108,6 +108,19 @@ public class StringUtils {
             return value;
         else
             return (new StringBuilder()).append(Character.toUpperCase(value.charAt(0))).append(value.substring(1)).toString();
+    }
+
+    /**
+     * <p> 首字母转大写，其余字母转小写 </p>
+     *
+     * @param value 待处理字符串
+     * @return 首字母转大写，其余字母转小写的字符串
+     * @since 1.0.0
+     */
+    public static String toUpperCase(String value) {
+        StringBuilder newValue = new StringBuilder();
+        newValue.append(Character.toUpperCase(value.charAt(0))).append(value.substring(1).toLowerCase());
+        return newValue.toString();
     }
 
     /**

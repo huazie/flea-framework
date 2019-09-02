@@ -21,7 +21,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class FleaJerseyResServiceTest {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(FleaJerseyResServiceTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FleaJerseyResServiceTest.class);
 
     private ApplicationContext applicationContext;
 

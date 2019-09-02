@@ -23,7 +23,7 @@ import java.util.List;
 @Repository("i18nErrorMappingDAO")
 public class FleaJerseyI18nErrorMappingDAOImpl extends FleaConfigDAOImpl<FleaJerseyI18nErrorMapping> implements IFleaJerseyI18nErrorMappingDAO {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(FleaJerseyI18nErrorMappingDAOImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FleaJerseyI18nErrorMappingDAOImpl.class);
 
     @Override
     @SuppressWarnings(value = "unchecked")
