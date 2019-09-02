@@ -1,6 +1,6 @@
 package %CODE_PACKAGE%.dao.impl;
 
-import %FLEA_PERSISTENCE_UNIT_DAO_CLASS_PACKAGE%;
+import %FLEA_PERSISTENCE_UNIT_DAO_CLASS_PACKAGE%.%FLEA_PERSISTENCE_UNIT_DAO_CLASS_NAME%;
 import %CODE_PACKAGE%.dao.interfaces.I%ENTITY_CLASS_NAME%DAO;
 import %CODE_PACKAGE%.entity.%ENTITY_CLASS_NAME%;
 import org.springframework.stereotype.Repository;

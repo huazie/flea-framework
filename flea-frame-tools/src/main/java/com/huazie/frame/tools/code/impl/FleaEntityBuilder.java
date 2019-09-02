@@ -29,7 +29,7 @@ public class FleaEntityBuilder extends FleaCodeBuilder {
     private static final Logger LOGGER = LoggerFactory.getLogger(FleaEntityBuilder.class);
 
     @Override
-    protected void combinedFilePath(StringBuilder fleaFilePathStrBuilder, String entityClassName, String separator) {
+    protected void combinedFilePath(StringBuilder fleaFilePathStrBuilder, String entityClassName, String separator, Map<String, Object> param) {
         fleaFilePathStrBuilder.append("entity").append(separator).append(entityClassName).append(".java");
     }
 

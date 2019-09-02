@@ -21,7 +21,7 @@ public class FleaDaoImplBuilder extends FleaCodeBuilder {
     private static final Logger LOGGER = LoggerFactory.getLogger(FleaDaoImplBuilder.class);
 
     @Override
-    protected void combinedFilePath(StringBuilder fleaFilePathStrBuilder, String entityClassName, String separator) {
+    protected void combinedFilePath(StringBuilder fleaFilePathStrBuilder, String entityClassName, String separator, Map<String, Object> param) {
         fleaFilePathStrBuilder.append("dao").append(separator).append("impl").append(separator)
                 .append(entityClassName).append("DAOImpl").append(".java");
     }
@@ -37,18 +37,12 @@ public class FleaDaoImplBuilder extends FleaCodeBuilder {
         // 实体类名
         String entityClassName = StringUtils.valueOf(param.get(ToolsConstants.CodeConstants.ENTITY_CLASS_NAME));
 
-        // 持久化单元DAO层公共类全名
-        String fleaPersistenceUnitDaoClassPackage = StringUtils.valueOf(param.get(ToolsConstants.CodeConstants.FLEA_PERSISTENCE_UNIT_DAO_CLASS_PACKAGE));
-        // 获取持久化单元DAO层公共类名
-        String fleaPersistenceUnitDaoClassName = fleaPersistenceUnitDaoClassPackage.substring(fleaPersistenceUnitDaoClassPackage.lastIndexOf(".") + 1);
-        param.put(ToolsConstants.CodeConstants.FLEA_PERSISTENCE_UNIT_DAO_CLASS_NAME, fleaPersistenceUnitDaoClassName);
-
         // 获取DAO层实现类配置模板文件内容
         String content = IOUtils.toNativeStringFromResource("flea/code/dao/FleaDAOImpl.code");
         // 新建DAO层实现类java文件
         IOUtils.toFileFromNativeString(FleaCodeHelper.convert(content, param), fleaDAOImplFilePathStr);
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("DAO层实现类 = {}", entityClassName);
+            LOGGER.debug("DAO层实现类 = {}", entityClassName + "DAOImpl");
             LOGGER.debug("DAO层实现类代码文件路径 = {}", fleaDAOImplFilePathStr);
             LOGGER.debug("结束编写DAO层实现类代码");
         }

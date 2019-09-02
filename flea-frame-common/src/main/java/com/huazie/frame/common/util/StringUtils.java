@@ -77,7 +77,7 @@ public class StringUtils {
      * @since 1.0.0
      */
     public static void clear(StringBuilder value) {
-        if (ObjectUtils.isNotEmpty(value) && StringUtils.isNotBlank(value.toString())) {
+        if (ObjectUtils.isNotEmpty(value) && isNotBlank(value.toString())) {
             value.delete(0, value.length());
         }
     }

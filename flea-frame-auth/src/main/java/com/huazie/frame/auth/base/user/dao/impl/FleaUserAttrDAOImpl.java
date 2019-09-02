@@ -1,6 +1,6 @@
 package com.huazie.frame.auth.base.user.dao.impl;
 
-import com.huazie.frame.auth.base.FleaAuthDaoImpl;
+import com.huazie.frame.auth.base.FleaAuthDAOImpl;
 import com.huazie.frame.auth.base.user.dao.interfaces.IFleaUserAttrDAO;
 import com.huazie.frame.auth.base.user.entity.FleaUserAttr;
 import org.springframework.stereotype.Repository;
@@ -13,5 +13,5 @@ import org.springframework.stereotype.Repository;
  * @since 1.0.0
  */
 @Repository("fleaUserAttrDAO")
-public class FleaUserAttrDAOImpl extends FleaAuthDaoImpl<FleaUserAttr> implements IFleaUserAttrDAO {
+public class FleaUserAttrDAOImpl extends FleaAuthDAOImpl<FleaUserAttr> implements IFleaUserAttrDAO {
 }

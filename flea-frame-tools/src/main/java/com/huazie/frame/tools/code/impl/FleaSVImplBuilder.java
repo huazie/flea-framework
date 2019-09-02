@@ -21,7 +21,7 @@ public class FleaSVImplBuilder extends FleaCodeBuilder {
     private static final Logger LOGGER = LoggerFactory.getLogger(FleaSVImplBuilder.class);
 
     @Override
-    protected void combinedFilePath(StringBuilder fleaFilePathStrBuilder, String entityClassName, String separator) {
+    protected void combinedFilePath(StringBuilder fleaFilePathStrBuilder, String entityClassName, String separator, Map<String, Object> param) {
         fleaFilePathStrBuilder.append("service").append(separator).append("impl").append(separator)
                 .append(entityClassName).append("SVImpl").append(".java");
     }

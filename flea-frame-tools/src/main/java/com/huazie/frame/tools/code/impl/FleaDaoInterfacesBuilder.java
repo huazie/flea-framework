@@ -21,7 +21,7 @@ public class FleaDaoInterfacesBuilder extends FleaCodeBuilder {
     private static final Logger LOGGER = LoggerFactory.getLogger(FleaDaoInterfacesBuilder.class);
 
     @Override
-    protected void combinedFilePath(StringBuilder fleaFilePathStrBuilder, String entityClassName, String separator) {
+    protected void combinedFilePath(StringBuilder fleaFilePathStrBuilder, String entityClassName, String separator, Map<String, Object> param) {
         fleaFilePathStrBuilder.append("dao").append(separator).append("interfaces").append(separator)
                 .append("I").append(entityClassName).append("DAO").append(".java");
     }
@@ -42,7 +42,7 @@ public class FleaDaoInterfacesBuilder extends FleaCodeBuilder {
         // 新建DAO层接口类java文件
         IOUtils.toFileFromNativeString(FleaCodeHelper.convert(content, param), iFleaDAOFilePathStr);
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("DAO层接口类 = {}", entityClassName);
+            LOGGER.debug("DAO层接口类 = {}", "I" + entityClassName + "DAO");
             LOGGER.debug("DAO层接口类代码文件路径 = {}", iFleaDAOFilePathStr);
             LOGGER.debug("结束编写DAO层接口类代码");
         }

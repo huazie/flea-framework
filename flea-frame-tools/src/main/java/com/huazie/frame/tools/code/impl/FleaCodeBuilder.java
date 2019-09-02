@@ -29,15 +29,19 @@ public abstract class FleaCodeBuilder implements IFleaCodeBuilder {
             return;
         }
 
+        // 获取持久化单元名
+        String fleaPersistenceUnitName = StringUtils.valueOf(param.get(ToolsConstants.CodeConstants.FLEA_PERSISTENCE_UNIT_NAME));
+        String fleaPersistenceUnitAliasName = StringUtils.valueOf(param.get(ToolsConstants.CodeConstants.FLEA_PERSISTENCE_UNIT_ALIAS_NAME));
+        if (StringUtils.isNotBlank(fleaPersistenceUnitName) && StringUtils.isNotBlank(fleaPersistenceUnitAliasName)) {
+            param.put(ToolsConstants.CodeConstants.FLEA_PERSISTENCE_UNIT_DAO_CLASS_NAME, fleaPersistenceUnitAliasName + "DAOImpl");
+            param.put(ToolsConstants.CodeConstants.FLEA_PERSISTENCE_UNIT_ALIAS_NAME_1, StringUtils.toLowerCaseInitial(fleaPersistenceUnitAliasName));
+        }
+
         // 实体类名
         String entityClassName = toEntityClassName(param);
         param.put(ToolsConstants.CodeConstants.ENTITY_CLASS_NAME, entityClassName);
         param.put(ToolsConstants.CodeConstants.ENTITY_CLASS_NAME_1, StringUtils.toLowerCaseInitial(entityClassName));
         param.put(ToolsConstants.CodeConstants.CODE_FILE_PATH, toFleaFilePath(param));
-
-        // 获取持久化单元名
-        // String fleaPersistenceUnitName = StringUtils.valueOf(param.get(ToolsConstants.CodeConstants.FLEA_PERSISTENCE_UNIT_NAME));
-        // String fleaPersistenceUnitDaoClassAliasName = StringUtils.valueOf(param.get(ToolsConstants.CodeConstants.FLEA_PERSISTENCE_UNIT_NAME));
 
         // 子类实现代码编写
         code(param);
@@ -47,12 +51,15 @@ public abstract class FleaCodeBuilder implements IFleaCodeBuilder {
     public void destroy(Map<String, Object> param) {
         param.put(ToolsConstants.CodeConstants.ENTITY_CLASS_NAME, toEntityClassName(param));
         String filePath = toFleaFilePath(param);
+        File fleaCodeFile = new File(filePath);
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("删除代码文件：{}", filePath);
         }
-        File fleaCodeFile = new File(filePath);
         if (fleaCodeFile.exists()) {
             fleaCodeFile.delete();
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("删除代码文件：{}", filePath);
+            }
         }
     }
 
@@ -99,7 +106,7 @@ public abstract class FleaCodeBuilder implements IFleaCodeBuilder {
         StringBuilder fleaFilePathStrBuilder = new StringBuilder();
         fleaFilePathStrBuilder.append(rootPackage).append(separator).append(codePackage.replaceAll("\\.", "\\" + separator)).append(separator);
         // 组合代码文件路径（自定义部分）
-        combinedFilePath(fleaFilePathStrBuilder, entityClassName, separator);
+        combinedFilePath(fleaFilePathStrBuilder, entityClassName, separator, param);
         return fleaFilePathStrBuilder.toString();
     }
 
@@ -110,7 +117,7 @@ public abstract class FleaCodeBuilder implements IFleaCodeBuilder {
      * @param entityClassName        实体类名
      * @param separator              路径分隔符
      */
-    protected abstract void combinedFilePath(StringBuilder fleaFilePathStrBuilder, String entityClassName, String separator);
+    protected abstract void combinedFilePath(StringBuilder fleaFilePathStrBuilder, String entityClassName, String separator, Map<String, Object> param);
 
     /**
      * <p> 由具体子类实现代码编写 </p>

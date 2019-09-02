@@ -1,4 +1,4 @@
-package com.huazie.frame.auth.base;
+package %FLEA_PERSISTENCE_UNIT_DAO_CLASS_PACKAGE%;
 
 import com.huazie.frame.db.jpa.dao.impl.AbstractFleaJPADAOImpl;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,49 +8,49 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 /**
- * <p> FleaAuth数据源DAO层父类 </p>
+ * <p> %FLEA_PERSISTENCE_UNIT_ALIAS_NAME%数据源DAO层父类 </p>
  *
- * @author huazie
- * @version 1.0.0
- * @since 1.0.0
+ * @author %AUTHOR%
+ * @version %VERSION%
+ * @since %VERSION%
  */
-public class FleaAuthDaoImpl<T> extends AbstractFleaJPADAOImpl<T> {
+public class %FLEA_PERSISTENCE_UNIT_ALIAS_NAME%DAOImpl<T> extends AbstractFleaJPADAOImpl<T> {
 
-    @PersistenceContext(unitName="fleaauth")
+    @PersistenceContext(unitName="%FLEA_PERSISTENCE_UNIT_NAME%")
     protected EntityManager entityManager;
 
     @Override
-    @Transactional("fleaAuthTransactionManager")
+    @Transactional("%FLEA_PERSISTENCE_UNIT_ALIAS_NAME_1%TransactionManager")
     public boolean remove(long entityId) throws Exception {
         return super.remove(entityId);
     }
 
     @Override
-    @Transactional("fleaAuthTransactionManager")
+    @Transactional("%FLEA_PERSISTENCE_UNIT_ALIAS_NAME_1%TransactionManager")
     public boolean remove(String entityId) throws Exception {
         return super.remove(entityId);
     }
 
     @Override
-    @Transactional("fleaAuthTransactionManager")
+    @Transactional("%FLEA_PERSISTENCE_UNIT_ALIAS_NAME_1%TransactionManager")
     public T update(T entity) throws Exception {
         return super.update(entity);
     }
 
     @Override
-    @Transactional("fleaAuthTransactionManager")
+    @Transactional("%FLEA_PERSISTENCE_UNIT_ALIAS_NAME_1%TransactionManager")
     public List<T> batchUpdate(List<T> entities) throws Exception {
         return super.batchUpdate(entities);
     }
 
     @Override
-    @Transactional("fleaAuthTransactionManager")
+    @Transactional("%FLEA_PERSISTENCE_UNIT_ALIAS_NAME_1%TransactionManager")
     public void save(T entity) throws Exception {
         super.save(entity);
     }
 
     @Override
-    @Transactional("fleaAuthTransactionManager")
+    @Transactional("%FLEA_PERSISTENCE_UNIT_ALIAS_NAME_1%TransactionManager")
     public void batchSave(List<T> entities) throws Exception {
         super.batchSave(entities);
     }
@@ -61,19 +61,19 @@ public class FleaAuthDaoImpl<T> extends AbstractFleaJPADAOImpl<T> {
     }
 
     @Override
-    @Transactional("fleaAuthTransactionManager")
+    @Transactional("%FLEA_PERSISTENCE_UNIT_ALIAS_NAME_1%TransactionManager")
     public int insert(String relationId, T entity) throws Exception {
         return super.insert(relationId, entity);
     }
 
     @Override
-    @Transactional("fleaAuthTransactionManager")
+    @Transactional("%FLEA_PERSISTENCE_UNIT_ALIAS_NAME_1%TransactionManager")
     public int update(String relationId, T entity) throws Exception {
         return super.update(relationId, entity);
     }
 
     @Override
-    @Transactional("fleaAuthTransactionManager")
+    @Transactional("%FLEA_PERSISTENCE_UNIT_ALIAS_NAME_1%TransactionManager")
     public int delete(String relationId, T entity) throws Exception {
         return super.delete(relationId, entity);
     }
