@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  */
 public class TableSplitConfig {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(TableSplitConfig.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TableSplitConfig.class);
 
     private static volatile TableSplitConfig config;
 

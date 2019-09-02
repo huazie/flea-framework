@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class FleaJerseyFilterConfig {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(FleaJerseyFilterConfig.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FleaJerseyFilterConfig.class);
 
     private static volatile FleaJerseyFilterConfig config;
 

@@ -3,13 +3,14 @@ package com.huazie.frame.cache.redis.impl;
 import com.huazie.frame.cache.AbstractFleaCache;
 import com.huazie.frame.cache.common.CacheEnum;
 import com.huazie.frame.cache.redis.RedisClient;
+import com.huazie.frame.cache.redis.config.RedisConfig;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.util.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <p> 自定义Redis缓存类 </p>
+ * <p> Redis Flea缓存类 </p>
  *
  * @author huazie
  * @version 1.0.0
@@ -19,16 +20,23 @@ public class RedisFleaCache extends AbstractFleaCache {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RedisFleaCache.class);
 
-    private RedisClient redisClient; // Redis客户端类
+    private RedisClient redisClient; // Redis客户端
 
-    public RedisFleaCache(String name, long expiry) {
+    /**
+     * <p> 带参数的构造方法，初始化Redis Flea缓存类 </p>
+     *
+     * @param name        缓存主关键字
+     * @param expiry      失效时长
+     * @param redisClient Redis客户端
+     */
+    public RedisFleaCache(String name, long expiry, RedisClient redisClient) {
         super(name, expiry);
+        this.redisClient = redisClient;
         cache = CacheEnum.Redis;
-        redisClient = RedisClientProxy.getProxyInstance();
     }
 
     @Override
-    protected Object getNativeValue(String key) {
+    public Object getNativeValue(String key) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("RedisFleaCache##getNativeValue(String) KEY = {}", key);
         }
@@ -37,7 +45,7 @@ public class RedisFleaCache extends AbstractFleaCache {
     }
 
     @Override
-    protected void putNativeValue(String key, Object value, long expiry) {
+    public void putNativeValue(String key, Object value, long expiry) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("RedisFleaCache##putNativeValue(String, Object, long) KEY = {}", key);
             LOGGER.debug("RedisFleaCache##putNativeValue(String, Object, long) VALUE = {}", value);
@@ -56,11 +64,15 @@ public class RedisFleaCache extends AbstractFleaCache {
     }
 
     @Override
-    protected void deleteNativeValue(String key) {
+    public void deleteNativeValue(String key) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("RedisFleaCache##deleteNativeValue(String) KEY = {}", key);
         }
         redisClient.del(key);
     }
 
+    @Override
+    public String getSystemName() {
+        return RedisConfig.getConfig().getSystemName();
+    }
 }

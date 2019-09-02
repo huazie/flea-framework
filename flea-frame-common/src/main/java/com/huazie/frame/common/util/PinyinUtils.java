@@ -27,7 +27,7 @@ import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombi
  */
 public class PinyinUtils {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(PinyinUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PinyinUtils.class);
 
     /**
      * <p> 获取中文的简拼 </p>

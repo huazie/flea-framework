@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  */
 public class JerseyLoggerFilter implements IFleaJerseyFilter {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(JerseyLoggerFilter.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JerseyLoggerFilter.class);
 
     @Override
     public void doFilter(FleaJerseyRequest request, FleaJerseyResponse response) throws Exception {

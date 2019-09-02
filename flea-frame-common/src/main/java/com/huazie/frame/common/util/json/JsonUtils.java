@@ -21,7 +21,7 @@ import java.util.Map;
  */
 public class JsonUtils {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(JsonUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JsonUtils.class);
 
     /**
      * <p> 使用net.sf.json解析，获取String对象的List集合 </p>

@@ -20,7 +20,7 @@ import java.util.Map;
 
 public class FleaJPAQueryTest {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(FleaJPAQueryTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FleaJPAQueryTest.class);
 
     private static EntityManagerFactory emf;
     private static EntityManager em;

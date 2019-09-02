@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 public class DataConvertTest {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(DataConvertTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DataConvertTest.class);
 
     @Test
     public void hex2byte() {

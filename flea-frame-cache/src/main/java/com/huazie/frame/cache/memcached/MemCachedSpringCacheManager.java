@@ -51,8 +51,4 @@ public class MemCachedSpringCacheManager extends AbstractSpringCacheManager {
         return new MemCachedSpringCache(name, expiry, memCachedClient);
     }
 
-    public void setMemCachedClient(MemCachedClient memCachedClient) {
-        this.memCachedClient = memCachedClient;
-    }
-
 }

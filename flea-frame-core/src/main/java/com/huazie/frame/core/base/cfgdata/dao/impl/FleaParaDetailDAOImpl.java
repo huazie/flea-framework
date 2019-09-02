@@ -22,7 +22,7 @@ import java.util.List;
 @Repository("fleaParaDetailDAO")
 public class FleaParaDetailDAOImpl extends FleaConfigDAOImpl<FleaParaDetail> implements IFleaParaDetailDAO {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(FleaParaDetailDAOImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FleaParaDetailDAOImpl.class);
 
     @Override
     @SuppressWarnings(value = "unchecked")

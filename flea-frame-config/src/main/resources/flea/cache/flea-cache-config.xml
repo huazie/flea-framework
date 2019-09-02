@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<flea-cache-config>
+
+    <!-- 缓存初始化配置项集 -->
+    <cache-items key="FleaCacheInit" desc="缓存初始化配置项">
+        <cache-item key="systemName" desc="缓存所属系统名">FleaFS</cache-item>
+    </cache-items>
+
+    <!-- Flea缓存配置项集 -->
+    <cache-items key="FleaCacheBuilder" desc="Flea缓存建造者实现">
+        <cache-item key="MemCached" desc="MemCached的Flea缓存建造者实现">com.huazie.frame.cache.memcached.MemCachedFleaCacheBuilder</cache-item>
+        <cache-item key="Redis" desc="Redis的Flea缓存建造者实现">com.huazie.frame.cache.redis.RedisFleaCacheBuilder</cache-item>
+    </cache-items>
+
+    <!-- Redis缓存参数集 -->
+    <cache-params key="Redis" desc="Redis缓存配置数据">
+        <cache-param key="connectionTimeout" desc="Redis客户端socket连接超时时间">2000</cache-param>
+        <cache-param key="soTimeout" desc="Redis客户端socket读写超时时间">2000</cache-param>
+        <cache-param key="hashingAlg" desc="Redis分布式hash算法(1:MURMUR_HASH,2:MD5)">1</cache-param>
+        <cache-param key="pool.maxTotal" desc="Redis客户端Jedis连接池最大连接数">8</cache-param>
+        <cache-param key="pool.maxIdle" desc="Redis客户端Jedis连接池最大空闲连接数">8</cache-param>
+        <cache-param key="pool.minIdle" desc="Redis客户端Jedis连接池最小空闲连接数">0</cache-param>
+        <cache-param key="pool.maxWaitMillis" desc="Redis客户端Jedis连接池获取连接时的最大等待毫秒数">2000</cache-param>
+    </cache-params>
+
+    <!-- MemCached缓存参数集 -->
+    <cache-params key="MemCached" desc="MemCached缓存配置数据">
+        <cache-param key="initConn" desc="初始化时对每个服务器建立的连接数目">20</cache-param>
+        <cache-param key="minConn" desc="每个服务器建立最小的连接数">20</cache-param>
+        <cache-param key="maxConn" desc="每个服务器建立最大的连接数">500</cache-param>
+        <cache-param key="maintSleep" desc="自查线程周期进行工作，其每次休眠时间">60000</cache-param>
+        <cache-param key="nagle" desc="Socket的参数，如果是true在写数据时不缓冲，立即发送出去">true</cache-param>
+        <cache-param key="socketTO" desc="Socket阻塞读取数据的超时时间">3000</cache-param>
+        <cache-param key="socketConnectTO" desc="Socket连接超时时间">3000</cache-param>
+        <!--
+            0 - native String.hashCode();
+            1 - original compatibility
+            2 - new CRC32 based
+            3 - MD5 Based
+        -->
+        <cache-param key="hashingAlg" desc="MemCached分布式hash算法">3</cache-param>
+    </cache-params>
+
+    <!-- Flea缓存数据集 -->
+    <cache-datas>
+        <cache-data type="auth" desc="Flea权限缓存数据所在组配置">authGroup</cache-data>
+        <cache-data type="jersey" desc="Flea Jersey缓存数据所在组配置">configGroup</cache-data>
+        <cache-data type="fleafs" desc="FleaFs配置数据所在组配置">configGroup</cache-data>
+    </cache-datas>
+
+    <!-- Flea缓存组集 -->
+    <cache-groups>
+        <cache-group group="authGroup" desc="Flea权限数据缓存组">MemCached</cache-group>
+        <cache-group group="configGroup" desc="Flea配置数据缓存组">Redis</cache-group>
+    </cache-groups>
+
+    <!-- Flea缓存服务器集 -->
+    <cache-servers>
+        <cache-server group="authGroup" weight="1" desc="MemCached缓存服务器配置">127.0.0.1:31113</cache-server>
+        <cache-server group="authGroup" weight="1" desc="MemCached缓存服务器配置">127.0.0.1:31114</cache-server>
+
+        <cache-server group="configGroup" password="huazie123" weight="1" desc="Redis缓存服务器配置">127.0.0.1:10001</cache-server>
+        <cache-server group="configGroup" password="huazie123" weight="1" desc="Redis缓存服务器配置">127.0.0.1:10002</cache-server>
+        <cache-server group="configGroup" password="huazie123" weight="1" desc="Redis缓存服务器配置">127.0.0.1:10003</cache-server>
+    </cache-servers>
+
+</flea-cache-config>

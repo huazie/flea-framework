@@ -49,6 +49,12 @@
             <artifactId>slf4j-log4j12</artifactId>
         </dependency>
 
+        <!-- 扩展java.io.InputStream和Reader -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+        </dependency>
+
         <!-- flea frame 配置文件 -->
         <dependency>
             <groupId>com.huazie.frame</groupId>

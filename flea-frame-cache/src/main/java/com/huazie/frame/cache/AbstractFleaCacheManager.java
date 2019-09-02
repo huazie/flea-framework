@@ -18,13 +18,18 @@ import java.util.concurrent.ConcurrentMap;
  */
 public abstract class AbstractFleaCacheManager {
 
-    private static ConcurrentMap<String, AbstractFleaCache> cacheMap = new ConcurrentHashMap<String, AbstractFleaCache>();
+    private static final ConcurrentMap<String, AbstractFleaCache> cacheMap = new ConcurrentHashMap<String, AbstractFleaCache>();
 
-    protected Map<String, Long> configMap = new HashMap<String, Long>();   // 各缓存的时间Map
+    private Map<String, Long> configMap = new HashMap<String, Long>();   // 各缓存的时间Map
 
+    /**
+     * <p> 获取所有的Flea缓存 </p>
+     *
+     * @return 所有的Flea缓存
+     * @since 1.0.0
+     */
     protected Collection<? extends AbstractFleaCache> loadCaches() {
-        Collection<AbstractFleaCache> values = cacheMap.values();
-        return values;
+        return cacheMap.values();
     }
 
     /**
@@ -35,14 +40,16 @@ public abstract class AbstractFleaCacheManager {
      * @since 1.0.0
      */
     public AbstractFleaCache getCache(String name) {
-        synchronized (cacheMap) {
-            if (!cacheMap.containsKey(name)) {
-                Long expiry = configMap.get(name);
-                if (ObjectUtils.isEmpty(expiry)) {
-                    expiry = CommonConstants.NumeralConstants.ZERO; // 表示永久
-                    configMap.put(name, expiry);
+        if (!cacheMap.containsKey(name)) {
+            synchronized (cacheMap) {
+                if (!cacheMap.containsKey(name)) {
+                    Long expiry = configMap.get(name);
+                    if (ObjectUtils.isEmpty(expiry)) {
+                        expiry = CommonConstants.NumeralConstants.ZERO; // 表示永久
+                        configMap.put(name, expiry);
+                    }
+                    cacheMap.put(name, newCache(name, expiry));
                 }
-                cacheMap.put(name, newCache(name, expiry));
             }
         }
         return cacheMap.get(name);

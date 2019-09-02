@@ -17,7 +17,7 @@ import java.util.UUID;
  */
 public class RandomCode {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(RandomCode.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RandomCode.class);
 
     // 创建随机数对象
     private static Random random = new Random();

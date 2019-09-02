@@ -1,0 +1,5 @@
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "%TABLE_NAME_1%_SEQ")
+    @SequenceGenerator(name = "%TABLE_NAME_1%_SEQ")
+    @Column(name = "%COLUMN_NAME%", unique = true, nullable = false)
+    private %VAR_TYPE% %VARIABLE%; // %COLUMN_DESC%

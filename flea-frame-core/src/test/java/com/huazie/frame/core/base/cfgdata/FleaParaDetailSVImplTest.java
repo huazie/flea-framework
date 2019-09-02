@@ -4,7 +4,7 @@ import com.huazie.frame.cache.AbstractFleaCache;
 import com.huazie.frame.cache.AbstractFleaCacheManager;
 import com.huazie.frame.cache.AbstractSpringCache;
 import com.huazie.frame.cache.AbstractSpringCacheManager;
-import com.huazie.frame.cache.FleaCacheManagerFactory;
+import com.huazie.frame.cache.common.FleaCacheManagerFactory;
 import com.huazie.frame.cache.common.CacheEnum;
 import com.huazie.frame.cache.memcached.MemCachedSpringCacheManager;
 import com.huazie.frame.cache.redis.RedisSpringCacheManager;
@@ -30,7 +30,7 @@ import java.util.Set;
 
 public class FleaParaDetailSVImplTest {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(FleaParaDetailSVImplTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FleaParaDetailSVImplTest.class);
 
     private ApplicationContext applicationContext;
 

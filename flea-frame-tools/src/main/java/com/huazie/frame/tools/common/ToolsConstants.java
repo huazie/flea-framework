@@ -1,0 +1,43 @@
+package com.huazie.frame.tools.common;
+
+/**
+ * <p> 工具包常量 </p>
+ *
+ * @author huazie
+ * @version 1.0.0
+ * @since 1.0.0
+ */
+public interface ToolsConstants {
+
+    interface CodeConstants {
+        String AUTHOR = "AUTHOR";
+        String VERSION = "VERSION";
+        String ROOT_PACKAGE = "ROOT_PACKAGE";
+        String CODE_PACKAGE = "CODE_PACKAGE";
+        String FLEA_PERSISTENCE_UNIT_NAME = "FLEA_PERSISTENCE_UNIT_NAME";
+        String FLEA_PERSISTENCE_UNIT_ALIAS_NAME = "FLEA_PERSISTENCE_UNIT_ALIAS_NAME";
+        String FLEA_PERSISTENCE_UNIT_ALIAS_NAME_1 = "FLEA_PERSISTENCE_UNIT_ALIAS_NAME_1";
+        String FLEA_PERSISTENCE_UNIT_DAO_CLASS_PACKAGE = "FLEA_PERSISTENCE_UNIT_DAO_CLASS_PACKAGE";
+        String FLEA_PERSISTENCE_UNIT_DAO_CLASS_NAME = "FLEA_PERSISTENCE_UNIT_DAO_CLASS_NAME";
+        String TABLE_NAME = "TABLE_NAME";
+        String TABLE_NAME_1 = "TABLE_NAME_1";
+        String TABLE_DESC = "TABLE_DESC";
+
+        String ENTITY_CLASS_NAME = "ENTITY_CLASS_NAME";
+        String ENTITY_CLASS_NAME_1 = "ENTITY_CLASS_NAME_1";
+        String CODE_FILE_PATH = "CODE_FILE_PATH";
+
+        String COLUMN_NAME = "COLUMN_NAME";
+        String COLUMN_DESC = "COLUMN_DESC";
+        String VAR_TYPE = "VAR_TYPE";
+        String VARIABLE = "VARIABLE";
+        String VARIABLE_1 = "VARIABLE_1";
+
+        String VARIABLE_CODE = "VARIABLE_CODE";
+        String METHOD_CODE = "METHOD_CODE";
+
+        String DB_SYSTEM_NAME = "DB_SYSTEM_NAME";
+        String DB_NAME = "DB_NAME";
+    }
+
+}

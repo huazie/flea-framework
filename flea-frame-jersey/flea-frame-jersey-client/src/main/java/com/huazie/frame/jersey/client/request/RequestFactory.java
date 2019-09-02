@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  */
 public class RequestFactory {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(RequestFactory.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RequestFactory.class);
 
     private static volatile RequestFactory factory;
 

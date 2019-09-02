@@ -1,8 +1,10 @@
 package com.huazie.frame.db.jdbc;
 
+import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
+import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.exception.DaoException;
 import com.huazie.frame.db.common.sql.pojo.SqlParam;
 import com.huazie.frame.db.common.sql.template.ITemplate;
@@ -11,17 +13,20 @@ import com.huazie.frame.db.common.sql.template.impl.DeleteSqlTemplate;
 import com.huazie.frame.db.common.sql.template.impl.InsertSqlTemplate;
 import com.huazie.frame.db.common.sql.template.impl.SelectSqlTemplate;
 import com.huazie.frame.db.common.sql.template.impl.UpdateSqlTemplate;
+import com.huazie.frame.db.common.table.pojo.Column;
 import com.huazie.frame.db.jdbc.config.FleaJDBCConfig;
 import com.huazie.frame.db.jdbc.pojo.FleaDBOperationHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +40,7 @@ import java.util.Map;
  */
 public class FleaJDBCHelper {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(FleaJDBCHelper.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FleaJDBCHelper.class);
 
     /**
      * <p> 以返回List<Map>，其中Map的键为属性名，值为相应的数据 </p>
@@ -554,6 +559,103 @@ public class FleaJDBCHelper {
             }
         }
         return listMaps;
+    }
+
+    /**
+     * <p> 获取表结构 </p>
+     *
+     * @param tableName 表名
+     * @return 表结构列表
+     * @since 1.0.0
+     */
+    public static List<Column> queryTableStructure(String tableName) {
+        List<Column> columnList = null;
+        Connection connection = null;
+        ResultSet primaryKeyResultSet = null;
+        ResultSet columnsResultSet = null;
+        try {
+            connection = FleaJDBCConfig.getConfig().getConnection();
+            DatabaseMetaData metaData = connection.getMetaData();
+
+            String pkName = "";
+            primaryKeyResultSet = metaData.getPrimaryKeys(null, null, tableName.toUpperCase());
+            while (primaryKeyResultSet.next()) {
+                pkName = primaryKeyResultSet.getString("COLUMN_NAME");
+            }
+
+            columnsResultSet = metaData.getColumns(null, null, tableName.toUpperCase(), "");
+            columnList = new ArrayList<Column>();
+            while (columnsResultSet.next()) {
+                String columnName = columnsResultSet.getString("COLUMN_NAME");
+                int columnSize = columnsResultSet.getInt("COLUMN_SIZE");
+                String typeName = columnsResultSet.getString("TYPE_NAME");
+                String isNullable = columnsResultSet.getString("IS_NULLABLE");
+                String remarks = columnsResultSet.getString("REMARKS");
+
+                Column column = new Column();
+                column.setTabColumnName(columnName); // 表列名
+
+                String[] columnNameArr = StringUtils.split(columnName, CommonConstants.SymbolConstants.UNDERLINE);
+                if (ArrayUtils.isNotEmpty(columnNameArr)) {
+                    for (int n = 0; n < columnNameArr.length; n++) {
+                        if (CommonConstants.NumeralConstants.INT_ZERO == n) {
+                            columnNameArr[n] = columnNameArr[n].toLowerCase();
+                        } else {
+                            columnNameArr[n] = StringUtils.toUpperCase(columnNameArr[n]);
+                        }
+                    }
+                }
+                String attrName = StringUtils.strCat("", columnNameArr);
+                column.setAttrName(attrName); // 属性名
+
+                // 设置属性类型
+                if ("INT".equals(typeName) || ("NUMBER".equals(typeName) && columnSize >= 10)) {
+                    column.setAttrType(Long.class);
+                }
+
+                if ("BIT".equals(typeName) || "TINYINT".equals(typeName) || ("NUMBER".equals(typeName) && columnSize < 10)) {
+                    column.setAttrType(Integer.class);
+                }
+
+                if ("VARCHAR".equals(typeName) || "VARCHAR2".equals(typeName)) {
+                    column.setAttrType(String.class);
+                }
+
+                if ("DATE".equals(typeName) || "DATETIME".equals(typeName)) {
+                    column.setAttrType(Date.class);
+                }
+
+                // 设置是否为空
+                if ("YES".equals(isNullable)) {
+                    column.setNullable(true);
+                } else {
+                    column.setNullable(false);
+                }
+
+                // 设置字段描述
+                column.setTabColumnDesc(remarks);
+
+                if (pkName.equals(columnName)) {
+                    column.setPrimaryKey(true);
+                    column.setUnique(true);
+                } else {
+                    column.setPrimaryKey(false);
+                }
+
+                columnList.add(column);
+
+            }
+        } catch (SQLException e) {
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("数据库操作异常：", e);
+            }
+        } finally {
+            FleaJDBCConfig.close(columnsResultSet);
+            FleaJDBCConfig.close(primaryKeyResultSet);
+            FleaJDBCConfig.close(connection);
+        }
+
+        return columnList;
     }
 
     /**

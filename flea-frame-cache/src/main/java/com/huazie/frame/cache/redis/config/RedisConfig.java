@@ -28,11 +28,13 @@ import java.util.Properties;
  */
 public class RedisConfig {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(RedisConfig.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RedisConfig.class);
 
     private static volatile RedisConfig config;
 
     private static Properties prop;
+
+    private String systemName; // 缓存所属系统名
 
     private List<JedisShardInfo> servers; // 服务器信息 （ host + port + password + weight + connectionTimeout + soTimeOut）
 
@@ -42,8 +44,8 @@ public class RedisConfig {
 
     static {
         String fileName = CacheConstants.RedisConfigConstants.REDIS_FILE_NAME;
-        if (StringUtils.isNotBlank(System.getProperty("fleaframe.cache.redis.config.filename"))) {
-            fileName = StringUtils.trim(System.getProperty("fleaframe.cache.redis.config.filename"));
+        if (StringUtils.isNotBlank(System.getProperty(CacheConstants.RedisConfigConstants.REDIS_CONFIG_FILE_SYSTEM_KEY))) {
+            fileName = StringUtils.trim(System.getProperty(CacheConstants.RedisConfigConstants.REDIS_CONFIG_FILE_SYSTEM_KEY));
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("RedisConfig Use the specified redis.properties：{}", fileName);
             }
@@ -67,7 +69,14 @@ public class RedisConfig {
                 if (ObjectUtils.isEmpty(config)) {
                     config = new RedisConfig();
                     try {
-                        List<JedisShardInfo> jedisRedisInfos = null;
+                        // 获取缓存所属系统名
+                        String systemName = PropertiesUtil.getStringValue(prop, CacheConstants.RedisConfigConstants.REDIS_CONFIG_SYSTEM_NAME);
+                        if (StringUtils.isBlank(systemName)) {
+                            throw new Exception("缓存归属系统名未配置，请检查");
+                        }
+                        config.setSystemName(systemName);
+
+                        List<JedisShardInfo> jedisShardInfos = null;
                         String servers = PropertiesUtil.getStringValue(prop, CacheConstants.RedisConfigConstants.REDIS_CONFIG_SERVER);
                         String passwords = PropertiesUtil.getStringValue(prop, CacheConstants.RedisConfigConstants.REDIS_CONFIG_PASSWORD);
                         String weights = PropertiesUtil.getStringValue(prop, CacheConstants.RedisConfigConstants.REDIS_CONFIG_WEIGHT);
@@ -89,12 +98,12 @@ public class RedisConfig {
                             }
 
                             if (ArrayUtils.isNotEmpty(serverArr)) {
-                                jedisRedisInfos = new ArrayList<JedisShardInfo>();
+                                jedisShardInfos = new ArrayList<JedisShardInfo>();
                                 for (int i = 0; i < serverArr.length; i++) {
                                     String ip = serverArr[i];
 
                                     if (StringUtils.isBlank(ip)) {
-                                        throw new Exception("The IP Address of server is empty");
+                                        throw new Exception("服务器配置的IP地址为空，请检查");
                                     }
 
                                     String host = Protocol.DEFAULT_HOST;    // 默认主机
@@ -134,11 +143,11 @@ public class RedisConfig {
                                         jedisShardInfo.setPassword(passwordArr[i]);
                                     }
 
-                                    jedisRedisInfos.add(jedisShardInfo);
+                                    jedisShardInfos.add(jedisShardInfo);
                                 }
                             }
                         }
-                        config.setServers(jedisRedisInfos);
+                        config.setServers(jedisShardInfos);
 
                         // 获取Redis分布式hash算法
                         Integer alg = PropertiesUtil.getIntegerValue(prop, CacheConstants.RedisConfigConstants.REDIS_CONFIG_HASHINGALG);
@@ -150,7 +159,7 @@ public class RedisConfig {
                         } else if (CacheConstants.RedisConfigConstants.REDIS_CONFIG_HASHINGALG_MD5 == alg) {
                             config.setHashingAlg(Hashing.MD5);
                         } else {
-                            throw new Exception("The config of hashingAlg [ " + alg + "] is invalid, only 1 or 2");
+                            throw new Exception("配置的分布式hash算法【" + alg + "】非法, 仅允许1和2，请检查");
                         }
 
                         // 获取客户端连接池配置信息
@@ -190,6 +199,14 @@ public class RedisConfig {
             }
         }
         return config;
+    }
+
+    public String getSystemName() {
+        return systemName;
+    }
+
+    public void setSystemName(String systemName) {
+        this.systemName = systemName;
     }
 
     public List<JedisShardInfo> getServers() {

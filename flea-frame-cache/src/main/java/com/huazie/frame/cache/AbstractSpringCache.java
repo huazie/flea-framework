@@ -18,11 +18,11 @@ import java.util.concurrent.Callable;
  */
 public abstract class AbstractSpringCache implements Cache, IFleaCache {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(AbstractSpringCache.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractSpringCache.class);
 
-    protected final String name;  // 缓存主要关键字（用于区分）
+    private final String name;  // 缓存主要关键字（用于区分）
 
-    private final IFleaCache fleaCache;
+    private final IFleaCache fleaCache; // 具体Flea缓存实现
 
     public AbstractSpringCache(String name, IFleaCache fleaCache) {
         this.name = name;
@@ -43,12 +43,12 @@ public abstract class AbstractSpringCache implements Cache, IFleaCache {
     public ValueWrapper get(Object key) {
         ValueWrapper wrapper = null;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("AbstractSpringCache##get(Object) KEY={}", key);
+            LOGGER.debug("AbstractSpringCache##get(Object) KEY = {}", key);
         }
         Object cacheValue = fleaCache.get(key.toString());
         if (ObjectUtils.isNotEmpty(cacheValue)) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("AbstractSpringCache##get(Object) VALUE={}", cacheValue);
+                LOGGER.debug("AbstractSpringCache##get(Object) VALUE = {}", cacheValue);
             }
             wrapper = new SimpleValueWrapper(cacheValue);
         }
@@ -74,7 +74,7 @@ public abstract class AbstractSpringCache implements Cache, IFleaCache {
     @SuppressWarnings(value = "unchecked")
     public <T> T get(Object key, Class<T> type) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("AbstractSpringCache##get(Object) KEY={}", key);
+            LOGGER.debug("AbstractSpringCache##get(Object) KEY = {}", key);
         }
         Object cacheValue = fleaCache.get(key.toString());
         if (ObjectUtils.isNotEmpty(type) && !type.isInstance(cacheValue)) {
@@ -84,7 +84,7 @@ public abstract class AbstractSpringCache implements Cache, IFleaCache {
             return null;
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("AbstractSpringCache##get(Object, Class<T>) VALUE={}", cacheValue);
+            LOGGER.debug("AbstractSpringCache##get(Object, Class<T>) VALUE = {}", cacheValue);
         }
         return (T) cacheValue;
     }
@@ -97,7 +97,7 @@ public abstract class AbstractSpringCache implements Cache, IFleaCache {
             fleaCache.put(key.toString(), value);
         } else {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("AbstractSpringCache##putIfAbsent(Object, Object) VALUE=", cacheValue);
+                LOGGER.debug("AbstractSpringCache##putIfAbsent(Object, Object) VALUE = {}", cacheValue);
             }
             wrapper = new SimpleValueWrapper(cacheValue);
         }
@@ -127,5 +127,10 @@ public abstract class AbstractSpringCache implements Cache, IFleaCache {
     @Override
     public Set<String> getCacheKey() {
         return fleaCache.getCacheKey();
+    }
+
+    @Override
+    public String getSystemName() {
+        return fleaCache.getSystemName();
     }
 }

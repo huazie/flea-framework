@@ -6,8 +6,6 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Map;
-
 /**
  * <p>  </p>
  *
@@ -17,7 +15,7 @@ import java.util.Map;
  */
 public class FleaConfigTest {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(FleaConfigTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FleaConfigTest.class);
 
     @Test
     public void testFleaConfig() {
@@ -33,8 +31,8 @@ public class FleaConfigTest {
         ConfigItem configItem1 = null;
         ConfigItem configItem2 = null;
         if (ObjectUtils.isNotEmpty(configItems)) {
-            configItem1 = configItems.getConfigItem("system_user_id");
-            configItem2 = configItems.getConfigItem("system_user_pwd");
+            configItem1 = configItems.getConfigItem("system_acct_id");
+            configItem2 = configItems.getConfigItem("system_acct_pwd");
         }
         LOGGER.debug("ConfigItem1 = {}", configItem1);
         LOGGER.debug("ConfigItem2 = {}", configItem2);

@@ -20,7 +20,7 @@ import java.util.Locale;
 
 public class SqlTemplateTest {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(SqlTemplateTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SqlTemplateTest.class);
 
     private ApplicationContext applicationContext;
     private FleaParaDetail fleaParaDetail;

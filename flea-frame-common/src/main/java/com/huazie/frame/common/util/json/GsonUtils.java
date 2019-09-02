@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class GsonUtils {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(GsonUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GsonUtils.class);
 
     /**
      * <p> 使用Gson进行解析 ,并获取T对象 </p>

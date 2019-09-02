@@ -20,7 +20,7 @@ import java.security.NoSuchAlgorithmException;
  */
 public class SecurityUtils {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(SecurityUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SecurityUtils.class);
 
     /**
      * <p> 进行MD5加密, 单向 </p>

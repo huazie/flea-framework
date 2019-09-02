@@ -19,7 +19,7 @@ import java.util.Map;
  */
 public class JDBCConfigTest {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(JDBCConfigTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JDBCConfigTest.class);
 
     @Test
     public void testDBPrefix() {
@@ -104,6 +104,12 @@ public class JDBCConfigTest {
         } catch (Exception e) {
             LOGGER.error("Exception={}", e);
         }
+    }
+
+    @Test
+    public void testQueryTableStructure() {
+        FleaJDBCConfig.init(DBSystemEnum.MySQL.getName(), "fleaconfig");
+        FleaJDBCHelper.queryTableStructure("flea_jersey_i18n_error_mapping");
     }
 
 }

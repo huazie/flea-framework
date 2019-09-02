@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class FastJsonUtils {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(FastJsonUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FastJsonUtils.class);
 
     /**
      * <p> 使用FastJson进行解析 ,获取T对象 </p>

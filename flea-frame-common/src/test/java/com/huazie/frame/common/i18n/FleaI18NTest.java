@@ -15,7 +15,7 @@ import java.util.Locale;
  */
 public class FleaI18NTest {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(FleaI18NTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FleaI18NTest.class);
 
     @Test
     public void fleaI18NConfigTest() {

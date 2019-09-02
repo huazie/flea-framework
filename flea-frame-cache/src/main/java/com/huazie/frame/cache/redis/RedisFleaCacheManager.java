@@ -2,10 +2,8 @@ package com.huazie.frame.cache.redis;
 
 import com.huazie.frame.cache.AbstractFleaCache;
 import com.huazie.frame.cache.AbstractFleaCacheManager;
-import com.huazie.frame.cache.AbstractSpringCache;
-import com.huazie.frame.cache.AbstractSpringCacheManager;
+import com.huazie.frame.cache.redis.impl.RedisClientProxy;
 import com.huazie.frame.cache.redis.impl.RedisFleaCache;
-import org.springframework.cache.support.AbstractCacheManager;
 
 /**
  * <p> Redis Flea缓存管理类 </p>
@@ -16,9 +14,20 @@ import org.springframework.cache.support.AbstractCacheManager;
  */
 public class RedisFleaCacheManager extends AbstractFleaCacheManager {
 
+    private RedisClient redisClient;
+
+    /**
+     * <p> 默认构造方法，初始化Redis Flea缓存管理类 </p>
+     *
+     * @since 1.0.0
+     */
+    public RedisFleaCacheManager() {
+        redisClient = RedisClientProxy.getProxyInstance();
+    }
+
     @Override
     protected AbstractFleaCache newCache(String name, long expiry) {
-        return new RedisFleaCache(name, expiry);
+        return new RedisFleaCache(name, expiry, redisClient);
     }
 
 }

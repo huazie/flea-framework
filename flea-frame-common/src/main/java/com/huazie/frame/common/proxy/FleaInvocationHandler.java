@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class FleaInvocationHandler implements InvocationHandler {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(FleaInvocationHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FleaInvocationHandler.class);
 
     protected Object proxyObject;
 
