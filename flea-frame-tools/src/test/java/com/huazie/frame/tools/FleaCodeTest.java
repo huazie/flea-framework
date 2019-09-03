@@ -1,7 +1,7 @@
 package com.huazie.frame.tools;
 
 import com.huazie.frame.common.util.IOUtils;
-import com.huazie.frame.tools.code.FleaCodeMain;
+import com.huazie.frame.tools.code.FleaCodePanel;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,13 +25,13 @@ public class FleaCodeTest {
 
     @Test
     public void testFleaCodeMain() {
-        FleaCodeMain codeMain = new FleaCodeMain();
+        FleaCodePanel codeMain = new FleaCodePanel();
         codeMain.code();
     }
 
     @Test
     public void testFleaCodeDelete() {
-        FleaCodeMain codeMain = new FleaCodeMain();
+        FleaCodePanel codeMain = new FleaCodePanel();
         codeMain.clean();
     }
 
