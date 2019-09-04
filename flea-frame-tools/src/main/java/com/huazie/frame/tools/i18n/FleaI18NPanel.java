@@ -4,6 +4,7 @@ import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.i18n.FleaI18nHelper;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.common.util.UnicodeUtils;
+import com.huazie.frame.tools.common.ToolsHelper;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -69,7 +70,7 @@ public class FleaI18NPanel extends JPanel {
 
     private static String EXE_PATH_DEFAULT = "E:\\Software\\Java\\bin\\jdk1.7.0\\bin\\native2ascii.exe";
 
-    private int initWidhtLen = 620;
+    private int initWidhtLen = 520;
 
     private int initHeightLen = (int) (initWidhtLen * 0.618);
 
@@ -212,7 +213,7 @@ public class FleaI18NPanel extends JPanel {
     private void initFileUnicodeToNative() {
         JLabel unicodeFileLabel = new JLabel(FleaI18nHelper.i18nForCommon("COMMON_I18N_00002"), JLabel.CENTER);
         unicodeFileLabel.setFont(new Font("宋体", Font.PLAIN, 16)); // 设置"Unicode文件"字体
-        unicodeFileLabel.setPreferredSize(new Dimension(initWidhtLen / 6, initHeightLen / 12));
+        unicodeFileLabel.setPreferredSize(new Dimension(initWidhtLen / 5, initHeightLen / 12));
         unicodeFileText = new JTextField(initHeightLen / 8);// Unicode文件路径输入框
         unicodeFileText.setPreferredSize(new Dimension(initWidhtLen / 2, initHeightLen / 12));
         unicodeFileText.setSelectedTextColor(Color.RED);
@@ -313,13 +314,13 @@ public class FleaI18NPanel extends JPanel {
             try {
                 Desktop.getDesktop().open(new File(path).getParentFile());
             } catch (IOException e) {
-                showTips(FleaI18nHelper.i18nForCommon("COMMON_I18N_00010"), "大佬，由于系统异常，打开生成文件 所在目录异常", JOptionPane.ERROR_MESSAGE);
+                ToolsHelper.showTips(FleaI18nHelper.i18nForCommon("COMMON_I18N_00010"), "大佬，由于系统异常，打开生成文件 所在目录异常", JOptionPane.ERROR_MESSAGE);
             }
         } else {
             if (currTab == 1) {
-                showTips(FleaI18nHelper.i18nForCommon("COMMON_I18N_00009"), FleaI18nHelper.i18nForCommon("COMMON_I18N_00015", new String[]{FleaI18nHelper.i18nForCommon("COMMON_I18N_00001")}), JOptionPane.WARNING_MESSAGE);
+                ToolsHelper.showTips(FleaI18nHelper.i18nForCommon("COMMON_I18N_00009"), FleaI18nHelper.i18nForCommon("COMMON_I18N_00015", new String[]{FleaI18nHelper.i18nForCommon("COMMON_I18N_00001")}), JOptionPane.WARNING_MESSAGE);
             } else if (currTab == 2) {
-                showTips(FleaI18nHelper.i18nForCommon("COMMON_I18N_00009"), FleaI18nHelper.i18nForCommon("COMMON_I18N_00015", new String[]{FleaI18nHelper.i18nForCommon("COMMON_I18N_00002")}), JOptionPane.WARNING_MESSAGE);
+                ToolsHelper.showTips(FleaI18nHelper.i18nForCommon("COMMON_I18N_00009"), FleaI18nHelper.i18nForCommon("COMMON_I18N_00015", new String[]{FleaI18nHelper.i18nForCommon("COMMON_I18N_00002")}), JOptionPane.WARNING_MESSAGE);
             }
         }
     }
@@ -340,13 +341,13 @@ public class FleaI18NPanel extends JPanel {
             try {
                 UnicodeUtils.fileNativeToUnicode(EXE_PATH_DEFAULT, "gbk", nativeFilePath, unicodeFilePath);
                 // 提示 转化成功，展示文件路径
-                showTips(FleaI18nHelper.i18nForCommon("COMMON_I18N_00011"), FleaI18nHelper.i18nForCommon("COMMON_I18N_00016", new String[]{FleaI18nHelper.i18nForCommon("COMMON_I18N_00002"), unicodeFilePath}), JOptionPane.INFORMATION_MESSAGE);
+                ToolsHelper.showTips(FleaI18nHelper.i18nForCommon("COMMON_I18N_00011"), FleaI18nHelper.i18nForCommon("COMMON_I18N_00016", new String[]{FleaI18nHelper.i18nForCommon("COMMON_I18N_00002"), unicodeFilePath}), JOptionPane.INFORMATION_MESSAGE);
                 unicodeFilePathArea.setText(unicodeFilePath);
             } catch (Exception e) {
-                showTips(FleaI18nHelper.i18nForCommon("COMMON_I18N_00010"), FleaI18nHelper.i18nForCommon("COMMON_I18N_00014"), JOptionPane.ERROR_MESSAGE);
+                ToolsHelper.showTips(FleaI18nHelper.i18nForCommon("COMMON_I18N_00010"), FleaI18nHelper.i18nForCommon("COMMON_I18N_00014"), JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            showTips(FleaI18nHelper.i18nForCommon("COMMON_I18N_00009"), FleaI18nHelper.i18nForCommon("COMMON_I18N_00012", new String[]{FleaI18nHelper.i18nForCommon("COMMON_I18N_00001")}), JOptionPane.WARNING_MESSAGE);
+            ToolsHelper.showTips(FleaI18nHelper.i18nForCommon("COMMON_I18N_00009"), FleaI18nHelper.i18nForCommon("COMMON_I18N_00012", new String[]{FleaI18nHelper.i18nForCommon("COMMON_I18N_00001")}), JOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -366,13 +367,13 @@ public class FleaI18NPanel extends JPanel {
             try {
                 UnicodeUtils.fileUnicodeToNative(EXE_PATH_DEFAULT, unicodeFilePath, nativeFilePath);
                 // 提示 转化成功，展示文件路径
-                showTips(FleaI18nHelper.i18nForCommon("COMMON_I18N_00011"), FleaI18nHelper.i18nForCommon("COMMON_I18N_00016", new String[]{FleaI18nHelper.i18nForCommon("COMMON_I18N_00001"), nativeFilePath}), JOptionPane.INFORMATION_MESSAGE);
+                ToolsHelper.showTips(FleaI18nHelper.i18nForCommon("COMMON_I18N_00011"), FleaI18nHelper.i18nForCommon("COMMON_I18N_00016", new String[]{FleaI18nHelper.i18nForCommon("COMMON_I18N_00001"), nativeFilePath}), JOptionPane.INFORMATION_MESSAGE);
                 nativeFilePathArea.setText(nativeFilePath);
             } catch (Exception e) {
-                showTips(FleaI18nHelper.i18nForCommon("COMMON_I18N_00010"), FleaI18nHelper.i18nForCommon("COMMON_I18N_00014"), JOptionPane.ERROR_MESSAGE);
+                ToolsHelper.showTips(FleaI18nHelper.i18nForCommon("COMMON_I18N_00010"), FleaI18nHelper.i18nForCommon("COMMON_I18N_00014"), JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            showTips(FleaI18nHelper.i18nForCommon("COMMON_I18N_00009"), FleaI18nHelper.i18nForCommon("COMMON_I18N_00012", new String[]{FleaI18nHelper.i18nForCommon("COMMON_I18N_00002")}), JOptionPane.WARNING_MESSAGE);
+            ToolsHelper.showTips(FleaI18nHelper.i18nForCommon("COMMON_I18N_00009"), FleaI18nHelper.i18nForCommon("COMMON_I18N_00012", new String[]{FleaI18nHelper.i18nForCommon("COMMON_I18N_00002")}), JOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -389,10 +390,10 @@ public class FleaI18NPanel extends JPanel {
                 String unicodeStr = UnicodeUtils.nativeToUnicode(nativeStr);
                 unicodeStringArea.setText(unicodeStr);
             } catch (Exception e) {
-                showTips(FleaI18nHelper.i18nForCommon("COMMON_I18N_00010"), FleaI18nHelper.i18nForCommon("COMMON_I18N_00014"), JOptionPane.ERROR_MESSAGE);
+                ToolsHelper.showTips(FleaI18nHelper.i18nForCommon("COMMON_I18N_00010"), FleaI18nHelper.i18nForCommon("COMMON_I18N_00014"), JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            showTips(FleaI18nHelper.i18nForCommon("COMMON_I18N_00009"), FleaI18nHelper.i18nForCommon("COMMON_I18N_00013", new String[]{FleaI18nHelper.i18nForCommon("COMMON_I18N_00003")}), JOptionPane.WARNING_MESSAGE);
+            ToolsHelper.showTips(FleaI18nHelper.i18nForCommon("COMMON_I18N_00009"), FleaI18nHelper.i18nForCommon("COMMON_I18N_00013", new String[]{FleaI18nHelper.i18nForCommon("COMMON_I18N_00003")}), JOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -409,29 +410,17 @@ public class FleaI18NPanel extends JPanel {
                 String nativeStr = UnicodeUtils.unicodeToNative(unicodeStr);
                 nativeStringArea.setText(nativeStr);
             } catch (Exception e) {
-                showTips(FleaI18nHelper.i18nForCommon("COMMON_I18N_00010"), FleaI18nHelper.i18nForCommon("COMMON_I18N_00014"), JOptionPane.ERROR_MESSAGE);
+                ToolsHelper.showTips(FleaI18nHelper.i18nForCommon("COMMON_I18N_00010"), FleaI18nHelper.i18nForCommon("COMMON_I18N_00014"), JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            showTips(FleaI18nHelper.i18nForCommon("COMMON_I18N_00009"), FleaI18nHelper.i18nForCommon("COMMON_I18N_00013", new String[]{FleaI18nHelper.i18nForCommon("COMMON_I18N_00004")}), JOptionPane.WARNING_MESSAGE);
+            ToolsHelper.showTips(FleaI18nHelper.i18nForCommon("COMMON_I18N_00009"), FleaI18nHelper.i18nForCommon("COMMON_I18N_00013", new String[]{FleaI18nHelper.i18nForCommon("COMMON_I18N_00004")}), JOptionPane.WARNING_MESSAGE);
         }
-    }
-
-    /**
-     * 展示提示消息
-     *
-     * @param title
-     * @param msg
-     * @param messageType
-     * @date 2018年10月10日
-     */
-    private void showTips(String title, String msg, int messageType) {
-        JOptionPane.showMessageDialog(null, msg, title, messageType);
     }
 
     /**
      * 弹出选择文件页面
      *
-     * @date 2018年10月29日
+     * @since 1.0.0
      */
     private void selectFile() {
         fileChooser = new JFileChooser();

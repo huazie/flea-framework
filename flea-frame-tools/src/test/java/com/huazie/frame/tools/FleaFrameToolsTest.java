@@ -19,8 +19,8 @@ public class FleaFrameToolsTest {
 
     public static void main(String[] args){
 //        FleaFrameManager.getManager().setLocale(Locale.US);
-//        FleaI18NPanel main = new FleaI18NPanel();
-//        main.setVisible(true);
+////        FleaI18NPanel main = new FleaI18NPanel();
+////        main.setVisible(true);
         try {
             UIManager.setLookAndFeel(new SubstanceLookAndFeel());
             JFrame.setDefaultLookAndFeelDecorated(true);

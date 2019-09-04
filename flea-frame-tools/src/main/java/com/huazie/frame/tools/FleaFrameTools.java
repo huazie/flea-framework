@@ -68,7 +68,7 @@ public class FleaFrameTools extends JFrame implements ActionListener, ChangeList
     }
 
     private void init() {
-        setBounds(200, 20, (int) (620 / 0.618), 620);
+        setBounds(200, 20, (int) (520 / 0.618), 520);
 
         Dimension screen = getToolkit().getScreenSize(); // 得到屏幕尺寸
         setLocation((screen.width - getSize().width) / 2, (screen.height - getSize().height) / 2); // 设置窗口位置
