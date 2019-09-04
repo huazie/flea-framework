@@ -6,23 +6,10 @@ import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.common.util.UnicodeUtils;
 import com.huazie.frame.tools.common.ToolsHelper;
 
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Desktop;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -112,7 +99,6 @@ public class FleaI18NPanel extends JPanel {
         operatePanel = new JPanel();
 
         open = new JButton(FleaI18nHelper.i18nForCommon("COMMON_I18N_00005"));
-        open.setPreferredSize(new Dimension(initWidhtLen / 7, initHeightLen / 12));
         open.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -124,7 +110,6 @@ public class FleaI18NPanel extends JPanel {
         operatePanel.add(open);
 
         convert = new JButton(FleaI18nHelper.i18nForCommon("COMMON_I18N_00006"));
-        convert.setPreferredSize(new Dimension(initWidhtLen / 7, initHeightLen / 12));
         convert.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -144,9 +129,7 @@ public class FleaI18NPanel extends JPanel {
         operatePanel.add(convert);
 
 
-
         reset = new JButton(FleaI18nHelper.i18nForCommon("COMMON_I18N_00007"));
-        reset.setPreferredSize(new Dimension(initWidhtLen / 7, initHeightLen / 12));
         reset.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (currTab == 1) {
@@ -173,14 +156,11 @@ public class FleaI18NPanel extends JPanel {
      * @date 2018年10月29日
      */
     private void initFileNativeToUnicode() {
-        JLabel nativeFileLabel = new JLabel(FleaI18nHelper.i18nForCommon("COMMON_I18N_00001"), JLabel.CENTER);
+        JLabel nativeFileLabel = new JLabel(FleaI18nHelper.i18nForCommon("COMMON_I18N_00001") + ":", JLabel.RIGHT);
         nativeFileLabel.setFont(new Font("宋体", Font.PLAIN, 16)); // 设置"本地文件"字体
-        nativeFileLabel.setPreferredSize(new Dimension(initWidhtLen / 7, initHeightLen / 12));
-        nativeFileText = new JTextField(initHeightLen / 8);// 本地文件路径输入框
-        nativeFileText.setPreferredSize(new Dimension(initWidhtLen / 2, initHeightLen / 12));
+        nativeFileText = new JTextField();// 本地文件路径输入框
         nativeFileText.setSelectedTextColor(Color.RED);
         nativeFileSelectBtn = new JButton(FleaI18nHelper.i18nForCommon("COMMON_I18N_00008"));// 本地文件选择按钮
-        nativeFileSelectBtn.setPreferredSize(new Dimension(initWidhtLen / 7, initHeightLen / 12));
         nativeFileSelectBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -196,11 +176,11 @@ public class FleaI18NPanel extends JPanel {
         unicodeFilePathArea.setEditable(false);
 
         // File Native To Unicode
-        nativeToUnicodeFilePanel = new JPanel(new BorderLayout());
-        JPanel topJpanel = new JPanel();
-        topJpanel.add(nativeFileLabel);
-        topJpanel.add(nativeFileText);
-        topJpanel.add(nativeFileSelectBtn);
+        nativeToUnicodeFilePanel = new JPanel(new BorderLayout(10, 5));
+        JPanel topJpanel = new JPanel(new BorderLayout(10, 10));
+        topJpanel.add(nativeFileLabel, BorderLayout.WEST);
+        topJpanel.add(nativeFileText, BorderLayout.CENTER);
+        topJpanel.add(nativeFileSelectBtn, BorderLayout.EAST);
         nativeToUnicodeFilePanel.add(topJpanel, BorderLayout.NORTH);
         nativeToUnicodeFilePanel.add(unicodeFilePathArea);
     }
@@ -211,14 +191,11 @@ public class FleaI18NPanel extends JPanel {
      * @date 2018年10月29日
      */
     private void initFileUnicodeToNative() {
-        JLabel unicodeFileLabel = new JLabel(FleaI18nHelper.i18nForCommon("COMMON_I18N_00002"), JLabel.CENTER);
+        JLabel unicodeFileLabel = new JLabel(FleaI18nHelper.i18nForCommon("COMMON_I18N_00002") + ":", JLabel.RIGHT);
         unicodeFileLabel.setFont(new Font("宋体", Font.PLAIN, 16)); // 设置"Unicode文件"字体
-        unicodeFileLabel.setPreferredSize(new Dimension(initWidhtLen / 5, initHeightLen / 12));
-        unicodeFileText = new JTextField(initHeightLen / 8);// Unicode文件路径输入框
-        unicodeFileText.setPreferredSize(new Dimension(initWidhtLen / 2, initHeightLen / 12));
+        unicodeFileText = new JTextField();// Unicode文件路径输入框
         unicodeFileText.setSelectedTextColor(Color.RED);
         unicodeFileSelectBtn = new JButton(FleaI18nHelper.i18nForCommon("COMMON_I18N_00008"));// Unicode文件选择按钮
-        unicodeFileSelectBtn.setPreferredSize(new Dimension(initWidhtLen / 7, initHeightLen / 12));
         unicodeFileSelectBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -234,11 +211,11 @@ public class FleaI18NPanel extends JPanel {
         nativeFilePathArea.setEditable(false);
 
         // File Unicode To Native
-        unicodeToNativeFilePanel = new JPanel(new BorderLayout());
-        JPanel topJpanel = new JPanel();
-        topJpanel.add(unicodeFileLabel);
-        topJpanel.add(unicodeFileText);
-        topJpanel.add(unicodeFileSelectBtn);
+        unicodeToNativeFilePanel = new JPanel(new BorderLayout(10, 5));
+        JPanel topJpanel = new JPanel(new BorderLayout(10, 10));
+        topJpanel.add(unicodeFileLabel, BorderLayout.WEST);
+        topJpanel.add(unicodeFileText, BorderLayout.CENTER);
+        topJpanel.add(unicodeFileSelectBtn, BorderLayout.EAST);
         unicodeToNativeFilePanel.add(topJpanel, BorderLayout.NORTH);
         unicodeToNativeFilePanel.add(nativeFilePathArea);
     }
@@ -249,11 +226,9 @@ public class FleaI18NPanel extends JPanel {
      * @date 2018年10月29日
      */
     private void initStringNativeToUnicode() {
-        JLabel nativeStringLabel = new JLabel(FleaI18nHelper.i18nForCommon("COMMON_I18N_00003"), JLabel.CENTER);
-        nativeStringLabel.setFont(new Font("宋体", Font.PLAIN, 18)); // 设置"本地文件"字体
-        nativeStringLabel.setPreferredSize(new Dimension(initWidhtLen / 5, initHeightLen / 12));
-        nativeStringText = new JTextField(initHeightLen / 8);// 本地文件路径输入框
-        nativeStringText.setPreferredSize(new Dimension(initWidhtLen / 3, initHeightLen / 12));
+        JLabel nativeStringLabel = new JLabel(FleaI18nHelper.i18nForCommon("COMMON_I18N_00003") + ":", JLabel.RIGHT);
+        nativeStringLabel.setFont(new Font("宋体", Font.PLAIN, 16)); // 设置"本地文件"字体
+        nativeStringText = new JTextField();// 本地文件路径输入框
         nativeStringText.setSelectedTextColor(Color.RED);
         unicodeStringArea = new JTextArea();// Unicode文本域
         unicodeStringArea.setSelectedTextColor(Color.RED);// 设置选中文本的颜色
@@ -261,10 +236,10 @@ public class FleaI18NPanel extends JPanel {
         unicodeStringArea.setWrapStyleWord(true);// 设置换行不断字
 
         // String Native To Unicode
-        nativeToUnicodeStringPanel = new JPanel(new BorderLayout());
-        JPanel topJpanel = new JPanel();
-        topJpanel.add(nativeStringLabel);
-        topJpanel.add(nativeStringText);
+        nativeToUnicodeStringPanel = new JPanel(new BorderLayout(10, 5));
+        JPanel topJpanel = new JPanel(new BorderLayout(10, 10));
+        topJpanel.add(nativeStringLabel, BorderLayout.WEST);
+        topJpanel.add(nativeStringText, BorderLayout.CENTER);
         nativeToUnicodeStringPanel.add(topJpanel, BorderLayout.NORTH);
         nativeToUnicodeStringPanel.add(unicodeStringArea);
     }
@@ -275,11 +250,9 @@ public class FleaI18NPanel extends JPanel {
      * @date 2018年10月29日
      */
     private void initStringUnicodeToNative() {
-        JLabel unicodeStringLabel = new JLabel(FleaI18nHelper.i18nForCommon("COMMON_I18N_00004"), JLabel.CENTER);
-        unicodeStringLabel.setFont(new Font("宋体", Font.PLAIN, 18)); // 设置"Unicode文件"字体
-        unicodeStringLabel.setPreferredSize(new Dimension(initWidhtLen / 4, initHeightLen / 12));
-        unicodeStringText = new JTextField(initHeightLen / 8);// Unicode文件路径输入框
-        unicodeStringText.setPreferredSize(new Dimension(initWidhtLen / 3, initHeightLen / 12));
+        JLabel unicodeStringLabel = new JLabel(FleaI18nHelper.i18nForCommon("COMMON_I18N_00004") + ":", JLabel.RIGHT);
+        unicodeStringLabel.setFont(new Font("宋体", Font.PLAIN, 16)); // 设置"Unicode文件"字体
+        unicodeStringText = new JTextField();// Unicode文件路径输入框
         unicodeStringText.setSelectedTextColor(Color.RED);
         nativeStringArea = new JTextArea();// 本地文本域
         nativeStringArea.setSelectedTextColor(Color.RED);// 设置选中文本的颜色
@@ -287,10 +260,10 @@ public class FleaI18NPanel extends JPanel {
         nativeStringArea.setWrapStyleWord(true);// 设置换行不断字
 
         // String Unicode To Native
-        unicodeToNativeStringPanel = new JPanel(new BorderLayout());
-        JPanel topJpanel = new JPanel();
-        topJpanel.add(unicodeStringLabel);
-        topJpanel.add(unicodeStringText);
+        unicodeToNativeStringPanel = new JPanel(new BorderLayout(10, 5));
+        JPanel topJpanel = new JPanel(new BorderLayout(10, 10));
+        topJpanel.add(unicodeStringLabel, BorderLayout.WEST);
+        topJpanel.add(unicodeStringText, BorderLayout.CENTER);
         unicodeToNativeStringPanel.add(topJpanel, BorderLayout.NORTH);
         unicodeToNativeStringPanel.add(nativeStringArea);
     }

@@ -450,8 +450,8 @@ public class FleaCodePanel extends JPanel implements ActionListener {
         configGridBagConstraints.weightx = 0.0;
         configGridBagConstraints.gridwidth = GridBagConstraints.REMAINDER; // end row
         configGridBagConstraints.insets = new Insets(2, 0, 2, 0);
-        JSeparator sep = new JSeparator(SwingConstants.CENTER);
-        sep.setBackground(new Color(153, 153, 153));
+        JSeparator sep = new JSeparator(SwingConstants.HORIZONTAL);
+        sep.setBackground(new Color(10, 10, 10));
         configGridBagLayout.setConstraints(sep, configGridBagConstraints);
         configPanel.add(sep);
     }
