@@ -67,7 +67,7 @@ public class FleaI18NPanel extends JPanel {
 
     public void init() {
 
-        setLayout(new GridLayout(2, 1));
+        setLayout(new BorderLayout());
 
         initFileNativeToUnicode();    // 初始化本地文件转Unicode文件页面
 
@@ -146,7 +146,7 @@ public class FleaI18NPanel extends JPanel {
             }
         });
         operatePanel.add(reset);
-        add(operatePanel);
+        add(operatePanel, BorderLayout.SOUTH);
 
     }
 

@@ -3,6 +3,7 @@ package com.huazie.frame.tools;
 import com.huazie.frame.common.i18n.FleaI18nHelper;
 import com.huazie.frame.tools.code.FleaCodePanel;
 import com.huazie.frame.tools.i18n.FleaI18NPanel;
+import com.huazie.frame.tools.log.FleaLoggerPanel;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -13,8 +14,10 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
@@ -22,6 +25,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -62,6 +66,8 @@ public class FleaFrameTools extends JFrame implements ActionListener, ChangeList
 
     private JScrollPane mJScrollPane;// 滚动条
 
+    private JTextArea logTextArea; // 日志区域
+
     public FleaFrameTools() {
         super("Flea Frame Tools");
         init();
@@ -70,14 +76,35 @@ public class FleaFrameTools extends JFrame implements ActionListener, ChangeList
     private void init() {
 
         Dimension screen = getToolkit().getScreenSize(); // 得到屏幕尺寸
-        int height = screen.height / 2;
+        int height = (int) (screen.height / 1.2);
         setBounds(200, 20, (int) (height / 0.618), height);
 
         setLocation((screen.width - getSize().width) / 2, (screen.height - getSize().height) / 2); // 设置窗口位置
 
+        // 设置布局
+        setLayout(new BorderLayout());
+
         // 修改左上角图标
         setIconImage(Toolkit.getDefaultToolkit().createImage(FleaFrameTools.class.getClassLoader().getResource("flea/image/fleaframetools.png")));
 
+        initMenuBar(); // 初始化菜单栏
+
+        initToolBar(); // 初始化工具栏
+
+        initMainArea(); // 初始化主区域
+
+        initLogArea(); // // 初始化日志区域
+
+        setResizable(true);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    }
+
+    /**
+     * <p> 初始化菜单栏 </p>
+     *
+     * @since 1.0.0
+     */
+    private void initMenuBar() {
         mExitMenuItem.addActionListener(this);
         mSystemMenu.add(mExitMenuItem);
 
@@ -89,10 +116,14 @@ public class FleaFrameTools extends JFrame implements ActionListener, ChangeList
 
         // 添加菜单栏
         setJMenuBar(mBar);
+    }
 
-        // 设置布局
-        setLayout(new BorderLayout());
-
+    /**
+     * <p> 初始化工具栏 </p>
+     *
+     * @since 1.0.0
+     */
+    private void initToolBar() {
         // 工具栏按钮响应事件
         mTabbedPanePreBtn.addActionListener(this);
         mTabbedPaneNextBtn.addActionListener(this);
@@ -118,20 +149,36 @@ public class FleaFrameTools extends JFrame implements ActionListener, ChangeList
         mToolbar.add(new JLabel("  "));
         mToolbar.addSeparator();
 
+        // 添加工具栏
+        add(mToolbar, BorderLayout.NORTH);
+    }
+
+    /**
+     * <p> 初始化主区域 </p>
+     *
+     * @since 1.0.0
+     */
+    private void initMainArea() {
         mFleaI18NPanel = new FleaI18NPanel();
         mFleaCodePanel = new FleaCodePanel();
         mJScrollPane = new JScrollPane(mFleaCodePanel);
-        mFleaCodePanel.setPreferredSize(new Dimension(getWidth() - 200, getHeight()));
 
         mTabbedPane.add(mFleaI18NPanel, FleaI18nHelper.i18nForCommon("COMMON_I18N_00000"));
         mTabbedPane.add(mJScrollPane, FleaI18nHelper.i18nForCommon("COMMON_CODE_00000"));
         mTabbedPane.addChangeListener(this);
 
         add(mTabbedPane);
-        // 添加工具栏
-        add(mToolbar, BorderLayout.NORTH);
+    }
 
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    /**
+     * <p> 初始化日志面板 </p>
+     *
+     * @since 1.0.0
+     */
+    private void initLogArea() {
+        JPanel logPanel = new FleaLoggerPanel(new GridLayout(1, 1));
+        logPanel.setPreferredSize(new Dimension(getWidth(), 180));
+        add(logPanel, BorderLayout.SOUTH);
     }
 
     @Override

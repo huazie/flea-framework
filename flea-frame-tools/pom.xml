@@ -27,14 +27,6 @@
 
     <dependencies>
 
-        <!-- FLEA FRAME CONFIG -->
-        <dependency>
-            <groupId>com.huazie.frame</groupId>
-            <artifactId>flea-frame-config</artifactId>
-            <version>${parent.version}</version>
-            <scope>test</scope>
-        </dependency>
-
         <!-- FLEA FRAME COMMON -->
         <dependency>
             <groupId>com.huazie.frame</groupId>

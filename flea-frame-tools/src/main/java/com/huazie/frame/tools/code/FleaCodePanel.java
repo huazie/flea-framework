@@ -1,7 +1,6 @@
 package com.huazie.frame.tools.code;
 
 import com.huazie.frame.common.i18n.FleaI18nHelper;
-import com.huazie.frame.common.log.impl.TextAreaLogAppender;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.DBSystemEnum;
@@ -9,12 +8,26 @@ import com.huazie.frame.tools.common.ToolsConstants;
 import com.huazie.frame.tools.common.ToolsException;
 import com.huazie.frame.tools.common.ToolsHelper;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JSeparator;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,27 +64,27 @@ public class FleaCodePanel extends JPanel implements ActionListener {
 
     private ButtonGroup btnGroup; // 单选按钮组
 
-    private JTextField persistenceUnitDaoPackageTextField; // 持久化单元DAO层实现包名
+    private JTextField puDaoPackageTextField; // 持久化单元DAO层实现包名
 
     private JLabel puDAOClassNameLabel;
 
-    private JTextField persistenceUnitDaoClassNameTextField; // 持久化单元DAO层实现类名
+    private JTextField puDaoClassNameTextField; // 持久化单元DAO层实现类名
 
     private JLabel persistenceUnitNameLabel;
 
-    private JTextField persistenceUnitNameTextField; // 持久化单元名
+    private JTextField puNameTextField; // 持久化单元名
 
     private JLabel persistenceUnitAliasNameLabel;
 
-    private JTextField persistenceUnitAliasNameTextField; // 持久化单元别名
+    private JTextField puAliasNameTextField; // 持久化单元别名
+
+    private JButton importButton; // 导入 按钮
 
     private JButton generateButton; // 生成 按钮
 
     private JButton destroyButton; // 销毁 按钮
 
     private JButton resetButton; // 重置 按钮
-
-    private JTextArea logTextArea; // 日志区域
 
     private GridBagLayout configGridBagLayout;
 
@@ -117,9 +130,6 @@ public class FleaCodePanel extends JPanel implements ActionListener {
 
         // 初始化按钮
         initButton();
-
-        // 日志
-        initLogArea();
     }
 
     private void initDBConfig() {
@@ -379,56 +389,56 @@ public class FleaCodePanel extends JPanel implements ActionListener {
         // 持久化单元DAO层实现类包名
         JLabel puDAOClassPackageLabel = new JLabel(FleaI18nHelper.i18nForCommon("COMMON_CODE_00010") + ":", JLabel.RIGHT);
         puDAOClassPackageLabel.setFont(new Font("宋体", Font.PLAIN, 15)); // 字体
-        persistenceUnitDaoPackageTextField = new JTextField();
+        puDaoPackageTextField = new JTextField();
 
         configGridBagConstraints.gridwidth = 1;
         configGridBagLayout.setConstraints(puDAOClassPackageLabel, configGridBagConstraints);
         configPanel.add(puDAOClassPackageLabel);
         configGridBagConstraints.gridwidth = GridBagConstraints.REMAINDER; // end row
-        configGridBagLayout.setConstraints(persistenceUnitDaoPackageTextField, configGridBagConstraints);
-        configPanel.add(persistenceUnitDaoPackageTextField);
+        configGridBagLayout.setConstraints(puDaoPackageTextField, configGridBagConstraints);
+        configPanel.add(puDaoPackageTextField);
 
         // 持久化单元DAO层实现类名
         puDAOClassNameLabel = new JLabel(FleaI18nHelper.i18nForCommon("COMMON_CODE_00016") + ":", JLabel.RIGHT);
         puDAOClassNameLabel.setFont(new Font("宋体", Font.PLAIN, 15)); // 字体
-        persistenceUnitDaoClassNameTextField = new JTextField();
+        puDaoClassNameTextField = new JTextField();
 
         configGridBagConstraints.gridwidth = 1;
         configGridBagLayout.setConstraints(puDAOClassNameLabel, configGridBagConstraints);
         configPanel.add(puDAOClassNameLabel);
         configGridBagConstraints.gridwidth = GridBagConstraints.REMAINDER; // end row
-        configGridBagLayout.setConstraints(persistenceUnitDaoClassNameTextField, configGridBagConstraints);
-        configPanel.add(persistenceUnitDaoClassNameTextField);
+        configGridBagLayout.setConstraints(puDaoClassNameTextField, configGridBagConstraints);
+        configPanel.add(puDaoClassNameTextField);
 
         // 持久化单元名
         persistenceUnitNameLabel = new JLabel(FleaI18nHelper.i18nForCommon("COMMON_CODE_00014") + ":", JLabel.RIGHT);
         persistenceUnitNameLabel.setFont(new Font("宋体", Font.PLAIN, 15)); // 字体
-        persistenceUnitNameTextField = new JTextField();
+        puNameTextField = new JTextField();
         // 持久化单元别名 （单词首字母大写）
         persistenceUnitAliasNameLabel = new JLabel(FleaI18nHelper.i18nForCommon("COMMON_CODE_00015") + ":", JLabel.RIGHT);
         persistenceUnitAliasNameLabel.setFont(new Font("宋体", Font.PLAIN, 15)); // 字体
-        persistenceUnitAliasNameTextField = new JTextField();
+        puAliasNameTextField = new JTextField();
 
         configGridBagConstraints.gridwidth = 1;
         configGridBagLayout.setConstraints(persistenceUnitNameLabel, configGridBagConstraints);
         configPanel.add(persistenceUnitNameLabel);
         configGridBagConstraints.gridwidth = 4;
-        configGridBagLayout.setConstraints(persistenceUnitNameTextField, configGridBagConstraints);
-        configPanel.add(persistenceUnitNameTextField);
+        configGridBagLayout.setConstraints(puNameTextField, configGridBagConstraints);
+        configPanel.add(puNameTextField);
         configGridBagConstraints.gridwidth = 1;
         configGridBagLayout.setConstraints(persistenceUnitAliasNameLabel, configGridBagConstraints);
         configPanel.add(persistenceUnitAliasNameLabel);
         configGridBagConstraints.gridwidth = GridBagConstraints.REMAINDER; // end row
-        configGridBagLayout.setConstraints(persistenceUnitAliasNameTextField, configGridBagConstraints);
-        configPanel.add(persistenceUnitAliasNameTextField);
+        configGridBagLayout.setConstraints(puAliasNameTextField, configGridBagConstraints);
+        configPanel.add(puAliasNameTextField);
 
         // 初始化
         // 设置第一个单选按钮选中
         oldRadioButton.setSelected(true);
         persistenceUnitNameLabel.setVisible(false);
-        persistenceUnitNameTextField.setVisible(false);
+        puNameTextField.setVisible(false);
         persistenceUnitAliasNameLabel.setVisible(false);
-        persistenceUnitAliasNameTextField.setVisible(false);
+        puAliasNameTextField.setVisible(false);
     }
 
     private void addSeparator() {
@@ -457,40 +467,16 @@ public class FleaCodePanel extends JPanel implements ActionListener {
         resetButton.addActionListener(this);
         buttonPanel.add(resetButton);
 
+        // 导入按钮
+        importButton = new JButton(FleaI18nHelper.i18nForCommon("COMMON_CODE_00019"));
+        importButton.addActionListener(this);
+        buttonPanel.add(importButton);
+
         configGridBagConstraints.weightx = 0.0;
         configGridBagConstraints.gridwidth = GridBagConstraints.REMAINDER; // end row
         configGridBagConstraints.insets = new Insets(2, 0, 2, 0);
         configGridBagLayout.setConstraints(buttonPanel, configGridBagConstraints);
         configPanel.add(buttonPanel);
-    }
-
-    private void initLogArea() {
-        JPanel logPanel = new JPanel(new BorderLayout(5, 5));
-
-        logTextArea = new JTextArea();
-        logTextArea.setSelectedTextColor(Color.RED);// 设置选中文本的颜色
-        logTextArea.setLineWrap(true);// 设置自动换行
-        logTextArea.setWrapStyleWord(true);// 设置换行不断字
-        logTextArea.setEditable(false);
-        logTextArea.setBackground(new Color(153, 153, 153));
-        logTextArea.setCaretColor(new Color(0, 0, 0));
-
-        JScrollPane jScrollPane = new JScrollPane(logTextArea);
-        logPanel.add(jScrollPane);
-        configGridBagConstraints.weightx = 0.0;
-        configGridBagConstraints.gridwidth = GridBagConstraints.REMAINDER; // end row
-        configGridBagConstraints.gridheight = 5;
-        configGridBagConstraints.weighty = 1.0;
-        configGridBagConstraints.insets = new Insets(2, 2, 2, 2);
-        configGridBagLayout.setConstraints(logPanel, configGridBagConstraints);
-        configPanel.add(logPanel);
-
-        try {
-            Thread textAreaLogAppender = new TextAreaLogAppender(logTextArea, jScrollPane);
-            textAreaLogAppender.start();
-        } catch (IOException e) {
-            // 日志启动记录异常
-        }
     }
 
     @Override
@@ -499,18 +485,18 @@ public class FleaCodePanel extends JPanel implements ActionListener {
             Object source = ae.getSource();
             if (newRadioButton == source) {
                 puDAOClassNameLabel.setVisible(false);
-                persistenceUnitDaoClassNameTextField.setVisible(false);
+                puDaoClassNameTextField.setVisible(false);
                 persistenceUnitNameLabel.setVisible(true);
-                persistenceUnitNameTextField.setVisible(true);
+                puNameTextField.setVisible(true);
                 persistenceUnitAliasNameLabel.setVisible(true);
-                persistenceUnitAliasNameTextField.setVisible(true);
+                puAliasNameTextField.setVisible(true);
             } else if (oldRadioButton == source) {
                 puDAOClassNameLabel.setVisible(true);
-                persistenceUnitDaoClassNameTextField.setVisible(true);
+                puDaoClassNameTextField.setVisible(true);
                 persistenceUnitNameLabel.setVisible(false);
-                persistenceUnitNameTextField.setVisible(false);
+                puNameTextField.setVisible(false);
                 persistenceUnitAliasNameLabel.setVisible(false);
-                persistenceUnitAliasNameTextField.setVisible(false);
+                puAliasNameTextField.setVisible(false);
             } else if (generateButton == source) {
                 code();
             } else if (destroyButton == source) {
@@ -519,23 +505,30 @@ public class FleaCodePanel extends JPanel implements ActionListener {
                 reset();
             } else if (rootPathSelectButton == source) {
                 selectFile();
+            } else if (importButton == source) {
+                importConfig();
             }
         } catch (Exception e1) {
             ToolsHelper.showTips(FleaI18nHelper.i18nForCommon("COMMON_I18N_00010"), e1.getMessage(), JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    public void code() throws Exception {
+    private void code() throws Exception {
         // 编写代码
         FleaCodeProgrammer.code(createParamMap());
     }
 
-    public void clean() throws Exception {
+    private void clean() throws Exception {
         // 清理代码
         FleaCodeProgrammer.clean(createParamMap());
     }
 
-    public void reset() {
+    /**
+     * <p> 重置 </p>
+     *
+     * @since 1.0.0
+     */
+    private void reset() {
         // 数据库配置
         dbSystemComboBox.setSelectedIndex(0);
         dbNameTextField.setText("");
@@ -549,10 +542,31 @@ public class FleaCodePanel extends JPanel implements ActionListener {
         codePackageTextField.setText("");
 
         // 持久化单元配置
-        persistenceUnitDaoPackageTextField.setText("");
-        persistenceUnitDaoClassNameTextField.setText("");
-        persistenceUnitNameTextField.setText("");
-        persistenceUnitAliasNameTextField.setText("");
+        puDaoPackageTextField.setText("");
+        puDaoClassNameTextField.setText("");
+        puNameTextField.setText("");
+        puAliasNameTextField.setText("");
+
+    }
+
+    /**
+     * <p> 导入配置 </p>
+     *
+     * @since 1.0.0
+     */
+    private void importConfig() {
+        CodeConfig config = CodeConfig.getConfig();
+        dbNameTextField.setText(config.getDbName());
+        tableNameTextField.setText(config.getTableName());
+        tableNameDescTextField.setText(config.getTableNameDesc());
+        authorTextField.setText(config.getAuthor());
+        versionTextField.setText(config.getVersion());
+        rootPathTextField.setText(config.getRootPath());
+        codePackageTextField.setText(config.getCodePackage());
+        puDaoPackageTextField.setText(config.getPuDaoCodePackage());
+        puDaoClassNameTextField.setText(config.getPuDaoClassName());
+        puNameTextField.setText(config.getPuName());
+        puAliasNameTextField.setText(config.getPuAliasName());
     }
 
     /**
@@ -623,7 +637,7 @@ public class FleaCodePanel extends JPanel implements ActionListener {
         param.put(ToolsConstants.CodeConstants.CODE_PACKAGE, codePackage);
 
         // 3. 持久化单元配置
-        String puDaoClassPackage = persistenceUnitDaoPackageTextField.getText();
+        String puDaoClassPackage = puDaoPackageTextField.getText();
         if (StringUtils.isBlank(puDaoClassPackage)) {
             throw new ToolsException("COMMON_I18N_00013", FleaI18nHelper.i18nForCommon("COMMON_CODE_00011") + FleaI18nHelper.i18nForCommon("COMMON_CODE_00010"));
         }
@@ -631,20 +645,20 @@ public class FleaCodePanel extends JPanel implements ActionListener {
         // 获取单选按钮
         if (btnGroup.isSelected(newRadioButton.getModel())) { // 选择新建
             // 持久化单元名
-            String fleaPersistenceUnitName = persistenceUnitNameTextField.getText();
+            String fleaPersistenceUnitName = puNameTextField.getText();
             if (StringUtils.isBlank(fleaPersistenceUnitName)) {
                 throw new ToolsException("COMMON_I18N_00013", FleaI18nHelper.i18nForCommon("COMMON_CODE_00014"));
             }
             param.put(ToolsConstants.CodeConstants.FLEA_PERSISTENCE_UNIT_NAME, fleaPersistenceUnitName);
             // 持久化单元别名
-            String fleaPersistenceUnitAliasName = persistenceUnitAliasNameTextField.getText();
+            String fleaPersistenceUnitAliasName = puAliasNameTextField.getText();
             if (StringUtils.isBlank(fleaPersistenceUnitAliasName)) {
                 throw new ToolsException("COMMON_I18N_00013", FleaI18nHelper.i18nForCommon("COMMON_CODE_00015"));
             }
             param.put(ToolsConstants.CodeConstants.FLEA_PERSISTENCE_UNIT_ALIAS_NAME, fleaPersistenceUnitAliasName);
         } else { // 选择现有
             // 持久化单元DAO层实现类名
-            String fleaPersistenceUnitDaoClassName = persistenceUnitDaoClassNameTextField.getText();
+            String fleaPersistenceUnitDaoClassName = puDaoClassNameTextField.getText();
             if (StringUtils.isBlank(fleaPersistenceUnitDaoClassName)) {
                 throw new ToolsException("COMMON_I18N_00013", FleaI18nHelper.i18nForCommon("COMMON_CODE_00016"));
             }
