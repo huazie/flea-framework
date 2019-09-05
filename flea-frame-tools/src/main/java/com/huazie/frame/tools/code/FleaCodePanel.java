@@ -1,6 +1,7 @@
 package com.huazie.frame.tools.code;
 
 import com.huazie.frame.common.i18n.FleaI18nHelper;
+import com.huazie.frame.common.log.impl.TextAreaLogAppender;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.DBSystemEnum;
@@ -8,28 +9,12 @@ import com.huazie.frame.tools.common.ToolsConstants;
 import com.huazie.frame.tools.common.ToolsException;
 import com.huazie.frame.tools.common.ToolsHelper;
 
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JSeparator;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -490,7 +475,8 @@ public class FleaCodePanel extends JPanel implements ActionListener {
         logTextArea.setBackground(new Color(153, 153, 153));
         logTextArea.setCaretColor(new Color(0, 0, 0));
 
-        logPanel.add(logTextArea);
+        JScrollPane jScrollPane = new JScrollPane(logTextArea);
+        logPanel.add(jScrollPane);
         configGridBagConstraints.weightx = 0.0;
         configGridBagConstraints.gridwidth = GridBagConstraints.REMAINDER; // end row
         configGridBagConstraints.gridheight = 5;
@@ -498,6 +484,13 @@ public class FleaCodePanel extends JPanel implements ActionListener {
         configGridBagConstraints.insets = new Insets(2, 2, 2, 2);
         configGridBagLayout.setConstraints(logPanel, configGridBagConstraints);
         configPanel.add(logPanel);
+
+        try {
+            Thread textAreaLogAppender = new TextAreaLogAppender(logTextArea, jScrollPane);
+            textAreaLogAppender.start();
+        } catch (IOException e) {
+            // 日志启动记录异常
+        }
     }
 
     @Override
