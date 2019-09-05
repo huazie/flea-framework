@@ -555,7 +555,7 @@ public class FleaCodePanel extends JPanel implements ActionListener {
      * @since 1.0.0
      */
     private void importConfig() {
-        CodeConfig config = CodeConfig.getConfig();
+        FleaCodeConfig config = FleaCodeConfig.getConfig();
         dbNameTextField.setText(config.getDbName());
         tableNameTextField.setText(config.getTableName());
         tableNameDescTextField.setText(config.getTableNameDesc());

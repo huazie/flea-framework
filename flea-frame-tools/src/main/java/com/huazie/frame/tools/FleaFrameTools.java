@@ -5,35 +5,17 @@ import com.huazie.frame.tools.code.FleaCodePanel;
 import com.huazie.frame.tools.i18n.FleaI18NPanel;
 import com.huazie.frame.tools.log.FleaLoggerPanel;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
-import javax.swing.JToolBar;
-import javax.swing.SwingConstants;
-import javax.swing.WindowConstants;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 /**
- * <p> Flea Tools </p>
+ * <p> Flea Frame Tools </p>
  *
  * @author huazie
  * @version 1.0.0
@@ -65,8 +47,6 @@ public class FleaFrameTools extends JFrame implements ActionListener, ChangeList
     private FleaCodePanel mFleaCodePanel;
 
     private JScrollPane mJScrollPane;// 滚动条
-
-    private JTextArea logTextArea; // 日志区域
 
     public FleaFrameTools() {
         super("Flea Frame Tools");
@@ -177,7 +157,7 @@ public class FleaFrameTools extends JFrame implements ActionListener, ChangeList
      */
     private void initLogArea() {
         JPanel logPanel = new FleaLoggerPanel(new GridLayout(1, 1));
-        logPanel.setPreferredSize(new Dimension(getWidth(), 180));
+        logPanel.setPreferredSize(new Dimension(getWidth(), getHeight() / 3));
         add(logPanel, BorderLayout.SOUTH);
     }
 

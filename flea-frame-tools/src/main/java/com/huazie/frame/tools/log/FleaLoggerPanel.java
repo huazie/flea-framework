@@ -18,13 +18,7 @@ import java.awt.LayoutManager;
  */
 public class FleaLoggerPanel extends JPanel {
 
-    private JScrollPane mJScrollPane;// 滚动条
-
     private JTextArea logTextArea; // 日志区域
-
-    public FleaLoggerPanel() {
-        init();
-    }
 
     public FleaLoggerPanel(LayoutManager layout) {
         super(layout);
@@ -38,8 +32,7 @@ public class FleaLoggerPanel extends JPanel {
         logTextArea.setLineWrap(true);// 设置自动换行
         logTextArea.setWrapStyleWord(true);// 设置换行不断字
         logTextArea.setEditable(false);
-        logTextArea.setBackground(new Color(153, 153, 153));
-        logTextArea.setCaretColor(new Color(0, 0, 0));
+        logTextArea.setBackground(new Color(230, 230, 230));
 
         JScrollPane jScrollPane = new JScrollPane(logTextArea);
         add(jScrollPane);
