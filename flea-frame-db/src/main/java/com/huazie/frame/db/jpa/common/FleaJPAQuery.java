@@ -18,7 +18,6 @@ import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -35,56 +34,31 @@ import java.util.Set;
  * @since 1.0.0
  */
 @SuppressWarnings({"rawtypes", "unchecked"})
-public final class FleaJPAQuery implements Serializable {
-
-    private static final long serialVersionUID = -4272805743956204878L;
+public final class FleaJPAQuery {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FleaJPAQuery.class);
 
     private static volatile FleaJPAQuery query;
 
-    private EntityManager entityManager; // JPA中用于增删改查的接口
+    private EntityManager entityManager; // JPA中用于增删改查的持久化接口
 
     private Class sourceClazz; // 实体类类对象
 
     private Class resultClazz; // 操作结果类类对象
 
-    private Root root; // 根SQL表达式
-
-    private List<Predicate> predicates; // Where条件
+    private Root root; // 根SQL表达式对象
 
     private CriteriaBuilder criteriaBuilder; //标准化生成器
 
     private CriteriaQuery criteriaQuery; // 标准化查询对象
 
-    private List<Order> orders; // 排序
+    private List<Predicate> predicates; // Where条件集合
 
-    private List<Expression> groups; //分组
+    private List<Order> orders; // 排序集合
+
+    private List<Expression> groups; // 分组集合
 
     private FleaJPAQuery() {
-    }
-
-    /**
-     * <p> getQuery()之后，一定要调用该方法进行初始化 </p>
-     *
-     * @param entityManager JPA中用于增删改查的接口
-     * @param sourceClazz   实体类类对象
-     * @param resultClazz   操作结果类类对象
-     * @since 1.0.0
-     */
-    public void init(EntityManager entityManager, Class sourceClazz, Class resultClazz) {
-
-        this.entityManager = entityManager;
-        this.sourceClazz = sourceClazz;
-        this.resultClazz = resultClazz;
-        criteriaBuilder = entityManager.getCriteriaBuilder();
-        if (ObjectUtils.isEmpty(resultClazz)) {
-            criteriaQuery = criteriaBuilder.createQuery(sourceClazz);
-        } else {
-            criteriaQuery = criteriaBuilder.createQuery(resultClazz);
-        }
-        root = criteriaQuery.from(sourceClazz);
-        predicates = new ArrayList<Predicate>();
     }
 
     /**
@@ -102,6 +76,34 @@ public final class FleaJPAQuery implements Serializable {
             }
         }
         return query;
+    }
+
+    /**
+     * <p> getQuery()之后，一定要调用该方法进行初始化 </p>
+     *
+     * @param entityManager JPA中用于增删改查的接口
+     * @param sourceClazz   实体类类对象
+     * @param resultClazz   操作结果类类对象
+     * @since 1.0.0
+     */
+    public void init(EntityManager entityManager, Class sourceClazz, Class resultClazz) {
+
+        this.entityManager = entityManager;
+        this.sourceClazz = sourceClazz;
+        this.resultClazz = resultClazz;
+        // 从持久化接口中获取标准化生成器
+        criteriaBuilder = entityManager.getCriteriaBuilder();
+        // 通过标准化生成器 获取 标准化查询对象
+        if (ObjectUtils.isEmpty(resultClazz)) {
+            // 行记录查询结果
+            criteriaQuery = criteriaBuilder.createQuery(sourceClazz);
+        } else {
+            // 单个查询结果
+            criteriaQuery = criteriaBuilder.createQuery(resultClazz);
+        }
+        // 通过标准化查询对象，获取根SQL表达式对象
+        root = criteriaQuery.from(sourceClazz);
+        predicates = new ArrayList<Predicate>();
     }
 
     /**
@@ -263,7 +265,7 @@ public final class FleaJPAQuery implements Serializable {
     }
 
     /**
-     * <p> attrName属性的值在value集合中的查询条件 </p>
+     * <p> in条件，attrName属性的值在value集合中 </p>
      *
      * @param attrName 属性名称
      * @param value    值集合
@@ -275,7 +277,7 @@ public final class FleaJPAQuery implements Serializable {
     }
 
     /**
-     * <p> attrName属性的值不在value集合中的查询条件 </p>
+     * <p> not in条件，attrName属性的值不在value集合中 </p>
      *
      * @param attrName 属性名称
      * @param value    值集合
@@ -322,7 +324,7 @@ public final class FleaJPAQuery implements Serializable {
     }
 
     /**
-     * <p> 模糊匹配条件（value一定要是字符类型的） </p>
+     * <p> 模糊匹配条件（value一定要是字符串类型的） </p>
      *
      * @param attrName 属性名称
      * @param value    属性值
@@ -749,7 +751,7 @@ public final class FleaJPAQuery implements Serializable {
     }
 
     /**
-     * <p> 获取查询的记录行结果集合（设置分页） </p>
+     * <p> 获取查询的记录行结果集合（设置查询范围，可用于分页） </p>
      *
      * @param start 开始查询记录行
      * @param max   最大查询数量
@@ -778,7 +780,7 @@ public final class FleaJPAQuery implements Serializable {
     }
 
     /**
-     * <p> 获取查询的单个属性列结果集合（设置分页） </p>
+     * <p> 获取查询的单个属性列结果集合（设置查询范围，可用于分页） </p>
      * <p> 需要先调用 distinct，否则默认返回行记录结果集合 </p>
      *
      * @param start 开始查询记录行

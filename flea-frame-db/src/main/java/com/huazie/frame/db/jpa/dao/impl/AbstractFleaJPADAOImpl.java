@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <p> 抽象Dao层实现类，该类实现了基本的增删改查功能，可以自行拓展 </p>
+ * <p> 抽象Flea JPA DAO层实现类，该类实现了基本的增删改查功能，可以自行拓展 </p>
  *
  * @author huazie
  * @version 1.0.0
@@ -294,18 +294,6 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     }
 
     /**
-     * <p> 获取指定的查询对象 </p>
-     *
-     * @return 自定义Flea JPA查询对象
-     * @since 1.0.0
-     */
-    protected FleaJPAQuery getQuery(Class result) {
-        FleaJPAQuery query = FleaJPAQuery.getQuery();
-        query.init(getEntityManager(), clazz, result);
-        return query;
-    }
-
-    /**
      * <p> 校验主键合法性 </p>
      *
      * @param entityId 实体类对应的主键编号
@@ -351,6 +339,20 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
                 query.setParameter(sqlParam.getIndex(), sqlParam.getAttrValue());
             }
         }
+    }
+
+    /**
+     * <p> 获取指定的查询对象 </p>
+     *
+     * @return 自定义Flea JPA查询对象
+     * @since 1.0.0
+     */
+    protected FleaJPAQuery getQuery(Class result) {
+        // 获取Flea JPA查询对象实例
+        FleaJPAQuery query = FleaJPAQuery.getQuery();
+        // 获取实例后必须调用该方法进行初始化
+        query.init(getEntityManager(), clazz, result);
+        return query;
     }
 
     /**
