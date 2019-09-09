@@ -18,6 +18,7 @@ import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.io.Closeable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -34,9 +35,11 @@ import java.util.Set;
  * @since 1.0.0
  */
 @SuppressWarnings({"rawtypes", "unchecked"})
-public final class FleaJPAQuery {
+public final class FleaJPAQuery implements Closeable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FleaJPAQuery.class);
+
+    protected FleaJPAQueryPool fleaObjectPool;
 
     private static volatile FleaJPAQuery query;
 
@@ -52,13 +55,22 @@ public final class FleaJPAQuery {
 
     private CriteriaQuery criteriaQuery; // 标准化查询对象
 
-    private List<Predicate> predicates; // Where条件集合
+    private List<Predicate> predicates = new ArrayList<Predicate>(); // Where条件集合
 
     private List<Order> orders; // 排序集合
 
     private List<Expression> groups; // 分组集合
 
-    private FleaJPAQuery() {
+    public FleaJPAQuery() {
+    }
+
+    @Override
+    public void close() {
+        if (ObjectUtils.isNotEmpty(fleaObjectPool)) {
+            reset(); // 重置Flea JPA查询对象
+            fleaObjectPool.returnFleaObject(this);
+            fleaObjectPool = null;
+        }
     }
 
     /**
@@ -103,7 +115,6 @@ public final class FleaJPAQuery {
         }
         // 通过标准化查询对象，获取根SQL表达式对象
         root = criteriaQuery.from(sourceClazz);
-        predicates = new ArrayList<Predicate>();
     }
 
     /**
@@ -849,6 +860,29 @@ public final class FleaJPAQuery {
             // 属性列名不能为空
             throw new DaoException("ERROR-DB-DAO0000000001");
         }
+    }
+
+    public void setFleaObjectPool(FleaJPAQueryPool fleaObjectPool) {
+        this.fleaObjectPool = fleaObjectPool;
+    }
+
+    /**
+     * <p> 重置Flea JPA查询对象 </p>
+     *
+     * @since 1.0.0
+     */
+    public void reset() {
+        entityManager = null;
+        sourceClazz = null;
+        resultClazz = null;
+        root = null;
+        criteriaBuilder = null;
+        criteriaQuery = null;
+        if (CollectionUtils.isNotEmpty(predicates)) {
+            predicates.clear();
+        }
+        orders = null;
+        groups = null;
     }
 
     public EntityManager getEntityManager() {

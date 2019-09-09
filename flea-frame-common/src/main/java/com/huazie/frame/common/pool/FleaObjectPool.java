@@ -78,9 +78,10 @@ public abstract class FleaObjectPool<T> implements Closeable {
     /**
      * <p> 将对象实例归还给对象池 </p>
      *
+     * @param object 对象实例
      * @since 1.0.0
      */
-    protected void returnFleaObject(final T object) {
+    protected void returnObject(final T object) {
         if (ObjectUtils.isEmpty(object)) {
             return;
         }
@@ -90,6 +91,18 @@ public abstract class FleaObjectPool<T> implements Closeable {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("Could not return the object instance to the pool, Exception :\n", e);
             }
+        }
+    }
+
+    /**
+     * <p> 将对象实例归还给对象池 </p>
+     *
+     * @param object 对象实例
+     * @since 1.0.0
+     */
+    protected void returnFleaObject(final T object) {
+        if (ObjectUtils.isNotEmpty(object)) {
+            returnObject(object);
         }
     }
 
@@ -113,7 +126,7 @@ public abstract class FleaObjectPool<T> implements Closeable {
     /**
      * <p> 获取当前外部在用的实例数目（即从对象池中已借出未归还的实例数目） </p>
      *
-     * @return 当前外部在用的实例数目；如果对象池没有创建或已关闭，返回 -1
+     * @return 当前外部在用的实例数目；如果对象池没有创建或已关闭，返回 -1。
      * @since 1.0.0
      */
     public int getNumActive() {
@@ -175,7 +188,7 @@ public abstract class FleaObjectPool<T> implements Closeable {
      * @param count 添加数目
      * @since 1.0.0
      */
-    public void addObjects(int count) {
+    public void addFleaObjects(int count) {
         try {
             for (int i = 0; i < count; i++) {
                 fleaObjectPool.addObject();
