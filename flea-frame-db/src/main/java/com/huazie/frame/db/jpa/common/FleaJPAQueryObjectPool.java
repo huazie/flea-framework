@@ -12,30 +12,36 @@ import java.util.concurrent.ConcurrentMap;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class JPAQueryPool {
+public class FleaJPAQueryObjectPool {
 
-    private static final ConcurrentMap<String, JPAQueryPool> jpaQueryPools = new ConcurrentHashMap<String, JPAQueryPool>();
+    private static final ConcurrentMap<String, FleaJPAQueryObjectPool> jpaQueryPools = new ConcurrentHashMap<String, FleaJPAQueryObjectPool>();
 
-    private String poolName; // 连接池名
+    private String poolName; // 对象池名
 
     private FleaJPAQueryPool fleaJPAQueryPool; // Flea JPA查询对象池
 
-    private JPAQueryPool(String poolName) {
+    /**
+     * <p> 私有构造方法，指定对象池名 </p>
+     *
+     * @param poolName 对象池名
+     * @since 1.0.0
+     */
+    private FleaJPAQueryObjectPool(String poolName) {
         this.poolName = poolName;
     }
 
     /**
-     * <p> 获取Redis连接池实例 (指定连接池名)</p>
+     * <p> 获取JPA查询对象池实例 (指定对象池名) </p>
      *
-     * @param poolName 连接池名
-     * @return Redis连接池实例对象
+     * @param poolName 对象池名
+     * @return JPA查询对象池实例
      * @since 1.0.0
      */
-    public static JPAQueryPool getInstance(String poolName) {
+    public static FleaJPAQueryObjectPool getInstance(String poolName) {
         if (!jpaQueryPools.containsKey(poolName)) {
             synchronized (jpaQueryPools) {
                 if (!jpaQueryPools.containsKey(poolName)) {
-                    JPAQueryPool jpaQueryPool = new JPAQueryPool(poolName);
+                    FleaJPAQueryObjectPool jpaQueryPool = new FleaJPAQueryObjectPool(poolName);
                     jpaQueryPool.fleaJPAQueryPool = new FleaJPAQueryPool(FleaJPAQueryPoolConfig.getConfig());
                     jpaQueryPools.putIfAbsent(poolName, jpaQueryPool);
                 }
@@ -45,19 +51,31 @@ public class JPAQueryPool {
     }
 
     /**
-     * <p> 获取Redis连接池实例 (默认) </p>
+     * <p> 获取JPA查询对象池实例 (默认对象池名 default) </p>
      *
-     * @return Redis连接池实例对象
+     * @return JPA查询对象池实例
      * @since 1.0.0
      */
-    public static JPAQueryPool getInstance() {
+    public static FleaJPAQueryObjectPool getInstance() {
         return getInstance(CommonConstants.FleaPoolConstants.DEFAUTL_POOL_NAME);
     }
 
+    /**
+     * <p> 获取对象池名</p>
+     *
+     * @return 对象池名
+     * @since 1.0.0
+     */
     public String getPoolName() {
         return poolName;
     }
 
+    /**
+     * <p> 获取Flea JPA查询对象池 </p>
+     *
+     * @return Flea JPA查询对象池实例
+     * @since 1.0.0
+     */
     public FleaJPAQueryPool getFleaJPAQueryPool() {
         return fleaJPAQueryPool;
     }

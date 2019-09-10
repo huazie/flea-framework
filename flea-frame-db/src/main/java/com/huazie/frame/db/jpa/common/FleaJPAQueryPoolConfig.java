@@ -20,6 +20,8 @@ public class FleaJPAQueryPoolConfig extends GenericObjectPoolConfig {
 
     /**
      * <p> 无参构造方法，初始化部分默认配置 </p>
+     *
+     * @since 1.0.0
      */
     private FleaJPAQueryPoolConfig() {
         setTestWhileIdle(true);
@@ -28,6 +30,12 @@ public class FleaJPAQueryPoolConfig extends GenericObjectPoolConfig {
         setNumTestsPerEvictionRun(-1);
     }
 
+    /**
+     * <p> 获取Flea JPA查询对象池配置实例 </p>
+     *
+     * @return Flea JPA查询对象池配置实例
+     * @since 1.0.0
+     */
     public static FleaJPAQueryPoolConfig getConfig() {
         if (ObjectUtils.isEmpty(config)) {
             synchronized (FleaJPAQueryPoolConfig.class) {

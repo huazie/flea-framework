@@ -5,7 +5,7 @@ import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
 import com.huazie.frame.db.common.exception.DaoException;
 import com.huazie.frame.db.jpa.common.FleaJPAQuery;
 import com.huazie.frame.db.jpa.common.FleaJPAQueryPool;
-import com.huazie.frame.db.jpa.common.JPAQueryPool;
+import com.huazie.frame.db.jpa.common.FleaJPAQueryObjectPool;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -57,7 +57,7 @@ public class FleaJPAQueryTest {
     public void testFleaJPAQuery() {
         //FleaFrameManager.getManager().setLocale(Locale.US);
         try {
-            FleaJPAQueryPool fleaJPAQueryPool = JPAQueryPool.getInstance().getFleaJPAQueryPool();
+            FleaJPAQueryPool fleaJPAQueryPool = FleaJPAQueryObjectPool.getInstance().getFleaJPAQueryPool();
             FleaJPAQuery query = fleaJPAQueryPool.getFleaObject();
             LOGGER.debug("FleaJPAQuery: {}", query);
             query.init(em, FleaParaDetail.class, null);

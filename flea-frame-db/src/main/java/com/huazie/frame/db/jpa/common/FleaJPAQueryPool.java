@@ -9,6 +9,14 @@ import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 
 /**
  * <p> Flea JPA查询对象池 </p>
+ * <pre>使用:
+ *  // 获取JPA查询对象池实例（使用默认连接池名"default"即可）
+ *  FleaJPAQueryObjectPool jpaQueryPool = FleaJPAQueryObjectPool.getInstance();
+ *  // 获取Flea JPA查询对象池实例
+ *  FleaJPAQueryPool pool = jpaQueryPool.getFleaJPAQueryPool();
+ *  // 获取Flea JPA查询对象实例
+ *  FleaJPAQuery query = pool.getFleaObject();
+ * </pre>
  *
  * @author huazie
  * @version 1.0.0
@@ -49,6 +57,10 @@ public class FleaJPAQueryPool extends FleaObjectPool<FleaJPAQuery> {
 
     /**
      * <p> Flea JPA查询对象池化工厂类 </p>
+     *
+     * @author huazie
+     * @version 1.0.0
+     * @since 1.0.0
      */
     private static class FleaJPAQueryFactory implements PooledObjectFactory<FleaJPAQuery> {
 

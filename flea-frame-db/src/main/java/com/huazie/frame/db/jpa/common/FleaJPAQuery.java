@@ -33,6 +33,7 @@ import java.util.Set;
  *
  * @author huazie
  * @version 1.0.0
+ * @see FleaJPAQueryPool Flea JPA查询对象池
  * @since 1.0.0
  */
 @SuppressWarnings({"rawtypes", "unchecked"})
@@ -40,7 +41,7 @@ public final class FleaJPAQuery implements Closeable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FleaJPAQuery.class);
 
-    protected FleaJPAQueryPool fleaObjectPool;
+    protected FleaJPAQueryPool fleaObjectPool; // Flea JPA查询对象池
 
     private EntityManager entityManager; // JPA中用于增删改查的持久化接口
 
@@ -885,7 +886,7 @@ public final class FleaJPAQuery implements Closeable {
      */
     public void reset() {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJPAQuery##reset() start");
+            LOGGER.debug("FleaJPAQuery##reset() Start");
             LOGGER.debug("FleaJPAQuery##reset() Before FleaJPAQuery={}", toString());
         }
         entityManager = null;
@@ -901,7 +902,7 @@ public final class FleaJPAQuery implements Closeable {
         groups = null;
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FleaJPAQuery##reset() After FleaJPAQuery={}", toString());
-            LOGGER.debug("FleaJPAQuery##reset() end");
+            LOGGER.debug("FleaJPAQuery##reset() End");
         }
     }
 

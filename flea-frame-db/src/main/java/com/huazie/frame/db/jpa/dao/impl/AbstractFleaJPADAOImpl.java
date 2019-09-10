@@ -12,7 +12,7 @@ import com.huazie.frame.db.common.sql.template.impl.SelectSqlTemplate;
 import com.huazie.frame.db.common.sql.template.impl.UpdateSqlTemplate;
 import com.huazie.frame.db.jpa.common.FleaJPAQuery;
 import com.huazie.frame.db.jpa.common.FleaJPAQueryPool;
-import com.huazie.frame.db.jpa.common.JPAQueryPool;
+import com.huazie.frame.db.jpa.common.FleaJPAQueryObjectPool;
 import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -350,15 +350,18 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
      * @since 1.0.0
      */
     protected FleaJPAQuery getQuery(Class result) {
-        // 初始化Flea JPA对象连接池
-        FleaJPAQueryPool pool = JPAQueryPool.getInstance().getFleaJPAQueryPool();
+        // 获取JPA查询对象池实例（使用默认连接池名"default"即可）
+        FleaJPAQueryObjectPool jpaQueryPool = FleaJPAQueryObjectPool.getInstance();
+        // 获取Flea JPA查询对象池实例
+        FleaJPAQueryPool pool = jpaQueryPool.getFleaJPAQueryPool();
         // 获取Flea JPA查询对象实例
         FleaJPAQuery query = pool.getFleaObject();
         if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("AbstractFleaJPADAOImpl##getQuery(Class) Pool Name = {}", jpaQueryPool.getPoolName());
             LOGGER.debug("AbstractFleaJPADAOImpl##getQuery(Class) FleaJPAQueryPool = {}", pool);
             LOGGER.debug("AbstractFleaJPADAOImpl##getQuery(Class) FleaJPAQuery = {}", query);
         }
-        // 获取实例后必须调用该方法进行初始化
+        // 获取实例后必须调用该方法,对Flea JPA查询对象进行初始化
         query.init(getEntityManager(), clazz, result);
         return query;
     }
