@@ -6,6 +6,7 @@ import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.DBConstants;
 import com.huazie.frame.db.common.exception.DaoException;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,8 +42,6 @@ public final class FleaJPAQuery implements Closeable {
 
     protected FleaJPAQueryPool fleaObjectPool;
 
-    private static volatile FleaJPAQuery query;
-
     private EntityManager entityManager; // JPA中用于增删改查的持久化接口
 
     private Class sourceClazz; // 实体类类对象
@@ -67,27 +66,9 @@ public final class FleaJPAQuery implements Closeable {
     @Override
     public void close() {
         if (ObjectUtils.isNotEmpty(fleaObjectPool)) {
-            reset(); // 重置Flea JPA查询对象
             fleaObjectPool.returnFleaObject(this);
             fleaObjectPool = null;
         }
-    }
-
-    /**
-     * <p> 获取查询对象 </p>
-     *
-     * @return FleaJPAQuery查询对象
-     * @since 1.0.0
-     */
-    public static FleaJPAQuery getQuery() {
-        if (ObjectUtils.isEmpty(query)) {
-            synchronized (FleaJPAQuery.class) {
-                if (ObjectUtils.isEmpty(query)) {
-                    query = new FleaJPAQuery();
-                }
-            }
-        }
-        return query;
     }
 
     /**
@@ -758,7 +739,12 @@ public final class FleaJPAQuery implements Closeable {
      * @since 1.0.0
      */
     public List getResultList() throws DaoException {
-        return createQuery(false).getResultList();
+        try {
+            return createQuery(false).getResultList();
+        } finally {
+            // 将Flea JPA查询对象重置，并归还给对象池
+            close();
+        }
     }
 
     /**
@@ -770,12 +756,17 @@ public final class FleaJPAQuery implements Closeable {
      * @since 1.0.0
      */
     public List getResultList(int start, int max) throws DaoException {
-        TypedQuery query = createQuery(false);
-        // 设置开始查询记录行
-        query.setFirstResult(start);
-        // 设置一次最大查询数量
-        query.setMaxResults(max);
-        return query.getResultList();
+        try {
+            TypedQuery query = createQuery(false);
+            // 设置开始查询记录行
+            query.setFirstResult(start);
+            // 设置一次最大查询数量
+            query.setMaxResults(max);
+            return query.getResultList();
+        } finally {
+            // 将Flea JPA查询对象重置，并归还给对象池
+            close();
+        }
     }
 
     /**
@@ -787,7 +778,12 @@ public final class FleaJPAQuery implements Closeable {
      * @since 1.0.0
      */
     public List getSingleResultList() throws DaoException {
-        return createQuery(true).getResultList();
+        try {
+            return createQuery(true).getResultList();
+        } finally {
+            // 将Flea JPA查询对象重置，并归还给对象池
+            close();
+        }
     }
 
     /**
@@ -800,12 +796,17 @@ public final class FleaJPAQuery implements Closeable {
      * @since 1.0.0
      */
     public List getSingleResultList(int start, int max) throws DaoException {
-        TypedQuery query = createQuery(true);
-        // 设置开始查询记录行
-        query.setFirstResult(start);
-        // 设置一次最大查询数量
-        query.setMaxResults(max);
-        return query.getResultList();
+        try {
+            TypedQuery query = createQuery(true);
+            // 设置开始查询记录行
+            query.setFirstResult(start);
+            // 设置一次最大查询数量
+            query.setMaxResults(max);
+            return query.getResultList();
+        } finally {
+            // 将Flea JPA查询对象重置，并归还给对象池
+            close();
+        }
     }
 
     /**
@@ -817,7 +818,12 @@ public final class FleaJPAQuery implements Closeable {
      * @since 1.0.0
      */
     public Object getSingleResult() throws DaoException {
-        return createQuery(true).getSingleResult();
+        try {
+            return createQuery(true).getSingleResult();
+        } finally {
+            // 将Flea JPA查询对象重置，并归还给对象池
+            close();
+        }
     }
 
     /**
@@ -862,6 +868,12 @@ public final class FleaJPAQuery implements Closeable {
         }
     }
 
+    /**
+     * <p> 设置Flea对象池 </p>
+     *
+     * @param fleaObjectPool Flea JPA查询对象池
+     * @since 1.0.0
+     */
     public void setFleaObjectPool(FleaJPAQueryPool fleaObjectPool) {
         this.fleaObjectPool = fleaObjectPool;
     }
@@ -872,6 +884,10 @@ public final class FleaJPAQuery implements Closeable {
      * @since 1.0.0
      */
     public void reset() {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("FleaJPAQuery##reset() start");
+            LOGGER.debug("FleaJPAQuery##reset() Before FleaJPAQuery={}", toString());
+        }
         entityManager = null;
         sourceClazz = null;
         resultClazz = null;
@@ -883,6 +899,10 @@ public final class FleaJPAQuery implements Closeable {
         }
         orders = null;
         groups = null;
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("FleaJPAQuery##reset() After FleaJPAQuery={}", toString());
+            LOGGER.debug("FleaJPAQuery##reset() end");
+        }
     }
 
     public EntityManager getEntityManager() {
@@ -919,5 +939,10 @@ public final class FleaJPAQuery implements Closeable {
 
     public List<Expression> getGroups() {
         return groups;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 }

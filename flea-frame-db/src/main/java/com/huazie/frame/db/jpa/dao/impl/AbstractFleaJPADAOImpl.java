@@ -11,6 +11,8 @@ import com.huazie.frame.db.common.sql.template.impl.InsertSqlTemplate;
 import com.huazie.frame.db.common.sql.template.impl.SelectSqlTemplate;
 import com.huazie.frame.db.common.sql.template.impl.UpdateSqlTemplate;
 import com.huazie.frame.db.jpa.common.FleaJPAQuery;
+import com.huazie.frame.db.jpa.common.FleaJPAQueryPool;
+import com.huazie.frame.db.jpa.common.JPAQueryPool;
 import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -278,11 +280,11 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         List<SqlParam> nativeParam = sqlTemplate.toNativeParams();
 
         if (LOGGER.isDebugEnabled()) {
-            if(TemplateTypeEnum.INSERT.getKey().equals(templateType)) {
+            if (TemplateTypeEnum.INSERT.getKey().equals(templateType)) {
                 LOGGER.debug("AbstractFleaJPADAOImpl##insert(String, T) SQL = {}", nativeSql);
-            } else if(TemplateTypeEnum.UPDATE.getKey().equals(templateType)) {
+            } else if (TemplateTypeEnum.UPDATE.getKey().equals(templateType)) {
                 LOGGER.debug("AbstractFleaJPADAOImpl##update(String, T) SQL = {}", nativeSql);
-            } else if(TemplateTypeEnum.DELETE.getKey().equals(templateType)) {
+            } else if (TemplateTypeEnum.DELETE.getKey().equals(templateType)) {
                 LOGGER.debug("AbstractFleaJPADAOImpl##delete(String, T) SQL = {}", nativeSql);
             }
         }
@@ -327,13 +329,13 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     private void setParameter(Query query, List<SqlParam> sqlParams, String templateType) {
         if (CollectionUtils.isNotEmpty(sqlParams)) {
             for (SqlParam sqlParam : sqlParams) {
-                if(TemplateTypeEnum.INSERT.getKey().equals(templateType)) {
+                if (TemplateTypeEnum.INSERT.getKey().equals(templateType)) {
                     LOGGER.debug("AbstractFleaJPADAOImpl##insert(String, T) COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
-                } else if(TemplateTypeEnum.UPDATE.getKey().equals(templateType)) {
+                } else if (TemplateTypeEnum.UPDATE.getKey().equals(templateType)) {
                     LOGGER.debug("AbstractFleaJPADAOImpl##update(String, T) COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
-                } else if(TemplateTypeEnum.DELETE.getKey().equals(templateType)) {
+                } else if (TemplateTypeEnum.DELETE.getKey().equals(templateType)) {
                     LOGGER.debug("AbstractFleaJPADAOImpl##delete(String, T) COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
-                } else if(TemplateTypeEnum.SELECT.getKey().equals(templateType)) {
+                } else if (TemplateTypeEnum.SELECT.getKey().equals(templateType)) {
                     LOGGER.debug("AbstractFleaJPADAOImpl##query(String, T) COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
                 }
                 query.setParameter(sqlParam.getIndex(), sqlParam.getAttrValue());
@@ -348,8 +350,14 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
      * @since 1.0.0
      */
     protected FleaJPAQuery getQuery(Class result) {
+        // 初始化Flea JPA对象连接池
+        FleaJPAQueryPool pool = JPAQueryPool.getInstance().getFleaJPAQueryPool();
         // 获取Flea JPA查询对象实例
-        FleaJPAQuery query = FleaJPAQuery.getQuery();
+        FleaJPAQuery query = pool.getFleaObject();
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("AbstractFleaJPADAOImpl##getQuery(Class) FleaJPAQueryPool = {}", pool);
+            LOGGER.debug("AbstractFleaJPADAOImpl##getQuery(Class) FleaJPAQuery = {}", query);
+        }
         // 获取实例后必须调用该方法进行初始化
         query.init(getEntityManager(), clazz, result);
         return query;

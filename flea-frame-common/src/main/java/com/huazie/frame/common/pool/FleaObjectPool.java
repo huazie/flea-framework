@@ -22,6 +22,9 @@ public abstract class FleaObjectPool<T> implements Closeable {
 
     protected GenericObjectPool<T> fleaObjectPool; // 内部Flea对象池对象
 
+    /**
+     * <p> 外部可调用initFleaObjectPool方法初始化 </p>
+     */
     public FleaObjectPool() {
     }
 
