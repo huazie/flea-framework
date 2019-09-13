@@ -4,8 +4,8 @@ import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResource;
 import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
 import com.huazie.frame.db.common.exception.DaoException;
 import com.huazie.frame.db.jpa.common.FleaJPAQuery;
-import com.huazie.frame.db.jpa.common.FleaJPAQueryPool;
 import com.huazie.frame.db.jpa.common.FleaJPAQueryObjectPool;
+import com.huazie.frame.db.jpa.common.FleaJPAQueryPool;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -32,7 +32,11 @@ public class FleaJPAQueryTest {
     @BeforeClass
     public static void initEntityManager() {
         Map<String, Object> map = new HashMap<String, Object>();
+        // 持久化配置文件
         map.put("eclipselink.persistencexml", "META-INF/fleaconfig-persistence.xml");
+        // 显示查询SQL
+        map.put("eclipselink.logging.level.sql", "FINE");
+        map.put("eclipselink.logging.parameters", "true");
         emf = Persistence.createEntityManagerFactory("fleaconfig", map);
         em = emf.createEntityManager();
     }
@@ -61,9 +65,10 @@ public class FleaJPAQueryTest {
             FleaJPAQuery query = fleaJPAQueryPool.getFleaObject();
             LOGGER.debug("FleaJPAQuery: {}", query);
             query.init(em, FleaParaDetail.class, null);
+            // 去重查询某一列数据
             query.distinct("para1");
-            List<FleaParaDetail> list = query.getSingleResultList();
-            LOGGER.debug("list:{}", list);
+            List<String> list = query.getSingleResultList();
+            LOGGER.debug("List : {}", list);
 
             FleaJPAQuery query1 = fleaJPAQueryPool.getFleaObject();
             LOGGER.debug("FleaJPAQuery: {}", query1);

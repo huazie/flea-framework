@@ -73,7 +73,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> getQuery()之后，一定要调用该方法进行初始化 </p>
+     * <p> Flea JPA查询对象池获取之后，一定要调用该方法进行初始化 </p>
      *
      * @param entityManager JPA中用于增删改查的接口
      * @param sourceClazz   实体类类对象
