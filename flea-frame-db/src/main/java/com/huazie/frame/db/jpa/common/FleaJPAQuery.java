@@ -573,8 +573,15 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @since 1.0.0
      */
-    public FleaJPAQuery countDistinct() {
-        criteriaQuery.select(criteriaBuilder.countDistinct(root));
+    public FleaJPAQuery countDistinct(String attrName) throws DaoException{
+        // 属性列名非空校验
+        checkAttrName(attrName);
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("FMJPAQuery##countDistinct(attrName) -->> AttrName={}", attrName);
+        }
+
+        criteriaQuery.select(criteriaBuilder.countDistinct(root.get(attrName)));
         return this;
     }
 

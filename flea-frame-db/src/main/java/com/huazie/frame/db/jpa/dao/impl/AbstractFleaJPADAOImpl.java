@@ -83,86 +83,56 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 
     @Override
     public List<T> query(Map<String, Object> paramMap) throws Exception {
-        FleaJPAQuery query = getQuery(null);
-        query.equal(paramMap);
-        List<T> ts = query.getResultList();
-        return ts;
+        return getQuery(null).equal(paramMap).getResultList();
     }
 
     @Override
     public List<T> query(Map<String, Object> paramMap, String attrName, String orderBy) throws Exception {
-        FleaJPAQuery query = getQuery(null);
-        query.equal(paramMap);
-        query.addOrderby(attrName, orderBy);
-        List<T> ts = query.getResultList();
-        return ts;
+        return getQuery(null).equal(paramMap).addOrderby(attrName, orderBy).getResultList();
     }
 
     @Override
     public List<T> query(Map<String, Object> paramMap, int start, int max) throws Exception {
-        FleaJPAQuery query = getQuery(null);
-        query.equal(paramMap);
-        List<T> ts = query.getResultList(start, max);
-        return ts;
+        return getQuery(null).equal(paramMap).getResultList(start, max);
     }
 
     @Override
     public List<T> query(Map<String, Object> paramMap, String attrName, String orderBy, int start, int max)
             throws Exception {
-        FleaJPAQuery query = getQuery(null);
-        query.equal(paramMap);
-        query.addOrderby(attrName, orderBy);
-        List<T> ts = query.getResultList(start, max);
-        return ts;
+        return getQuery(null).equal(paramMap).addOrderby(attrName, orderBy).getResultList(start, max);
     }
 
     @Override
     public List<T> queryAll() throws Exception {
-        FleaJPAQuery query = getQuery(null);
-        List<T> ts = query.getResultList();
-        return ts;
+        return getQuery(null).getResultList();
     }
 
     @Override
     public List<T> queryAll(String attrName, String orderBy) throws Exception {
-        FleaJPAQuery query = getQuery(null);
-        query.addOrderby(attrName, orderBy);
-        List<T> ts = query.getResultList();
-        return ts;
+        return getQuery(null).addOrderby(attrName, orderBy).getResultList();
     }
 
     @Override
     public List<T> queryAll(int start, int max) throws Exception {
-        FleaJPAQuery query = getQuery(null);
-        List<T> ts = query.getResultList(start, max);
-        return ts;
+        return getQuery(null).getResultList(start, max);
     }
 
     @Override
     public List<T> queryAll(String attrName, String orderBy, int start, int max) throws Exception {
-        FleaJPAQuery query = getQuery(null);
-        query.addOrderby(attrName, orderBy);
-        List<T> ts = query.getResultList(start, max);
-        return ts;
+        return getQuery(null).addOrderby(attrName, orderBy).getResultList(start, max);
     }
 
     @Override
     public long queryCount() throws Exception {
-        FleaJPAQuery query = getQuery(Long.class);
-        query.countDistinct();
-        long count = ((Long) query.getSingleResult());
-        return count;
+        // 调用SQL的COUNT函数统计数目 count()
+        return ((Long) getQuery(Long.class).count().getSingleResult());
     }
 
     @Override
     public long queryCount(Map<String, Object> paramMap) throws Exception {
-        FleaJPAQuery query = getQuery(Long.class);
-        // 添加Where子句查询条件
-        query.equal(paramMap);
-        // 设置调用SQL的COUNT函数统计数目
-        query.countDistinct();
-        long count = ((Long) query.getSingleResult());
-        return count;
+        // 添加Where子句查询条件 equal(Map)
+        // 调用SQL的COUNT函数统计数目 count()
+        return ((Long) getQuery(Long.class).equal(paramMap).count().getSingleResult());
     }
 
     @Override
@@ -198,8 +168,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         if (ObjectUtils.isEmpty(entity)) {
             throw new DaoException("ERROR-DB-DAO0000000012");
         }
-        T t = getEntityManager().merge(entity);
-        return t;
+        return getEntityManager().merge(entity);
     }
 
     @Override
