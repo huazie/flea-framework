@@ -52,9 +52,6 @@ public abstract class FleaCodeBuilder implements IFleaCodeBuilder {
         param.put(ToolsConstants.CodeConstants.ENTITY_CLASS_NAME, toEntityClassName(param));
         String filePath = toFleaFilePath(param);
         File fleaCodeFile = new File(filePath);
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("删除代码文件：{}", filePath);
-        }
         if (fleaCodeFile.exists()) {
             fleaCodeFile.delete();
             if (LOGGER.isDebugEnabled()) {

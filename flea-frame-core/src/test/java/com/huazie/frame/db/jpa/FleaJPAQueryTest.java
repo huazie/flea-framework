@@ -1,8 +1,11 @@
 package com.huazie.frame.db.jpa;
 
+import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResource;
 import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
 import com.huazie.frame.db.common.exception.DaoException;
 import com.huazie.frame.db.jpa.common.FleaJPAQuery;
+import com.huazie.frame.db.jpa.common.FleaJPAQueryObjectPool;
+import com.huazie.frame.db.jpa.common.FleaJPAQueryPool;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -29,7 +32,11 @@ public class FleaJPAQueryTest {
     @BeforeClass
     public static void initEntityManager() {
         Map<String, Object> map = new HashMap<String, Object>();
+        // 持久化配置文件
         map.put("eclipselink.persistencexml", "META-INF/fleaconfig-persistence.xml");
+        // 显示查询SQL
+        map.put("eclipselink.logging.level.sql", "FINE");
+        map.put("eclipselink.logging.parameters", "true");
         emf = Persistence.createEntityManagerFactory("fleaconfig", map);
         em = emf.createEntityManager();
     }
@@ -54,11 +61,21 @@ public class FleaJPAQueryTest {
     public void testFleaJPAQuery() {
         //FleaFrameManager.getManager().setLocale(Locale.US);
         try {
-            FleaJPAQuery query = FleaJPAQuery.getQuery();
+            FleaJPAQueryPool fleaJPAQueryPool = FleaJPAQueryObjectPool.getInstance().getFleaJPAQueryPool();
+            FleaJPAQuery query = fleaJPAQueryPool.getFleaObject();
+            LOGGER.debug("FleaJPAQuery: {}", query);
             query.init(em, FleaParaDetail.class, null);
-            query.distinct("");
-            List<FleaParaDetail> list = query.getSingleResultList();
-            LOGGER.debug("list:{}", list);
+            // 去重查询某一列数据, 模糊查询 para_code
+            query.distinct("para1").like("paraCode","FLEA");
+            List<String> list = query.getSingleResultList();
+            LOGGER.debug("List : {}", list);
+
+            FleaJPAQuery query1 = fleaJPAQueryPool.getFleaObject();
+            LOGGER.debug("FleaJPAQuery: {}", query1);
+            query1.init(em, FleaJerseyResource.class, null);
+            List<FleaJerseyResource> resourceList = query1.getResultList();
+            LOGGER.debug("Resource List : {}", resourceList);
+
         } catch (DaoException e) {
             LOGGER.error("Exception:", e);
         }

@@ -35,6 +35,14 @@
 
     <dependencies>
 
+        <!-- flea frame 配置文件 -->
+        <dependency>
+            <groupId>com.huazie.frame</groupId>
+            <artifactId>flea-frame-config</artifactId>
+            <version>${parent.version}</version>
+            <scope>test</scope>
+        </dependency>
+
         <!-- 日志相关, 此处使用log4j -->
         <dependency>
             <groupId>log4j</groupId>
@@ -55,12 +63,10 @@
             <artifactId>commons-io</artifactId>
         </dependency>
 
-        <!-- flea frame 配置文件 -->
+        <!-- 实现对象池化框架 -->
         <dependency>
-            <groupId>com.huazie.frame</groupId>
-            <artifactId>flea-frame-config</artifactId>
-            <version>${parent.version}</version>
-            <scope>test</scope>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
         </dependency>
 
         <!-- Http操作相关 -->

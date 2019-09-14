@@ -1,6 +1,5 @@
 package com.huazie.frame.cache.redis.impl;
 
-import com.huazie.frame.cache.common.CacheConstants;
 import com.huazie.frame.cache.redis.RedisClient;
 import com.huazie.frame.cache.redis.RedisPool;
 import com.huazie.frame.common.CommonConstants;
@@ -53,7 +52,7 @@ public class FleaRedisClient implements RedisClient {
      */
     private void init() {
         if (StringUtils.isBlank(poolName)) {
-            poolName = CacheConstants.FleaCacheConstants.DEFAUTL_POOL_NAME;
+            poolName = CommonConstants.FleaPoolConstants.DEFAUTL_POOL_NAME;
             RedisPool redisPool = RedisPool.getInstance();
             redisPool.initialize(); // 先初始化
             shardedJedisPool = redisPool.getJedisPool();

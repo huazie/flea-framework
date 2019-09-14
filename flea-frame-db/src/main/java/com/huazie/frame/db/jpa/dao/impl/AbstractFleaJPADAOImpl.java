@@ -11,6 +11,8 @@ import com.huazie.frame.db.common.sql.template.impl.InsertSqlTemplate;
 import com.huazie.frame.db.common.sql.template.impl.SelectSqlTemplate;
 import com.huazie.frame.db.common.sql.template.impl.UpdateSqlTemplate;
 import com.huazie.frame.db.jpa.common.FleaJPAQuery;
+import com.huazie.frame.db.jpa.common.FleaJPAQueryPool;
+import com.huazie.frame.db.jpa.common.FleaJPAQueryObjectPool;
 import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <p> 抽象Dao层实现类，该类实现了基本的增删改查功能，可以自行拓展 </p>
+ * <p> 抽象Flea JPA DAO层实现类，该类实现了基本的增删改查功能，可以自行拓展 </p>
  *
  * @author huazie
  * @version 1.0.0
@@ -278,11 +280,11 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         List<SqlParam> nativeParam = sqlTemplate.toNativeParams();
 
         if (LOGGER.isDebugEnabled()) {
-            if(TemplateTypeEnum.INSERT.getKey().equals(templateType)) {
+            if (TemplateTypeEnum.INSERT.getKey().equals(templateType)) {
                 LOGGER.debug("AbstractFleaJPADAOImpl##insert(String, T) SQL = {}", nativeSql);
-            } else if(TemplateTypeEnum.UPDATE.getKey().equals(templateType)) {
+            } else if (TemplateTypeEnum.UPDATE.getKey().equals(templateType)) {
                 LOGGER.debug("AbstractFleaJPADAOImpl##update(String, T) SQL = {}", nativeSql);
-            } else if(TemplateTypeEnum.DELETE.getKey().equals(templateType)) {
+            } else if (TemplateTypeEnum.DELETE.getKey().equals(templateType)) {
                 LOGGER.debug("AbstractFleaJPADAOImpl##delete(String, T) SQL = {}", nativeSql);
             }
         }
@@ -291,18 +293,6 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         setParameter(query, nativeParam, templateType);
         // 执行原生SQL语句（可能包含 INSERT, UPDATE, DELETE）
         return query.executeUpdate();
-    }
-
-    /**
-     * <p> 获取指定的查询对象 </p>
-     *
-     * @return 自定义Flea JPA查询对象
-     * @since 1.0.0
-     */
-    protected FleaJPAQuery getQuery(Class result) {
-        FleaJPAQuery query = FleaJPAQuery.getQuery();
-        query.init(getEntityManager(), clazz, result);
-        return query;
     }
 
     /**
@@ -339,18 +329,41 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     private void setParameter(Query query, List<SqlParam> sqlParams, String templateType) {
         if (CollectionUtils.isNotEmpty(sqlParams)) {
             for (SqlParam sqlParam : sqlParams) {
-                if(TemplateTypeEnum.INSERT.getKey().equals(templateType)) {
+                if (TemplateTypeEnum.INSERT.getKey().equals(templateType)) {
                     LOGGER.debug("AbstractFleaJPADAOImpl##insert(String, T) COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
-                } else if(TemplateTypeEnum.UPDATE.getKey().equals(templateType)) {
+                } else if (TemplateTypeEnum.UPDATE.getKey().equals(templateType)) {
                     LOGGER.debug("AbstractFleaJPADAOImpl##update(String, T) COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
-                } else if(TemplateTypeEnum.DELETE.getKey().equals(templateType)) {
+                } else if (TemplateTypeEnum.DELETE.getKey().equals(templateType)) {
                     LOGGER.debug("AbstractFleaJPADAOImpl##delete(String, T) COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
-                } else if(TemplateTypeEnum.SELECT.getKey().equals(templateType)) {
+                } else if (TemplateTypeEnum.SELECT.getKey().equals(templateType)) {
                     LOGGER.debug("AbstractFleaJPADAOImpl##query(String, T) COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
                 }
                 query.setParameter(sqlParam.getIndex(), sqlParam.getAttrValue());
             }
         }
+    }
+
+    /**
+     * <p> 获取指定的查询对象 </p>
+     *
+     * @return 自定义Flea JPA查询对象
+     * @since 1.0.0
+     */
+    protected FleaJPAQuery getQuery(Class result) {
+        // 获取JPA查询对象池实例（使用默认连接池名"default"即可）
+        FleaJPAQueryObjectPool jpaQueryPool = FleaJPAQueryObjectPool.getInstance();
+        // 获取Flea JPA查询对象池实例
+        FleaJPAQueryPool pool = jpaQueryPool.getFleaJPAQueryPool();
+        // 获取Flea JPA查询对象实例
+        FleaJPAQuery query = pool.getFleaObject();
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("AbstractFleaJPADAOImpl##getQuery(Class) Pool Name = {}", jpaQueryPool.getPoolName());
+            LOGGER.debug("AbstractFleaJPADAOImpl##getQuery(Class) FleaJPAQueryPool = {}", pool);
+            LOGGER.debug("AbstractFleaJPADAOImpl##getQuery(Class) FleaJPAQuery = {}", query);
+        }
+        // 获取实例后必须调用该方法,对Flea JPA查询对象进行初始化
+        query.init(getEntityManager(), clazz, result);
+        return query;
     }
 
     /**

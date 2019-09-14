@@ -40,4 +40,33 @@ public interface ToolsConstants {
         String DB_NAME = "DB_NAME";
     }
 
+    interface CodeConfigConstants {
+
+        String CODE_CONFIG_FILE_NAME = "code.properties";
+
+        String CODE_CONFIG_FILE_SYSTEM_KEY = "flea.tools.code.filename";
+
+        String DB_NAME = "dbName";
+
+        String TABLE_NAME = "tableName";
+
+        String TABLE_NAME_DESC = "tableNameDesc";
+
+        String AUTHOR = "author";
+
+        String VERSION = "version";
+
+        String ROOT_PATH = "rootPath";
+
+        String CODE_PACKAGE = "codePackage";
+
+        String PU_DAO_CODE_PACKAGE = "puDaoCodePackage";
+
+        String PU_DAO_CLASS_NAME = "puDaoClassName";
+
+        String PU_NAME = "puName";
+
+        String PU_ALIAS_NAME = "puAliasName";
+    }
+
 }

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE log4j:configuration PUBLIC "-//LOGGER" "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	<appender name="myConsole" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %-5p [%c:%L] %t - %m%n" />
+		</layout>
+		<!--过滤器设置输出的级别-->
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="levelMin" value="debug" />
+			<param name="levelMax" value="error" />
+			<param name="AcceptOnMatch" value="true" />
+		</filter>
+	</appender>
+	
+	<appender name="myFile" class="org.apache.log4j.RollingFileAppender">
+		<!-- 设置日志输出文件名 -->
+        <param name="File" value="E:/flea-frame.log" />
+        <!-- 设置是否在重新启动服务时，在原有日志的基础添加新日志 -->
+        <param name="Append" value="true" />
+        <param name="MaxBackupIndex" value="10" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %-5p [%c:%L] - %m%n" />
+        </layout>
+    </appender>
+	
+	<logger name="org.springframework">
+		<level value="WARN" />
+		<appender-ref ref="myConsole" />
+		<appender-ref ref="myFile"/>
+	</logger>
+	
+	<logger name="org.hibernate">
+		<level value="WARN" />
+		<appender-ref ref="myConsole" />
+		<appender-ref ref="myFile"/>
+	</logger>
+
+	<!-- -->
+	<logger name="org.apache">
+		<level value="WARN" />
+		<appender-ref ref="myConsole" />
+		<appender-ref ref="myFile"/>
+	</logger>
+	
+	<!-- 根logger的设置--> 
+	<root>
+		<priority value="debug" />
+		<appender-ref ref="myConsole" />
+		<appender-ref ref="myFile"/>
+	</root>
+	
+</log4j:configuration>  

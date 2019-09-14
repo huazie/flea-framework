@@ -41,13 +41,13 @@ public class FleaPersistenceUnitDaoImplBuilder extends FleaCodeBuilder {
 
         // 持久化单元DAO层实现类代码文件路径
         String fleaPersistenceUnitDAOImplFilePathStr = StringUtils.valueOf(param.get(ToolsConstants.CodeConstants.CODE_FILE_PATH));
-        // 持久化单元名
-        String fleaPersistenceUnitName = StringUtils.valueOf(param.get(ToolsConstants.CodeConstants.FLEA_PERSISTENCE_UNIT_NAME));
         // 持久化单元别名 （每个英文单词首字母大写）
-        String fleaPersistenceUnitAliasName = StringUtils.valueOf(param.get(ToolsConstants.CodeConstants.FLEA_PERSISTENCE_UNIT_ALIAS_NAME));
+        String fleaPUAliasName = StringUtils.valueOf(param.get(ToolsConstants.CodeConstants.FLEA_PERSISTENCE_UNIT_ALIAS_NAME));
+        // 持久化单元名
+        String fleaPUName = StringUtils.valueOf(param.get(ToolsConstants.CodeConstants.FLEA_PERSISTENCE_UNIT_NAME));
         // 持久化单元DAO层实现类名
         String fleaPersistenceUnitDaoClassName = StringUtils.valueOf(param.get(ToolsConstants.CodeConstants.FLEA_PERSISTENCE_UNIT_DAO_CLASS_NAME));
-        if (StringUtils.isBlank(fleaPersistenceUnitName) || StringUtils.isBlank(fleaPersistenceUnitAliasName)) {
+        if (StringUtils.isBlank(fleaPUName) || StringUtils.isBlank(fleaPUAliasName)) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("采用现有的持久化单元DAO层实现类 = {}", fleaPersistenceUnitDaoClassName);
                 LOGGER.debug("现有持久化单元DAO层实现类代码文件路径 = {}", fleaPersistenceUnitDAOImplFilePathStr);
