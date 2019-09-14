@@ -29,7 +29,7 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class RedisPool {
 
-    private final static ConcurrentMap<String, RedisPool> redisPools = new ConcurrentHashMap<String, RedisPool>();
+    private static final ConcurrentMap<String, RedisPool> redisPools = new ConcurrentHashMap<String, RedisPool>();
 
     private String poolName; // 连接池名
 
@@ -65,7 +65,7 @@ public class RedisPool {
      * @since 1.0.0
      */
     public static RedisPool getInstance() {
-        return getInstance(CacheConstants.FleaCacheConstants.DEFAUTL_POOL_NAME);
+        return getInstance(CommonConstants.FleaPoolConstants.DEFAUTL_POOL_NAME);
     }
 
     /**
@@ -74,7 +74,7 @@ public class RedisPool {
      * @since 1.0.0
      */
     public void initialize() {
-        if (!CacheConstants.FleaCacheConstants.DEFAUTL_POOL_NAME.equals(poolName)) {
+        if (!CommonConstants.FleaPoolConstants.DEFAUTL_POOL_NAME.equals(poolName)) {
             throw new RuntimeException("采用默认初始化，请使用RedisPool##getInstance()");
         }
         RedisConfig redisConfig = RedisConfig.getConfig();
@@ -91,7 +91,7 @@ public class RedisPool {
      * @since 1.0.0
      */
     public void initialize(List<CacheServer> cacheServerList, CacheParams cacheParams) {
-        if (CacheConstants.FleaCacheConstants.DEFAUTL_POOL_NAME.equals(poolName)) {
+        if (CommonConstants.FleaPoolConstants.DEFAUTL_POOL_NAME.equals(poolName)) {
             throw new RuntimeException("采用指定连接池名初始化，请使用RedisPool##getInstance(String poolName)");
         }
 

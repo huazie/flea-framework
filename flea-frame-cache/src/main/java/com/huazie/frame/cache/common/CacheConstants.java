@@ -16,10 +16,6 @@ public interface CacheConstants {
      */
     interface FleaCacheConstants {
         /**
-         * <p> 默认连接池名 </p>
-         */
-        String DEFAUTL_POOL_NAME = "default";
-        /**
          * <p> Flea缓存名 </p>
          */
         String FLEA_CACHE_NAME = "FleaCache";

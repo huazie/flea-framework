@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <p> 数据处理的基本方法接口 </p>
+ * <p> 数据处理的基本接口 </p>
  *
  * @author huazie
  * @version 1.0.0

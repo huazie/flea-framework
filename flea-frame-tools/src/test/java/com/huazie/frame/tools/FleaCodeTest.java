@@ -1,7 +1,6 @@
 package com.huazie.frame.tools;
 
 import com.huazie.frame.common.util.IOUtils;
-import com.huazie.frame.tools.code.FleaCodeMain;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,18 +20,6 @@ public class FleaCodeTest {
     public void testFleaCode() {
         String str = IOUtils.toNativeStringFromResource("flea/code/service/FleaSVImpl.code");
         LOGGER.debug("CODE : \n{}", str);
-    }
-
-    @Test
-    public void testFleaCodeMain() {
-        FleaCodeMain codeMain = new FleaCodeMain();
-        codeMain.code();
-    }
-
-    @Test
-    public void testFleaCodeDelete() {
-        FleaCodeMain codeMain = new FleaCodeMain();
-        codeMain.clean();
     }
 
 }

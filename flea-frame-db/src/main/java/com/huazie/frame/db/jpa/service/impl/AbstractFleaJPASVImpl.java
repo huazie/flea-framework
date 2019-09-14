@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <p> 抽象服务层实现类 </p>
+ * <p> 抽象Flea JPA SV层实现类 </p>
  *
  * @author huazie
  * @version 1.0.0

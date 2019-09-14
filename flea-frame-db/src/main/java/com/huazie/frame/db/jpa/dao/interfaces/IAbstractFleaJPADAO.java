@@ -3,7 +3,7 @@ package com.huazie.frame.db.jpa.dao.interfaces;
 import com.huazie.frame.db.jpa.common.IFleaJPABaseDataHandler;
 
 /**
- * <p> 抽象FleaJPA DAO层接口，用于实现数据操作的抽象逻辑，实现基本的增删改查功能 </p>
+ * <p> 抽象Flea JPA DAO层接口，实现基本的查询、（批量）添加、（批量）更新、删除接口 </p>
  *
  * @author huazie
  * @version 1.0.0

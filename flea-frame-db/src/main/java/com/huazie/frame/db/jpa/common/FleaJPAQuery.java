@@ -6,6 +6,7 @@ import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.DBConstants;
 import com.huazie.frame.db.common.exception.DaoException;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +19,7 @@ import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.io.Serializable;
+import java.io.Closeable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -32,40 +33,47 @@ import java.util.Set;
  *
  * @author huazie
  * @version 1.0.0
+ * @see FleaJPAQueryPool Flea JPA查询对象池
  * @since 1.0.0
  */
 @SuppressWarnings({"rawtypes", "unchecked"})
-public final class FleaJPAQuery implements Serializable {
-
-    private static final long serialVersionUID = -4272805743956204878L;
+public final class FleaJPAQuery implements Closeable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FleaJPAQuery.class);
 
-    private static volatile FleaJPAQuery query;
+    protected FleaJPAQueryPool fleaObjectPool; // Flea JPA查询对象池
 
-    private EntityManager entityManager; // JPA中用于增删改查的接口
+    private EntityManager entityManager; // JPA中用于增删改查的持久化接口
 
     private Class sourceClazz; // 实体类类对象
 
     private Class resultClazz; // 操作结果类类对象
 
-    private Root root; // 根SQL表达式
-
-    private List<Predicate> predicates; // Where条件
+    private Root root; // 根SQL表达式对象
 
     private CriteriaBuilder criteriaBuilder; //标准化生成器
 
     private CriteriaQuery criteriaQuery; // 标准化查询对象
 
-    private List<Order> orders; // 排序
+    private List<Predicate> predicates = new ArrayList<Predicate>(); // Where条件集合
 
-    private List<Expression> groups; //分组
+    private List<Order> orders; // 排序集合
 
-    private FleaJPAQuery() {
+    private List<Expression> groups; // 分组集合
+
+    public FleaJPAQuery() {
+    }
+
+    @Override
+    public void close() {
+        if (ObjectUtils.isNotEmpty(fleaObjectPool)) {
+            fleaObjectPool.returnFleaObject(this);
+            fleaObjectPool = null;
+        }
     }
 
     /**
-     * <p> getQuery()之后，一定要调用该方法进行初始化 </p>
+     * <p> Flea JPA查询对象池获取之后，一定要调用该方法进行初始化 </p>
      *
      * @param entityManager JPA中用于增删改查的接口
      * @param sourceClazz   实体类类对象
@@ -77,31 +85,18 @@ public final class FleaJPAQuery implements Serializable {
         this.entityManager = entityManager;
         this.sourceClazz = sourceClazz;
         this.resultClazz = resultClazz;
+        // 从持久化接口中获取标准化生成器
         criteriaBuilder = entityManager.getCriteriaBuilder();
+        // 通过标准化生成器 获取 标准化查询对象
         if (ObjectUtils.isEmpty(resultClazz)) {
+            // 行记录查询结果
             criteriaQuery = criteriaBuilder.createQuery(sourceClazz);
         } else {
+            // 单个查询结果
             criteriaQuery = criteriaBuilder.createQuery(resultClazz);
         }
+        // 通过标准化查询对象，获取根SQL表达式对象
         root = criteriaQuery.from(sourceClazz);
-        predicates = new ArrayList<Predicate>();
-    }
-
-    /**
-     * <p> 获取查询对象 </p>
-     *
-     * @return FleaJPAQuery查询对象
-     * @since 1.0.0
-     */
-    public static FleaJPAQuery getQuery() {
-        if (ObjectUtils.isEmpty(query)) {
-            synchronized (FleaJPAQuery.class) {
-                if (ObjectUtils.isEmpty(query)) {
-                    query = new FleaJPAQuery();
-                }
-            }
-        }
-        return query;
     }
 
     /**
@@ -112,8 +107,8 @@ public final class FleaJPAQuery implements Serializable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void equal(String attrName, Object value) throws DaoException {
-        newEqualExpression(attrName, value, true);
+    public FleaJPAQuery equal(String attrName, Object value) throws DaoException {
+        return newEqualExpression(attrName, value, true);
     }
 
     /**
@@ -123,8 +118,8 @@ public final class FleaJPAQuery implements Serializable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void equal(Map<String, Object> paramMap) throws DaoException {
-        newEqualExpression(paramMap, true);
+    public FleaJPAQuery equal(Map<String, Object> paramMap) throws DaoException {
+        return newEqualExpression(paramMap, true);
     }
 
     /**
@@ -135,8 +130,8 @@ public final class FleaJPAQuery implements Serializable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void notEqual(String attrName, Object value) throws DaoException {
-        newEqualExpression(attrName, value, false);
+    public FleaJPAQuery notEqual(String attrName, Object value) throws DaoException {
+        return newEqualExpression(attrName, value, false);
     }
 
     /**
@@ -146,8 +141,8 @@ public final class FleaJPAQuery implements Serializable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void notEqual(Map<String, Object> paramMap) throws DaoException {
-        newEqualExpression(paramMap, false);
+    public FleaJPAQuery notEqual(Map<String, Object> paramMap) throws DaoException {
+        return newEqualExpression(paramMap, false);
     }
 
     /**
@@ -159,7 +154,7 @@ public final class FleaJPAQuery implements Serializable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    private void newEqualExpression(String attrName, Object value, boolean isEqual) throws DaoException {
+    private FleaJPAQuery newEqualExpression(String attrName, Object value, boolean isEqual) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -179,6 +174,7 @@ public final class FleaJPAQuery implements Serializable {
         } else {
             predicates.add(criteriaBuilder.notEqual(root.get(attrName), value));
         }
+        return this;
     }
 
     /**
@@ -189,7 +185,7 @@ public final class FleaJPAQuery implements Serializable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    private void newEqualExpression(Map<String, Object> paramMap, boolean isEqual) throws DaoException {
+    private FleaJPAQuery newEqualExpression(Map<String, Object> paramMap, boolean isEqual) throws DaoException {
         if (MapUtils.isEmpty(paramMap)) {
             // 条件参数Map不能为空
             throw new DaoException("ERROR-DB-DAO0000000003");
@@ -212,6 +208,7 @@ public final class FleaJPAQuery implements Serializable {
                 predicates.add(criteriaBuilder.notEqual(root.get(key), value));
             }
         }
+        return this;
     }
 
     /**
@@ -221,8 +218,8 @@ public final class FleaJPAQuery implements Serializable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void isNull(String attrName) throws DaoException {
-        newIsNullExpression(attrName, true);
+    public FleaJPAQuery isNull(String attrName) throws DaoException {
+        return newIsNullExpression(attrName, true);
     }
 
     /**
@@ -232,8 +229,8 @@ public final class FleaJPAQuery implements Serializable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void isNotNull(String attrName) throws DaoException {
-        newIsNullExpression(attrName, false);
+    public FleaJPAQuery isNotNull(String attrName) throws DaoException {
+        return newIsNullExpression(attrName, false);
     }
 
     /**
@@ -244,7 +241,7 @@ public final class FleaJPAQuery implements Serializable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    private void newIsNullExpression(String attrName, boolean isNull) throws DaoException {
+    private FleaJPAQuery newIsNullExpression(String attrName, boolean isNull) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -260,30 +257,31 @@ public final class FleaJPAQuery implements Serializable {
         } else {
             predicates.add(criteriaBuilder.isNotNull(root.get(attrName)));
         }
+        return this;
     }
 
     /**
-     * <p> attrName属性的值在value集合中的查询条件 </p>
+     * <p> in条件，attrName属性的值在value集合中 </p>
      *
      * @param attrName 属性名称
      * @param value    值集合
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void in(String attrName, Collection value) throws DaoException {
-        newInExpression(attrName, value, true);
+    public FleaJPAQuery in(String attrName, Collection value) throws DaoException {
+        return newInExpression(attrName, value, true);
     }
 
     /**
-     * <p> attrName属性的值不在value集合中的查询条件 </p>
+     * <p> not in条件，attrName属性的值不在value集合中 </p>
      *
      * @param attrName 属性名称
      * @param value    值集合
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void notIn(String attrName, Collection value) throws DaoException {
-        newInExpression(attrName, value, false);
+    public FleaJPAQuery notIn(String attrName, Collection value) throws DaoException {
+        return newInExpression(attrName, value, false);
     }
 
     /**
@@ -294,7 +292,7 @@ public final class FleaJPAQuery implements Serializable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    private void newInExpression(String attrName, Collection value, boolean isIn) throws DaoException {
+    private FleaJPAQuery newInExpression(String attrName, Collection value, boolean isIn) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -319,17 +317,18 @@ public final class FleaJPAQuery implements Serializable {
         } else {
             predicates.add(criteriaBuilder.not(in));
         }
+        return this;
     }
 
     /**
-     * <p> 模糊匹配条件（value一定要是字符类型的） </p>
+     * <p> 模糊匹配条件（value一定要是字符串类型的） </p>
      *
      * @param attrName 属性名称
      * @param value    属性值
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void like(String attrName, String value) throws DaoException {
+    public FleaJPAQuery like(String attrName, String value) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -344,6 +343,7 @@ public final class FleaJPAQuery implements Serializable {
             value = DBConstants.SQLConstants.SQL_PERCENT + value + DBConstants.SQLConstants.SQL_PERCENT;
         }
         predicates.add(criteriaBuilder.like(root.get(attrName), value));
+        return this;
     }
 
     /**
@@ -354,7 +354,7 @@ public final class FleaJPAQuery implements Serializable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void le(String attrName, Number value) throws DaoException {
+    public FleaJPAQuery le(String attrName, Number value) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -366,6 +366,7 @@ public final class FleaJPAQuery implements Serializable {
             LOGGER.debug("FMJPAQuery##le(attrName, value) -->> AttrName={}, Value={}", attrName, value);
         }
         predicates.add(criteriaBuilder.le(root.get(attrName), value));
+        return this;
     }
 
     /**
@@ -376,7 +377,7 @@ public final class FleaJPAQuery implements Serializable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void lt(String attrName, Number value) throws DaoException {
+    public FleaJPAQuery lt(String attrName, Number value) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -388,6 +389,7 @@ public final class FleaJPAQuery implements Serializable {
             LOGGER.debug("FMJPAQuery##lt(attrName, value) -->> AttrName={}, Value={}", attrName, value);
         }
         predicates.add(criteriaBuilder.lt(root.get(attrName), value));
+        return this;
     }
 
     /**
@@ -398,7 +400,7 @@ public final class FleaJPAQuery implements Serializable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void ge(String attrName, Number value) throws DaoException {
+    public FleaJPAQuery ge(String attrName, Number value) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -410,6 +412,7 @@ public final class FleaJPAQuery implements Serializable {
             LOGGER.debug("FMJPAQuery##ge(attrName, value) -->> AttrName={}, Value={}", attrName, value);
         }
         predicates.add(criteriaBuilder.ge(root.get(attrName), value));
+        return this;
     }
 
     /**
@@ -420,7 +423,7 @@ public final class FleaJPAQuery implements Serializable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void gt(String attrName, Number value) throws DaoException {
+    public FleaJPAQuery gt(String attrName, Number value) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -432,6 +435,7 @@ public final class FleaJPAQuery implements Serializable {
             LOGGER.debug("FMJPAQuery##gt(attrName, value) -->> AttrName={}, Value={}", attrName, value);
         }
         predicates.add(criteriaBuilder.gt(root.get(attrName), value));
+        return this;
     }
 
     /**
@@ -443,7 +447,7 @@ public final class FleaJPAQuery implements Serializable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void between(String attrName, Date startTime, Date endTime) throws DaoException {
+    public FleaJPAQuery between(String attrName, Date startTime, Date endTime) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -459,6 +463,7 @@ public final class FleaJPAQuery implements Serializable {
             LOGGER.debug("FMJPAQuery##between(attrName, startTime, endTime) -->> AttrName={}, StartTime={}, EndTime={}", attrName, startTime, endTime);
         }
         predicates.add(criteriaBuilder.between(root.get(attrName), startTime, endTime));
+        return this;
     }
 
     /**
@@ -469,7 +474,7 @@ public final class FleaJPAQuery implements Serializable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void greaterThan(String attrName, Date value) throws DaoException {
+    public FleaJPAQuery greaterThan(String attrName, Date value) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -481,6 +486,7 @@ public final class FleaJPAQuery implements Serializable {
             LOGGER.debug("FMJPAQuery##greaterThan() -->> AttrName={}, Date={}", attrName, value);
         }
         predicates.add(criteriaBuilder.greaterThan(root.get(attrName), value));
+        return this;
     }
 
     /**
@@ -491,7 +497,7 @@ public final class FleaJPAQuery implements Serializable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void greaterThanOrEqualTo(String attrName, Date value) throws DaoException {
+    public FleaJPAQuery greaterThanOrEqualTo(String attrName, Date value) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -503,6 +509,7 @@ public final class FleaJPAQuery implements Serializable {
             LOGGER.debug("FMJPAQuery##greaterThanOrEqualTo() -->> AttrName={}, Date={}", attrName, value);
         }
         predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get(attrName), value));
+        return this;
     }
 
     /**
@@ -513,7 +520,7 @@ public final class FleaJPAQuery implements Serializable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void lessThan(String attrName, Date value) throws DaoException {
+    public FleaJPAQuery lessThan(String attrName, Date value) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -525,6 +532,7 @@ public final class FleaJPAQuery implements Serializable {
             LOGGER.debug("FMJPAQuery##lessThan() -->> AttrName={}, Date={}", attrName, value);
         }
         predicates.add(criteriaBuilder.lessThan(root.get(attrName), value));
+        return this;
     }
 
     /**
@@ -535,7 +543,7 @@ public final class FleaJPAQuery implements Serializable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void lessThanOrEqualTo(String attrName, Date value) throws DaoException {
+    public FleaJPAQuery lessThanOrEqualTo(String attrName, Date value) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -547,6 +555,7 @@ public final class FleaJPAQuery implements Serializable {
             LOGGER.debug("FMJPAQuery##lessThanOrEqualTo() -->> AttrName={}, Date={}", attrName, value);
         }
         predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get(attrName), value));
+        return this;
     }
 
     /**
@@ -554,8 +563,9 @@ public final class FleaJPAQuery implements Serializable {
      *
      * @since 1.0.0
      */
-    public void count() {
+    public FleaJPAQuery count() {
         criteriaQuery.select(criteriaBuilder.count(root));
+        return this;
     }
 
     /**
@@ -563,8 +573,9 @@ public final class FleaJPAQuery implements Serializable {
      *
      * @since 1.0.0
      */
-    public void countDistinct() {
+    public FleaJPAQuery countDistinct() {
         criteriaQuery.select(criteriaBuilder.countDistinct(root));
+        return this;
     }
 
     /**
@@ -574,7 +585,7 @@ public final class FleaJPAQuery implements Serializable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void max(String attrName) throws DaoException {
+    public FleaJPAQuery max(String attrName) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -582,6 +593,7 @@ public final class FleaJPAQuery implements Serializable {
             LOGGER.debug("FMJPAQuery##max(attrName) -->> AttrName={}", attrName);
         }
         criteriaQuery.select(criteriaBuilder.max(root.get(attrName)));
+        return this;
     }
 
     /**
@@ -591,7 +603,7 @@ public final class FleaJPAQuery implements Serializable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void min(String attrName) throws DaoException {
+    public FleaJPAQuery min(String attrName) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -599,6 +611,7 @@ public final class FleaJPAQuery implements Serializable {
             LOGGER.debug("FMJPAQuery##min(attrName) -->> AttrName={}", attrName);
         }
         criteriaQuery.select(criteriaBuilder.min(root.get(attrName)));
+        return this;
     }
 
     /**
@@ -608,7 +621,7 @@ public final class FleaJPAQuery implements Serializable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void avg(String attrName) throws DaoException {
+    public FleaJPAQuery avg(String attrName) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -616,6 +629,7 @@ public final class FleaJPAQuery implements Serializable {
             LOGGER.debug("FMJPAQuery##avg(attrName) -->> AttrName={}", attrName);
         }
         criteriaQuery.select(criteriaBuilder.avg(root.get(attrName)));
+        return this;
     }
 
     /**
@@ -625,7 +639,7 @@ public final class FleaJPAQuery implements Serializable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void sum(String attrName) throws DaoException {
+    public FleaJPAQuery sum(String attrName) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -633,6 +647,7 @@ public final class FleaJPAQuery implements Serializable {
             LOGGER.debug("FMJPAQuery##sum(attrName) -->> AttrName={}", attrName);
         }
         criteriaQuery.select(criteriaBuilder.sum(root.get(attrName)));
+        return this;
     }
 
     /**
@@ -642,7 +657,7 @@ public final class FleaJPAQuery implements Serializable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void sumAsLong(String attrName) throws DaoException {
+    public FleaJPAQuery sumAsLong(String attrName) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -650,6 +665,7 @@ public final class FleaJPAQuery implements Serializable {
             LOGGER.debug("FMJPAQuery##sumAsLong(attrName) -->> AttrName={}", attrName);
         }
         criteriaQuery.select(criteriaBuilder.sumAsLong(root.get(attrName)));
+        return this;
     }
 
     /**
@@ -659,7 +675,7 @@ public final class FleaJPAQuery implements Serializable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void sumAsDouble(String attrName) throws DaoException {
+    public FleaJPAQuery sumAsDouble(String attrName) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -667,6 +683,7 @@ public final class FleaJPAQuery implements Serializable {
             LOGGER.debug("FMJPAQuery##sumAsDouble(attrName) -->> AttrName={}", attrName);
         }
         criteriaQuery.select(criteriaBuilder.sumAsDouble(root.get(attrName)));
+        return this;
     }
 
     /**
@@ -676,7 +693,7 @@ public final class FleaJPAQuery implements Serializable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void distinct(String attrName) throws DaoException {
+    public FleaJPAQuery distinct(String attrName) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -684,6 +701,7 @@ public final class FleaJPAQuery implements Serializable {
             LOGGER.debug("FMJPAQuery##distinct(attrName) -->> AttrName={}", attrName);
         }
         criteriaQuery.select(root.get(attrName)).distinct(true);
+        return this;
     }
 
     /**
@@ -694,7 +712,7 @@ public final class FleaJPAQuery implements Serializable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void addOrderby(String attrName, String orderBy) throws DaoException {
+    public FleaJPAQuery addOrderby(String attrName, String orderBy) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -712,6 +730,7 @@ public final class FleaJPAQuery implements Serializable {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FMJPAQuery##addOrderby(attrName, orderBy) -->> AttrName={}, OrderBy={}", attrName, orderBy);
         }
+        return this;
     }
 
     /**
@@ -721,7 +740,7 @@ public final class FleaJPAQuery implements Serializable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void addGroupBy(String attrName) throws DaoException {
+    public FleaJPAQuery addGroupBy(String attrName) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -734,7 +753,7 @@ public final class FleaJPAQuery implements Serializable {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FMJPAQuery##addGroupBy(attrName) -->> AttrName={}, GroupBy={}", attrName);
         }
-
+        return this;
     }
 
     /**
@@ -745,11 +764,16 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public List getResultList() throws DaoException {
-        return createQuery(false).getResultList();
+        try {
+            return createQuery(false).getResultList();
+        } finally {
+            // 将Flea JPA查询对象重置，并归还给对象池
+            close();
+        }
     }
 
     /**
-     * <p> 获取查询的记录行结果集合（设置分页） </p>
+     * <p> 获取查询的记录行结果集合（设置查询范围，可用于分页） </p>
      *
      * @param start 开始查询记录行
      * @param max   最大查询数量
@@ -757,12 +781,17 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public List getResultList(int start, int max) throws DaoException {
-        TypedQuery query = createQuery(false);
-        // 设置开始查询记录行
-        query.setFirstResult(start);
-        // 设置一次最大查询数量
-        query.setMaxResults(max);
-        return query.getResultList();
+        try {
+            TypedQuery query = createQuery(false);
+            // 设置开始查询记录行
+            query.setFirstResult(start);
+            // 设置一次最大查询数量
+            query.setMaxResults(max);
+            return query.getResultList();
+        } finally {
+            // 将Flea JPA查询对象重置，并归还给对象池
+            close();
+        }
     }
 
     /**
@@ -774,11 +803,16 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public List getSingleResultList() throws DaoException {
-        return createQuery(true).getResultList();
+        try {
+            return createQuery(true).getResultList();
+        } finally {
+            // 将Flea JPA查询对象重置，并归还给对象池
+            close();
+        }
     }
 
     /**
-     * <p> 获取查询的单个属性列结果集合（设置分页） </p>
+     * <p> 获取查询的单个属性列结果集合（设置查询范围，可用于分页） </p>
      * <p> 需要先调用 distinct，否则默认返回行记录结果集合 </p>
      *
      * @param start 开始查询记录行
@@ -787,12 +821,17 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public List getSingleResultList(int start, int max) throws DaoException {
-        TypedQuery query = createQuery(true);
-        // 设置开始查询记录行
-        query.setFirstResult(start);
-        // 设置一次最大查询数量
-        query.setMaxResults(max);
-        return query.getResultList();
+        try {
+            TypedQuery query = createQuery(true);
+            // 设置开始查询记录行
+            query.setFirstResult(start);
+            // 设置一次最大查询数量
+            query.setMaxResults(max);
+            return query.getResultList();
+        } finally {
+            // 将Flea JPA查询对象重置，并归还给对象池
+            close();
+        }
     }
 
     /**
@@ -804,7 +843,12 @@ public final class FleaJPAQuery implements Serializable {
      * @since 1.0.0
      */
     public Object getSingleResult() throws DaoException {
-        return createQuery(true).getSingleResult();
+        try {
+            return createQuery(true).getSingleResult();
+        } finally {
+            // 将Flea JPA查询对象重置，并归还给对象池
+            close();
+        }
     }
 
     /**
@@ -849,6 +893,43 @@ public final class FleaJPAQuery implements Serializable {
         }
     }
 
+    /**
+     * <p> 设置Flea对象池 </p>
+     *
+     * @param fleaObjectPool Flea JPA查询对象池
+     * @since 1.0.0
+     */
+    public void setFleaObjectPool(FleaJPAQueryPool fleaObjectPool) {
+        this.fleaObjectPool = fleaObjectPool;
+    }
+
+    /**
+     * <p> 重置Flea JPA查询对象 </p>
+     *
+     * @since 1.0.0
+     */
+    public void reset() {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("FleaJPAQuery##reset() Start");
+            LOGGER.debug("FleaJPAQuery##reset() Before FleaJPAQuery={}", toString());
+        }
+        entityManager = null;
+        sourceClazz = null;
+        resultClazz = null;
+        root = null;
+        criteriaBuilder = null;
+        criteriaQuery = null;
+        if (CollectionUtils.isNotEmpty(predicates)) {
+            predicates.clear();
+        }
+        orders = null;
+        groups = null;
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("FleaJPAQuery##reset() After FleaJPAQuery={}", toString());
+            LOGGER.debug("FleaJPAQuery##reset() End");
+        }
+    }
+
     public EntityManager getEntityManager() {
         return entityManager;
     }
@@ -883,5 +964,10 @@ public final class FleaJPAQuery implements Serializable {
 
     public List<Expression> getGroups() {
         return groups;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 }

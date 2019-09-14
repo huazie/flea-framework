@@ -10,6 +10,13 @@
         <config-item key="error" desc="error国际化资源特殊配置，指定路径和文件前缀，逗号分隔">flea/i18n,flea_i18n</config-item>
     </config-items>
 
+    <config-items key="flea-jpa-query" desc="Flea JPA查询对象池配置">
+        <cache-param key="pool.maxTotal" desc="Flea JPA查询对象池最大连接数">100</cache-param>
+        <cache-param key="pool.maxIdle" desc="Flea JPA查询对象池最大空闲连接数">10</cache-param>
+        <cache-param key="pool.minIdle" desc="Flea JPA查询对象池最小空闲连接数">0</cache-param>
+        <cache-param key="pool.maxWaitMillis" desc="Flea JPA查询对象池获取连接时的最大等待毫秒数">2000</cache-param>
+    </config-items>
+
     <config-items key="mysql-fleaconfig" desc="JDBC数据库配置【key=数据库系统-数据库或数据库用户】">
         <config-item key="driver" desc="mysql数据库驱动名">com.mysql.jdbc.Driver</config-item>
         <config-item key="url" desc="mysql数据库连接地址">jdbc:mysql://localhost:3306/fleaconfig?useUnicode=true&amp;characterEncoding=UTF-8</config-item>

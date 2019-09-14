@@ -151,6 +151,16 @@ public interface CommonConstants {
     }
 
     /**
+     * <p> Flea连接池常量 </p>
+     */
+    interface FleaPoolConstants {
+        /**
+         * <p> 默认连接池名 </p>
+         */
+        String DEFAUTL_POOL_NAME = "default";
+    }
+
+    /**
      * <p> Flea用户信息常量 </p>
      *
      * @since 1.0.0

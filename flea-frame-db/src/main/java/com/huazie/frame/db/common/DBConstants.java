@@ -116,4 +116,32 @@ public interface DBConstants {
          */
         String DB_CONFIG_PASSWORD = "password";
     }
+
+    /**
+     * <p> JPA查询对象池配置常量 </p>
+     *
+     * @since 1.0.0
+     */
+    interface JPAQueryPoolConfigConstants {
+        /**
+         * Flea JPA查询配置常量
+         */
+        String FLEA_JPA_QUERY = "flea-jpa-query";
+        /**
+         * Flea JPA查询对象池最大连接数
+         */
+        String JPA_QUERY_POOL_MAXTOTAL = "pool.maxTotal";
+        /**
+         * Flea JPA查询对象池最大空闲连接数
+         */
+        String JPA_QUERY_POOL_MAXIDLE = "pool.maxIdle";
+        /**
+         * Flea JPA查询对象池最小空闲连接数
+         */
+        String JPA_QUERY_POOL_MINIDLE = "pool.minIdle";
+        /**
+         * Flea JPA查询对象池获取连接时的最大等待毫秒数
+         */
+        String JPA_QUERY_POOL_MAXWAITMILLIS = "pool.maxWaitMillis";
+    }
 }

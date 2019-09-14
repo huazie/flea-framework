@@ -187,6 +187,14 @@ public class IOUtils {
      * @return
      */
     public static File toFileFromNativeString(String content, String filePath) {
+        // 获取系统路径连接符
+        String separator = File.separator;
+        // 获取父目录
+        String parentPathStr = filePath.substring(0, filePath.lastIndexOf(separator));
+        File parentPath = new File(parentPathStr);
+        if (!parentPath.exists()) {
+            parentPath.mkdirs();
+        }
         File file = new File(filePath);
         if (!file.exists()) {
             try {

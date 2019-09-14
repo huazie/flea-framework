@@ -18,8 +18,8 @@
         <cache-param key="connectionTimeout" desc="Redis客户端socket连接超时时间">2000</cache-param>
         <cache-param key="soTimeout" desc="Redis客户端socket读写超时时间">2000</cache-param>
         <cache-param key="hashingAlg" desc="Redis分布式hash算法(1:MURMUR_HASH,2:MD5)">1</cache-param>
-        <cache-param key="pool.maxTotal" desc="Redis客户端Jedis连接池最大连接数">8</cache-param>
-        <cache-param key="pool.maxIdle" desc="Redis客户端Jedis连接池最大空闲连接数">8</cache-param>
+        <cache-param key="pool.maxTotal" desc="Redis客户端Jedis连接池最大连接数">100</cache-param>
+        <cache-param key="pool.maxIdle" desc="Redis客户端Jedis连接池最大空闲连接数">10</cache-param>
         <cache-param key="pool.minIdle" desc="Redis客户端Jedis连接池最小空闲连接数">0</cache-param>
         <cache-param key="pool.maxWaitMillis" desc="Redis客户端Jedis连接池获取连接时的最大等待毫秒数">2000</cache-param>
     </cache-params>

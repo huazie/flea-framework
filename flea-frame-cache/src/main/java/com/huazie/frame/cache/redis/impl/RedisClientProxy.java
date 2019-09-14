@@ -1,7 +1,7 @@
 package com.huazie.frame.cache.redis.impl;
 
-import com.huazie.frame.cache.common.CacheConstants;
 import com.huazie.frame.cache.redis.RedisClient;
+import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.proxy.FleaProxy;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class RedisClientProxy extends FleaProxy<RedisClient> {
 
-    private final static ConcurrentMap<String, RedisClient> redisClients = new ConcurrentHashMap<String, RedisClient>();
+    private static final ConcurrentMap<String, RedisClient> redisClients = new ConcurrentHashMap<String, RedisClient>();
 
     /**
      * <p> 获取RedisClient代理类 (默认)</p>
@@ -25,7 +25,7 @@ public class RedisClientProxy extends FleaProxy<RedisClient> {
      * @since 1.0.0
      */
     public static RedisClient getProxyInstance() {
-        return getProxyInstance(CacheConstants.FleaCacheConstants.DEFAUTL_POOL_NAME);
+        return getProxyInstance(CommonConstants.FleaPoolConstants.DEFAUTL_POOL_NAME);
     }
 
     /**
@@ -41,7 +41,7 @@ public class RedisClientProxy extends FleaProxy<RedisClient> {
                 if (!redisClients.containsKey(poolName)) {
                     // 新建一个Flea Redis客户端类， 用于被代理
                     RedisClient originRedisClient;
-                    if(CacheConstants.FleaCacheConstants.DEFAUTL_POOL_NAME.equals(poolName)) {
+                    if(CommonConstants.FleaPoolConstants.DEFAUTL_POOL_NAME.equals(poolName)) {
                         originRedisClient = new FleaRedisClient();
                     } else {
                         originRedisClient = new FleaRedisClient(poolName);
