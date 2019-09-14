@@ -65,8 +65,8 @@ public class FleaJPAQueryTest {
             FleaJPAQuery query = fleaJPAQueryPool.getFleaObject();
             LOGGER.debug("FleaJPAQuery: {}", query);
             query.init(em, FleaParaDetail.class, null);
-            // 去重查询某一列数据
-            query.distinct("para1");
+            // 去重查询某一列数据, 模糊查询 para_code
+            query.distinct("para1").like("paraCode","FLEA");
             List<String> list = query.getSingleResultList();
             LOGGER.debug("List : {}", list);
 

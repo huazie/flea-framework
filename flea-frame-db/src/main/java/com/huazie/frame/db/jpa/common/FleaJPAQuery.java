@@ -107,8 +107,8 @@ public final class FleaJPAQuery implements Closeable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void equal(String attrName, Object value) throws DaoException {
-        newEqualExpression(attrName, value, true);
+    public FleaJPAQuery equal(String attrName, Object value) throws DaoException {
+        return newEqualExpression(attrName, value, true);
     }
 
     /**
@@ -118,8 +118,8 @@ public final class FleaJPAQuery implements Closeable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void equal(Map<String, Object> paramMap) throws DaoException {
-        newEqualExpression(paramMap, true);
+    public FleaJPAQuery equal(Map<String, Object> paramMap) throws DaoException {
+        return newEqualExpression(paramMap, true);
     }
 
     /**
@@ -130,8 +130,8 @@ public final class FleaJPAQuery implements Closeable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void notEqual(String attrName, Object value) throws DaoException {
-        newEqualExpression(attrName, value, false);
+    public FleaJPAQuery notEqual(String attrName, Object value) throws DaoException {
+        return newEqualExpression(attrName, value, false);
     }
 
     /**
@@ -141,8 +141,8 @@ public final class FleaJPAQuery implements Closeable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void notEqual(Map<String, Object> paramMap) throws DaoException {
-        newEqualExpression(paramMap, false);
+    public FleaJPAQuery notEqual(Map<String, Object> paramMap) throws DaoException {
+        return newEqualExpression(paramMap, false);
     }
 
     /**
@@ -154,7 +154,7 @@ public final class FleaJPAQuery implements Closeable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    private void newEqualExpression(String attrName, Object value, boolean isEqual) throws DaoException {
+    private FleaJPAQuery newEqualExpression(String attrName, Object value, boolean isEqual) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -174,6 +174,7 @@ public final class FleaJPAQuery implements Closeable {
         } else {
             predicates.add(criteriaBuilder.notEqual(root.get(attrName), value));
         }
+        return this;
     }
 
     /**
@@ -184,7 +185,7 @@ public final class FleaJPAQuery implements Closeable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    private void newEqualExpression(Map<String, Object> paramMap, boolean isEqual) throws DaoException {
+    private FleaJPAQuery newEqualExpression(Map<String, Object> paramMap, boolean isEqual) throws DaoException {
         if (MapUtils.isEmpty(paramMap)) {
             // 条件参数Map不能为空
             throw new DaoException("ERROR-DB-DAO0000000003");
@@ -207,6 +208,7 @@ public final class FleaJPAQuery implements Closeable {
                 predicates.add(criteriaBuilder.notEqual(root.get(key), value));
             }
         }
+        return this;
     }
 
     /**
@@ -216,8 +218,8 @@ public final class FleaJPAQuery implements Closeable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void isNull(String attrName) throws DaoException {
-        newIsNullExpression(attrName, true);
+    public FleaJPAQuery isNull(String attrName) throws DaoException {
+        return newIsNullExpression(attrName, true);
     }
 
     /**
@@ -227,8 +229,8 @@ public final class FleaJPAQuery implements Closeable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void isNotNull(String attrName) throws DaoException {
-        newIsNullExpression(attrName, false);
+    public FleaJPAQuery isNotNull(String attrName) throws DaoException {
+        return newIsNullExpression(attrName, false);
     }
 
     /**
@@ -239,7 +241,7 @@ public final class FleaJPAQuery implements Closeable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    private void newIsNullExpression(String attrName, boolean isNull) throws DaoException {
+    private FleaJPAQuery newIsNullExpression(String attrName, boolean isNull) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -255,6 +257,7 @@ public final class FleaJPAQuery implements Closeable {
         } else {
             predicates.add(criteriaBuilder.isNotNull(root.get(attrName)));
         }
+        return this;
     }
 
     /**
@@ -265,8 +268,8 @@ public final class FleaJPAQuery implements Closeable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void in(String attrName, Collection value) throws DaoException {
-        newInExpression(attrName, value, true);
+    public FleaJPAQuery in(String attrName, Collection value) throws DaoException {
+        return newInExpression(attrName, value, true);
     }
 
     /**
@@ -277,8 +280,8 @@ public final class FleaJPAQuery implements Closeable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void notIn(String attrName, Collection value) throws DaoException {
-        newInExpression(attrName, value, false);
+    public FleaJPAQuery notIn(String attrName, Collection value) throws DaoException {
+        return newInExpression(attrName, value, false);
     }
 
     /**
@@ -289,7 +292,7 @@ public final class FleaJPAQuery implements Closeable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    private void newInExpression(String attrName, Collection value, boolean isIn) throws DaoException {
+    private FleaJPAQuery newInExpression(String attrName, Collection value, boolean isIn) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -314,6 +317,7 @@ public final class FleaJPAQuery implements Closeable {
         } else {
             predicates.add(criteriaBuilder.not(in));
         }
+        return this;
     }
 
     /**
@@ -324,7 +328,7 @@ public final class FleaJPAQuery implements Closeable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void like(String attrName, String value) throws DaoException {
+    public FleaJPAQuery like(String attrName, String value) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -339,6 +343,7 @@ public final class FleaJPAQuery implements Closeable {
             value = DBConstants.SQLConstants.SQL_PERCENT + value + DBConstants.SQLConstants.SQL_PERCENT;
         }
         predicates.add(criteriaBuilder.like(root.get(attrName), value));
+        return this;
     }
 
     /**
@@ -349,7 +354,7 @@ public final class FleaJPAQuery implements Closeable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void le(String attrName, Number value) throws DaoException {
+    public FleaJPAQuery le(String attrName, Number value) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -361,6 +366,7 @@ public final class FleaJPAQuery implements Closeable {
             LOGGER.debug("FMJPAQuery##le(attrName, value) -->> AttrName={}, Value={}", attrName, value);
         }
         predicates.add(criteriaBuilder.le(root.get(attrName), value));
+        return this;
     }
 
     /**
@@ -371,7 +377,7 @@ public final class FleaJPAQuery implements Closeable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void lt(String attrName, Number value) throws DaoException {
+    public FleaJPAQuery lt(String attrName, Number value) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -383,6 +389,7 @@ public final class FleaJPAQuery implements Closeable {
             LOGGER.debug("FMJPAQuery##lt(attrName, value) -->> AttrName={}, Value={}", attrName, value);
         }
         predicates.add(criteriaBuilder.lt(root.get(attrName), value));
+        return this;
     }
 
     /**
@@ -393,7 +400,7 @@ public final class FleaJPAQuery implements Closeable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void ge(String attrName, Number value) throws DaoException {
+    public FleaJPAQuery ge(String attrName, Number value) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -405,6 +412,7 @@ public final class FleaJPAQuery implements Closeable {
             LOGGER.debug("FMJPAQuery##ge(attrName, value) -->> AttrName={}, Value={}", attrName, value);
         }
         predicates.add(criteriaBuilder.ge(root.get(attrName), value));
+        return this;
     }
 
     /**
@@ -415,7 +423,7 @@ public final class FleaJPAQuery implements Closeable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void gt(String attrName, Number value) throws DaoException {
+    public FleaJPAQuery gt(String attrName, Number value) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -427,6 +435,7 @@ public final class FleaJPAQuery implements Closeable {
             LOGGER.debug("FMJPAQuery##gt(attrName, value) -->> AttrName={}, Value={}", attrName, value);
         }
         predicates.add(criteriaBuilder.gt(root.get(attrName), value));
+        return this;
     }
 
     /**
@@ -438,7 +447,7 @@ public final class FleaJPAQuery implements Closeable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void between(String attrName, Date startTime, Date endTime) throws DaoException {
+    public FleaJPAQuery between(String attrName, Date startTime, Date endTime) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -454,6 +463,7 @@ public final class FleaJPAQuery implements Closeable {
             LOGGER.debug("FMJPAQuery##between(attrName, startTime, endTime) -->> AttrName={}, StartTime={}, EndTime={}", attrName, startTime, endTime);
         }
         predicates.add(criteriaBuilder.between(root.get(attrName), startTime, endTime));
+        return this;
     }
 
     /**
@@ -464,7 +474,7 @@ public final class FleaJPAQuery implements Closeable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void greaterThan(String attrName, Date value) throws DaoException {
+    public FleaJPAQuery greaterThan(String attrName, Date value) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -476,6 +486,7 @@ public final class FleaJPAQuery implements Closeable {
             LOGGER.debug("FMJPAQuery##greaterThan() -->> AttrName={}, Date={}", attrName, value);
         }
         predicates.add(criteriaBuilder.greaterThan(root.get(attrName), value));
+        return this;
     }
 
     /**
@@ -486,7 +497,7 @@ public final class FleaJPAQuery implements Closeable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void greaterThanOrEqualTo(String attrName, Date value) throws DaoException {
+    public FleaJPAQuery greaterThanOrEqualTo(String attrName, Date value) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -498,6 +509,7 @@ public final class FleaJPAQuery implements Closeable {
             LOGGER.debug("FMJPAQuery##greaterThanOrEqualTo() -->> AttrName={}, Date={}", attrName, value);
         }
         predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get(attrName), value));
+        return this;
     }
 
     /**
@@ -508,7 +520,7 @@ public final class FleaJPAQuery implements Closeable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void lessThan(String attrName, Date value) throws DaoException {
+    public FleaJPAQuery lessThan(String attrName, Date value) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -520,6 +532,7 @@ public final class FleaJPAQuery implements Closeable {
             LOGGER.debug("FMJPAQuery##lessThan() -->> AttrName={}, Date={}", attrName, value);
         }
         predicates.add(criteriaBuilder.lessThan(root.get(attrName), value));
+        return this;
     }
 
     /**
@@ -530,7 +543,7 @@ public final class FleaJPAQuery implements Closeable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void lessThanOrEqualTo(String attrName, Date value) throws DaoException {
+    public FleaJPAQuery lessThanOrEqualTo(String attrName, Date value) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -542,6 +555,7 @@ public final class FleaJPAQuery implements Closeable {
             LOGGER.debug("FMJPAQuery##lessThanOrEqualTo() -->> AttrName={}, Date={}", attrName, value);
         }
         predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get(attrName), value));
+        return this;
     }
 
     /**
@@ -549,8 +563,9 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @since 1.0.0
      */
-    public void count() {
+    public FleaJPAQuery count() {
         criteriaQuery.select(criteriaBuilder.count(root));
+        return this;
     }
 
     /**
@@ -558,8 +573,9 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @since 1.0.0
      */
-    public void countDistinct() {
+    public FleaJPAQuery countDistinct() {
         criteriaQuery.select(criteriaBuilder.countDistinct(root));
+        return this;
     }
 
     /**
@@ -569,7 +585,7 @@ public final class FleaJPAQuery implements Closeable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void max(String attrName) throws DaoException {
+    public FleaJPAQuery max(String attrName) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -577,6 +593,7 @@ public final class FleaJPAQuery implements Closeable {
             LOGGER.debug("FMJPAQuery##max(attrName) -->> AttrName={}", attrName);
         }
         criteriaQuery.select(criteriaBuilder.max(root.get(attrName)));
+        return this;
     }
 
     /**
@@ -586,7 +603,7 @@ public final class FleaJPAQuery implements Closeable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void min(String attrName) throws DaoException {
+    public FleaJPAQuery min(String attrName) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -594,6 +611,7 @@ public final class FleaJPAQuery implements Closeable {
             LOGGER.debug("FMJPAQuery##min(attrName) -->> AttrName={}", attrName);
         }
         criteriaQuery.select(criteriaBuilder.min(root.get(attrName)));
+        return this;
     }
 
     /**
@@ -603,7 +621,7 @@ public final class FleaJPAQuery implements Closeable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void avg(String attrName) throws DaoException {
+    public FleaJPAQuery avg(String attrName) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -611,6 +629,7 @@ public final class FleaJPAQuery implements Closeable {
             LOGGER.debug("FMJPAQuery##avg(attrName) -->> AttrName={}", attrName);
         }
         criteriaQuery.select(criteriaBuilder.avg(root.get(attrName)));
+        return this;
     }
 
     /**
@@ -620,7 +639,7 @@ public final class FleaJPAQuery implements Closeable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void sum(String attrName) throws DaoException {
+    public FleaJPAQuery sum(String attrName) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -628,6 +647,7 @@ public final class FleaJPAQuery implements Closeable {
             LOGGER.debug("FMJPAQuery##sum(attrName) -->> AttrName={}", attrName);
         }
         criteriaQuery.select(criteriaBuilder.sum(root.get(attrName)));
+        return this;
     }
 
     /**
@@ -637,7 +657,7 @@ public final class FleaJPAQuery implements Closeable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void sumAsLong(String attrName) throws DaoException {
+    public FleaJPAQuery sumAsLong(String attrName) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -645,6 +665,7 @@ public final class FleaJPAQuery implements Closeable {
             LOGGER.debug("FMJPAQuery##sumAsLong(attrName) -->> AttrName={}", attrName);
         }
         criteriaQuery.select(criteriaBuilder.sumAsLong(root.get(attrName)));
+        return this;
     }
 
     /**
@@ -654,7 +675,7 @@ public final class FleaJPAQuery implements Closeable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void sumAsDouble(String attrName) throws DaoException {
+    public FleaJPAQuery sumAsDouble(String attrName) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -662,6 +683,7 @@ public final class FleaJPAQuery implements Closeable {
             LOGGER.debug("FMJPAQuery##sumAsDouble(attrName) -->> AttrName={}", attrName);
         }
         criteriaQuery.select(criteriaBuilder.sumAsDouble(root.get(attrName)));
+        return this;
     }
 
     /**
@@ -671,7 +693,7 @@ public final class FleaJPAQuery implements Closeable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void distinct(String attrName) throws DaoException {
+    public FleaJPAQuery distinct(String attrName) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -679,6 +701,7 @@ public final class FleaJPAQuery implements Closeable {
             LOGGER.debug("FMJPAQuery##distinct(attrName) -->> AttrName={}", attrName);
         }
         criteriaQuery.select(root.get(attrName)).distinct(true);
+        return this;
     }
 
     /**
@@ -689,7 +712,7 @@ public final class FleaJPAQuery implements Closeable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void addOrderby(String attrName, String orderBy) throws DaoException {
+    public FleaJPAQuery addOrderby(String attrName, String orderBy) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -707,6 +730,7 @@ public final class FleaJPAQuery implements Closeable {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FMJPAQuery##addOrderby(attrName, orderBy) -->> AttrName={}, OrderBy={}", attrName, orderBy);
         }
+        return this;
     }
 
     /**
@@ -716,7 +740,7 @@ public final class FleaJPAQuery implements Closeable {
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
-    public void addGroupBy(String attrName) throws DaoException {
+    public FleaJPAQuery addGroupBy(String attrName) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -729,7 +753,7 @@ public final class FleaJPAQuery implements Closeable {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FMJPAQuery##addGroupBy(attrName) -->> AttrName={}, GroupBy={}", attrName);
         }
-
+        return this;
     }
 
     /**
