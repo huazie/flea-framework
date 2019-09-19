@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50538
 File Encoding         : 65001
 
-Date: 2019-09-02 15:55:19
+Date: 2019-09-19 18:15:07
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -35,7 +35,7 @@ CREATE TABLE `flea_account` (
   KEY `index_name_psw` (`account_code`,`account_pwd`) USING BTREE,
   KEY `fk_account_user` (`user_id`) USING BTREE,
   CONSTRAINT `flea_account_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `flea_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=1000000026 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of flea_account
@@ -61,6 +61,33 @@ CREATE TABLE `flea_account_attr` (
 
 -- ----------------------------
 -- Records of flea_account_attr
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `flea_login_log`
+-- ----------------------------
+DROP TABLE IF EXISTS `flea_login_log`;
+CREATE TABLE `flea_login_log` (
+  `login_log_id` int(12) NOT NULL AUTO_INCREMENT COMMENT '登录日志编号',
+  `account_id` int(12) NOT NULL COMMENT '账户编号',
+  `login_ip4` varchar(15) CHARACTER SET utf8 NOT NULL COMMENT 'ip4地址',
+  `login_ip6` varchar(40) CHARACTER SET utf8 DEFAULT NULL COMMENT 'ip6地址',
+  `login_area` varchar(15) CHARACTER SET utf8 DEFAULT NULL COMMENT '登录地区',
+  `login_state` tinyint(2) NOT NULL COMMENT '登录状态（1：登录中，2：已退出）',
+  `login_time` datetime NOT NULL COMMENT '登录时间',
+  `logout_time` datetime DEFAULT NULL COMMENT '退出时间',
+  `create_date` datetime NOT NULL COMMENT '创建日期',
+  `done_date` datetime DEFAULT NULL COMMENT '修改日期',
+  `remarks` varchar(1024) CHARACTER SET utf8 DEFAULT NULL COMMENT '描述信息',
+  `ext1` varchar(1024) CHARACTER SET utf8 DEFAULT NULL COMMENT '扩展字段1',
+  `ext2` varchar(1024) CHARACTER SET utf8 DEFAULT NULL COMMENT '扩展字段2',
+  PRIMARY KEY (`login_log_id`),
+  KEY `fk_loginlog_account` (`account_id`),
+  CONSTRAINT `fk_loginlog_account` FOREIGN KEY (`account_id`) REFERENCES `flea_account` (`account_id`) ON DELETE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=1000000362 DEFAULT CHARSET=gbk;
+
+-- ----------------------------
+-- Records of flea_login_log
 -- ----------------------------
 
 -- ----------------------------
