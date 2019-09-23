@@ -9,7 +9,6 @@ import com.huazie.frame.core.base.cfgdata.dao.interfaces.IFleaJerseyResourceDAO;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResource;
 import com.huazie.frame.core.common.EntityStateEnum;
 import com.huazie.frame.core.common.FleaEntityConstants;
-import com.huazie.frame.db.jpa.common.FleaJPAQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -33,16 +32,10 @@ public class FleaJerseyResourceDAOImpl extends FleaConfigDAOImpl<FleaJerseyResou
     @SuppressWarnings(value = "unchecked")
     public List<FleaJerseyResource> getResource(String resourceCode) throws Exception {
 
-        FleaJPAQuery query = getQuery(null);
-
-        if (StringUtils.isNotBlank(resourceCode)) {
-            query.equal(FleaEntityConstants.S_RESOURCE_CODE, resourceCode);
-        }
-
-        // 查询在用状态的资源定义数据
-        query.equal(FleaEntityConstants.S_STATE, EntityStateEnum.IN_USE.getValue());
-
-        List<FleaJerseyResource> resourceList = query.getResultList();
+        List<FleaJerseyResource> resourceList = getQuery(null)
+                .equal(FleaEntityConstants.S_RESOURCE_CODE, resourceCode)
+                .equal(FleaEntityConstants.S_STATE, EntityStateEnum.IN_USE.getValue()) // 查询在用状态的资源定义数据
+                .getResultList();
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FleaJerseyResourceDAOImpl##getResource(String) Resource List={}", resourceList);

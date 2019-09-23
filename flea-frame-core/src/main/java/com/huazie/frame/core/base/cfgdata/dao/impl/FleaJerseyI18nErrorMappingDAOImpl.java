@@ -1,12 +1,10 @@
 package com.huazie.frame.core.base.cfgdata.dao.impl;
 
 import com.huazie.frame.common.util.CollectionUtils;
-import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.core.base.cfgdata.dao.interfaces.IFleaJerseyI18nErrorMappingDAO;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyI18nErrorMapping;
 import com.huazie.frame.core.common.EntityStateEnum;
 import com.huazie.frame.core.common.FleaEntityConstants;
-import com.huazie.frame.db.jpa.common.FleaJPAQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -28,11 +26,12 @@ public class FleaJerseyI18nErrorMappingDAOImpl extends FleaConfigDAOImpl<FleaJer
     @Override
     @SuppressWarnings(value = "unchecked")
     public List<FleaJerseyI18nErrorMapping> getMappings(String resourceCode, String serviceCode) throws Exception {
-        FleaJPAQuery query = initQuery(resourceCode, serviceCode);
 
-        query.equal(FleaEntityConstants.S_STATE, EntityStateEnum.IN_USE.getValue());
-
-        List<FleaJerseyI18nErrorMapping> mappingList = query.getResultList();
+        List<FleaJerseyI18nErrorMapping> mappingList = getQuery(null)
+                .equal(FleaEntityConstants.S_RESOURCE_CODE, resourceCode)
+                .equal(FleaEntityConstants.S_SERVICE_CODE, serviceCode)
+                .equal(FleaEntityConstants.S_STATE, EntityStateEnum.IN_USE.getValue())
+                .getResultList();
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FleaJerseyI18NErrorMappingDAOImpl##getMappings(String, String) List={}", mappingList);
@@ -46,15 +45,12 @@ public class FleaJerseyI18nErrorMappingDAOImpl extends FleaConfigDAOImpl<FleaJer
     @SuppressWarnings(value = "unchecked")
     public FleaJerseyI18nErrorMapping getMapping(String resourceCode, String serviceCode, String i18nCode) throws Exception {
 
-        FleaJPAQuery query = initQuery(resourceCode, serviceCode);
-
-        if (StringUtils.isNotBlank(i18nCode)) {
-            query.equal(FleaEntityConstants.S_I18N_CODE, i18nCode);
-        }
-
-        query.equal(FleaEntityConstants.S_STATE, EntityStateEnum.IN_USE.getValue());
-
-        List<FleaJerseyI18nErrorMapping> mappingList = query.getResultList();
+        List<FleaJerseyI18nErrorMapping> mappingList = getQuery(null)
+                .equal(FleaEntityConstants.S_RESOURCE_CODE, resourceCode)
+                .equal(FleaEntityConstants.S_SERVICE_CODE, serviceCode)
+                .equal(FleaEntityConstants.S_I18N_CODE, i18nCode)
+                .equal(FleaEntityConstants.S_STATE, EntityStateEnum.IN_USE.getValue())
+                .getResultList();
 
         FleaJerseyI18nErrorMapping mapping = null;
 
@@ -69,26 +65,4 @@ public class FleaJerseyI18nErrorMappingDAOImpl extends FleaConfigDAOImpl<FleaJer
         return mapping;
     }
 
-    /**
-     * <p> 初始化 FleaJPAQuery </p>
-     *
-     * @param resourceCode 资源编码
-     * @param serviceCode  服务编码
-     * @return FleaJPAQuery查询对象
-     * @throws Exception
-     * @since 1.0.0
-     */
-    private FleaJPAQuery initQuery(String resourceCode, String serviceCode) throws Exception {
-        FleaJPAQuery query = getQuery(null);
-
-        if (StringUtils.isNotBlank(resourceCode)) {
-            query.equal(FleaEntityConstants.S_RESOURCE_CODE, resourceCode);
-        }
-
-        if (StringUtils.isNotBlank(serviceCode)) {
-            query.equal(FleaEntityConstants.S_SERVICE_CODE, serviceCode);
-        }
-
-        return query;
-    }
 }

@@ -41,7 +41,7 @@ public final class FleaJPAQuery implements Closeable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FleaJPAQuery.class);
 
-    protected FleaJPAQueryPool fleaObjectPool; // Flea JPA查询对象池
+    private FleaJPAQueryPool fleaObjectPool; // Flea JPA查询对象池
 
     private EntityManager entityManager; // JPA中用于增删改查的持久化接口
 
@@ -159,8 +159,8 @@ public final class FleaJPAQuery implements Closeable {
         checkAttrName(attrName);
 
         if (ObjectUtils.isEmpty(value)) {
-            // 属性列【{0}】对应的值为空
-            throw new DaoException("ERROR-DB-DAO0000000002", attrName);
+            // 不做处理，直接返回即可
+            return this;
         }
         if (LOGGER.isDebugEnabled()) {
             if (isEqual) {
@@ -333,8 +333,8 @@ public final class FleaJPAQuery implements Closeable {
         checkAttrName(attrName);
 
         if (ObjectUtils.isEmpty(value)) {
-            // 属性列【{0}】对应的值为空
-            throw new DaoException("ERROR-DB-DAO0000000002", attrName);
+            // 不做处理，直接返回即可
+            return this;
         }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FMJPAQuery##like(attrName, value) -->> AttrName={}, Value={}", attrName, value);
@@ -359,8 +359,8 @@ public final class FleaJPAQuery implements Closeable {
         checkAttrName(attrName);
 
         if (ObjectUtils.isEmpty(value)) {
-            // 属性列【{0}】对应的值为空
-            throw new DaoException("ERROR-DB-DAO0000000002", attrName);
+            // 不做处理，直接返回即可
+            return this;
         }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FMJPAQuery##le(attrName, value) -->> AttrName={}, Value={}", attrName, value);
@@ -382,8 +382,8 @@ public final class FleaJPAQuery implements Closeable {
         checkAttrName(attrName);
 
         if (ObjectUtils.isEmpty(value)) {
-            // 属性列【{0}】对应的值为空
-            throw new DaoException("ERROR-DB-DAO0000000002", attrName);
+            // 不做处理，直接返回即可
+            return this;
         }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FMJPAQuery##lt(attrName, value) -->> AttrName={}, Value={}", attrName, value);
@@ -405,8 +405,8 @@ public final class FleaJPAQuery implements Closeable {
         checkAttrName(attrName);
 
         if (ObjectUtils.isEmpty(value)) {
-            // 属性列【{0}】对应的值为空
-            throw new DaoException("ERROR-DB-DAO0000000002", attrName);
+            // 不做处理，直接返回即可
+            return this;
         }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FMJPAQuery##ge(attrName, value) -->> AttrName={}, Value={}", attrName, value);
@@ -428,8 +428,8 @@ public final class FleaJPAQuery implements Closeable {
         checkAttrName(attrName);
 
         if (ObjectUtils.isEmpty(value)) {
-            // 属性列【{0}】对应的值为空
-            throw new DaoException("ERROR-DB-DAO0000000002", attrName);
+            // 不做处理，直接返回即可
+            return this;
         }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FMJPAQuery##gt(attrName, value) -->> AttrName={}, Value={}", attrName, value);
@@ -479,8 +479,8 @@ public final class FleaJPAQuery implements Closeable {
         checkAttrName(attrName);
 
         if (ObjectUtils.isEmpty(value)) {
-            // 属性列【{0}】对应的值为空
-            throw new DaoException("ERROR-DB-DAO0000000002", attrName);
+            // 不做处理，直接返回即可
+            return this;
         }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FMJPAQuery##greaterThan() -->> AttrName={}, Date={}", attrName, value);
@@ -502,8 +502,8 @@ public final class FleaJPAQuery implements Closeable {
         checkAttrName(attrName);
 
         if (ObjectUtils.isEmpty(value)) {
-            // 属性列【{0}】对应的值为空
-            throw new DaoException("ERROR-DB-DAO0000000002", attrName);
+            // 不做处理，直接返回即可
+            return this;
         }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FMJPAQuery##greaterThanOrEqualTo() -->> AttrName={}, Date={}", attrName, value);
@@ -525,8 +525,8 @@ public final class FleaJPAQuery implements Closeable {
         checkAttrName(attrName);
 
         if (ObjectUtils.isEmpty(value)) {
-            // 属性列【{0}】对应的值为空
-            throw new DaoException("ERROR-DB-DAO0000000002", attrName);
+            // 不做处理，直接返回即可
+            return this;
         }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FMJPAQuery##lessThan() -->> AttrName={}, Date={}", attrName, value);
@@ -548,8 +548,8 @@ public final class FleaJPAQuery implements Closeable {
         checkAttrName(attrName);
 
         if (ObjectUtils.isEmpty(value)) {
-            // 属性列【{0}】对应的值为空
-            throw new DaoException("ERROR-DB-DAO0000000002", attrName);
+            // 不做处理，直接返回即可
+            return this;
         }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FMJPAQuery##lessThanOrEqualTo() -->> AttrName={}, Date={}", attrName, value);
