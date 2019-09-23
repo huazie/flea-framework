@@ -15,7 +15,7 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 /**
- * <p> Flea账户属性表对应的实体类 </p>
+ * <p> Flea帐户属性表对应的实体类 </p>
  *
  * @author huazie
  * @version 1.0.0
@@ -34,7 +34,7 @@ public class FleaAccountAttr implements FleaEntity {
     private Long attrId; // 属性编号
 
     @Column(name = "account_id", nullable = false)
-    private Long accountId; // 账户编号
+    private Long accountId; // 帐户编号
 
     @Column(name = "attr_code", nullable = false)
     private String attrCode; // 属性码

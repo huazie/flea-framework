@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**
- * <p> Flea账户信息SV层实现类 </p>
+ * <p> Flea帐户信息SV层实现类 </p>
  *
  * @author huazie
  * @version 1.0.0
