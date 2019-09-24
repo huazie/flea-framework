@@ -74,7 +74,7 @@ public class AuthTest {
             LOGGER.debug("FleaJPAQuery: {}", query);
             query.init(em, FleaLoginLog.class, null);
             // 去重查询某一列数据, 模糊查询 para_code
-            query.initQueryEntity(fleaLoginLog).distinct("accountId").like("loginIp4","127.0.0");
+            query.initQueryEntity(fleaLoginLog).distinct("accountId").like("loginIp4");
             List<String> list = query.getSingleResultList();
             LOGGER.debug("List : {}", list);
 
