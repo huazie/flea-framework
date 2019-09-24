@@ -1,12 +1,19 @@
 package com.huazie.frame.db.jpa.common;
 
+import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.MapUtils;
+import com.huazie.frame.common.util.NumberUtils;
 import com.huazie.frame.common.util.ObjectUtils;
+import com.huazie.frame.common.util.ReflectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.DBConstants;
 import com.huazie.frame.db.common.exception.DaoException;
+import com.huazie.frame.db.common.table.pojo.Column;
+import com.huazie.frame.db.common.table.split.TableSplitHelper;
+import com.huazie.frame.db.common.util.EntityUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.eclipse.persistence.internal.jpa.metamodel.EntityTypeImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -61,6 +68,8 @@ public final class FleaJPAQuery implements Closeable {
 
     private List<Expression> groups; // 分组集合
 
+    private Object entity; // 查询的数据库实体类实例
+
     public FleaJPAQuery() {
     }
 
@@ -100,10 +109,66 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
+     * <p> 初始化查询实体 </p>
+     *
+     * @param entity 实体类实例
+     * @return
+     * @throws Exception
+     */
+    public FleaJPAQuery initQueryEntity(Object entity) throws Exception {
+
+        if (ObjectUtils.isEmpty(entity) || (ObjectUtils.isNotEmpty(sourceClazz) && !sourceClazz.isInstance(entity))) {
+            return this;
+        }
+
+        this.entity = entity;
+
+        // 从实体类上获取表名
+        String tableName = EntityUtils.getTableName(entity);
+        // 获取实体类T的对象的属性列相关信息
+        Column[] entityCols = EntityUtils.toColumnsArray(entity);
+
+        String realTableName = "";
+        if (ArrayUtils.isNotEmpty(entityCols)) {
+            // 获取实际表名，如是分表，则获取分表名
+            realTableName = TableSplitHelper.getRealTableName(tableName, entityCols);
+        }
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("FleaJPAQuery##initQueryEntity(Object) Table Name = {}", tableName);
+            LOGGER.debug("FleaJPAQuery##initQueryEntity(Object) Real Table Name = {}", realTableName);
+        }
+        // 存在分表，需要查询指定分表
+        if (StringUtils.isNotBlank(tableName) && !tableName.equals(realTableName)) {
+            Set<Root<?>> roots = criteriaQuery.getRoots();
+            if (CollectionUtils.isNotEmpty(roots)) {
+                // 重新设置 查询的分表表名
+                ((EntityTypeImpl<?>) roots.toArray(new Root<?>[0])[0].getModel()).getDescriptor().setTableName(realTableName);
+            }
+        }
+
+        return this;
+    }
+
+    /**
+     * <p> 等于条件 </p>
+     * <p> 需要先初始化实体类,即调用initQueryEntity(Object entity) </p>
+     *
+     * @param attrName 属性名
+     * @return Flea JPA查询对象
+     * @throws DaoException 数据操作层异常类
+     * @since 1.0.0
+     */
+    public FleaJPAQuery equal(String attrName) throws DaoException {
+        return equal(attrName, getAttrValue(attrName));
+    }
+
+    /**
      * <p> 等于条件 </p>
      *
      * @param attrName 属性名
      * @param value    属性值
+     * @return Flea JPA查询对象
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
@@ -115,6 +180,7 @@ public final class FleaJPAQuery implements Closeable {
      * <p> 等于条件 </p>
      *
      * @param paramMap 参数集合
+     * @return Flea JPA查询对象
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
@@ -124,9 +190,23 @@ public final class FleaJPAQuery implements Closeable {
 
     /**
      * <p> 不等于条件 </p>
+     * <p> 需要先初始化实体类,即调用initQueryEntity(Object entity) </p>
+     *
+     * @param attrName 属性名
+     * @return Flea JPA查询对象
+     * @throws DaoException 数据操作层异常类
+     * @since 1.0.0
+     */
+    public FleaJPAQuery notEqual(String attrName) throws DaoException {
+        return notEqual(attrName, getAttrValue(attrName));
+    }
+
+    /**
+     * <p> 不等于条件 </p>
      *
      * @param attrName 属性名
      * @param value    属性值
+     * @return Flea JPA查询对象
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
@@ -138,6 +218,7 @@ public final class FleaJPAQuery implements Closeable {
      * <p> 等于条件 </p>
      *
      * @param paramMap 条件集合
+     * @return Flea JPA查询对象
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
@@ -151,6 +232,7 @@ public final class FleaJPAQuery implements Closeable {
      * @param attrName 属性名
      * @param value    属性值
      * @param isEqual  true: 构建equal表达式; false: 构建notEqual表达式
+     * @return Flea JPA查询对象
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
@@ -182,6 +264,7 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param paramMap 条件集合
      * @param isEqual  true: 构建equal表达式; false: 构建notEqual表达式
+     * @return Flea JPA查询对象
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
@@ -215,6 +298,7 @@ public final class FleaJPAQuery implements Closeable {
      * <p>某属性值为空的条件</p>
      *
      * @param attrName 属性名
+     * @return Flea JPA查询对象
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
@@ -226,6 +310,7 @@ public final class FleaJPAQuery implements Closeable {
      * <p> 某属性值为非空的条件 </p>
      *
      * @param attrName 属性名
+     * @return Flea JPA查询对象
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
@@ -238,6 +323,7 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名
      * @param isNull   true: 构建isNull表达式; false: 构建isNotNull表达式
+     * @return Flea JPA查询对象
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
@@ -265,6 +351,7 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名称
      * @param value    值集合
+     * @return Flea JPA查询对象
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
@@ -277,6 +364,7 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名称
      * @param value    值集合
+     * @return Flea JPA查询对象
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
@@ -289,6 +377,7 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名称
      * @param value    值集合
+     * @return Flea JPA查询对象
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
@@ -322,9 +411,23 @@ public final class FleaJPAQuery implements Closeable {
 
     /**
      * <p> 模糊匹配条件（value一定要是字符串类型的） </p>
+     * <p> 需要先初始化实体类,即调用initQueryEntity(Object entity) </p>
+     *
+     * @param attrName 属性名称
+     * @return Flea JPA查询对象
+     * @throws DaoException 数据操作层异常类
+     * @since 1.0.0
+     */
+    public FleaJPAQuery like(String attrName) throws DaoException {
+        return like(attrName, StringUtils.valueOf(getAttrValue(attrName)));
+    }
+
+    /**
+     * <p> 模糊匹配条件（value一定要是字符串类型的） </p>
      *
      * @param attrName 属性名称
      * @param value    属性值
+     * @return Flea JPA查询对象
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
@@ -348,9 +451,23 @@ public final class FleaJPAQuery implements Closeable {
 
     /**
      * <p> 小于等于条件 </p>
+     * <p> 需要先初始化实体类,即调用initQueryEntity(Object entity) </p>
+     *
+     * @param attrName 属性名称
+     * @return Flea JPA查询对象
+     * @throws DaoException 数据操作层异常类
+     * @since 1.0.0
+     */
+    public FleaJPAQuery le(String attrName) throws DaoException {
+        return le(attrName, getNumberAttrValue(attrName));
+    }
+
+    /**
+     * <p> 小于等于条件 </p>
      *
      * @param attrName 属性名称
      * @param value    属性值
+     * @return Flea JPA查询对象
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
@@ -370,10 +487,24 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
+     * <p> 小于条件 </p>
+     * <p> 需要先初始化实体类,即调用initQueryEntity(Object entity) </p>
+     *
+     * @param attrName 属性名称
+     * @return Flea JPA查询对象
+     * @throws DaoException 数据操作层异常类
+     * @since 1.0.0
+     */
+    public FleaJPAQuery lt(String attrName) throws DaoException {
+        return lt(attrName, getNumberAttrValue(attrName));
+    }
+
+    /**
      * <p>小于条件</p>
      *
      * @param attrName 属性名称
      * @param value    属性值
+     * @return Flea JPA查询对象
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
@@ -394,9 +525,23 @@ public final class FleaJPAQuery implements Closeable {
 
     /**
      * <p> 大于等于条件 </p>
+     * <p> 需要先初始化实体类,即调用initQueryEntity(Object entity) </p>
+     *
+     * @param attrName 属性名称
+     * @return Flea JPA查询对象
+     * @throws DaoException 数据操作层异常类
+     * @since 1.0.0
+     */
+    public FleaJPAQuery ge(String attrName) throws DaoException {
+        return ge(attrName, getNumberAttrValue(attrName));
+    }
+
+    /**
+     * <p> 大于等于条件 </p>
      *
      * @param attrName 属性名称
      * @param value    属性值
+     * @return Flea JPA查询对象
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
@@ -417,9 +562,23 @@ public final class FleaJPAQuery implements Closeable {
 
     /**
      * <p> 大于条件 </p>
+     * <p> 需要先初始化实体类,即调用initQueryEntity(Object entity) </p>
+     *
+     * @param attrName 属性名称
+     * @return Flea JPA查询对象
+     * @throws DaoException 数据操作层异常类
+     * @since 1.0.0
+     */
+    public FleaJPAQuery gt(String attrName) throws DaoException {
+        return gt(attrName, getNumberAttrValue(attrName));
+    }
+
+    /**
+     * <p> 大于条件 </p>
      *
      * @param attrName 属性名称
      * @param value    属性值
+     * @return Flea JPA查询对象
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
@@ -444,6 +603,7 @@ public final class FleaJPAQuery implements Closeable {
      * @param attrName  属性名
      * @param startTime 开始时间
      * @param endTime   结束时间
+     * @return Flea JPA查询对象
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
@@ -468,9 +628,23 @@ public final class FleaJPAQuery implements Closeable {
 
     /**
      * <p> 大于某个日期值条件 </p>
+     * <p> 需要先初始化实体类,即调用initQueryEntity(Object entity) </p>
+     *
+     * @param attrName 属性名
+     * @return Flea JPA查询对象
+     * @throws DaoException 数据操作层异常类
+     * @since 1.0.0
+     */
+    public FleaJPAQuery greaterThan(String attrName) throws DaoException {
+        return greaterThan(attrName, getDateAttrValue(attrName));
+    }
+
+    /**
+     * <p> 大于某个日期值条件 </p>
      *
      * @param attrName 属性名
      * @param value    指定日期值
+     * @return Flea JPA查询对象
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
@@ -491,9 +665,23 @@ public final class FleaJPAQuery implements Closeable {
 
     /**
      * <p> 大于等于某个日期值 </p>
+     * <p> 需要先初始化实体类,即调用initQueryEntity(Object entity) </p>
+     *
+     * @param attrName 属性名
+     * @return Flea JPA查询对象
+     * @throws DaoException 数据操作层异常类
+     * @since 1.0.0
+     */
+    public FleaJPAQuery greaterThanOrEqualTo(String attrName) throws DaoException {
+        return greaterThanOrEqualTo(attrName, getDateAttrValue(attrName));
+    }
+
+    /**
+     * <p> 大于等于某个日期值 </p>
      *
      * @param attrName 属性名
      * @param value    指定日期值
+     * @return Flea JPA查询对象
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
@@ -514,9 +702,23 @@ public final class FleaJPAQuery implements Closeable {
 
     /**
      * <p> 小于某个日期值条件 </p>
+     * <p> 需要先初始化实体类,即调用initQueryEntity(Object entity) </p>
+     *
+     * @param attrName 属性名
+     * @return Flea JPA查询对象
+     * @throws DaoException 数据操作层异常类
+     * @since 1.0.0
+     */
+    public FleaJPAQuery lessThan(String attrName) throws DaoException {
+        return lessThan(attrName, getDateAttrValue(attrName));
+    }
+
+    /**
+     * <p> 小于某个日期值条件 </p>
      *
      * @param attrName 属性名
      * @param value    指定日期值
+     * @return Flea JPA查询对象
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
@@ -537,9 +739,23 @@ public final class FleaJPAQuery implements Closeable {
 
     /**
      * <p> 小于等于某个日期值条件 </p>
+     * <p> 需要先初始化实体类,即调用initQueryEntity(Object entity) </p>
+     *
+     * @param attrName 属性名
+     * @return Flea JPA查询对象
+     * @throws DaoException 数据操作层异常类
+     * @since 1.0.0
+     */
+    public FleaJPAQuery lessThanOrEqualTo(String attrName) throws DaoException {
+        return lessThanOrEqualTo(attrName, getDateAttrValue(attrName));
+    }
+
+    /**
+     * <p> 小于等于某个日期值条件 </p>
      *
      * @param attrName 属性名
      * @param value    指定日期值
+     * @return Flea JPA查询对象
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
@@ -561,6 +777,7 @@ public final class FleaJPAQuery implements Closeable {
     /**
      * <p> 统计数目，在getSingleResult调用之前使用 </p>
      *
+     * @return Flea JPA查询对象
      * @since 1.0.0
      */
     public FleaJPAQuery count() {
@@ -571,9 +788,10 @@ public final class FleaJPAQuery implements Closeable {
     /**
      * <p> 统计数目(带distinct参数)，在getSingleResult调用之前使用 </p>
      *
+     * @return Flea JPA查询对象
      * @since 1.0.0
      */
-    public FleaJPAQuery countDistinct(String attrName) throws DaoException{
+    public FleaJPAQuery countDistinct(String attrName) throws DaoException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -589,6 +807,7 @@ public final class FleaJPAQuery implements Closeable {
      * <p> 设置查询某属性的最大值，在getSingleResult调用之前使用 </p>
      *
      * @param attrName 属性名
+     * @return Flea JPA查询对象
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
@@ -607,6 +826,7 @@ public final class FleaJPAQuery implements Closeable {
      * <p> 设置查询某属性的最小值，在getSingleResult调用之前使用 </p>
      *
      * @param attrName 属性名
+     * @return Flea JPA查询对象
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
@@ -625,6 +845,7 @@ public final class FleaJPAQuery implements Closeable {
      * <p> 设置查询某属性的平均值，在getSingleResult调用之前使用 </p>
      *
      * @param attrName 属性名
+     * @return Flea JPA查询对象
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
@@ -643,6 +864,7 @@ public final class FleaJPAQuery implements Closeable {
      * <p> 设置查询某属性的值的总和，在getSingleResult调用之前使用 </p>
      *
      * @param attrName 属性名
+     * @return Flea JPA查询对象
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
@@ -661,6 +883,7 @@ public final class FleaJPAQuery implements Closeable {
      * <p> 设置查询某属性的值的总和，在getSingleResult调用之前使用 </p>
      *
      * @param attrName 属性名
+     * @return Flea JPA查询对象
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
@@ -679,6 +902,7 @@ public final class FleaJPAQuery implements Closeable {
      * <p> 设置查询某属性的值的总和，在getSingleResult调用之前使用 </p>
      *
      * @param attrName 属性名
+     * @return Flea JPA查询对象
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
@@ -697,6 +921,7 @@ public final class FleaJPAQuery implements Closeable {
      * <p> 去重某一列 </p>
      *
      * @param attrName 属性名
+     * @return Flea JPA查询对象
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
@@ -716,6 +941,7 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名
      * @param orderBy  排序顺序
+     * @return Flea JPA查询对象
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
@@ -744,6 +970,7 @@ public final class FleaJPAQuery implements Closeable {
      * <p> 添加group by子句 </p>
      *
      * @param attrName 属性名
+     * @return Flea JPA查询对象
      * @throws DaoException 数据操作层异常类
      * @since 1.0.0
      */
@@ -863,6 +1090,7 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @return 查询对象
      * @throws DaoException 数据操作层异常类
+     * @since 1.0.0
      */
     private TypedQuery createQuery(boolean isSingle) throws DaoException {
         if (ObjectUtils.isEmpty(sourceClazz)) {
@@ -892,12 +1120,60 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性列名
      * @throws DaoException 数据操作层异常类
+     * @since 1.0.0
      */
     private void checkAttrName(String attrName) throws DaoException {
         if (StringUtils.isBlank(attrName)) {
             // 属性列名不能为空
             throw new DaoException("ERROR-DB-DAO0000000001");
         }
+    }
+
+    /**
+     * <p> 根据属性名，从查询实体类实例中获取对应值 </p>
+     *
+     * @param attrName 属性列名
+     * @return 属性值
+     * @throws DaoException
+     * @since 1.0.0
+     */
+    private Object getAttrValue(String attrName) throws DaoException {
+        checkAttrName(attrName);
+
+        if (ObjectUtils.isEmpty(entity) || (ObjectUtils.isNotEmpty(sourceClazz) && !sourceClazz.isInstance(entity))) {
+            return null;
+        }
+
+        return ReflectUtils.getObjectAttrValue(entity, attrName);
+    }
+
+    /**
+     * <p> 根据属性名，从查询实体类中获取对应的数字值 </p>
+     *
+     * @param attrName 属性列名
+     * @return 属性值
+     * @throws DaoException
+     * @since 1.0.0
+     */
+    private Number getNumberAttrValue(String attrName) throws DaoException {
+        return NumberUtils.toNumber(getAttrValue(attrName));
+    }
+
+    /**
+     * <p> 根据属性名，从查询实体类中获取对应的日期值 </p>
+     *
+     * @param attrName 属性列名
+     * @return 属性值
+     * @throws DaoException
+     * @since 1.0.0
+     */
+    private Date getDateAttrValue(String attrName) throws DaoException {
+        Object attrValue = getAttrValue(attrName);
+        Date value = null;
+        if (ObjectUtils.isNotEmpty(attrValue) && Date.class.isInstance(attrValue)) {
+            value = (Date) attrValue;
+        }
+        return value;
     }
 
     /**
@@ -931,6 +1207,7 @@ public final class FleaJPAQuery implements Closeable {
         }
         orders = null;
         groups = null;
+        entity = null;
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FleaJPAQuery##reset() After FleaJPAQuery={}", toString());
             LOGGER.debug("FleaJPAQuery##reset() End");
