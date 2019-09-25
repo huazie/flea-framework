@@ -3,11 +3,14 @@ package com.huazie.frame.db.common.util;
 import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.ReflectUtils;
+import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.exception.DaoException;
 import com.huazie.frame.db.common.sql.template.config.Param;
 import com.huazie.frame.db.common.sql.template.config.Relation;
 import com.huazie.frame.db.common.sql.template.config.Template;
 import com.huazie.frame.db.common.table.pojo.Column;
+import com.huazie.frame.db.common.table.pojo.SplitTable;
+import com.huazie.frame.db.common.table.split.TableSplitHelper;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -223,6 +226,36 @@ public class EntityUtils {
             }
         }
         return tableName;
+    }
+
+    /**
+     * <p> 获取真实的表名，如是分表，则获取分表名 </p>
+     *
+     * @param entity 实体类对象实例
+     * @return 真实的表名，如是分表，则返回相应的分表名
+     * @throws Exception
+     * @since 1.0.0
+     */
+    public static SplitTable getSplitTable(Object entity) throws Exception {
+        // 从实体类上获取表名
+        String tableName = getTableName(entity);
+        if (StringUtils.isBlank(tableName)) {
+            // 请检查初始实体类(其上的注解@Table或者@FleaTable对应的表名不能为空)
+            throw new DaoException("ERROR-DB-SQT0000000012");
+        }
+        // 获取实体类T的对象的属性列相关信息
+        Column[] entityCols = toColumnsArray(entity);
+        if (org.apache.commons.lang.ArrayUtils.isEmpty(entityCols)) {
+            // 请检查初始实体类（实体类的属性列相关信息不存在）
+            throw new DaoException("ERROR-DB-SQT0000000016");
+        }
+        String splitTableName = TableSplitHelper.getRealTableName(tableName, entityCols);
+        SplitTable splitTable = new SplitTable();
+        splitTable.setTableName(tableName);
+        if (!tableName.equals(splitTableName)) {
+            splitTable.setSplitTableName(splitTableName);
+        }
+        return splitTable;
     }
 
 }

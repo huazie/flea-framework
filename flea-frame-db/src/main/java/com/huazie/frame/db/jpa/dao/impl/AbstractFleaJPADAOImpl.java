@@ -11,6 +11,8 @@ import com.huazie.frame.db.common.sql.template.impl.DeleteSqlTemplate;
 import com.huazie.frame.db.common.sql.template.impl.InsertSqlTemplate;
 import com.huazie.frame.db.common.sql.template.impl.SelectSqlTemplate;
 import com.huazie.frame.db.common.sql.template.impl.UpdateSqlTemplate;
+import com.huazie.frame.db.common.table.pojo.SplitTable;
+import com.huazie.frame.db.common.util.EntityUtils;
 import com.huazie.frame.db.jpa.common.FleaJPAQuery;
 import com.huazie.frame.db.jpa.common.FleaJPAQueryPool;
 import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
@@ -198,6 +200,18 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         for (T t : entities) {
             getEntityManager().persist(t);
         }
+    }
+
+    /**
+     * <p> 内部处理方法 </p>
+     *
+     * @param entity
+     * @throws Exception
+     */
+    private void handleInternal(T entity) throws Exception {
+
+        SplitTable splitTable = EntityUtils.getSplitTable(entity);
+
     }
 
     @Override

@@ -50,7 +50,7 @@ public class TableSplitHelper {
         if (ObjectUtils.isNotEmpty(tab)) {// 当前表具有分表配置
             // 获取分表名表达式
             String exp = tab.getExp();
-            if(StringUtils.isBlank(exp)){
+            if (StringUtils.isBlank(exp)) {
                 // 请检查分表配置信息（分表表达式【exp】不能为空）
                 throw new TableSplitException("ERROR-DB-TSP0000000009");
             }
@@ -65,7 +65,7 @@ public class TableSplitHelper {
                 List<Split> splitList = splits.getSplitList();
                 if (CollectionUtils.isNotEmpty(splitList)) {
                     Iterator<Split> splitIt = splitList.iterator();
-                    while(splitIt.hasNext()){
+                    while (splitIt.hasNext()) {
                         Split split = splitIt.next();
                         // 分表类型关键字
                         String key = split.getKey();

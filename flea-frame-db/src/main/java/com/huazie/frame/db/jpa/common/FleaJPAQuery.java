@@ -1,6 +1,5 @@
 package com.huazie.frame.db.jpa.common;
 
-import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.MapUtils;
 import com.huazie.frame.common.util.NumberUtils;
@@ -9,8 +8,7 @@ import com.huazie.frame.common.util.ReflectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.DBConstants;
 import com.huazie.frame.db.common.exception.DaoException;
-import com.huazie.frame.db.common.table.pojo.Column;
-import com.huazie.frame.db.common.table.split.TableSplitHelper;
+import com.huazie.frame.db.common.table.pojo.SplitTable;
 import com.huazie.frame.db.common.util.EntityUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.eclipse.persistence.internal.jpa.metamodel.EntityTypeImpl;
@@ -123,27 +121,14 @@ public final class FleaJPAQuery implements Closeable {
 
         this.entity = entity;
 
-        // 从实体类上获取表名
-        String tableName = EntityUtils.getTableName(entity);
-        // 获取实体类T的对象的属性列相关信息
-        Column[] entityCols = EntityUtils.toColumnsArray(entity);
+        SplitTable splitTable = EntityUtils.getSplitTable(entity);
 
-        String realTableName = "";
-        if (ArrayUtils.isNotEmpty(entityCols)) {
-            // 获取实际表名，如是分表，则获取分表名
-            realTableName = TableSplitHelper.getRealTableName(tableName, entityCols);
-        }
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJPAQuery##initQueryEntity(Object) Table Name = {}", tableName);
-            LOGGER.debug("FleaJPAQuery##initQueryEntity(Object) Real Table Name = {}", realTableName);
-        }
         // 存在分表，需要查询指定分表
-        if (StringUtils.isNotBlank(tableName) && !tableName.equals(realTableName)) {
+        if (StringUtils.isNotBlank(splitTable.getSplitTableName())) {
             Set<Root<?>> roots = criteriaQuery.getRoots();
             if (CollectionUtils.isNotEmpty(roots)) {
                 // 重新设置 查询的分表表名
-                ((EntityTypeImpl<?>) roots.toArray(new Root<?>[0])[0].getModel()).getDescriptor().setTableName(realTableName);
+                ((EntityTypeImpl<?>) roots.toArray(new Root<?>[0])[0].getModel()).getDescriptor().setTableName(splitTable.getSplitTableName());
             }
         }
 
