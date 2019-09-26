@@ -21,6 +21,18 @@ public class FleaAuthDAOImpl<T> extends AbstractFleaJPADAOImpl<T> {
 
     @Override
     @Transactional("fleaAuthTransactionManager")
+    public T queryNew(long entityId, T entity) throws Exception {
+        return super.queryNew(entityId, entity);
+    }
+
+    @Override
+    @Transactional("fleaAuthTransactionManager")
+    public T queryNew(String entityId, T entity) throws Exception {
+        return super.queryNew(entityId, entity);
+    }
+
+    @Override
+    @Transactional("fleaAuthTransactionManager")
     public boolean remove(long entityId) throws Exception {
         return super.remove(entityId);
     }
@@ -29,6 +41,18 @@ public class FleaAuthDAOImpl<T> extends AbstractFleaJPADAOImpl<T> {
     @Transactional("fleaAuthTransactionManager")
     public boolean remove(String entityId) throws Exception {
         return super.remove(entityId);
+    }
+
+    @Override
+    @Transactional("fleaAuthTransactionManager")
+    public boolean removeNew(long entityId, T entity) throws Exception {
+        return super.removeNew(entityId, entity);
+    }
+
+    @Override
+    @Transactional("fleaAuthTransactionManager")
+    public boolean removeNew(String entityId, T entity) throws Exception {
+        return super.removeNew(entityId, entity);
     }
 
     @Override

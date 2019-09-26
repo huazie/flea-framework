@@ -11,8 +11,7 @@ import com.huazie.frame.db.common.sql.template.impl.DeleteSqlTemplate;
 import com.huazie.frame.db.common.sql.template.impl.InsertSqlTemplate;
 import com.huazie.frame.db.common.sql.template.impl.SelectSqlTemplate;
 import com.huazie.frame.db.common.sql.template.impl.UpdateSqlTemplate;
-import com.huazie.frame.db.common.table.pojo.SplitTable;
-import com.huazie.frame.db.common.util.EntityUtils;
+import com.huazie.frame.db.common.table.split.TableSplitHelper;
 import com.huazie.frame.db.jpa.common.FleaJPAQuery;
 import com.huazie.frame.db.jpa.common.FleaJPAQueryPool;
 import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
@@ -25,6 +24,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * <p> 抽象Flea JPA DAO层实现类，该类实现了基本的增删改查功能，可以自行拓展 </p>
@@ -62,12 +62,22 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 
     @Override
     public T query(long entityId) throws Exception {
-        return queryById(entityId);
+        return queryById(entityId, null);
     }
 
     @Override
     public T query(String entityId) throws Exception {
-        return queryById(entityId);
+        return queryById(entityId, null);
+    }
+
+    @Override
+    public T queryNew(long entityId, T entity) throws Exception {
+        return queryById(entityId, entity);
+    }
+
+    @Override
+    public T queryNew(String entityId, T entity) throws Exception {
+        return queryById(entityId, entity);
     }
 
     /**
@@ -76,10 +86,11 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
      * @param entityId 主键编号
      * @return 数据行对应的实体类信息
      * @throws Exception
+     * @since 1.0.0
      */
-    protected T queryById(Object entityId) throws Exception {
+    protected T queryById(Object entityId, T entity) throws Exception {
         checkPrimaryKey(entityId);
-        T t = getEntityManager().find(clazz, entityId);
+        T t = getEntityManager(entity, true).find(clazz, entityId);
         return t;
     }
 
@@ -138,13 +149,76 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     }
 
     @Override
+    public List<T> query(Set<String> attrNames, T entity) throws Exception {
+        return getQuery(null).initQueryEntity(entity).equal(attrNames).getResultList();
+    }
+
+    @Override
+    public List<T> query(Set<String> attrNames, String attrName, String orderBy, T entity) throws Exception {
+        return getQuery(null).initQueryEntity(entity).equal(attrNames).addOrderby(attrName, orderBy).getResultList();
+    }
+
+    @Override
+    public List<T> query(Set<String> attrNames, int start, int max, T entity) throws Exception {
+        return getQuery(null).initQueryEntity(entity).equal(attrNames).getResultList(start, max);
+    }
+
+    @Override
+    public List<T> query(Set<String> attrNames, String attrName, String orderBy, int start, int max, T entity) throws Exception {
+        return getQuery(null).initQueryEntity(entity).equal(attrNames).addOrderby(attrName, orderBy).getResultList(start, max);
+    }
+
+    @Override
+    public List<T> queryAll(T entity) throws Exception {
+        return getQuery(null).initQueryEntity(entity).getResultList();
+    }
+
+    @Override
+    public List<T> queryAll(String attrName, String orderBy, T entity) throws Exception {
+        return getQuery(null).initQueryEntity(entity).addOrderby(attrName, orderBy).getResultList();
+    }
+
+    @Override
+    public List<T> queryAll(int start, int max, T entity) throws Exception {
+        return getQuery(null).initQueryEntity(entity).getResultList(start, max);
+    }
+
+    @Override
+    public List<T> queryAll(String attrName, String orderBy, int start, int max, T entity) throws Exception {
+        return getQuery(null).initQueryEntity(entity).addOrderby(attrName, orderBy).getResultList(start, max);
+    }
+
+    @Override
+    public long queryCount(T entity) throws Exception {
+        // 调用SQL的COUNT函数统计数目 count()
+        return ((Long) getQuery(Long.class).initQueryEntity(entity).count().getSingleResult());
+    }
+
+    @Override
+    public long queryCount(Set<String> attrNames, T entity) throws Exception {
+        // 添加Where子句查询条件 equal(Set)
+        // 调用SQL的COUNT函数统计数目 count()
+        return ((Long) getQuery(Long.class).initQueryEntity(entity).equal(attrNames).count().getSingleResult());
+    }
+
+    @Override
     public boolean remove(long entityId) throws Exception {
-        return removeById(entityId);
+        return removeById(entityId, null);
     }
 
     @Override
     public boolean remove(String entityId) throws Exception {
-        return removeById(entityId);
+        return removeById(entityId, null);
+    }
+
+    @Override
+    public boolean removeNew(long entityId, T entity) throws Exception {
+        return removeById(entityId, entity);
+    }
+
+    @Override
+    public boolean removeNew(String entityId, T entity) throws Exception {
+        return removeById(entityId, entity);
     }
 
     /**
@@ -153,12 +227,13 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
      * @param entityId 主键数据
      * @return true : 删除成功; false : 删除失败
      * @throws Exception
+     * @since 1.0.0
      */
-    protected boolean removeById(Object entityId) throws Exception {
+    protected boolean removeById(Object entityId, T entity) throws Exception {
         checkPrimaryKey(entityId);
-        final T old = queryById(entityId);
+        final T old = queryById(entityId, entity);
         if (ObjectUtils.isNotEmpty(old)) {
-            getEntityManager().remove(old);
+            getEntityManager(entity, false).remove(old);
             return true;
         } else {
             return false;
@@ -170,7 +245,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         if (ObjectUtils.isEmpty(entity)) {
             throw new DaoException("ERROR-DB-DAO0000000012");
         }
-        return getEntityManager().merge(entity);
+        return getEntityManager(entity, false).merge(entity);
     }
 
     @Override
@@ -179,7 +254,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
             throw new DaoException("ERROR-DB-DAO0000000013");
         }
         for (T t : entities) {
-            getEntityManager().merge(t);
+            getEntityManager(t, false).merge(t);
         }
         return entities;
     }
@@ -189,7 +264,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         if (ObjectUtils.isEmpty(entity)) {
             throw new DaoException("ERROR-DB-DAO0000000012");
         }
-        getEntityManager().persist(entity);
+        getEntityManager(entity, false).persist(entity);
     }
 
     @Override
@@ -198,20 +273,8 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
             throw new DaoException("ERROR-DB-DAO0000000013");
         }
         for (T t : entities) {
-            getEntityManager().persist(t);
+            getEntityManager(t, false).persist(t);
         }
-    }
-
-    /**
-     * <p> 内部处理方法 </p>
-     *
-     * @param entity
-     * @throws Exception
-     */
-    private void handleInternal(T entity) throws Exception {
-
-        SplitTable splitTable = EntityUtils.getSplitTable(entity);
-
     }
 
     @Override
@@ -350,11 +413,25 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     }
 
     /**
-     * <p> 获取EntityManager对象 </p>
+     * <p> 获取JPA持久化对象 </p>
      *
-     * @return EntityManager对象
+     * @return JPA持久化对象
      * @since 1.0.0
      */
     protected abstract EntityManager getEntityManager();
+
+    /**
+     * <p> 获取JPA持久化对象 </p>
+     *
+     * @param entity 实体类对象实例
+     * @return JPA持久化对象
+     * @since 1.0.0
+     */
+    protected EntityManager getEntityManager(T entity, boolean isRead) throws Exception {
+        EntityManager entityManager = getEntityManager();
+        // 处理并添加分表信息，如果不存在分表则不处理
+        TableSplitHelper.findTableSplitHandle().handle(entityManager, entity, isRead);
+        return entityManager;
+    }
 
 }

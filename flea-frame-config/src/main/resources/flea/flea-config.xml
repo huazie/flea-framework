@@ -21,6 +21,10 @@
         <config-item key="pool.maxWaitMillis" desc="Flea JPA查询对象池获取连接时的最大等待毫秒数">2000</config-item>
     </config-items>
 
+    <config-items key="flea-jpa" desc="Flea JPA配置">
+        <config-item key="table_split_handler" desc="Flea JPA分表处理者实现类">com.huazie.frame.db.jpa.persistence.impl.EclipseLinkTableSplitHandler</config-item>
+    </config-items>
+
     <config-items key="mysql-fleaconfig" desc="JDBC数据库配置【key=数据库系统-数据库或数据库用户】">
         <config-item key="driver" desc="mysql数据库驱动名">com.mysql.jdbc.Driver</config-item>
         <config-item key="url" desc="mysql数据库连接地址">jdbc:mysql://localhost:3306/fleaconfig?useUnicode=true&amp;characterEncoding=UTF-8</config-item>

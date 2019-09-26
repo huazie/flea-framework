@@ -10,6 +10,22 @@ package com.huazie.frame.db.common;
 public interface DBConstants {
 
     /**
+     * <p> Flea JPA 配置常量类 </p>
+     *
+     * @since 1.0.0
+     */
+    interface FleaJPAConstants {
+        /**
+         * Flea JPA 配置
+         */
+        String FLEA_JPA = "flea-jpa";
+        /**
+         * 分表处理者
+         */
+        String TABLE_SPLIT_HANDLER = "table_split_handler";
+    }
+
+    /**
      * <p> SQL模板常量类 </p>
      *
      * @since 1.0.0
