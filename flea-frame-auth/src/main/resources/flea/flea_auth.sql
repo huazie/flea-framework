@@ -31,9 +31,7 @@ CREATE TABLE `flea_account` (
   `expiry_date` datetime NOT NULL COMMENT '失效日期',
   `remarks` varchar(1024) DEFAULT NULL COMMENT '备注信息',
   PRIMARY KEY (`account_id`),
-  KEY `index_name_psw` (`account_code`,`account_pwd`) USING BTREE,
-  KEY `fk_account_user` (`user_id`) USING BTREE,
-  CONSTRAINT `flea_account_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `flea_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `index_name_psw` (`account_code`,`account_pwd`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
@@ -81,9 +79,7 @@ CREATE TABLE `flea_login_log` (
   `remarks` varchar(1024) CHARACTER SET utf8 DEFAULT NULL COMMENT '描述信息',
   `ext1` varchar(1024) CHARACTER SET utf8 DEFAULT NULL COMMENT '扩展字段1',
   `ext2` varchar(1024) CHARACTER SET utf8 DEFAULT NULL COMMENT '扩展字段2',
-  PRIMARY KEY (`login_log_id`),
-  KEY `fk_loginlog_account` (`account_id`),
-  CONSTRAINT `fk_loginlog_account` FOREIGN KEY (`account_id`) REFERENCES `flea_account` (`account_id`) ON DELETE NO ACTION
+  PRIMARY KEY (`login_log_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk;
 
 -- ----------------------------
@@ -109,9 +105,7 @@ CREATE TABLE `flea_login_log_201909` (
   `remarks` varchar(1024) CHARACTER SET utf8 DEFAULT NULL COMMENT '描述信息',
   `ext1` varchar(1024) CHARACTER SET utf8 DEFAULT NULL COMMENT '扩展字段1',
   `ext2` varchar(1024) CHARACTER SET utf8 DEFAULT NULL COMMENT '扩展字段2',
-  PRIMARY KEY (`login_log_id`),
-  KEY `fk_loginlog_account` (`account_id`),
-  CONSTRAINT `flea_login_log_201909_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `flea_account` (`account_id`) ON DELETE NO ACTION
+  PRIMARY KEY (`login_log_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk;
 
 -- ----------------------------
