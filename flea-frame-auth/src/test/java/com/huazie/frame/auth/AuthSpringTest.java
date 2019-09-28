@@ -56,7 +56,7 @@ public class AuthSpringTest {
             FleaLoginLog fleaLoginLog = new FleaLoginLog();
             fleaLoginLog.setCreateDate(DateUtils.getCurrentTime());
 
-            fleaLoginLog = fleaLoginLogSV.queryNew(2L, fleaLoginLog);
+            fleaLoginLog = fleaLoginLogSV.queryNew(1L, fleaLoginLog);
 
             LOGGER.debug("FleaLoginLog = {}", fleaLoginLog);
 
@@ -75,7 +75,7 @@ public class AuthSpringTest {
             FleaLoginLog fleaLoginLog = new FleaLoginLog();
             fleaLoginLog.setCreateDate(DateUtils.getCurrentTime());
 
-            fleaLoginLog = fleaLoginLogSV.queryNew(2L, fleaLoginLog);
+            fleaLoginLog = fleaLoginLogSV.queryNew(1L, fleaLoginLog);
 
             LOGGER.debug("FleaLoginLog = {}", fleaLoginLog);
 
@@ -83,6 +83,7 @@ public class AuthSpringTest {
             fleaLoginLog.setLogoutTime(DateUtils.getCurrentTime());
             fleaLoginLog.setDoneDate(DateUtils.getCurrentTime());
             fleaLoginLog.setLoginState(2);
+            fleaLoginLog.setRemarks("用户退出登陆");
 
             fleaLoginLogSV.update(fleaLoginLog);
 
@@ -101,7 +102,7 @@ public class AuthSpringTest {
             FleaLoginLog fleaLoginLog = new FleaLoginLog();
             fleaLoginLog.setCreateDate(DateUtils.getCurrentTime());
 
-            fleaLoginLogSV.removeNew(2L, fleaLoginLog);
+            fleaLoginLogSV.removeNew(1L, fleaLoginLog);
 
         } catch (Exception e) {
             e.printStackTrace();
