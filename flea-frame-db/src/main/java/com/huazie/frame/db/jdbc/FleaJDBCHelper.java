@@ -394,11 +394,8 @@ public class FleaJDBCHelper {
      * @since 1.0.0
      */
     public static int insert(String relationId, Object entity) throws SQLException {
-        try (FleaDBOperationHandler handler = getDBOperationHandler(new InsertSqlTemplate<Object>(relationId, entity), TemplateTypeEnum.INSERT.getKey())) {
-            return save(handler);
-        } catch (Exception e) {
-            throw new SQLException(e);
-        }
+        return save(new InsertSqlTemplate<Object>(relationId, entity), TemplateTypeEnum.INSERT.getKey());
+
     }
 
     /**
@@ -411,11 +408,7 @@ public class FleaJDBCHelper {
      * @since 1.0.0
      */
     public static int update(String relationId, Object entity) throws SQLException {
-        try (FleaDBOperationHandler handler = getDBOperationHandler(new UpdateSqlTemplate<Object>(relationId, entity), TemplateTypeEnum.UPDATE.getKey())) {
-            return save(handler);
-        } catch (Exception e) {
-            throw new SQLException(e);
-        }
+        return save(new UpdateSqlTemplate<Object>(relationId, entity), TemplateTypeEnum.UPDATE.getKey());
     }
 
     /**
@@ -428,18 +421,14 @@ public class FleaJDBCHelper {
      * @since 1.0.0
      */
     public static int delete(String relationId, Object entity) throws SQLException {
-        try (FleaDBOperationHandler handler = getDBOperationHandler(new DeleteSqlTemplate<Object>(relationId, entity), TemplateTypeEnum.DELETE.getKey())) {
-            return save(handler);
-        } catch (Exception e) {
-            throw new SQLException(e);
-        }
+        return save(new DeleteSqlTemplate<Object>(relationId, entity), TemplateTypeEnum.DELETE.getKey());
     }
 
     /**
      * <p> 用于带参数的查询，返回结果集 </p>
      *
      * @param template SQL模板接口类
-     * @return 一次数据库操作处理
+     * @return 一次数据库操作处理对象
      * @throws Exception
      * @since 1.0.0
      */
@@ -454,11 +443,28 @@ public class FleaJDBCHelper {
     }
 
     /**
+     * <p> 构建并执行INSERT. UPDATE. DELETE SQL模板 </p>
+     *
+     * @param template     SQL模板
+     * @param templateType 模板类型
+     * @return 操作记录数
+     * @throws SQLException 数据库操作异常
+     * @since 1.0.0
+     */
+    private static int save(ITemplate<Object> template, String templateType) throws SQLException {
+        try (FleaDBOperationHandler handler = getDBOperationHandler(template, templateType)) {
+            return save(handler);
+        } catch (Exception e) {
+            throw new SQLException(e);
+        }
+    }
+
+    /**
      * <p> 构建INSERT, UPDATE, DELETE SQL模板，获取Connection 和 PreparedStatement </p>
      *
      * @param template     SQL模板
      * @param templateType 模板类型
-     * @return 处理记录数
+     * @return 一次数据库操作处理对象
      * @throws Exception
      * @since 1.0.0
      */
