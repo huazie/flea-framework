@@ -273,8 +273,8 @@ public class FleaParaDetailSVImplTest {
         // 测试 JDBC 接入 SELECT SQL 模板
         FleaJDBCConfig.init(DBSystemEnum.MySQL.getName(), "fleaconfig");
         FleaParaDetail fleaParaDetail = new FleaParaDetail();
-        fleaParaDetail.setParaType("huazie1");
-        fleaParaDetail.setParaCode("huazie1");
+        fleaParaDetail.setParaType("huazie");
+        fleaParaDetail.setParaCode("huazie");
         try {
             List<Map<String, Object>> results = FleaJDBCHelper.query("select", fleaParaDetail);
             Assert.assertNotNull(results);

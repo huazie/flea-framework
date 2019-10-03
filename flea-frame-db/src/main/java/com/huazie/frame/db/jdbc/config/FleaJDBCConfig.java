@@ -152,6 +152,9 @@ public class FleaJDBCConfig {
         try {
             if (ObjectUtils.isNotEmpty(conn)) {
                 conn.close();
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("JDBCConfig##closeConnection(Connection) Connection已关闭。");
+                }
             }
         } catch (SQLException e) {
             if (LOGGER.isErrorEnabled()) {
@@ -169,6 +172,9 @@ public class FleaJDBCConfig {
         try {
             if (ObjectUtils.isNotEmpty(statement)) {
                 statement.close();
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("JDBCConfig##closeStatement(Statement) Statement已关闭。");
+                }
             }
         } catch (SQLException e) {
             if (LOGGER.isErrorEnabled()) {
@@ -186,6 +192,9 @@ public class FleaJDBCConfig {
         try {
             if (ObjectUtils.isNotEmpty(rs)) {
                 rs.close();
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("JDBCConfig##closeStatement(ResultSet) ResultSet已关闭。");
+                }
             }
         } catch (SQLException e) {
             if (LOGGER.isErrorEnabled()) {
@@ -202,9 +211,9 @@ public class FleaJDBCConfig {
      * @param rs        数据库结果集对象
      */
     public static void close(Connection conn, Statement statement, ResultSet rs) {
-        closeConnection(conn);
-        closeStatement(statement);
         closeResultSet(rs);
+        closeStatement(statement);
+        closeConnection(conn);
     }
 
     /**
