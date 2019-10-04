@@ -20,6 +20,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * <p> 读取数据库的配置信息,该信息存在于db-config.properties中 , 并获取连接对象和释放连接对象 </p>
@@ -34,7 +36,7 @@ public class FleaJDBCConfig {
 
     private static volatile FleaJDBCConfig config;
 
-    private Map<String, FleaDBUnit> fleaDBUnits = new HashMap<String, FleaDBUnit>();
+    private static ConcurrentMap<String, FleaDBUnit> fleaDBUnits = new ConcurrentHashMap<String, FleaDBUnit>();
 
     private FleaJDBCConfig() {
     }
@@ -84,16 +86,15 @@ public class FleaJDBCConfig {
 
         String dbConfigKey = FleaFrameManager.getManager().getDBConfigKey();
 
-        if (MapUtils.isEmpty(fleaDBUnits)) {
-            fleaDBUnit = getFleaDBUnit(dbConfigKey);
-            fleaDBUnits.put(dbConfigKey, fleaDBUnit);
-        } else {
-            fleaDBUnit = fleaDBUnits.get(dbConfigKey);
-            if (ObjectUtils.isEmpty(fleaDBUnit)) {
-                fleaDBUnit = getFleaDBUnit(dbConfigKey);
-                fleaDBUnits.put(dbConfigKey, fleaDBUnit);
+        if (!fleaDBUnits.containsKey(dbConfigKey)) {
+            synchronized (fleaDBUnits) {
+                if (!fleaDBUnits.containsKey(dbConfigKey)) {
+                    fleaDBUnits.put(dbConfigKey, getFleaDBUnit(dbConfigKey));
+                }
             }
         }
+
+        fleaDBUnit = fleaDBUnits.get(dbConfigKey);
 
         try {
 
