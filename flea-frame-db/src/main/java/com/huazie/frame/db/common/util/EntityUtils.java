@@ -174,8 +174,6 @@ public class EntityUtils {
                 column.setNullable(isNullable);
                 column.setUnique(isUnique);
 
-                column.setEntity(entity);
-
                 columns.add(column);
             }
         }

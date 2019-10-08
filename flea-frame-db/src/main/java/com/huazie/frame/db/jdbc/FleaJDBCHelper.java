@@ -8,11 +8,8 @@ import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.exception.DaoException;
 import com.huazie.frame.db.common.sql.pojo.SqlParam;
 import com.huazie.frame.db.common.sql.template.ITemplate;
+import com.huazie.frame.db.common.sql.template.SqlTemplateFactory;
 import com.huazie.frame.db.common.sql.template.TemplateTypeEnum;
-import com.huazie.frame.db.common.sql.template.impl.DeleteSqlTemplate;
-import com.huazie.frame.db.common.sql.template.impl.InsertSqlTemplate;
-import com.huazie.frame.db.common.sql.template.impl.SelectSqlTemplate;
-import com.huazie.frame.db.common.sql.template.impl.UpdateSqlTemplate;
 import com.huazie.frame.db.common.table.pojo.Column;
 import com.huazie.frame.db.jdbc.config.FleaJDBCConfig;
 import com.huazie.frame.db.jdbc.pojo.FleaDBOperationHandler;
@@ -20,7 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -377,8 +373,31 @@ public class FleaJDBCHelper {
      */
     public static List<Map<String, Object>> query(String relationId, Object entity) throws SQLException {
 
-        try (FleaDBOperationHandler handler = getDBOperationHandlerWithReturnSet(new SelectSqlTemplate<Object>(relationId, entity), TemplateTypeEnum.SELECT.getKey())) {
+        try (FleaDBOperationHandler handler = getDBOperationHandlerWithReturnSet(SqlTemplateFactory.newSqlTemplate(relationId, entity, TemplateTypeEnum.SELECT))) {
             return ResultToListMap(handler.getResultSet());
+        } catch (Exception e) {
+            throw new SQLException(e);
+        }
+    }
+
+    /**
+     * <p> 构建并执行 SELECT SQL模板 (单个查询结果) </p>
+     *
+     * @param relationId 关系编号
+     * @param entity     实体类对象
+     * @return 单个查询结果
+     * @throws SQLException 数据库操作异常
+     * @since 1.0.0
+     */
+    public static Object querySingle(String relationId, Object entity) throws SQLException {
+        Object result = null;
+
+        try (FleaDBOperationHandler handler = getDBOperationHandlerWithReturnSet(SqlTemplateFactory.newSqlTemplate(relationId, entity, TemplateTypeEnum.SELECT))) {
+            ResultSet rs = handler.getResultSet();
+            if (rs.next()) {
+                result = rs.getObject(1);
+            }
+            return result;
         } catch (Exception e) {
             throw new SQLException(e);
         }
@@ -394,7 +413,7 @@ public class FleaJDBCHelper {
      * @since 1.0.0
      */
     public static int insert(String relationId, Object entity) throws SQLException {
-        return save(new InsertSqlTemplate<Object>(relationId, entity), TemplateTypeEnum.INSERT.getKey());
+        return save(SqlTemplateFactory.newSqlTemplate(relationId, entity, TemplateTypeEnum.INSERT));
 
     }
 
@@ -408,7 +427,7 @@ public class FleaJDBCHelper {
      * @since 1.0.0
      */
     public static int update(String relationId, Object entity) throws SQLException {
-        return save(new UpdateSqlTemplate<Object>(relationId, entity), TemplateTypeEnum.UPDATE.getKey());
+        return save(SqlTemplateFactory.newSqlTemplate(relationId, entity, TemplateTypeEnum.UPDATE));
     }
 
     /**
@@ -421,7 +440,7 @@ public class FleaJDBCHelper {
      * @since 1.0.0
      */
     public static int delete(String relationId, Object entity) throws SQLException {
-        return save(new DeleteSqlTemplate<Object>(relationId, entity), TemplateTypeEnum.DELETE.getKey());
+        return save(SqlTemplateFactory.newSqlTemplate(relationId, entity, TemplateTypeEnum.DELETE));
     }
 
     /**
@@ -432,11 +451,11 @@ public class FleaJDBCHelper {
      * @throws Exception
      * @since 1.0.0
      */
-    private static FleaDBOperationHandler getDBOperationHandlerWithReturnSet(ITemplate<Object> template, String templateType) throws Exception {
+    private static FleaDBOperationHandler getDBOperationHandlerWithReturnSet(ITemplate<Object> template) throws Exception {
         FleaDBOperationHandler handler = null;
         if (ObjectUtils.isNotEmpty(template)) {
             template.initialize(); // 初始化SQL模板（一定要初始化）
-            handler = getDBOperationHandler(template.toNativeSql(), template.toNativeParams(), templateType);
+            handler = getDBOperationHandler(template.toNativeSql(), template.toNativeParams(), template.getTemplateType().getKey());
             queryWithReturnResultSet(handler);
         }
         return handler;
@@ -446,13 +465,12 @@ public class FleaJDBCHelper {
      * <p> 构建并执行INSERT. UPDATE. DELETE SQL模板 </p>
      *
      * @param template     SQL模板
-     * @param templateType 模板类型
      * @return 操作记录数
      * @throws SQLException 数据库操作异常
      * @since 1.0.0
      */
-    private static int save(ITemplate<Object> template, String templateType) throws SQLException {
-        try (FleaDBOperationHandler handler = getDBOperationHandler(template, templateType)) {
+    private static int save(ITemplate<Object> template) throws SQLException {
+        try (FleaDBOperationHandler handler = getDBOperationHandler(template)) {
             return save(handler);
         } catch (Exception e) {
             throw new SQLException(e);
@@ -463,16 +481,15 @@ public class FleaJDBCHelper {
      * <p> 构建INSERT, UPDATE, DELETE SQL模板，获取Connection 和 PreparedStatement </p>
      *
      * @param template     SQL模板
-     * @param templateType 模板类型
      * @return 一次数据库操作处理对象
      * @throws Exception
      * @since 1.0.0
      */
-    private static FleaDBOperationHandler getDBOperationHandler(ITemplate<Object> template, String templateType) throws Exception {
+    private static FleaDBOperationHandler getDBOperationHandler(ITemplate<Object> template) throws Exception {
         FleaDBOperationHandler handler = null;
         if (ObjectUtils.isNotEmpty(template)) {
             template.initialize(); // 初始化SQL模板（一定要初始化）
-            handler = getDBOperationHandler(template.toNativeSql(), template.toNativeParams(), templateType);
+            handler = getDBOperationHandler(template.toNativeSql(), template.toNativeParams(), template.getTemplateType().getKey());
         }
         return handler;
     }

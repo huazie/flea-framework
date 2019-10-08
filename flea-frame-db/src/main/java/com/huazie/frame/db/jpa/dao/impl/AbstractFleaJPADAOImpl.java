@@ -6,11 +6,8 @@ import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.db.common.exception.DaoException;
 import com.huazie.frame.db.common.sql.pojo.SqlParam;
 import com.huazie.frame.db.common.sql.template.ITemplate;
+import com.huazie.frame.db.common.sql.template.SqlTemplateFactory;
 import com.huazie.frame.db.common.sql.template.TemplateTypeEnum;
-import com.huazie.frame.db.common.sql.template.impl.DeleteSqlTemplate;
-import com.huazie.frame.db.common.sql.template.impl.InsertSqlTemplate;
-import com.huazie.frame.db.common.sql.template.impl.SelectSqlTemplate;
-import com.huazie.frame.db.common.sql.template.impl.UpdateSqlTemplate;
 import com.huazie.frame.db.common.table.split.TableSplitHelper;
 import com.huazie.frame.db.jpa.common.FleaJPAQuery;
 import com.huazie.frame.db.jpa.common.FleaJPAQueryPool;
@@ -279,38 +276,63 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 
     @Override
     public List<T> query(String relationId, T entity) throws Exception {
+        return createNativeQuery(relationId, entity, null).getResultList();
+    }
+
+    @Override
+    public Object querySingle(String relationId, T entity) throws Exception {
+        return createNativeQuery(relationId, entity, Object.class).getSingleResult();
+    }
+
+    /**
+     * <p> 构建原生查询对象 </p>
+     *
+     * @param relationId  关系编号
+     * @param entity      实体类
+     * @param resultClazz 查询结果Class
+     * @return 实体类数据集合
+     * @throws Exception
+     * @since 1.0.0
+     */
+    private Query createNativeQuery(String relationId, T entity, Class resultClazz) throws Exception {
         // 构建并执行 SELECT SQL模板
-        ITemplate<T> selectSqlTemplate = new SelectSqlTemplate<T>(relationId, entity);
+        ITemplate<T> selectSqlTemplate = SqlTemplateFactory.newSqlTemplate(relationId, entity, TemplateTypeEnum.SELECT);
         selectSqlTemplate.initialize();
         String nativeSql = selectSqlTemplate.toNativeSql();
         List<SqlParam> nativeParam = selectSqlTemplate.toNativeParams();
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("AbstractFleaJPADAOImpl##query(String, T) SQL = {}", nativeSql);
+            LOGGER.debug("AbstractFleaJPADAOImpl##createNativeQuery(String, T, Class) SQL = {}", nativeSql);
         }
 
-        Query query = getEntityManager().createNativeQuery(nativeSql, entity.getClass());
+        Query query;
+        if (ObjectUtils.isNotEmpty(resultClazz)) {
+            query = getEntityManager().createNativeQuery(nativeSql, resultClazz);
+        } else {
+            query = getEntityManager().createNativeQuery(nativeSql, entity.getClass());
+        }
+
         setParameter(query, nativeParam, TemplateTypeEnum.SELECT.getKey());
 
-        return query.getResultList();
+        return query;
     }
 
     @Override
     public int insert(String relationId, T entity) throws Exception {
         // 构建并执行INSERT SQL模板
-        return save(new InsertSqlTemplate<T>(relationId, entity), TemplateTypeEnum.INSERT.getKey());
+        return save(SqlTemplateFactory.newSqlTemplate(relationId, entity, TemplateTypeEnum.INSERT));
     }
 
     @Override
     public int update(String relationId, T entity) throws Exception {
         // 构建并执行UPDATE SQL模板
-        return save(new UpdateSqlTemplate<T>(relationId, entity), TemplateTypeEnum.UPDATE.getKey());
+        return save(SqlTemplateFactory.newSqlTemplate(relationId, entity, TemplateTypeEnum.UPDATE));
     }
 
     @Override
     public int delete(String relationId, T entity) throws Exception {
         // 构建并执行DELETE SQL模板
-        return save(new DeleteSqlTemplate<T>(relationId, entity), TemplateTypeEnum.DELETE.getKey());
+        return save(SqlTemplateFactory.newSqlTemplate(relationId, entity, TemplateTypeEnum.DELETE));
     }
 
     /**
@@ -320,23 +342,23 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
      * @throws Exception
      * @since 1.0.0
      */
-    private int save(ITemplate<T> sqlTemplate, String templateType) throws Exception {
+    private int save(ITemplate<T> sqlTemplate) throws Exception {
         sqlTemplate.initialize();
         String nativeSql = sqlTemplate.toNativeSql();
         List<SqlParam> nativeParam = sqlTemplate.toNativeParams();
 
         if (LOGGER.isDebugEnabled()) {
-            if (TemplateTypeEnum.INSERT.getKey().equals(templateType)) {
+            if (TemplateTypeEnum.INSERT.getKey().equals(sqlTemplate.getTemplateType().getKey())) {
                 LOGGER.debug("AbstractFleaJPADAOImpl##insert(String, T) SQL = {}", nativeSql);
-            } else if (TemplateTypeEnum.UPDATE.getKey().equals(templateType)) {
+            } else if (TemplateTypeEnum.UPDATE.getKey().equals(sqlTemplate.getTemplateType().getKey())) {
                 LOGGER.debug("AbstractFleaJPADAOImpl##update(String, T) SQL = {}", nativeSql);
-            } else if (TemplateTypeEnum.DELETE.getKey().equals(templateType)) {
+            } else if (TemplateTypeEnum.DELETE.getKey().equals(sqlTemplate.getTemplateType().getKey())) {
                 LOGGER.debug("AbstractFleaJPADAOImpl##delete(String, T) SQL = {}", nativeSql);
             }
         }
 
         Query query = getEntityManager().createNativeQuery(nativeSql);
-        setParameter(query, nativeParam, templateType);
+        setParameter(query, nativeParam, sqlTemplate.getTemplateType().getKey());
         // 执行原生SQL语句（可能包含 INSERT, UPDATE, DELETE）
         return query.executeUpdate();
     }

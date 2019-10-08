@@ -64,6 +64,9 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
 
     protected TemplateTypeEnum templateType; // 模板类型
 
+    // 实体属性变量和表字段对应关系（主要是应对where子句中表字段对应多个实体属性变量的场景）， K ：实体属性变量名 V ：表字段名
+    private Map<String, String> paramTabCols = new HashMap<String, String>();
+
     public SqlTemplate() {
     }
 
@@ -282,6 +285,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
         for (int i = 0; i < entityCols.length; i++) {
             Column column = entityCols[i];
             paramMap.put(column.getAttrName(), column.getAttrValue());
+            paramTabCols.put(column.getAttrName(), column.getTabColumnName());
         }
     }
 
@@ -310,8 +314,10 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
                 String[] connAttr = StringUtils.split(singleConn, DBConstants.SQLConstants.SQL_EQUAL,
                         DBConstants.SQLConstants.SQL_GE, DBConstants.SQLConstants.SQL_GT,
                         DBConstants.SQLConstants.SQL_LE, DBConstants.SQLConstants.SQL_LT,
-                        DBConstants.SQLConstants.SQL_LIKE, DBConstants.SQLConstants.SQL_LOWER_LIKE,
-                        DBConstants.SQLConstants.SQL_IN, DBConstants.SQLConstants.SQL_LOWER_IN);
+                        DBConstants.SQLConstants.SQL_BLANK + DBConstants.SQLConstants.SQL_LIKE + DBConstants.SQLConstants.SQL_BLANK,
+                        DBConstants.SQLConstants.SQL_BLANK + DBConstants.SQLConstants.SQL_LOWER_LIKE + DBConstants.SQLConstants.SQL_BLANK,
+                        DBConstants.SQLConstants.SQL_BLANK + DBConstants.SQLConstants.SQL_IN + DBConstants.SQLConstants.SQL_BLANK,
+                        DBConstants.SQLConstants.SQL_BLANK + DBConstants.SQLConstants.SQL_LOWER_IN + DBConstants.SQLConstants.SQL_BLANK);
                 if (connAttr.length == 2) {
                     String key = connAttr[0];
                     String value = connAttr[1];
@@ -321,6 +327,11 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
                     }
 
                     if (value.contains(DBConstants.SQLConstants.SQL_COLON)) {
+                        // 存在重复的key，value中的值以逗号分隔
+                        String val = map.get(StringUtils.trim(key));
+                        if (StringUtils.isNotBlank(val)) {
+                            value = StringUtils.trim(val) + DBConstants.SQLConstants.SQL_COMMA + StringUtils.trim(value);
+                        }
                         map.put(StringUtils.trim(key), StringUtils.trim(value));
                     }
                 }
@@ -403,27 +414,49 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
             }
 
             String attrN = column.getAttrName();
-            Object entity = column.getEntity();
-            FleaEntity fleaEntity = null;
-            if (ObjectUtils.isNotEmpty(entity)) {
-                fleaEntity = (FleaEntity) entity;
-            }
-            String attrNameVar = StringUtils.subStrLast(attrName, attrName.length() - 1);
-            if (!attrName.equals(StringUtils.strCat(DBConstants.SQLConstants.SQL_COLON, attrN)) && ObjectUtils.isNotEmpty(fleaEntity) && !fleaEntity.contains(attrNameVar)) {
-                // 请检查SQL模板参数【id="{0}"】配置（属性【key="{1}"】中的属性列{2}与属性变量{3}不一一对应）
-                throw new SqlTemplateException("ERROR-DB-SQT0000000023", paramId, sqlTemplateEnum.getKey(), tabColName, attrName);
-            }
-            if (ObjectUtils.isNotEmpty(fleaEntity) && fleaEntity.contains(attrName) && !attrName.equals(StringUtils.strCat(DBConstants.SQLConstants.SQL_COLON, attrN))) {
-                // 实体类其他属性
-                Column col = new Column();
-                col.setAttrName(attrNameVar);
-                col.setAttrValue(fleaEntity.get(attrNameVar));
-                cols.add(col);
-            } else {
+            if (attrName.equals(StringUtils.strCat(DBConstants.SQLConstants.SQL_COLON, attrN))) {
                 cols.add(column);
+            } else {
+                if (!checkAttrName(attrName, cols, tabColName)) {
+                    // 请检查SQL模板参数【id="{0}"】配置（属性【key="{1}"】中的属性列{2}与属性变量{3}不一一对应）
+                    throw new SqlTemplateException("ERROR-DB-SQT0000000023", paramId, sqlTemplateEnum.getKey(), tabColName, attrName);
+                }
             }
         }
         return cols.toArray(new Column[0]);
+    }
+
+    /**
+     * <p> 校验属性名, 存在多个以逗号分隔 </p>
+     *
+     * @param attrName 属性名
+     * @return true：属性名合法；false：属性名不合法
+     * @since 1.0.0
+     */
+    private boolean checkAttrName(String attrName, List<Column> cols, String tabColName) {
+        boolean isValid = true;
+        FleaEntity fleaEntity = null;
+        if (ObjectUtils.isNotEmpty(entity) && entity instanceof FleaEntity) {
+            fleaEntity = (FleaEntity) entity;
+        }
+        String[] aNameArr = StringUtils.split(attrName, DBConstants.SQLConstants.SQL_COMMA);
+        if (ArrayUtils.isNotEmpty(aNameArr)) {
+            for (String aName : aNameArr) {
+                String aNameVar = StringUtils.subStrLast(aName, aName.length() - 1);
+                if (ObjectUtils.isNotEmpty(fleaEntity) && !fleaEntity.contains(aNameVar)) {
+                    isValid = false;
+                    break;
+                }
+                if (ObjectUtils.isNotEmpty(fleaEntity) && fleaEntity.contains(aNameVar)) {
+                    Column column = new Column();
+                    column.setAttrName(aNameVar);
+                    column.setAttrValue(fleaEntity.get(aNameVar));
+                    column.setTabColumnName(tabColName);
+                    cols.add(column);
+                }
+            }
+        }
+        return isValid;
     }
 
     /**
@@ -448,18 +481,22 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
                 int index = sqlStr.indexOf(DBConstants.SQLConstants.SQL_COLON + key);
 
                 Column column = (Column) EntityUtils.getEntity(entityCols, Column.COLUMN_ATTR_NAME, key);
+                SqlParam sqlParam = new SqlParam();
                 if (ObjectUtils.isNotEmpty(column)) {
-                    SqlParam sqlParam = new SqlParam();
                     sqlParam.setAttrName(column.getAttrName());
                     sqlParam.setAttrValue(column.getAttrValue());
                     sqlParam.setTabColName(column.getTabColumnName());
-                    // 设置参数索引为起始位置，后面需要重新根据这个排序确定
-                    sqlParam.setIndex(index);
-                    // 添加SQL参数
-                    sqlParams.add(sqlParam);
-                    // 将sql中的 :实体属性变量名 替换为 ?
-                    StringUtils.replace(sql, DBConstants.SQLConstants.SQL_COLON + key, DBConstants.SQLConstants.SQL_PLACEHOLDER);
+                } else {
+                    sqlParam.setAttrName(key);
+                    sqlParam.setAttrValue(params.get(key));
+                    sqlParam.setTabColName(paramTabCols.get(key));
                 }
+                // 设置参数索引为起始位置，后面需要重新根据这个排序确定
+                sqlParam.setIndex(index);
+                // 添加SQL参数
+                sqlParams.add(sqlParam);
+                // 将sql中的 :实体属性变量名 替换为 ?
+                StringUtils.replace(sql, DBConstants.SQLConstants.SQL_COLON + key, DBConstants.SQLConstants.SQL_PLACEHOLDER);
             }
         }
 
@@ -594,4 +631,8 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
         return sqlParams;
     }
 
+    @Override
+    public TemplateTypeEnum getTemplateType() {
+        return templateType;
+    }
 }

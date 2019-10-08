@@ -379,6 +379,17 @@ public interface IFleaJPABaseDataHandler<T> {
     List<T> query(String relationId, T entity) throws Exception;
 
     /**
+     * <p> 通过SELECT SQL模板，查询数据（其中<code>relationId</code>为SQL关系编号, 单个查询结果返回） </p>
+     *
+     * @param relationId 关系编号
+     * @param entity     实体类
+     * @return 实体类数据集合
+     * @throws Exception
+     * @since 1.0.0
+     */
+    Object querySingle(String relationId, T entity) throws Exception;
+
+    /**
      * <p> 通过INSERT SQL模板，保存数据（其中<code>relationId</code>为SQL关系编号）</p>
      *
      * @param relationId 关系编号
