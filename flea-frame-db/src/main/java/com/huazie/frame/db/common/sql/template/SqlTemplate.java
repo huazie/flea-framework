@@ -1,5 +1,6 @@
 package com.huazie.frame.db.common.sql.template;
 
+import com.huazie.frame.common.FleaEntity;
 import com.huazie.frame.common.util.MapUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
@@ -402,11 +403,25 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
             }
 
             String attrN = column.getAttrName();
-            if (!attrName.equals(StringUtils.strCat(DBConstants.SQLConstants.SQL_COLON, attrN))) {
+            Object entity = column.getEntity();
+            FleaEntity fleaEntity = null;
+            if (ObjectUtils.isNotEmpty(entity)) {
+                fleaEntity = (FleaEntity) entity;
+            }
+            String attrNameVar = StringUtils.subStrLast(attrName, attrName.length() - 1);
+            if (!attrName.equals(StringUtils.strCat(DBConstants.SQLConstants.SQL_COLON, attrN)) && ObjectUtils.isNotEmpty(fleaEntity) && !fleaEntity.contains(attrNameVar)) {
                 // 请检查SQL模板参数【id="{0}"】配置（属性【key="{1}"】中的属性列{2}与属性变量{3}不一一对应）
                 throw new SqlTemplateException("ERROR-DB-SQT0000000023", paramId, sqlTemplateEnum.getKey(), tabColName, attrName);
             }
-            cols.add(column);
+            if (ObjectUtils.isNotEmpty(fleaEntity) && fleaEntity.contains(attrName) && !attrName.equals(StringUtils.strCat(DBConstants.SQLConstants.SQL_COLON, attrN))) {
+                // 实体类其他属性
+                Column col = new Column();
+                col.setAttrName(attrNameVar);
+                col.setAttrValue(fleaEntity.get(attrNameVar));
+                cols.add(col);
+            } else {
+                cols.add(column);
+            }
         }
         return cols.toArray(new Column[0]);
     }

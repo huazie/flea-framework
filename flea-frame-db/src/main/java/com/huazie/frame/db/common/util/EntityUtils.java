@@ -174,6 +174,8 @@ public class EntityUtils {
                 column.setNullable(isNullable);
                 column.setUnique(isUnique);
 
+                column.setEntity(entity);
+
                 columns.add(column);
             }
         }
@@ -245,7 +247,7 @@ public class EntityUtils {
         }
         // 获取实体类T的对象的属性列相关信息
         Column[] entityCols = toColumnsArray(entity);
-        if (org.apache.commons.lang.ArrayUtils.isEmpty(entityCols)) {
+        if (ArrayUtils.isEmpty(entityCols)) {
             // 请检查初始实体类（实体类的属性列相关信息不存在）
             throw new DaoException("ERROR-DB-SQT0000000016");
         }

@@ -20,7 +20,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "flea_para_detail")
-public class FleaParaDetail implements FleaEntity {
+public class FleaParaDetail extends FleaEntity {
 
     private static final long serialVersionUID = -1711370793670889694L;
 

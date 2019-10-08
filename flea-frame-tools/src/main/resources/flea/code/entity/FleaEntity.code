@@ -23,7 +23,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "%TABLE_NAME%")
-public class %ENTITY_CLASS_NAME% implements FleaEntity {
+public class %ENTITY_CLASS_NAME% extends FleaEntity {
 
 %VARIABLE_CODE%
 

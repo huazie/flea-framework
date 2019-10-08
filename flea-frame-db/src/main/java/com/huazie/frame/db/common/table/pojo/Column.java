@@ -19,6 +19,8 @@ public class Column implements Serializable {
 
     public static final String COLUMN_TAB_COL_NAME = "tabColumnName";
 
+    private Object entity; // 实体类对象实例
+
     private Class<?> attrType; // 实体类属性对应类型
 
     private String attrName; // 实体类属性变量名
@@ -34,6 +36,14 @@ public class Column implements Serializable {
     private boolean nullable; // 是否可空
 
     private Boolean unique; // 是否唯一
+
+    public Object getEntity() {
+        return entity;
+    }
+
+    public void setEntity(Object entity) {
+        this.entity = entity;
+    }
 
     public Class<?> getAttrType() {
         return attrType;
