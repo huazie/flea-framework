@@ -79,8 +79,11 @@ public interface DBConstants {
         String SQL_WHERE = "WHERE";
         String SQL_SET = "SET";
         String SQL_ORDER_BY = "ORDER BY";
+        String SQL_LOWER_ORDER_BY = "order by";
         String SQL_GROUP_BY = "GROUP BY";
+        String SQL_LOWER_GROUP_BY = "group by";
         String SQL_LIMIT = "LIMIT";
+        String SQL_LOWER_LIMIT = "limit";
         String SQL_COMMA = ",";
         String SQL_DOT = ".";
         String SQL_COLON = ":";

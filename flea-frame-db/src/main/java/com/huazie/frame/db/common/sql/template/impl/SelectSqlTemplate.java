@@ -2,6 +2,7 @@ package com.huazie.frame.db.common.sql.template.impl;
 
 import com.huazie.frame.common.util.MapUtils;
 import com.huazie.frame.common.util.ObjectUtils;
+import com.huazie.frame.common.util.PatternMatcherUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.DBConstants;
 import com.huazie.frame.db.common.exception.SqlTemplateException;
@@ -14,6 +15,7 @@ import com.huazie.frame.db.common.util.EntityUtils;
 import org.apache.commons.lang.ArrayUtils;
 
 import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * <p> 查找SQL模板, 用于使用原生SQL实现分表; </p>
@@ -78,6 +80,8 @@ import java.util.Map;
 public class SelectSqlTemplate<T> extends SqlTemplate<T> {
 
     private static final long serialVersionUID = -8355057263712328779L;
+
+    private static final String SINGLE_SELECT_RESULT_EXP = "AVG\\([([\\s\\S]*)]*\\)|COUNT\\([([\\s\\S]*)]*\\)|SUM\\([([\\s\\S]*)]*\\)|MAX\\([([\\s\\S]*)]*\\)|MIN\\([([\\s\\S]*)]*\\)";
 
     /**
      * <p> SELECT模板构造方法, 参考示例1 </p>
@@ -172,7 +176,7 @@ public class SelectSqlTemplate<T> extends SqlTemplate<T> {
         for (int n = 0; n < cols.length; n++) {
             String tabColumnName = StringUtils.trim(cols[n]);//表字段名
             Column column = (Column) EntityUtils.getEntity(entityCols, Column.COLUMN_TAB_COL_NAME, tabColumnName);
-            if (ObjectUtils.isEmpty(column)) {
+            if (ObjectUtils.isEmpty(column) && !PatternMatcherUtils.matches(SINGLE_SELECT_RESULT_EXP, tabColumnName, Pattern.CASE_INSENSITIVE)) {
                 // 请检查SQL模板参数【id="{0}"】配置（属性【key="{1}"】中的字段【{2}】在实体类【{3}】中不存在）
                 throw new SqlTemplateException("ERROR-DB-SQT0000000022", paramId, SqlTemplateEnum.COLUMNS.getKey(), tabColumnName, getEntity().getClass().getName());
             }

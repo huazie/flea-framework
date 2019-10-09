@@ -280,8 +280,8 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     }
 
     @Override
-    public Object querySingle(String relationId, T entity) throws Exception {
-        return createNativeQuery(relationId, entity, Object.class).getSingleResult();
+    public Object querySingle(String relationId, T entity, Class<?> resultClazz) throws Exception {
+        return createNativeQuery(relationId, entity, resultClazz).getSingleResult();
     }
 
     /**
