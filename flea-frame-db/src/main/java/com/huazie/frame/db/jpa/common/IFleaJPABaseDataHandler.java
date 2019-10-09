@@ -383,12 +383,11 @@ public interface IFleaJPABaseDataHandler<T> {
      *
      * @param relationId 关系编号
      * @param entity     实体类
-     * @param resultClazz 单个结果Class
      * @return 实体类数据集合
      * @throws Exception
      * @since 1.0.0
      */
-    Object querySingle(String relationId, T entity, Class<?> resultClazz) throws Exception;
+    Object querySingle(String relationId, T entity) throws Exception;
 
     /**
      * <p> 通过INSERT SQL模板，保存数据（其中<code>relationId</code>为SQL关系编号）</p>

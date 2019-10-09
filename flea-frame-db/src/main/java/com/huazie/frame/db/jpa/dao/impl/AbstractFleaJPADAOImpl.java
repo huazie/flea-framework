@@ -276,25 +276,24 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 
     @Override
     public List<T> query(String relationId, T entity) throws Exception {
-        return createNativeQuery(relationId, entity, null).getResultList();
+        return createNativeQuery(relationId, entity, false).getResultList();
     }
 
     @Override
-    public Object querySingle(String relationId, T entity, Class<?> resultClazz) throws Exception {
-        return createNativeQuery(relationId, entity, resultClazz).getSingleResult();
+    public Object querySingle(String relationId, T entity) throws Exception {
+        return createNativeQuery(relationId, entity, true).getSingleResult();
     }
 
     /**
      * <p> 构建原生查询对象 </p>
      *
-     * @param relationId  关系编号
-     * @param entity      实体类
-     * @param resultClazz 查询结果Class
+     * @param relationId 关系编号
+     * @param entity     实体类
      * @return 实体类数据集合
      * @throws Exception
      * @since 1.0.0
      */
-    private Query createNativeQuery(String relationId, T entity, Class resultClazz) throws Exception {
+    private Query createNativeQuery(String relationId, T entity, boolean isSingle) throws Exception {
         // 构建并执行 SELECT SQL模板
         ITemplate<T> selectSqlTemplate = SqlTemplateFactory.newSqlTemplate(relationId, entity, TemplateTypeEnum.SELECT);
         selectSqlTemplate.initialize();
@@ -306,8 +305,8 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         }
 
         Query query;
-        if (ObjectUtils.isNotEmpty(resultClazz)) {
-            query = getEntityManager().createNativeQuery(nativeSql, resultClazz);
+        if (isSingle) {
+            query = getEntityManager().createNativeQuery(nativeSql);
         } else {
             query = getEntityManager().createNativeQuery(nativeSql, entity.getClass());
         }
