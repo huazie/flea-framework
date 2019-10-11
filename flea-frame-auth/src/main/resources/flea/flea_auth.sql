@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50538
 File Encoding         : 65001
 
-Date: 2019-09-24 17:43:34
+Date: 2019-10-11 18:42:30
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,7 +31,8 @@ CREATE TABLE `flea_account` (
   `expiry_date` datetime NOT NULL COMMENT '失效日期',
   `remarks` varchar(1024) DEFAULT NULL COMMENT '备注信息',
   PRIMARY KEY (`account_id`),
-  KEY `index_name_psw` (`account_code`,`account_pwd`) USING BTREE
+  KEY `index_name_psw` (`account_code`,`account_pwd`) USING BTREE,
+  KEY `fk_account_user` (`user_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
@@ -79,7 +80,8 @@ CREATE TABLE `flea_login_log` (
   `remarks` varchar(1024) CHARACTER SET utf8 DEFAULT NULL COMMENT '描述信息',
   `ext1` varchar(1024) CHARACTER SET utf8 DEFAULT NULL COMMENT '扩展字段1',
   `ext2` varchar(1024) CHARACTER SET utf8 DEFAULT NULL COMMENT '扩展字段2',
-  PRIMARY KEY (`login_log_id`)
+  PRIMARY KEY (`login_log_id`),
+  KEY `fk_loginlog_account` (`account_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk;
 
 -- ----------------------------
@@ -105,11 +107,30 @@ CREATE TABLE `flea_login_log_201909` (
   `remarks` varchar(1024) CHARACTER SET utf8 DEFAULT NULL COMMENT '描述信息',
   `ext1` varchar(1024) CHARACTER SET utf8 DEFAULT NULL COMMENT '扩展字段1',
   `ext2` varchar(1024) CHARACTER SET utf8 DEFAULT NULL COMMENT '扩展字段2',
-  PRIMARY KEY (`login_log_id`)
+  PRIMARY KEY (`login_log_id`),
+  KEY `fk_loginlog_account` (`account_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk;
 
 -- ----------------------------
 -- Records of flea_login_log_201909
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `flea_role`
+-- ----------------------------
+DROP TABLE IF EXISTS `flea_role`;
+CREATE TABLE `flea_role` (
+  `role_id` int(12) NOT NULL AUTO_INCREMENT COMMENT '角色编号',
+  `role_name` varchar(50) NOT NULL COMMENT '角色名称',
+  `role_state` tinyint(2) NOT NULL COMMENT '角色状态（1: 正常  0: 删除）',
+  `create_date` datetime NOT NULL COMMENT '创建日期',
+  `done_date` datetime DEFAULT NULL COMMENT '修改日期',
+  `remarks` varchar(1024) DEFAULT NULL COMMENT '备注信息',
+  PRIMARY KEY (`role_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10012 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of flea_role
 -- ----------------------------
 
 -- ----------------------------
