@@ -147,4 +147,11 @@ public class SqlTemplateConfigTest {
         LOGGER.debug("RESULT = {}", PatternMatcherUtils.matches(regExp, input, Pattern.CASE_INSENSITIVE));
     }
 
+    @Test
+    public void testPattern1() throws Exception {
+        String regExp = "[ ]*1[ ]*=[ ]*1[ ]*";
+        String input = " 1= 1 ";
+        LOGGER.debug("RESULT = {}", PatternMatcherUtils.matches(regExp, input, Pattern.CASE_INSENSITIVE));
+    }
+
 }

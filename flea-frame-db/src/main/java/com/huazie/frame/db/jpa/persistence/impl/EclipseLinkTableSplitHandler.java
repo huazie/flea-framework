@@ -35,7 +35,7 @@ public class EclipseLinkTableSplitHandler implements IFleaJPATableSplitHandler {
         SplitTable splitTable = EntityUtils.getSplitTable(entity);
 
         // 存在分表，需要查询指定分表
-        if (StringUtils.isNotBlank(splitTable.getSplitTableName()) && ObjectUtils.isNotEmpty(criteriaQuery)) {
+        if (StringUtils.isNotBlank(splitTable.getSplitTableName())) {
             Set<Root<?>> roots = criteriaQuery.getRoots();
             if (CollectionUtils.isNotEmpty(roots)) {
                 // 重新设置 查询的分表表名

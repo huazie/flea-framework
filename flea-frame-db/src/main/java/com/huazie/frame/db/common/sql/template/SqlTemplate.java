@@ -303,31 +303,26 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
                 .replace(DBConstants.SQLConstants.SQL_RIGHT_ROUND_BRACKETS, DBConstants.SQLConstants.SQL_BLANK);
 
         // 根据 and , or , order by , group by , limit 进行分组
-        String[] singleConnAttr = StringUtils.split(newConn, DBConstants.SQLConstants.SQL_AND, DBConstants.SQLConstants.SQL_LOWER_AND,
+        String[] singleConnAttr = StringUtils.split(newConn,
+                DBConstants.SQLConstants.SQL_AND, DBConstants.SQLConstants.SQL_LOWER_AND,
                 DBConstants.SQLConstants.SQL_OR, DBConstants.SQLConstants.SQL_LOWER_OR,
-                DBConstants.SQLConstants.SQL_BLANK + DBConstants.SQLConstants.SQL_ORDER_BY + DBConstants.SQLConstants.SQL_BLANK,
-                DBConstants.SQLConstants.SQL_BLANK + DBConstants.SQLConstants.SQL_LOWER_ORDER_BY + DBConstants.SQLConstants.SQL_BLANK,
-                DBConstants.SQLConstants.SQL_BLANK + DBConstants.SQLConstants.SQL_GROUP_BY + DBConstants.SQLConstants.SQL_BLANK,
-                DBConstants.SQLConstants.SQL_BLANK + DBConstants.SQLConstants.SQL_LOWER_GROUP_BY + DBConstants.SQLConstants.SQL_BLANK,
-                DBConstants.SQLConstants.SQL_BLANK + DBConstants.SQLConstants.SQL_LIMIT + DBConstants.SQLConstants.SQL_BLANK,
-                DBConstants.SQLConstants.SQL_BLANK + DBConstants.SQLConstants.SQL_LOWER_LIMIT + DBConstants.SQLConstants.SQL_BLANK);
+                DBConstants.SQLConstants.SQL_ORDER_BY, DBConstants.SQLConstants.SQL_LOWER_ORDER_BY,
+                DBConstants.SQLConstants.SQL_GROUP_BY, DBConstants.SQLConstants.SQL_LOWER_GROUP_BY,
+                DBConstants.SQLConstants.SQL_LIMIT, DBConstants.SQLConstants.SQL_LOWER_LIMIT);
 
         if (!ArrayUtils.isEmpty(singleConnAttr)) {
 
             map = new HashMap<String, String>();
 
             for (String singleConn : singleConnAttr) {
-                String[] connAttr = StringUtils.split(singleConn, DBConstants.SQLConstants.SQL_BLANK
-                                + DBConstants.SQLConstants.SQL_EQUAL + DBConstants.SQLConstants.SQL_BLANK,
+                String[] connAttr = StringUtils.split(singleConn, DBConstants.SQLConstants.SQL_EQUAL,
                         DBConstants.SQLConstants.SQL_GE, DBConstants.SQLConstants.SQL_GT,
                         DBConstants.SQLConstants.SQL_LE, DBConstants.SQLConstants.SQL_LT,
-                        DBConstants.SQLConstants.SQL_BLANK + DBConstants.SQLConstants.SQL_LIKE + DBConstants.SQLConstants.SQL_BLANK,
-                        DBConstants.SQLConstants.SQL_BLANK + DBConstants.SQLConstants.SQL_LOWER_LIKE + DBConstants.SQLConstants.SQL_BLANK,
-                        DBConstants.SQLConstants.SQL_BLANK + DBConstants.SQLConstants.SQL_IN + DBConstants.SQLConstants.SQL_BLANK,
-                        DBConstants.SQLConstants.SQL_BLANK + DBConstants.SQLConstants.SQL_LOWER_IN + DBConstants.SQLConstants.SQL_BLANK);
+                        DBConstants.SQLConstants.SQL_LIKE, DBConstants.SQLConstants.SQL_LOWER_LIKE,
+                        DBConstants.SQLConstants.SQL_IN, DBConstants.SQLConstants.SQL_LOWER_IN);
                 if (connAttr.length == CommonConstants.NumeralConstants.INT_ONE) {
                     if (connAttr[0].contains(DBConstants.SQLConstants.SQL_COLON)) { // 目前这里就只有 limit
-                        map.put(DBConstants.SQLConstants.SQL_LIMIT, connAttr[0]);
+                        map.put(StringUtils.trim(DBConstants.SQLConstants.SQL_LIMIT), connAttr[0]);
                     }
                 } else if (connAttr.length == CommonConstants.NumeralConstants.INT_TWO) {
                     String key = connAttr[0];
@@ -419,7 +414,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
             }
 
             Column column = (Column) EntityUtils.getEntity(entityCols, Column.COLUMN_TAB_COL_NAME, tabColName);
-            if (ObjectUtils.isEmpty(column) && !DBConstants.SQLConstants.SQL_LIMIT.equals(tabColName)) {
+            if (ObjectUtils.isEmpty(column) && !StringUtils.trim(DBConstants.SQLConstants.SQL_LIMIT).equals(tabColName)) {
                 // 请检查SQL模板参数【id="{0}"】配置（属性【key="{1}"】中的字段【{2}】在实体类【{3}】中不存在）
                 throw new SqlTemplateException("ERROR-DB-SQT0000000022", paramId, sqlTemplateEnum.getKey(), tabColName, entity.getClass().getName());
             }
@@ -435,7 +430,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
                     }
                 }
             } else {
-                if (DBConstants.SQLConstants.SQL_LIMIT.equals(tabColName)) {
+                if (StringUtils.trim(DBConstants.SQLConstants.SQL_LIMIT).equals(tabColName)) {
                     if (!checkAttrName(attrName, cols, tabColName)) {
                         // 请检查SQL模板参数【id="{0}"】配置（属性【key="{1}"】中的LIMIT子句里的变量{2}）
                         throw new SqlTemplateException("ERROR-DB-SQT0000000032", paramId, sqlTemplateEnum.getKey(), attrName);

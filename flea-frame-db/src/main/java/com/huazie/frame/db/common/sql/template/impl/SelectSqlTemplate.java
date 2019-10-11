@@ -83,6 +83,8 @@ public class SelectSqlTemplate<T> extends SqlTemplate<T> {
 
     private static final String SINGLE_SELECT_RESULT_EXP = "AVG\\([([\\s\\S]*)]*\\)|COUNT\\([([\\s\\S]*)]*\\)|SUM\\([([\\s\\S]*)]*\\)|MAX\\([([\\s\\S]*)]*\\)|MIN\\([([\\s\\S]*)]*\\)";
 
+    private static final String EQUAL_EXP = "[ ]*1[ ]*=[ ]*1[ ]*";
+
     /**
      * <p> SELECT模板构造方法, 参考示例1 </p>
      *
@@ -138,7 +140,7 @@ public class SelectSqlTemplate<T> extends SqlTemplate<T> {
         Map<String, String> whereMap = createConditionMap(condStr);
 
         // 校验【key=columns】和【key=conditions】的数据是否正确
-        Column[] realEntityCols = check(entityCols, cols, whereMap);
+        Column[] realEntityCols = check(entityCols, cols, whereMap, condStr);
 
         // 设置SQL参数
         createParamMap(params, realEntityCols);
@@ -161,14 +163,14 @@ public class SelectSqlTemplate<T> extends SqlTemplate<T> {
      * @throws SqlTemplateException SQL模板异常类
      * @since 1.0.0
      */
-    private Column[] check(final Column[] entityCols, String[] cols, Map<String, String> whereMap) throws SqlTemplateException {
+    private Column[] check(final Column[] entityCols, String[] cols, Map<String, String> whereMap, String condStr) throws SqlTemplateException {
 
         if (ArrayUtils.isEmpty(cols)) {
             // 请检查SQL模板参数【id="{0}"】配置(属性【key="{1}"】中的【value】不能为空)
             throw new SqlTemplateException("ERROR-DB-SQT0000000013", paramId, SqlTemplateEnum.COLUMNS.getKey());
         }
 
-        if (MapUtils.isEmpty(whereMap)) {
+        if (MapUtils.isEmpty(whereMap) && !PatternMatcherUtils.matches(EQUAL_EXP, condStr, Pattern.CASE_INSENSITIVE)) {
             // 请检查SQL模板参数【id="{0}"】配置(属性【key="{1}"】中的【value】不能为空)
             throw new SqlTemplateException("ERROR-DB-SQT0000000013", paramId, SqlTemplateEnum.CONDITIONS.getKey());
         }
