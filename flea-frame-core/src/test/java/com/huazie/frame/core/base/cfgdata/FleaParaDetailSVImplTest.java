@@ -160,6 +160,9 @@ public class FleaParaDetailSVImplTest {
             AbstractSpringCache cache = manager.getCache("fleaparadetail");
             LOGGER.debug("Cache={}", cache);
 
+            Set<String> cacheKey = cache.getCacheKey();
+            LOGGER.debug("CacheKey = {}", cacheKey);
+
             //#### 1.  简单字符串
 //			cache.put("menu1", "huazie");
 //            cache.get("menu1");
@@ -170,7 +173,7 @@ public class FleaParaDetailSVImplTest {
 //			cache.put("user", user);
 //			LOGGER.debug(cache.get("user", String.class));
 //            cache.get("FLEA_RES_STATE");
-            cache.clear();
+//            cache.clear();
 
             //#### 3.  List塞对象
 //			List<String> userList = new ArrayList<String>();
