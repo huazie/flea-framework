@@ -22,6 +22,8 @@ public class RedisSpringCacheManager extends AbstractSpringCacheManager {
      * @since 1.0.0
      */
     public RedisSpringCacheManager() {
+        // 初始化默认连接池
+        RedisPool.getInstance().initialize();
         redisClient = RedisClientProxy.getProxyInstance();
     }
 

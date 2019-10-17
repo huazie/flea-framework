@@ -1,18 +1,16 @@
 package com.huazie.frame.db.jpa.dao.impl;
 
+import com.huazie.frame.common.pool.FleaObjectPoolFactory;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.db.common.exception.DaoException;
 import com.huazie.frame.db.common.sql.pojo.SqlParam;
 import com.huazie.frame.db.common.sql.template.ITemplate;
+import com.huazie.frame.db.common.sql.template.SqlTemplateFactory;
 import com.huazie.frame.db.common.sql.template.TemplateTypeEnum;
-import com.huazie.frame.db.common.sql.template.impl.DeleteSqlTemplate;
-import com.huazie.frame.db.common.sql.template.impl.InsertSqlTemplate;
-import com.huazie.frame.db.common.sql.template.impl.SelectSqlTemplate;
-import com.huazie.frame.db.common.sql.template.impl.UpdateSqlTemplate;
+import com.huazie.frame.db.common.table.split.TableSplitHelper;
 import com.huazie.frame.db.jpa.common.FleaJPAQuery;
 import com.huazie.frame.db.jpa.common.FleaJPAQueryPool;
-import com.huazie.frame.db.jpa.common.FleaJPAQueryObjectPool;
 import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +21,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * <p> 抽象Flea JPA DAO层实现类，该类实现了基本的增删改查功能，可以自行拓展 </p>
@@ -60,12 +59,22 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 
     @Override
     public T query(long entityId) throws Exception {
-        return queryById(entityId);
+        return queryById(entityId, null);
     }
 
     @Override
     public T query(String entityId) throws Exception {
-        return queryById(entityId);
+        return queryById(entityId, null);
+    }
+
+    @Override
+    public T queryNew(long entityId, T entity) throws Exception {
+        return queryById(entityId, entity);
+    }
+
+    @Override
+    public T queryNew(String entityId, T entity) throws Exception {
+        return queryById(entityId, entity);
     }
 
     /**
@@ -74,105 +83,139 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
      * @param entityId 主键编号
      * @return 数据行对应的实体类信息
      * @throws Exception
+     * @since 1.0.0
      */
-    protected T queryById(Object entityId) throws Exception {
+    protected T queryById(Object entityId, T entity) throws Exception {
         checkPrimaryKey(entityId);
-        T t = getEntityManager().find(clazz, entityId);
+        T t = getEntityManager(entity, true).find(clazz, entityId);
         return t;
     }
 
     @Override
     public List<T> query(Map<String, Object> paramMap) throws Exception {
-        FleaJPAQuery query = getQuery(null);
-        query.equal(paramMap);
-        List<T> ts = query.getResultList();
-        return ts;
+        return getQuery(null).equal(paramMap).getResultList();
     }
 
     @Override
     public List<T> query(Map<String, Object> paramMap, String attrName, String orderBy) throws Exception {
-        FleaJPAQuery query = getQuery(null);
-        query.equal(paramMap);
-        query.addOrderby(attrName, orderBy);
-        List<T> ts = query.getResultList();
-        return ts;
+        return getQuery(null).equal(paramMap).addOrderby(attrName, orderBy).getResultList();
     }
 
     @Override
     public List<T> query(Map<String, Object> paramMap, int start, int max) throws Exception {
-        FleaJPAQuery query = getQuery(null);
-        query.equal(paramMap);
-        List<T> ts = query.getResultList(start, max);
-        return ts;
+        return getQuery(null).equal(paramMap).getResultList(start, max);
     }
 
     @Override
     public List<T> query(Map<String, Object> paramMap, String attrName, String orderBy, int start, int max)
             throws Exception {
-        FleaJPAQuery query = getQuery(null);
-        query.equal(paramMap);
-        query.addOrderby(attrName, orderBy);
-        List<T> ts = query.getResultList(start, max);
-        return ts;
+        return getQuery(null).equal(paramMap).addOrderby(attrName, orderBy).getResultList(start, max);
     }
 
     @Override
     public List<T> queryAll() throws Exception {
-        FleaJPAQuery query = getQuery(null);
-        List<T> ts = query.getResultList();
-        return ts;
+        return getQuery(null).getResultList();
     }
 
     @Override
     public List<T> queryAll(String attrName, String orderBy) throws Exception {
-        FleaJPAQuery query = getQuery(null);
-        query.addOrderby(attrName, orderBy);
-        List<T> ts = query.getResultList();
-        return ts;
+        return getQuery(null).addOrderby(attrName, orderBy).getResultList();
     }
 
     @Override
     public List<T> queryAll(int start, int max) throws Exception {
-        FleaJPAQuery query = getQuery(null);
-        List<T> ts = query.getResultList(start, max);
-        return ts;
+        return getQuery(null).getResultList(start, max);
     }
 
     @Override
     public List<T> queryAll(String attrName, String orderBy, int start, int max) throws Exception {
-        FleaJPAQuery query = getQuery(null);
-        query.addOrderby(attrName, orderBy);
-        List<T> ts = query.getResultList(start, max);
-        return ts;
+        return getQuery(null).addOrderby(attrName, orderBy).getResultList(start, max);
     }
 
     @Override
     public long queryCount() throws Exception {
-        FleaJPAQuery query = getQuery(Long.class);
-        query.countDistinct();
-        long count = ((Long) query.getSingleResult());
-        return count;
+        // 调用SQL的COUNT函数统计数目 count()
+        return ((Long) getQuery(Long.class).count().getSingleResult());
     }
 
     @Override
     public long queryCount(Map<String, Object> paramMap) throws Exception {
-        FleaJPAQuery query = getQuery(Long.class);
-        // 添加Where子句查询条件
-        query.equal(paramMap);
-        // 设置调用SQL的COUNT函数统计数目
-        query.countDistinct();
-        long count = ((Long) query.getSingleResult());
-        return count;
+        // 添加Where子句查询条件 equal(Map)
+        // 调用SQL的COUNT函数统计数目 count()
+        return ((Long) getQuery(Long.class).equal(paramMap).count().getSingleResult());
+    }
+
+    @Override
+    public List<T> query(Set<String> attrNames, T entity) throws Exception {
+        return getQuery(null).initQueryEntity(entity).equal(attrNames).getResultList();
+    }
+
+    @Override
+    public List<T> query(Set<String> attrNames, String attrName, String orderBy, T entity) throws Exception {
+        return getQuery(null).initQueryEntity(entity).equal(attrNames).addOrderby(attrName, orderBy).getResultList();
+    }
+
+    @Override
+    public List<T> query(Set<String> attrNames, int start, int max, T entity) throws Exception {
+        return getQuery(null).initQueryEntity(entity).equal(attrNames).getResultList(start, max);
+    }
+
+    @Override
+    public List<T> query(Set<String> attrNames, String attrName, String orderBy, int start, int max, T entity) throws Exception {
+        return getQuery(null).initQueryEntity(entity).equal(attrNames).addOrderby(attrName, orderBy).getResultList(start, max);
+    }
+
+    @Override
+    public List<T> queryAll(T entity) throws Exception {
+        return getQuery(null).initQueryEntity(entity).getResultList();
+    }
+
+    @Override
+    public List<T> queryAll(String attrName, String orderBy, T entity) throws Exception {
+        return getQuery(null).initQueryEntity(entity).addOrderby(attrName, orderBy).getResultList();
+    }
+
+    @Override
+    public List<T> queryAll(int start, int max, T entity) throws Exception {
+        return getQuery(null).initQueryEntity(entity).getResultList(start, max);
+    }
+
+    @Override
+    public List<T> queryAll(String attrName, String orderBy, int start, int max, T entity) throws Exception {
+        return getQuery(null).initQueryEntity(entity).addOrderby(attrName, orderBy).getResultList(start, max);
+    }
+
+    @Override
+    public long queryCount(T entity) throws Exception {
+        // 调用SQL的COUNT函数统计数目 count()
+        return ((Long) getQuery(Long.class).initQueryEntity(entity).count().getSingleResult());
+    }
+
+    @Override
+    public long queryCount(Set<String> attrNames, T entity) throws Exception {
+        // 添加Where子句查询条件 equal(Set)
+        // 调用SQL的COUNT函数统计数目 count()
+        return ((Long) getQuery(Long.class).initQueryEntity(entity).equal(attrNames).count().getSingleResult());
     }
 
     @Override
     public boolean remove(long entityId) throws Exception {
-        return removeById(entityId);
+        return removeById(entityId, null);
     }
 
     @Override
     public boolean remove(String entityId) throws Exception {
-        return removeById(entityId);
+        return removeById(entityId, null);
+    }
+
+    @Override
+    public boolean removeNew(long entityId, T entity) throws Exception {
+        return removeById(entityId, entity);
+    }
+
+    @Override
+    public boolean removeNew(String entityId, T entity) throws Exception {
+        return removeById(entityId, entity);
     }
 
     /**
@@ -181,12 +224,13 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
      * @param entityId 主键数据
      * @return true : 删除成功; false : 删除失败
      * @throws Exception
+     * @since 1.0.0
      */
-    protected boolean removeById(Object entityId) throws Exception {
+    protected boolean removeById(Object entityId, T entity) throws Exception {
         checkPrimaryKey(entityId);
-        final T old = queryById(entityId);
+        final T old = queryById(entityId, entity);
         if (ObjectUtils.isNotEmpty(old)) {
-            getEntityManager().remove(old);
+            getEntityManager(entity, false).remove(old);
             return true;
         } else {
             return false;
@@ -198,8 +242,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         if (ObjectUtils.isEmpty(entity)) {
             throw new DaoException("ERROR-DB-DAO0000000012");
         }
-        T t = getEntityManager().merge(entity);
-        return t;
+        return getEntityManager(entity, false).merge(entity);
     }
 
     @Override
@@ -208,7 +251,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
             throw new DaoException("ERROR-DB-DAO0000000013");
         }
         for (T t : entities) {
-            getEntityManager().merge(t);
+            getEntityManager(t, false).merge(t);
         }
         return entities;
     }
@@ -218,7 +261,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         if (ObjectUtils.isEmpty(entity)) {
             throw new DaoException("ERROR-DB-DAO0000000012");
         }
-        getEntityManager().persist(entity);
+        getEntityManager(entity, false).persist(entity);
     }
 
     @Override
@@ -227,44 +270,68 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
             throw new DaoException("ERROR-DB-DAO0000000013");
         }
         for (T t : entities) {
-            getEntityManager().persist(t);
+            getEntityManager(t, false).persist(t);
         }
     }
 
     @Override
     public List<T> query(String relationId, T entity) throws Exception {
+        return createNativeQuery(relationId, entity, false).getResultList();
+    }
+
+    @Override
+    public Object querySingle(String relationId, T entity) throws Exception {
+        return createNativeQuery(relationId, entity, true).getSingleResult();
+    }
+
+    /**
+     * <p> 构建原生查询对象 </p>
+     *
+     * @param relationId 关系编号
+     * @param entity     实体类
+     * @return 实体类数据集合
+     * @throws Exception
+     * @since 1.0.0
+     */
+    private Query createNativeQuery(String relationId, T entity, boolean isSingle) throws Exception {
         // 构建并执行 SELECT SQL模板
-        ITemplate<T> selectSqlTemplate = new SelectSqlTemplate<T>(relationId, entity);
+        ITemplate<T> selectSqlTemplate = SqlTemplateFactory.newSqlTemplate(relationId, entity, TemplateTypeEnum.SELECT);
         selectSqlTemplate.initialize();
         String nativeSql = selectSqlTemplate.toNativeSql();
         List<SqlParam> nativeParam = selectSqlTemplate.toNativeParams();
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("AbstractFleaJPADAOImpl##query(String, T) SQL = {}", nativeSql);
+            LOGGER.debug("AbstractFleaJPADAOImpl##createNativeQuery(String, T, Class) SQL = {}", nativeSql);
         }
 
-        Query query = getEntityManager().createNativeQuery(nativeSql, entity.getClass());
+        Query query;
+        if (isSingle) {
+            query = getEntityManager().createNativeQuery(nativeSql);
+        } else {
+            query = getEntityManager().createNativeQuery(nativeSql, entity.getClass());
+        }
+
         setParameter(query, nativeParam, TemplateTypeEnum.SELECT.getKey());
 
-        return query.getResultList();
+        return query;
     }
 
     @Override
     public int insert(String relationId, T entity) throws Exception {
         // 构建并执行INSERT SQL模板
-        return save(new InsertSqlTemplate<T>(relationId, entity), TemplateTypeEnum.INSERT.getKey());
+        return save(SqlTemplateFactory.newSqlTemplate(relationId, entity, TemplateTypeEnum.INSERT));
     }
 
     @Override
     public int update(String relationId, T entity) throws Exception {
         // 构建并执行UPDATE SQL模板
-        return save(new UpdateSqlTemplate<T>(relationId, entity), TemplateTypeEnum.UPDATE.getKey());
+        return save(SqlTemplateFactory.newSqlTemplate(relationId, entity, TemplateTypeEnum.UPDATE));
     }
 
     @Override
     public int delete(String relationId, T entity) throws Exception {
         // 构建并执行DELETE SQL模板
-        return save(new DeleteSqlTemplate<T>(relationId, entity), TemplateTypeEnum.DELETE.getKey());
+        return save(SqlTemplateFactory.newSqlTemplate(relationId, entity, TemplateTypeEnum.DELETE));
     }
 
     /**
@@ -274,23 +341,23 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
      * @throws Exception
      * @since 1.0.0
      */
-    private int save(ITemplate<T> sqlTemplate, String templateType) throws Exception {
+    private int save(ITemplate<T> sqlTemplate) throws Exception {
         sqlTemplate.initialize();
         String nativeSql = sqlTemplate.toNativeSql();
         List<SqlParam> nativeParam = sqlTemplate.toNativeParams();
 
         if (LOGGER.isDebugEnabled()) {
-            if (TemplateTypeEnum.INSERT.getKey().equals(templateType)) {
+            if (TemplateTypeEnum.INSERT.getKey().equals(sqlTemplate.getTemplateType().getKey())) {
                 LOGGER.debug("AbstractFleaJPADAOImpl##insert(String, T) SQL = {}", nativeSql);
-            } else if (TemplateTypeEnum.UPDATE.getKey().equals(templateType)) {
+            } else if (TemplateTypeEnum.UPDATE.getKey().equals(sqlTemplate.getTemplateType().getKey())) {
                 LOGGER.debug("AbstractFleaJPADAOImpl##update(String, T) SQL = {}", nativeSql);
-            } else if (TemplateTypeEnum.DELETE.getKey().equals(templateType)) {
+            } else if (TemplateTypeEnum.DELETE.getKey().equals(sqlTemplate.getTemplateType().getKey())) {
                 LOGGER.debug("AbstractFleaJPADAOImpl##delete(String, T) SQL = {}", nativeSql);
             }
         }
 
         Query query = getEntityManager().createNativeQuery(nativeSql);
-        setParameter(query, nativeParam, templateType);
+        setParameter(query, nativeParam, sqlTemplate.getTemplateType().getKey());
         // 执行原生SQL语句（可能包含 INSERT, UPDATE, DELETE）
         return query.executeUpdate();
     }
@@ -350,14 +417,14 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
      * @since 1.0.0
      */
     protected FleaJPAQuery getQuery(Class result) {
-        // 获取JPA查询对象池实例（使用默认连接池名"default"即可）
-        FleaJPAQueryObjectPool jpaQueryPool = FleaJPAQueryObjectPool.getInstance();
-        // 获取Flea JPA查询对象池实例
-        FleaJPAQueryPool pool = jpaQueryPool.getFleaJPAQueryPool();
+        // 获取Flea JPA查询对象池 （使用默认连接池名"default"即可）
+        FleaJPAQueryPool pool = FleaObjectPoolFactory.getFleaObjectPool(FleaJPAQuery.class, FleaJPAQueryPool.class);
+        if (ObjectUtils.isEmpty(pool)) {
+            throw new RuntimeException("Can not get a object pool instance");
+        }
         // 获取Flea JPA查询对象实例
         FleaJPAQuery query = pool.getFleaObject();
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("AbstractFleaJPADAOImpl##getQuery(Class) Pool Name = {}", jpaQueryPool.getPoolName());
             LOGGER.debug("AbstractFleaJPADAOImpl##getQuery(Class) FleaJPAQueryPool = {}", pool);
             LOGGER.debug("AbstractFleaJPADAOImpl##getQuery(Class) FleaJPAQuery = {}", query);
         }
@@ -367,11 +434,25 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     }
 
     /**
-     * <p> 获取EntityManager对象 </p>
+     * <p> 获取JPA持久化对象 </p>
      *
-     * @return EntityManager对象
+     * @return JPA持久化对象
      * @since 1.0.0
      */
     protected abstract EntityManager getEntityManager();
+
+    /**
+     * <p> 获取JPA持久化对象 </p>
+     *
+     * @param entity 实体类对象实例
+     * @return JPA持久化对象
+     * @since 1.0.0
+     */
+    protected EntityManager getEntityManager(T entity, boolean isRead) throws Exception {
+        EntityManager entityManager = getEntityManager();
+        // 处理并添加分表信息，如果不存在分表则不处理
+        TableSplitHelper.findTableSplitHandle().handle(entityManager, entity, isRead);
+        return entityManager;
+    }
 
 }

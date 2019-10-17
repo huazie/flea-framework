@@ -86,4 +86,12 @@ public interface ITemplate<T> extends Serializable {
      * @since 1.0.0
      */
     List<SqlParam> toNativeParams();
+
+    /**
+     * <p> 获取当前模板类型 </p>
+     *
+     * @return 返回SQL模板类型枚举对象实例
+     * @since 1.0.0
+     */
+    TemplateTypeEnum getTemplateType();
 }

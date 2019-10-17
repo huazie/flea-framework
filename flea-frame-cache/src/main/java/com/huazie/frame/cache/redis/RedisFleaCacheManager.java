@@ -22,6 +22,8 @@ public class RedisFleaCacheManager extends AbstractFleaCacheManager {
      * @since 1.0.0
      */
     public RedisFleaCacheManager() {
+        // 初始化默认连接池
+        RedisPool.getInstance().initialize();
         redisClient = RedisClientProxy.getProxyInstance();
     }
 

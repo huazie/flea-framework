@@ -2,8 +2,6 @@ package com.huazie.frame.db.common.table.split.config;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-import java.io.Serializable;
-
 /**
  * <p> 分表定义类 </p>
  *
@@ -16,6 +14,8 @@ public class Table {
     private String name;    // 分表对应的主表名
 
     private String exp;     // 分表名表达式
+
+    private String desc;    // 分表规则描述
 
     private Splits splits;  // 分表后缀配置列表
 
@@ -33,6 +33,14 @@ public class Table {
 
     public void setExp(String exp) {
         this.exp = exp;
+    }
+
+    public String getDesc() {
+        return this.desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
     public Splits getSplits() {

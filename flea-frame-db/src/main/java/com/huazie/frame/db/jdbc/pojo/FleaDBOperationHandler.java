@@ -1,5 +1,7 @@
 package com.huazie.frame.db.jdbc.pojo;
 
+import com.huazie.frame.db.jdbc.config.FleaJDBCConfig;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,13 +13,18 @@ import java.sql.ResultSet;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class FleaDBOperationHandler {
+public class FleaDBOperationHandler implements AutoCloseable{
 
     private Connection connection;
 
     private PreparedStatement preparedStatement;
 
     private ResultSet resultSet;
+
+    @Override
+    public void close() throws Exception {
+        FleaJDBCConfig.close(connection, preparedStatement, resultSet);
+    }
 
     public Connection getConnection() {
         return this.connection;

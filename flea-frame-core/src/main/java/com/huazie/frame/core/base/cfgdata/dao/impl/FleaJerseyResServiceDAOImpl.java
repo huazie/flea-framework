@@ -1,12 +1,10 @@
 package com.huazie.frame.core.base.cfgdata.dao.impl;
 
 import com.huazie.frame.common.util.CollectionUtils;
-import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.core.base.cfgdata.dao.interfaces.IFleaJerseyResServiceDAO;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResService;
 import com.huazie.frame.core.common.EntityStateEnum;
 import com.huazie.frame.core.common.FleaEntityConstants;
-import com.huazie.frame.db.jpa.common.FleaJPAQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -28,20 +26,12 @@ public class FleaJerseyResServiceDAOImpl extends FleaConfigDAOImpl<FleaJerseyRes
     @Override
     @SuppressWarnings(value = "unchecked")
     public FleaJerseyResService getResService(String serviceCode, String resourceCode) throws Exception {
-        FleaJPAQuery query = getQuery(null);
 
-        if (StringUtils.isNotBlank(serviceCode)) {
-            query.equal(FleaEntityConstants.S_SERVICE_CODE, serviceCode);
-        }
-
-        if (StringUtils.isNotBlank(resourceCode)) {
-            query.equal(FleaEntityConstants.S_RESOURCE_CODE, resourceCode);
-        }
-
-        // 查询在用状态的资源服务
-        query.equal(FleaEntityConstants.S_STATE, EntityStateEnum.IN_USE.getValue());
-
-        List<FleaJerseyResService> resServiceList = query.getResultList();
+        List<FleaJerseyResService> resServiceList = getQuery(null)
+                .equal(FleaEntityConstants.S_SERVICE_CODE, serviceCode)
+                .equal(FleaEntityConstants.S_RESOURCE_CODE, resourceCode)
+                .equal(FleaEntityConstants.S_STATE, EntityStateEnum.IN_USE.getValue()) // 查询在用状态的资源服务
+                .getResultList();
 
         FleaJerseyResService resService = null;
 

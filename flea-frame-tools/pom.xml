@@ -39,6 +39,8 @@
             <groupId>org.jvnet.substance</groupId>
             <artifactId>substance</artifactId>
             <version>4.3</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/substance-4.3.jar</systemPath>
         </dependency>
 
     </dependencies>

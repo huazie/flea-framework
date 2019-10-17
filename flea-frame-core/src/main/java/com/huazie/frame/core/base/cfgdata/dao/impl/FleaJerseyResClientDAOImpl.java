@@ -1,12 +1,10 @@
 package com.huazie.frame.core.base.cfgdata.dao.impl;
 
 import com.huazie.frame.common.util.CollectionUtils;
-import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.core.base.cfgdata.dao.interfaces.IFleaJerseyResClientDAO;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResClient;
 import com.huazie.frame.core.common.EntityStateEnum;
 import com.huazie.frame.core.common.FleaEntityConstants;
-import com.huazie.frame.db.jpa.common.FleaJPAQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -29,15 +27,10 @@ public class FleaJerseyResClientDAOImpl extends FleaConfigDAOImpl<FleaJerseyResC
     @SuppressWarnings(value = "unchecked")
     public FleaJerseyResClient getResClient(String clientCode) throws Exception {
 
-        FleaJPAQuery query = getQuery(null);
-
-        if (StringUtils.isNotBlank(clientCode)) {
-            query.equal(FleaEntityConstants.S_CLIENT_CODE, clientCode);
-        }
-
-        query.equal(FleaEntityConstants.S_STATE, EntityStateEnum.IN_USE.getValue());
-
-        List<FleaJerseyResClient> resClientList = query.getResultList();
+        List<FleaJerseyResClient> resClientList = getQuery(null)
+                .equal(FleaEntityConstants.S_CLIENT_CODE, clientCode)
+                .equal(FleaEntityConstants.S_STATE, EntityStateEnum.IN_USE.getValue())
+                .getResultList();
 
         FleaJerseyResClient resClient = null;
 

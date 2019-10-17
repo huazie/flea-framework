@@ -8,11 +8,8 @@ import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.exception.DaoException;
 import com.huazie.frame.db.common.sql.pojo.SqlParam;
 import com.huazie.frame.db.common.sql.template.ITemplate;
+import com.huazie.frame.db.common.sql.template.SqlTemplateFactory;
 import com.huazie.frame.db.common.sql.template.TemplateTypeEnum;
-import com.huazie.frame.db.common.sql.template.impl.DeleteSqlTemplate;
-import com.huazie.frame.db.common.sql.template.impl.InsertSqlTemplate;
-import com.huazie.frame.db.common.sql.template.impl.SelectSqlTemplate;
-import com.huazie.frame.db.common.sql.template.impl.UpdateSqlTemplate;
 import com.huazie.frame.db.common.table.pojo.Column;
 import com.huazie.frame.db.jdbc.config.FleaJDBCConfig;
 import com.huazie.frame.db.jdbc.pojo.FleaDBOperationHandler;
@@ -20,7 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -64,14 +60,11 @@ public class FleaJDBCHelper {
      * @since 1.0.0
      */
     public static List<Map<String, Object>> query(String sql, Object... params) throws SQLException {
-        FleaDBOperationHandler handler = null;
-        try {
-            handler = queryWithReturnResultSet(sql, params);
+
+        try (FleaDBOperationHandler handler = queryWithReturnResultSet(sql, params)) {
             return ResultToListMap(handler.getResultSet());
-        } catch (SQLException e) {
+        } catch (Exception e) {
             throw new SQLException(e);
-        } finally {
-            close(handler);
         }
     }
 
@@ -131,18 +124,15 @@ public class FleaJDBCHelper {
      */
     public static Object querySingle(String sql, Object... params) throws SQLException {
         Object result = null;
-        FleaDBOperationHandler handler = null;
-        try {
-            handler = queryWithReturnResultSet(sql, params);
+
+        try (FleaDBOperationHandler handler = queryWithReturnResultSet(sql, params)) {
             ResultSet rs = handler.getResultSet();
             if (rs.next()) {
                 result = rs.getObject(1);
             }
             return result;
-        } catch (SQLException e) {
+        } catch (Exception e) {
             throw new SQLException(e);
-        } finally {
-            close(handler);
         }
     }
 
@@ -300,7 +290,11 @@ public class FleaJDBCHelper {
      * @since 1.0.0
      */
     private static int save(String sql, Object... params) throws SQLException {
-        return save(getDBOperationHandler(sql, params));
+        try (FleaDBOperationHandler handler = getDBOperationHandler(sql, params)) {
+            return save(handler);
+        } catch (Exception e) {
+            throw new SQLException(e);
+        }
     }
 
     /**
@@ -330,17 +324,11 @@ public class FleaJDBCHelper {
      * @since 1.0.0
      */
     private static int save(FleaDBOperationHandler handler) throws SQLException {
-        try {
-            PreparedStatement preparedStatement = null;
-            if (ObjectUtils.isNotEmpty(handler)) {
-                preparedStatement = handler.getPreparedStatement();
-            }
-            return ObjectUtils.isNotEmpty(preparedStatement) ? preparedStatement.executeUpdate() : -1;
-        } catch (SQLException e) {
-            throw new SQLException(e);
-        } finally {
-            close(handler);
+        PreparedStatement preparedStatement = null;
+        if (ObjectUtils.isNotEmpty(handler)) {
+            preparedStatement = handler.getPreparedStatement();
         }
+        return ObjectUtils.isNotEmpty(preparedStatement) ? preparedStatement.executeUpdate() : -1;
     }
 
     /**
@@ -357,13 +345,13 @@ public class FleaJDBCHelper {
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJDBCHelper##getDBOperationHandler(String, Object...) SQL    : {}", sql);
+            LOGGER.debug("FleaJDBCHelper##getDBOperationHandler(String, Object...) SQL = {}", sql);
         }
 
         if (ObjectUtils.isNotEmpty(preparedStatement) && ArrayUtils.isNotEmpty(params)) {
             for (int i = 0; i < params.length; i++) {
                 if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("FleaJDBCHelper##getDBOperationHandler(String, Object...) PARAM{} : {}", i + 1, params[i]);
+                    LOGGER.debug("FleaJDBCHelper##getDBOperationHandler(String, Object...) PARAM{} = {}", i + 1, params[i]);
                 }
                 preparedStatement.setObject(i + 1, params[i]);
             }
@@ -380,18 +368,38 @@ public class FleaJDBCHelper {
      * @param relationId 关系编号
      * @param entity     实体类对象
      * @return 查询结果Map集合
-     * @throws Exception
+     * @throws SQLException 数据库操作异常
      * @since 1.0.0
      */
-    public static List<Map<String, Object>> query(String relationId, Object entity) throws Exception {
-        FleaDBOperationHandler handler = null;
-        try {
-            handler = getDBOperationHandlerWithReturnSet(new SelectSqlTemplate<Object>(relationId, entity), TemplateTypeEnum.SELECT.getKey());
+    public static List<Map<String, Object>> query(String relationId, Object entity) throws SQLException {
+
+        try (FleaDBOperationHandler handler = getDBOperationHandlerWithReturnSet(SqlTemplateFactory.newSqlTemplate(relationId, entity, TemplateTypeEnum.SELECT))) {
             return ResultToListMap(handler.getResultSet());
-        } catch (SQLException e) {
+        } catch (Exception e) {
             throw new SQLException(e);
-        } finally {
-            close(handler);
+        }
+    }
+
+    /**
+     * <p> 构建并执行 SELECT SQL模板 (单个查询结果) </p>
+     *
+     * @param relationId 关系编号
+     * @param entity     实体类对象
+     * @return 单个查询结果
+     * @throws SQLException 数据库操作异常
+     * @since 1.0.0
+     */
+    public static Object querySingle(String relationId, Object entity) throws SQLException {
+        Object result = null;
+
+        try (FleaDBOperationHandler handler = getDBOperationHandlerWithReturnSet(SqlTemplateFactory.newSqlTemplate(relationId, entity, TemplateTypeEnum.SELECT))) {
+            ResultSet rs = handler.getResultSet();
+            if (rs.next()) {
+                result = rs.getObject(1);
+            }
+            return result;
+        } catch (Exception e) {
+            throw new SQLException(e);
         }
     }
 
@@ -401,11 +409,12 @@ public class FleaJDBCHelper {
      * @param relationId 关系编号
      * @param entity     实体类对象
      * @return 新增的记录数
-     * @throws Exception
+     * @throws SQLException 数据库操作异常
      * @since 1.0.0
      */
-    public static int insert(String relationId, Object entity) throws Exception {
-        return save(getDBOperationHandler(new InsertSqlTemplate<Object>(relationId, entity), TemplateTypeEnum.INSERT.getKey()));
+    public static int insert(String relationId, Object entity) throws SQLException {
+        return save(SqlTemplateFactory.newSqlTemplate(relationId, entity, TemplateTypeEnum.INSERT));
+
     }
 
     /**
@@ -414,11 +423,11 @@ public class FleaJDBCHelper {
      * @param relationId 关系编号
      * @param entity     实体类对象
      * @return 更新的记录数
-     * @throws Exception
+     * @throws SQLException 数据库操作异常
      * @since 1.0.0
      */
-    public static int update(String relationId, Object entity) throws Exception {
-        return save(getDBOperationHandler(new UpdateSqlTemplate<Object>(relationId, entity), TemplateTypeEnum.UPDATE.getKey()));
+    public static int update(String relationId, Object entity) throws SQLException {
+        return save(SqlTemplateFactory.newSqlTemplate(relationId, entity, TemplateTypeEnum.UPDATE));
     }
 
     /**
@@ -427,45 +436,60 @@ public class FleaJDBCHelper {
      * @param relationId 关系编号
      * @param entity     实体类对象
      * @return 删除的记录数
-     * @throws Exception
+     * @throws SQLException 数据库操作异常
      * @since 1.0.0
      */
-    public static int delete(String relationId, Object entity) throws Exception {
-        return save(getDBOperationHandler(new DeleteSqlTemplate<Object>(relationId, entity), TemplateTypeEnum.DELETE.getKey()));
+    public static int delete(String relationId, Object entity) throws SQLException {
+        return save(SqlTemplateFactory.newSqlTemplate(relationId, entity, TemplateTypeEnum.DELETE));
     }
 
     /**
      * <p> 用于带参数的查询，返回结果集 </p>
      *
      * @param template SQL模板接口类
-     * @return 一次数据库操作处理
+     * @return 一次数据库操作处理对象
      * @throws Exception
      * @since 1.0.0
      */
-    private static FleaDBOperationHandler getDBOperationHandlerWithReturnSet(ITemplate<Object> template, String templateType) throws Exception {
+    private static FleaDBOperationHandler getDBOperationHandlerWithReturnSet(ITemplate<Object> template) throws Exception {
         FleaDBOperationHandler handler = null;
         if (ObjectUtils.isNotEmpty(template)) {
             template.initialize(); // 初始化SQL模板（一定要初始化）
-            handler = getDBOperationHandler(template.toNativeSql(), template.toNativeParams(), templateType);
+            handler = getDBOperationHandler(template.toNativeSql(), template.toNativeParams(), template.getTemplateType().getKey());
             queryWithReturnResultSet(handler);
         }
         return handler;
     }
 
     /**
+     * <p> 构建并执行INSERT. UPDATE. DELETE SQL模板 </p>
+     *
+     * @param template     SQL模板
+     * @return 操作记录数
+     * @throws SQLException 数据库操作异常
+     * @since 1.0.0
+     */
+    private static int save(ITemplate<Object> template) throws SQLException {
+        try (FleaDBOperationHandler handler = getDBOperationHandler(template)) {
+            return save(handler);
+        } catch (Exception e) {
+            throw new SQLException(e);
+        }
+    }
+
+    /**
      * <p> 构建INSERT, UPDATE, DELETE SQL模板，获取Connection 和 PreparedStatement </p>
      *
      * @param template     SQL模板
-     * @param templateType 模板类型
-     * @return 处理记录数
+     * @return 一次数据库操作处理对象
      * @throws Exception
      * @since 1.0.0
      */
-    private static FleaDBOperationHandler getDBOperationHandler(ITemplate<Object> template, String templateType) throws Exception {
+    private static FleaDBOperationHandler getDBOperationHandler(ITemplate<Object> template) throws Exception {
         FleaDBOperationHandler handler = null;
         if (ObjectUtils.isNotEmpty(template)) {
             template.initialize(); // 初始化SQL模板（一定要初始化）
-            handler = getDBOperationHandler(template.toNativeSql(), template.toNativeParams(), templateType);
+            handler = getDBOperationHandler(template.toNativeSql(), template.toNativeParams(), template.getTemplateType().getKey());
         }
         return handler;
     }
@@ -570,20 +594,16 @@ public class FleaJDBCHelper {
      */
     public static List<Column> queryTableStructure(String tableName) {
         List<Column> columnList = null;
-        Connection connection = null;
-        ResultSet primaryKeyResultSet = null;
-        ResultSet columnsResultSet = null;
-        try {
-            connection = FleaJDBCConfig.getConfig().getConnection();
-            DatabaseMetaData metaData = connection.getMetaData();
+
+        try (Connection connection = FleaJDBCConfig.getConfig().getConnection();
+             ResultSet primaryKeyResultSet = connection.getMetaData().getPrimaryKeys(null, null, tableName.toUpperCase());
+             ResultSet columnsResultSet = connection.getMetaData().getColumns(null, null, tableName.toUpperCase(), "")) {
 
             String pkName = "";
-            primaryKeyResultSet = metaData.getPrimaryKeys(null, null, tableName.toUpperCase());
             while (primaryKeyResultSet.next()) {
                 pkName = primaryKeyResultSet.getString("COLUMN_NAME");
             }
 
-            columnsResultSet = metaData.getColumns(null, null, tableName.toUpperCase(), "");
             columnList = new ArrayList<Column>();
             while (columnsResultSet.next()) {
                 String columnName = columnsResultSet.getString("COLUMN_NAME");
@@ -645,29 +665,17 @@ public class FleaJDBCHelper {
                 columnList.add(column);
 
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("数据库操作异常：", e);
             }
-        } finally {
-            FleaJDBCConfig.close(columnsResultSet);
-            FleaJDBCConfig.close(primaryKeyResultSet);
-            FleaJDBCConfig.close(connection);
+        }
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("FleaJDBCHelper##queryTableStructure(String) Table Info : {}", columnList);
         }
 
         return columnList;
-    }
-
-    /**
-     * <p> 关闭Connection，PreparedStatement，ResultSet </p>
-     *
-     * @param handler 一次数据库操作处理
-     * @since 1.0.0
-     */
-    public static void close(FleaDBOperationHandler handler) {
-        if (ObjectUtils.isNotEmpty(handler)) {
-            FleaJDBCConfig.close(handler.getConnection(), handler.getPreparedStatement(), handler.getResultSet());
-        }
     }
 
 }

@@ -4,7 +4,7 @@ import com.huazie.frame.auth.base.user.entity.FleaAccountAttr;
 import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 
 /**
- * <p> Flea账户属性DAO层接口 </p>
+ * <p> Flea帐户属性DAO层接口 </p>
  *
  * @author huazie
  * @version 1.0.0

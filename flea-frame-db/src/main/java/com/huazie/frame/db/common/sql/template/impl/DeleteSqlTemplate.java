@@ -12,8 +12,8 @@ import com.huazie.frame.db.common.table.pojo.Column;
 import java.util.Map;
 
 /**
- * <p> DELETE SQL模板, 用于使用原生SQL实现分表; </p>
- * <p> DELETE SQL模板定义配置在<b>flea-sql-template.xml</b>; </p>
+ * <p> 删除SQL模板, 用于使用原生SQL实现分表; </p>
+ * <p> 删除SQL模板定义配置在<b>flea-sql-template.xml</b>; </p>
  * <pre>
  * (1) 模板配置信息：
  * {@code

@@ -5,14 +5,20 @@
 		name : 分表对应的主表名
 		exp  : 分表名表达式 (FLEA_TABLE_NAME)_(列名大写)_(列名大写)
 	-->
-	<table name="flea_file_info" exp="(FLEA_TABLE_NAME)_(FILE_ID)">
+	<table name="flea_file_info" exp="(FLEA_TABLE_NAME)_(FILE_ID)" desc="Flea文件信息表分表规则">
 		<splits>
 			<!-- 定义分表后缀
-				key : 分表类型关键字
-				column : 分表属性列
+				key : 分表类型关键字 (可查看 com.huazie.frame.db.common.table.split.TableSplitEnum )
+				column : 分表属性列字段名
 				implClass : 分表后缀转换实现类
 			-->
 			<split key="twohex" column="file_id" implClass="com.huazie.frame.db.common.table.split.impl.TwoHexTableSplitImpl"/>
+		</splits>
+	</table>
+
+	<table name="flea_login_log" exp="(FLEA_TABLE_NAME)_(CREATE_DATE)" desc="Flea登录日志表分表规则">
+		<splits>
+			<split key="yyyymm" column="create_date" implClass="com.huazie.frame.db.common.table.split.impl.YYYYMMTableSplitImpl"/>
 		</splits>
 	</table>
 

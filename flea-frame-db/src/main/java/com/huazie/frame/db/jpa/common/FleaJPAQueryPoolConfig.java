@@ -3,9 +3,9 @@ package com.huazie.frame.db.jpa.common;
 import com.huazie.frame.common.FleaConfigManager;
 import com.huazie.frame.common.config.ConfigItem;
 import com.huazie.frame.common.config.ConfigItems;
+import com.huazie.frame.common.pool.FleaObjectPoolConfig;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.db.common.DBConstants;
-import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 
 /**
  * <p> Flea JPA查询对象池配置 </p>
@@ -14,7 +14,7 @@ import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class FleaJPAQueryPoolConfig extends GenericObjectPoolConfig {
+public class FleaJPAQueryPoolConfig extends FleaObjectPoolConfig {
 
     private static volatile FleaJPAQueryPoolConfig config;
 
@@ -24,10 +24,7 @@ public class FleaJPAQueryPoolConfig extends GenericObjectPoolConfig {
      * @since 1.0.0
      */
     private FleaJPAQueryPoolConfig() {
-        setTestWhileIdle(true);
-        setMinEvictableIdleTimeMillis(60000);
-        setTimeBetweenEvictionRunsMillis(30000);
-        setNumTestsPerEvictionRun(-1);
+        super();
     }
 
     /**

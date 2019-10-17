@@ -37,13 +37,12 @@ public class MemCachedSpringCacheManager extends AbstractSpringCacheManager {
     }
 
     /**
-     * 初始化MemCached连接池
+     * <p> 初始化MemCached连接池 </p>
      *
      * @since 1.0.0
      */
     private void initPool() {
-        MemCachedPool pool = MemCachedPool.getInstance();
-        pool.initialize();
+        MemCachedPool.getInstance().initialize();
     }
 
     @Override

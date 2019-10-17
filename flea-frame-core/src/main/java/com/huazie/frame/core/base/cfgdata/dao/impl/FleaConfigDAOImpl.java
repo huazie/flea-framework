@@ -19,6 +19,18 @@ public class FleaConfigDAOImpl<T> extends AbstractFleaJPADAOImpl<T> {
 	
 	@PersistenceContext(unitName="fleaconfig")
 	protected EntityManager entityManager;
+
+	@Override
+	@Transactional("fleaConfigTransactionManager")
+	public T queryNew(long entityId, T entity) throws Exception {
+		return super.queryNew(entityId, entity);
+	}
+
+	@Override
+	@Transactional("fleaConfigTransactionManager")
+	public T queryNew(String entityId, T entity) throws Exception {
+		return super.queryNew(entityId, entity);
+	}
 	
 	@Override
 	@Transactional("fleaConfigTransactionManager")
@@ -30,6 +42,18 @@ public class FleaConfigDAOImpl<T> extends AbstractFleaJPADAOImpl<T> {
 	@Transactional("fleaConfigTransactionManager")
 	public boolean remove(String entityId) throws Exception {
 		return super.remove(entityId);
+	}
+
+	@Override
+	@Transactional("fleaConfigTransactionManager")
+	public boolean removeNew(long entityId, T entity) throws Exception {
+		return super.removeNew(entityId, entity);
+	}
+
+	@Override
+	@Transactional("fleaConfigTransactionManager")
+	public boolean removeNew(String entityId, T entity) throws Exception {
+		return super.removeNew(entityId, entity);
 	}
 
 	@Override

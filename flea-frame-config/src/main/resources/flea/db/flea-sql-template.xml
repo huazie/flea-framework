@@ -16,7 +16,7 @@
 		</rule>
 	</rules>
 
-	<!-- SQL模板配置 -->
+	<!-- SQL模板定义配置 -->
 	<templates>
 		<template id="insert" ruleId="insert" name="INSERT SQL模板" desc="用于原生SQL中INSERT语句的使用">
 			<!-- SQL模板数据 -->
