@@ -41,7 +41,7 @@ public class MemCachedSpringCacheManager extends AbstractSpringCacheManager {
      *
      * @since 1.0.0
      */
-    public void initPool() {
+    private void initPool() {
         MemCachedPool.getInstance().initialize();
     }
 
