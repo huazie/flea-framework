@@ -10,6 +10,9 @@
 		<class>com.huazie.frame.auth.base.user.entity.FleaUser</class>
 		<class>com.huazie.frame.auth.base.user.entity.FleaUserAttr</class>
 		<class>com.huazie.frame.auth.base.user.entity.FleaRealNameInfo</class>
+		<class>com.huazie.frame.auth.base.user.entity.FleaAccount</class>
+		<class>com.huazie.frame.auth.base.user.entity.FleaAccountAttr</class>
+		<class>com.huazie.frame.auth.base.user.entity.FleaLoginLog</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		
 		<properties>

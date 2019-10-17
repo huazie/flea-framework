@@ -151,13 +151,17 @@ public interface CommonConstants {
     }
 
     /**
-     * <p> Flea连接池常量 </p>
+     * <p> Flea池常量 </p>
      */
     interface FleaPoolConstants {
         /**
-         * <p> 默认连接池名 </p>
+         * <p> 默认池名 </p>
          */
         String DEFAUTL_POOL_NAME = "default";
+        /**
+         * <p> Flea对象池配置 </p>
+         */
+        String FLEA_OBJECT_POOL = "flea-object-pool";
     }
 
     /**

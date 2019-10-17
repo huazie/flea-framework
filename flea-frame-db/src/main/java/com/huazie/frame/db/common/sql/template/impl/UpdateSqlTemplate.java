@@ -15,8 +15,7 @@ import java.util.Map;
 
 /**
  * <p> 更新SQL模板, 用于使用原生SQL实现分表; </p>
- * <p> 更新模板定义配置在<b>flea-sql-template.xml</b>; </p>
- * <p> 节点<b>{@code <update>}</b>下即为更新SQL模板: </p>
+ * <p> 更新SQL模板定义配置在<b>flea-sql-template.xml</b>; </p>
  * <pre>
  * (1) 模板配置信息：
  * {@code

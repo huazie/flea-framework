@@ -53,9 +53,7 @@ public class FleaRedisClient implements RedisClient {
     private void init() {
         if (StringUtils.isBlank(poolName)) {
             poolName = CommonConstants.FleaPoolConstants.DEFAUTL_POOL_NAME;
-            RedisPool redisPool = RedisPool.getInstance();
-            redisPool.initialize(); // 先初始化
-            shardedJedisPool = redisPool.getJedisPool();
+            shardedJedisPool = RedisPool.getInstance().getJedisPool();
         } else {
             shardedJedisPool = RedisPool.getInstance(poolName).getJedisPool();
         }

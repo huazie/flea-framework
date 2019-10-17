@@ -21,6 +21,18 @@ public class %FLEA_PERSISTENCE_UNIT_ALIAS_NAME%DAOImpl<T> extends AbstractFleaJP
 
     @Override
     @Transactional("%FLEA_PERSISTENCE_UNIT_ALIAS_NAME_1%TransactionManager")
+    public T queryNew(long entityId, T entity) throws Exception {
+        return super.queryNew(entityId, entity);
+    }
+
+    @Override
+    @Transactional("%FLEA_PERSISTENCE_UNIT_ALIAS_NAME_1%TransactionManager")
+    public T queryNew(String entityId, T entity) throws Exception {
+        return super.queryNew(entityId, entity);
+    }
+
+    @Override
+    @Transactional("%FLEA_PERSISTENCE_UNIT_ALIAS_NAME_1%TransactionManager")
     public boolean remove(long entityId) throws Exception {
         return super.remove(entityId);
     }
@@ -29,6 +41,18 @@ public class %FLEA_PERSISTENCE_UNIT_ALIAS_NAME%DAOImpl<T> extends AbstractFleaJP
     @Transactional("%FLEA_PERSISTENCE_UNIT_ALIAS_NAME_1%TransactionManager")
     public boolean remove(String entityId) throws Exception {
         return super.remove(entityId);
+    }
+
+    @Override
+    @Transactional("%FLEA_PERSISTENCE_UNIT_ALIAS_NAME_1%TransactionManager")
+    public boolean removeNew(long entityId, T entity) throws Exception {
+        return super.removeNew(entityId, entity);
+    }
+
+    @Override
+    @Transactional("%FLEA_PERSISTENCE_UNIT_ALIAS_NAME_1%TransactionManager")
+    public boolean removeNew(String entityId, T entity) throws Exception {
+        return super.removeNew(entityId, entity);
     }
 
     @Override

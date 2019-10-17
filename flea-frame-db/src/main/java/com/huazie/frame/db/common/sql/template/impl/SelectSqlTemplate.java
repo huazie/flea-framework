@@ -2,6 +2,7 @@ package com.huazie.frame.db.common.sql.template.impl;
 
 import com.huazie.frame.common.util.MapUtils;
 import com.huazie.frame.common.util.ObjectUtils;
+import com.huazie.frame.common.util.PatternMatcherUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.DBConstants;
 import com.huazie.frame.db.common.exception.SqlTemplateException;
@@ -14,11 +15,11 @@ import com.huazie.frame.db.common.util.EntityUtils;
 import org.apache.commons.lang.ArrayUtils;
 
 import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * <p> 查找SQL模板, 用于使用原生SQL实现分表; </p>
- * <p> 查找模板定义配置在<b>flea-sql-template.xml</b>; </p>
- * <p> 节点<b>{@code <select>}</b>下即为查找SQL模板:</p>
+ * <p> 查找SQL模板定义配置在<b>flea-sql-template.xml</b>; </p>
  * <pre>
  * (1) 模板配置信息：
  * {@code
@@ -80,6 +81,10 @@ public class SelectSqlTemplate<T> extends SqlTemplate<T> {
 
     private static final long serialVersionUID = -8355057263712328779L;
 
+    private static final String SINGLE_SELECT_RESULT_EXP = "AVG\\([([\\s\\S]*)]*\\)|COUNT\\([([\\s\\S]*)]*\\)|SUM\\([([\\s\\S]*)]*\\)|MAX\\([([\\s\\S]*)]*\\)|MIN\\([([\\s\\S]*)]*\\)";
+
+    private static final String EQUAL_EXP = "[ ]*1[ ]*=[ ]*1[ ]*";
+
     /**
      * <p> SELECT模板构造方法, 参考示例1 </p>
      *
@@ -135,7 +140,7 @@ public class SelectSqlTemplate<T> extends SqlTemplate<T> {
         Map<String, String> whereMap = createConditionMap(condStr);
 
         // 校验【key=columns】和【key=conditions】的数据是否正确
-        Column[] realEntityCols = check(entityCols, cols, whereMap);
+        Column[] realEntityCols = check(entityCols, cols, whereMap, condStr);
 
         // 设置SQL参数
         createParamMap(params, realEntityCols);
@@ -158,14 +163,14 @@ public class SelectSqlTemplate<T> extends SqlTemplate<T> {
      * @throws SqlTemplateException SQL模板异常类
      * @since 1.0.0
      */
-    private Column[] check(final Column[] entityCols, String[] cols, Map<String, String> whereMap) throws SqlTemplateException {
+    private Column[] check(final Column[] entityCols, String[] cols, Map<String, String> whereMap, String condStr) throws SqlTemplateException {
 
         if (ArrayUtils.isEmpty(cols)) {
             // 请检查SQL模板参数【id="{0}"】配置(属性【key="{1}"】中的【value】不能为空)
             throw new SqlTemplateException("ERROR-DB-SQT0000000013", paramId, SqlTemplateEnum.COLUMNS.getKey());
         }
 
-        if (MapUtils.isEmpty(whereMap)) {
+        if (MapUtils.isEmpty(whereMap) && !PatternMatcherUtils.matches(EQUAL_EXP, condStr, Pattern.CASE_INSENSITIVE)) {
             // 请检查SQL模板参数【id="{0}"】配置(属性【key="{1}"】中的【value】不能为空)
             throw new SqlTemplateException("ERROR-DB-SQT0000000013", paramId, SqlTemplateEnum.CONDITIONS.getKey());
         }
@@ -173,7 +178,7 @@ public class SelectSqlTemplate<T> extends SqlTemplate<T> {
         for (int n = 0; n < cols.length; n++) {
             String tabColumnName = StringUtils.trim(cols[n]);//表字段名
             Column column = (Column) EntityUtils.getEntity(entityCols, Column.COLUMN_TAB_COL_NAME, tabColumnName);
-            if (ObjectUtils.isEmpty(column)) {
+            if (ObjectUtils.isEmpty(column) && !PatternMatcherUtils.matches(SINGLE_SELECT_RESULT_EXP, tabColumnName, Pattern.CASE_INSENSITIVE)) {
                 // 请检查SQL模板参数【id="{0}"】配置（属性【key="{1}"】中的字段【{2}】在实体类【{3}】中不存在）
                 throw new SqlTemplateException("ERROR-DB-SQT0000000022", paramId, SqlTemplateEnum.COLUMNS.getKey(), tabColumnName, getEntity().getClass().getName());
             }

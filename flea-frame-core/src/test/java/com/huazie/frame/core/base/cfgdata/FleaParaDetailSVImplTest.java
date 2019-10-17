@@ -160,6 +160,9 @@ public class FleaParaDetailSVImplTest {
             AbstractSpringCache cache = manager.getCache("fleaparadetail");
             LOGGER.debug("Cache={}", cache);
 
+            Set<String> cacheKey = cache.getCacheKey();
+            LOGGER.debug("CacheKey = {}", cacheKey);
+
             //#### 1.  简单字符串
 //			cache.put("menu1", "huazie");
 //            cache.get("menu1");
@@ -170,7 +173,7 @@ public class FleaParaDetailSVImplTest {
 //			cache.put("user", user);
 //			LOGGER.debug(cache.get("user", String.class));
 //            cache.get("FLEA_RES_STATE");
-            cache.clear();
+//            cache.clear();
 
             //#### 3.  List塞对象
 //			List<String> userList = new ArrayList<String>();
@@ -273,8 +276,8 @@ public class FleaParaDetailSVImplTest {
         // 测试 JDBC 接入 SELECT SQL 模板
         FleaJDBCConfig.init(DBSystemEnum.MySQL.getName(), "fleaconfig");
         FleaParaDetail fleaParaDetail = new FleaParaDetail();
-        fleaParaDetail.setParaType("huazie1");
-        fleaParaDetail.setParaCode("huazie1");
+        fleaParaDetail.setParaType("huazie");
+        fleaParaDetail.setParaCode("huazie");
         try {
             List<Map<String, Object>> results = FleaJDBCHelper.query("select", fleaParaDetail);
             Assert.assertNotNull(results);

@@ -1,7 +1,10 @@
 package com.huazie.frame.db.common.sql.template;
 
+import com.huazie.frame.common.CommonConstants;
+import com.huazie.frame.common.FleaEntity;
 import com.huazie.frame.common.util.MapUtils;
 import com.huazie.frame.common.util.ObjectUtils;
+import com.huazie.frame.common.util.PatternMatcherUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.DBConstants;
 import com.huazie.frame.db.common.exception.SqlTemplateException;
@@ -25,7 +28,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -62,6 +64,9 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
     private Rule rule;              // 校验规则
 
     protected TemplateTypeEnum templateType; // 模板类型
+
+    // 实体属性变量和表字段对应关系（主要是应对where子句中表字段对应多个实体属性变量的场景）， K ：实体属性变量名 V ：表字段名
+    private Map<String, String> paramTabCols = new HashMap<String, String>();
 
     public SqlTemplate() {
     }
@@ -244,9 +249,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
                 // 请检查SQL模板【id="{0}"】配置（其关联的校验规则【id="{1}"】的属性【key="{2}"】中的【value】不能为空）
                 throw new SqlTemplateException("ERROR-DB-SQT0000000019", templateId, template.getRuleId(), SqlTemplateEnum.SQL.getKey());
             }
-            Pattern p = Pattern.compile(regExp, Pattern.CASE_INSENSITIVE);
-            Matcher matcher = p.matcher(templateValue);
-            if (!matcher.matches()) { // SQL模板不满足校验规则配置
+            if (!PatternMatcherUtils.matches(regExp, templateValue, Pattern.CASE_INSENSITIVE)) { // SQL模板不满足校验规则配置
                 // 请检查SQL模板【id="{0}"】配置（属性【key="{1}"】中的【value】配置有误）
                 throw new SqlTemplateException("ERROR-DB-SQT0000000020", templateId, SqlTemplateEnum.TEMPLATE.getKey());
             }
@@ -281,6 +284,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
         for (int i = 0; i < entityCols.length; i++) {
             Column column = entityCols[i];
             paramMap.put(column.getAttrName(), column.getAttrValue());
+            paramTabCols.put(column.getAttrName(), column.getTabColumnName());
         }
     }
 
@@ -298,8 +302,13 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
                 .replace(DBConstants.SQLConstants.SQL_LEFT_ROUND_BRACKETS, DBConstants.SQLConstants.SQL_BLANK)
                 .replace(DBConstants.SQLConstants.SQL_RIGHT_ROUND_BRACKETS, DBConstants.SQLConstants.SQL_BLANK);
 
-        // 根据 and 和 or 进行分组
-        String[] singleConnAttr = StringUtils.split(newConn, DBConstants.SQLConstants.SQL_AND, DBConstants.SQLConstants.SQL_LOWER_AND, DBConstants.SQLConstants.SQL_OR, DBConstants.SQLConstants.SQL_LOWER_OR);
+        // 根据 and , or , order by , group by , limit 进行分组
+        String[] singleConnAttr = StringUtils.split(newConn,
+                DBConstants.SQLConstants.SQL_AND, DBConstants.SQLConstants.SQL_LOWER_AND,
+                DBConstants.SQLConstants.SQL_OR, DBConstants.SQLConstants.SQL_LOWER_OR,
+                DBConstants.SQLConstants.SQL_ORDER_BY, DBConstants.SQLConstants.SQL_LOWER_ORDER_BY,
+                DBConstants.SQLConstants.SQL_GROUP_BY, DBConstants.SQLConstants.SQL_LOWER_GROUP_BY,
+                DBConstants.SQLConstants.SQL_LIMIT, DBConstants.SQLConstants.SQL_LOWER_LIMIT);
 
         if (!ArrayUtils.isEmpty(singleConnAttr)) {
 
@@ -311,7 +320,11 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
                         DBConstants.SQLConstants.SQL_LE, DBConstants.SQLConstants.SQL_LT,
                         DBConstants.SQLConstants.SQL_LIKE, DBConstants.SQLConstants.SQL_LOWER_LIKE,
                         DBConstants.SQLConstants.SQL_IN, DBConstants.SQLConstants.SQL_LOWER_IN);
-                if (connAttr.length == 2) {
+                if (connAttr.length == CommonConstants.NumeralConstants.INT_ONE) {
+                    if (connAttr[0].contains(DBConstants.SQLConstants.SQL_COLON)) { // 目前这里就只有 limit
+                        map.put(StringUtils.trim(DBConstants.SQLConstants.SQL_LIMIT), connAttr[0]);
+                    }
+                } else if (connAttr.length == CommonConstants.NumeralConstants.INT_TWO) {
                     String key = connAttr[0];
                     String value = connAttr[1];
 
@@ -320,6 +333,11 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
                     }
 
                     if (value.contains(DBConstants.SQLConstants.SQL_COLON)) {
+                        // 存在重复的key，value中的值以逗号分隔
+                        String val = map.get(StringUtils.trim(key));
+                        if (StringUtils.isNotBlank(val)) {
+                            value = StringUtils.trim(val) + DBConstants.SQLConstants.SQL_COMMA + StringUtils.trim(value);
+                        }
                         map.put(StringUtils.trim(key), StringUtils.trim(value));
                     }
                 }
@@ -396,19 +414,65 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
             }
 
             Column column = (Column) EntityUtils.getEntity(entityCols, Column.COLUMN_TAB_COL_NAME, tabColName);
-            if (ObjectUtils.isEmpty(column)) {
+            if (ObjectUtils.isEmpty(column) && !StringUtils.trim(DBConstants.SQLConstants.SQL_LIMIT).equals(tabColName)) {
                 // 请检查SQL模板参数【id="{0}"】配置（属性【key="{1}"】中的字段【{2}】在实体类【{3}】中不存在）
                 throw new SqlTemplateException("ERROR-DB-SQT0000000022", paramId, sqlTemplateEnum.getKey(), tabColName, entity.getClass().getName());
             }
 
-            String attrN = column.getAttrName();
-            if (!attrName.equals(StringUtils.strCat(DBConstants.SQLConstants.SQL_COLON, attrN))) {
-                // 请检查SQL模板参数【id="{0}"】配置（属性【key="{1}"】中的属性列{2}与属性变量{3}不一一对应）
-                throw new SqlTemplateException("ERROR-DB-SQT0000000023", paramId, sqlTemplateEnum.getKey(), tabColName, attrName);
+            if (ObjectUtils.isNotEmpty(column)) {
+                String attrN = column.getAttrName();
+                if (attrName.equals(StringUtils.strCat(DBConstants.SQLConstants.SQL_COLON, attrN))) {
+                    cols.add(column);
+                } else {
+                    if (!checkAttrName(attrName, cols, tabColName)) {
+                        // 请检查SQL模板参数【id="{0}"】配置（属性【key="{1}"】中的属性列{2}与属性变量{3}不一一对应）
+                        throw new SqlTemplateException("ERROR-DB-SQT0000000023", paramId, sqlTemplateEnum.getKey(), tabColName, attrName);
+                    }
+                }
+            } else {
+                if (StringUtils.trim(DBConstants.SQLConstants.SQL_LIMIT).equals(tabColName)) {
+                    if (!checkAttrName(attrName, cols, tabColName)) {
+                        // 请检查SQL模板参数【id="{0}"】配置（属性【key="{1}"】中的LIMIT子句里的变量{2}）
+                        throw new SqlTemplateException("ERROR-DB-SQT0000000032", paramId, sqlTemplateEnum.getKey(), attrName);
+                    }
+                }
             }
-            cols.add(column);
         }
         return cols.toArray(new Column[0]);
+    }
+
+    /**
+     * <p> 校验属性名, 存在多个以逗号分隔 </p>
+     *
+     * @param attrName 属性名
+     * @return true：属性名合法；false：属性名不合法
+     * @since 1.0.0
+     */
+    private boolean checkAttrName(String attrName, List<Column> cols, String tabColName) {
+        boolean isValid = true;
+        FleaEntity fleaEntity = null;
+        if (ObjectUtils.isNotEmpty(entity) && entity instanceof FleaEntity) {
+            fleaEntity = (FleaEntity) entity;
+        }
+        String[] aNameArr = StringUtils.split(attrName, DBConstants.SQLConstants.SQL_COMMA);
+        if (ArrayUtils.isNotEmpty(aNameArr)) {
+            for (String aName : aNameArr) {
+                aName = StringUtils.trim(aName);
+                String aNameVar = StringUtils.subStrLast(aName, aName.length() - 1);
+                if (ObjectUtils.isNotEmpty(fleaEntity) && !fleaEntity.contains(aNameVar)) {
+                    isValid = false;
+                    break;
+                }
+                if (ObjectUtils.isNotEmpty(fleaEntity) && fleaEntity.contains(aNameVar)) {
+                    Column column = new Column();
+                    column.setAttrName(aNameVar);
+                    column.setAttrValue(fleaEntity.get(aNameVar));
+                    column.setTabColumnName(tabColName);
+                    cols.add(column);
+                }
+            }
+        }
+        return isValid;
     }
 
     /**
@@ -433,18 +497,22 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
                 int index = sqlStr.indexOf(DBConstants.SQLConstants.SQL_COLON + key);
 
                 Column column = (Column) EntityUtils.getEntity(entityCols, Column.COLUMN_ATTR_NAME, key);
+                SqlParam sqlParam = new SqlParam();
                 if (ObjectUtils.isNotEmpty(column)) {
-                    SqlParam sqlParam = new SqlParam();
                     sqlParam.setAttrName(column.getAttrName());
                     sqlParam.setAttrValue(column.getAttrValue());
                     sqlParam.setTabColName(column.getTabColumnName());
-                    // 设置参数索引为起始位置，后面需要重新根据这个排序确定
-                    sqlParam.setIndex(index);
-                    // 添加SQL参数
-                    sqlParams.add(sqlParam);
-                    // 将sql中的 :实体属性变量名 替换为 ?
-                    StringUtils.replace(sql, DBConstants.SQLConstants.SQL_COLON + key, DBConstants.SQLConstants.SQL_PLACEHOLDER);
+                } else {
+                    sqlParam.setAttrName(key);
+                    sqlParam.setAttrValue(params.get(key));
+                    sqlParam.setTabColName(paramTabCols.get(key));
                 }
+                // 设置参数索引为起始位置，后面需要重新根据这个排序确定
+                sqlParam.setIndex(index);
+                // 添加SQL参数
+                sqlParams.add(sqlParam);
+                // 将sql中的 :实体属性变量名 替换为 ?
+                StringUtils.replace(sql, DBConstants.SQLConstants.SQL_COLON + key, DBConstants.SQLConstants.SQL_PLACEHOLDER);
             }
         }
 
@@ -579,4 +647,8 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
         return sqlParams;
     }
 
+    @Override
+    public TemplateTypeEnum getTemplateType() {
+        return templateType;
+    }
 }

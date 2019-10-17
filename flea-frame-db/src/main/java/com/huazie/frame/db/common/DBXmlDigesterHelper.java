@@ -103,7 +103,7 @@ public class DBXmlDigesterHelper {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("DBXmlDigesterHelper##newTables() Use the current flea-sql-template.xml :" + fileName);
+            LOGGER.debug("DBXmlDigesterHelper##newTables() Use the current flea-table-split.xml :" + fileName);
             LOGGER.debug("DBXmlDigesterHelper##newTables() Start to parse the flea-table-split.xml");
         }
 

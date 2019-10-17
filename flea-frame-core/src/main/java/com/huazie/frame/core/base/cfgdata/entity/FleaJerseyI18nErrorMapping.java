@@ -23,7 +23,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "flea_jersey_i18n_error_mapping")
-public class FleaJerseyI18nErrorMapping implements FleaEntity {
+public class FleaJerseyI18nErrorMapping extends FleaEntity {
 
     private static final long serialVersionUID = -3499450136118740002L;
 
