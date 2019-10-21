@@ -1,0 +1,40 @@
+#############################################################
+flea-frame-jersey 模块
+#############################################################
+
+flea_jersey_res_service
+flea_jersey_i18n_error_mapping  
+flea_jersey_res_client
+flea_jersey_resource
+flea_jersey_res_service_log
+
+#############################################################
+flea-frame-auth 模块（一个用户对应一个账户， 为用户赋权）
+#############################################################
+flea_account 账户
+flea_account_attr 账户扩展属性
+flea_login_log_YYYYMM
+flea_user  用户
+flea_user_attr 用户扩展属性
+flea_user_real_name_info 用户实名信息
+
+flea_user_role 用户和角色关联
+
+flea_user_group 用户组
+flea_user_group_relat 用户组关联 （用户，角色）
+
+flea_role 角色
+flea_role_relat 角色关联 （ 角色【1：继承  2：组合】， 权限 ， 权限组）
+
+flea_role_group 角色组 （不参与授权）
+flea_role_group_relat  角色组关联 （角色，用户，用户组）
+
+flea_privilege 权限
+flea_privilege_group 权限组
+
+
+
+
+  
+
+
