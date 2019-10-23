@@ -1,13 +1,4 @@
 #############################################################
-flea-frame-jersey 模块
-#############################################################
-flea_jersey_res_service         Flea Jersey 资源服务
-flea_jersey_i18n_error_mapping  Flea Jersey 国际码和错误码映射
-flea_jersey_res_client          Flea Jersey 资源客户端
-flea_jersey_resource            Flea Jersey 资源
-flea_jersey_res_service_log     Flea Jersey 资源服务调用日志
-
-#############################################################
 flea-frame-auth 模块（一个用户对应一个账户， 为用户赋权）
 #############################################################
 flea_account                账户
@@ -34,6 +25,18 @@ flea_privilege_group        权限组
 flea_privilege_relat        权限关联 （菜单）
 
 flea_menu                   菜单表
+flea_operation              操作表
+
+#############################################################
+flea-frame-jersey 模块
+#############################################################
+flea_jersey_res_service         Flea Jersey 资源服务
+flea_jersey_i18n_error_mapping  Flea Jersey 国际码和错误码映射
+flea_jersey_res_client          Flea Jersey 资源客户端
+flea_jersey_resource            Flea Jersey 资源
+flea_jersey_res_service_log     Flea Jersey 资源服务调用日志
+
+
 
 
 
