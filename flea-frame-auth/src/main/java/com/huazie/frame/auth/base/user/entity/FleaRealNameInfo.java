@@ -15,26 +15,23 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 /**
- * <p> Flea用户实名信息表对应的实体类 </p>
+ * <p> Flea实名信息表对应的实体类 </p>
  *
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0
  */
 @Entity
-@Table(name = "flea_user_real_name_info")
-public class FleaUserRealNameInfo extends FleaEntity {
+@Table(name = "flea_real_name_info")
+public class FleaRealNameInfo extends FleaEntity {
 
-    private static final long serialVersionUID = -8847538755956749882L;
+    private static final long serialVersionUID = -2748615972845104783L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "FLEA_USER_REAL_NAME_INFO_SEQ")
-    @SequenceGenerator(name = "FLEA_USER_REAL_NAME_INFO_SEQ")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "FLEA_REAL_NAME_INFO_SEQ")
+    @SequenceGenerator(name = "FLEA_REAL_NAME_INFO_SEQ")
     @Column(name = "real_name_id", unique = true, nullable = false)
     private Long realNameId; // 实名编号
-
-    @Column(name = "user_id", nullable = false)
-    private Long userId; // 用户编号
 
     @Column(name = "cert_type", nullable = false)
     private Integer certType; // 证件类型（1：身份证）
@@ -76,14 +73,6 @@ public class FleaUserRealNameInfo extends FleaEntity {
 
     public void setRealNameId(Long realNameId) {
         this.realNameId = realNameId;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 
     public Integer getCertType() {
