@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50538
 File Encoding         : 65001
 
-Date: 2019-10-27 23:19:02
+Date: 2019-10-28 18:11:16
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -153,6 +153,77 @@ CREATE TABLE `flea_role` (
 
 -- ----------------------------
 -- Records of flea_role
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `flea_role_group`
+-- ----------------------------
+DROP TABLE IF EXISTS `flea_role_group`;
+CREATE TABLE `flea_role_group` (
+  `role_group_id` int(12) NOT NULL AUTO_INCREMENT COMMENT '角色组编号',
+  `role_group_name` varchar(50) NOT NULL COMMENT '角色组名称',
+  `role_group_desc` varchar(1024) DEFAULT NULL COMMENT '角色组描述',
+  `role_group_state` tinyint(2) NOT NULL COMMENT '角色组状态',
+  `create_date` datetime NOT NULL COMMENT '创建日期',
+  `done_date` datetime DEFAULT NULL COMMENT '修改日期',
+  `remarks` varchar(1024) DEFAULT NULL COMMENT '备注信息',
+  PRIMARY KEY (`role_group_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of flea_role_group
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `flea_role_group_rel`
+-- ----------------------------
+DROP TABLE IF EXISTS `flea_role_group_rel`;
+CREATE TABLE `flea_role_group_rel` (
+  `role_group_rel_id` int(12) NOT NULL AUTO_INCREMENT COMMENT '角色组关联编号',
+  `role_group_id` int(12) NOT NULL COMMENT '角色组编号',
+  `relat_id` int(12) NOT NULL COMMENT '关联编号',
+  `relat_type` varchar(50) NOT NULL COMMENT '关联类型',
+  `relat_state` tinyint(2) NOT NULL COMMENT '关联状态',
+  `create_date` datetime NOT NULL COMMENT '创建日期',
+  `done_date` datetime DEFAULT NULL COMMENT '修改日期',
+  `remarks` varchar(1024) DEFAULT NULL COMMENT '备注信息',
+  `relat_ext_a` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段A',
+  `relat_ext_b` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段B',
+  `relat_ext_c` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段C',
+  `relat_ext_x` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段X',
+  `relat_ext_y` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Y',
+  `relat_ext_z` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Z',
+  PRIMARY KEY (`role_group_rel_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of flea_role_group_rel
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `flea_role_rel`
+-- ----------------------------
+DROP TABLE IF EXISTS `flea_role_rel`;
+CREATE TABLE `flea_role_rel` (
+  `role_rel_id` int(12) NOT NULL AUTO_INCREMENT COMMENT '角色关联编号',
+  `role_id` int(12) NOT NULL COMMENT '角色编号',
+  `relat_id` int(12) NOT NULL COMMENT '关联编号',
+  `relat_type` varchar(50) NOT NULL COMMENT '关联类型',
+  `relat_state` tinyint(2) NOT NULL COMMENT '关联状态',
+  `create_date` datetime NOT NULL COMMENT '创建日期',
+  `done_date` datetime DEFAULT NULL COMMENT '修改日期',
+  `remarks` varchar(1024) DEFAULT NULL COMMENT '备注信息',
+  `relat_ext_a` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段A',
+  `relat_ext_b` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段B',
+  `relat_ext_c` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段C',
+  `relat_ext_x` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段X',
+  `relat_ext_y` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Y',
+  `relat_ext_z` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Z',
+  PRIMARY KEY (`role_rel_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of flea_role_rel
 -- ----------------------------
 
 -- ----------------------------
