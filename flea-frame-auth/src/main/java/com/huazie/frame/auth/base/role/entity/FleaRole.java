@@ -25,7 +25,7 @@ import java.util.Date;
 @Table(name = "flea_role")
 public class FleaRole extends FleaEntity {
 
-    private static final long serialVersionUID = 4983209318726974015L;
+    private static final long serialVersionUID = 6228198601951225197L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "FLEA_ROLE_SEQ")
@@ -35,6 +35,9 @@ public class FleaRole extends FleaEntity {
 
     @Column(name = "role_name", nullable = false)
     private String roleName; // 角色名称
+
+    @Column(name = "role_desc")
+    private String roleDesc; // 角色描述
 
     @Column(name = "role_state", nullable = false)
     private Integer roleState; // 角色状态（1: 正常  0: 删除）
@@ -64,6 +67,14 @@ public class FleaRole extends FleaEntity {
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
+    }
+
+    public String getRoleDesc() {
+        return roleDesc;
+    }
+
+    public void setRoleDesc(String roleDesc) {
+        this.roleDesc = roleDesc;
     }
 
     public Integer getRoleState() {
