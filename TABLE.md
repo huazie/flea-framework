@@ -22,7 +22,7 @@
 |  flea_menu                |  菜单                            |
 |  flea_menu_attr           |  菜单扩展属性                     |
 |  flea_operation           |  操作                            |
-|  flea_page_elements       |  页面元素                        |
+|  flea_element             |  元素 (页面)                      |
    
 ***
 

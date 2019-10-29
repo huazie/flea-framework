@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50538
 File Encoding         : 65001
 
-Date: 2019-10-29 18:13:41
+Date: 2019-10-30 00:17:16
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -122,11 +122,11 @@ CREATE TABLE `flea_menu` (
   `menu_code` varchar(50) NOT NULL COMMENT '菜单编码',
   `menu_name` varchar(50) NOT NULL COMMENT '菜单名称',
   `menu_icon` varchar(30) NOT NULL COMMENT '菜单FontAwesome小图标',
-  `menu_sort` tinyint(3) unsigned NOT NULL COMMENT '菜单展示排序()',
-  `menu_view` varchar(255) DEFAULT NULL COMMENT '菜单对应页面（含有子菜单的可以为空）',
-  `menu_level` tinyint(2) NOT NULL COMMENT '菜单级别（1：一级菜单 2；二级菜单 3：三级菜单 4：四级菜单）',
-  `menu_state` tinyint(2) NOT NULL COMMENT '菜单状态（1: 在用  0:下线）',
-  `parent_id` int(12) NOT NULL COMMENT '子菜单的父编码',
+  `menu_sort` tinyint(3) unsigned NOT NULL COMMENT '菜单展示顺序(同一个父菜单下)',
+  `menu_view` varchar(255) DEFAULT NULL COMMENT '菜单对应页面（非叶子菜单的可以为空）',
+  `menu_level` tinyint(2) NOT NULL COMMENT '菜单层级（1：一级菜单 2；二级菜单 3：三级菜单 4：四级菜单）',
+  `menu_state` tinyint(2) NOT NULL COMMENT '菜单状态（0:下线，1: 在用 ）',
+  `parent_id` int(12) NOT NULL COMMENT '父菜单编号',
   `create_date` datetime NOT NULL COMMENT '创建日期',
   `done_date` datetime DEFAULT NULL COMMENT '修改日期',
   `effective_date` datetime NOT NULL COMMENT '生效日期',
@@ -160,6 +160,26 @@ CREATE TABLE `flea_menu_attr` (
 
 -- ----------------------------
 -- Records of flea_menu_attr
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `flea_operation`
+-- ----------------------------
+DROP TABLE IF EXISTS `flea_operation`;
+CREATE TABLE `flea_operation` (
+  `operation_id` int(12) NOT NULL AUTO_INCREMENT COMMENT '操作编号',
+  `operation_code` varchar(50) NOT NULL COMMENT '操作编码',
+  `operation_name` varchar(50) NOT NULL COMMENT '操作名称',
+  `operation_desc` varchar(255) DEFAULT NULL COMMENT '操作描述',
+  `operation_state` tinyint(2) NOT NULL COMMENT '操作状态',
+  `create_date` datetime NOT NULL COMMENT '创建日期',
+  `done_date` datetime DEFAULT NULL COMMENT '修改日期',
+  `remarks` varchar(1024) DEFAULT NULL COMMENT '备注信息',
+  PRIMARY KEY (`operation_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of flea_operation
 -- ----------------------------
 
 -- ----------------------------
