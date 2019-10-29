@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50538
 File Encoding         : 65001
 
-Date: 2019-10-28 18:11:16
+Date: 2019-10-29 18:13:41
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -114,6 +114,119 @@ CREATE TABLE `flea_login_log_201909` (
 INSERT INTO `flea_login_log_201909` VALUES ('1', '1000000', '2000', '127.0.0.1', null, null, '1', '2019-09-27 00:03:47', null, '2019-09-27 00:03:47', null, null, null, null);
 
 -- ----------------------------
+-- Table structure for `flea_menu`
+-- ----------------------------
+DROP TABLE IF EXISTS `flea_menu`;
+CREATE TABLE `flea_menu` (
+  `menu_id` int(12) NOT NULL AUTO_INCREMENT COMMENT '菜单编号',
+  `menu_code` varchar(50) NOT NULL COMMENT '菜单编码',
+  `menu_name` varchar(50) NOT NULL COMMENT '菜单名称',
+  `menu_icon` varchar(30) NOT NULL COMMENT '菜单FontAwesome小图标',
+  `menu_sort` tinyint(3) unsigned NOT NULL COMMENT '菜单展示排序()',
+  `menu_view` varchar(255) DEFAULT NULL COMMENT '菜单对应页面（含有子菜单的可以为空）',
+  `menu_level` tinyint(2) NOT NULL COMMENT '菜单级别（1：一级菜单 2；二级菜单 3：三级菜单 4：四级菜单）',
+  `menu_state` tinyint(2) NOT NULL COMMENT '菜单状态（1: 在用  0:下线）',
+  `parent_id` int(12) NOT NULL COMMENT '子菜单的父编码',
+  `create_date` datetime NOT NULL COMMENT '创建日期',
+  `done_date` datetime DEFAULT NULL COMMENT '修改日期',
+  `effective_date` datetime NOT NULL COMMENT '生效日期',
+  `expiry_date` datetime NOT NULL COMMENT '失效日期',
+  `remarks` varchar(1024) DEFAULT NULL COMMENT '菜单描述',
+  PRIMARY KEY (`menu_id`),
+  UNIQUE KEY `check_menu_code` (`menu_code`) USING HASH
+) ENGINE=InnoDB AUTO_INCREMENT=1008 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of flea_menu
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `flea_menu_attr`
+-- ----------------------------
+DROP TABLE IF EXISTS `flea_menu_attr`;
+CREATE TABLE `flea_menu_attr` (
+  `attr_id` int(12) NOT NULL AUTO_INCREMENT COMMENT '属性编号',
+  `menu_id` int(12) NOT NULL COMMENT '菜单编号',
+  `attr_code` varchar(50) NOT NULL COMMENT '属性码',
+  `attr_value` varchar(1024) DEFAULT NULL COMMENT '属性值',
+  `state` tinyint(1) NOT NULL COMMENT '属性状态(0：删除 1：在用）',
+  `create_date` datetime NOT NULL COMMENT '创建日期',
+  `done_date` datetime DEFAULT NULL COMMENT '修改日期',
+  `effective_date` datetime DEFAULT NULL COMMENT '生效日期',
+  `expiry_date` datetime DEFAULT NULL COMMENT '失效日期',
+  `remarks` varchar(1024) DEFAULT NULL COMMENT '备注信息',
+  PRIMARY KEY (`attr_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of flea_menu_attr
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `flea_privilege`
+-- ----------------------------
+DROP TABLE IF EXISTS `flea_privilege`;
+CREATE TABLE `flea_privilege` (
+  `privilege_id` int(12) NOT NULL AUTO_INCREMENT COMMENT '权限编号',
+  `privilege_name` varchar(50) NOT NULL COMMENT '权限名称',
+  `privilege_desc` varchar(1024) DEFAULT NULL COMMENT '权限描述',
+  `privilege_state` tinyint(2) NOT NULL COMMENT '权限状态',
+  `create_date` datetime NOT NULL COMMENT '创建日期',
+  `done_date` datetime DEFAULT NULL COMMENT '修改日期',
+  `remarks` varchar(1024) DEFAULT NULL COMMENT '备注信息',
+  PRIMARY KEY (`privilege_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of flea_privilege
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `flea_privilege_group`
+-- ----------------------------
+DROP TABLE IF EXISTS `flea_privilege_group`;
+CREATE TABLE `flea_privilege_group` (
+  `privilege_group_id` int(12) NOT NULL AUTO_INCREMENT COMMENT '权限组编号',
+  `privilege_group_name` varchar(50) NOT NULL COMMENT '权限组名称',
+  `privilege_group_desc` varchar(1024) DEFAULT NULL COMMENT '权限组描述',
+  `privilege_group_state` tinyint(2) NOT NULL COMMENT '权限组状态',
+  `create_date` datetime NOT NULL COMMENT '创建日期',
+  `done_date` datetime DEFAULT NULL COMMENT '修改日期',
+  `remarks` varchar(1024) DEFAULT NULL COMMENT '备注信息',
+  PRIMARY KEY (`privilege_group_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of flea_privilege_group
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `flea_privilege_rel`
+-- ----------------------------
+DROP TABLE IF EXISTS `flea_privilege_rel`;
+CREATE TABLE `flea_privilege_rel` (
+  `privilege_rel_id` int(12) NOT NULL AUTO_INCREMENT COMMENT '权限关联编号',
+  `privilege_id` int(12) NOT NULL COMMENT '权限编号',
+  `relat_id` int(12) NOT NULL COMMENT '关联编号',
+  `relat_type` varchar(50) NOT NULL COMMENT '关联类型',
+  `relat_state` tinyint(2) NOT NULL COMMENT '关联状态',
+  `create_date` datetime NOT NULL COMMENT '创建日期',
+  `done_date` datetime DEFAULT NULL COMMENT '修改日期',
+  `remarks` varchar(1024) DEFAULT NULL COMMENT '备注信息',
+  `relat_ext_a` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段A',
+  `relat_ext_b` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段B',
+  `relat_ext_c` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段C',
+  `relat_ext_x` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段X',
+  `relat_ext_y` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Y',
+  `relat_ext_z` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Z',
+  PRIMARY KEY (`privilege_rel_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of flea_privilege_rel
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for `flea_real_name_info`
 -- ----------------------------
 DROP TABLE IF EXISTS `flea_real_name_info`;
@@ -143,7 +256,7 @@ DROP TABLE IF EXISTS `flea_role`;
 CREATE TABLE `flea_role` (
   `role_id` int(12) NOT NULL AUTO_INCREMENT COMMENT '角色编号',
   `role_name` varchar(50) NOT NULL COMMENT '角色名称',
-  `role_desc` varchar(255) DEFAULT NULL COMMENT '角色描述',
+  `role_desc` varchar(1024) DEFAULT NULL COMMENT '角色描述',
   `role_state` tinyint(2) NOT NULL COMMENT '角色状态（1: 正常  0: 删除）',
   `create_date` datetime NOT NULL COMMENT '创建日期',
   `done_date` datetime DEFAULT NULL COMMENT '修改日期',
@@ -280,7 +393,7 @@ DROP TABLE IF EXISTS `flea_user_group`;
 CREATE TABLE `flea_user_group` (
   `user_group_id` int(12) NOT NULL AUTO_INCREMENT COMMENT '用户组编号',
   `user_group_name` varchar(50) NOT NULL COMMENT '用户组名',
-  `user_group_desc` varchar(255) DEFAULT NULL COMMENT '用户组描述',
+  `user_group_desc` varchar(1024) DEFAULT NULL COMMENT '用户组描述',
   `user_group_state` tinyint(2) NOT NULL COMMENT '用户组状态（1: 正常  0: 删除）',
   `create_date` datetime NOT NULL COMMENT '创建日期',
   `done_date` datetime DEFAULT NULL COMMENT '修改日期',

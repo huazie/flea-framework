@@ -20,6 +20,7 @@
 |  flea_privilege_group     |  权限组                          |
 |  flea_privilege_rel       |  权限关联 （菜单， 操作， 页面元素）|
 |  flea_menu                |  菜单                            |
+|  flea_menu_attr           |  菜单扩展属性                     |
 |  flea_operation           |  操作                            |
 |  flea_page_elements       |  页面元素                        |
    
