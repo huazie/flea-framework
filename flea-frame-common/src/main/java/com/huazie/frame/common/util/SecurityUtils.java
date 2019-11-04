@@ -71,7 +71,7 @@ public class SecurityUtils {
             }
         }
         // 将摘要转为字符串
-        String result = DataConvert.byte2hex(digestInfo);
+        String result = DataHandleUtils.byte2hex(digestInfo);
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("SecurityUtils#encrypt(EncryptionAlgorithmEnum, String) Result = {}", result);
         }
@@ -174,7 +174,7 @@ public class SecurityUtils {
             }
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("SecurityUtils#createSecretKey(EncryptionAlgorithmEnum) SecretKey = {}", DataConvert.byte2hex(key.getEncoded()));
+            LOGGER.debug("SecurityUtils#createSecretKey(EncryptionAlgorithmEnum) SecretKey = {}", DataHandleUtils.byte2hex(key.getEncoded()));
         }
         return key;
     }
@@ -191,7 +191,7 @@ public class SecurityUtils {
     private static String encrypt(String algorithm, SecretKey key, String info) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("SecurityUtils#encrypt(String, SecretKey, String) Algorithm = {}", algorithm);
-            LOGGER.debug("SecurityUtils#encrypt(String, SecretKey, String) SecretKey = {}", DataConvert.byte2hex(key.getEncoded()));
+            LOGGER.debug("SecurityUtils#encrypt(String, SecretKey, String) SecretKey = {}", DataHandleUtils.byte2hex(key.getEncoded()));
             LOGGER.debug("SecurityUtils#encrypt(String, SecretKey, String) Info = {}", info);
         }
         String result = null;
@@ -204,7 +204,7 @@ public class SecurityUtils {
             // 对要加密的内容进行编码处理,
             byte[] cipherByte = c1.doFinal(info.getBytes());
             // 返回密文的十六进制形式
-            result = DataConvert.byte2hex(cipherByte);
+            result = DataHandleUtils.byte2hex(cipherByte);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("SecurityUtils#encrypt(String, SecretKey, String) Exception = ", e);
@@ -253,7 +253,7 @@ public class SecurityUtils {
     private static String decrypt(String algorithm, SecretKey key, String info) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("SecurityUtils#decrypt(String, SecretKey, String) Algorithm = {}", algorithm);
-            LOGGER.debug("SecurityUtils#decrypt(String, SecretKey, String) SecretKey = {}", DataConvert.byte2hex(key.getEncoded()));
+            LOGGER.debug("SecurityUtils#decrypt(String, SecretKey, String) SecretKey = {}", DataHandleUtils.byte2hex(key.getEncoded()));
             LOGGER.debug("SecurityUtils#decrypt(String, SecretKey, String) Info = {}", info);
         }
         String result = null;
@@ -263,7 +263,7 @@ public class SecurityUtils {
             // 用指定的密钥和模式初始化Cipher对象
             c1.init(Cipher.DECRYPT_MODE, key);
             // 对要解密的内容进行编码处理
-            byte[] cipherByte = c1.doFinal(DataConvert.hex2byte(info));
+            byte[] cipherByte = c1.doFinal(DataHandleUtils.hex2byte(info));
             result = new String(cipherByte);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {

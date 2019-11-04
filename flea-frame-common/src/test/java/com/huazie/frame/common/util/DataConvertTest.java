@@ -11,7 +11,7 @@ public class DataConvertTest {
     @Test
     public void hex2byte() {
         String hex = "ABCDE";
-        byte[] bytes = DataConvert.hex2byte(hex);
+        byte[] bytes = DataHandleUtils.hex2byte(hex);
         if(ArrayUtils.isNotEmpty(bytes)){
             for(byte bte : bytes){
                 LOGGER.debug("" + bte);
@@ -22,8 +22,8 @@ public class DataConvertTest {
     @Test
     public void byte2hex() {
         String hex = "ABCD";
-        byte[] bytes = DataConvert.hex2byte(hex);
-        String hex1 = DataConvert.byte2hex(bytes);
+        byte[] bytes = DataHandleUtils.hex2byte(hex);
+        String hex1 = DataHandleUtils.byte2hex(bytes);
         LOGGER.debug("byte2hex = " + hex1);
     }
 }

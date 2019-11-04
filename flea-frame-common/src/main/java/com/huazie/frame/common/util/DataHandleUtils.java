@@ -1,13 +1,22 @@
 package com.huazie.frame.common.util;
 
+import org.apache.commons.codec.binary.Base64;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.ByteArrayOutputStream;
+import java.util.zip.GZIPOutputStream;
+
 /**
- * <p> 数据转换工具类 </p>
+ * <p> 数据处理工具类 </p>
  *
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0
  */
-public class DataConvert {
+public class DataHandleUtils {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(DataHandleUtils.class);
 
     /**
      * <p> 十六进制字符串转化为字节数组 </p>
@@ -62,5 +71,38 @@ public class DataConvert {
             }
         }
         return hs.toUpperCase();
+    }
+
+    /**
+     * <p> 数据压缩(gzip) </p>
+     *
+     * @param originalStr 原始字符串
+     * @return 压缩后的字符串（Base64编码了）
+     * @since 1.0.0
+     */
+    public static String gzip(String originalStr) {
+        if (StringUtils.isBlank(originalStr)) {
+            return null;
+        }
+
+        String compressedStr = null;
+        try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+             GZIPOutputStream gzipOutputStream = new GZIPOutputStream(byteArrayOutputStream)) {
+            gzipOutputStream.write(originalStr.getBytes());
+            compressedStr = new String(new Base64().encode(byteArrayOutputStream.toByteArray()));
+        } catch (Exception e) {
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("采用gzip方式压缩数据异常：", e);
+            }
+        }
+        return compressedStr;
+    }
+
+    public static String ungzip(String input) {
+        if (StringUtils.isNotBlank(input)) {
+            return null;
+        }
+
+        return null;
     }
 }
