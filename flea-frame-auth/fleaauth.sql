@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50538
 File Encoding         : 65001
 
-Date: 2019-10-30 00:17:16
+Date: 2019-11-05 17:54:27
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -134,7 +134,7 @@ CREATE TABLE `flea_menu` (
   `remarks` varchar(1024) DEFAULT NULL COMMENT '菜单描述',
   PRIMARY KEY (`menu_id`),
   UNIQUE KEY `check_menu_code` (`menu_code`) USING HASH
-) ENGINE=InnoDB AUTO_INCREMENT=1008 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of flea_menu
@@ -282,7 +282,7 @@ CREATE TABLE `flea_role` (
   `done_date` datetime DEFAULT NULL COMMENT '修改日期',
   `remarks` varchar(1024) DEFAULT NULL COMMENT '备注信息',
   PRIMARY KEY (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10012 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of flea_role
