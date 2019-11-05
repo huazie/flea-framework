@@ -1,11 +1,15 @@
 package com.huazie.frame.common.util;
 
-import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 /**
  * <p> 数据处理工具类 </p>
@@ -85,24 +89,157 @@ public class DataHandleUtils {
             return null;
         }
 
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("DataHandleUtils#gzip(String) Original Length = {}", originalStr.length());
+        }
+
         String compressedStr = null;
-        try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-             GZIPOutputStream gzipOutputStream = new GZIPOutputStream(byteArrayOutputStream)) {
-            gzipOutputStream.write(originalStr.getBytes());
-            compressedStr = new String(new Base64().encode(byteArrayOutputStream.toByteArray()));
+        try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
+            try (GZIPOutputStream gzipOutputStream = new GZIPOutputStream(byteArrayOutputStream)) {
+                gzipOutputStream.write(originalStr.getBytes());
+            } finally {
+                // 获取输出流的数据之前，需要将gzipOutputStream关闭
+                compressedStr = new String(Base64Helper.getInstance().encode(byteArrayOutputStream.toByteArray()));
+            }
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("采用gzip方式压缩数据异常：", e);
             }
         }
+
+        if (LOGGER.isDebugEnabled()) {
+            if (StringUtils.isNotBlank(compressedStr)) {
+                LOGGER.debug("DataHandleUtils#gzip(String) Compressed Length = {}", compressedStr.length());
+            }
+        }
+
         return compressedStr;
     }
 
-    public static String ungzip(String input) {
-        if (StringUtils.isNotBlank(input)) {
+    /**
+     * <p> 数据解压(gzip)</p>
+     *
+     * @param compressedStr 压缩后的字符串
+     * @return 原始字符串
+     * @since 1.0.0
+     */
+    public static String unGzip(String compressedStr) {
+        if (StringUtils.isBlank(compressedStr)) {
             return null;
         }
 
-        return null;
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("DataHandleUtils#unGzip(String) Compressed Length = {}", compressedStr.length());
+        }
+
+        String originalStr = null;
+        byte[] compressedArr = Base64Helper.getInstance().decode(compressedStr.getBytes());
+        try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+             ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(compressedArr);
+             GZIPInputStream gzipInputStream = new GZIPInputStream(byteArrayInputStream)) {
+            byte[] temp = new byte[1024];
+            int offset;
+            while ((offset = gzipInputStream.read(temp)) != -1) {
+                byteArrayOutputStream.write(temp, 0, offset);
+            }
+            originalStr = byteArrayOutputStream.toString();
+        } catch (Exception e) {
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("采用gzip方式解压数据异常：", e);
+            }
+        }
+
+        if (LOGGER.isDebugEnabled()) {
+            if (StringUtils.isNotBlank(originalStr)) {
+                LOGGER.debug("DataHandleUtils#unGzip(String) Original Length = {}", originalStr.length());
+            }
+        }
+
+        return originalStr;
     }
+
+    /**
+     * <p> 数据压缩(zip) </p>
+     *
+     * @param originalStr 原始字符串
+     * @return 压缩后的字符串（Base64编码）
+     * @since 1.0.0
+     */
+    public static String zip(String originalStr) {
+        if (StringUtils.isBlank(originalStr)) {
+            return null;
+        }
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("DataHandleUtils#zip(String) Original Length = {}", originalStr.length());
+        }
+
+        String compressedStr = null;
+        try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+             ZipOutputStream zipOutputStream = new ZipOutputStream(byteArrayOutputStream)) {
+            // 开始写入新的 ZIP 文件条目并将流定位到条目数据的开始处
+            zipOutputStream.putNextEntry(new ZipEntry("zip"));
+            zipOutputStream.write(originalStr.getBytes());
+            // 关闭当前的 ZIP 条目并定位流以读取下一个条目
+            zipOutputStream.closeEntry();
+
+            compressedStr = new String(Base64Helper.getInstance().encode(byteArrayOutputStream.toByteArray()));
+        } catch (Exception e) {
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("采用zip方式压缩数据异常：", e);
+            }
+        }
+
+        if (LOGGER.isDebugEnabled()) {
+            if (StringUtils.isNotBlank(compressedStr)) {
+                LOGGER.debug("DataHandleUtils#zip(String) Compressed Length = {}", compressedStr.length());
+            }
+        }
+
+        return compressedStr;
+    }
+
+    /**
+     * <p> 数据解压(zip) </p>
+     *
+     * @param compressedStr 压缩后的字符串(Base64编码)
+     * @return 原始字符串
+     * @since 1.0.0
+     */
+    public static String unZip(String compressedStr) {
+        if (StringUtils.isBlank(compressedStr)) {
+            return null;
+        }
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("DataHandleUtils#unZip(String) Compressed Length = {}", compressedStr.length());
+        }
+
+        String originalStr = null;
+        byte[] compressedArr = Base64Helper.getInstance().decode(compressedStr.getBytes());
+        try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+             ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(compressedArr);
+             ZipInputStream zipInputStream = new ZipInputStream(byteArrayInputStream)) {
+            zipInputStream.getNextEntry();
+            byte[] temp = new byte[1024];
+            int offset;
+            while ((offset = zipInputStream.read(temp)) != -1) {
+                byteArrayOutputStream.write(temp, 0, offset);
+            }
+            originalStr = byteArrayOutputStream.toString();
+        } catch (Exception e) {
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("采用zip方式解压数据异常：", e);
+            }
+        }
+
+        if (LOGGER.isDebugEnabled()) {
+            if (StringUtils.isNotBlank(originalStr)) {
+                LOGGER.debug("DataHandleUtils#unZip(String) Original Length = {}", originalStr.length());
+            }
+        }
+
+        return originalStr;
+    }
+
 }
