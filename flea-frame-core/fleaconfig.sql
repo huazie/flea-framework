@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50538
 File Encoding         : 65001
 
-Date: 2019-11-05 18:00:47
+Date: 2019-11-06 15:36:35
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -119,7 +119,7 @@ CREATE TABLE `flea_jersey_res_service_log` (
   `sys_acct_id` int(12) NOT NULL COMMENT '接入系统账号编号',
   `create_date` datetime DEFAULT NULL COMMENT '创建日期',
   `done_date` datetime DEFAULT NULL COMMENT '修改日期',
-  `remarks` varchar(1024) DEFAULT NULL,
+  `remarks` varchar(1024) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`log_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
