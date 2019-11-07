@@ -134,15 +134,9 @@ public class DataHandleUtils {
 
         String originalStr = null;
         byte[] compressedArr = Base64Helper.getInstance().decode(compressedStr.getBytes());
-        try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-             ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(compressedArr);
+        try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(compressedArr);
              GZIPInputStream gzipInputStream = new GZIPInputStream(byteArrayInputStream)) {
-            byte[] temp = new byte[1024];
-            int offset;
-            while ((offset = gzipInputStream.read(temp)) != -1) {
-                byteArrayOutputStream.write(temp, 0, offset);
-            }
-            originalStr = byteArrayOutputStream.toString();
+            originalStr = IOUtils.toString(gzipInputStream, false);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("采用gzip方式解压数据异常：", e);
@@ -217,16 +211,10 @@ public class DataHandleUtils {
 
         String originalStr = null;
         byte[] compressedArr = Base64Helper.getInstance().decode(compressedStr.getBytes());
-        try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-             ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(compressedArr);
+        try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(compressedArr);
              ZipInputStream zipInputStream = new ZipInputStream(byteArrayInputStream)) {
             zipInputStream.getNextEntry();
-            byte[] temp = new byte[1024];
-            int offset;
-            while ((offset = zipInputStream.read(temp)) != -1) {
-                byteArrayOutputStream.write(temp, 0, offset);
-            }
-            originalStr = byteArrayOutputStream.toString();
+            originalStr = IOUtils.toString(zipInputStream, false);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("采用zip方式解压数据异常：", e);

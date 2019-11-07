@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.InputStream;
 
 public class DataHandleUtilsTest {
 
@@ -31,27 +32,58 @@ public class DataHandleUtilsTest {
 
     @Test
     public void testGzip() {
+        // 图片压缩 （压缩率 高于95%, 压缩效果不好）
         File file = new File("E:\\IMG.jpg");
-        String input = IOUtils.toString(file);
+        String input = IOUtils.toString(file, true);
 
         String compressedStr = DataHandleUtils.gzip(input);
 
         String originalStr = DataHandleUtils.unGzip(compressedStr);
 
-        File newFile = IOUtils.toFile(originalStr, "E:\\IMG_1.jpg");
+        File newFile = IOUtils.toFile(originalStr, "E:\\IMG_1.jpg", true);
         LOGGER.debug("FILE : {}", newFile);
     }
 
     @Test
+    public void testGzip1() {
+        // 配置文件压缩 (压缩率 低于50%，压缩效果明显)
+        InputStream inputStream = IOUtils.getInputStreamFromClassPath("applicationContext.xml");
+        String input = IOUtils.toString(inputStream, false);
+
+        String compressedStr = DataHandleUtils.gzip(input);
+
+        String originalStr = DataHandleUtils.unGzip(compressedStr);
+
+        File file = IOUtils.toFile(originalStr, "E:\\applicationContext.xml", false);
+        LOGGER.debug("FILE : {}", file);
+    }
+
+    @Test
     public void testZip() {
+        // 图片压缩 （压缩率 高于95%）
         File file = new File("E:\\IMG.jpg");
-        String input = IOUtils.toString(file);
+        String input = IOUtils.toString(file, true);
 
         String compressedStr = DataHandleUtils.zip(input);
 
         String originalStr = DataHandleUtils.unZip(compressedStr);
 
-        File newFile = IOUtils.toFile(originalStr, "E:\\IMG_1.jpg");
+        File newFile = IOUtils.toFile(originalStr, "E:\\IMG_1.jpg", true);
         LOGGER.debug("FILE : {}", newFile);
     }
+
+    @Test
+    public void testZip1() {
+        // 配置文件压缩 (压缩率 低于50%)
+        InputStream inputStream = IOUtils.getInputStreamFromClassPath("applicationContext.xml");
+        String input = IOUtils.toString(inputStream, false);
+
+        String compressedStr = DataHandleUtils.zip(input);
+
+        String originalStr = DataHandleUtils.unZip(compressedStr);
+
+        File file = IOUtils.toFile(originalStr, "E:\\applicationContext.xml", false);
+        LOGGER.debug("FILE : {}", file);
+    }
+
 }
