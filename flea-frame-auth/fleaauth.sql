@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50538
 File Encoding         : 65001
 
-Date: 2019-11-05 17:54:27
+Date: 2019-11-08 18:15:55
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -58,6 +58,50 @@ CREATE TABLE `flea_account_attr` (
 
 -- ----------------------------
 -- Records of flea_account_attr
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `flea_element`
+-- ----------------------------
+DROP TABLE IF EXISTS `flea_element`;
+CREATE TABLE `flea_element` (
+  `element_id` int(12) NOT NULL AUTO_INCREMENT COMMENT '元素编号',
+  `element_code` varchar(50) NOT NULL COMMENT '元素编码',
+  `element_name` varchar(50) NOT NULL COMMENT '元素名称',
+  `element_desc` varchar(255) DEFAULT NULL COMMENT '元素描述',
+  `element_type` tinyint(2) NOT NULL COMMENT '元素类型',
+  `element_content` varchar(2000) DEFAULT NULL COMMENT '元素内容',
+  `element_state` tinyint(2) NOT NULL COMMENT '元素状态',
+  `create_date` datetime NOT NULL COMMENT '创建日期',
+  `done_date` datetime DEFAULT NULL COMMENT '修改日期',
+  `remarks` varchar(1024) DEFAULT NULL COMMENT '备注信息',
+  PRIMARY KEY (`element_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of flea_element
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `flea_element_attr`
+-- ----------------------------
+DROP TABLE IF EXISTS `flea_element_attr`;
+CREATE TABLE `flea_element_attr` (
+  `attr_id` int(12) NOT NULL AUTO_INCREMENT COMMENT '属性编号',
+  `element_id` int(12) NOT NULL COMMENT '元素编号',
+  `attr_code` varchar(50) NOT NULL COMMENT '属性码',
+  `attr_value` varchar(1024) DEFAULT NULL COMMENT '属性值',
+  `state` tinyint(1) NOT NULL COMMENT '属性状态(0：删除 1：在用）',
+  `create_date` datetime NOT NULL COMMENT '创建日期',
+  `done_date` datetime DEFAULT NULL COMMENT '修改日期',
+  `effective_date` datetime DEFAULT NULL COMMENT '生效日期',
+  `expiry_date` datetime DEFAULT NULL COMMENT '失效日期',
+  `remarks` varchar(1024) DEFAULT NULL COMMENT '备注信息',
+  PRIMARY KEY (`attr_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of flea_element_attr
 -- ----------------------------
 
 -- ----------------------------
@@ -180,6 +224,28 @@ CREATE TABLE `flea_operation` (
 
 -- ----------------------------
 -- Records of flea_operation
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `flea_operation_attr`
+-- ----------------------------
+DROP TABLE IF EXISTS `flea_operation_attr`;
+CREATE TABLE `flea_operation_attr` (
+  `attr_id` int(12) NOT NULL AUTO_INCREMENT COMMENT '属性编号',
+  `operation_id` int(12) NOT NULL COMMENT '操作编号',
+  `attr_code` varchar(50) NOT NULL COMMENT '属性码',
+  `attr_value` varchar(1024) DEFAULT NULL COMMENT '属性值',
+  `state` tinyint(1) NOT NULL COMMENT '属性状态(0：删除 1：在用）',
+  `create_date` datetime NOT NULL COMMENT '创建日期',
+  `done_date` datetime DEFAULT NULL COMMENT '修改日期',
+  `effective_date` datetime DEFAULT NULL COMMENT '生效日期',
+  `expiry_date` datetime DEFAULT NULL COMMENT '失效日期',
+  `remarks` varchar(1024) DEFAULT NULL COMMENT '备注信息',
+  PRIMARY KEY (`attr_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of flea_operation_attr
 -- ----------------------------
 
 -- ----------------------------
