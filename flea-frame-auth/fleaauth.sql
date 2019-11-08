@@ -122,7 +122,7 @@ CREATE TABLE `flea_menu` (
   `menu_code` varchar(50) NOT NULL COMMENT '菜单编码',
   `menu_name` varchar(50) NOT NULL COMMENT '菜单名称',
   `menu_icon` varchar(30) NOT NULL COMMENT '菜单FontAwesome小图标',
-  `menu_sort` tinyint(3) unsigned NOT NULL COMMENT '菜单展示顺序(同一个父菜单下)',
+  `menu_sort` tinyint(2) NOT NULL COMMENT '菜单展示顺序(同一个父菜单下)',
   `menu_view` varchar(255) DEFAULT NULL COMMENT '菜单对应页面（非叶子菜单的可以为空）',
   `menu_level` tinyint(2) NOT NULL COMMENT '菜单层级（1：一级菜单 2；二级菜单 3：三级菜单 4：四级菜单）',
   `menu_state` tinyint(2) NOT NULL COMMENT '菜单状态（0:下线，1: 在用 ）',
