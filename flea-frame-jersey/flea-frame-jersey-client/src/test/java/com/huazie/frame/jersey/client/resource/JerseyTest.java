@@ -107,7 +107,7 @@ public class JerseyTest {
                 String fileInput = response.getOutput().getFileInput();
                 LOGGER.debug("FILE_NAME = {}", fileName);
                 LOGGER.debug("FILE = \n{}", fileInput);
-                IOUtils.toFile(fileInput, "E:\\" + fileName);
+                IOUtils.toFile(fileInput, "E:\\" + fileName, true);
             }
 
         } catch (Exception e) {

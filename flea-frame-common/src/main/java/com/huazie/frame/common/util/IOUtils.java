@@ -2,8 +2,6 @@ package com.huazie.frame.common.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -29,10 +27,6 @@ public class IOUtils {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(IOUtils.class);
 
-    private static final BASE64Encoder encoder = new BASE64Encoder();
-
-    private static final BASE64Decoder decoder = new BASE64Decoder();
-
     /**
      * <p> 根据文件路径获取文件输入流对象 </p>
      *
@@ -51,14 +45,18 @@ public class IOUtils {
      * @return 字符串
      * @since 1.0.0
      */
-    public static String toString(InputStream inputStream) {
+    public static String toString(InputStream inputStream, boolean base64Flag) {
         String input = "";
         byte[] bytes = toByteArray(inputStream);
         if (ArrayUtils.isNotEmpty(bytes)) {
-            input = encoder.encodeBuffer(bytes);
+            if (base64Flag) {
+                input = Base64Helper.getInstance().encodeToString(bytes);
+            } else {
+                input = new String(bytes);
+            }
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("IOUtils##toString(File) input : \n{}", input);
+            LOGGER.debug("IOUtils##toString(InputStrearm, boolean) INPUT = \n{}", input);
         }
         return input;
     }
@@ -70,17 +68,14 @@ public class IOUtils {
      * @return 字符串
      * @since 1.0.0
      */
-    public static String toString(File file) {
+    public static String toString(File file, boolean base64Flag) {
         String input = "";
         try (InputStream inputStream = new FileInputStream(file)) {
-            input = toString(inputStream);
+            input = toString(inputStream, base64Flag);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("文件转字符串出现异常：", e);
             }
-        }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("IOUtils##toString(File) input : \n{}", input);
         }
         return input;
     }
@@ -92,9 +87,9 @@ public class IOUtils {
      * @return 文件对象
      * @since 1.0.0
      */
-    public static File toFile(String input, String filePath) {
+    public static File toFile(String input, String filePath, boolean base64Flag) {
         File file = new File(filePath);
-        try (InputStream inputStream = toInputStream(input);
+        try (InputStream inputStream = toInputStream(input, base64Flag);
              FileOutputStream outputStream = new FileOutputStream(file)) {
             byte[] bytes = toByteArray(inputStream);
             outputStream.write(bytes, 0, bytes.length);
@@ -113,8 +108,13 @@ public class IOUtils {
      * @return 输入流对象
      * @since 1.0.0
      */
-    public static InputStream toInputStream(String input) throws IOException {
-        byte[] bytes = decoder.decodeBuffer(input);
+    public static InputStream toInputStream(String input, boolean base64Flag) throws IOException {
+        byte[] bytes;
+        if (base64Flag) {
+            bytes = Base64Helper.getInstance().decode(input);
+        } else {
+            bytes = input.getBytes();
+        }
         return new ByteArrayInputStream(bytes);
     }
 
@@ -125,7 +125,7 @@ public class IOUtils {
      * @return 字节数组
      * @since 1.0.0
      */
-    private static byte[] toByteArray(InputStream inputStream) {
+    public static byte[] toByteArray(InputStream inputStream) {
 
         byte[] result = null;
 

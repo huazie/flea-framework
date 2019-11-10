@@ -464,7 +464,7 @@ public class FleaJDBCHelper {
     /**
      * <p> 构建并执行INSERT. UPDATE. DELETE SQL模板 </p>
      *
-     * @param template     SQL模板
+     * @param template SQL模板
      * @return 操作记录数
      * @throws SQLException 数据库操作异常
      * @since 1.0.0
@@ -480,7 +480,7 @@ public class FleaJDBCHelper {
     /**
      * <p> 构建INSERT, UPDATE, DELETE SQL模板，获取Connection 和 PreparedStatement </p>
      *
-     * @param template     SQL模板
+     * @param template SQL模板
      * @return 一次数据库操作处理对象
      * @throws Exception
      * @since 1.0.0
@@ -637,7 +637,8 @@ public class FleaJDBCHelper {
                     column.setAttrType(Integer.class);
                 }
 
-                if ("VARCHAR".equals(typeName) || "VARCHAR2".equals(typeName)) {
+                if ("VARCHAR".equals(typeName) || "VARCHAR2".equals(typeName) || "TINYTEXT".equals(typeName) || "TEXT".equals(typeName)
+                        || "MEDIUMTEXT".equals(typeName) || "LONGTEXT".equals(typeName)) {
                     column.setAttrType(String.class);
                 }
 
