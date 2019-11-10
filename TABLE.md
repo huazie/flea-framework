@@ -18,7 +18,7 @@
 |  flea_role_group_rel      |  角色组关联（角色，用户，用户组）   |
 |  flea_privilege           |  权限                            |
 |  flea_privilege_group     |  权限组                          |
-|  flea_privilege_rel       |  权限关联（菜单， 操作， 页面元素）|
+|  flea_privilege_rel       |  权限关联（菜单， 操作， 元素）|
 |  flea_menu                |  菜单                            |
 |  flea_menu_attr           |  菜单扩展属性                     |
 |  flea_operation           |  操作                            |
