@@ -61,7 +61,7 @@ public class SecurityUtilsTest {
     public void testOther(){
         String hexKey = "1A2025C4044F4508";
         String result = "AC235D321317B49E";
-        byte[] bytes = DataConvert.hex2byte(hexKey);
+        byte[] bytes = DataHandleUtils.hex2byte(hexKey);
         SecretKeySpec skeySpec = new SecretKeySpec(bytes, "DES");
         SecurityUtils.decryptByDES(skeySpec, result);
     }
