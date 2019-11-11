@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50538
 File Encoding         : 65001
 
-Date: 2019-11-11 10:36:03
+Date: 2019-11-11 10:57:05
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -438,6 +438,7 @@ CREATE TABLE `flea_user` (
   `user_address` varchar(50) DEFAULT NULL COMMENT '住址',
   `user_email` varchar(30) DEFAULT NULL COMMENT '邮箱',
   `user_phone` varchar(11) DEFAULT NULL COMMENT '手机',
+  `group_id` int(12) NOT NULL DEFAULT '-1' COMMENT '用户组编号',
   `user_state` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态（1：正常，0：禁用）',
   `create_date` datetime NOT NULL COMMENT '创建日期',
   `done_date` datetime DEFAULT NULL COMMENT '修改日期',
