@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50538
 File Encoding         : 65001
 
-Date: 2019-11-08 18:15:55
+Date: 2019-11-11 10:36:03
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -256,6 +256,7 @@ CREATE TABLE `flea_privilege` (
   `privilege_id` int(12) NOT NULL AUTO_INCREMENT COMMENT '权限编号',
   `privilege_name` varchar(50) NOT NULL COMMENT '权限名称',
   `privilege_desc` varchar(1024) DEFAULT NULL COMMENT '权限描述',
+  `group_id` int(12) NOT NULL DEFAULT '-1' COMMENT '权限组编号',
   `privilege_state` tinyint(2) NOT NULL COMMENT '权限状态',
   `create_date` datetime NOT NULL COMMENT '创建日期',
   `done_date` datetime DEFAULT NULL COMMENT '修改日期',

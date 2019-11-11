@@ -11,7 +11,7 @@
 |  flea_user_attr           |  用户扩展属性                     |
 |  flea_user_role_rel       |  用户和角色关联                   |
 |  flea_user_group          |  用户组                          |
-|  flea_user_group_rel      |  用户组关联（用户，角色）          |
+|  flea_user_group_rel      |  用户组关联（角色）                |
 |  flea_role                |  角色                            |
 |  flea_role_rel            |  角色关联（角色， 权限， 权限组）   |
 |  flea_role_group          |  角色组（不参与授权）              |
