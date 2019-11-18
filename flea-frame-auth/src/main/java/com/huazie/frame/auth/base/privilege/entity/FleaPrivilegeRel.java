@@ -15,7 +15,7 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 /**
- * <p> Flea权限关联（菜单， 操作， 页面元素）表对应的实体类 </p>
+ * <p> Flea权限关联（菜单， 操作， 元素）表对应的实体类 </p>
  *
  * @author huazie
  * @version 1.0.0
