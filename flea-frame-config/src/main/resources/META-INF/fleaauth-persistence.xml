@@ -14,18 +14,19 @@
 		<class>com.huazie.frame.auth.base.user.entity.FleaLoginLog</class>
 		<class>com.huazie.frame.auth.base.user.entity.FleaUser</class>
 		<class>com.huazie.frame.auth.base.user.entity.FleaUserAttr</class>
+		<class>com.huazie.frame.auth.base.user.entity.FleaUserRel</class>
 		<class>com.huazie.frame.auth.base.user.entity.FleaUserGroup</class>
 		<class>com.huazie.frame.auth.base.user.entity.FleaUserGroupRel</class>
-		<class>com.huazie.frame.auth.base.user.entity.FleaUserRoleRel</class>
 		<!-- 角色子模块 -->
 		<class>com.huazie.frame.auth.base.role.entity.FleaRole</class>
+		<class>com.huazie.frame.auth.base.role.entity.FleaRoleRel</class>
 		<class>com.huazie.frame.auth.base.role.entity.FleaRoleGroup</class>
 		<class>com.huazie.frame.auth.base.role.entity.FleaRoleGroupRel</class>
-		<class>com.huazie.frame.auth.base.role.entity.FleaRoleRel</class>
 		<!-- 权限子模块 -->
 		<class>com.huazie.frame.auth.base.privilege.entity.FleaPrivilege</class>
-		<class>com.huazie.frame.auth.base.privilege.entity.FleaPrivilegeGroup</class>
 		<class>com.huazie.frame.auth.base.privilege.entity.FleaPrivilegeRel</class>
+		<class>com.huazie.frame.auth.base.privilege.entity.FleaPrivilegeGroup</class>
+		<class>com.huazie.frame.auth.base.privilege.entity.FleaPrivilegeGroupRel</class>
 		<!-- 功能子模块 -->
 		<class>com.huazie.frame.auth.base.function.entity.FleaElement</class>
 		<class>com.huazie.frame.auth.base.function.entity.FleaElementAttr</class>
