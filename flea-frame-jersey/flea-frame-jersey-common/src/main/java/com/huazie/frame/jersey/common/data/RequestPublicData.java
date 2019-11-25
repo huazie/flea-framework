@@ -6,7 +6,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.io.Serializable;
 
 /**
  * <p> 请求公共数据 </p>
@@ -17,7 +16,7 @@ import java.io.Serializable;
  */
 @XmlRootElement(name = "PUBLIC")
 @XmlAccessorType(XmlAccessType.FIELD)
-public final class RequestPublicData implements Serializable {
+public final class RequestPublicData {
 
     @XmlElement(name = "SYSTEM_ACCT_ID")
     private String systemAccountId; // 系统账户编号

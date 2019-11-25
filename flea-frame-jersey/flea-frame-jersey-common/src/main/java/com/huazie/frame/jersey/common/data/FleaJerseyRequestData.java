@@ -6,7 +6,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.io.Serializable;
 
 /**
  * <p> Flea Jersey 请求数据 </p>
@@ -17,7 +16,7 @@ import java.io.Serializable;
  */
 @XmlRootElement(name = "REQUEST")
 @XmlAccessorType(XmlAccessType.FIELD)
-public final class FleaJerseyRequestData implements Serializable {
+public final class FleaJerseyRequestData {
 
     @XmlElement(name = "PUBLIC")
     private RequestPublicData publicData;       // 请求公共数据
