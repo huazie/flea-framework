@@ -26,7 +26,7 @@ public interface JerseyDeleteResource {
      */
     @DELETE
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Produces({MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     FleaJerseyResponse doDeleteResource(@QueryParam("REQUEST") String requestXml);
 
 }

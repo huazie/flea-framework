@@ -26,7 +26,7 @@ public interface JerseyPostResource {
      */
     @POST
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Produces({MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     FleaJerseyResponse doPostResource(FleaJerseyRequest request);
 
 }
