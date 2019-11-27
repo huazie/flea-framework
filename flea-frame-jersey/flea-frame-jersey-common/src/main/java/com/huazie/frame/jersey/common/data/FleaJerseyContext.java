@@ -9,13 +9,13 @@ import javax.ws.rs.core.Request;
 import javax.ws.rs.core.UriInfo;
 
 /**
- * <p> Flea Jersey 全局数据 </p>
+ * <p> Flea Jersey 上下文 </p>
  *
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0
  */
-public class FleaJerseyGlobalData {
+public class FleaJerseyContext {
 
     private Request request; // 请求信息的上下文
 
@@ -53,5 +53,37 @@ public class FleaJerseyGlobalData {
 
     public void setHttpHeaders(HttpHeaders httpHeaders) {
         this.httpHeaders = httpHeaders;
+    }
+
+    public ServletContext getServletContext() {
+        return servletContext;
+    }
+
+    public void setServletContext(ServletContext servletContext) {
+        this.servletContext = servletContext;
+    }
+
+    public HttpServletRequest getHttpServletRequest() {
+        return httpServletRequest;
+    }
+
+    public void setHttpServletRequest(HttpServletRequest httpServletRequest) {
+        this.httpServletRequest = httpServletRequest;
+    }
+
+    public HttpServletResponse getHttpServletResponse() {
+        return httpServletResponse;
+    }
+
+    public void setHttpServletResponse(HttpServletResponse httpServletResponse) {
+        this.httpServletResponse = httpServletResponse;
+    }
+
+    public ResourceInfo getResourceInfo() {
+        return resourceInfo;
+    }
+
+    public void setResourceInfo(ResourceInfo resourceInfo) {
+        this.resourceInfo = resourceInfo;
     }
 }
