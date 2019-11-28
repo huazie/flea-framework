@@ -1,5 +1,6 @@
 package com.huazie.frame.jersey.server.resource;
 
+import com.huazie.frame.jersey.common.data.FleaJerseyContext;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
 import com.huazie.frame.jersey.server.filter.FilterChainManager;
@@ -51,6 +52,7 @@ public abstract class Resource {
      * @since 1.0.0
      */
     protected FleaJerseyResponse doResource(FleaJerseyRequest request) {
+        initContext();
         return FilterChainManager.getManager().doFilter(request);
     }
 
@@ -62,7 +64,25 @@ public abstract class Resource {
      * @since 1.0.0
      */
     protected FleaJerseyResponse doResource(String requestXml) {
+        initContext();
         return FilterChainManager.getManager().doFilter(requestXml);
+    }
+
+    /**
+     * <p> 初始化上下文对象 </p>
+     *
+     * @since 1.0.0
+     */
+    private void initContext() {
+        FleaJerseyContext context = FilterChainManager.getManager().getContext();
+        context.setRequest(request);
+        context.setUriInfo(uriInfo);
+        context.setHttpHeaders(httpHeaders);
+        context.setResourceInfo(resourceInfo);
+        context.setServletContext(servletContext);
+        context.setHttpServletRequest(httpServletRequest);
+        context.setHttpServletResponse(httpServletResponse);
+        FilterChainManager.getManager().setContext(context);
     }
 
 }
