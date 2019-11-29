@@ -26,7 +26,7 @@ public interface JerseyGetResource {
      */
     @GET
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Produces({MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     FleaJerseyResponse doGetResource(@QueryParam("REQUEST") String requestXml);
 
 }

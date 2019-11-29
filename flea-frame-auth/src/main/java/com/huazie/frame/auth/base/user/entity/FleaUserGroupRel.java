@@ -15,7 +15,7 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 /**
- * <p> Flea用户组关联（用户，角色）表对应的实体类 </p>
+ * <p> Flea用户组关联（角色，角色组）表对应的实体类 </p>
  *
  * @author huazie
  * @version 1.0.0

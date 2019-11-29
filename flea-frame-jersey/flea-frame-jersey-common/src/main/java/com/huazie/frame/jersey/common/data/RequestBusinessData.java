@@ -6,7 +6,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.io.Serializable;
 
 /**
  * <p> 请求业务数据 </p>
@@ -17,7 +16,7 @@ import java.io.Serializable;
  */
 @XmlRootElement(name = "BUSINESS")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class RequestBusinessData implements Serializable {
+public final class RequestBusinessData {
 
     @XmlElement(name = "INPUT")
     private String input; // 业务入参

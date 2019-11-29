@@ -7,7 +7,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.io.Serializable;
 
 /**
  * <p> 响应公共数据 </p>
@@ -18,7 +17,7 @@ import java.io.Serializable;
  */
 @XmlRootElement(name = "PUBLIC")
 @XmlAccessorType(XmlAccessType.FIELD)
-public final class ResponsePublicData implements Serializable {
+public final class ResponsePublicData {
 
     @XmlElement(name = "RESULT_CODE")
     private String resultCode; // 返回码
