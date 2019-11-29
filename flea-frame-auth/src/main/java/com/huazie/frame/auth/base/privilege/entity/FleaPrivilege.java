@@ -25,7 +25,7 @@ import java.util.Date;
 @Table(name = "flea_privilege")
 public class FleaPrivilege extends FleaEntity {
 
-    private static final long serialVersionUID = -92191900604005886L;
+    private static final long serialVersionUID = 9087738171790593468L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "FLEA_PRIVILEGE_SEQ")
@@ -38,6 +38,9 @@ public class FleaPrivilege extends FleaEntity {
 
     @Column(name = "privilege_desc")
     private String privilegeDesc; // 权限描述
+
+    @Column(name = "group_id", nullable = false)
+    private Long groupId; // 权限组编号
 
     @Column(name = "privilege_state", nullable = false)
     private Integer privilegeState; // 权限状态
@@ -75,6 +78,14 @@ public class FleaPrivilege extends FleaEntity {
 
     public void setPrivilegeDesc(String privilegeDesc) {
         this.privilegeDesc = privilegeDesc;
+    }
+
+    public Long getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Long groupId) {
+        this.groupId = groupId;
     }
 
     public Integer getPrivilegeState() {

@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "JERSEY")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class FleaJerseyResponse {
+public final class FleaJerseyResponse {
 
     @XmlElement(name = "RESPONSE")
     private FleaJerseyResponseData responseData;

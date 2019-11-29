@@ -7,12 +7,34 @@
 		<!-- provider -->
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<!-- Connection JDBC -->
-		<class>com.huazie.frame.auth.base.user.entity.FleaUser</class>
-		<class>com.huazie.frame.auth.base.user.entity.FleaUserAttr</class>
-		<class>com.huazie.frame.auth.base.user.entity.FleaRealNameInfo</class>
+		<!-- 用户子模块 -->
 		<class>com.huazie.frame.auth.base.user.entity.FleaAccount</class>
 		<class>com.huazie.frame.auth.base.user.entity.FleaAccountAttr</class>
+		<class>com.huazie.frame.auth.base.user.entity.FleaRealNameInfo</class>
 		<class>com.huazie.frame.auth.base.user.entity.FleaLoginLog</class>
+		<class>com.huazie.frame.auth.base.user.entity.FleaUser</class>
+		<class>com.huazie.frame.auth.base.user.entity.FleaUserAttr</class>
+		<class>com.huazie.frame.auth.base.user.entity.FleaUserRel</class>
+		<class>com.huazie.frame.auth.base.user.entity.FleaUserGroup</class>
+		<class>com.huazie.frame.auth.base.user.entity.FleaUserGroupRel</class>
+		<!-- 角色子模块 -->
+		<class>com.huazie.frame.auth.base.role.entity.FleaRole</class>
+		<class>com.huazie.frame.auth.base.role.entity.FleaRoleRel</class>
+		<class>com.huazie.frame.auth.base.role.entity.FleaRoleGroup</class>
+		<class>com.huazie.frame.auth.base.role.entity.FleaRoleGroupRel</class>
+		<!-- 权限子模块 -->
+		<class>com.huazie.frame.auth.base.privilege.entity.FleaPrivilege</class>
+		<class>com.huazie.frame.auth.base.privilege.entity.FleaPrivilegeRel</class>
+		<class>com.huazie.frame.auth.base.privilege.entity.FleaPrivilegeGroup</class>
+		<class>com.huazie.frame.auth.base.privilege.entity.FleaPrivilegeGroupRel</class>
+		<!-- 功能子模块 -->
+		<class>com.huazie.frame.auth.base.function.entity.FleaElement</class>
+		<class>com.huazie.frame.auth.base.function.entity.FleaElementAttr</class>
+		<class>com.huazie.frame.auth.base.function.entity.FleaMenu</class>
+		<class>com.huazie.frame.auth.base.function.entity.FleaMenuAttr</class>
+		<class>com.huazie.frame.auth.base.function.entity.FleaOperation</class>
+		<class>com.huazie.frame.auth.base.function.entity.FleaOperationAttr</class>
+
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		
 		<properties>

@@ -9,16 +9,17 @@
 |  flea_login_log_YYYYMM    |  登录日志                        |
 |  flea_user                |  用户                            |
 |  flea_user_attr           |  用户扩展属性                     |
-|  flea_user_role_rel       |  用户和角色关联                   |
+|  flea_user_rel       		|  用户关联（角色，角色组）           |
 |  flea_user_group          |  用户组                          |
-|  flea_user_group_rel      |  用户组关联（用户，角色）          |
+|  flea_user_group_rel      |  用户组关联（角色，角色组）         |
 |  flea_role                |  角色                            |
 |  flea_role_rel            |  角色关联（角色， 权限， 权限组）   |
 |  flea_role_group          |  角色组（不参与授权）              |
-|  flea_role_group_rel      |  角色组关联（角色，用户，用户组）   |
+|  flea_role_group_rel      |  角色组关联（角色）                |
 |  flea_privilege           |  权限                            |
-|  flea_privilege_group     |  权限组                          |
-|  flea_privilege_rel       |  权限关联（菜单， 操作， 页面元素）|
+|  flea_privilege_rel      	|  权限关联（菜单， 操作， 元素）     |
+|  flea_privilege_group     |  权限组                          |			
+|  flea_privilege_group_rel |  权限组关联 (权限)                |
 |  flea_menu                |  菜单                            |
 |  flea_menu_attr           |  菜单扩展属性                     |
 |  flea_operation           |  操作                            |

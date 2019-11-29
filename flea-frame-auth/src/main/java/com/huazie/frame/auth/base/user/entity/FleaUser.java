@@ -15,7 +15,7 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 /**
- * <p> Flea用户信息表对应的实体类 </p>
+ * <p> Flea用户表对应的实体类 </p>
  *
  * @author huazie
  * @version 1.0.0
@@ -25,7 +25,7 @@ import java.util.Date;
 @Table(name = "flea_user")
 public class FleaUser extends FleaEntity {
 
-    private static final long serialVersionUID = 2539048894091917212L;
+    private static final long serialVersionUID = 1099530831277358097L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "FLEA_USER_SEQ")
@@ -51,6 +51,9 @@ public class FleaUser extends FleaEntity {
 
     @Column(name = "user_phone")
     private String userPhone; // 手机
+
+    @Column(name = "group_id", nullable = false)
+    private Long groupId; // 用户组编号
 
     @Column(name = "user_state", nullable = false)
     private Integer userState; // 状态（1：正常，0：禁用）
@@ -128,6 +131,14 @@ public class FleaUser extends FleaEntity {
 
     public void setUserPhone(String userPhone) {
         this.userPhone = userPhone;
+    }
+
+    public Long getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Long groupId) {
+        this.groupId = groupId;
     }
 
     public Integer getUserState() {

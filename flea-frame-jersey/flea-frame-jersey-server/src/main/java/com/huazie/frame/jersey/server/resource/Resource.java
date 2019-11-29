@@ -1,8 +1,18 @@
 package com.huazie.frame.jersey.server.resource;
 
+import com.huazie.frame.jersey.common.data.FleaJerseyContext;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
 import com.huazie.frame.jersey.server.filter.FilterChainManager;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.container.ResourceInfo;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.Request;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * <p> Flea Jersey 资源父类 </p>
@@ -13,6 +23,27 @@ import com.huazie.frame.jersey.server.filter.FilterChainManager;
  */
 public abstract class Resource {
 
+    @Context
+    protected Request request; // 请求信息的上下文
+
+    @Context
+    protected UriInfo uriInfo; // 路径信息的上下文
+
+    @Context
+    protected HttpHeaders httpHeaders; // 请求头信息的上下文
+
+    @Context
+    protected ServletContext servletContext; // Servlet上下文
+
+    @Context
+    protected HttpServletRequest httpServletRequest; // Http Servlet请求对象
+
+    @Context
+    protected HttpServletResponse httpServletResponse; // Http Servlet响应对象
+
+    @Context
+    protected ResourceInfo resourceInfo; // 资源信息
+
     /**
      * <p> 处理资源数据 </p>
      *
@@ -21,6 +52,7 @@ public abstract class Resource {
      * @since 1.0.0
      */
     protected FleaJerseyResponse doResource(FleaJerseyRequest request) {
+        initContext();
         return FilterChainManager.getManager().doFilter(request);
     }
 
@@ -32,7 +64,25 @@ public abstract class Resource {
      * @since 1.0.0
      */
     protected FleaJerseyResponse doResource(String requestXml) {
+        initContext();
         return FilterChainManager.getManager().doFilter(requestXml);
+    }
+
+    /**
+     * <p> 初始化上下文对象 </p>
+     *
+     * @since 1.0.0
+     */
+    private void initContext() {
+        FleaJerseyContext context = FilterChainManager.getManager().getContext();
+        context.setRequest(request);
+        context.setUriInfo(uriInfo);
+        context.setHttpHeaders(httpHeaders);
+        context.setResourceInfo(resourceInfo);
+        context.setServletContext(servletContext);
+        context.setHttpServletRequest(httpServletRequest);
+        context.setHttpServletResponse(httpServletResponse);
+        FilterChainManager.getManager().setContext(context);
     }
 
 }

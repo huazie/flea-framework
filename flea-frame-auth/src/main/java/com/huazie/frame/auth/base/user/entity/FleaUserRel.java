@@ -1,4 +1,4 @@
-package com.huazie.frame.auth.base.role.entity;
+package com.huazie.frame.auth.base.user.entity;
 
 import com.huazie.frame.common.FleaEntity;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -15,26 +15,26 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 /**
- * <p> Flea角色组关联（角色）表对应的实体类 </p>
+ * <p> Flea用户关联（角色，角色组）表对应的实体类 </p>
  *
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0
  */
 @Entity
-@Table(name = "flea_role_group_rel")
-public class FleaRoleGroupRel extends FleaEntity {
+@Table(name = "flea_user_rel")
+public class FleaUserRel extends FleaEntity {
 
-    private static final long serialVersionUID = 3903426247530091605L;
+    private static final long serialVersionUID = -6060032995811415159L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "FLEA_ROLE_GROUP_REL_SEQ")
-    @SequenceGenerator(name = "FLEA_ROLE_GROUP_REL_SEQ")
-    @Column(name = "role_group_rel_id", unique = true, nullable = false)
-    private Long roleGroupRelId; // 角色组关联编号
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "FLEA_USER_REL_SEQ")
+    @SequenceGenerator(name = "FLEA_USER_REL_SEQ")
+    @Column(name = "user_role_rel_id", unique = true, nullable = false)
+    private Long userRoleRelId; // 用户角色关联编号
 
-    @Column(name = "role_group_id", nullable = false)
-    private Long roleGroupId; // 角色组编号
+    @Column(name = "user_id", nullable = false)
+    private Long userId; // 用户编号
 
     @Column(name = "relat_id", nullable = false)
     private Long relatId; // 关联编号
@@ -74,20 +74,20 @@ public class FleaRoleGroupRel extends FleaEntity {
     @Column(name = "relat_ext_z")
     private String relatExtZ; // 关联扩展字段Z
 
-    public Long getRoleGroupRelId() {
-        return roleGroupRelId;
+    public Long getUserRoleRelId() {
+        return userRoleRelId;
     }
 
-    public void setRoleGroupRelId(Long roleGroupRelId) {
-        this.roleGroupRelId = roleGroupRelId;
+    public void setUserRoleRelId(Long userRoleRelId) {
+        this.userRoleRelId = userRoleRelId;
     }
 
-    public Long getRoleGroupId() {
-        return roleGroupId;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setRoleGroupId(Long roleGroupId) {
-        this.roleGroupId = roleGroupId;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Long getRelatId() {

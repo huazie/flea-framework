@@ -140,6 +140,24 @@ public class FleaJerseyI18NErrorMappingSVImplTest {
     }
 
     @Test
+    public void testInsertMappingSeven() {
+        IFleaJerseyI18nErrorMappingSV fleaJerseyI18nErrorMappingSV = (IFleaJerseyI18nErrorMappingSV) applicationContext.getBean("i18nErrorMappingSV");
+        FleaJerseyI18nErrorMapping mapping = new FleaJerseyI18nErrorMapping();
+        mapping.setResourceCode("FLEA_SERVICE_DOWNLOAD_AUTH");
+        mapping.setServiceCode("download");
+        mapping.setI18nCode("ERROR-SERVICE0000000001");
+        mapping.setErrorCode("110001");
+        mapping.setReturnMess("入参【{0}】不能为空");
+        mapping.setState(EntityStateEnum.IN_USE.getValue());
+        mapping.setCreateDate(DateUtils.getCurrentTime());
+        try {
+            fleaJerseyI18nErrorMappingSV.save(mapping);
+        } catch (Exception e) {
+            LOGGER.error("Exception:", e);
+        }
+    }
+
+    @Test
     public void testGetMappings() {
         IFleaJerseyI18nErrorMappingSV fleaJerseyI18nErrorMappingSV = (IFleaJerseyI18nErrorMappingSV) applicationContext.getBean("i18nErrorMappingSV");
 
