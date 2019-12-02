@@ -94,6 +94,12 @@
                 <version>${jersey.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.glassfish.jersey.media</groupId>
+                <artifactId>jersey-media-multipart</artifactId>
+                <version>${jersey.version}</version>
+            </dependency>
+
             <!-- 日志相关, 此处使用log4j -->
             <dependency>
                 <groupId>log4j</groupId>
