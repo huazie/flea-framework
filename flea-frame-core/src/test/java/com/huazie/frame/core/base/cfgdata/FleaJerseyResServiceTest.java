@@ -52,6 +52,26 @@ public class FleaJerseyResServiceTest {
     }
 
     @Test
+    public void testInsertFileUpload() {
+        IFleaJerseyResServiceSV fleaJerseyResServiceSV = (IFleaJerseyResServiceSV) applicationContext.getBean("resServiceSV");
+        FleaJerseyResService resService = new FleaJerseyResService();
+        resService.setServiceCode("FLEA_SERVICE_FILE_UPLOAD");
+        resService.setResourceCode("upload");
+        resService.setServiceName("文件上传服务");
+        resService.setServiceInterfaces("com.huazie.ffs.module.upload.service.interfaces.IFleaUploadSV");
+        resService.setServiceMethod("fileUpload");
+        resService.setServiceInput("com.huazie.ffs.pojo.upload.input.InputFileUploadInfo");
+        resService.setServiceOutput("com.huazie.ffs.pojo.upload.output.OutputFileUploadInfo");
+        resService.setState(EntityStateEnum.IN_USE.getValue());
+        resService.setCreateDate(DateUtils.getCurrentTime());
+        try {
+            fleaJerseyResServiceSV.save(resService);
+        } catch (Exception e) {
+            LOGGER.error("Exception:", e);
+        }
+    }
+
+    @Test
     public void testInsertFileDownload() {
         IFleaJerseyResServiceSV fleaJerseyResServiceSV = (IFleaJerseyResServiceSV) applicationContext.getBean("resServiceSV");
         FleaJerseyResService resService = new FleaJerseyResService();

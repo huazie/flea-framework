@@ -88,14 +88,33 @@ public class IOUtils {
      * @since 1.0.0
      */
     public static File toFile(String input, String filePath, boolean base64Flag) {
+        File file = null;
+        try (InputStream inputStream = toInputStream(input, base64Flag)) {
+            file = toFile(inputStream, filePath);
+        } catch (Exception e) {
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("字符串转文件出现异常：", e);
+            }
+        }
+        return file;
+    }
+
+    /**
+     * <p> 将输入流转成文件对象 </p>
+     *
+     * @param inputStream 文件输入流
+     * @param filePath    文件路径
+     * @return文件对象
+     * @since 1.0.0
+     */
+    public static File toFile(InputStream inputStream, String filePath) {
         File file = new File(filePath);
-        try (InputStream inputStream = toInputStream(input, base64Flag);
-             FileOutputStream outputStream = new FileOutputStream(file)) {
+        try (FileOutputStream outputStream = new FileOutputStream(file)) {
             byte[] bytes = toByteArray(inputStream);
             outputStream.write(bytes, 0, bytes.length);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("字符串转文件出现异常：", e);
+                LOGGER.error("文件输入流转文件出现异常：", e);
             }
         }
         return file;

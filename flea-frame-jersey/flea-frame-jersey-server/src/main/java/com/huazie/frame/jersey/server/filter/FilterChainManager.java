@@ -55,12 +55,12 @@ public class FilterChainManager {
     /**
      * <p> 执行过滤器 </p>
      *
-     * @param requestXml 请求XML字符串
+     * @param requestData 请求数据字符串
      * @return 响应对象
      * @since 1.0.0
      */
-    public FleaJerseyResponse doFilter(String requestXml) {
-        return filterChain.doFilter(requestXml);
+    public FleaJerseyResponse doFilter(String requestData) {
+        return filterChain.doFilter(requestData);
     }
 
     /**

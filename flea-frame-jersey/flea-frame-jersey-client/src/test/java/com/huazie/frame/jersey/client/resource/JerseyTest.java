@@ -4,6 +4,7 @@ import com.huazie.ffs.pojo.download.input.InputDownloadAuthInfo;
 import com.huazie.ffs.pojo.download.input.InputFileDownloadInfo;
 import com.huazie.ffs.pojo.download.output.OutputDownloadAuthInfo;
 import com.huazie.ffs.pojo.download.output.OutputFileDownloadInfo;
+import com.huazie.ffs.pojo.upload.input.InputFileUploadInfo;
 import com.huazie.ffs.pojo.upload.input.InputUploadAuthInfo;
 import com.huazie.ffs.pojo.upload.output.OutputUploadAuthInfo;
 import com.huazie.frame.common.FleaFrameManager;
@@ -20,8 +21,13 @@ import com.huazie.frame.jersey.client.response.Response;
 import com.huazie.frame.jersey.common.FleaUserImpl;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequestData;
+import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
 import com.huazie.frame.jersey.common.data.RequestBusinessData;
 import com.huazie.frame.jersey.common.data.RequestPublicData;
+import org.glassfish.jersey.media.multipart.FormDataBodyPart;
+import org.glassfish.jersey.media.multipart.FormDataMultiPart;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
+import org.glassfish.jersey.media.multipart.file.FileDataBodyPart;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -29,7 +35,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import java.io.File;
 import java.util.Locale;
 
 /**
@@ -144,6 +155,53 @@ public class JerseyTest {
 
         FleaJerseyRequest request1 = JABXUtils.fromXml(inputStr, FleaJerseyRequest.class);
         LOGGER.debug("FleaJerseyRequest = {}", request1);
+    }
+
+    @Test
+    public void testUploadFile() {
+        FleaJerseyRequest request = new FleaJerseyRequest();
+        FleaJerseyRequestData requestData = new FleaJerseyRequestData();
+
+        RequestPublicData publicData = new RequestPublicData();
+        publicData.setSystemAccountId("1000");
+        publicData.setSystemAccountPassword("asd123");
+        publicData.setResourceCode("upload");
+        publicData.setServiceCode("FLEA_SERVICE_FILE_UPLOAD");
+
+        RequestBusinessData businessData = new RequestBusinessData();
+
+        InputFileUploadInfo input = new InputFileUploadInfo();
+        input.setToken(RandomCode.toUUID());
+
+        String inputJson = GsonUtils.toJsonString(input);
+        businessData.setInput(inputJson);
+
+        requestData.setPublicData(publicData);
+        requestData.setBusinessData(businessData);
+
+        request.setRequestData(requestData);
+
+        String inputStr = JABXUtils.toXml(request, false);
+
+        String resourceUrl = "http://localhost:8080/fleafs";
+
+        Client client = ClientBuilder.newClient();
+        client.register(MultiPartFeature.class);
+
+        WebTarget target = client.target(resourceUrl).path("upload").path("jerseyUpload");
+
+        FormDataMultiPart formDataMultiPart = new FormDataMultiPart();
+
+        File file = new File("E:\\IMG.jpg");
+        FileDataBodyPart fileDataBodyPart = new FileDataBodyPart("file", file);
+        FormDataBodyPart formDataBodyPart = new FormDataBodyPart("request", inputStr);
+        formDataMultiPart.bodyPart(fileDataBodyPart);
+        formDataMultiPart.bodyPart(formDataBodyPart);
+
+        Entity<FormDataMultiPart> entity = Entity.entity(formDataMultiPart, MediaType.MULTIPART_FORM_DATA);
+        FleaJerseyResponse response = target.request().post(entity, FleaJerseyResponse.class);
+
+        LOGGER.debug("FleaJerseyResponse = {}", response);
     }
 
     @Test

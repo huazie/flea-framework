@@ -16,13 +16,13 @@ public abstract class FleaJerseyDeleteResource extends Resource implements Jerse
     /**
      * <p> 处理DELETE资源数据 </p>
      *
-     * @param requestXml 请求XMl字符串
+     * @param requestData 请求数据字符串
      * @return 响应对象
      * @since 1.0.0
      */
     @Override
-    public FleaJerseyResponse doDeleteResource(String requestXml) {
-        return doResource(requestXml);
+    public FleaJerseyResponse doDeleteResource(String requestData) {
+        return doResource(requestData);
     }
 
 }
