@@ -85,6 +85,7 @@ public class FilterChainManager {
         FleaJerseyContext context = sContext.get();
         if (ObjectUtils.isEmpty(context)) {
             context = new FleaJerseyContext();
+            setContext(context);
         }
         return context;
     }

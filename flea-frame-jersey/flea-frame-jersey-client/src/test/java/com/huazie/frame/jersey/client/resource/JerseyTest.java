@@ -165,6 +165,7 @@ public class JerseyTest {
         RequestPublicData publicData = new RequestPublicData();
         publicData.setSystemAccountId("1000");
         publicData.setSystemAccountPassword("asd123");
+        publicData.setAccountId("11000");
         publicData.setResourceCode("upload");
         publicData.setServiceCode("FLEA_SERVICE_FILE_UPLOAD");
 

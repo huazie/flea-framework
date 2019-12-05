@@ -2,6 +2,7 @@ package com.huazie.frame.jersey.server.resource;
 
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.xml.JABXUtils;
+import com.huazie.frame.jersey.common.FleaJerseyConstants;
 import com.huazie.frame.jersey.common.data.FleaJerseyContext;
 import com.huazie.frame.jersey.common.data.FleaJerseyFileContext;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
@@ -88,17 +89,17 @@ public abstract class Resource {
 
         if (ObjectUtils.isNotEmpty(formDataMultiPart)) {
 
-            FormDataBodyPart fileFormDataBodyPart = formDataMultiPart.getField("file");
+            FormDataBodyPart fileFormDataBodyPart = formDataMultiPart.getField(FleaJerseyConstants.FormDataConstants.FORM_DATA_KEY_FILE);
+            // 生成文件上下文
+            FleaJerseyFileContext fleaJerseyFileContext = new FleaJerseyFileContext();
+            fleaJerseyFileContext.setFileFormDataBodyPart(fileFormDataBodyPart);
+            // 设置文件上下文
+            FleaJerseyManager.getContext().setFleaJerseyFileContext(fleaJerseyFileContext);
 
-            FormDataBodyPart formDataBodyPart = formDataMultiPart.getField("request");
+            // 获取请求表单数据
+            FormDataBodyPart formDataBodyPart = formDataMultiPart.getField(FleaJerseyConstants.FormDataConstants.FORM_DATA_KEY_REQUEST);
             // 获取请求参数
             String requestData = formDataBodyPart.getValueAs(String.class);
-//            // 生成文件上下文
-//            FleaJerseyFileContext fleaJerseyFileContext = new FleaJerseyFileContext();
-//            fleaJerseyFileContext.setInputStream(inputStream);
-//            fleaJerseyFileContext.setFormDataContentDisposition(formDataContentDisposition);
-//            // 设置文件上下文
-//            FleaJerseyManager.getContext().setFleaJerseyFileContext(fleaJerseyFileContext);
             // 处理文件上传资源数据
             fleaJerseyResponse = doResource(requestData);
         }
