@@ -14,11 +14,7 @@ import com.huazie.frame.jersey.server.resource.Resource;
 public abstract class FleaJerseyDeleteResource extends Resource implements JerseyDeleteResource {
 
     /**
-     * <p> 处理DELETE资源数据 </p>
-     *
-     * @param requestData 请求数据字符串
-     * @return 响应对象
-     * @since 1.0.0
+     * @see JerseyDeleteResource#doDeleteResource(String requestData)
      */
     @Override
     public FleaJerseyResponse doDeleteResource(String requestData) {

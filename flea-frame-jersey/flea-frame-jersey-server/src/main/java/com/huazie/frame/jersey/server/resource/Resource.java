@@ -83,7 +83,7 @@ public abstract class Resource {
      * @return 响应对象
      * @since 1.0.0
      */
-    protected FleaJerseyResponse doFileUploadResource(FormDataMultiPart formDataMultiPart) {
+    protected FleaJerseyResponse doCommonFileUploadResource(FormDataMultiPart formDataMultiPart) {
 
         FleaJerseyResponse fleaJerseyResponse = null;
 
@@ -114,7 +114,7 @@ public abstract class Resource {
      * @return Jersey响应对象
      * @since 1.0.0
      */
-    protected Response doFileDownloadResource(FleaJerseyRequest fleaJerseyRequest) {
+    protected Response doCommonFileDownloadResource(FleaJerseyRequest fleaJerseyRequest) {
         FleaJerseyResponse fleaJerseyResponse = doResource(fleaJerseyRequest);
         String responseData = JABXUtils.toXml(fleaJerseyResponse, false);
         // 获取文件上下文

@@ -18,6 +18,7 @@ import com.huazie.frame.common.util.xml.JABXUtils;
 import com.huazie.frame.jersey.client.core.FleaJerseyClient;
 import com.huazie.frame.jersey.client.request.RequestModeEnum;
 import com.huazie.frame.jersey.client.response.Response;
+import com.huazie.frame.jersey.common.FleaJerseyConstants;
 import com.huazie.frame.jersey.common.FleaUserImpl;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequestData;
@@ -189,13 +190,13 @@ public class JerseyTest {
         Client client = ClientBuilder.newClient();
         client.register(MultiPartFeature.class);
 
-        WebTarget target = client.target(resourceUrl).path("upload").path("jerseyUpload");
+        WebTarget target = client.target(resourceUrl).path("upload").path("fileUpload");
 
         FormDataMultiPart formDataMultiPart = new FormDataMultiPart();
 
         File file = new File("E:\\IMG.jpg");
-        FileDataBodyPart fileDataBodyPart = new FileDataBodyPart("file", file);
-        FormDataBodyPart formDataBodyPart = new FormDataBodyPart("request", inputStr);
+        FileDataBodyPart fileDataBodyPart = new FileDataBodyPart(FleaJerseyConstants.FormDataConstants.FORM_DATA_KEY_FILE, file);
+        FormDataBodyPart formDataBodyPart = new FormDataBodyPart(FleaJerseyConstants.FormDataConstants.FORM_DATA_KEY_REQUEST, inputStr);
         formDataMultiPart.bodyPart(fileDataBodyPart);
         formDataMultiPart.bodyPart(formDataBodyPart);
 

@@ -24,14 +24,14 @@ public interface JerseyResource {
     /**
      * <p> 处理GET资源数据 </p>
      *
-     * @param requestXml 请求XMl字符串
+     * @param requestData 请求XMl字符串
      * @return 响应对象
      * @since 1.0.0
      */
     @GET
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Produces({MediaType.APPLICATION_XML})
-    FleaJerseyResponse doGetResource(@QueryParam("REQUEST") String requestXml);
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    FleaJerseyResponse doGetResource(@QueryParam("REQUEST") String requestData);
 
     /**
      * <p> 处理POST资源数据 </p>
@@ -42,7 +42,7 @@ public interface JerseyResource {
      */
     @POST
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Produces({MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     FleaJerseyResponse doPostResource(FleaJerseyRequest request);
 
     /**
@@ -54,19 +54,19 @@ public interface JerseyResource {
      */
     @PUT
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Produces({MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     FleaJerseyResponse doPutResource(FleaJerseyRequest request);
 
     /**
      * <p> 处理DELETE资源数据 </p>
      *
-     * @param requestXml 请求XMl字符串
+     * @param requestData 请求XMl字符串
      * @return 响应对象
      * @since 1.0.0
      */
     @DELETE
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Produces({MediaType.APPLICATION_XML})
-    FleaJerseyResponse doDeleteResource(@QueryParam("REQUEST") String requestXml);
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    FleaJerseyResponse doDeleteResource(@QueryParam("REQUEST") String requestData);
 
 }

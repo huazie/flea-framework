@@ -122,17 +122,17 @@ public interface FleaJerseyConstants {
         /**
          * <p> 文件数据键 </p>
          */
-        String FORM_DATA_KEY_FILE = "file";
+        String FORM_DATA_KEY_FILE = "FILE";
 
         /**
          * <p> 请求数据键 </p>
          */
-        String FORM_DATA_KEY_REQUEST = "request";
+        String FORM_DATA_KEY_REQUEST = "REQUEST";
 
         /**
          * <p> 响应数据键 </p>
          */
-        String FORM_DATA_KEY_RESPONSE = "response";
+        String FORM_DATA_KEY_RESPONSE = "RESPONSE";
     }
 
 }
