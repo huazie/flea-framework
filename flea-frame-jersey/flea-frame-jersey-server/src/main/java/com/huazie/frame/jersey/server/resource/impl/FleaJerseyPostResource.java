@@ -8,6 +8,7 @@ import com.huazie.frame.jersey.server.resource.Resource;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 
 import javax.ws.rs.POST;
+import javax.ws.rs.Path;
 
 /**
  * <p> Flea Jersey Post Resource </p>
@@ -30,6 +31,7 @@ public abstract class FleaJerseyPostResource extends Resource implements JerseyP
      * @see JerseyFileUploadResource#doFileUploadResource(FormDataMultiPart formDataMultiPart)
      */
     @POST
+    @Path("/fileUpload")
     @Override
     public FleaJerseyResponse doFileUploadResource(FormDataMultiPart formDataMultiPart) {
         return doCommonFileUploadResource(formDataMultiPart);

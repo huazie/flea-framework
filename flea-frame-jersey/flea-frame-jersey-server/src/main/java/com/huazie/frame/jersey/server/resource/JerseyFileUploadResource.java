@@ -4,7 +4,6 @@ import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -24,7 +23,6 @@ public interface JerseyFileUploadResource {
      * @return 响应对象
      * @since 1.0.0
      */
-    @Path("/fileUpload")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     FleaJerseyResponse doFileUploadResource(FormDataMultiPart formDataMultiPart);
