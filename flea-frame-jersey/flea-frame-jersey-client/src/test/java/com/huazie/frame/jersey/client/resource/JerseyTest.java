@@ -98,7 +98,7 @@ public class JerseyTest {
 
             LOGGER.debug("result = {}", response);
         } catch (Exception e) {
-            LOGGER.debug("Exception = ", e);
+            LOGGER.error("Exception = ", e);
         }
     }
 
@@ -123,7 +123,7 @@ public class JerseyTest {
             }
 
         } catch (Exception e) {
-            LOGGER.debug("Exception = ", e);
+            LOGGER.error("Exception = ", e);
         }
     }
 
@@ -159,7 +159,7 @@ public class JerseyTest {
     }
 
     @Test
-    public void testUploadFile() {
+    public void testUploadFileOrigin() {
         FleaJerseyRequest request = new FleaJerseyRequest();
         FleaJerseyRequestData requestData = new FleaJerseyRequestData();
 

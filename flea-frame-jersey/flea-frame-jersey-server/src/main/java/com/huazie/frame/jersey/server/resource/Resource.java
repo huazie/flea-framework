@@ -3,11 +3,12 @@ package com.huazie.frame.jersey.server.resource;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.xml.JABXUtils;
 import com.huazie.frame.jersey.common.FleaJerseyConstants;
+import com.huazie.frame.jersey.common.FleaJerseyManager;
 import com.huazie.frame.jersey.common.data.FleaJerseyContext;
 import com.huazie.frame.jersey.common.data.FleaJerseyFileContext;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
-import com.huazie.frame.jersey.server.filter.FleaJerseyManager;
+import com.huazie.frame.jersey.server.filter.FilterChainManager;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 
@@ -20,7 +21,6 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-import java.io.File;
 
 /**
  * <p> Flea Jersey 资源父类 </p>
@@ -61,7 +61,7 @@ public abstract class Resource {
      */
     protected FleaJerseyResponse doResource(FleaJerseyRequest fleaJerseyRequest) {
         initContext();
-        return FleaJerseyManager.doFilter(fleaJerseyRequest);
+        return FilterChainManager.getManager().doFilter(fleaJerseyRequest);
     }
 
     /**
@@ -73,7 +73,7 @@ public abstract class Resource {
      */
     protected FleaJerseyResponse doResource(String requestData) {
         initContext();
-        return FleaJerseyManager.doFilter(requestData);
+        return FilterChainManager.getManager().doFilter(requestData);
     }
 
     /**
@@ -89,12 +89,11 @@ public abstract class Resource {
 
         if (ObjectUtils.isNotEmpty(formDataMultiPart)) {
 
-            FormDataBodyPart fileFormDataBodyPart = formDataMultiPart.getField(FleaJerseyConstants.FormDataConstants.FORM_DATA_KEY_FILE);
             // 生成文件上下文
             FleaJerseyFileContext fleaJerseyFileContext = new FleaJerseyFileContext();
-            fleaJerseyFileContext.setFileFormDataBodyPart(fileFormDataBodyPart);
+            fleaJerseyFileContext.setFormDataMultiPart(formDataMultiPart);
             // 设置文件上下文
-            FleaJerseyManager.getContext().setFleaJerseyFileContext(fleaJerseyFileContext);
+            FleaJerseyManager.getManager().getContext().setFleaJerseyFileContext(fleaJerseyFileContext);
 
             // 获取请求表单数据
             FormDataBodyPart formDataBodyPart = formDataMultiPart.getField(FleaJerseyConstants.FormDataConstants.FORM_DATA_KEY_REQUEST);
@@ -118,24 +117,24 @@ public abstract class Resource {
         FleaJerseyResponse fleaJerseyResponse = doResource(fleaJerseyRequest);
         String responseData = JABXUtils.toXml(fleaJerseyResponse, false);
         // 获取文件上下文
-        FleaJerseyFileContext fleaJerseyFileContext = FleaJerseyManager.getContext().getFleaJerseyFileContext();
+        FleaJerseyFileContext fleaJerseyFileContext = FleaJerseyManager.getManager().getContext().getFleaJerseyFileContext();
 
         Response response = null;
-        if (ObjectUtils.isNotEmpty(fleaJerseyFileContext)) {
-            File downloadFile = fleaJerseyFileContext.getFile();
-            if (ObjectUtils.isNotEmpty(downloadFile)) {
-                if (downloadFile.exists()) {
-                    response = Response.ok(downloadFile)
-                            .header("Content-disposition", "attachment;response=" + responseData)
-                            .header("Cache-Control", "no-cache").build();
-                } else {
-                    response = Response.status(Response.Status.NOT_FOUND).build();
-                }
-            } else {
-                // 这边取 StreamingOutput
-
-            }
-        }
+//        if (ObjectUtils.isNotEmpty(fleaJerseyFileContext)) {
+//            File downloadFile = fleaJerseyFileContext.getFile();
+//            if (ObjectUtils.isNotEmpty(downloadFile)) {
+//                if (downloadFile.exists()) {
+//                    response = Response.ok(downloadFile)
+//                            .header("Content-disposition", "attachment;response=" + responseData)
+//                            .header("Cache-Control", "no-cache").build();
+//                } else {
+//                    response = Response.status(Response.Status.NOT_FOUND).build();
+//                }
+//            } else {
+//                // 这边取 StreamingOutput
+//
+//            }
+//        }
 
         return response;
     }
@@ -146,7 +145,7 @@ public abstract class Resource {
      * @since 1.0.0
      */
     private void initContext() {
-        FleaJerseyContext context = FleaJerseyManager.getContext();
+        FleaJerseyContext context = FleaJerseyManager.getManager().getContext();
         context.setRequest(request);
         context.setUriInfo(uriInfo);
         context.setHttpHeaders(httpHeaders);
@@ -154,7 +153,7 @@ public abstract class Resource {
         context.setServletContext(servletContext);
         context.setHttpServletRequest(httpServletRequest);
         context.setHttpServletResponse(httpServletResponse);
-        FleaJerseyManager.setContext(context);
+        FleaJerseyManager.getManager().setContext(context);
     }
 
 }
