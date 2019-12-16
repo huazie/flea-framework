@@ -87,6 +87,8 @@ public class FleaJerseyManager {
             fileContext = context.getFleaJerseyFileContext();
             if (ObjectUtils.isEmpty(fileContext)) {
                 fileContext = new FleaJerseyFileContext();
+                // 新建文件上下文，并塞入Flea Jersey上下文中
+                context.setFleaJerseyFileContext(fileContext);
             }
         }
         return fileContext;
@@ -132,7 +134,7 @@ public class FleaJerseyManager {
      * @throws FleaJerseyCommonException Flea Jersey通用异常
      * @since 1.0.0
      */
-    public void setFileFormDataBodyPart(File file) throws FleaJerseyCommonException {
+    public void addFileDataBodyPart(File file) throws FleaJerseyCommonException {
 
         if (ObjectUtils.isEmpty(file) || !file.exists()) {
             // {0}获取失败，请检查

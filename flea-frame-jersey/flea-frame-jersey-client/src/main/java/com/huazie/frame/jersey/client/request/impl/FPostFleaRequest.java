@@ -70,12 +70,15 @@ public class FPostFleaRequest extends FleaRequest {
                 formDataMultiPart.bodyPart(formDataBodyPart);
             } else {
                 // {0}获取失败，请检查
-                throw new FleaJerseyCommonException("ERROR-JERSEY-COMMON0000000000", "FormDataMultiPart");
+                throw new FleaJerseyCommonException("ERROR-JERSEY-COMMON0000000000", "【FormDataMultiPart】");
             }
+        } else {
+            // {0}获取失败，请检查
+            throw new FleaJerseyCommonException("ERROR-JERSEY-COMMON0000000000", "【FleaJerseyFileContext】");
         }
 
         Entity<FormDataMultiPart> entity = Entity.entity(formDataMultiPart, toMediaType());
-        FleaJerseyResponse response = target.request().post(entity, FleaJerseyResponse.class);
+        FleaJerseyResponse response = target.path(FleaJerseyConstants.FileResourceConstants.FILE_UPLOAD_PATH).request().post(entity, FleaJerseyResponse.class);
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FPostFleaRequest##request(WebTarget, FleaJerseyRequest) FleaJerseyResponse = {}", response);

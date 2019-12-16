@@ -6,10 +6,10 @@ import com.huazie.ffs.pojo.download.output.OutputDownloadAuthInfo;
 import com.huazie.ffs.pojo.download.output.OutputFileDownloadInfo;
 import com.huazie.ffs.pojo.upload.input.InputFileUploadInfo;
 import com.huazie.ffs.pojo.upload.input.InputUploadAuthInfo;
+import com.huazie.ffs.pojo.upload.output.OutputFileUploadInfo;
 import com.huazie.ffs.pojo.upload.output.OutputUploadAuthInfo;
 import com.huazie.frame.common.FleaFrameManager;
 import com.huazie.frame.common.IFleaUser;
-import com.huazie.frame.common.i18n.FleaI18nHelper;
 import com.huazie.frame.common.util.IOUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.RandomCode;
@@ -19,6 +19,7 @@ import com.huazie.frame.jersey.client.core.FleaJerseyClient;
 import com.huazie.frame.jersey.client.request.RequestModeEnum;
 import com.huazie.frame.jersey.client.response.Response;
 import com.huazie.frame.jersey.common.FleaJerseyConstants;
+import com.huazie.frame.jersey.common.FleaJerseyManager;
 import com.huazie.frame.jersey.common.FleaUserImpl;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequestData;
@@ -42,7 +43,6 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import java.io.File;
-import java.util.Locale;
 
 /**
  * <p>  </p>
@@ -64,6 +64,19 @@ public class JerseyTest {
         IFleaUser fleaUser = new FleaUserImpl();
         fleaUser.setAcctId(10000001L);
         FleaFrameManager.getManager().setUserInfo(fleaUser);
+    }
+
+    @Test
+    public void testMediaType() {
+        String mediaTypeStr = "xml";
+        MediaType mediaType = MediaType.valueOf(mediaTypeStr);
+        LOGGER.debug("MediaType = {}", mediaType);
+    }
+
+    @Test
+    public void testEnum() {
+        RequestModeEnum modeEnum = RequestModeEnum.valueOf("GET1");
+        LOGGER.debug("RequestModeEnum = {}", modeEnum.getMode());
     }
 
     @Test
@@ -207,32 +220,24 @@ public class JerseyTest {
     }
 
     @Test
-    public void testMediaType() {
-
-        String mediaTypeStr = "xml";
-
-        MediaType mediaType = MediaType.valueOf(mediaTypeStr);
-
-        LOGGER.debug("MediaType = {}", mediaType);
-
-    }
-
-    @Test
-    public void testEnum() {
-
-        RequestModeEnum modeEnum = RequestModeEnum.valueOf("GET1");
-
-        LOGGER.debug("RequestModeEnum = {}", modeEnum.getMode());
-    }
-
-    @Test
-    public void fleaI18NHelperTest() {
-        FleaFrameManager.getManager().setLocale(Locale.CHINESE);
+    public void testUploadFile() {
         try {
-            FleaI18nHelper.i18n("ERROR0000000001", "error");
-            FleaI18nHelper.i18n("ERROR-JERSEY-CLIENT0000000000", "error_jersey");
+            String clientCode = "FLEA_CLIENT_FILE_UPLOAD";
+
+            InputFileUploadInfo input = new InputFileUploadInfo();
+            input.setToken(RandomCode.toUUID());
+
+            File file = new File("E:\\IMG.jpg");
+            FleaJerseyManager.getManager().addFileDataBodyPart(file);
+
+            FleaJerseyClient client = applicationContext.getBean(FleaJerseyClient.class);
+
+            Response<OutputFileUploadInfo> response = client.invoke(clientCode, input, OutputFileUploadInfo.class);
+
+            LOGGER.debug("result = {}", response);
         } catch (Exception e) {
-            LOGGER.error("Exception={}", e);
+            LOGGER.debug("Exception = ", e);
         }
     }
+
 }
