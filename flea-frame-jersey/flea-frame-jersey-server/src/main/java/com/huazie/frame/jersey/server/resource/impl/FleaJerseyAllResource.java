@@ -15,7 +15,7 @@ import com.huazie.frame.jersey.server.resource.Resource;
 public abstract class FleaJerseyAllResource extends Resource implements JerseyResource {
 
     /**
-     * @see JerseyResource#doGetResource(String requestData)
+     * @see JerseyResource#doGetResource(String)
      */
     @Override
     public FleaJerseyResponse doGetResource(String requestData) {
@@ -23,7 +23,7 @@ public abstract class FleaJerseyAllResource extends Resource implements JerseyRe
     }
 
     /**
-     * @see JerseyResource#doPostResource(FleaJerseyRequest request)
+     * @see JerseyResource#doPostResource(FleaJerseyRequest)
      */
     @Override
     public FleaJerseyResponse doPostResource(FleaJerseyRequest request) {
@@ -31,7 +31,7 @@ public abstract class FleaJerseyAllResource extends Resource implements JerseyRe
     }
 
     /**
-     * @see JerseyResource#doPutResource(FleaJerseyRequest request)
+     * @see JerseyResource#doPutResource(FleaJerseyRequest)
      */
     @Override
     public FleaJerseyResponse doPutResource(FleaJerseyRequest request) {
@@ -39,7 +39,7 @@ public abstract class FleaJerseyAllResource extends Resource implements JerseyRe
     }
 
     /**
-     * @see JerseyResource#doDeleteResource(String requestData)
+     * @see JerseyResource#doDeleteResource(String)
      */
     @Override
     public FleaJerseyResponse doDeleteResource(String requestData) {

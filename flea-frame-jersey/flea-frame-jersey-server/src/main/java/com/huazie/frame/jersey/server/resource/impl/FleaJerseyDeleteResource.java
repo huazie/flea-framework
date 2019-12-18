@@ -14,7 +14,7 @@ import com.huazie.frame.jersey.server.resource.Resource;
 public abstract class FleaJerseyDeleteResource extends Resource implements JerseyDeleteResource {
 
     /**
-     * @see JerseyDeleteResource#doDeleteResource(String requestData)
+     * @see JerseyDeleteResource#doDeleteResource(String)
      */
     @Override
     public FleaJerseyResponse doDeleteResource(String requestData) {

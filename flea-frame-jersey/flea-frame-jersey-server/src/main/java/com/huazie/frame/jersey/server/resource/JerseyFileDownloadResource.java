@@ -23,7 +23,6 @@ public interface JerseyFileDownloadResource {
      * @return Jersey响应对象
      * @since 1.0.0
      */
-    @Path("/fileDownload")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     Response doFileDownloadResource(FleaJerseyRequest request);
 }

@@ -2,13 +2,7 @@ package com.huazie.frame.jersey.server.resource.impl;
 
 import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
-import com.huazie.frame.jersey.server.resource.JerseyFileUploadResource;
 import com.huazie.frame.jersey.server.resource.JerseyPutResource;
-import com.huazie.frame.jersey.server.resource.Resource;
-import org.glassfish.jersey.media.multipart.FormDataMultiPart;
-
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
 
 /**
  * <p> Flea Jersey Put Resource </p>
@@ -17,23 +11,14 @@ import javax.ws.rs.Path;
  * @version 1.0.0
  * @since 1.0.0
  */
-public abstract class FleaJerseyPutResource extends Resource implements JerseyPutResource, JerseyFileUploadResource {
+public abstract class FleaJerseyPutResource extends FleaJerseyFPutResource implements JerseyPutResource {
 
     /**
-     * @see JerseyPutResource#doPutResource(FleaJerseyRequest request)
+     * @see JerseyPutResource#doPutResource(FleaJerseyRequest)
      */
     @Override
     public FleaJerseyResponse doPutResource(FleaJerseyRequest request) {
         return doResource(request);
     }
 
-    /**
-     * @see JerseyFileUploadResource#doFileUploadResource(FormDataMultiPart formDataMultiPart)
-     */
-    @PUT
-    @Path("/fileUpload")
-    @Override
-    public FleaJerseyResponse doFileUploadResource(FormDataMultiPart formDataMultiPart) {
-        return doCommonFileUploadResource(formDataMultiPart);
-    }
 }

@@ -1,6 +1,7 @@
 package com.huazie.frame.jersey.server.filter.impl;
 
 import com.huazie.frame.common.util.ObjectUtils;
+import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.common.util.json.GsonUtils;
 import com.huazie.frame.core.base.cfgdata.bean.FleaConfigDataSpringBean;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResService;
@@ -84,8 +85,13 @@ public class InvokeServiceFilter implements IFleaJerseyFilter {
         }
 
         Object outputObj = method.invoke(obj, inputObj);
-        Class outputClazz = Class.forName(outputParam);
-        if (!outputClazz.isInstance(outputObj)) {
+
+        Class outputClazz = null;
+        if (StringUtils.isNotBlank(outputParam)) {
+            outputClazz = Class.forName(outputParam);
+        }
+
+        if (null != outputClazz && !outputClazz.isInstance(outputObj)) {
             // 资源【{0}】下的服务【{1}】请求异常：配置的出参【{2}】与服务方法【{3}】出参【{4}】类型不一致
             throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000009", resourceCode, serviceCode, outputParam, serviceMethod, outputObj.getClass().getName());
         }
@@ -93,8 +99,11 @@ public class InvokeServiceFilter implements IFleaJerseyFilter {
         // 获取响应业务报文
         ResponseBusinessData responseBusinessData = response.getResponseData().getBusinessData();
 
-        String outputJson = GsonUtils.toJsonString(outputObj);
-        responseBusinessData.setOutput(outputJson);
+        String outputJson = null;
+        if (ObjectUtils.isNotEmpty(outputObj)) {
+            outputJson = GsonUtils.toJsonString(outputObj);
+            responseBusinessData.setOutput(outputJson);
+        }
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("InvokeServiceFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) OUTPUT OBJ   = {}", outputObj);
