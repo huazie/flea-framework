@@ -54,6 +54,28 @@ public class FleaJerseyResClientTest {
     }
 
     @Test
+    public void testInsertClientFileUpload() {
+        IFleaJerseyResClientSV fleaJerseyResClientSV = (IFleaJerseyResClientSV) applicationContext.getBean("resClientSV");
+        FleaJerseyResClient resClient = new FleaJerseyResClient();
+        resClient.setClientCode("FLEA_CLIENT_FILE_UPLOAD");
+        resClient.setResourceUrl("http://localhost:8080/fleafs");
+        resClient.setResourceCode("upload");
+        resClient.setServiceCode("FLEA_SERVICE_FILE_UPLOAD");
+        resClient.setRequestMode("fpost");
+        resClient.setMediaType("multipart/form-data");
+        resClient.setClientInput("com.huazie.ffs.pojo.upload.input.InputFileUploadInfo");
+        resClient.setClientOutput("com.huazie.ffs.pojo.upload.output.OutputFileUploadInfo");
+        resClient.setState(EntityStateEnum.IN_USE.getValue());
+        resClient.setCreateDate(DateUtils.getCurrentTime());
+        resClient.setRemarks("文件上传服务");
+        try {
+            fleaJerseyResClientSV.save(resClient);
+        } catch (Exception e) {
+            LOGGER.error("Exception:", e);
+        }
+    }
+
+    @Test
     public void testInsertClientDownloadAuth() {
         IFleaJerseyResClientSV fleaJerseyResClientSV = (IFleaJerseyResClientSV) applicationContext.getBean("resClientSV");
         FleaJerseyResClient resClient = new FleaJerseyResClient();

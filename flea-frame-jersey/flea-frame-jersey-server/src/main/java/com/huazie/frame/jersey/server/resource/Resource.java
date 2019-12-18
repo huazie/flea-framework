@@ -1,9 +1,16 @@
 package com.huazie.frame.jersey.server.resource;
 
+import com.huazie.frame.common.util.ObjectUtils;
+import com.huazie.frame.common.util.xml.JABXUtils;
+import com.huazie.frame.jersey.common.FleaJerseyConstants;
+import com.huazie.frame.jersey.common.FleaJerseyManager;
 import com.huazie.frame.jersey.common.data.FleaJerseyContext;
+import com.huazie.frame.jersey.common.data.FleaJerseyFileContext;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
 import com.huazie.frame.jersey.server.filter.FilterChainManager;
+import org.glassfish.jersey.media.multipart.FormDataBodyPart;
+import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +19,7 @@ import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Request;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -47,25 +55,88 @@ public abstract class Resource {
     /**
      * <p> 处理资源数据 </p>
      *
-     * @param request 请求对象
+     * @param fleaJerseyRequest 请求对象
      * @return 响应对象
      * @since 1.0.0
      */
-    protected FleaJerseyResponse doResource(FleaJerseyRequest request) {
+    protected FleaJerseyResponse doResource(FleaJerseyRequest fleaJerseyRequest) {
         initContext();
-        return FilterChainManager.getManager().doFilter(request);
+        return FilterChainManager.getManager().doFilter(fleaJerseyRequest);
     }
 
     /**
      * <p> 处理资源数据 </p>
      *
-     * @param requestXml 请求XMl字符串
+     * @param requestData 请求数据字符串
      * @return 响应对象
      * @since 1.0.0
      */
-    protected FleaJerseyResponse doResource(String requestXml) {
+    protected FleaJerseyResponse doResource(String requestData) {
         initContext();
-        return FilterChainManager.getManager().doFilter(requestXml);
+        return FilterChainManager.getManager().doFilter(requestData);
+    }
+
+    /**
+     * <p> 处理文件上传资源数据 </p>
+     *
+     * @param formDataMultiPart 表单数据
+     * @return 响应对象
+     * @since 1.0.0
+     */
+    protected FleaJerseyResponse doCommonFileUploadResource(FormDataMultiPart formDataMultiPart) {
+
+        FleaJerseyResponse fleaJerseyResponse = null;
+
+        if (ObjectUtils.isNotEmpty(formDataMultiPart)) {
+
+            // 生成文件上下文
+            FleaJerseyFileContext fleaJerseyFileContext = new FleaJerseyFileContext();
+            fleaJerseyFileContext.setFormDataMultiPart(formDataMultiPart);
+            // 设置文件上下文
+            FleaJerseyManager.getManager().getContext().setFleaJerseyFileContext(fleaJerseyFileContext);
+
+            // 获取请求表单数据
+            FormDataBodyPart formDataBodyPart = formDataMultiPart.getField(FleaJerseyConstants.FormDataConstants.FORM_DATA_KEY_REQUEST);
+            // 获取请求参数
+            String requestData = formDataBodyPart.getValueAs(String.class);
+            // 处理文件上传资源数据
+            fleaJerseyResponse = doResource(requestData);
+        }
+
+        return fleaJerseyResponse;
+    }
+
+    /**
+     * <p> 处理文件下载资源数据 </p>
+     *
+     * @param fleaJerseyRequest 请求对象
+     * @return Jersey响应对象
+     * @since 1.0.0
+     */
+    protected Response doCommonFileDownloadResource(FleaJerseyRequest fleaJerseyRequest) {
+        FleaJerseyResponse fleaJerseyResponse = doResource(fleaJerseyRequest);
+        String responseData = JABXUtils.toXml(fleaJerseyResponse, false);
+        // 获取文件上下文
+        FleaJerseyFileContext fleaJerseyFileContext = FleaJerseyManager.getManager().getContext().getFleaJerseyFileContext();
+
+        Response response = null;
+//        if (ObjectUtils.isNotEmpty(fleaJerseyFileContext)) {
+//            File downloadFile = fleaJerseyFileContext.getFile();
+//            if (ObjectUtils.isNotEmpty(downloadFile)) {
+//                if (downloadFile.exists()) {
+//                    response = Response.ok(downloadFile)
+//                            .header("Content-disposition", "attachment;response=" + responseData)
+//                            .header("Cache-Control", "no-cache").build();
+//                } else {
+//                    response = Response.status(Response.Status.NOT_FOUND).build();
+//                }
+//            } else {
+//                // 这边取 StreamingOutput
+//
+//            }
+//        }
+
+        return response;
     }
 
     /**
@@ -74,7 +145,7 @@ public abstract class Resource {
      * @since 1.0.0
      */
     private void initContext() {
-        FleaJerseyContext context = FilterChainManager.getManager().getContext();
+        FleaJerseyContext context = FleaJerseyManager.getManager().getContext();
         context.setRequest(request);
         context.setUriInfo(uriInfo);
         context.setHttpHeaders(httpHeaders);
@@ -82,7 +153,7 @@ public abstract class Resource {
         context.setServletContext(servletContext);
         context.setHttpServletRequest(httpServletRequest);
         context.setHttpServletResponse(httpServletResponse);
-        FilterChainManager.getManager().setContext(context);
+        FleaJerseyManager.getManager().setContext(context);
     }
 
 }

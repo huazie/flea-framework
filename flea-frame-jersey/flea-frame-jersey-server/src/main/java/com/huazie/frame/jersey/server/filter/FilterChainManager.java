@@ -1,7 +1,6 @@
 package com.huazie.frame.jersey.server.filter;
 
 import com.huazie.frame.common.util.ObjectUtils;
-import com.huazie.frame.jersey.common.data.FleaJerseyContext;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
 
@@ -17,8 +16,6 @@ public class FilterChainManager {
     private static volatile FilterChainManager manager;
 
     private FleaJerseyFilterChain filterChain;
-
-    private static ThreadLocal<FleaJerseyContext> sContext = new ThreadLocal<FleaJerseyContext>(); // Flea Jersey 上下文
 
     private FilterChainManager(FleaJerseyFilterChain filterChain) {
         this.filterChain = filterChain;
@@ -55,38 +52,12 @@ public class FilterChainManager {
     /**
      * <p> 执行过滤器 </p>
      *
-     * @param requestXml 请求XML字符串
+     * @param requestData 请求数据字符串
      * @return 响应对象
      * @since 1.0.0
      */
-    public FleaJerseyResponse doFilter(String requestXml) {
-        return filterChain.doFilter(requestXml);
-    }
-
-    /**
-     * <p> 设置Flea Jersey上下文对象 </p>
-     *
-     * @param context Flea Jersey上下文对象
-     * @since 1.0.0
-     */
-    public void setContext(FleaJerseyContext context) {
-        if (ObjectUtils.isNotEmpty(context)) {
-            sContext.set(context);
-        }
-    }
-
-    /**
-     * <p> 获取Flea Jersey上下文对象 </p>
-     *
-     * @return 当前线程下的Flea Jersey上下文对象
-     * @since 1.0.0
-     */
-    public FleaJerseyContext getContext() {
-        FleaJerseyContext context = sContext.get();
-        if (ObjectUtils.isEmpty(context)) {
-            context = new FleaJerseyContext();
-        }
-        return context;
+    public FleaJerseyResponse doFilter(String requestData) {
+        return filterChain.doFilter(requestData);
     }
 
 }

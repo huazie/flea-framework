@@ -57,6 +57,12 @@
             </exclusions>
         </dependency>
 
+        <!-- Jersey上传和下载文件的依赖 -->
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-multipart</artifactId>
+        </dependency>
+
         <!-- FLEA FRAME CORE -->
         <dependency>
             <groupId>com.huazie.frame</groupId>

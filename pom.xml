@@ -94,6 +94,12 @@
                 <version>${jersey.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.glassfish.jersey.media</groupId>
+                <artifactId>jersey-media-multipart</artifactId>
+                <version>${jersey.version}</version>
+            </dependency>
+
             <!-- 日志相关, 此处使用log4j -->
             <dependency>
                 <groupId>log4j</groupId>
@@ -252,14 +258,14 @@
     </dependencies>
 
     <modules>
+        <module>flea-frame-config</module>
         <module>flea-frame-common</module>
         <module>flea-frame-cache</module>
         <module>flea-frame-db</module>
-        <module>flea-frame-config</module>
         <module>flea-frame-core</module>
         <module>flea-frame-tools</module>
-        <module>flea-frame-jersey</module>
         <module>flea-frame-auth</module>
+        <module>flea-frame-jersey</module>
     </modules>
 
 </project>
