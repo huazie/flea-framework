@@ -113,4 +113,42 @@ public interface FleaJerseyConstants {
         String SERVICE_CODE = "SERVICE_CODE";
     }
 
+    /**
+     * <p> 表单数据常量 </p>
+     *
+     * @since 1.0.0
+     */
+    interface FormDataConstants {
+        /**
+         * <p> 文件数据键 </p>
+         */
+        String FORM_DATA_KEY_FILE = "FILE";
+
+        /**
+         * <p> 请求数据键 </p>
+         */
+        String FORM_DATA_KEY_REQUEST = "REQUEST";
+
+        /**
+         * <p> 响应数据键 </p>
+         */
+        String FORM_DATA_KEY_RESPONSE = "RESPONSE";
+    }
+
+    /**
+     * <p> 文件资源常量 </p>
+     *
+     * @since 1.0.0
+     */
+    interface FileResourceConstants {
+        /**
+         * <p> 文件上传资源路径 </p>
+         */
+        String FILE_UPLOAD_PATH = "fileUpload";
+        /**
+         * <p> 文件下载资源路径 </p>
+         */
+        String FILE_DOWNLOAD_PATH = "fileDownload";
+    }
+
 }

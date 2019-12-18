@@ -1,6 +1,10 @@
 package com.huazie.frame.common.util.xml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.StringReader;
@@ -15,6 +19,8 @@ import java.io.StringWriter;
  */
 public class JABXUtils {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(JABXUtils.class);
+
     /**
      * <p> 将带有JAXB注解的pojo类转换为XML字符串 </p>
      *
@@ -24,13 +30,19 @@ public class JABXUtils {
      * @throws Exception
      * @since 1.0.0
      */
-    public static <T> String toXml(T t, boolean isFormat) throws Exception {
-        JAXBContext context = JAXBContext.newInstance(t.getClass());
-        Marshaller marshaller = context.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, isFormat);
+    public static <T> String toXml(T t, boolean isFormat) {
         StringWriter writer = new StringWriter();
-        marshaller.marshal(t, writer);
+        try {
+            JAXBContext context = JAXBContext.newInstance(t.getClass());
+            Marshaller marshaller = context.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, isFormat);
+            marshaller.marshal(t, writer);
+        } catch (JAXBException e) {
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("实体转XML，出现异常：\n", e);
+            }
+        }
         return writer.toString();
     }
 

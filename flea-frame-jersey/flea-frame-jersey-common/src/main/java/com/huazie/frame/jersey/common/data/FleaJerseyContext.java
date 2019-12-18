@@ -1,5 +1,7 @@
 package com.huazie.frame.jersey.common.data;
 
+import com.huazie.frame.common.FleaCommonConfig;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +17,7 @@ import javax.ws.rs.core.UriInfo;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class FleaJerseyContext {
+public class FleaJerseyContext extends FleaCommonConfig {
 
     private Request request; // 请求信息的上下文
 
@@ -30,6 +32,8 @@ public class FleaJerseyContext {
     private HttpServletResponse httpServletResponse; // Http Servlet响应对象
 
     private ResourceInfo resourceInfo; // 资源信息
+
+    private FleaJerseyFileContext fleaJerseyFileContext; // Flea Jersey文件相关上下文
 
     public Request getRequest() {
         return request;
@@ -85,5 +89,13 @@ public class FleaJerseyContext {
 
     public void setResourceInfo(ResourceInfo resourceInfo) {
         this.resourceInfo = resourceInfo;
+    }
+
+    public FleaJerseyFileContext getFleaJerseyFileContext() {
+        return fleaJerseyFileContext;
+    }
+
+    public void setFleaJerseyFileContext(FleaJerseyFileContext fleaJerseyFileContext) {
+        this.fleaJerseyFileContext = fleaJerseyFileContext;
     }
 }

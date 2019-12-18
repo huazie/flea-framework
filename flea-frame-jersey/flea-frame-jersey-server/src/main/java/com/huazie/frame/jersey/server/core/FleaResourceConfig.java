@@ -2,6 +2,7 @@ package com.huazie.frame.jersey.server.core;
 
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.core.base.cfgdata.bean.FleaConfigDataSpringBean;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,6 +56,7 @@ public abstract class FleaResourceConfig extends ResourceConfig {
         if (CollectionUtils.isNotEmpty(resourcePackages)) {
             packages(resourcePackages.toArray(new String[0]));
         }
+        register(MultiPartFeature.class);
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FleaResourceConfig#init() End");
         }

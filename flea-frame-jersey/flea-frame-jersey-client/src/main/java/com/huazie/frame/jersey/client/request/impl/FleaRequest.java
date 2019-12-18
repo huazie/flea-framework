@@ -20,9 +20,11 @@ import com.huazie.frame.jersey.common.data.RequestPublicData;
 import com.huazie.frame.jersey.common.data.ResponseBusinessData;
 import com.huazie.frame.jersey.common.data.ResponsePublicData;
 import com.huazie.frame.jersey.common.exception.FleaJerseyClientException;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
@@ -134,7 +136,7 @@ public abstract class FleaRequest implements Request {
             throw new FleaJerseyClientException("ERROR-JERSEY-CLIENT0000000007", clientCode, clientOutput, clazz.getName());
         }
 
-        WebTarget target = ClientBuilder.newClient().target(resourceUrl).path(resourceCode);
+        WebTarget target = ClientBuilder.newClient().register(MultiPartFeature.class).target(resourceUrl).path(resourceCode);
 
         FleaJerseyRequest request = createFleaJerseyRequest(resourceCode, serviceCode, input);
         if (LOGGER.isDebugEnabled()) {

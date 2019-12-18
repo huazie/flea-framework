@@ -12,12 +12,6 @@
     <artifactId>flea-frame-jersey</artifactId>
     <packaging>pom</packaging>
 
-    <modules>
-        <module>flea-frame-jersey-client</module>
-        <module>flea-frame-jersey-server</module>
-		<module>flea-frame-jersey-common</module>
-    </modules>
-
     <dependencies>
 
         <!-- FLEA FRAME CONFIG -->
@@ -29,5 +23,11 @@
         </dependency>
 
     </dependencies>
+
+    <modules>
+        <module>flea-frame-jersey-common</module>
+        <module>flea-frame-jersey-client</module>
+        <module>flea-frame-jersey-server</module>
+    </modules>
 
 </project>

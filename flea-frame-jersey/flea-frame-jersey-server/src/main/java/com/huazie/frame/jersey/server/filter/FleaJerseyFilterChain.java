@@ -7,6 +7,7 @@ import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.common.util.xml.JABXUtils;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
+import com.huazie.frame.jersey.common.exception.FleaJerseyFilterException;
 import com.huazie.frame.jersey.common.filter.config.Filter;
 import com.huazie.frame.jersey.common.filter.config.FleaJerseyFilterConfig;
 import org.slf4j.Logger;
@@ -74,16 +75,20 @@ public class FleaJerseyFilterChain {
     /**
      * <p> 执行过滤器 </p>
      *
-     * @param requestXml 请求XML字符串
+     * @param requestData 请求数据字符串
      * @since 1.0.0
      */
-    public FleaJerseyResponse doFilter(String requestXml) {
+    public FleaJerseyResponse doFilter(String requestData) {
         FleaJerseyResponse response = new FleaJerseyResponse();
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJerseyFilterChain##doFilter(String) RequestXml = {}", requestXml);
+            LOGGER.debug("FleaJerseyFilterChain##doFilter(String) RequestData = {}", requestData);
         }
         try {
-            FleaJerseyRequest request = JABXUtils.fromXml(requestXml, FleaJerseyRequest.class);
+            if (StringUtils.isBlank(requestData)) {
+                // 请求报文不能为空
+                throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000003");
+            }
+            FleaJerseyRequest request = JABXUtils.fromXml(requestData, FleaJerseyRequest.class);
             response = doFilter(request, response);
         } catch (Exception e) {
             // 执行异常过滤器

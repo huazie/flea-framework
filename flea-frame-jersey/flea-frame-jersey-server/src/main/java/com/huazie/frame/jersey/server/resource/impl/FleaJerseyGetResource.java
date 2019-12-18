@@ -1,8 +1,13 @@
 package com.huazie.frame.jersey.server.resource.impl;
 
+import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
+import com.huazie.frame.jersey.server.resource.JerseyFileDownloadResource;
 import com.huazie.frame.jersey.server.resource.JerseyGetResource;
 import com.huazie.frame.jersey.server.resource.Resource;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.core.Response;
 
 /**
  * <p> Flea Jersey Get Resource </p>
@@ -11,18 +16,22 @@ import com.huazie.frame.jersey.server.resource.Resource;
  * @version 1.0.0
  * @since 1.0.0
  */
-public abstract class FleaJerseyGetResource extends Resource implements JerseyGetResource {
+public abstract class FleaJerseyGetResource extends Resource implements JerseyGetResource, JerseyFileDownloadResource {
 
     /**
-     * <p> 处理GET资源数据 </p>
-     *
-     * @param requestXml 请求XMl字符串
-     * @return 响应对象
-     * @since 1.0.0
+     * @see JerseyGetResource#doGetResource(String requestData)
      */
     @Override
-    public FleaJerseyResponse doGetResource(String requestXml) {
-        return doResource(requestXml);
+    public FleaJerseyResponse doGetResource(String requestData) {
+        return doResource(requestData);
     }
 
+    /**
+     * @see JerseyFileDownloadResource#doFileDownloadResource(FleaJerseyRequest request)
+     */
+    @GET
+    @Override
+    public Response doFileDownloadResource(FleaJerseyRequest request) {
+        return doCommonFileDownloadResource(request);
+    }
 }
