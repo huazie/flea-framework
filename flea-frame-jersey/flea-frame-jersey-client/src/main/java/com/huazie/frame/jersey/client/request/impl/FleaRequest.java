@@ -228,7 +228,7 @@ public abstract class FleaRequest implements Request {
      * @throws Exception
      * @since 1.0.0
      */
-    protected String toRequestXml(FleaJerseyRequest request) throws Exception {
+    protected String toRequestData(FleaJerseyRequest request) throws Exception {
         String input = request.getRequestData().getBusinessData().getInput();
         if (ObjectUtils.isNotEmpty(input)) {
             input = URLEncoder.encode(input, "UTF-8");

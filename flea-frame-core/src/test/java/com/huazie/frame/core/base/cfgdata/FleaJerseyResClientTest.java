@@ -105,8 +105,8 @@ public class FleaJerseyResClientTest {
         resClient.setResourceUrl("http://localhost:8080/fleafs");
         resClient.setResourceCode("download");
         resClient.setServiceCode("FLEA_SERVICE_FILE_DOWNLOAD");
-        resClient.setRequestMode("get");
-        resClient.setMediaType("application/xml");
+        resClient.setRequestMode("fget");
+        resClient.setMediaType(""); // 这个可以不填
         resClient.setClientInput("com.huazie.ffs.pojo.download.input.InputFileDownloadInfo");
         resClient.setClientOutput("com.huazie.ffs.pojo.download.output.OutputFileDownloadInfo");
         resClient.setState(EntityStateEnum.IN_USE.getValue());

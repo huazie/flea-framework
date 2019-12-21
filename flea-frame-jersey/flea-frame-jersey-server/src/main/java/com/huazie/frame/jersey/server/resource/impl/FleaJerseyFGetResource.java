@@ -1,12 +1,8 @@
 package com.huazie.frame.jersey.server.resource.impl;
 
-import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.server.resource.JerseyFileDownloadResource;
 import com.huazie.frame.jersey.server.resource.Resource;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.core.Response;
+import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 
 /**
  * <p> Flea Jersey File Get Resource </p>
@@ -18,13 +14,11 @@ import javax.ws.rs.core.Response;
 public abstract class FleaJerseyFGetResource extends Resource implements JerseyFileDownloadResource {
 
     /**
-     * @see JerseyFileDownloadResource#doFileDownloadResource(FleaJerseyRequest)
+     * @see JerseyFileDownloadResource#doFileDownloadResource(String)
      */
-    @GET
-    @Path("/fileDownload")
     @Override
-    public Response doFileDownloadResource(FleaJerseyRequest request) {
-        return doCommonFileDownloadResource(request);
+    public FormDataMultiPart doFileDownloadResource(String requestData) {
+        return doCommonFileDownloadResource(requestData);
     }
 
 }

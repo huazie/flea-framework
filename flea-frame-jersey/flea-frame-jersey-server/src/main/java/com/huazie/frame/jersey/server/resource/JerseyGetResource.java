@@ -20,13 +20,13 @@ public interface JerseyGetResource {
     /**
      * <p> 处理GET资源数据 </p>
      *
-     * @param requestXml 请求XMl字符串
+     * @param requestData 请求数据字符串
      * @return 响应对象
      * @since 1.0.0
      */
     @GET
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    FleaJerseyResponse doGetResource(@QueryParam("REQUEST") String requestXml);
+    FleaJerseyResponse doGetResource(@QueryParam("REQUEST") String requestData);
 
 }
