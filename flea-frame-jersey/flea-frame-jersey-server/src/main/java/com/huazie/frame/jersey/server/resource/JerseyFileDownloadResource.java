@@ -1,6 +1,5 @@
 package com.huazie.frame.jersey.server.resource;
 
-import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 
 import javax.ws.rs.Consumes;
@@ -9,7 +8,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 /**
  * <p> Jersey 文件下载资源 </p>
