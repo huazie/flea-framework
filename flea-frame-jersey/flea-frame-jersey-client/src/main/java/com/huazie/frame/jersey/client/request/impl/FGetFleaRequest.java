@@ -66,7 +66,7 @@ public class FGetFleaRequest extends FleaRequest {
         FormDataMultiPart formDataMultiPart = target
                 .path(FleaJerseyConstants.FileResourceConstants.FILE_DOWNLOAD_PATH)
                 .queryParam(FleaJerseyConstants.FormDataConstants.FORM_DATA_KEY_REQUEST, requestData)
-                .request()
+                .request(toMediaType())
                 .get(FormDataMultiPart.class);
 
         // 将表单添加到文件上下文中

@@ -6,10 +6,10 @@
 
         <cache key="fleaparadetail" type="fleafs" expiry="86400" desc="Flea配置数据缓存" />
 
-        <cache key="fleajerseyi18nerrormapping" type="jersey" desc="Flea Jersey 国际码和错误码映射缓存" />
-        <cache key="fleajerseyresservice" type="jersey" desc="Flea Jersey 资源服务缓存" />
-        <cache key="fleajerseyresclient" type="jersey" desc="Flea Jersey 资源客户端缓存" />
-        <cache key="fleajerseyresource" type="jersey" desc="Flea Jersey 资源缓存" />
+        <cache key="fleajerseyi18nerrormapping" type="jersey" expiry="86400" desc="Flea Jersey 国际码和错误码映射缓存" />
+        <cache key="fleajerseyresservice" type="jersey" expiry="86400" desc="Flea Jersey 资源服务缓存" />
+        <cache key="fleajerseyresclient" type="jersey" expiry="86400" desc="Flea Jersey 资源客户端缓存" />
+        <cache key="fleajerseyresource" type="jersey" expiry="86400" desc="Flea Jersey 资源缓存" />
 
     </caches>
 
