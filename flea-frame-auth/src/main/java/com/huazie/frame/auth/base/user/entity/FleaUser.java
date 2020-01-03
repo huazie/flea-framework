@@ -56,7 +56,7 @@ public class FleaUser extends FleaEntity {
     private Long groupId; // 用户组编号
 
     @Column(name = "user_state", nullable = false)
-    private Integer userState; // 状态（1：正常，0：禁用）
+    private Integer userState; // 用户状态（0：删除，1：正常 ，2：禁用，3：待审核）
 
     @Column(name = "create_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)

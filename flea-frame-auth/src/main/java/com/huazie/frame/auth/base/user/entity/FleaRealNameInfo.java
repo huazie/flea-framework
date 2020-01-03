@@ -46,7 +46,7 @@ public class FleaRealNameInfo extends FleaEntity {
     private String certAddress; // 证件地址
 
     @Column(name = "real_name_state", nullable = false)
-    private Integer realNameState; // 实名信息状态（0：删除 1：在用）
+    private Integer realNameState; // 实名信息状态 (0: 删除 1: 正常)
 
     @Column(name = "create_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
