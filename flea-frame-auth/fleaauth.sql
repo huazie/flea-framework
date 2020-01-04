@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50538
 File Encoding         : 65001
 
-Date: 2019-11-18 15:57:56
+Date: 2020-01-05 00:12:58
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,7 +31,8 @@ CREATE TABLE `flea_account` (
   `expiry_date` datetime NOT NULL COMMENT '失效日期',
   `remarks` varchar(1024) DEFAULT NULL COMMENT '备注信息',
   PRIMARY KEY (`account_id`),
-  KEY `index_name_psw` (`account_code`,`account_pwd`) USING BTREE
+  KEY `INDEX_CODE_PWD` (`account_code`,`account_pwd`) USING BTREE,
+  KEY `INDEX_USER_ID` (`user_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
@@ -53,7 +54,9 @@ CREATE TABLE `flea_account_attr` (
   `effective_date` datetime DEFAULT NULL COMMENT '生效日期',
   `expiry_date` datetime DEFAULT NULL COMMENT '失效日期',
   `remarks` varchar(1024) DEFAULT NULL COMMENT '备注信息',
-  PRIMARY KEY (`attr_id`)
+  PRIMARY KEY (`attr_id`),
+  KEY `INDEX_ACCOUNT_ID` (`account_id`) USING BTREE,
+  KEY `INDEX_ATTR_CODE` (`attr_code`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -75,7 +78,8 @@ CREATE TABLE `flea_element` (
   `create_date` datetime NOT NULL COMMENT '创建日期',
   `done_date` datetime DEFAULT NULL COMMENT '修改日期',
   `remarks` varchar(1024) DEFAULT NULL COMMENT '备注信息',
-  PRIMARY KEY (`element_id`)
+  PRIMARY KEY (`element_id`),
+  UNIQUE KEY `UNIQUE_ELEMENT_CODE` (`element_code`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -83,12 +87,13 @@ CREATE TABLE `flea_element` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `flea_element_attr`
+-- Table structure for `flea_function_attr`
 -- ----------------------------
-DROP TABLE IF EXISTS `flea_element_attr`;
-CREATE TABLE `flea_element_attr` (
+DROP TABLE IF EXISTS `flea_function_attr`;
+CREATE TABLE `flea_function_attr` (
   `attr_id` int(12) NOT NULL AUTO_INCREMENT COMMENT '属性编号',
-  `element_id` int(12) NOT NULL COMMENT '元素编号',
+  `function_id` int(12) NOT NULL COMMENT '功能编号',
+  `function_type` varchar(25) NOT NULL COMMENT '功能类型(菜单、操作、元素) ',
   `attr_code` varchar(50) NOT NULL COMMENT '属性码',
   `attr_value` varchar(1024) DEFAULT NULL COMMENT '属性值',
   `state` tinyint(1) NOT NULL COMMENT '属性状态(0: 删除 1: 正常）',
@@ -97,11 +102,13 @@ CREATE TABLE `flea_element_attr` (
   `effective_date` datetime DEFAULT NULL COMMENT '生效日期',
   `expiry_date` datetime DEFAULT NULL COMMENT '失效日期',
   `remarks` varchar(1024) DEFAULT NULL COMMENT '备注信息',
-  PRIMARY KEY (`attr_id`)
+  PRIMARY KEY (`attr_id`),
+  KEY `INDEX_FUNCTION_ID` (`function_id`) USING BTREE,
+  KEY `INDEX_ATTR_CODE` (`attr_code`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of flea_element_attr
+-- Records of flea_function_attr
 -- ----------------------------
 
 -- ----------------------------
@@ -123,7 +130,9 @@ CREATE TABLE `flea_login_log` (
   `remarks` varchar(1024) CHARACTER SET utf8 DEFAULT NULL COMMENT '描述信息',
   `ext1` varchar(1024) CHARACTER SET utf8 DEFAULT NULL COMMENT '扩展字段1',
   `ext2` varchar(1024) CHARACTER SET utf8 DEFAULT NULL COMMENT '扩展字段2',
-  PRIMARY KEY (`login_log_id`)
+  PRIMARY KEY (`login_log_id`),
+  KEY `INDEX_ACCOUNT_ID` (`account_id`) USING BTREE,
+  KEY `INDEX_SYS_ACCOUNT_ID` (`system_account_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk;
 
 -- ----------------------------
@@ -131,10 +140,10 @@ CREATE TABLE `flea_login_log` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `flea_login_log_201909`
+-- Table structure for `flea_login_log_202001`
 -- ----------------------------
-DROP TABLE IF EXISTS `flea_login_log_201909`;
-CREATE TABLE `flea_login_log_201909` (
+DROP TABLE IF EXISTS `flea_login_log_202001`;
+CREATE TABLE `flea_login_log_202001` (
   `login_log_id` int(12) NOT NULL AUTO_INCREMENT COMMENT '登录日志编号',
   `account_id` int(12) NOT NULL COMMENT '账户编号',
   `system_account_id` int(12) NOT NULL COMMENT '系统账户编号',
@@ -149,13 +158,14 @@ CREATE TABLE `flea_login_log_201909` (
   `remarks` varchar(1024) CHARACTER SET utf8 DEFAULT NULL COMMENT '描述信息',
   `ext1` varchar(1024) CHARACTER SET utf8 DEFAULT NULL COMMENT '扩展字段1',
   `ext2` varchar(1024) CHARACTER SET utf8 DEFAULT NULL COMMENT '扩展字段2',
-  PRIMARY KEY (`login_log_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=gbk;
+  PRIMARY KEY (`login_log_id`),
+  KEY `INDEX_ACCOUNT_ID` (`account_id`) USING BTREE,
+  KEY `INDEX_SYS_ACCOUNT_ID` (`system_account_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=gbk;
 
 -- ----------------------------
--- Records of flea_login_log_201909
+-- Records of flea_login_log_202001
 -- ----------------------------
-INSERT INTO `flea_login_log_201909` VALUES ('1', '1000000', '2000', '127.0.0.1', null, null, '1', '2019-09-27 00:03:47', null, '2019-09-27 00:03:47', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `flea_menu`
@@ -177,33 +187,11 @@ CREATE TABLE `flea_menu` (
   `expiry_date` datetime NOT NULL COMMENT '失效日期',
   `remarks` varchar(1024) DEFAULT NULL COMMENT '菜单描述',
   PRIMARY KEY (`menu_id`),
-  UNIQUE KEY `check_menu_code` (`menu_code`) USING HASH
+  UNIQUE KEY `UNIQUE_MENU_CODE` (`menu_code`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of flea_menu
--- ----------------------------
-
--- ----------------------------
--- Table structure for `flea_menu_attr`
--- ----------------------------
-DROP TABLE IF EXISTS `flea_menu_attr`;
-CREATE TABLE `flea_menu_attr` (
-  `attr_id` int(12) NOT NULL AUTO_INCREMENT COMMENT '属性编号',
-  `menu_id` int(12) NOT NULL COMMENT '菜单编号',
-  `attr_code` varchar(50) NOT NULL COMMENT '属性码',
-  `attr_value` varchar(1024) DEFAULT NULL COMMENT '属性值',
-  `state` tinyint(1) NOT NULL COMMENT '属性状态(0: 删除 1: 正常）',
-  `create_date` datetime NOT NULL COMMENT '创建日期',
-  `done_date` datetime DEFAULT NULL COMMENT '修改日期',
-  `effective_date` datetime DEFAULT NULL COMMENT '生效日期',
-  `expiry_date` datetime DEFAULT NULL COMMENT '失效日期',
-  `remarks` varchar(1024) DEFAULT NULL COMMENT '备注信息',
-  PRIMARY KEY (`attr_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of flea_menu_attr
 -- ----------------------------
 
 -- ----------------------------
@@ -219,33 +207,12 @@ CREATE TABLE `flea_operation` (
   `create_date` datetime NOT NULL COMMENT '创建日期',
   `done_date` datetime DEFAULT NULL COMMENT '修改日期',
   `remarks` varchar(1024) DEFAULT NULL COMMENT '备注信息',
-  PRIMARY KEY (`operation_id`)
+  PRIMARY KEY (`operation_id`),
+  UNIQUE KEY `UNIQUE_OPERATION_CODE` (`operation_code`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of flea_operation
--- ----------------------------
-
--- ----------------------------
--- Table structure for `flea_operation_attr`
--- ----------------------------
-DROP TABLE IF EXISTS `flea_operation_attr`;
-CREATE TABLE `flea_operation_attr` (
-  `attr_id` int(12) NOT NULL AUTO_INCREMENT COMMENT '属性编号',
-  `operation_id` int(12) NOT NULL COMMENT '操作编号',
-  `attr_code` varchar(50) NOT NULL COMMENT '属性码',
-  `attr_value` varchar(1024) DEFAULT NULL COMMENT '属性值',
-  `state` tinyint(1) NOT NULL COMMENT '属性状态(0: 删除 1: 正常)',
-  `create_date` datetime NOT NULL COMMENT '创建日期',
-  `done_date` datetime DEFAULT NULL COMMENT '修改日期',
-  `effective_date` datetime DEFAULT NULL COMMENT '生效日期',
-  `expiry_date` datetime DEFAULT NULL COMMENT '失效日期',
-  `remarks` varchar(1024) DEFAULT NULL COMMENT '备注信息',
-  PRIMARY KEY (`attr_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of flea_operation_attr
 -- ----------------------------
 
 -- ----------------------------
@@ -261,7 +228,8 @@ CREATE TABLE `flea_privilege` (
   `create_date` datetime NOT NULL COMMENT '创建日期',
   `done_date` datetime DEFAULT NULL COMMENT '修改日期',
   `remarks` varchar(1024) DEFAULT NULL COMMENT '备注信息',
-  PRIMARY KEY (`privilege_id`)
+  PRIMARY KEY (`privilege_id`),
+  KEY `INDEX_GROUP_ID` (`group_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -306,7 +274,9 @@ CREATE TABLE `flea_privilege_group_rel` (
   `relat_ext_x` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段X',
   `relat_ext_y` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Y',
   `relat_ext_z` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Z',
-  PRIMARY KEY (`privilege_group_rel_id`)
+  PRIMARY KEY (`privilege_group_rel_id`),
+  KEY `INDEX_PRIVILEGE_GROUP_ID` (`privilege_group_id`) USING BTREE,
+  KEY `INDEX_RELAT_ID` (`relat_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -332,7 +302,9 @@ CREATE TABLE `flea_privilege_rel` (
   `relat_ext_x` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段X',
   `relat_ext_y` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Y',
   `relat_ext_z` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Z',
-  PRIMARY KEY (`privilege_rel_id`)
+  PRIMARY KEY (`privilege_rel_id`),
+  KEY `INDEX_PRIVILEGE_ID` (`privilege_id`) USING BTREE,
+  KEY `INDEX_RELAT_ID` (`relat_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -355,7 +327,9 @@ CREATE TABLE `flea_real_name_info` (
   `effective_date` datetime NOT NULL COMMENT '生效日期',
   `expiry_date` datetime NOT NULL COMMENT '失效日期',
   `remarks` varchar(1024) DEFAULT NULL COMMENT '备注信息',
-  PRIMARY KEY (`real_name_id`)
+  PRIMARY KEY (`real_name_id`),
+  KEY `INDEX_CERT_CODE` (`cert_code`) USING BTREE,
+  KEY `INDEX_CERT_NAME` (`cert_name`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -375,7 +349,8 @@ CREATE TABLE `flea_role` (
   `create_date` datetime NOT NULL COMMENT '创建日期',
   `done_date` datetime DEFAULT NULL COMMENT '修改日期',
   `remarks` varchar(1024) DEFAULT NULL COMMENT '备注信息',
-  PRIMARY KEY (`role_id`)
+  PRIMARY KEY (`role_id`),
+  KEY `INDEX_GROUP_ID` (`group_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -420,7 +395,9 @@ CREATE TABLE `flea_role_group_rel` (
   `relat_ext_x` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段X',
   `relat_ext_y` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Y',
   `relat_ext_z` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Z',
-  PRIMARY KEY (`role_group_rel_id`)
+  PRIMARY KEY (`role_group_rel_id`),
+  KEY `INDEX_ROLE_GROUP_ID` (`role_group_id`) USING BTREE,
+  KEY `INDEX_RELAT_ID` (`relat_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -446,7 +423,9 @@ CREATE TABLE `flea_role_rel` (
   `relat_ext_x` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段X',
   `relat_ext_y` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Y',
   `relat_ext_z` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Z',
-  PRIMARY KEY (`role_rel_id`)
+  PRIMARY KEY (`role_rel_id`),
+  KEY `INDEX_ROLE_ID` (`role_id`) USING BTREE,
+  KEY `INDEX_RELAT_ID` (`relat_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -472,7 +451,11 @@ CREATE TABLE `flea_user` (
   `effective_date` datetime NOT NULL COMMENT '生效日期',
   `expiry_date` datetime NOT NULL COMMENT '失效日期',
   `remarks` varchar(1024) DEFAULT NULL COMMENT '备注信息',
-  PRIMARY KEY (`user_id`)
+  PRIMARY KEY (`user_id`),
+  KEY `INDEX_USER_NAME` (`user_name`) USING BTREE,
+  KEY `INDEX_USER_BIRTHDAY` (`user_birthday`) USING BTREE,
+  KEY `INDEX_USER_EMAIL` (`user_email`) USING BTREE,
+  KEY `INDEX_USER_PHONE` (`user_phone`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -494,7 +477,9 @@ CREATE TABLE `flea_user_attr` (
   `effective_date` datetime DEFAULT NULL COMMENT '生效日期',
   `expiry_date` datetime DEFAULT NULL COMMENT '失效日期',
   `remarks` varchar(1024) DEFAULT NULL COMMENT '备注信息',
-  PRIMARY KEY (`attr_id`)
+  PRIMARY KEY (`attr_id`),
+  KEY `INDEX_USER_ID` (`user_id`) USING BTREE,
+  KEY `INDEX_ATTR_CODE` (`attr_code`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -539,7 +524,9 @@ CREATE TABLE `flea_user_group_rel` (
   `relat_ext_x` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段X',
   `relat_ext_y` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Y',
   `relat_ext_z` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Z',
-  PRIMARY KEY (`user_group_relat_id`)
+  PRIMARY KEY (`user_group_relat_id`),
+  KEY `INDEX_USER_GROUP_ID` (`user_group_id`) USING BTREE,
+  KEY `INDEX_RELAT_ID` (`relat_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -565,7 +552,9 @@ CREATE TABLE `flea_user_rel` (
   `relat_ext_x` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段X',
   `relat_ext_y` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Y',
   `relat_ext_z` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Z',
-  PRIMARY KEY (`user_rel_id`)
+  PRIMARY KEY (`user_rel_id`),
+  KEY `INDEX_USER_ID` (`user_id`) USING BTREE,
+  KEY `INDEX_RELAT_ID` (`relat_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
