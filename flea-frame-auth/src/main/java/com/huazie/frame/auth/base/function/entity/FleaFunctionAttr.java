@@ -15,26 +15,29 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 /**
- * <p> Flea元素扩展属性表对应的实体类 </p>
+ * <p> Flea功能扩展属性表对应的实体类 </p>
  *
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0
  */
 @Entity
-@Table(name = "flea_element_attr")
-public class FleaElementAttr extends FleaEntity {
+@Table(name = "flea_function_attr")
+public class FleaFunctionAttr extends FleaEntity {
 
-    private static final long serialVersionUID = 2621890554721583118L;
+    private static final long serialVersionUID = -1325218604346017313L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "FLEA_ELEMENT_ATTR_SEQ")
-    @SequenceGenerator(name = "FLEA_ELEMENT_ATTR_SEQ")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "FLEA_FUNCTION_ATTR_SEQ")
+    @SequenceGenerator(name = "FLEA_FUNCTION_ATTR_SEQ")
     @Column(name = "attr_id", unique = true, nullable = false)
     private Long attrId; // 属性编号
 
-    @Column(name = "element_id", nullable = false)
-    private Long elementId; // 元素编号
+    @Column(name = "function_id", nullable = false)
+    private Long functionId; // 功能编号
+
+    @Column(name = "function_type", nullable = false)
+    private String functionType; // 功能类型
 
     @Column(name = "attr_code", nullable = false)
     private String attrCode; // 属性码
@@ -43,7 +46,7 @@ public class FleaElementAttr extends FleaEntity {
     private String attrValue; // 属性值
 
     @Column(name = "state", nullable = false)
-    private Integer state; // 属性状态(0: 删除 1: 正常)
+    private Integer state; // 属性状态(0: 删除 1: 正常）
 
     @Column(name = "create_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -72,12 +75,20 @@ public class FleaElementAttr extends FleaEntity {
         this.attrId = attrId;
     }
 
-    public Long getElementId() {
-        return elementId;
+    public Long getFunctionId() {
+        return functionId;
     }
 
-    public void setElementId(Long elementId) {
-        this.elementId = elementId;
+    public void setFunctionId(Long functionId) {
+        this.functionId = functionId;
+    }
+
+    public String getFunctionType() {
+        return functionType;
+    }
+
+    public void setFunctionType(String functionType) {
+        this.functionType = functionType;
     }
 
     public String getAttrCode() {
