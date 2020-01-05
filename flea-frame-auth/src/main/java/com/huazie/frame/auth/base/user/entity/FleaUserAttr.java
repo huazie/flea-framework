@@ -43,7 +43,7 @@ public class FleaUserAttr extends FleaEntity {
     private String attrValue; // 属性值
 
     @Column(name = "state", nullable = false)
-    private Integer state; // 属性状态(0：删除 1：正常 ）
+    private Integer state; // 属性状态(0: 删除 1: 正常)
 
     @Column(name = "create_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)

@@ -15,7 +15,7 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 /**
- * <p> Flea帐户信息表对应的实体类 </p>
+ * <p> Flea账户信息表对应的实体类 </p>
  *
  * @author huazie
  * @version 1.0.0
@@ -31,19 +31,19 @@ public class FleaAccount extends FleaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "FLEA_ACCOUNT_SEQ")
     @SequenceGenerator(name = "FLEA_ACCOUNT_SEQ")
     @Column(name = "account_id", unique = true, nullable = false)
-    private Long accountId; // 帐户编号
+    private Long accountId; // 账户编号
 
     @Column(name = "user_id", nullable = false)
     private Long userId; // 用户编号
 
     @Column(name = "account_code", nullable = false)
-    private String accountCode; // 帐号
+    private String accountCode; // 账户号码
 
     @Column(name = "account_pwd", nullable = false)
-    private String accountPwd; // 密码
+    private String accountPwd; // 账户密码
 
     @Column(name = "account_state", nullable = false)
-    private Integer accountState; // 帐户状态（0：删除，1：正常 ，2：禁用，3：待审核）
+    private Integer accountState; // 账户状态（0：删除，1：正常 ，2：禁用，3：待审核）
 
     @Column(name = "create_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)

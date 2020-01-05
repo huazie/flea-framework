@@ -43,7 +43,7 @@ public class FleaPrivilegeGroupRel extends FleaEntity {
     private String relatType; // 关联类型
 
     @Column(name = "relat_state", nullable = false)
-    private Integer relatState; // 关联状态
+    private Integer relatState; // 关联状态(0: 删除 1: 正常)
 
     @Column(name = "create_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)

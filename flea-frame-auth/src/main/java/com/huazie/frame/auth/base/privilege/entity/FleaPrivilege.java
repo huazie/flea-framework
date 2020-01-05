@@ -43,7 +43,7 @@ public class FleaPrivilege extends FleaEntity {
     private Long groupId; // 权限组编号
 
     @Column(name = "privilege_state", nullable = false)
-    private Integer privilegeState; // 权限状态
+    private Integer privilegeState; // 权限状态(0: 删除 1: 正常)
 
     @Column(name = "create_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)

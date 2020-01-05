@@ -30,8 +30,8 @@ public class FleaUserRel extends FleaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "FLEA_USER_REL_SEQ")
     @SequenceGenerator(name = "FLEA_USER_REL_SEQ")
-    @Column(name = "user_role_rel_id", unique = true, nullable = false)
-    private Long userRoleRelId; // 用户角色关联编号
+    @Column(name = "user_rel_id", unique = true, nullable = false)
+    private Long userRelId; // 用户关联编号
 
     @Column(name = "user_id", nullable = false)
     private Long userId; // 用户编号
@@ -43,7 +43,7 @@ public class FleaUserRel extends FleaEntity {
     private String relatType; // 关联类型
 
     @Column(name = "relat_state", nullable = false)
-    private Integer relatState; // 关联状态
+    private Integer relatState; // 关联状态(0: 删除 1: 正常)
 
     @Column(name = "create_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -74,12 +74,12 @@ public class FleaUserRel extends FleaEntity {
     @Column(name = "relat_ext_z")
     private String relatExtZ; // 关联扩展字段Z
 
-    public Long getUserRoleRelId() {
-        return userRoleRelId;
+    public Long getUserRelId() {
+        return userRelId;
     }
 
-    public void setUserRoleRelId(Long userRoleRelId) {
-        this.userRoleRelId = userRoleRelId;
+    public void setUserRelId(Long userRelId) {
+        this.userRelId = userRelId;
     }
 
     public Long getUserId() {

@@ -8,8 +8,10 @@ import com.huazie.ffs.pojo.upload.input.InputFileUploadInfo;
 import com.huazie.ffs.pojo.upload.input.InputUploadAuthInfo;
 import com.huazie.ffs.pojo.upload.output.OutputFileUploadInfo;
 import com.huazie.ffs.pojo.upload.output.OutputUploadAuthInfo;
+import com.huazie.frame.common.DateFormatEnum;
 import com.huazie.frame.common.FleaFrameManager;
 import com.huazie.frame.common.IFleaUser;
+import com.huazie.frame.common.util.DateUtils;
 import com.huazie.frame.common.util.IOUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.RandomCode;
@@ -21,12 +23,14 @@ import com.huazie.frame.jersey.client.response.Response;
 import com.huazie.frame.jersey.common.FleaJerseyConstants;
 import com.huazie.frame.jersey.common.FleaJerseyManager;
 import com.huazie.frame.jersey.common.FleaUserImpl;
+import com.huazie.frame.jersey.common.data.FleaFileObject;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequestData;
 import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
 import com.huazie.frame.jersey.common.data.RequestBusinessData;
 import com.huazie.frame.jersey.common.data.RequestPublicData;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.media.multipart.file.FileDataBodyPart;
@@ -43,6 +47,8 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import java.io.File;
+import java.io.FileInputStream;
+import java.net.URLEncoder;
 
 /**
  * <p>  </p>
@@ -116,31 +122,6 @@ public class JerseyTest {
     }
 
     @Test
-    public void testFileDownload() {
-        try {
-            String clientCode = "FLEA_CLIENT_FILE_DOWNLOAD";
-
-            InputFileDownloadInfo input = new InputFileDownloadInfo();
-            input.setToken(RandomCode.toUUID());
-
-            FleaJerseyClient client = applicationContext.getBean(FleaJerseyClient.class);
-
-            Response<OutputFileDownloadInfo> response = client.invoke(clientCode, input, OutputFileDownloadInfo.class);
-
-            if (ObjectUtils.isNotEmpty(response.getOutput())) {
-                String fileName = response.getOutput().getFileName();
-                String fileInput = response.getOutput().getFileInput();
-                LOGGER.debug("FILE_NAME = {}", fileName);
-                LOGGER.debug("FILE = \n{}", fileInput);
-                IOUtils.toFile(fileInput, "E:\\" + fileName, true);
-            }
-
-        } catch (Exception e) {
-            LOGGER.error("Exception = ", e);
-        }
-    }
-
-    @Test
     public void testGetFleaRequest() throws Exception {
         FleaJerseyRequest request = new FleaJerseyRequest();
         FleaJerseyRequestData requestData = new FleaJerseyRequestData();
@@ -200,10 +181,11 @@ public class JerseyTest {
 
         String resourceUrl = "http://localhost:8080/fleafs";
 
-        Client client = ClientBuilder.newClient();
-        client.register(MultiPartFeature.class);
-
-        WebTarget target = client.target(resourceUrl).path("upload").path("fileUpload");
+        WebTarget target = ClientBuilder.newClient()
+                .register(MultiPartFeature.class)
+                .target(resourceUrl)
+                .path("upload")
+                .path("fileUpload");
 
         FormDataMultiPart formDataMultiPart = new FormDataMultiPart();
 
@@ -240,4 +222,100 @@ public class JerseyTest {
         }
     }
 
+    @Test
+    public void testDownloadFileOrigin() throws Exception {
+
+        FleaJerseyRequest request = new FleaJerseyRequest();
+        FleaJerseyRequestData requestData = new FleaJerseyRequestData();
+
+        RequestPublicData publicData = new RequestPublicData();
+        publicData.setSystemAccountId("1000");
+        publicData.setSystemAccountPassword("asd123");
+        publicData.setAccountId("11000");
+        publicData.setResourceCode("download");
+        publicData.setServiceCode("FLEA_SERVICE_FILE_DOWNLOAD");
+
+        RequestBusinessData businessData = new RequestBusinessData();
+
+        InputFileDownloadInfo input = new InputFileDownloadInfo();
+        input.setToken(RandomCode.toUUID());
+
+        String inputJson = GsonUtils.toJsonString(input);
+        if (ObjectUtils.isNotEmpty(inputJson)) {
+            inputJson = URLEncoder.encode(inputJson, "UTF-8");
+        }
+        businessData.setInput(inputJson);
+
+        requestData.setPublicData(publicData);
+        requestData.setBusinessData(businessData);
+
+        request.setRequestData(requestData);
+
+        String inputStr = JABXUtils.toXml(request, false);
+
+        String resourceUrl = "http://localhost:8080/fleafs";
+
+        WebTarget target = ClientBuilder.newClient()
+                .register(MultiPartFeature.class)
+                .target(resourceUrl)
+                .path("download")
+                .path("fileDownload");
+
+        FormDataMultiPart formDataMultiPart = target.queryParam("REQUEST", inputStr).request().get(FormDataMultiPart.class);
+
+        FleaJerseyManager.getManager().getFileContext().setFormDataMultiPart(formDataMultiPart);
+
+        // 获取响应报文
+        FormDataBodyPart responseFormData = FleaJerseyManager.getManager().getFormDataBodyPart(FleaJerseyConstants.FormDataConstants.FORM_DATA_KEY_RESPONSE);
+        String responseData = responseFormData.getValue();
+
+        FleaJerseyResponse response = JABXUtils.fromXml(responseData, FleaJerseyResponse.class);
+
+        LOGGER.debug("Response = {}", response);
+
+        // 获取文件信息
+        FleaFileObject fileObject = FleaJerseyManager.getManager().getFileObject();
+        String fileName = fileObject.getFileName();
+        File downloadFile = fileObject.getFile();
+
+        String fileId = DateUtils.date2String(null, DateFormatEnum.YYYYMMDD) + RandomCode.toUUID();
+        if (downloadFile.exists()) {
+            IOUtils.toFile(new FileInputStream(downloadFile), "E:\\" + fileId + "_" + fileName);
+        }
+
+    }
+
+    @Test
+    public void testDownloadFile() {
+        try {
+            String clientCode = "FLEA_CLIENT_FILE_DOWNLOAD";
+
+            InputFileDownloadInfo input = new InputFileDownloadInfo();
+            input.setToken(RandomCode.toUUID());
+
+            FleaJerseyClient client = applicationContext.getBean(FleaJerseyClient.class);
+
+            Response<OutputFileDownloadInfo> response = client.invoke(clientCode, input, OutputFileDownloadInfo.class);
+
+            LOGGER.debug("result = {}", response);
+
+            OutputFileDownloadInfo output = response.getOutput();
+
+            // 获取文件信息
+            FleaFileObject fileObject = FleaJerseyManager.getManager().getFileObject();
+            String fileName = fileObject.getFileName();
+            File downloadFile = fileObject.getFile();
+
+            String uploadSystemAcctId = output.getUploadSystemAcctId();
+            String uploadAcctId = output.getUploadAcctId();
+            String uploadDate = output.getUploadDate();
+
+            if (downloadFile.exists()) {
+                IOUtils.toFile(new FileInputStream(downloadFile), "E:\\" + uploadDate + "_" + uploadSystemAcctId + "_" + uploadAcctId + "_" + fileName);
+            }
+
+        } catch (Exception e) {
+            LOGGER.error("Exception = ", e);
+        }
+    }
 }

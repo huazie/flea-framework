@@ -43,7 +43,7 @@ public class FleaRole extends FleaEntity {
     private Long groupId; // 角色组编号
 
     @Column(name = "role_state", nullable = false)
-    private Integer roleState; // 角色状态（1: 正常  0: 删除）
+    private Integer roleState; // 角色状态(0: 删除 1: 正常)
 
     @Column(name = "create_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)

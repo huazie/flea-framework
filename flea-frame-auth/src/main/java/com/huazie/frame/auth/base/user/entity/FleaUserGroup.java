@@ -40,7 +40,7 @@ public class FleaUserGroup extends FleaEntity {
     private String userGroupDesc; // 用户组描述
 
     @Column(name = "user_group_state", nullable = false)
-    private Integer userGroupState; // 用户组状态（1: 正常  0: 删除）
+    private Integer userGroupState; // 用户组状态(0: 删除 1: 正常)
 
     @Column(name = "create_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)

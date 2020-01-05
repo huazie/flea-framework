@@ -91,10 +91,10 @@ public class FleaParaDetailSVImplTest {
         try {
             AbstractFleaCacheManager manager = FleaCacheManagerFactory.getFleaCacheManager(CacheEnum.Redis.getName());
             LOGGER.debug("RedisCacheManager={}", manager);
-            AbstractFleaCache cache = manager.getCache("fleajerseyresservice");
+            AbstractFleaCache cache = manager.getCache("fleajerseyresclient");
             LOGGER.debug("Cache={}", cache);
 
-            cache.delete("FLEA_SERVICE_UPLOAD_AUTH_upload");
+//            cache.delete("FLEA_CLIENT_FILE_DOWNLOAD");
 //            cache.clear();
             //#### 复杂配置参数
             Set<String> cacheKey = cache.getCacheKey();

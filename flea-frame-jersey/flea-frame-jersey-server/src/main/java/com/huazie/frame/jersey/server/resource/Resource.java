@@ -8,9 +8,12 @@ import com.huazie.frame.jersey.common.data.FleaJerseyContext;
 import com.huazie.frame.jersey.common.data.FleaJerseyFileContext;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
+import com.huazie.frame.jersey.common.exception.FleaJerseyCommonException;
 import com.huazie.frame.jersey.server.filter.FilterChainManager;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +22,6 @@ import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Request;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -30,6 +32,8 @@ import javax.ws.rs.core.UriInfo;
  * @since 1.0.0
  */
 public abstract class Resource {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(Resource.class);
 
     @Context
     protected Request request; // 请求信息的上下文
@@ -109,34 +113,28 @@ public abstract class Resource {
     /**
      * <p> 处理文件下载资源数据 </p>
      *
-     * @param fleaJerseyRequest 请求对象
+     * @param requestData 请求数据字符串
      * @return Jersey响应对象
      * @since 1.0.0
      */
-    protected Response doCommonFileDownloadResource(FleaJerseyRequest fleaJerseyRequest) {
-        FleaJerseyResponse fleaJerseyResponse = doResource(fleaJerseyRequest);
+    protected FormDataMultiPart doCommonFileDownloadResource(String requestData) {
+
+        FleaJerseyResponse fleaJerseyResponse = doResource(requestData);
+
         String responseData = JABXUtils.toXml(fleaJerseyResponse, false);
-        // 获取文件上下文
-        FleaJerseyFileContext fleaJerseyFileContext = FleaJerseyManager.getManager().getContext().getFleaJerseyFileContext();
 
-        Response response = null;
-//        if (ObjectUtils.isNotEmpty(fleaJerseyFileContext)) {
-//            File downloadFile = fleaJerseyFileContext.getFile();
-//            if (ObjectUtils.isNotEmpty(downloadFile)) {
-//                if (downloadFile.exists()) {
-//                    response = Response.ok(downloadFile)
-//                            .header("Content-disposition", "attachment;response=" + responseData)
-//                            .header("Cache-Control", "no-cache").build();
-//                } else {
-//                    response = Response.status(Response.Status.NOT_FOUND).build();
-//                }
-//            } else {
-//                // 这边取 StreamingOutput
-//
-//            }
-//        }
+        FormDataMultiPart formDataMultiPart = null;
 
-        return response;
+        try {
+            // 将响应数据添加到表单中
+            FleaJerseyManager.getManager().addFormDataBodyPart(responseData, FleaJerseyConstants.FormDataConstants.FORM_DATA_KEY_RESPONSE);
+            formDataMultiPart = FleaJerseyManager.getManager().getFileContext().getFormDataMultiPart();
+        } catch (FleaJerseyCommonException e) {
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("Exception occurs : \n", e);
+            }
+        }
+        return formDataMultiPart;
     }
 
     /**

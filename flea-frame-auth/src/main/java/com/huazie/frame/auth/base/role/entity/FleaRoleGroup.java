@@ -40,7 +40,7 @@ public class FleaRoleGroup extends FleaEntity {
     private String roleGroupDesc; // 角色组描述
 
     @Column(name = "role_group_state", nullable = false)
-    private Integer roleGroupState; // 角色组状态
+    private Integer roleGroupState; // 角色组状态(0: 删除 1: 正常)
 
     @Column(name = "create_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)

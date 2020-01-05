@@ -2,13 +2,17 @@ package com.huazie.frame.jersey.common;
 
 import com.huazie.frame.common.FleaFrameManager;
 import com.huazie.frame.common.util.ObjectUtils;
+import com.huazie.frame.common.util.StringUtils;
+import com.huazie.frame.jersey.common.data.FleaFileObject;
 import com.huazie.frame.jersey.common.data.FleaJerseyContext;
 import com.huazie.frame.jersey.common.data.FleaJerseyFileContext;
 import com.huazie.frame.jersey.common.exception.FleaJerseyCommonException;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import org.glassfish.jersey.media.multipart.file.FileDataBodyPart;
 
+import javax.ws.rs.core.MediaType;
 import java.io.File;
 
 /**
@@ -95,6 +99,24 @@ public class FleaJerseyManager {
     }
 
     /**
+     * <p> 获取Flea文件对象 </p>
+     *
+     * @return Flea文件对象
+     * @throws FleaJerseyCommonException Flea Jersey通用异常
+     * @since 1.0.0
+     */
+    public FleaFileObject getFileObject() throws FleaJerseyCommonException {
+        FormDataBodyPart fileFormDataBodyPart = getFileFormDataBodyPart();
+        FormDataContentDisposition formDataContentDisposition = fileFormDataBodyPart.getFormDataContentDisposition();
+        FleaFileObject fileObject = new FleaFileObject();
+        if (ObjectUtils.isNotEmpty(formDataContentDisposition)) {
+            fileObject.setFileName(formDataContentDisposition.getFileName());
+        }
+        fileObject.setFile(fileFormDataBodyPart.getValueAs(File.class));
+        return fileObject;
+    }
+
+    /**
      * <p> 获取文件表单信息 </p>
      *
      * @return 文件表单数据
@@ -102,9 +124,26 @@ public class FleaJerseyManager {
      * @since 1.0.0
      */
     public FormDataBodyPart getFileFormDataBodyPart() throws FleaJerseyCommonException {
+        return getFormDataBodyPart(FleaJerseyConstants.FormDataConstants.FORM_DATA_KEY_FILE);
+    }
+
+    /**
+     * <p> 获取表单数据信息 </p>
+     *
+     * @param formDataKey 表单数据键
+     * @return 表单数据
+     * @throws FleaJerseyCommonException Flea Jersey通用异常
+     * @since 1.0.0
+     */
+    public FormDataBodyPart getFormDataBodyPart(String formDataKey) throws FleaJerseyCommonException {
+
+        if (StringUtils.isBlank(formDataKey)) {
+            // {0}不能为空，请检查
+            throw new FleaJerseyCommonException("ERROR-JERSEY-COMMON0000000001", "【Form Data Key】");
+        }
 
         // 获取文件上下文信息
-        FleaJerseyFileContext fleaJerseyFileContext = FleaJerseyManager.getManager().getContext().getFleaJerseyFileContext();
+        FleaJerseyFileContext fleaJerseyFileContext = getFileContext();
         if (ObjectUtils.isEmpty(fleaJerseyFileContext)) {
             // {0}获取失败，请检查
             throw new FleaJerseyCommonException("ERROR-JERSEY-COMMON0000000000", "【FleaJerseyFileContext】");
@@ -118,7 +157,7 @@ public class FleaJerseyManager {
         }
 
         // 获取文件表单数据内容
-        FormDataBodyPart fileFormDataBodyPart = formDataMultiPart.getField(FleaJerseyConstants.FormDataConstants.FORM_DATA_KEY_FILE);
+        FormDataBodyPart fileFormDataBodyPart = formDataMultiPart.getField(formDataKey);
         if (ObjectUtils.isEmpty(fileFormDataBodyPart)) {
             // {0}获取失败，请检查
             throw new FleaJerseyCommonException("ERROR-JERSEY-COMMON0000000000", "【FILE = FormDataBodyPart】");
@@ -128,28 +167,68 @@ public class FleaJerseyManager {
     }
 
     /**
-     * <p> 设置文件表单信息 </p>
+     * <p> 添加文件表单信息 </p>
      *
      * @param file 文件对象
      * @throws FleaJerseyCommonException Flea Jersey通用异常
      * @since 1.0.0
      */
     public void addFileDataBodyPart(File file) throws FleaJerseyCommonException {
+        addFormDataBodyPart(file, FleaJerseyConstants.FormDataConstants.FORM_DATA_KEY_FILE, null);
+    }
 
-        if (ObjectUtils.isEmpty(file) || !file.exists()) {
-            // {0}获取失败，请检查
-            throw new FleaJerseyCommonException("ERROR-JERSEY-COMMON0000000000", "【File】");
+    /**
+     * <p> 添加字符数据表单信息 </p>
+     *
+     * @param formDataStr 表单数据字符串
+     * @param formDataKey 表单数据键
+     * @throws FleaJerseyCommonException Flea Jersey通用异常
+     * @since 1.0.0
+     */
+    public void addFormDataBodyPart(String formDataStr, String formDataKey) throws FleaJerseyCommonException {
+        addFormDataBodyPart(formDataStr, formDataKey, null);
+    }
+
+    /**
+     * <p> 添加通用表单信息 </p>
+     *
+     * @param formDataObj 表单数据对象
+     * @param formDataKey 表单数据键
+     * @param <T>         表单数据类型
+     * @throws FleaJerseyCommonException Flea Jersey通用异常
+     * @since 1.0.0
+     */
+    public <T> void addFormDataBodyPart(T formDataObj, String formDataKey, MediaType formDataMediaType) throws FleaJerseyCommonException {
+
+        if (ObjectUtils.isEmpty(formDataObj)) {
+            // {0}不能为空，请检查
+            throw new FleaJerseyCommonException("ERROR-JERSEY-COMMON0000000001", "【Form Data】");
+        }
+
+        if (StringUtils.isBlank(formDataKey)) {
+            // {0}不能为空，请检查
+            throw new FleaJerseyCommonException("ERROR-JERSEY-COMMON0000000001", "【Form Data Key】");
         }
 
         // 获取文件上下文信息
         FleaJerseyFileContext fileContext = getFileContext();
         if (ObjectUtils.isNotEmpty(fileContext)) {
-            FormDataMultiPart formDataMultiPart = new FormDataMultiPart();
-            // 添加文件表单信息
-            FileDataBodyPart fileDataBodyPart = new FileDataBodyPart(FleaJerseyConstants.FormDataConstants.FORM_DATA_KEY_FILE, file);
-            formDataMultiPart.bodyPart(fileDataBodyPart);
-            // 添加到文件上下文中
-            fileContext.setFormDataMultiPart(formDataMultiPart);
+            FormDataMultiPart formDataMultiPart = fileContext.getFormDataMultiPart();
+            if (ObjectUtils.isEmpty(formDataMultiPart)) {
+                formDataMultiPart = new FormDataMultiPart();
+                fileContext.setFormDataMultiPart(formDataMultiPart);
+            }
+
+            FormDataBodyPart formDataBodyPart;
+            if (formDataObj instanceof File) {
+                formDataBodyPart = new FileDataBodyPart(formDataKey, (File) formDataObj);
+            } else if (formDataObj instanceof String) {
+                formDataBodyPart = new FormDataBodyPart(formDataKey, (String) formDataObj);
+            } else {
+                formDataBodyPart = new FormDataBodyPart(formDataKey, formDataObj, formDataMediaType);
+            }
+
+            formDataMultiPart.bodyPart(formDataBodyPart);
         }
     }
 
