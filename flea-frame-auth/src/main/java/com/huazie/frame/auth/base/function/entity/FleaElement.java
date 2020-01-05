@@ -49,7 +49,7 @@ public class FleaElement extends FleaEntity {
     private String elementContent; // 元素内容
 
     @Column(name = "element_state", nullable = false)
-    private Integer elementState; // 元素状态
+    private Integer elementState; // 元素状态(0: 删除 1: 正常)
 
     @Column(name = "create_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)

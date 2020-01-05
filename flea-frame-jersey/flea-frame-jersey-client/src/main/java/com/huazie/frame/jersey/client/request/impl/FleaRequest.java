@@ -136,6 +136,7 @@ public abstract class FleaRequest implements Request {
             throw new FleaJerseyClientException("ERROR-JERSEY-CLIENT0000000007", clientCode, clientOutput, clazz.getName());
         }
 
+        // 客户端注册MultiPartFeature组件，用于支持 multipart/form-data 媒体类型
         WebTarget target = ClientBuilder.newClient().register(MultiPartFeature.class).target(resourceUrl).path(resourceCode);
 
         FleaJerseyRequest request = createFleaJerseyRequest(resourceCode, serviceCode, input);
@@ -227,7 +228,7 @@ public abstract class FleaRequest implements Request {
      * @throws Exception
      * @since 1.0.0
      */
-    protected String toRequestXml(FleaJerseyRequest request) throws Exception {
+    protected String toRequestData(FleaJerseyRequest request) throws Exception {
         String input = request.getRequestData().getBusinessData().getInput();
         if (ObjectUtils.isNotEmpty(input)) {
             input = URLEncoder.encode(input, "UTF-8");

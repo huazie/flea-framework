@@ -105,8 +105,8 @@ public class FleaJerseyResClientTest {
         resClient.setResourceUrl("http://localhost:8080/fleafs");
         resClient.setResourceCode("download");
         resClient.setServiceCode("FLEA_SERVICE_FILE_DOWNLOAD");
-        resClient.setRequestMode("get");
-        resClient.setMediaType("application/xml");
+        resClient.setRequestMode("fget");
+        resClient.setMediaType("multipart/form-data");
         resClient.setClientInput("com.huazie.ffs.pojo.download.input.InputFileDownloadInfo");
         resClient.setClientOutput("com.huazie.ffs.pojo.download.output.OutputFileDownloadInfo");
         resClient.setState(EntityStateEnum.IN_USE.getValue());
@@ -123,7 +123,7 @@ public class FleaJerseyResClientTest {
     public void testFleaConfigDataSpringBean() {
         FleaConfigDataSpringBean bean = (FleaConfigDataSpringBean) applicationContext.getBean("fleaConfigDataSpringBean");
         try {
-            bean.getResClient("FLEA_CLIENT_UPLOAD_AUTH");
+            bean.getResClient("FLEA_CLIENT_FILE_DOWNLOAD");
         } catch (Exception e) {
             LOGGER.error("Exception:", e);
         }

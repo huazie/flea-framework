@@ -43,7 +43,7 @@ public class FleaOperation extends FleaEntity {
     private String operationDesc; // 操作描述
 
     @Column(name = "operation_state", nullable = false)
-    private Integer operationState; // 操作状态
+    private Integer operationState; // 操作状态(0: 删除 1: 正常)
 
     @Column(name = "create_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)

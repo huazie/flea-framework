@@ -40,7 +40,7 @@ public class FleaPrivilegeGroup extends FleaEntity {
     private String privilegeGroupDesc; // 权限组描述
 
     @Column(name = "privilege_group_state", nullable = false)
-    private Integer privilegeGroupState; // 权限组状态
+    private Integer privilegeGroupState; // 权限组状态(0: 删除 1: 正常)
 
     @Column(name = "create_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)

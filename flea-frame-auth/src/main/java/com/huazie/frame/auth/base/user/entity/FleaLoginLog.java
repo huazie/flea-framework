@@ -34,10 +34,10 @@ public class FleaLoginLog extends FleaEntity {
     private Long loginLogId; // 登录日志编号
 
     @Column(name = "account_id", nullable = false)
-    private Long accountId; // 帐户编号
+    private Long accountId; // 账户编号
 
     @Column(name = "system_account_id", nullable = false)
-    private Long systemAccountId; // 系统帐户编号
+    private Long systemAccountId; // 系统账户编号
 
     @Column(name = "login_ip4", nullable = false)
     private String loginIp4; // ip4地址
