@@ -35,11 +35,19 @@
 
     <dependencies>
 
-        <!-- servlet 3.x -->
+        <!-- servlet 2.x
+        <dependency>
+            <groupId>org.glassfish.jersey.containers</groupId>
+            <artifactId>jersey-container-servlet-core</artifactId>
+        </dependency>
+        -->
+
+        <!-- servlet 3.x
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
             <artifactId>jersey-container-servlet</artifactId>
         </dependency>
+        -->
 
         <!-- Jersey对Spring的依赖 -->
         <dependency>
