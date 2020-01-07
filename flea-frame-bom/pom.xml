@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>flea-frame</artifactId>
+        <groupId>com.huazie.frame</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <name>FLEA FRAME BOM</name>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>flea-frame-bom</artifactId>
+    <packaging>pom</packaging>
+    <url>https://github.com/Huazie/flea-frame</url>
+
+    <developers>
+        <developer>
+            <id>huazie</id>
+            <name>Huazie Lau</name>
+            <email>huazie.lgh@gmail.com</email>
+        </developer>
+    </developers>
+
+    <properties>
+        <jersey.version>2.9</jersey.version>
+        <spring.version>4.3.19.RELEASE</spring.version>
+        <struts2.version>2.3.20</struts2.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+
+            <!-- 日志相关, 此处使用log4j -->
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>1.2.17</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>1.7.21</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>1.7.21</version>
+            </dependency>
+
+            <!-- 提供一些基础的、通用的操作和处理 -->
+            <dependency>
+                <groupId>commons-lang</groupId>
+                <artifactId>commons-lang</artifactId>
+                <version>2.5</version>
+            </dependency>
+
+            <!--  使用注解所需jar -->
+            <dependency>
+                <groupId>javax.annotation</groupId>
+                <artifactId>javax.annotation-api</artifactId>
+                <version>1.2</version>
+            </dependency>
+
+            <!-- 提供对java反射和自省API的包装,动态的获取/设值Java Bean的属性  -->
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>1.8.0</version>
+            </dependency>
+
+            <!-- 用来处理常用的编码方法的工具类包，例如DES、SHA1、MD5、Base64等等 -->
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>1.6</version>
+            </dependency>
+
+            <!-- 扩展标准java Collection -->
+            <dependency>
+                <groupId>commons-collections</groupId>
+                <artifactId>commons-collections</artifactId>
+                <version>3.2.1</version>
+            </dependency>
+
+            <!-- 实现对象池化框架 -->
+            <dependency>
+                <groupId>commons-pool</groupId>
+                <artifactId>commons-pool</artifactId>
+                <version>1.5.6</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-pool2</artifactId>
+                <version>2.4.3</version>
+            </dependency>
+
+            <!-- 扩展java.io.InputStream和Reader -->
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>2.2</version>
+            </dependency>
+
+            <!-- 参数校验相关 -->
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>1.1.0.Final</version>
+            </dependency>
+
+            <!-- Spring -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-framework-bom</artifactId>
+                <version>${spring.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- Struct2 -->
+            <dependency>
+                <groupId>org.apache.struts</groupId>
+                <artifactId>struts2-bom</artifactId>
+                <version>${struts2.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- Jersey -->
+            <dependency>
+                <groupId>org.glassfish.jersey</groupId>
+                <artifactId>jersey-bom</artifactId>
+                <version>${jersey.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- FLEA FRAME AUTH-->
+            <dependency>
+                <groupId>com.huazie.frame</groupId>
+                <artifactId>flea-frame-auth</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- FLEA FRAME CACHE-->
+            <dependency>
+                <groupId>com.huazie.frame</groupId>
+                <artifactId>flea-frame-cache</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- FLEA FRAME COMMON-->
+            <dependency>
+                <groupId>com.huazie.frame</groupId>
+                <artifactId>flea-frame-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- FLEA FRAME CORE-->
+            <dependency>
+                <groupId>com.huazie.frame</groupId>
+                <artifactId>flea-frame-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- FLEA FRAME DB-->
+            <dependency>
+                <groupId>com.huazie.frame</groupId>
+                <artifactId>flea-frame-db</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- FLEA FRAME JERSEY CLIENT-->
+            <dependency>
+                <groupId>com.huazie.frame</groupId>
+                <artifactId>flea-frame-jersey-client</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- FLEA FRAME JERSEY COMMON -->
+            <dependency>
+                <groupId>com.huazie.frame</groupId>
+                <artifactId>flea-frame-jersey-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- FLEA FRAME JERSEY SERVER-->
+            <dependency>
+                <groupId>com.huazie.frame</groupId>
+                <artifactId>flea-frame-jersey-server</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+</project>
