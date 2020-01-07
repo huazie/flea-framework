@@ -16,7 +16,10 @@
     </developers>
 
     <properties>
+        <jdk.version>1.7</jdk.version>
         <jersey.version>2.9</jersey.version>
+        <spring.version>4.3.19.RELEASE</spring.version>
+        <struts2.version>2.3.20</struts2.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -27,8 +30,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.3</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>${jdk.version}</source>
+                    <target>${jdk.version}</target>
                     <encoding>UTF-8</encoding>
                     <compilerArgs>
                         <arg>-g</arg>
@@ -88,23 +91,11 @@
                 <scope>import</scope>
             </dependency>
 
-            <dependency>
-                <groupId>org.glassfish.jersey.ext</groupId>
-                <artifactId>jersey-spring3</artifactId>
-                <version>${jersey.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.glassfish.jersey.media</groupId>
-                <artifactId>jersey-media-multipart</artifactId>
-                <version>${jersey.version}</version>
-            </dependency>
-
             <!-- 日志相关, 此处使用log4j -->
             <dependency>
                 <groupId>log4j</groupId>
                 <artifactId>log4j</artifactId>
-                <version>1.2.16</version>
+                <version>1.2.17</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
@@ -181,67 +172,78 @@
 
             <!-- Spring相关 -->
             <dependency>
-                <groupId>aopalliance</groupId>
-                <artifactId>aopalliance</artifactId>
-                <version>1.0</version>
-            </dependency>
-            <dependency>
                 <groupId>org.springframework</groupId>
-                <artifactId>spring-aop</artifactId>
-                <version>4.3.18.RELEASE</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-core</artifactId>
-                <version>4.3.18.RELEASE</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-context</artifactId>
-                <version>4.3.18.RELEASE</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-context-support</artifactId>
-                <version>4.3.18.RELEASE</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-expression</artifactId>
-                <version>4.3.18.RELEASE</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-jdbc</artifactId>
-                <version>4.3.18.RELEASE</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-orm</artifactId>
-                <version>4.3.18.RELEASE</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-web</artifactId>
-                <version>4.3.18.RELEASE</version>
+                <artifactId>spring-framework-bom</artifactId>
+                <version>${spring.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
 
-            <!-- Struct2相关
+            <!-- Struct2相关 -->
             <dependency>
                 <groupId>org.apache.struts</groupId>
-                <artifactId>struts2-core</artifactId>
-                <version>2.3.20</version>
+                <artifactId>struts2-bom</artifactId>
+                <version>${struts2.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
+
+            <!-- FLEA FRAME AUTH-->
             <dependency>
-                <groupId>org.apache.struts</groupId>
-                <artifactId>struts2-json-plugin</artifactId>
-                <version>2.3.20</version>
+                <groupId>com.huazie.frame</groupId>
+                <artifactId>flea-frame-auth</artifactId>
+                <version>${project.version}</version>
             </dependency>
+
+            <!-- FLEA FRAME CACHE-->
             <dependency>
-                <groupId>org.apache.struts</groupId>
-                <artifactId>struts2-spring-plugin</artifactId>
-                <version>2.3.20</version>
-            </dependency>-->
+                <groupId>com.huazie.frame</groupId>
+                <artifactId>flea-frame-cache</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- FLEA FRAME COMMON-->
+            <dependency>
+                <groupId>com.huazie.frame</groupId>
+                <artifactId>flea-frame-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- FLEA FRAME CORE-->
+            <dependency>
+                <groupId>com.huazie.frame</groupId>
+                <artifactId>flea-frame-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- FLEA FRAME DB-->
+            <dependency>
+                <groupId>com.huazie.frame</groupId>
+                <artifactId>flea-frame-db</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- FLEA FRAME JERSEY CLIENT-->
+            <dependency>
+                <groupId>com.huazie.frame</groupId>
+                <artifactId>flea-frame-jersey-client</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- FLEA FRAME JERSEY COMMON -->
+            <dependency>
+                <groupId>com.huazie.frame</groupId>
+                <artifactId>flea-frame-jersey-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- FLEA FRAME JERSEY SERVER-->
+            <dependency>
+                <groupId>com.huazie.frame</groupId>
+                <artifactId>flea-frame-jersey-server</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
