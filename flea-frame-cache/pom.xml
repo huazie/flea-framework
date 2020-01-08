@@ -47,14 +47,12 @@
         <dependency>
             <groupId>com.whalin</groupId>
             <artifactId>Memcached-Java-Client</artifactId>
-            <version>3.0.2</version>
         </dependency>
 
         <!-- Java redis -->
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
-            <version>3.0.1</version>
         </dependency>
 
         <!-- Spring相关 -->
