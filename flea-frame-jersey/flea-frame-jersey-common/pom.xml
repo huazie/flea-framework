@@ -76,6 +76,13 @@
             <version>${parent.version}</version>
         </dependency>
 
+        <!-- FLEA FRAME AUTH -->
+        <dependency>
+            <groupId>com.huazie.frame</groupId>
+            <artifactId>flea-frame-auth</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+
     </dependencies>
 
 </project>
