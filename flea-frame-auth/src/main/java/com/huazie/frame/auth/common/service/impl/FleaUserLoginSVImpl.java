@@ -23,7 +23,7 @@ public class FleaUserLoginSVImpl implements IFleaUserLoginSV {
     private final IFleaAccountSV fleaAccountSV; // Flea账户信息服务
 
     @Autowired
-    public FleaUserLoginSVImpl(@Qualifier("fleaAccountDAO") IFleaAccountSV fleaAccountSV) {
+    public FleaUserLoginSVImpl(@Qualifier("fleaAccountSV") IFleaAccountSV fleaAccountSV) {
         this.fleaAccountSV = fleaAccountSV;
     }
 
