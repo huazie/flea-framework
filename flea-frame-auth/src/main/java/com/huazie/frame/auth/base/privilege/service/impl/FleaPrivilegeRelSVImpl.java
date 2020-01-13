@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**
- * <p> Flea权限关联（菜单， 操作， 页面元素）SV层实现类 </p>
+ * <p> Flea权限关联（菜单， 操作， 元素）SV层实现类 </p>
  *
  * @author huazie
  * @version 1.0.0
@@ -19,9 +19,12 @@ import org.springframework.stereotype.Service;
 @Service("fleaPrivilegeRelSV")
 public class FleaPrivilegeRelSVImpl extends AbstractFleaJPASVImpl<FleaPrivilegeRel> implements IFleaPrivilegeRelSV {
 
+    private final IFleaPrivilegeRelDAO fleaPrivilegeRelDao;
+
     @Autowired
-    @Qualifier("fleaPrivilegeRelDAO")
-    private IFleaPrivilegeRelDAO fleaPrivilegeRelDao;
+    public FleaPrivilegeRelSVImpl(@Qualifier("fleaPrivilegeRelDAO") IFleaPrivilegeRelDAO fleaPrivilegeRelDao) {
+        this.fleaPrivilegeRelDao = fleaPrivilegeRelDao;
+    }
 
     @Override
     protected IAbstractFleaJPADAO<FleaPrivilegeRel> getDAO() {

@@ -22,8 +22,8 @@ DROP TABLE IF EXISTS `flea_account`;
 CREATE TABLE `flea_account` (
   `account_id` int(12) NOT NULL AUTO_INCREMENT COMMENT '账户编号',
   `user_id` int(12) NOT NULL COMMENT '用户编号',
-  `account_code` varchar(30) NOT NULL COMMENT '账户号码',
-  `account_pwd` varchar(16) NOT NULL COMMENT '账户密码',
+  `account_code` varchar(30) NOT NULL COMMENT '账号',
+  `account_pwd` varchar(16) NOT NULL COMMENT '密码',
   `account_state` tinyint(2) NOT NULL DEFAULT '1' COMMENT '账户状态（0：删除，1：正常 ，2：禁用，3：待审核）',
   `create_date` datetime NOT NULL COMMENT '创建日期',
   `done_date` datetime DEFAULT NULL COMMENT '修改日期',

@@ -6,7 +6,7 @@ import com.huazie.frame.auth.base.user.entity.FleaUserGroupRel;
 import org.springframework.stereotype.Repository;
 
 /**
- * <p> Flea用户组关联（用户，角色）DAO层实现类 </p>
+ * <p> Flea用户组关联（角色，角色组）DAO层实现类 </p>
  *
  * @author huazie
  * @version 1.0.0
