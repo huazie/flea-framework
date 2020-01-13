@@ -4,15 +4,17 @@ import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.core.base.cfgdata.bean.FleaConfigDataSpringBean;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResClient;
-import com.huazie.frame.jersey.client.request.RequestFactory;
 import com.huazie.frame.jersey.client.request.Request;
 import com.huazie.frame.jersey.client.request.RequestConfig;
+import com.huazie.frame.jersey.client.request.RequestFactory;
 import com.huazie.frame.jersey.client.response.Response;
 import com.huazie.frame.jersey.common.exception.FleaJerseyClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 
 /**
  * <p> Flea Jersey 客户端 </p>
@@ -26,8 +28,12 @@ public class FleaJerseyClient {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FleaJerseyClient.class);
 
+    private final FleaConfigDataSpringBean springBean;
+
     @Autowired
-    private FleaConfigDataSpringBean springBean;
+    public FleaJerseyClient(FleaConfigDataSpringBean springBean) {
+        this.springBean = springBean;
+    }
 
     /**
      * <p> Flea Jersey客户端调用 </p>
@@ -108,6 +114,5 @@ public class FleaJerseyClient {
 
         return response;
     }
-
 
 }

@@ -22,24 +22,27 @@ import java.util.List;
 @Service("i18nErrorMappingSV")
 public class FleaJerseyI18nErrorMappingSVImpl extends AbstractFleaJPASVImpl<FleaJerseyI18nErrorMapping> implements IFleaJerseyI18nErrorMappingSV {
 
+    private final IFleaJerseyI18nErrorMappingDAO i18NErrorMappingDAO;
+
     @Autowired
-    @Qualifier("i18nErrorMappingDAO")
-    private IFleaJerseyI18nErrorMappingDAO fleaJerseyI18NErrorMappingDAO;
+    public FleaJerseyI18nErrorMappingSVImpl(@Qualifier("i18nErrorMappingDAO") IFleaJerseyI18nErrorMappingDAO i18NErrorMappingDAO) {
+        this.i18NErrorMappingDAO = i18NErrorMappingDAO;
+    }
 
     @Override
     @Cacheable(value = "fleajerseyi18nerrormapping", key = "#resourceCode + '_' + #serviceCode")
     public List<FleaJerseyI18nErrorMapping> getMappings(String resourceCode, String serviceCode) throws Exception {
-        return fleaJerseyI18NErrorMappingDAO.getMappings(resourceCode, serviceCode);
+        return i18NErrorMappingDAO.getMappings(resourceCode, serviceCode);
     }
 
     @Override
     @Cacheable(value = "fleajerseyi18nerrormapping", key = "#resourceCode + '_' + #serviceCode + '_' + #i18nCode")
     public FleaJerseyI18nErrorMapping getMapping(String resourceCode, String serviceCode, String i18nCode) throws Exception {
-        return fleaJerseyI18NErrorMappingDAO.getMapping(resourceCode, serviceCode, i18nCode);
+        return i18NErrorMappingDAO.getMapping(resourceCode, serviceCode, i18nCode);
     }
 
     @Override
     protected IAbstractFleaJPADAO<FleaJerseyI18nErrorMapping> getDAO() {
-        return fleaJerseyI18NErrorMappingDAO;
+        return i18NErrorMappingDAO;
     }
 }

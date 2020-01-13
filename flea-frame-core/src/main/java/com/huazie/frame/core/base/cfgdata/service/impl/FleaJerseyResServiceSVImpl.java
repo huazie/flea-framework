@@ -20,18 +20,21 @@ import org.springframework.stereotype.Service;
 @Service("resServiceSV")
 public class FleaJerseyResServiceSVImpl extends AbstractFleaJPASVImpl<FleaJerseyResService> implements IFleaJerseyResServiceSV {
 
+    private final IFleaJerseyResServiceDAO resServiceDAO;
+
     @Autowired
-    @Qualifier("resServiceDAO")
-    private IFleaJerseyResServiceDAO fleaJerseyResServiceDAO;
+    public FleaJerseyResServiceSVImpl(@Qualifier("resServiceDAO") IFleaJerseyResServiceDAO resServiceDAO) {
+        this.resServiceDAO = resServiceDAO;
+    }
 
     @Override
     @Cacheable(value = "fleajerseyresservice", key = "#serviceCode + '_' + #resourceCode")
     public FleaJerseyResService getResService(String serviceCode, String resourceCode) throws Exception {
-        return fleaJerseyResServiceDAO.getResService(serviceCode, resourceCode);
+        return resServiceDAO.getResService(serviceCode, resourceCode);
     }
 
     @Override
     protected IAbstractFleaJPADAO<FleaJerseyResService> getDAO() {
-        return fleaJerseyResServiceDAO;
+        return resServiceDAO;
     }
 }

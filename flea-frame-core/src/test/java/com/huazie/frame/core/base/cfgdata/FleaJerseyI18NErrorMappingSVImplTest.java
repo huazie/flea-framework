@@ -183,7 +183,7 @@ public class FleaJerseyI18NErrorMappingSVImplTest {
     public void testFleaConfigDataSpringBean() {
         FleaConfigDataSpringBean bean = (FleaConfigDataSpringBean) applicationContext.getBean("fleaConfigDataSpringBean");
         try {
-            bean.getMapping("jersey-filter-resource", "jersey-filter-service", "ERROR-JERSEY-FILTER0000000005");
+            bean.getMapping("jersey-filter-resource", "jersey-filter-service", "ERROR-JERSEY-FILTER0000000003");
         } catch (Exception e) {
             LOGGER.error("Exception:", e);
         }
