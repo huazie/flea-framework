@@ -19,9 +19,12 @@ import org.springframework.stereotype.Service;
 @Service("%ENTITY_CLASS_NAME_1%SV")
 public class %ENTITY_CLASS_NAME%SVImpl extends AbstractFleaJPASVImpl<%ENTITY_CLASS_NAME%> implements I%ENTITY_CLASS_NAME%SV {
 
+    private final I%ENTITY_CLASS_NAME%DAO %ENTITY_CLASS_NAME_1%Dao;
+
     @Autowired
-    @Qualifier("%ENTITY_CLASS_NAME_1%DAO")
-    private I%ENTITY_CLASS_NAME%DAO %ENTITY_CLASS_NAME_1%Dao;
+    public %ENTITY_CLASS_NAME%SVImpl(@Qualifier("%ENTITY_CLASS_NAME_1%DAO") I%ENTITY_CLASS_NAME%DAO %ENTITY_CLASS_NAME_1%Dao) {
+        this.%ENTITY_CLASS_NAME_1%Dao = %ENTITY_CLASS_NAME_1%Dao;
+    }
 
     @Override
     protected IAbstractFleaJPADAO<%ENTITY_CLASS_NAME%> getDAO() {

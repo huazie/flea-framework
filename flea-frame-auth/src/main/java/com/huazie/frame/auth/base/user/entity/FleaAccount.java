@@ -37,10 +37,10 @@ public class FleaAccount extends FleaEntity {
     private Long userId; // 用户编号
 
     @Column(name = "account_code", nullable = false)
-    private String accountCode; // 账户号码
+    private String accountCode; // 账号
 
     @Column(name = "account_pwd", nullable = false)
-    private String accountPwd; // 账户密码
+    private String accountPwd; // 密码
 
     @Column(name = "account_state", nullable = false)
     private Integer accountState; // 账户状态（0：删除，1：正常 ，2：禁用，3：待审核）
