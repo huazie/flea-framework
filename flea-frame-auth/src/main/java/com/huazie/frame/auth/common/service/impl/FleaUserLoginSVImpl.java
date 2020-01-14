@@ -41,6 +41,12 @@ public class FleaUserLoginSVImpl implements IFleaUserLoginSV {
         this.fleaAccountSV = fleaAccountSV;
     }
 
+    @Autowired
+    @Qualifier("fleaLoginLogSV")
+    public void setFleaLoginLogSV(IFleaLoginLogSV fleaLoginLogSV) {
+        this.fleaLoginLogSV = fleaLoginLogSV;
+    }
+
     @Override
     public FleaAccount login(FleaUserLoginInfo fleaUserLoginInfo) throws CommonException {
 
