@@ -2,8 +2,8 @@ package com.huazie.frame.core.base.cfgdata.dao.impl;
 
 import com.huazie.frame.core.base.cfgdata.dao.interfaces.IFleaParaDetailDAO;
 import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
-import com.huazie.frame.core.common.EntityStateEnum;
-import com.huazie.frame.core.common.FleaEntityConstants;
+import com.huazie.frame.common.EntityStateEnum;
+import com.huazie.frame.core.common.FleaConfigEntityConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -27,9 +27,9 @@ public class FleaParaDetailDAOImpl extends FleaConfigDAOImpl<FleaParaDetail> imp
     public List<FleaParaDetail> getParaDetail(String paraType, String paraCode) throws Exception {
 
         List<FleaParaDetail> fleaParaDetailList = getQuery(null)
-                .equal(FleaEntityConstants.S_PARA_TYPE, paraType)
-                .equal(FleaEntityConstants.S_PARA_CODE, paraCode)
-                .equal(FleaEntityConstants.S_PARA_STATE, EntityStateEnum.IN_USE.getValue()) // 查在用状态的配置数据
+                .equal(FleaConfigEntityConstants.S_PARA_TYPE, paraType)
+                .equal(FleaConfigEntityConstants.S_PARA_CODE, paraCode)
+                .equal(FleaConfigEntityConstants.S_PARA_STATE, EntityStateEnum.IN_USE.getValue()) // 查在用状态的配置数据
                 .getResultList();
 
         if (LOGGER.isDebugEnabled()) {

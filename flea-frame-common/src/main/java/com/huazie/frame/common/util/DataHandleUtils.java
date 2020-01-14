@@ -31,7 +31,7 @@ public class DataHandleUtils {
      */
     public static byte[] hex2byte(String hex) {
         if (StringUtils.isBlank(hex)) {
-            return null;
+            return new byte[0];
         }
         int len = hex.length();
         int byteLen;

@@ -3,8 +3,8 @@ package com.huazie.frame.core.base.cfgdata.dao.impl;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.core.base.cfgdata.dao.interfaces.IFleaJerseyResClientDAO;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResClient;
-import com.huazie.frame.core.common.EntityStateEnum;
-import com.huazie.frame.core.common.FleaEntityConstants;
+import com.huazie.frame.common.EntityStateEnum;
+import com.huazie.frame.core.common.FleaConfigEntityConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -28,8 +28,8 @@ public class FleaJerseyResClientDAOImpl extends FleaConfigDAOImpl<FleaJerseyResC
     public FleaJerseyResClient getResClient(String clientCode) throws Exception {
 
         List<FleaJerseyResClient> resClientList = getQuery(null)
-                .equal(FleaEntityConstants.S_CLIENT_CODE, clientCode)
-                .equal(FleaEntityConstants.S_STATE, EntityStateEnum.IN_USE.getValue())
+                .equal(FleaConfigEntityConstants.S_CLIENT_CODE, clientCode)
+                .equal(FleaConfigEntityConstants.S_STATE, EntityStateEnum.IN_USE.getValue())
                 .getResultList();
 
         FleaJerseyResClient resClient = null;

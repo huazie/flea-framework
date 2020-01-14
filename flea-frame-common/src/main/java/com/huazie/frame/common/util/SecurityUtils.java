@@ -403,11 +403,11 @@ public class SecurityUtils {
             throw new Exception("密钥不能为空");
         }
         // 判断采用AES加解密方式的Key是否为16位
-        if ("AES".equals(algorithm) && key.length() != 16) {
+        if (EncryptionAlgorithmEnum.AES.getAlgorithm().equals(algorithm) && key.length() != 16) {
             throw new Exception("密钥长度不是16位");
         }
         // 判断采用DES加解密方式的Key是否为8位
-        if ("DES".equals(algorithm) && key.length() != 8) {
+        if (EncryptionAlgorithmEnum.DES.getAlgorithm().equals(algorithm) && key.length() != 8) {
             throw new Exception("密钥长度不是8位");
         }
         byte[] raw = key.getBytes("ASCII");

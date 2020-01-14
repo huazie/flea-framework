@@ -1,4 +1,4 @@
-package com.huazie.frame.core.common;
+package com.huazie.frame.common;
 
 /**
  * <p> 实体状态枚举 </p>
