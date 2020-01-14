@@ -3,8 +3,8 @@ package com.huazie.frame.core.base.cfgdata.dao.impl;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.core.base.cfgdata.dao.interfaces.IFleaJerseyResServiceDAO;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResService;
-import com.huazie.frame.core.common.EntityStateEnum;
-import com.huazie.frame.core.common.FleaEntityConstants;
+import com.huazie.frame.common.EntityStateEnum;
+import com.huazie.frame.core.common.FleaConfigEntityConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -28,9 +28,9 @@ public class FleaJerseyResServiceDAOImpl extends FleaConfigDAOImpl<FleaJerseyRes
     public FleaJerseyResService getResService(String serviceCode, String resourceCode) throws Exception {
 
         List<FleaJerseyResService> resServiceList = getQuery(null)
-                .equal(FleaEntityConstants.S_SERVICE_CODE, serviceCode)
-                .equal(FleaEntityConstants.S_RESOURCE_CODE, resourceCode)
-                .equal(FleaEntityConstants.S_STATE, EntityStateEnum.IN_USE.getValue()) // 查询在用状态的资源服务
+                .equal(FleaConfigEntityConstants.S_SERVICE_CODE, serviceCode)
+                .equal(FleaConfigEntityConstants.S_RESOURCE_CODE, resourceCode)
+                .equal(FleaConfigEntityConstants.S_STATE, EntityStateEnum.IN_USE.getValue()) // 查询在用状态的资源服务
                 .getResultList();
 
         FleaJerseyResService resService = null;

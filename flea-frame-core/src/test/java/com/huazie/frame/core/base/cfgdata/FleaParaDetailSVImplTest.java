@@ -11,7 +11,7 @@ import com.huazie.frame.cache.redis.RedisSpringCacheManager;
 import com.huazie.frame.common.FleaFrameManager;
 import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaParaDetailSV;
-import com.huazie.frame.core.common.EntityStateEnum;
+import com.huazie.frame.common.EntityStateEnum;
 import com.huazie.frame.db.common.DBSystemEnum;
 import com.huazie.frame.db.jdbc.FleaJDBCHelper;
 import com.huazie.frame.db.jdbc.config.FleaJDBCConfig;

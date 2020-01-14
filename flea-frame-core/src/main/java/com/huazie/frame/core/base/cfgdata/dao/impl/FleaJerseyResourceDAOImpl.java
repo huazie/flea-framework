@@ -7,8 +7,8 @@ import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.core.base.cfgdata.dao.interfaces.IFleaJerseyResourceDAO;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResource;
-import com.huazie.frame.core.common.EntityStateEnum;
-import com.huazie.frame.core.common.FleaEntityConstants;
+import com.huazie.frame.common.EntityStateEnum;
+import com.huazie.frame.core.common.FleaConfigEntityConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -33,8 +33,8 @@ public class FleaJerseyResourceDAOImpl extends FleaConfigDAOImpl<FleaJerseyResou
     public List<FleaJerseyResource> getResource(String resourceCode) throws Exception {
 
         List<FleaJerseyResource> resourceList = getQuery(null)
-                .equal(FleaEntityConstants.S_RESOURCE_CODE, resourceCode)
-                .equal(FleaEntityConstants.S_STATE, EntityStateEnum.IN_USE.getValue()) // 查询在用状态的资源定义数据
+                .equal(FleaConfigEntityConstants.S_RESOURCE_CODE, resourceCode)
+                .equal(FleaConfigEntityConstants.S_STATE, EntityStateEnum.IN_USE.getValue()) // 查询在用状态的资源定义数据
                 .getResultList();
 
         if (LOGGER.isDebugEnabled()) {
