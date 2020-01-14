@@ -5,6 +5,8 @@ import com.huazie.frame.auth.common.exception.FleaAuthCommonException;
 import com.huazie.frame.auth.common.pojo.login.FleaUserLoginInfo;
 import com.huazie.frame.common.exception.CommonException;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * <p> Flea 用户登录服务接口类 </p>
  *
@@ -24,4 +26,21 @@ public interface IFleaUserLoginSV {
      */
     FleaAccount login(FleaUserLoginInfo fleaUserLoginInfo) throws CommonException;
 
+    /**
+     * <p> 保存用户登录日志 </p>
+     *
+     * @param accountId 账户编号
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    void saveLoginLog(Long accountId, HttpServletRequest request) throws CommonException;
+
+    /**
+     * <p> 保存用户退出日志 </p>
+     *
+     * @param accountId 账户编号
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    void saveQuitLog(Long accountId) throws CommonException;
 }

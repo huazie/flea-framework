@@ -1,5 +1,6 @@
 package com.huazie.frame.core.base.cfgdata.dao.impl;
 
+import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.core.base.cfgdata.dao.interfaces.IFleaJerseyI18nErrorMappingDAO;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyI18nErrorMapping;
@@ -25,7 +26,7 @@ public class FleaJerseyI18nErrorMappingDAOImpl extends FleaConfigDAOImpl<FleaJer
 
     @Override
     @SuppressWarnings(value = "unchecked")
-    public List<FleaJerseyI18nErrorMapping> getMappings(String resourceCode, String serviceCode) throws Exception {
+    public List<FleaJerseyI18nErrorMapping> getMappings(String resourceCode, String serviceCode) throws CommonException {
 
         List<FleaJerseyI18nErrorMapping> mappingList = getQuery(null)
                 .equal(FleaConfigEntityConstants.S_RESOURCE_CODE, resourceCode)
@@ -43,7 +44,7 @@ public class FleaJerseyI18nErrorMappingDAOImpl extends FleaConfigDAOImpl<FleaJer
 
     @Override
     @SuppressWarnings(value = "unchecked")
-    public FleaJerseyI18nErrorMapping getMapping(String resourceCode, String serviceCode, String i18nCode) throws Exception {
+    public FleaJerseyI18nErrorMapping getMapping(String resourceCode, String serviceCode, String i18nCode) throws CommonException {
 
         List<FleaJerseyI18nErrorMapping> mappingList = getQuery(null)
                 .equal(FleaConfigEntityConstants.S_RESOURCE_CODE, resourceCode)

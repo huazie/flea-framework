@@ -1,5 +1,6 @@
 package com.huazie.frame.core.base.cfgdata.dao.interfaces;
 
+import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
 import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 
@@ -20,9 +21,9 @@ public interface IFleaParaDetailDAO extends IAbstractFleaJPADAO<FleaParaDetail> 
      * @param paraType 参数配置数据类型
      * @param paraCode 参数配置数据编码
      * @return 参数配置数据集合
-     * @throws Exception
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    List<FleaParaDetail> getParaDetail(String paraType, String paraCode) throws Exception;
+    List<FleaParaDetail> getParaDetail(String paraType, String paraCode) throws CommonException;
 
 }
