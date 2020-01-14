@@ -1,5 +1,6 @@
 package com.huazie.frame.core.base.cfgdata.dao.impl;
 
+import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.core.base.cfgdata.dao.interfaces.IFleaParaDetailDAO;
 import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
 import com.huazie.frame.common.EntityStateEnum;
@@ -24,7 +25,7 @@ public class FleaParaDetailDAOImpl extends FleaConfigDAOImpl<FleaParaDetail> imp
 
     @Override
     @SuppressWarnings(value = "unchecked")
-    public List<FleaParaDetail> getParaDetail(String paraType, String paraCode) throws Exception {
+    public List<FleaParaDetail> getParaDetail(String paraType, String paraCode) throws CommonException {
 
         List<FleaParaDetail> fleaParaDetailList = getQuery(null)
                 .equal(FleaConfigEntityConstants.S_PARA_TYPE, paraType)

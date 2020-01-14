@@ -1,5 +1,6 @@
 package com.huazie.frame.core.base.cfgdata.dao.impl;
 
+import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.core.base.cfgdata.dao.interfaces.IFleaJerseyResServiceDAO;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResService;
@@ -25,7 +26,7 @@ public class FleaJerseyResServiceDAOImpl extends FleaConfigDAOImpl<FleaJerseyRes
 
     @Override
     @SuppressWarnings(value = "unchecked")
-    public FleaJerseyResService getResService(String serviceCode, String resourceCode) throws Exception {
+    public FleaJerseyResService getResService(String serviceCode, String resourceCode) throws CommonException {
 
         List<FleaJerseyResService> resServiceList = getQuery(null)
                 .equal(FleaConfigEntityConstants.S_SERVICE_CODE, serviceCode)

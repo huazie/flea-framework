@@ -1,5 +1,6 @@
 package com.huazie.frame.core.base.cfgdata.dao.interfaces;
 
+import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResService;
 import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 
@@ -18,9 +19,9 @@ public interface IFleaJerseyResServiceDAO extends IAbstractFleaJPADAO<FleaJersey
      * @param serviceCode  服务编码
      * @param resourceCode 资源编码
      * @return 资源服务
-     * @throws Exception
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    FleaJerseyResService getResService(String serviceCode, String resourceCode) throws Exception;
+    FleaJerseyResService getResService(String serviceCode, String resourceCode) throws CommonException;
 
 }

@@ -1,6 +1,7 @@
 package com.huazie.frame.core.base.cfgdata.dao.impl;
 
 import com.huazie.frame.common.CommonConstants;
+import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
@@ -30,7 +31,7 @@ public class FleaJerseyResourceDAOImpl extends FleaConfigDAOImpl<FleaJerseyResou
 
     @Override
     @SuppressWarnings(value = "unchecked")
-    public List<FleaJerseyResource> getResource(String resourceCode) throws Exception {
+    public List<FleaJerseyResource> getResource(String resourceCode) throws CommonException {
 
         List<FleaJerseyResource> resourceList = getQuery(null)
                 .equal(FleaConfigEntityConstants.S_RESOURCE_CODE, resourceCode)
@@ -46,7 +47,7 @@ public class FleaJerseyResourceDAOImpl extends FleaConfigDAOImpl<FleaJerseyResou
     }
 
     @Override
-    public List<String> getResourcePackages() throws Exception {
+    public List<String> getResourcePackages() throws CommonException {
 
         // 获取所有的资源定义
         List<FleaJerseyResource> resourceList = getResource(null);

@@ -2,6 +2,7 @@ package com.huazie.frame.db.common.sql.template;
 
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.FleaEntity;
+import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.MapUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.PatternMatcherUtils;
@@ -92,7 +93,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
     }
 
     @Override
-    public void initialize() throws Exception {
+    public void initialize() throws CommonException {
         if (ObjectUtils.isEmpty(relation)) {
             // 请检查SQL关系配置（没有找到指定关系编号【id="{0}"】的SQL关系配置信息）
             throw new SqlTemplateException("ERROR-DB-SQT0000000001", getId());

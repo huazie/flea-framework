@@ -1,5 +1,6 @@
 package com.huazie.frame.db.common.sql.template;
 
+import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.db.common.sql.pojo.SqlParam;
 import com.huazie.frame.db.common.sql.template.config.Rule;
 import com.huazie.frame.db.common.sql.template.config.Template;
@@ -67,9 +68,10 @@ public interface ITemplate<T> extends Serializable {
     /**
      * <p> 初始化SQL模板 </p>
      *
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    void initialize() throws Exception;
+    void initialize() throws CommonException;
 
     /**
      * <p> 获取原生SQL </p>
