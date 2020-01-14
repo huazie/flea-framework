@@ -1,7 +1,6 @@
 package com.huazie.frame.auth.common.service.interfaces;
 
 import com.huazie.frame.auth.base.user.entity.FleaAccount;
-import com.huazie.frame.auth.common.exception.FleaAuthCommonException;
 import com.huazie.frame.auth.common.pojo.login.FleaUserLoginInfo;
 import com.huazie.frame.common.exception.CommonException;
 
