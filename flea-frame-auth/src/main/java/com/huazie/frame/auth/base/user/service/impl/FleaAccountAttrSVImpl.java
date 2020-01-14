@@ -1,7 +1,6 @@
 package com.huazie.frame.auth.base.user.service.impl;
 
 import com.huazie.frame.auth.base.user.dao.interfaces.IFleaAccountAttrDAO;
-import com.huazie.frame.auth.base.user.dao.interfaces.IFleaAccountDAO;
 import com.huazie.frame.auth.base.user.entity.FleaAccountAttr;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaAccountAttrSV;
 import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
