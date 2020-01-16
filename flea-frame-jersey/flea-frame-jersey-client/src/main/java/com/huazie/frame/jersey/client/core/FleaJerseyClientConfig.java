@@ -38,18 +38,4 @@ public class FleaJerseyClientConfig {
                 FleaJerseyConstants.JerseyClientConstants.CONFIG_ITEM_SYSTEM_ACCT_PWD);
     }
 
-    /**
-     * <p> 获取当前操作账户编号 </p>
-     *
-     * @return 当前操作账户编号
-     */
-    public static String getAcctId() {
-        String acctId = "";
-        IFleaUser fleaUser = FleaFrameManager.getManager().getUserInfo();
-        if (ObjectUtils.isNotEmpty(fleaUser)) {
-            acctId = StringUtils.valueOf(fleaUser.getAcctId());
-        }
-        return acctId;
-    }
-
 }

@@ -1,5 +1,6 @@
 package com.huazie.frame.jersey.client.request.impl;
 
+import com.huazie.frame.common.FleaSessionManager;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.ReflectUtils;
 import com.huazie.frame.common.util.StringUtils;
@@ -306,7 +307,7 @@ public abstract class FleaRequest implements Request {
         // 当前客户端的系统账户密码
         publicData.setSystemAccountPassword(FleaJerseyClientConfig.getSystemAcctPwd());
         // 当前操作的账户编号
-        publicData.setAccountId(FleaJerseyClientConfig.getAcctId());
+        publicData.setAccountId(StringUtils.valueOf(FleaSessionManager.getAcctId()));
         publicData.setResourceCode(resourceCode);
         publicData.setServiceCode(serviceCode);
         return publicData;
