@@ -26,6 +26,10 @@ public interface CommonConstants {
      */
     interface NumeralConstants {
         /**
+         * 整数 -1， long类型
+         */
+        long MINUS_ONE = -1L;
+        /**
          * <p> 整数 0 , long类型 </p>
          */
         long ZERO = 0L;

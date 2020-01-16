@@ -8,6 +8,8 @@ import com.huazie.frame.auth.common.exception.FleaAuthCommonException;
 import com.huazie.frame.auth.common.pojo.login.FleaUserLoginInfo;
 import com.huazie.frame.auth.common.service.interfaces.IFleaUserLoginSV;
 import com.huazie.frame.common.CommonConstants;
+import com.huazie.frame.common.FleaSessionManager;
+import com.huazie.frame.common.IFleaUser;
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.DateUtils;
 import com.huazie.frame.common.util.HttpUtils;
@@ -85,7 +87,7 @@ public class FleaUserLoginSVImpl implements IFleaUserLoginSV {
 
             FleaLoginLog fleaLoginLog = new FleaLoginLog();
             fleaLoginLog.setAccountId(accountId);
-            fleaLoginLog.setSystemAccountId(0L);
+            fleaLoginLog.setSystemAccountId(FleaSessionManager.getSystemAcctId());
             fleaLoginLog.setLoginIp4(ip4);
             fleaLoginLog.setLoginIp6(ip6);
             fleaLoginLog.setLoginArea(address);
