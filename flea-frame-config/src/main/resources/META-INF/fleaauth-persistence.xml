@@ -29,11 +29,9 @@
 		<class>com.huazie.frame.auth.base.privilege.entity.FleaPrivilegeGroupRel</class>
 		<!-- 功能子模块 -->
 		<class>com.huazie.frame.auth.base.function.entity.FleaElement</class>
-		<class>com.huazie.frame.auth.base.function.entity.FleaElementAttr</class>
 		<class>com.huazie.frame.auth.base.function.entity.FleaMenu</class>
-		<class>com.huazie.frame.auth.base.function.entity.FleaMenuAttr</class>
 		<class>com.huazie.frame.auth.base.function.entity.FleaOperation</class>
-		<class>com.huazie.frame.auth.base.function.entity.FleaOperationAttr</class>
+		<class>com.huazie.frame.auth.base.function.entity.FleaFunctionAttr</class>
 
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		
