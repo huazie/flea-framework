@@ -1,7 +1,7 @@
 package com.huazie.frame.auth.user;
 
 import com.huazie.frame.auth.base.user.entity.FleaAccount;
-import com.huazie.frame.auth.common.pojo.login.FleaUserLoginInfo;
+import com.huazie.frame.auth.common.pojo.user.login.FleaUserLoginInfo;
 import com.huazie.frame.auth.common.service.interfaces.IFleaUserLoginSV;
 import com.huazie.frame.common.exception.CommonException;
 import org.junit.Before;
