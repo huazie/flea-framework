@@ -1,8 +1,7 @@
-package com.huazie.frame.auth.common.pojo.login;
+package com.huazie.frame.auth.common.pojo.user.login;
 
+import com.huazie.frame.common.pojo.FleaCommonPOJO;
 import org.apache.commons.lang.builder.ToStringBuilder;
-
-import java.io.Serializable;
 
 /**
  * <p> Flea用户登录信息 </p>
@@ -11,7 +10,7 @@ import java.io.Serializable;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class FleaUserLoginInfo implements Serializable {
+public class FleaUserLoginInfo implements FleaCommonPOJO {
 
     private static final long serialVersionUID = -4379336461725022815L;
 
