@@ -1,6 +1,8 @@
 package com.huazie.frame.common.util;
 
+import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.DateFormatEnum;
+import com.huazie.frame.common.FleaConfigManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +20,8 @@ public class DateUtils {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DateUtils.class);
 
+    private static final String DEFAULT_EXPIRY_TIME_FOREVER = "29991231235959";
+
     /**
      * <p> 获取当前系统时间 </p>
      *
@@ -26,6 +30,31 @@ public class DateUtils {
      */
     public static Date getCurrentTime() {
         return new Date(System.currentTimeMillis());
+    }
+
+    /**
+     * <p> 获取配置的失效时间 </p>
+     *
+     * @return 失效时间
+     * @since 1.0.0
+     */
+    public static Date getExpiryTimeForever() {
+        // 获取失效时间(永久)配置
+        String expiryTimeForever = FleaConfigManager.getConfigItemValue(
+                CommonConstants.FleaFrameInitConstants.FLEA_FRAME_INIT,
+                CommonConstants.FleaFrameInitConstants.EXPIRY_TIME_FOREVER);
+
+        if (StringUtils.isBlank(expiryTimeForever)) {
+            expiryTimeForever = DEFAULT_EXPIRY_TIME_FOREVER; // 默认失效时间(永久)
+        }
+
+        Date expiryDate = string2Date(expiryTimeForever, DateFormatEnum.YYYYMMDDHHMMSS);
+        if (ObjectUtils.isEmpty(expiryDate)) { // 日期字符串格式化出错，采用默认失效时间(永久)
+            expiryDate = string2Date(DEFAULT_EXPIRY_TIME_FOREVER, DateFormatEnum.YYYYMMDDHHMMSS);
+        }
+
+        return expiryDate;
+
     }
 
     /**

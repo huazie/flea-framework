@@ -179,4 +179,21 @@ public interface CommonConstants {
          */
         String USER_ID = "USER_ID";
     }
+
+    /**
+     * <p> Flea Frame 初始化常量 </p>
+     *
+     * @since 1.0.0
+     */
+    interface FleaFrameInitConstants {
+        /**
+         * <p> Flea Frame初始化配置 </p>
+         */
+        String FLEA_FRAME_INIT = "flea-frame-init";
+
+        /**
+         * <p> 失效时间(永久) </p>
+         */
+        String EXPIRY_TIME_FOREVER = "expiry_time_forever";
+    }
 }

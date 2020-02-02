@@ -14,6 +14,20 @@ import com.huazie.frame.db.jpa.service.interfaces.IAbstractFleaJPASV;
 public interface IFleaAccountSV extends IAbstractFleaJPASV<FleaAccount> {
 
     /**
+     * <p> 新建一个Flea账户 </p>
+     *
+     * @param userId       用户编号
+     * @param accountCode  账号
+     * @param accountPwd   密码
+     * @param accountState 账户状态（0：删除，1：正常 ，2：禁用，3：待审核）
+     * @param remarks      备注
+     * @return Flea账户对象
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    FleaAccount newFleaAccount(Long userId, String accountCode, String accountPwd, Integer accountState, String remarks) throws CommonException;
+
+    /**
      * <p> 根据账号和密码查询账户信息 </p>
      *
      * @param accountCode 账号
@@ -23,5 +37,14 @@ public interface IFleaAccountSV extends IAbstractFleaJPASV<FleaAccount> {
      * @since 1.0.0
      */
     FleaAccount queryAccount(String accountCode, String accountPwd) throws CommonException;
+
+    /**
+     * <p> 账户密码加密 </p>
+     *
+     * @param originalAccountPwd 原始账户密码
+     * @return 加密后的密码
+     * @throws CommonException 通用异常
+     */
+    String encrypt(String originalAccountPwd);
 
 }

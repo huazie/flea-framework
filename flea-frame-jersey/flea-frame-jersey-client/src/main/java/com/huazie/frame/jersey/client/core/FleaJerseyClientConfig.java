@@ -1,10 +1,6 @@
 package com.huazie.frame.jersey.client.core;
 
 import com.huazie.frame.common.FleaConfigManager;
-import com.huazie.frame.common.FleaFrameManager;
-import com.huazie.frame.common.IFleaUser;
-import com.huazie.frame.common.util.ObjectUtils;
-import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.jersey.common.FleaJerseyConstants;
 
 /**
@@ -23,7 +19,8 @@ public class FleaJerseyClientConfig {
      * @since 1.0.0
      */
     public static String getSystemAcctId() {
-        return FleaConfigManager.getConfigItemValue(FleaJerseyConstants.JerseyClientConstants.CONFIG_ITEMS_KEY,
+        return FleaConfigManager.getConfigItemValue(
+                FleaJerseyConstants.JerseyClientConstants.CONFIG_ITEMS_KEY,
                 FleaJerseyConstants.JerseyClientConstants.CONFIG_ITEM_SYSTEM_ACCT_ID);
     }
 
@@ -34,7 +31,8 @@ public class FleaJerseyClientConfig {
      * @since 1.0.0
      */
     public static String getSystemAcctPwd() {
-        return FleaConfigManager.getConfigItemValue(FleaJerseyConstants.JerseyClientConstants.CONFIG_ITEMS_KEY,
+        return FleaConfigManager.getConfigItemValue(
+                FleaJerseyConstants.JerseyClientConstants.CONFIG_ITEMS_KEY,
                 FleaJerseyConstants.JerseyClientConstants.CONFIG_ITEM_SYSTEM_ACCT_PWD);
     }
 
