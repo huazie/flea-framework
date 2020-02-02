@@ -20,6 +20,8 @@ public class FleaUserRegisterInfo extends FleaUserLoginInfo {
 
     private Map<String, Object> userAttrMap; // 用户属性
 
+    private String remarks; // 备注
+
     public Map<String, Object> getAccountAttrMap() {
         return accountAttrMap;
     }
@@ -34,6 +36,14 @@ public class FleaUserRegisterInfo extends FleaUserLoginInfo {
 
     public void setUserAttrMap(Map<String, Object> userAttrMap) {
         this.userAttrMap = userAttrMap;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 
     @Override

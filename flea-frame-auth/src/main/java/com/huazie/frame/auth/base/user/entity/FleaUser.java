@@ -1,6 +1,10 @@
 package com.huazie.frame.auth.base.user.entity;
 
+import com.huazie.frame.auth.common.UserStateEnum;
+import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.FleaEntity;
+import com.huazie.frame.common.util.DateUtils;
+import com.huazie.frame.common.util.ObjectUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import javax.persistence.Column;
@@ -76,6 +80,41 @@ public class FleaUser extends FleaEntity {
 
     @Column(name = "remarks")
     private String remarks; // 备注信息
+
+    /**
+     * <p> 无参数构造方法 </p>
+     *
+     * @since 1.0.0
+     */
+    public FleaUser() {
+    }
+
+    /**
+     * <p> 带参数构造方法 </p>
+     *
+     * @param userName  账号
+     * @param groupId   用户组编号
+     * @param userState 用户状态（0：删除，1：正常 ，2：禁用，3：待审核）
+     * @param remarks   备注
+     * @since 1.0.0
+     */
+    public FleaUser(String userName, Long groupId, Integer userState, String remarks) {
+        this.userName = userName;
+        if (ObjectUtils.isEmpty(groupId)) {
+            // 默认用户组编号为 -1
+            groupId = CommonConstants.NumeralConstants.MINUS_ONE;
+        }
+        this.groupId = groupId;
+        if (ObjectUtils.isEmpty(userState)) {
+            // 默认用户状态为 3 : 待审核
+            userState = UserStateEnum.IN_AUDITING.getValue();
+        }
+        this.userState = userState;
+        createDate = DateUtils.getCurrentTime();
+        effectiveDate = DateUtils.getCurrentTime();
+        expiryDate = DateUtils.getExpiryTimeForever();
+        this.remarks = remarks;
+    }
 
     public Long getUserId() {
         return userId;

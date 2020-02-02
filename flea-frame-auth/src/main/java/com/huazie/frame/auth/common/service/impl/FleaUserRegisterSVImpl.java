@@ -1,6 +1,7 @@
 package com.huazie.frame.auth.common.service.impl;
 
 import com.huazie.frame.auth.base.user.entity.FleaAccount;
+import com.huazie.frame.auth.base.user.entity.FleaUser;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaAccountAttrSV;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaAccountSV;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaUserAttrSV;
@@ -67,8 +68,8 @@ public class FleaUserRegisterSVImpl implements IFleaUserRegisterSV {
         }
 
         // 查询注册账户是否已存在
-        FleaAccount fleaAccount = fleaAccountSV.queryAccount(accountCode, null);
-        if (ObjectUtils.isNotEmpty(fleaAccount)) {
+        FleaAccount oldFleaAccount = fleaAccountSV.queryAccount(accountCode, null);
+        if (ObjectUtils.isNotEmpty(oldFleaAccount)) {
             //【{0}】已存在！
             throw new FleaAuthCommonException("ERROR-AUTH-COMMON0000000004");
         }
@@ -78,6 +79,18 @@ public class FleaUserRegisterSVImpl implements IFleaUserRegisterSV {
             // 密码不能为空！
             throw new FleaAuthCommonException("ERROR-AUTH-COMMON0000000002");
         }
+
+        String remarks = fleaUserRegisterInfo.getRemarks();
+
+        // 新建一个flea用户
+        FleaUser fleaUser = fleaUserSV.newFleaUser(accountCode, -1L, null, remarks);
+
+        // 新建一个flea账户
+        FleaAccount newFleaAccount = fleaAccountSV.newFleaAccount(fleaUser.getUserId(), accountCode, accountPwd, null, remarks);
+
+        // 添加用户扩展属性
+
+        // 添加账户扩展属性
 
         return null;
     }

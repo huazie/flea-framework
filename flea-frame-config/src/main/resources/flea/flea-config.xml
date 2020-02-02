@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <flea-config>
+    <!-- flea-frame -->
+    <config-items key="flea-frame-init" desc="Flea Frame初始化配置">
+        <config-item key="expiry_time_forever" desc="失效时间(永久)">29991231235959</config-item>
+    </config-items>
+
     <!-- flea-frame-jersey -->
     <config-items key="flea-jersey-client" desc="Flea Jersey 客户端配置">
         <config-item key="system_acct_id" desc="系统账户编号">9999</config-item>
