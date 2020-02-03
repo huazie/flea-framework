@@ -49,24 +49,24 @@ public class FleaUserLoginSVImpl implements IFleaUserLoginSV {
     @Override
     public FleaAccount login(FleaUserLoginInfo fleaUserLoginInfo) throws CommonException {
 
-        String accountCode = fleaUserLoginInfo.getAccountCode();
-        if (StringUtils.isBlank(accountCode)) {
-            // 账号不能为空！
-            throw new FleaAuthCommonException("ERROR-AUTH-COMMON0000000001");
-        }
+        // 校验用户登录信息对象是否为空
+        // ERROR-AUTH-COMMON0000000001 【{0}】不能为空
+        ObjectUtils.checkEmpty(fleaUserLoginInfo, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", new String[]{"FleaUserLoginInfo"});
 
+        // 校验账号是否为空
+        // ERROR-AUTH-COMMON0000000002 账号不能为空！
+        String accountCode = fleaUserLoginInfo.getAccountCode();
+        StringUtils.checkBlank(accountCode, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000002");
+
+        // 校验密码是否为空
+        // ERROR-AUTH-COMMON0000000003 密码不能为空！
         String accountPwd = fleaUserLoginInfo.getAccountPwd();
-        if (StringUtils.isBlank(accountPwd)) {
-            // 密码不能为空！
-            throw new FleaAuthCommonException("ERROR-AUTH-COMMON0000000002");
-        }
+        StringUtils.checkBlank(accountPwd, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000003");
 
         FleaAccount fleaAccount = fleaAccountSV.queryAccount(accountCode, accountPwd);
-
-        if (ObjectUtils.isEmpty(fleaAccount)) {
-            // 账号或者密码错误！
-            throw new FleaAuthCommonException("ERROR-AUTH-COMMON0000000003");
-        }
+        // 校验登录账号和密码是否正确
+        // ERROR-AUTH-COMMON0000000004 账号或者密码错误！
+        ObjectUtils.checkEmpty(fleaAccount, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000004");
 
         return fleaAccount;
     }

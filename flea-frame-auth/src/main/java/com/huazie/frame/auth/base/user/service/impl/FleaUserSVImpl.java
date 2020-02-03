@@ -28,7 +28,7 @@ public class FleaUserSVImpl extends AbstractFleaJPASVImpl<FleaUser> implements I
     }
 
     @Override
-    public FleaUser newFleaUser(String accountCode, Long groupId, Integer userState, String remarks) throws CommonException {
+    public FleaUser saveFleaUser(String accountCode, Long groupId, Integer userState, String remarks) throws CommonException {
 
         FleaUser fleaUser = new FleaUser(accountCode, groupId, userState, remarks);
 

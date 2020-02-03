@@ -25,7 +25,7 @@ public interface IFleaAccountSV extends IAbstractFleaJPASV<FleaAccount> {
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    FleaAccount newFleaAccount(Long userId, String accountCode, String accountPwd, Integer accountState, String remarks) throws CommonException;
+    FleaAccount saveFleaAccount(Long userId, String accountCode, String accountPwd, Integer accountState, String remarks) throws CommonException;
 
     /**
      * <p> 根据账号和密码查询账户信息 </p>

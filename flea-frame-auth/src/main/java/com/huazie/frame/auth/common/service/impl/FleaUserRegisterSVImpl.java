@@ -61,37 +61,42 @@ public class FleaUserRegisterSVImpl implements IFleaUserRegisterSV {
     @Override
     public FleaAccount register(FleaUserRegisterInfo fleaUserRegisterInfo) throws CommonException {
 
+        // 校验用户注册信息对象是否为空
+        // ERROR-AUTH-COMMON0000000001 【{0}】不能为空
+        ObjectUtils.checkEmpty(fleaUserRegisterInfo, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", new String[]{"FleaUserRegisterInfo"});
+
+        // 校验账号是否为空
+        // ERROR-AUTH-COMMON0000000002 账号不能为空！
         String accountCode = fleaUserRegisterInfo.getAccountCode();
-        if (StringUtils.isBlank(accountCode)) {
-            // 账号不能为空！
-            throw new FleaAuthCommonException("ERROR-AUTH-COMMON0000000001");
-        }
+        StringUtils.checkBlank(accountCode, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000002");
 
-        // 查询注册账户是否已存在
+        // 校验待注册账户是否已存在
+        // ERROR-AUTH-COMMON0000000003 【{0}】已存在！
         FleaAccount oldFleaAccount = fleaAccountSV.queryAccount(accountCode, null);
-        if (ObjectUtils.isNotEmpty(oldFleaAccount)) {
-            //【{0}】已存在！
-            throw new FleaAuthCommonException("ERROR-AUTH-COMMON0000000004");
-        }
+        ObjectUtils.checkNotEmpty(oldFleaAccount, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000005", new String[]{accountCode});
 
+        // 校验密码是否为空
+        // ERROR-AUTH-COMMON0000000003 密码不能为空！
         String accountPwd = fleaUserRegisterInfo.getAccountPwd();
-        if (StringUtils.isBlank(accountPwd)) {
-            // 密码不能为空！
-            throw new FleaAuthCommonException("ERROR-AUTH-COMMON0000000002");
-        }
+        StringUtils.checkBlank(accountPwd, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000003");
 
         String remarks = fleaUserRegisterInfo.getRemarks();
 
         // 新建一个flea用户
-        FleaUser fleaUser = fleaUserSV.newFleaUser(accountCode, -1L, null, remarks);
+        FleaUser fleaUser = fleaUserSV.saveFleaUser(accountCode, -1L, null, remarks);
 
+        Long userId = fleaUser.getUserId();
         // 新建一个flea账户
-        FleaAccount newFleaAccount = fleaAccountSV.newFleaAccount(fleaUser.getUserId(), accountCode, accountPwd, null, remarks);
+        FleaAccount newFleaAccount = fleaAccountSV.saveFleaAccount(userId, accountCode, accountPwd, null, remarks);
 
         // 添加用户扩展属性
+        fleaUserRegisterInfo.setUserId(userId);
+        fleaUserAttrSV.saveFleaUserAttrs(fleaUserRegisterInfo.getUserAttrList());
 
         // 添加账户扩展属性
+        fleaUserRegisterInfo.setAccountId(newFleaAccount.getAccountId());
+        fleaAccountAttrSV.saveFleaAccountAttrs(fleaUserRegisterInfo.getAccountAttrList());
 
-        return null;
+        return newFleaAccount;
     }
 }
