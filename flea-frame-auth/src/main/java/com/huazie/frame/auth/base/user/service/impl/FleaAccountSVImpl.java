@@ -34,7 +34,7 @@ public class FleaAccountSVImpl extends AbstractFleaJPASVImpl<FleaAccount> implem
     }
 
     @Override
-    public FleaAccount newFleaAccount(Long userId, String accountCode, String accountPwd, Integer accountState, String remarks) throws CommonException {
+    public FleaAccount saveFleaAccount(Long userId, String accountCode, String accountPwd, Integer accountState, String remarks) throws CommonException {
 
         FleaAccount fleaAccount = new FleaAccount(userId, accountCode, encrypt(accountPwd), accountState, remarks);
 

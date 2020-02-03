@@ -24,6 +24,6 @@ public interface IFleaUserSV extends IAbstractFleaJPASV<FleaUser> {
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    FleaUser newFleaUser(String accountCode, Long groupId, Integer userState, String remarks) throws CommonException;
+    FleaUser saveFleaUser(String accountCode, Long groupId, Integer userState, String remarks) throws CommonException;
 
 }

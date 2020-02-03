@@ -1,6 +1,9 @@
 package com.huazie.frame.auth.base.user.entity;
 
+import com.huazie.frame.common.EntityStateEnum;
 import com.huazie.frame.common.FleaEntity;
+import com.huazie.frame.common.util.DateUtils;
+import com.huazie.frame.common.util.ObjectUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import javax.persistence.Column;
@@ -63,6 +66,44 @@ public class FleaUserAttr extends FleaEntity {
 
     @Column(name = "remarks")
     private String remarks; // 备注信息
+
+    /**
+     * <p> 无参数构造方法 </p>
+     *
+     * @since 1.0.0
+     */
+    public FleaUserAttr() {
+    }
+
+    /**
+     * <p> 带参数构造方法 </p>
+     *
+     * @param userId        用户编号
+     * @param attrCode      属性码
+     * @param attrValue     属性值
+     * @param effectiveDate 生效日期
+     * @param expiryDate    失效日期
+     * @param remarks       备注信息
+     * @since 1.0.0
+     */
+    public FleaUserAttr(Long userId, String attrCode, String attrValue, Date effectiveDate, Date expiryDate, String remarks) {
+        this.userId = userId;
+        this.attrCode = attrCode;
+        this.attrValue = attrValue;
+        this.state = EntityStateEnum.IN_USE.getValue(); // 默认正常状态
+        this.createDate = DateUtils.getCurrentTime();
+        if (ObjectUtils.isEmpty(effectiveDate)) {
+            // 默认取系统当前时间
+            effectiveDate = DateUtils.getCurrentTime();
+        }
+        this.effectiveDate = effectiveDate;
+        if (ObjectUtils.isEmpty(expiryDate)) {
+            // 默认取配置失效时间(永久)
+            expiryDate = DateUtils.getExpiryTimeForever();
+        }
+        this.expiryDate = expiryDate;
+        this.remarks = remarks;
+    }
 
     public Long getAttrId() {
         return attrId;
