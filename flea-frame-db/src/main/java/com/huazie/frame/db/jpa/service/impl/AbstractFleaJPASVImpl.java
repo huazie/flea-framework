@@ -203,6 +203,11 @@ public abstract class AbstractFleaJPASVImpl<T> implements IAbstractFleaJPASV<T> 
         return getDAO().delete(relationId, entity);
     }
 
+    @Override
+    public void flush() {
+        getDAO().flush();
+    }
+
     /**
      * <p> 获取DAO层实现 </p>
      *
