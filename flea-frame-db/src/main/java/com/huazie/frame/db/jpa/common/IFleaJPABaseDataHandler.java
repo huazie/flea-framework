@@ -356,7 +356,7 @@ public interface IFleaJPABaseDataHandler<T> {
      *
      * @param entity 待保存的实体
      * @throws CommonException 通用异常
-     *e 1.0.0
+     * @since 1.0.0
      */
     void save(final T entity) throws CommonException;
 
@@ -423,5 +423,12 @@ public interface IFleaJPABaseDataHandler<T> {
      * @since 1.0.0
      */
     int delete(String relationId, T entity) throws CommonException;
+
+    /**
+     * <p> 同步持久化上下文环境，即将持久化上下文环境的所有未保存实体的状态信息保存到数据库中 </p>
+     *
+     * @since 1.0.0
+     */
+    void flush();
 
 }

@@ -15,6 +15,7 @@ import com.huazie.frame.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p> Flea 用户注册服务实现类 </p>
@@ -59,6 +60,7 @@ public class FleaUserRegisterSVImpl implements IFleaUserRegisterSV {
     }
 
     @Override
+    @Transactional("fleaAuthTransactionManager")
     public FleaAccount register(FleaUserRegisterInfo fleaUserRegisterInfo) throws CommonException {
 
         // 校验用户注册信息对象是否为空
@@ -84,10 +86,14 @@ public class FleaUserRegisterSVImpl implements IFleaUserRegisterSV {
 
         // 新建一个flea用户
         FleaUser fleaUser = fleaUserSV.saveFleaUser(accountCode, -1L, null, remarks);
+        // 将用户信息持久化到数据库中，否则同一事物下，无法获取userId
+        fleaUserSV.flush();
 
         Long userId = fleaUser.getUserId();
         // 新建一个flea账户
         FleaAccount newFleaAccount = fleaAccountSV.saveFleaAccount(userId, accountCode, accountPwd, null, remarks);
+        // 将账户信息持久化到数据库中，否则同一事物下，无法获取accountId
+        fleaAccountSV.flush();
 
         // 添加用户扩展属性
         fleaUserRegisterInfo.setUserId(userId);

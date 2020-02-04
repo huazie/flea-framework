@@ -434,6 +434,11 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         return query;
     }
 
+    @Override
+    public void flush() {
+        getEntityManager().flush();
+    }
+
     /**
      * <p> 获取JPA持久化对象 </p>
      *
