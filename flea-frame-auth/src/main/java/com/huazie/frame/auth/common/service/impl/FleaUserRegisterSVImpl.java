@@ -7,7 +7,7 @@ import com.huazie.frame.auth.base.user.service.interfaces.IFleaAccountSV;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaUserAttrSV;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaUserSV;
 import com.huazie.frame.auth.common.exception.FleaAuthCommonException;
-import com.huazie.frame.auth.common.pojo.user.register.FleaUserRegisterInfo;
+import com.huazie.frame.auth.common.pojo.user.register.FleaUserRegisterPOJO;
 import com.huazie.frame.auth.common.service.interfaces.IFleaUserRegisterSV;
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.ObjectUtils;
@@ -61,7 +61,7 @@ public class FleaUserRegisterSVImpl implements IFleaUserRegisterSV {
 
     @Override
     @Transactional("fleaAuthTransactionManager")
-    public FleaAccount register(FleaUserRegisterInfo fleaUserRegisterInfo) throws CommonException {
+    public FleaAccount register(FleaUserRegisterPOJO fleaUserRegisterInfo) throws CommonException {
 
         // 校验用户注册信息对象是否为空
         // ERROR-AUTH-COMMON0000000001 【{0}】不能为空
@@ -74,6 +74,7 @@ public class FleaUserRegisterSVImpl implements IFleaUserRegisterSV {
 
         // 校验待注册账户是否已存在
         // ERROR-AUTH-COMMON0000000003 【{0}】已存在！
+        // TODO 验证账户是否存在（状态 1 和 3）
         FleaAccount oldFleaAccount = fleaAccountSV.queryAccount(accountCode, null);
         ObjectUtils.checkNotEmpty(oldFleaAccount, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000005", new String[]{accountCode});
 
@@ -82,25 +83,25 @@ public class FleaUserRegisterSVImpl implements IFleaUserRegisterSV {
         String accountPwd = fleaUserRegisterInfo.getAccountPwd();
         StringUtils.checkBlank(accountPwd, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000003");
 
-        String remarks = fleaUserRegisterInfo.getRemarks();
-
         // 新建一个flea用户
-        FleaUser fleaUser = fleaUserSV.saveFleaUser(accountCode, -1L, null, remarks);
+        FleaUser fleaUser = fleaUserSV.saveFleaUser(fleaUserRegisterInfo.newFleaUserPOJO());
         // 将用户信息持久化到数据库中，否则同一事物下，无法获取userId
         fleaUserSV.flush();
 
         Long userId = fleaUser.getUserId();
         // 新建一个flea账户
-        FleaAccount newFleaAccount = fleaAccountSV.saveFleaAccount(userId, accountCode, accountPwd, null, remarks);
+        FleaAccount newFleaAccount = fleaAccountSV.saveFleaAccount(fleaUserRegisterInfo.newFleaAccountPOJO(userId));
         // 将账户信息持久化到数据库中，否则同一事物下，无法获取accountId
         fleaAccountSV.flush();
 
-        // 添加用户扩展属性
+        // 用户扩展属性批量设置用户编号
         fleaUserRegisterInfo.setUserId(userId);
+        // 添加用户扩展属性
         fleaUserAttrSV.saveFleaUserAttrs(fleaUserRegisterInfo.getUserAttrList());
 
-        // 添加账户扩展属性
+        // 账户扩展属性批量设置账户编号
         fleaUserRegisterInfo.setAccountId(newFleaAccount.getAccountId());
+        // 添加账户扩展属性
         fleaAccountAttrSV.saveFleaAccountAttrs(fleaUserRegisterInfo.getAccountAttrList());
 
         return newFleaAccount;

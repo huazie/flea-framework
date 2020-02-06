@@ -4,7 +4,7 @@ import com.huazie.frame.auth.base.user.dao.interfaces.IFleaUserAttrDAO;
 import com.huazie.frame.auth.base.user.entity.FleaUserAttr;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaUserAttrSV;
 import com.huazie.frame.auth.common.exception.FleaAuthCommonException;
-import com.huazie.frame.auth.common.pojo.user.attr.FleaUserAttrInfo;
+import com.huazie.frame.auth.common.pojo.user.attr.FleaUserAttrPOJO;
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
@@ -36,9 +36,9 @@ public class FleaUserAttrSVImpl extends AbstractFleaJPASVImpl<FleaUserAttr> impl
     }
 
     @Override
-    public FleaUserAttr saveFleaUserAttr(FleaUserAttrInfo fleaUserAttrInfo) throws CommonException {
+    public FleaUserAttr saveFleaUserAttr(FleaUserAttrPOJO fleaUserAttrPOJO) throws CommonException {
 
-        FleaUserAttr fleaUserAttr = newFleaUserAttr(fleaUserAttrInfo);
+        FleaUserAttr fleaUserAttr = newFleaUserAttr(fleaUserAttrPOJO);
         // 保存Flea用户扩展属性
         fleaUserAttrDao.save(fleaUserAttr);
 
@@ -46,14 +46,14 @@ public class FleaUserAttrSVImpl extends AbstractFleaJPASVImpl<FleaUserAttr> impl
     }
 
     @Override
-    public List<FleaUserAttr> saveFleaUserAttrs(List<FleaUserAttrInfo> fleaUserAttrInfoList) throws CommonException {
+    public List<FleaUserAttr> saveFleaUserAttrs(List<FleaUserAttrPOJO> fleaUserAttrPOJOList) throws CommonException {
 
         List<FleaUserAttr> fleaUserAttrList = null;
-        if (CollectionUtils.isNotEmpty(fleaUserAttrInfoList)) {
+        if (CollectionUtils.isNotEmpty(fleaUserAttrPOJOList)) {
             fleaUserAttrList = new ArrayList<FleaUserAttr>();
-            for (FleaUserAttrInfo fleaUserAttrInfo : fleaUserAttrInfoList) {
-                if (ObjectUtils.isNotEmpty(fleaUserAttrInfo)) {
-                    FleaUserAttr fleaUserAttr = newFleaUserAttr(fleaUserAttrInfo);
+            for (FleaUserAttrPOJO fleaUserAttrPOJO : fleaUserAttrPOJOList) {
+                if (ObjectUtils.isNotEmpty(fleaUserAttrPOJO)) {
+                    FleaUserAttr fleaUserAttr = newFleaUserAttr(fleaUserAttrPOJO);
                     fleaUserAttrList.add(fleaUserAttr);
                 }
             }
@@ -70,30 +70,30 @@ public class FleaUserAttrSVImpl extends AbstractFleaJPASVImpl<FleaUserAttr> impl
     /**
      * <p> 新建一个Flea用户扩展属性实体对象 </p>
      *
-     * @param fleaUserAttrInfo Flea用户扩展属性POJO类对象
+     * @param fleaUserAttrPOJO Flea用户扩展属性POJO类对象
      * @return Flea用户扩展属性实体对象
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    private FleaUserAttr newFleaUserAttr(FleaUserAttrInfo fleaUserAttrInfo) throws CommonException {
+    private FleaUserAttr newFleaUserAttr(FleaUserAttrPOJO fleaUserAttrPOJO) throws CommonException {
 
         // 校验Flea用户扩展属性POJO类对象是否为空
         // ERROR-AUTH-COMMON0000000001 【{0}】不能为空
-        ObjectUtils.checkEmpty(fleaUserAttrInfo, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", new String[]{"FleaUserAttrInfo"});
+        ObjectUtils.checkEmpty(fleaUserAttrPOJO, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", new String[]{"FleaUserAttrInfo"});
 
         // 校验用户编号是否为空
-        Long userId = fleaUserAttrInfo.getUserId();
+        Long userId = fleaUserAttrPOJO.getUserId();
         ObjectUtils.checkEmpty(userId, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", new String[]{"userId"});
 
         // 校验扩展属性码是否为空
-        String attrCode = fleaUserAttrInfo.getAttrCode();
+        String attrCode = fleaUserAttrPOJO.getAttrCode();
         StringUtils.checkBlank(attrCode, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", new String[]{"attrCode"});
 
         return new FleaUserAttr(userId, attrCode,
-                fleaUserAttrInfo.getAttrValue(),
-                fleaUserAttrInfo.getEffectiveDate(),
-                fleaUserAttrInfo.getExpiryDate(),
-                fleaUserAttrInfo.getRemarks());
+                fleaUserAttrPOJO.getAttrValue(),
+                fleaUserAttrPOJO.getEffectiveDate(),
+                fleaUserAttrPOJO.getExpiryDate(),
+                fleaUserAttrPOJO.getRemarks());
     }
 
     @Override

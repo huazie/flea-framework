@@ -1,7 +1,7 @@
 package com.huazie.frame.auth.common.service.interfaces;
 
 import com.huazie.frame.auth.base.user.entity.FleaAccount;
-import com.huazie.frame.auth.common.pojo.user.register.FleaUserRegisterInfo;
+import com.huazie.frame.auth.common.pojo.user.register.FleaUserRegisterPOJO;
 import com.huazie.frame.common.exception.CommonException;
 
 /**
@@ -21,5 +21,5 @@ public interface IFleaUserRegisterSV {
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    FleaAccount register(FleaUserRegisterInfo fleaUserRegisterInfo) throws CommonException;
+    FleaAccount register(FleaUserRegisterPOJO fleaUserRegisterInfo) throws CommonException;
 }

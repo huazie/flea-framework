@@ -85,7 +85,7 @@ public class FleaAccount extends FleaEntity {
      * @param remarks      备注
      * @since 1.0.0
      */
-    public FleaAccount(Long userId, String accountCode, String accountPwd, Integer accountState, String remarks) {
+    public FleaAccount(Long userId, String accountCode, String accountPwd, Integer accountState, Date effectiveDate, Date expiryDate, String remarks) {
         this.userId = userId;
         this.accountCode = accountCode;
         this.accountPwd = accountPwd;
@@ -95,8 +95,14 @@ public class FleaAccount extends FleaEntity {
         }
         this.accountState = accountState;
         createDate = DateUtils.getCurrentTime();
-        effectiveDate = DateUtils.getCurrentTime();
-        expiryDate = DateUtils.getExpiryTimeForever();
+        if (ObjectUtils.isEmpty(effectiveDate)) {
+            effectiveDate = DateUtils.getCurrentTime();
+        }
+        this.effectiveDate = effectiveDate;
+        if (ObjectUtils.isEmpty(expiryDate)) {
+            expiryDate = DateUtils.getExpiryTimeForever();
+        }
+        this.expiryDate = expiryDate;
         this.remarks = remarks;
     }
 

@@ -5,7 +5,7 @@ import com.huazie.frame.auth.base.user.entity.FleaLoginLog;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaAccountSV;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaLoginLogSV;
 import com.huazie.frame.auth.common.exception.FleaAuthCommonException;
-import com.huazie.frame.auth.common.pojo.user.login.FleaUserLoginInfo;
+import com.huazie.frame.auth.common.pojo.user.login.FleaUserLoginPOJO;
 import com.huazie.frame.auth.common.service.interfaces.IFleaUserLoginSV;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.FleaSessionManager;
@@ -47,7 +47,7 @@ public class FleaUserLoginSVImpl implements IFleaUserLoginSV {
     }
 
     @Override
-    public FleaAccount login(FleaUserLoginInfo fleaUserLoginInfo) throws CommonException {
+    public FleaAccount login(FleaUserLoginPOJO fleaUserLoginInfo) throws CommonException {
 
         // 校验用户登录信息对象是否为空
         // ERROR-AUTH-COMMON0000000001 【{0}】不能为空
