@@ -3,7 +3,10 @@ package com.huazie.frame.auth.base.user.service.impl;
 import com.huazie.frame.auth.base.user.dao.interfaces.IFleaAccountDAO;
 import com.huazie.frame.auth.base.user.entity.FleaAccount;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaAccountSV;
+import com.huazie.frame.auth.common.exception.FleaAuthCommonException;
+import com.huazie.frame.auth.common.pojo.account.FleaAccountPOJO;
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.SecurityUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
@@ -34,9 +37,9 @@ public class FleaAccountSVImpl extends AbstractFleaJPASVImpl<FleaAccount> implem
     }
 
     @Override
-    public FleaAccount saveFleaAccount(Long userId, String accountCode, String accountPwd, Integer accountState, String remarks) throws CommonException {
+    public FleaAccount saveFleaAccount(FleaAccountPOJO fleaAccountPOJO) throws CommonException {
 
-        FleaAccount fleaAccount = new FleaAccount(userId, accountCode, encrypt(accountPwd), accountState, remarks);
+        FleaAccount fleaAccount = newFleaAccount(fleaAccountPOJO);
 
         // 保存Flea账户
         fleaAccountDao.save(fleaAccount);
@@ -64,6 +67,33 @@ public class FleaAccountSVImpl extends AbstractFleaJPASVImpl<FleaAccount> implem
             LOGGER.debug("FleaAccountSVImpl#encrypt(String) encryptedAccountPwd = {}", encryptedAccountPwd);
         }
         return encryptedAccountPwd;
+    }
+
+    private FleaAccount newFleaAccount(FleaAccountPOJO fleaAccountPOJO) throws CommonException {
+
+        // 校验Flea账户POJO类对象是否为空
+        // ERROR-AUTH-COMMON0000000001 【{0}】不能为空
+        ObjectUtils.checkEmpty(fleaAccountPOJO, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", new String[]{"FleaAccountPOJO"});
+
+        // 校验账号是否为空
+        // ERROR-AUTH-COMMON0000000002 账号不能为空！
+        String accountCode = fleaAccountPOJO.getAccountCode();
+        StringUtils.checkBlank(accountCode, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000002");
+
+        // 校验用户编号是否为空
+        Long userId = fleaAccountPOJO.getUserId();
+        ObjectUtils.checkEmpty(userId, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", new String[]{"userId"});
+
+        // 校验密码是否为空
+        // ERROR-AUTH-COMMON0000000003 密码不能为空！
+        String accountPwd = fleaAccountPOJO.getAccountPwd();
+        StringUtils.checkBlank(accountPwd, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000003");
+
+        return new FleaAccount(userId, accountCode, encrypt(accountPwd),
+                fleaAccountPOJO.getAccountState(),
+                fleaAccountPOJO.getEffectiveDate(),
+                fleaAccountPOJO.getExpiryDate(),
+                fleaAccountPOJO.getRemarks());
     }
 
     @Override

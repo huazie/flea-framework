@@ -1,6 +1,6 @@
 package com.huazie.frame.auth.common.pojo.account.attr;
 
-import com.huazie.frame.auth.common.pojo.FleaAttrInfo;
+import com.huazie.frame.auth.common.pojo.FleaAttrPOJO;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
@@ -10,7 +10,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class FleaAccountAttrInfo extends FleaAttrInfo {
+public class FleaAccountAttrPOJO extends FleaAttrPOJO {
 
     private static final long serialVersionUID = -5944599796113322652L;
 

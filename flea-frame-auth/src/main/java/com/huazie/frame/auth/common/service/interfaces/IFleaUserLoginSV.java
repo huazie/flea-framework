@@ -1,7 +1,7 @@
 package com.huazie.frame.auth.common.service.interfaces;
 
 import com.huazie.frame.auth.base.user.entity.FleaAccount;
-import com.huazie.frame.auth.common.pojo.user.login.FleaUserLoginInfo;
+import com.huazie.frame.auth.common.pojo.user.login.FleaUserLoginPOJO;
 import com.huazie.frame.common.exception.CommonException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +23,7 @@ public interface IFleaUserLoginSV {
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    FleaAccount login(FleaUserLoginInfo fleaUserLoginInfo) throws CommonException;
+    FleaAccount login(FleaUserLoginPOJO fleaUserLoginInfo) throws CommonException;
 
     /**
      * <p> 保存用户登录日志 </p>

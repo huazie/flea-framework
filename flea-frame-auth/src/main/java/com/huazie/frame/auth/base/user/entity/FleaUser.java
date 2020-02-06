@@ -98,7 +98,7 @@ public class FleaUser extends FleaEntity {
      * @param remarks   备注
      * @since 1.0.0
      */
-    public FleaUser(String userName, Long groupId, Integer userState, String remarks) {
+    public FleaUser(String userName, Long groupId, Integer userState, Date effectiveDate, Date expiryDate, String remarks) {
         this.userName = userName;
         if (ObjectUtils.isEmpty(groupId)) {
             // 默认用户组编号为 -1
@@ -111,8 +111,14 @@ public class FleaUser extends FleaEntity {
         }
         this.userState = userState;
         createDate = DateUtils.getCurrentTime();
-        effectiveDate = DateUtils.getCurrentTime();
-        expiryDate = DateUtils.getExpiryTimeForever();
+        if (ObjectUtils.isEmpty(effectiveDate)) {
+            effectiveDate = DateUtils.getCurrentTime();
+        }
+        this.effectiveDate = effectiveDate;
+        if (ObjectUtils.isEmpty(expiryDate)) {
+            expiryDate = DateUtils.getExpiryTimeForever();
+        }
+        this.expiryDate = expiryDate;
         this.remarks = remarks;
     }
 
