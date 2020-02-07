@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -52,6 +53,35 @@ public class FleaAccountDAOImpl extends FleaAuthDAOImpl<FleaAccount> implements 
         }
 
         return fleaAccount;
+    }
 
+    @Override
+    @SuppressWarnings(value = "unchecked")
+    public FleaAccount queryValidAccount(String accountCode) throws CommonException {
+
+        Date currentDate = DateUtils.getCurrentTime();
+
+        List<Integer> accountStateList = new ArrayList<Integer>();
+        accountStateList.add(UserStateEnum.IN_USE.getValue());
+        accountStateList.add(UserStateEnum.IN_AUDITING.getValue());
+
+        List<FleaAccount> accountList = getQuery(null)
+                .equal(FleaAuthEntityConstants.AccountEntityConstants.ACCOUNT_CODE, accountCode)
+                .in(FleaAuthEntityConstants.AccountEntityConstants.ACCOUNT_STATE, accountStateList)
+                .lessThan(FleaAuthEntityConstants.EFFECTIVE_DATE, currentDate)
+                .greaterThan(FleaAuthEntityConstants.EXPIRY_DATE, currentDate)
+                .getResultList();
+
+        FleaAccount fleaAccount = null;
+
+        if (CollectionUtils.isNotEmpty(accountList)) {
+            fleaAccount = accountList.get(0);
+        }
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("FleaAccountDAOImpl##queryValidAccount(String) FleaAccount={}", fleaAccount);
+        }
+
+        return fleaAccount;
     }
 }

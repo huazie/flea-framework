@@ -1,6 +1,7 @@
 package com.huazie.frame.auth.user;
 
 import com.huazie.frame.auth.base.user.entity.FleaAccount;
+import com.huazie.frame.auth.common.UserStateEnum;
 import com.huazie.frame.auth.common.pojo.account.attr.FleaAccountAttrPOJO;
 import com.huazie.frame.auth.common.pojo.user.attr.FleaUserAttrPOJO;
 import com.huazie.frame.auth.common.pojo.user.login.FleaUserLoginPOJO;
@@ -58,10 +59,11 @@ public class UserAuthTest {
     @Test
     public void userRegisterTest() {
 
-        FleaUserRegisterPOJO fleaUserRegisterInfo = new FleaUserRegisterPOJO();
+        FleaUserRegisterPOJO fleaUserRegisterPOJO = new FleaUserRegisterPOJO();
 
-        fleaUserRegisterInfo.setAccountCode("13218010892");
-        fleaUserRegisterInfo.setAccountPwd("123qwe");
+        fleaUserRegisterPOJO.setAccountCode("13218010892");
+        fleaUserRegisterPOJO.setAccountPwd("123qwe");
+        fleaUserRegisterPOJO.setState(UserStateEnum.IN_USE.getValue());
 
         // 添加用户属性
         List<FleaUserAttrPOJO> fleaUserAttrInfoList = new ArrayList<FleaUserAttrPOJO>();
@@ -89,15 +91,15 @@ public class UserAuthTest {
         fleaAccountAttrInfo2.setAttrValue("22222");
         fleaAccountAttrInfoList.add(fleaAccountAttrInfo2);
 
-        fleaUserRegisterInfo.setUserAttrList(fleaUserAttrInfoList);
-        fleaUserRegisterInfo.setAccountAttrList(fleaAccountAttrInfoList);
+        fleaUserRegisterPOJO.setUserAttrList(fleaUserAttrInfoList);
+        fleaUserRegisterPOJO.setAccountAttrList(fleaAccountAttrInfoList);
 
-        fleaUserRegisterInfo.setRemarks("用户自己注册时新增数据");
+        fleaUserRegisterPOJO.setRemarks("用户自己注册时新增数据");
 
         IFleaUserRegisterSV fleaUserRegisterSV = (IFleaUserRegisterSV) applicationContext.getBean("fleaUserRegisterSV");
 
         try {
-            FleaAccount fleaAccount = fleaUserRegisterSV.register(fleaUserRegisterInfo);
+            FleaAccount fleaAccount = fleaUserRegisterSV.register(fleaUserRegisterPOJO);
             LOGGER.debug("FleaAccount = {}", fleaAccount);
         } catch (CommonException e) {
             LOGGER.error("Exception = ", e);

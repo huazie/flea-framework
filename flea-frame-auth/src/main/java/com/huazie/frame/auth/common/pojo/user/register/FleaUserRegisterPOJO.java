@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * <p> Flea用户注册信息 </p>
+ * <p> Flea用户注册信息POJO类 </p>
  *
  * @author huazie
  * @version 1.0.0

@@ -140,10 +140,10 @@ CREATE TABLE `flea_login_log` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `flea_login_log_202001`
+-- Table structure for `flea_login_log_202002`
 -- ----------------------------
-DROP TABLE IF EXISTS `flea_login_log_202001`;
-CREATE TABLE `flea_login_log_202001` (
+DROP TABLE IF EXISTS `flea_login_log_202002`;
+CREATE TABLE `flea_login_log_202002` (
   `login_log_id` int(12) NOT NULL AUTO_INCREMENT COMMENT '登录日志编号',
   `account_id` int(12) NOT NULL COMMENT '账户编号',
   `system_account_id` int(12) NOT NULL COMMENT '系统账户编号',
@@ -164,7 +164,7 @@ CREATE TABLE `flea_login_log_202001` (
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk;
 
 -- ----------------------------
--- Records of flea_login_log_202001
+-- Records of flea_login_log_202002
 -- ----------------------------
 
 -- ----------------------------

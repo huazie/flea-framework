@@ -4,7 +4,7 @@ import com.huazie.frame.common.pojo.FleaCommonPOJO;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
- * <p> Flea用户登录信息 </p>
+ * <p> Flea用户登录信息POJO类 </p>
  *
  * @author huazie
  * @version 1.0.0
