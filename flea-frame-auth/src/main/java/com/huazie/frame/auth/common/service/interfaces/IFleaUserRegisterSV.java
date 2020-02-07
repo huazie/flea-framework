@@ -16,10 +16,10 @@ public interface IFleaUserRegisterSV {
     /**
      * <p> 用户注册 </p>
      *
-     * @param fleaUserRegisterInfo 用户注册信息
+     * @param fleaUserRegisterPOJO 用户注册信息
      * @return 账户信息
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    FleaAccount register(FleaUserRegisterPOJO fleaUserRegisterInfo) throws CommonException;
+    FleaAccount register(FleaUserRegisterPOJO fleaUserRegisterPOJO) throws CommonException;
 }

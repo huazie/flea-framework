@@ -29,11 +29,21 @@ public interface IFleaAccountSV extends IAbstractFleaJPASV<FleaAccount> {
      *
      * @param accountCode 账号
      * @param accountPwd  密码
-     * @return Flea账户信息对象
+     * @return Flea账户对象
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
     FleaAccount queryAccount(String accountCode, String accountPwd) throws CommonException;
+
+    /**
+     * <p> 根据账号查询有效的账户信息（账户状态 1 正常 和 3 待审批, 未失效） </p>
+     *
+     * @param accountCode 账号
+     * @return Flea账户对象
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    FleaAccount queryValidAccount(String accountCode) throws CommonException;
 
     /**
      * <p> 账户密码加密 </p>

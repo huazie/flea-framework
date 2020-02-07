@@ -18,12 +18,12 @@ public interface IFleaUserLoginSV {
     /**
      * <p> 用户登录验证 </p>
      *
-     * @param fleaUserLoginInfo Flea用户登录信息
+     * @param fleaUserLoginPOJO Flea用户登录信息
      * @return 账户信息
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    FleaAccount login(FleaUserLoginPOJO fleaUserLoginInfo) throws CommonException;
+    FleaAccount login(FleaUserLoginPOJO fleaUserLoginPOJO) throws CommonException;
 
     /**
      * <p> 保存用户登录日志 </p>

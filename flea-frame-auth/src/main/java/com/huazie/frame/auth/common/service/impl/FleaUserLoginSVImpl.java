@@ -47,20 +47,20 @@ public class FleaUserLoginSVImpl implements IFleaUserLoginSV {
     }
 
     @Override
-    public FleaAccount login(FleaUserLoginPOJO fleaUserLoginInfo) throws CommonException {
+    public FleaAccount login(FleaUserLoginPOJO fleaUserLoginPOJO) throws CommonException {
 
         // 校验用户登录信息对象是否为空
         // ERROR-AUTH-COMMON0000000001 【{0}】不能为空
-        ObjectUtils.checkEmpty(fleaUserLoginInfo, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", new String[]{"FleaUserLoginInfo"});
+        ObjectUtils.checkEmpty(fleaUserLoginPOJO, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", new String[]{"FleaUserLoginPOJO"});
 
         // 校验账号是否为空
         // ERROR-AUTH-COMMON0000000002 账号不能为空！
-        String accountCode = fleaUserLoginInfo.getAccountCode();
+        String accountCode = fleaUserLoginPOJO.getAccountCode();
         StringUtils.checkBlank(accountCode, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000002");
 
         // 校验密码是否为空
         // ERROR-AUTH-COMMON0000000003 密码不能为空！
-        String accountPwd = fleaUserLoginInfo.getAccountPwd();
+        String accountPwd = fleaUserLoginPOJO.getAccountPwd();
         StringUtils.checkBlank(accountPwd, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000003");
 
         FleaAccount fleaAccount = fleaAccountSV.queryAccount(accountCode, accountPwd);

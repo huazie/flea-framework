@@ -54,6 +54,11 @@ public class FleaAccountSVImpl extends AbstractFleaJPASVImpl<FleaAccount> implem
     }
 
     @Override
+    public FleaAccount queryValidAccount(String accountCode) throws CommonException {
+        return fleaAccountDao.queryValidAccount(accountCode);
+    }
+
+    @Override
     public String encrypt(String originalAccountPwd) {
         String encryptedAccountPwd = originalAccountPwd;
         if (LOGGER.isDebugEnabled()) {
