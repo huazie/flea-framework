@@ -1,6 +1,9 @@
 package com.huazie.frame.auth.base.user.entity;
 
+import com.huazie.frame.common.EntityStateEnum;
 import com.huazie.frame.common.FleaEntity;
+import com.huazie.frame.common.FleaSessionManager;
+import com.huazie.frame.common.util.DateUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import javax.persistence.Column;
@@ -75,6 +78,31 @@ public class FleaLoginLog extends FleaEntity {
 
     @Column(name = "ext2")
     private String ext2; // 扩展字段2
+
+    /**
+     * <p> 无参数构造方法 </p>
+     *
+     * @since 1.0.0
+     */
+    public FleaLoginLog() {
+    }
+
+    /**
+     * <p> 带参数构造方法 </p>
+     *
+     * @since 1.0.0
+     */
+    public FleaLoginLog(Long accountId, String loginIp4, String loginIp6, String loginArea, String remarks) {
+        this.accountId = accountId;
+        this.systemAccountId = FleaSessionManager.getSystemAcctId();
+        this.loginIp4 = loginIp4;
+        this.loginIp6 = loginIp6;
+        this.loginArea = loginArea;
+        this.loginState = EntityStateEnum.IN_USE.getValue();
+        this.loginTime = DateUtils.getCurrentTime();
+        this.createDate = DateUtils.getCurrentTime();
+        this.remarks = remarks;
+    }
 
     public Long getLoginLogId() {
         return loginLogId;

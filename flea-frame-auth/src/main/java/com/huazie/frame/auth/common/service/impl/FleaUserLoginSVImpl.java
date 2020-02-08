@@ -8,12 +8,12 @@ import com.huazie.frame.auth.common.exception.FleaAuthCommonException;
 import com.huazie.frame.auth.common.pojo.user.login.FleaUserLoginPOJO;
 import com.huazie.frame.auth.common.service.interfaces.IFleaUserLoginSV;
 import com.huazie.frame.common.CommonConstants;
-import com.huazie.frame.common.FleaSessionManager;
 import com.huazie.frame.common.exception.CommonException;
-import com.huazie.frame.common.util.DateUtils;
 import com.huazie.frame.common.util.HttpUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -29,6 +29,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Service("fleaUserLoginSV")
 public class FleaUserLoginSVImpl implements IFleaUserLoginSV {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(FleaUserLoginSVImpl.class);
 
     private IFleaAccountSV fleaAccountSV; // Flea账户信息服务
 
@@ -84,17 +86,15 @@ public class FleaUserLoginSVImpl implements IFleaUserLoginSV {
             // 获取用户登录的地市地址
             String address = HttpUtils.getAddressByTaoBao(ip4);
 
-            FleaLoginLog fleaLoginLog = new FleaLoginLog();
-            fleaLoginLog.setAccountId(accountId);
-            fleaLoginLog.setSystemAccountId(FleaSessionManager.getSystemAcctId());
-            fleaLoginLog.setLoginIp4(ip4);
-            fleaLoginLog.setLoginIp6(ip6);
-            fleaLoginLog.setLoginArea(address);
-            fleaLoginLog.setLoginState(1);
-            fleaLoginLog.setLoginTime(DateUtils.getCurrentTime());
-            fleaLoginLog.setCreateDate(DateUtils.getCurrentTime());
-            // 保存用户登录信息
-            fleaLoginLogSV.save(fleaLoginLog);
+            try {
+                FleaLoginLog fleaLoginLog = new FleaLoginLog(accountId, ip4, ip6, address, "");
+                // 保存用户登录信息
+                fleaLoginLogSV.save(fleaLoginLog);
+            } catch (Exception e) {
+                if (LOGGER.isErrorEnabled()) {
+                    LOGGER.error("Exception occurs when saving login log : ", e);
+                }
+            }
         }
 
     }

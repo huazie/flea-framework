@@ -6,11 +6,11 @@ public class HttpUtilsTest {
 
     @Test
     public void getAddressByTaoBao() {
-        HttpUtils.getAddressByTaoBao("218.205.56.222");
+        HttpUtils.getAddressByTaoBao("183.232.231.174");
     }
 
     @Test
     public void getAddressBySina() {
-        HttpUtils.getAddressBySina("218.205.56.222");
+        HttpUtils.getAddressBySina("183.232.231.174");
     }
 }
