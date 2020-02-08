@@ -102,8 +102,8 @@ public class HttpUtils {
             sb.append(dataMap.get(CommonConstants.IPAddressConstants.REGION));
             sb.append(dataMap.get(CommonConstants.IPAddressConstants.CITY));
             Object isp = dataMap.get(CommonConstants.IPAddressConstants.ISP);
-            if (!ObjectUtils.isEmpty(isp)) {
-                sb.append("(" + dataMap.get(CommonConstants.IPAddressConstants.ISP) + ")");
+            if (ObjectUtils.isNotEmpty(isp)) {
+                sb.append("(").append(dataMap.get(CommonConstants.IPAddressConstants.ISP)).append(")");
             }
 
         } catch (Exception e) {
