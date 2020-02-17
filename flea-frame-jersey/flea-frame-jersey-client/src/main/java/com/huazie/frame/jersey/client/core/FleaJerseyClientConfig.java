@@ -18,10 +18,22 @@ public class FleaJerseyClientConfig {
      * @return 系统账户编号
      * @since 1.0.0
      */
-    public static String getSystemAcctId() {
-        return FleaConfigManager.getConfigItemValue(
+    public static <T> T getSystemAcctId(Class<T> clazz) {
+        T t = null;
+        String systemAcctId = FleaConfigManager.getConfigItemValue(
                 FleaJerseyConstants.JerseyClientConstants.CONFIG_ITEMS_KEY,
                 FleaJerseyConstants.JerseyClientConstants.CONFIG_ITEM_SYSTEM_ACCT_ID);
+        if (clazz == String.class) {
+            t = clazz.cast(systemAcctId);
+        } else if (clazz == Long.class) {
+            long sysAcctId = -1L;
+            try {
+                sysAcctId = Long.parseLong(systemAcctId);
+            } finally {
+                t = clazz.cast(sysAcctId);
+            }
+        }
+        return t;
     }
 
     /**

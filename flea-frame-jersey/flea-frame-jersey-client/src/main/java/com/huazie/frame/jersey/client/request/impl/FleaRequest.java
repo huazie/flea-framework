@@ -6,12 +6,12 @@ import com.huazie.frame.common.util.ReflectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.common.util.json.GsonUtils;
 import com.huazie.frame.common.util.xml.JABXUtils;
+import com.huazie.frame.jersey.client.core.FleaJerseyClientConfig;
 import com.huazie.frame.jersey.client.request.Request;
 import com.huazie.frame.jersey.client.request.RequestConfig;
 import com.huazie.frame.jersey.client.request.RequestConfigEnum;
 import com.huazie.frame.jersey.client.request.RequestModeEnum;
 import com.huazie.frame.jersey.client.response.Response;
-import com.huazie.frame.jersey.client.core.FleaJerseyClientConfig;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequestData;
 import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
@@ -25,7 +25,6 @@ import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
@@ -303,7 +302,7 @@ public abstract class FleaRequest implements Request {
     private static RequestPublicData createRequestPublicData(String resourceCode, String serviceCode) {
         RequestPublicData publicData = new RequestPublicData();
         // 当前客户端的系统账户编号
-        publicData.setSystemAccountId(FleaJerseyClientConfig.getSystemAcctId());
+        publicData.setSystemAccountId(FleaJerseyClientConfig.getSystemAcctId(String.class));
         // 当前客户端的系统账户密码
         publicData.setSystemAccountPassword(FleaJerseyClientConfig.getSystemAcctPwd());
         // 当前操作的账户编号
