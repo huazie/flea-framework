@@ -4,7 +4,7 @@
 
     <!-- 缓存初始化配置项集 -->
     <cache-items key="FleaCacheInit" desc="缓存初始化配置项">
-        <cache-item key="systemName" desc="缓存所属系统名">FleaFS</cache-item>
+        <cache-item key="systemName" desc="缓存所属系统名">FleaFrame</cache-item>
     </cache-items>
 
     <!-- Flea缓存配置项集 -->
@@ -46,7 +46,7 @@
     <cache-datas>
         <cache-data type="auth" desc="Flea权限缓存数据所在组配置">authGroup</cache-data>
         <cache-data type="jersey" desc="Flea Jersey缓存数据所在组配置">configGroup</cache-data>
-        <cache-data type="fleafs" desc="FleaFs配置数据所在组配置">configGroup</cache-data>
+        <cache-data type="fleaFrame" desc="FleaFrame配置数据所在组配置">configGroup</cache-data>
     </cache-datas>
 
     <!-- Flea缓存组集 -->
