@@ -13,12 +13,22 @@ public class FleaCache {
 
     private Caches caches; // Flea缓存集
 
+    private CacheFiles cacheFiles; // 其他缓存定义配置文件集合
+
     public Caches getCaches() {
         return caches;
     }
 
     public void setCaches(Caches caches) {
         this.caches = caches;
+    }
+
+    public CacheFiles getCacheFiles() {
+        return cacheFiles;
+    }
+
+    public void setCacheFiles(CacheFiles cacheFiles) {
+        this.cacheFiles = cacheFiles;
     }
 
     @Override

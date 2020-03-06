@@ -3,6 +3,8 @@ package com.huazie.frame.cache.common;
 import com.huazie.frame.cache.config.Cache;
 import com.huazie.frame.cache.config.CacheData;
 import com.huazie.frame.cache.config.CacheDatas;
+import com.huazie.frame.cache.config.CacheFile;
+import com.huazie.frame.cache.config.CacheFiles;
 import com.huazie.frame.cache.config.CacheGroup;
 import com.huazie.frame.cache.config.CacheGroups;
 import com.huazie.frame.cache.config.CacheItem;
@@ -114,11 +116,26 @@ public class CacheXmlDigesterHelper {
                 digester.addObjectCreate("flea-cache", FleaCache.class.getName());
                 digester.addSetProperties("flea-cache");
 
+                // 缓存集
                 digester.addObjectCreate("flea-cache/caches", Caches.class.getName());
                 digester.addSetProperties("flea-cache/caches");
 
                 digester.addObjectCreate("flea-cache/caches/cache", Cache.class.getName());
                 digester.addSetProperties("flea-cache/caches/cache");
+
+                // 其他缓存定义配置文件集
+                digester.addObjectCreate("flea-cache/cache-files", CacheFiles.class.getName());
+                digester.addSetProperties("flea-cache/cache-files");
+
+                digester.addObjectCreate("flea-cache/cache-files/cache-file", CacheFile.class.getName());
+                digester.addSetProperties("flea-cache/cache-files/cache-file");
+
+                digester.addObjectCreate("flea-cache/cache-files/cache-file/location", CacheFile.class.getName());
+                digester.addBeanPropertySetter("flea-cache/cache-files/cache-file/location", "location");
+
+                digester.addObjectCreate("flea-cache/cache-files/cache-file/executions/execution", CacheFile.class.getName());
+                digester.addSetProperties("flea-cache/cache-files/cache-file/executions/execution");
+
 
                 digester.addSetNext("flea-cache/caches", "setCaches", Caches.class.getName());
                 digester.addSetNext("flea-cache/caches/cache", "addFleaCache", Cache.class.getName());
