@@ -19,7 +19,8 @@
             <location>classpath*:flea/cache/flea-auth-cache.xml</location>
             <!-- 不包含指定KEY缓存
             <executions>
-                <execution>fleaauth</execution>
+                <execution>fleaauthuser</execution>
+                <execution>fleaauthprivilege</execution>
             </executions>
             -->
         </cache-file>

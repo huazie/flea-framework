@@ -1,5 +1,7 @@
 package com.huazie.frame.cache.config;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,4 +53,8 @@ public class CacheFile {
         return executions.contains(cacheKey);
     }
 
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
 }
