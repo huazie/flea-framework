@@ -123,6 +123,9 @@ public class CacheXmlDigesterHelper {
                 digester.addObjectCreate("flea-cache/caches/cache", Cache.class.getName());
                 digester.addSetProperties("flea-cache/caches/cache");
 
+                digester.addSetNext("flea-cache/caches", "setCaches", Caches.class.getName());
+                digester.addSetNext("flea-cache/caches/cache", "addFleaCache", Cache.class.getName());
+
                 // 其他缓存定义配置文件集
                 digester.addObjectCreate("flea-cache/cache-files", CacheFiles.class.getName());
                 digester.addSetProperties("flea-cache/cache-files");
@@ -130,15 +133,10 @@ public class CacheXmlDigesterHelper {
                 digester.addObjectCreate("flea-cache/cache-files/cache-file", CacheFile.class.getName());
                 digester.addSetProperties("flea-cache/cache-files/cache-file");
 
-                digester.addObjectCreate("flea-cache/cache-files/cache-file/location", CacheFile.class.getName());
-                digester.addBeanPropertySetter("flea-cache/cache-files/cache-file/location", "location");
-
-                digester.addObjectCreate("flea-cache/cache-files/cache-file/executions/execution", CacheFile.class.getName());
-                digester.addSetProperties("flea-cache/cache-files/cache-file/executions/execution");
-
-
-                digester.addSetNext("flea-cache/caches", "setCaches", Caches.class.getName());
-                digester.addSetNext("flea-cache/caches/cache", "addFleaCache", Cache.class.getName());
+                digester.addSetNext("flea-cache/cache-files", "setCacheFiles", CacheFiles.class.getName());
+                digester.addSetNext("flea-cache/cache-files/cache-file", "addCacheFile", CacheFile.class.getName());
+                digester.addCallMethod("flea-cache/cache-files/cache-file/location", "setLocation", 0);
+                digester.addCallMethod("flea-cache/cache-files/cache-file/executions/execution", "addExecution", 0);
 
                 obj = (FleaCache) digester.parse(input);
 

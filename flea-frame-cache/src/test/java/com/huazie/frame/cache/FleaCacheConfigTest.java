@@ -2,12 +2,14 @@ package com.huazie.frame.cache;
 
 import com.huazie.frame.cache.common.CacheConfigManager;
 import com.huazie.frame.cache.common.CacheConstants;
+import com.huazie.frame.cache.common.CacheXmlDigesterHelper;
 import com.huazie.frame.cache.config.Cache;
 import com.huazie.frame.cache.config.CacheData;
 import com.huazie.frame.cache.config.CacheGroup;
 import com.huazie.frame.cache.config.CacheItem;
 import com.huazie.frame.cache.config.CacheParams;
 import com.huazie.frame.cache.config.CacheServer;
+import com.huazie.frame.cache.config.FleaCache;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +45,11 @@ public class FleaCacheConfigTest {
     public void testGetCacheItem() {
         CacheItem cacheItem = CacheConfigManager.getCacheItem(CacheConstants.FleaCacheConfigConstants.FLEA_CACHE_INIT, CacheConstants.FleaCacheConfigConstants.SYSTEM_NAME);
         LOGGER.debug("CacheItem={}", cacheItem);
+    }
 
+    @Test
+    public void testCacheFiles() {
+        FleaCache fleaCache = CacheXmlDigesterHelper.getInstance().getFleaCache();
+        LOGGER.debug("CacheFiles={}", fleaCache.getCacheFiles());
     }
 }
