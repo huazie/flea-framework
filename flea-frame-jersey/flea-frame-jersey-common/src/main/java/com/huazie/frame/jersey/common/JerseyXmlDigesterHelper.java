@@ -104,54 +104,7 @@ public class JerseyXmlDigesterHelper {
                 throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000001", fileName);
             }
 
-            Digester digester = new Digester();
-            digester.setValidating(false);
-
-            digester.addObjectCreate("jersey", Jersey.class.getName());
-            digester.addSetProperties("jersey");
-
-            // 过滤器链
-            digester.addObjectCreate("jersey/filterchain", FilterChain.class.getName());
-            digester.addSetProperties("jersey/filterchain");
-
-            // 前置过滤器链
-            digester.addObjectCreate("jersey/filterchain/before", Before.class.getName());
-            digester.addSetProperties("jersey/filterchain/before");
-
-            digester.addObjectCreate("jersey/filterchain/before/filter", Filter.class.getName());
-            digester.addSetProperties("jersey/filterchain/before/filter");
-            // 业务服务过滤器链
-            digester.addObjectCreate("jersey/filterchain/service", Service.class.getName());
-            digester.addSetProperties("jersey/filterchain/service");
-
-            digester.addObjectCreate("jersey/filterchain/service/filter", Filter.class.getName());
-            digester.addSetProperties("jersey/filterchain/service/filter");
-            // 后置过滤器链
-            digester.addObjectCreate("jersey/filterchain/after", After.class.getName());
-            digester.addSetProperties("jersey/filterchain/after");
-
-            digester.addObjectCreate("jersey/filterchain/after/filter", Filter.class.getName());
-            digester.addSetProperties("jersey/filterchain/after/filter");
-            // 异常过滤器链
-            digester.addObjectCreate("jersey/filterchain/error", Error.class.getName());
-            digester.addSetProperties("jersey/filterchain/error");
-
-            digester.addObjectCreate("jersey/filterchain/error/filter", Filter.class.getName());
-            digester.addSetProperties("jersey/filterchain/error/filter");
-
-            digester.addSetNext("jersey/filterchain", "setFilterChain", FilterChain.class.getName());
-
-            digester.addSetNext("jersey/filterchain/before", "setBefore", Before.class.getName());
-            digester.addSetNext("jersey/filterchain/before/filter", "addBeforeFilter", Filter.class.getName());
-
-            digester.addSetNext("jersey/filterchain/service", "setService", Service.class.getName());
-            digester.addSetNext("jersey/filterchain/service/filter", "addServiceFilter", Filter.class.getName());
-
-            digester.addSetNext("jersey/filterchain/after", "setAfter", After.class.getName());
-            digester.addSetNext("jersey/filterchain/after/filter", "addAfterFilter", Filter.class.getName());
-
-            digester.addSetNext("jersey/filterchain/error", "setError", Error.class.getName());
-            digester.addSetNext("jersey/filterchain/error/filter", "addErrorFilter", Filter.class.getName());
+            Digester digester = newFleaJerseyFilterFileDigester();
 
             obj = (Jersey) digester.parse(input);
 
@@ -165,6 +118,64 @@ public class JerseyXmlDigesterHelper {
         }
 
         return obj;
+    }
+
+    /**
+     * <p> 解析flea-jersey-filter.xml的Digester对象 </p>
+     *
+     * @return Digester对象
+     * @since 1.0.0
+     */
+    private Digester newFleaJerseyFilterFileDigester() {
+        Digester digester = new Digester();
+        digester.setValidating(false);
+
+        digester.addObjectCreate("jersey", Jersey.class.getName());
+        digester.addSetProperties("jersey");
+
+        // 过滤器链
+        digester.addObjectCreate("jersey/filterchain", FilterChain.class.getName());
+        digester.addSetProperties("jersey/filterchain");
+
+        // 前置过滤器链
+        digester.addObjectCreate("jersey/filterchain/before", Before.class.getName());
+        digester.addSetProperties("jersey/filterchain/before");
+
+        digester.addObjectCreate("jersey/filterchain/before/filter", Filter.class.getName());
+        digester.addSetProperties("jersey/filterchain/before/filter");
+        // 业务服务过滤器链
+        digester.addObjectCreate("jersey/filterchain/service", Service.class.getName());
+        digester.addSetProperties("jersey/filterchain/service");
+
+        digester.addObjectCreate("jersey/filterchain/service/filter", Filter.class.getName());
+        digester.addSetProperties("jersey/filterchain/service/filter");
+        // 后置过滤器链
+        digester.addObjectCreate("jersey/filterchain/after", After.class.getName());
+        digester.addSetProperties("jersey/filterchain/after");
+
+        digester.addObjectCreate("jersey/filterchain/after/filter", Filter.class.getName());
+        digester.addSetProperties("jersey/filterchain/after/filter");
+        // 异常过滤器链
+        digester.addObjectCreate("jersey/filterchain/error", Error.class.getName());
+        digester.addSetProperties("jersey/filterchain/error");
+
+        digester.addObjectCreate("jersey/filterchain/error/filter", Filter.class.getName());
+        digester.addSetProperties("jersey/filterchain/error/filter");
+
+        digester.addSetNext("jersey/filterchain", "setFilterChain", FilterChain.class.getName());
+
+        digester.addSetNext("jersey/filterchain/before", "setBefore", Before.class.getName());
+        digester.addSetNext("jersey/filterchain/before/filter", "addBeforeFilter", Filter.class.getName());
+
+        digester.addSetNext("jersey/filterchain/service", "setService", Service.class.getName());
+        digester.addSetNext("jersey/filterchain/service/filter", "addServiceFilter", Filter.class.getName());
+
+        digester.addSetNext("jersey/filterchain/after", "setAfter", After.class.getName());
+        digester.addSetNext("jersey/filterchain/after/filter", "addAfterFilter", Filter.class.getName());
+
+        digester.addSetNext("jersey/filterchain/error", "setError", Error.class.getName());
+        digester.addSetNext("jersey/filterchain/error/filter", "addErrorFilter", Filter.class.getName());
+        return digester;
     }
 
 }
