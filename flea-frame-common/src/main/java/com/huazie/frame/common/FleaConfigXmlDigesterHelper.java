@@ -77,7 +77,6 @@ public class FleaConfigXmlDigesterHelper {
     }
 
     private FleaConfig newFleaConfig() {
-        FleaConfig obj = null;
 
         String fileName = CommonConstants.FleaConfigConstants.FLEA_CONFIG_FILE_NAME;
         if (StringUtils.isNotBlank(System.getProperty(CommonConstants.FleaConfigConstants.FLEA_CONFIG_FILE_SYSTEM_KEY))) {
@@ -92,36 +91,8 @@ public class FleaConfigXmlDigesterHelper {
             LOGGER.debug("FleaConfigXmlDigesterHelper##newFleaConfig() Start to parse the flea-config.xml");
         }
 
-        try (InputStream input = IOUtils.getInputStreamFromClassPath(fileName)) {
-
-            if (ObjectUtils.isNotEmpty(input)) {
-
-                Digester digester = new Digester();
-                digester.setValidating(false);
-
-                digester.addObjectCreate("flea-config", FleaConfig.class.getName());
-                digester.addSetProperties("flea-config");
-
-                digester.addObjectCreate("flea-config/config-items", ConfigItems.class.getName());
-                digester.addSetProperties("flea-config/config-items");
-
-                digester.addObjectCreate("flea-config/config-items/config-item", ConfigItem.class.getName());
-                digester.addSetProperties("flea-config/config-items/config-item");
-                digester.addBeanPropertySetter("flea-config/config-items/config-item", "value");
-
-                digester.addSetNext("flea-config/config-items", "addConfigItems", ConfigItems.class.getName());
-
-                digester.addSetNext("flea-config/config-items/config-item", "addConfigItem", ConfigItem.class.getName());
-
-                obj = (FleaConfig) digester.parse(input);
-
-            }
-
-        } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("FleaConfigXmlDigesterHelper##newFleaConfig() Exception = ", e);
-            }
-        }
+        Digester digester = newFleaConfigFileDigester();
+        FleaConfig obj = XmlDigesterHelper.parse(fileName, digester, FleaConfig.class);
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("JerseyXmlDigesterHelper##newFleaConfig() Config = {}", obj);
@@ -129,6 +100,32 @@ public class FleaConfigXmlDigesterHelper {
         }
 
         return obj;
+    }
+
+    /**
+     * <p> 解析flea-config.xml的Digester对象 </p>
+     *
+     * @return Digester对象
+     * @since 1.0.0
+     */
+    private Digester newFleaConfigFileDigester() {
+        Digester digester = new Digester();
+        digester.setValidating(false);
+
+        digester.addObjectCreate("flea-config", FleaConfig.class.getName());
+        digester.addSetProperties("flea-config");
+
+        digester.addObjectCreate("flea-config/config-items", ConfigItems.class.getName());
+        digester.addSetProperties("flea-config/config-items");
+
+        digester.addObjectCreate("flea-config/config-items/config-item", ConfigItem.class.getName());
+        digester.addSetProperties("flea-config/config-items/config-item");
+        digester.addBeanPropertySetter("flea-config/config-items/config-item", "value");
+
+        digester.addSetNext("flea-config/config-items", "addConfigItems", ConfigItems.class.getName());
+
+        digester.addSetNext("flea-config/config-items/config-item", "addConfigItem", ConfigItem.class.getName());
+        return digester;
     }
 
 
