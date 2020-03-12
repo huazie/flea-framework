@@ -34,27 +34,48 @@ public class XmlDigesterHelper {
         T config = null;
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("XmlDigesterHelper##parse(String, Digester, Class<T>) Start to parse the file : " + filePath);
+            LOGGER.debug("XmlDigesterHelper##parse(String, Digester, Class<T>) The File Path : {}", filePath);
         }
 
         try (InputStream input = IOUtils.getInputStreamFromClassPath(filePath)) {
-
-            if (ObjectUtils.isNotEmpty(input)) {
-                Object obj = digester.parse(input);
-                if (clazz.isInstance(obj)) {
-                    config = clazz.cast(obj);
-                }
-            }
-
+            config = parse(input, digester, clazz);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("XmlDigesterHelper##parse(String, Digester, Class<T>) Exception = ", e);
             }
         }
 
+        return config;
+    }
+
+    /**
+     * <p> Xml文件解析 </p>
+     *
+     * @param input    Xml文件输入流
+     * @param digester Digester对象
+     * @param clazz    xml文件映射的POJO类Class对象
+     * @param <T>      POJO类对象的对象类型
+     * @return xml文件映射的POJO类实例
+     * @since 1.0.0
+     */
+    public static <T> T parse(InputStream input, Digester digester, Class<T> clazz) throws Exception {
+
+        T config = null;
+
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("XmlDigesterHelper##parse(String, Digester, Class<T>) Config = {}", config);
-            LOGGER.debug("XmlDigesterHelper##parse(String, Digester, Class<T>) End to parse the file");
+            LOGGER.debug("XmlDigesterHelper##parse(InputStream, Digester, Class<T>) Start to parse the file");
+        }
+
+        if (ObjectUtils.isNotEmpty(input)) {
+            Object obj = digester.parse(input);
+            if (clazz.isInstance(obj)) {
+                config = clazz.cast(obj);
+            }
+        }
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("XmlDigesterHelper##parse(InputStream, Digester, Class<T>) Config = {}", config);
+            LOGGER.debug("XmlDigesterHelper##parse(InputStream, Digester, Class<T>) End to parse the file");
         }
 
         return config;

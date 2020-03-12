@@ -91,8 +91,7 @@ public class FleaConfigXmlDigesterHelper {
             LOGGER.debug("FleaConfigXmlDigesterHelper##newFleaConfig() Start to parse the flea-config.xml");
         }
 
-        Digester digester = newFleaConfigFileDigester();
-        FleaConfig obj = XmlDigesterHelper.parse(fileName, digester, FleaConfig.class);
+        FleaConfig obj = XmlDigesterHelper.parse(fileName, newFleaConfigFileDigester(), FleaConfig.class);
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("JerseyXmlDigesterHelper##newFleaConfig() Config = {}", obj);

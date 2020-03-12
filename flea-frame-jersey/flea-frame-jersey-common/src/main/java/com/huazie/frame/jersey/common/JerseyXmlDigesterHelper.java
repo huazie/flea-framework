@@ -1,5 +1,6 @@
 package com.huazie.frame.jersey.common;
 
+import com.huazie.frame.common.XmlDigesterHelper;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.IOUtils;
 import com.huazie.frame.common.util.StringUtils;
@@ -104,9 +105,7 @@ public class JerseyXmlDigesterHelper {
                 throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000001", fileName);
             }
 
-            Digester digester = newFleaJerseyFilterFileDigester();
-
-            obj = (Jersey) digester.parse(input);
+            obj = XmlDigesterHelper.parse(input, newFleaJerseyFilterFileDigester(), Jersey.class);
 
         } catch (Exception e) {
             // XML转化异常：

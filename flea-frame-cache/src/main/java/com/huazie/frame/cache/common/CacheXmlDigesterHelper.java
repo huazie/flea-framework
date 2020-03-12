@@ -112,13 +112,24 @@ public class CacheXmlDigesterHelper {
         Digester digester = newFleaCacheFileDigester();
         FleaCache obj = XmlDigesterHelper.parse(fileName, digester, FleaCache.class);
 
-        // 获取 其他缓存定义配置文件
-        CacheFiles cacheFiles = obj.getCacheFiles();
-        if (ObjectUtils.isNotEmpty(cacheFiles)) {
-            List<CacheFile> cacheFileList = cacheFiles.getCacheFiles();
-            if (CollectionUtils.isNotEmpty(cacheFileList)) {
-                for (CacheFile cacheFile : cacheFileList) {
-
+        if (ObjectUtils.isNotEmpty(obj)) {
+            CacheFiles cacheFiles = obj.getCacheFiles();
+            if (ObjectUtils.isNotEmpty(cacheFiles)) {
+                List<CacheFile> cacheFileList = cacheFiles.getCacheFiles();
+                if (CollectionUtils.isNotEmpty(cacheFileList)) {
+                    for (CacheFile cacheFile : cacheFileList) {
+                        if (ObjectUtils.isNotEmpty(cacheFile)) {
+                            // 解析其他缓存定义配置文件
+                            FleaCache other = XmlDigesterHelper.parse(cacheFile.getLocation(), digester, FleaCache.class);
+                            if (ObjectUtils.isNotEmpty(other)) {
+                                Caches otherCaches = other.getCaches();
+                                if (ObjectUtils.isNotEmpty(otherCaches)) {
+                                    // 添加Flea缓存至缓存文件对象中
+                                    cacheFile.setCacheList(otherCaches.getCacheList());
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
