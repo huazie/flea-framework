@@ -16,7 +16,7 @@
     <!-- 其他缓存定义配置文件引入 -->
     <cache-files>
         <cache-file>
-            <location>classpath*:flea/cache/flea-auth-cache.xml</location>
+            <location>flea/cache/flea-auth-cache.xml</location>
             <!-- 不包含指定KEY缓存
             <executions>
                 <execution>fleaauthuser</execution>
