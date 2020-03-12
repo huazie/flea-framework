@@ -35,7 +35,14 @@ public class IOUtils {
      * @since 1.0.0
      */
     public static InputStream getInputStreamFromClassPath(String path) {
-        return Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
+
+        InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
+
+        if (ObjectUtils.isEmpty(inputStream)) {
+            // 获取 jar包中的 配置文件
+        }
+
+        return inputStream;
     }
 
     /**

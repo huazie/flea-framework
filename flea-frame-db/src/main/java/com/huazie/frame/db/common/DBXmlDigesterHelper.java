@@ -115,8 +115,7 @@ public class DBXmlDigesterHelper {
                 throw new TableSplitException("ERROR-DB-SQT0000000030", fileName);
             }
 
-            Digester digester = newFleaTableSplitFileDigester();
-            tabs = (Tables) digester.parse(input);
+            tabs = XmlDigesterHelper.parse(input, newFleaTableSplitFileDigester(), Tables.class);
 
         } catch (Exception e) {
             // XML转化异常：
@@ -203,8 +202,7 @@ public class DBXmlDigesterHelper {
                 throw new SqlTemplateException("ERROR-DB-SQT0000000030", fileName);
             }
 
-            Digester digester = newFleaSqlTemplateFileDigester();
-            sqlTemplate = (Sql) digester.parse(input);
+            sqlTemplate = XmlDigesterHelper.parse(input, newFleaSqlTemplateFileDigester(), Sql.class);
 
         } catch (Exception e) {
             // XML转化异常：

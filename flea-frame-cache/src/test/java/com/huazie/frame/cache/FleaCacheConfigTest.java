@@ -29,7 +29,7 @@ public class FleaCacheConfigTest {
 
     @Test
     public void testGetFleaCache() {
-        Cache cache = CacheConfigManager.getCache("fleaparadetail");
+        Cache cache = CacheConfigManager.getCache("fleaauth");
         LOGGER.debug("Cache={}", cache);
         CacheData cacheData = CacheConfigManager.getCacheData(cache.getType());
         LOGGER.debug("CacheData={}", cacheData);
