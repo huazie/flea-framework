@@ -46,7 +46,7 @@ public class RedisClientProxy extends FleaProxy<RedisClient> {
                     } else {
                         originRedisClient = new FleaRedisClient(poolName);
                     }
-                    RedisClient proxyRedisClient = newProxyInstance(originRedisClient.getClass().getClassLoader(), originRedisClient.getClass().getInterfaces(), new RedisClientInvocationHandler(originRedisClient));
+                    RedisClient proxyRedisClient = newProxyInstance(originRedisClient.getClass().getClassLoader(), originRedisClient.getClass().getInterfaces(), new RedisClientInvocationHandler(originRedisClient), RedisClient.class);
                     redisClients.put(poolName, proxyRedisClient);
                 }
             }
