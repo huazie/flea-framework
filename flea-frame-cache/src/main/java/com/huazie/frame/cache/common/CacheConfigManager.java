@@ -42,12 +42,14 @@ public class CacheConfigManager {
         if (ObjectUtils.isNotEmpty(fleaCache)) {
             Caches caches = fleaCache.getCaches();
             if (ObjectUtils.isNotEmpty(caches)) {
-                // 首先从主缓存配置文件中获取
+                // 从主缓存文件中获取
                 cache = caches.getFleaCache(key);
                 if (ObjectUtils.isEmpty(cache)) {
                     // 从其他引入的缓存文件中获取
                     CacheFiles cacheFiles = fleaCache.getCacheFiles();
-                    cache = cacheFiles.getFleaCache(key);
+                    if (ObjectUtils.isNotEmpty(cacheFiles)) {
+                        cache = cacheFiles.getFleaCache(key);
+                    }
                 }
             }
         }
