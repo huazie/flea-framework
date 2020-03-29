@@ -1,4 +1,4 @@
-package com.huazie.frame.auth;
+package com.huazie.frame.auth.user;
 
 import com.huazie.frame.auth.base.user.entity.FleaLoginLog;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaLoginLogSV;
@@ -17,9 +17,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class AuthSpringTest {
+public class LoginLogAuthTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AuthSpringTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoginLogAuthTest.class);
 
     private ApplicationContext applicationContext;
 

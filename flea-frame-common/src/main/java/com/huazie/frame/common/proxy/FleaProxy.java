@@ -1,5 +1,7 @@
 package com.huazie.frame.common.proxy;
 
+import com.huazie.frame.common.util.ObjectUtils;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 
@@ -17,18 +19,20 @@ public class FleaProxy<T> {
      *
      * @param loader     代理对象的ClassLoader
      * @param interfaces 代理对象的接口数组
-     * @param handler
-     * @param <T>
-     * @return
+     * @param handler    代理处理接口
+     * @param <T>        代理对象的类型
+     * @return 代理对象实例
+     * @since 1.0.0
      */
-    @SuppressWarnings(value = "unchecked")
-    public static <T> T newProxyInstance(ClassLoader loader, Class<?>[] interfaces, InvocationHandler handler) {
+    protected static <T> T newProxyInstance(ClassLoader loader, Class<?>[] interfaces, InvocationHandler handler, Class<T> proxyClass) {
 
-        // 前置处理
+        T t = null;
 
-        T t = (T) Proxy.newProxyInstance(loader, interfaces, handler);
+        Object proxyInstance = Proxy.newProxyInstance(loader, interfaces, handler);
 
-        // 后置处理
+        if (ObjectUtils.isNotEmpty(proxyClass) && proxyClass.isInstance(proxyInstance)) {
+            t = proxyClass.cast(proxyInstance);
+        }
 
         return t;
     }

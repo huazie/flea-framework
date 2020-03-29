@@ -1,5 +1,7 @@
 package com.huazie.frame.core.common;
 
+import com.huazie.frame.common.FleaEntityConstants;
+
 /**
  * <p> 实体类常量 </p>
  *
@@ -7,7 +9,7 @@ package com.huazie.frame.core.common;
  * @version 1.0.0
  * @since 1.0.0
  */
-public interface FleaEntityConstants {
+public interface FleaConfigEntityConstants extends FleaEntityConstants {
 
     String S_PARA_TYPE = "paraType";
 
@@ -20,8 +22,6 @@ public interface FleaEntityConstants {
     String S_SERVICE_CODE = "serviceCode";
 
     String S_I18N_CODE = "i18nCode";
-
-    String S_STATE = "state";
 
     String S_CLIENT_CODE = "clientCode";
 

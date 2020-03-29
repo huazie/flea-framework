@@ -38,10 +38,10 @@ public class ReflectUtils {
     }
 
     /**
-     * <p> 获取类实例对象 </p>
+     * <p> 获取类实例化后的对象 </p>
      *
-     * @param className 类名
-     * @return 实例化的类对象
+     * @param className 类全名
+     * @return 类实例化后的对象
      * @since 1.0.0
      */
     public static Object newInstance(String className) {
@@ -58,11 +58,26 @@ public class ReflectUtils {
     }
 
     /**
-     * <p> 获取类实例对象 </p>
+     * <p> 获取类实例化后的对象 </p>
+     *
+     * @param clazz 类对象
+     * @return 类实例化后的对象
+     * @since 1.0.0
+     */
+    public static Object newInstance(Class<?> clazz) {
+        Object obj = null;
+        if (ObjectUtils.isNotEmpty(clazz)) {
+            obj = newInstance(clazz.getName());
+        }
+        return obj;
+    }
+
+    /**
+     * <p> 获取类实例化后的对象 </p>
      *
      * @param className 类名
      * @param params    构造方法参数
-     * @return 实例化的类对象
+     * @return 类实例化后的对象
      * @since 1.0.0
      */
     public static Object newInstance(String className, Object... params) {
@@ -81,6 +96,22 @@ public class ReflectUtils {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("当前类反射出错，Class={}, Exception={}", className, e.getMessage());
             }
+        }
+        return obj;
+    }
+
+    /**
+     * <p> 获取类实例化后的对象 </p>
+     *
+     * @param clazz  类对象
+     * @param params 构造方法参数
+     * @return 类实例化后的对象
+     * @since 1.0.0
+     */
+    public static Object newInstance(Class<?> clazz, Object... params) {
+        Object obj = null;
+        if (ObjectUtils.isNotEmpty(clazz)) {
+            obj = newInstance(clazz.getName(), params);
         }
         return obj;
     }

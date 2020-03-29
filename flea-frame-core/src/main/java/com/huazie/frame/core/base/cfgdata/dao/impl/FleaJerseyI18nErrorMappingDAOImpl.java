@@ -1,10 +1,11 @@
 package com.huazie.frame.core.base.cfgdata.dao.impl;
 
+import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.core.base.cfgdata.dao.interfaces.IFleaJerseyI18nErrorMappingDAO;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyI18nErrorMapping;
-import com.huazie.frame.core.common.EntityStateEnum;
-import com.huazie.frame.core.common.FleaEntityConstants;
+import com.huazie.frame.common.EntityStateEnum;
+import com.huazie.frame.core.common.FleaConfigEntityConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -25,12 +26,12 @@ public class FleaJerseyI18nErrorMappingDAOImpl extends FleaConfigDAOImpl<FleaJer
 
     @Override
     @SuppressWarnings(value = "unchecked")
-    public List<FleaJerseyI18nErrorMapping> getMappings(String resourceCode, String serviceCode) throws Exception {
+    public List<FleaJerseyI18nErrorMapping> getMappings(String resourceCode, String serviceCode) throws CommonException {
 
         List<FleaJerseyI18nErrorMapping> mappingList = getQuery(null)
-                .equal(FleaEntityConstants.S_RESOURCE_CODE, resourceCode)
-                .equal(FleaEntityConstants.S_SERVICE_CODE, serviceCode)
-                .equal(FleaEntityConstants.S_STATE, EntityStateEnum.IN_USE.getValue())
+                .equal(FleaConfigEntityConstants.S_RESOURCE_CODE, resourceCode)
+                .equal(FleaConfigEntityConstants.S_SERVICE_CODE, serviceCode)
+                .equal(FleaConfigEntityConstants.S_STATE, EntityStateEnum.IN_USE.getValue())
                 .getResultList();
 
         if (LOGGER.isDebugEnabled()) {
@@ -43,13 +44,13 @@ public class FleaJerseyI18nErrorMappingDAOImpl extends FleaConfigDAOImpl<FleaJer
 
     @Override
     @SuppressWarnings(value = "unchecked")
-    public FleaJerseyI18nErrorMapping getMapping(String resourceCode, String serviceCode, String i18nCode) throws Exception {
+    public FleaJerseyI18nErrorMapping getMapping(String resourceCode, String serviceCode, String i18nCode) throws CommonException {
 
         List<FleaJerseyI18nErrorMapping> mappingList = getQuery(null)
-                .equal(FleaEntityConstants.S_RESOURCE_CODE, resourceCode)
-                .equal(FleaEntityConstants.S_SERVICE_CODE, serviceCode)
-                .equal(FleaEntityConstants.S_I18N_CODE, i18nCode)
-                .equal(FleaEntityConstants.S_STATE, EntityStateEnum.IN_USE.getValue())
+                .equal(FleaConfigEntityConstants.S_RESOURCE_CODE, resourceCode)
+                .equal(FleaConfigEntityConstants.S_SERVICE_CODE, serviceCode)
+                .equal(FleaConfigEntityConstants.S_I18N_CODE, i18nCode)
+                .equal(FleaConfigEntityConstants.S_STATE, EntityStateEnum.IN_USE.getValue())
                 .getResultList();
 
         FleaJerseyI18nErrorMapping mapping = null;

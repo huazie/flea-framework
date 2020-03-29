@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**
- * <p> Flea用户组关联（用户，角色）SV层实现类 </p>
+ * <p> Flea用户组关联（角色，角色组）SV层实现类 </p>
  *
  * @author huazie
  * @version 1.0.0
@@ -19,9 +19,12 @@ import org.springframework.stereotype.Service;
 @Service("fleaUserGroupRelSV")
 public class FleaUserGroupRelSVImpl extends AbstractFleaJPASVImpl<FleaUserGroupRel> implements IFleaUserGroupRelSV {
 
+    private final IFleaUserGroupRelDAO fleaUserGroupRelDao;
+
     @Autowired
-    @Qualifier("fleaUserGroupRelDAO")
-    private IFleaUserGroupRelDAO fleaUserGroupRelDao;
+    public FleaUserGroupRelSVImpl(@Qualifier("fleaUserGroupRelDAO") IFleaUserGroupRelDAO fleaUserGroupRelDao) {
+        this.fleaUserGroupRelDao = fleaUserGroupRelDao;
+    }
 
     @Override
     protected IAbstractFleaJPADAO<FleaUserGroupRel> getDAO() {

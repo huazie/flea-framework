@@ -1,5 +1,6 @@
 package com.huazie.frame.db.common.util;
 
+import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.ReflectUtils;
@@ -90,7 +91,7 @@ public class EntityUtils {
      * @throws Exception
      * @since 1.0.0
      */
-    public static Column[] toColumnsArray(Object entity) throws Exception {
+    public static Column[] toColumnsArray(Object entity) throws CommonException {
         return toColumnsList(entity).toArray(new Column[0]);
     }
 
@@ -102,7 +103,7 @@ public class EntityUtils {
      * @throws Exception
      * @since 1.0.0
      */
-    public static List<Column> toColumnsList(Object entity) throws Exception {
+    public static List<Column> toColumnsList(Object entity) throws CommonException {
         // 获取该实体类中的属性集
         Field[] fields = entity.getClass().getDeclaredFields();
         if (ArrayUtils.isEmpty(fields)) {
@@ -236,7 +237,7 @@ public class EntityUtils {
      * @throws Exception
      * @since 1.0.0
      */
-    public static SplitTable getSplitTable(Object entity) throws Exception {
+    public static SplitTable getSplitTable(Object entity) throws CommonException {
         // 从实体类上获取表名
         String tableName = getTableName(entity);
         if (StringUtils.isBlank(tableName)) {

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<flea-cache>
+
+    <caches>
+
+        <cache key="fleaauth" type="fleaAuth" expiry="86400" desc="Flea权限数据缓存" />
+
+    </caches>
+
+</flea-cache>

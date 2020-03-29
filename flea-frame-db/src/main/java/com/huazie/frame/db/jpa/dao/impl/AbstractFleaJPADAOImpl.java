@@ -1,5 +1,6 @@
 package com.huazie.frame.db.jpa.dao.impl;
 
+import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.pool.FleaObjectPoolFactory;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
@@ -58,22 +59,22 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     }
 
     @Override
-    public T query(long entityId) throws Exception {
+    public T query(long entityId) throws CommonException {
         return queryById(entityId, null);
     }
 
     @Override
-    public T query(String entityId) throws Exception {
+    public T query(String entityId) throws CommonException {
         return queryById(entityId, null);
     }
 
     @Override
-    public T queryNew(long entityId, T entity) throws Exception {
+    public T queryNew(long entityId, T entity) throws CommonException {
         return queryById(entityId, entity);
     }
 
     @Override
-    public T queryNew(String entityId, T entity) throws Exception {
+    public T queryNew(String entityId, T entity) throws CommonException {
         return queryById(entityId, entity);
     }
 
@@ -82,139 +83,139 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
      *
      * @param entityId 主键编号
      * @return 数据行对应的实体类信息
-     * @throws Exception
+     * @throws CommonException
      * @since 1.0.0
      */
-    protected T queryById(Object entityId, T entity) throws Exception {
+    protected T queryById(Object entityId, T entity) throws CommonException {
         checkPrimaryKey(entityId);
         T t = getEntityManager(entity, true).find(clazz, entityId);
         return t;
     }
 
     @Override
-    public List<T> query(Map<String, Object> paramMap) throws Exception {
+    public List<T> query(Map<String, Object> paramMap) throws CommonException {
         return getQuery(null).equal(paramMap).getResultList();
     }
 
     @Override
-    public List<T> query(Map<String, Object> paramMap, String attrName, String orderBy) throws Exception {
+    public List<T> query(Map<String, Object> paramMap, String attrName, String orderBy) throws CommonException {
         return getQuery(null).equal(paramMap).addOrderby(attrName, orderBy).getResultList();
     }
 
     @Override
-    public List<T> query(Map<String, Object> paramMap, int start, int max) throws Exception {
+    public List<T> query(Map<String, Object> paramMap, int start, int max) throws CommonException {
         return getQuery(null).equal(paramMap).getResultList(start, max);
     }
 
     @Override
     public List<T> query(Map<String, Object> paramMap, String attrName, String orderBy, int start, int max)
-            throws Exception {
+            throws CommonException {
         return getQuery(null).equal(paramMap).addOrderby(attrName, orderBy).getResultList(start, max);
     }
 
     @Override
-    public List<T> queryAll() throws Exception {
+    public List<T> queryAll() throws CommonException {
         return getQuery(null).getResultList();
     }
 
     @Override
-    public List<T> queryAll(String attrName, String orderBy) throws Exception {
+    public List<T> queryAll(String attrName, String orderBy) throws CommonException {
         return getQuery(null).addOrderby(attrName, orderBy).getResultList();
     }
 
     @Override
-    public List<T> queryAll(int start, int max) throws Exception {
+    public List<T> queryAll(int start, int max) throws CommonException {
         return getQuery(null).getResultList(start, max);
     }
 
     @Override
-    public List<T> queryAll(String attrName, String orderBy, int start, int max) throws Exception {
+    public List<T> queryAll(String attrName, String orderBy, int start, int max) throws CommonException {
         return getQuery(null).addOrderby(attrName, orderBy).getResultList(start, max);
     }
 
     @Override
-    public long queryCount() throws Exception {
+    public long queryCount() throws CommonException {
         // 调用SQL的COUNT函数统计数目 count()
         return ((Long) getQuery(Long.class).count().getSingleResult());
     }
 
     @Override
-    public long queryCount(Map<String, Object> paramMap) throws Exception {
+    public long queryCount(Map<String, Object> paramMap) throws CommonException {
         // 添加Where子句查询条件 equal(Map)
         // 调用SQL的COUNT函数统计数目 count()
         return ((Long) getQuery(Long.class).equal(paramMap).count().getSingleResult());
     }
 
     @Override
-    public List<T> query(Set<String> attrNames, T entity) throws Exception {
+    public List<T> query(Set<String> attrNames, T entity) throws CommonException {
         return getQuery(null).initQueryEntity(entity).equal(attrNames).getResultList();
     }
 
     @Override
-    public List<T> query(Set<String> attrNames, String attrName, String orderBy, T entity) throws Exception {
+    public List<T> query(Set<String> attrNames, String attrName, String orderBy, T entity) throws CommonException {
         return getQuery(null).initQueryEntity(entity).equal(attrNames).addOrderby(attrName, orderBy).getResultList();
     }
 
     @Override
-    public List<T> query(Set<String> attrNames, int start, int max, T entity) throws Exception {
+    public List<T> query(Set<String> attrNames, int start, int max, T entity) throws CommonException {
         return getQuery(null).initQueryEntity(entity).equal(attrNames).getResultList(start, max);
     }
 
     @Override
-    public List<T> query(Set<String> attrNames, String attrName, String orderBy, int start, int max, T entity) throws Exception {
+    public List<T> query(Set<String> attrNames, String attrName, String orderBy, int start, int max, T entity) throws CommonException {
         return getQuery(null).initQueryEntity(entity).equal(attrNames).addOrderby(attrName, orderBy).getResultList(start, max);
     }
 
     @Override
-    public List<T> queryAll(T entity) throws Exception {
+    public List<T> queryAll(T entity) throws CommonException {
         return getQuery(null).initQueryEntity(entity).getResultList();
     }
 
     @Override
-    public List<T> queryAll(String attrName, String orderBy, T entity) throws Exception {
+    public List<T> queryAll(String attrName, String orderBy, T entity) throws CommonException {
         return getQuery(null).initQueryEntity(entity).addOrderby(attrName, orderBy).getResultList();
     }
 
     @Override
-    public List<T> queryAll(int start, int max, T entity) throws Exception {
+    public List<T> queryAll(int start, int max, T entity) throws CommonException {
         return getQuery(null).initQueryEntity(entity).getResultList(start, max);
     }
 
     @Override
-    public List<T> queryAll(String attrName, String orderBy, int start, int max, T entity) throws Exception {
+    public List<T> queryAll(String attrName, String orderBy, int start, int max, T entity) throws CommonException {
         return getQuery(null).initQueryEntity(entity).addOrderby(attrName, orderBy).getResultList(start, max);
     }
 
     @Override
-    public long queryCount(T entity) throws Exception {
+    public long queryCount(T entity) throws CommonException {
         // 调用SQL的COUNT函数统计数目 count()
         return ((Long) getQuery(Long.class).initQueryEntity(entity).count().getSingleResult());
     }
 
     @Override
-    public long queryCount(Set<String> attrNames, T entity) throws Exception {
+    public long queryCount(Set<String> attrNames, T entity) throws CommonException {
         // 添加Where子句查询条件 equal(Set)
         // 调用SQL的COUNT函数统计数目 count()
         return ((Long) getQuery(Long.class).initQueryEntity(entity).equal(attrNames).count().getSingleResult());
     }
 
     @Override
-    public boolean remove(long entityId) throws Exception {
+    public boolean remove(long entityId) throws CommonException {
         return removeById(entityId, null);
     }
 
     @Override
-    public boolean remove(String entityId) throws Exception {
+    public boolean remove(String entityId) throws CommonException {
         return removeById(entityId, null);
     }
 
     @Override
-    public boolean removeNew(long entityId, T entity) throws Exception {
+    public boolean removeNew(long entityId, T entity) throws CommonException {
         return removeById(entityId, entity);
     }
 
     @Override
-    public boolean removeNew(String entityId, T entity) throws Exception {
+    public boolean removeNew(String entityId, T entity) throws CommonException {
         return removeById(entityId, entity);
     }
 
@@ -223,10 +224,10 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
      *
      * @param entityId 主键数据
      * @return true : 删除成功; false : 删除失败
-     * @throws Exception
+     * @throws CommonException
      * @since 1.0.0
      */
-    protected boolean removeById(Object entityId, T entity) throws Exception {
+    protected boolean removeById(Object entityId, T entity) throws CommonException {
         checkPrimaryKey(entityId);
         final T old = queryById(entityId, entity);
         if (ObjectUtils.isNotEmpty(old)) {
@@ -238,7 +239,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     }
 
     @Override
-    public T update(T entity) throws Exception {
+    public T update(T entity) throws CommonException {
         if (ObjectUtils.isEmpty(entity)) {
             throw new DaoException("ERROR-DB-DAO0000000012");
         }
@@ -246,7 +247,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     }
 
     @Override
-    public List<T> batchUpdate(List<T> entities) throws Exception {
+    public List<T> batchUpdate(List<T> entities) throws CommonException {
         if (CollectionUtils.isEmpty(entities)) {
             throw new DaoException("ERROR-DB-DAO0000000013");
         }
@@ -257,7 +258,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     }
 
     @Override
-    public void save(T entity) throws Exception {
+    public void save(T entity) throws CommonException {
         if (ObjectUtils.isEmpty(entity)) {
             throw new DaoException("ERROR-DB-DAO0000000012");
         }
@@ -265,7 +266,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     }
 
     @Override
-    public void batchSave(List<T> entities) throws Exception {
+    public void batchSave(List<T> entities) throws CommonException {
         if (CollectionUtils.isEmpty(entities)) {
             throw new DaoException("ERROR-DB-DAO0000000013");
         }
@@ -275,12 +276,12 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     }
 
     @Override
-    public List<T> query(String relationId, T entity) throws Exception {
+    public List<T> query(String relationId, T entity) throws CommonException {
         return createNativeQuery(relationId, entity, false).getResultList();
     }
 
     @Override
-    public Object querySingle(String relationId, T entity) throws Exception {
+    public Object querySingle(String relationId, T entity) throws CommonException {
         return createNativeQuery(relationId, entity, true).getSingleResult();
     }
 
@@ -290,10 +291,10 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
      * @param relationId 关系编号
      * @param entity     实体类
      * @return 实体类数据集合
-     * @throws Exception
+     * @throws CommonException
      * @since 1.0.0
      */
-    private Query createNativeQuery(String relationId, T entity, boolean isSingle) throws Exception {
+    private Query createNativeQuery(String relationId, T entity, boolean isSingle) throws CommonException {
         // 构建并执行 SELECT SQL模板
         ITemplate<T> selectSqlTemplate = SqlTemplateFactory.newSqlTemplate(relationId, entity, TemplateTypeEnum.SELECT);
         selectSqlTemplate.initialize();
@@ -317,19 +318,19 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     }
 
     @Override
-    public int insert(String relationId, T entity) throws Exception {
+    public int insert(String relationId, T entity) throws CommonException {
         // 构建并执行INSERT SQL模板
         return save(SqlTemplateFactory.newSqlTemplate(relationId, entity, TemplateTypeEnum.INSERT));
     }
 
     @Override
-    public int update(String relationId, T entity) throws Exception {
+    public int update(String relationId, T entity) throws CommonException {
         // 构建并执行UPDATE SQL模板
         return save(SqlTemplateFactory.newSqlTemplate(relationId, entity, TemplateTypeEnum.UPDATE));
     }
 
     @Override
-    public int delete(String relationId, T entity) throws Exception {
+    public int delete(String relationId, T entity) throws CommonException {
         // 构建并执行DELETE SQL模板
         return save(SqlTemplateFactory.newSqlTemplate(relationId, entity, TemplateTypeEnum.DELETE));
     }
@@ -338,10 +339,10 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
      * <p> 处理INSERT,UPDATE,DELETE SQL模板 </p>
      *
      * @param sqlTemplate SQL模板（包含 INSERT,UPDATE,DELETE）
-     * @throws Exception
+     * @throws CommonException
      * @since 1.0.0
      */
-    private int save(ITemplate<T> sqlTemplate) throws Exception {
+    private int save(ITemplate<T> sqlTemplate) throws CommonException {
         sqlTemplate.initialize();
         String nativeSql = sqlTemplate.toNativeSql();
         List<SqlParam> nativeParam = sqlTemplate.toNativeParams();
@@ -433,6 +434,11 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         return query;
     }
 
+    @Override
+    public void flush() {
+        getEntityManager().flush();
+    }
+
     /**
      * <p> 获取JPA持久化对象 </p>
      *
@@ -448,7 +454,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
      * @return JPA持久化对象
      * @since 1.0.0
      */
-    protected EntityManager getEntityManager(T entity, boolean isRead) throws Exception {
+    protected EntityManager getEntityManager(T entity, boolean isRead) throws CommonException {
         EntityManager entityManager = getEntityManager();
         // 处理并添加分表信息，如果不存在分表则不处理
         TableSplitHelper.findTableSplitHandle().handle(entityManager, entity, isRead);

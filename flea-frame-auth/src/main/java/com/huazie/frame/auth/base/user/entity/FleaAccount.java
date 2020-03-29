@@ -1,6 +1,9 @@
 package com.huazie.frame.auth.base.user.entity;
 
+import com.huazie.frame.auth.common.UserStateEnum;
 import com.huazie.frame.common.FleaEntity;
+import com.huazie.frame.common.util.DateUtils;
+import com.huazie.frame.common.util.ObjectUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import javax.persistence.Column;
@@ -37,10 +40,10 @@ public class FleaAccount extends FleaEntity {
     private Long userId; // 用户编号
 
     @Column(name = "account_code", nullable = false)
-    private String accountCode; // 账户号码
+    private String accountCode; // 账号
 
     @Column(name = "account_pwd", nullable = false)
-    private String accountPwd; // 账户密码
+    private String accountPwd; // 密码
 
     @Column(name = "account_state", nullable = false)
     private Integer accountState; // 账户状态（0：删除，1：正常 ，2：禁用，3：待审核）
@@ -63,6 +66,45 @@ public class FleaAccount extends FleaEntity {
 
     @Column(name = "remarks")
     private String remarks; // 备注信息
+
+    /**
+     * <p> 无参数构造方法 </p>
+     *
+     * @since 1.0.0
+     */
+    public FleaAccount() {
+    }
+
+    /**
+     * <p> 带参数构造方法 </p>
+     *
+     * @param userId       用户编号
+     * @param accountCode  账号
+     * @param accountPwd   密码
+     * @param accountState 账户状态
+     * @param remarks      备注
+     * @since 1.0.0
+     */
+    public FleaAccount(Long userId, String accountCode, String accountPwd, Integer accountState, Date effectiveDate, Date expiryDate, String remarks) {
+        this.userId = userId;
+        this.accountCode = accountCode;
+        this.accountPwd = accountPwd;
+        if (ObjectUtils.isEmpty(accountState)) {
+            // 默认账户状态为 3 : 待审核
+            accountState = UserStateEnum.IN_AUDITING.getValue();
+        }
+        this.accountState = accountState;
+        createDate = DateUtils.getCurrentTime();
+        if (ObjectUtils.isEmpty(effectiveDate)) {
+            effectiveDate = DateUtils.getCurrentTime();
+        }
+        this.effectiveDate = effectiveDate;
+        if (ObjectUtils.isEmpty(expiryDate)) {
+            expiryDate = DateUtils.getExpiryTimeForever();
+        }
+        this.expiryDate = expiryDate;
+        this.remarks = remarks;
+    }
 
     public Long getAccountId() {
         return accountId;

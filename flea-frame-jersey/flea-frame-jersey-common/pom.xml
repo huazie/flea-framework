@@ -35,6 +35,12 @@
 
     <dependencies>
 
+        <!-- servlet 2.x -->
+        <dependency>
+            <groupId>org.glassfish.jersey.containers</groupId>
+            <artifactId>jersey-container-servlet-core</artifactId>
+        </dependency>
+
         <!-- servlet 3.x -->
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
@@ -67,6 +73,13 @@
         <dependency>
             <groupId>com.huazie.frame</groupId>
             <artifactId>flea-frame-core</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+
+        <!-- FLEA FRAME AUTH -->
+        <dependency>
+            <groupId>com.huazie.frame</groupId>
+            <artifactId>flea-frame-auth</artifactId>
             <version>${parent.version}</version>
         </dependency>
 

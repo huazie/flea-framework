@@ -4,7 +4,7 @@ import com.huazie.frame.common.util.DateUtils;
 import com.huazie.frame.core.base.cfgdata.bean.FleaConfigDataSpringBean;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResClient;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaJerseyResClientSV;
-import com.huazie.frame.core.common.EntityStateEnum;
+import com.huazie.frame.common.EntityStateEnum;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;

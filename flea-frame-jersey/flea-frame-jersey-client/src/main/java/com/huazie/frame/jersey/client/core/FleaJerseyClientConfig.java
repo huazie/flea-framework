@@ -1,10 +1,6 @@
 package com.huazie.frame.jersey.client.core;
 
 import com.huazie.frame.common.FleaConfigManager;
-import com.huazie.frame.common.FleaFrameManager;
-import com.huazie.frame.common.IFleaUser;
-import com.huazie.frame.common.util.ObjectUtils;
-import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.jersey.common.FleaJerseyConstants;
 
 /**
@@ -22,9 +18,22 @@ public class FleaJerseyClientConfig {
      * @return 系统账户编号
      * @since 1.0.0
      */
-    public static String getSystemAcctId() {
-        return FleaConfigManager.getConfigItemValue(FleaJerseyConstants.JerseyClientConstants.CONFIG_ITEMS_KEY,
+    public static <T> T getSystemAcctId(Class<T> clazz) {
+        T t = null;
+        String systemAcctId = FleaConfigManager.getConfigItemValue(
+                FleaJerseyConstants.JerseyClientConstants.CONFIG_ITEMS_KEY,
                 FleaJerseyConstants.JerseyClientConstants.CONFIG_ITEM_SYSTEM_ACCT_ID);
+        if (clazz == String.class) {
+            t = clazz.cast(systemAcctId);
+        } else if (clazz == Long.class) {
+            long sysAcctId = -1L;
+            try {
+                sysAcctId = Long.parseLong(systemAcctId);
+            } finally {
+                t = clazz.cast(sysAcctId);
+            }
+        }
+        return t;
     }
 
     /**
@@ -34,22 +43,9 @@ public class FleaJerseyClientConfig {
      * @since 1.0.0
      */
     public static String getSystemAcctPwd() {
-        return FleaConfigManager.getConfigItemValue(FleaJerseyConstants.JerseyClientConstants.CONFIG_ITEMS_KEY,
+        return FleaConfigManager.getConfigItemValue(
+                FleaJerseyConstants.JerseyClientConstants.CONFIG_ITEMS_KEY,
                 FleaJerseyConstants.JerseyClientConstants.CONFIG_ITEM_SYSTEM_ACCT_PWD);
-    }
-
-    /**
-     * <p> 获取当前操作账户编号 </p>
-     *
-     * @return 当前操作账户编号
-     */
-    public static String getAcctId() {
-        String acctId = "";
-        IFleaUser fleaUser = FleaFrameManager.getManager().getUserInfo();
-        if (ObjectUtils.isNotEmpty(fleaUser)) {
-            acctId = StringUtils.valueOf(fleaUser.getAcctId());
-        }
-        return acctId;
     }
 
 }

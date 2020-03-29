@@ -5,6 +5,7 @@ import com.huazie.frame.cache.common.CacheConfigManager;
 import com.huazie.frame.cache.common.CacheConstants;
 import com.huazie.frame.cache.common.FleaCacheFactory;
 import com.huazie.frame.cache.config.CacheItem;
+import com.huazie.frame.common.util.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,7 +66,7 @@ public class CoreFleaCache extends AbstractFleaCache {
     public String getSystemName() {
         // 获取缓存初始化配置项集之缓存所属系统名配置项
         CacheItem cacheItem = CacheConfigManager.getCacheItem(CacheConstants.FleaCacheConfigConstants.FLEA_CACHE_INIT, CacheConstants.FleaCacheConfigConstants.SYSTEM_NAME);
-        if (null == cacheItem) {
+        if (ObjectUtils.isEmpty(cacheItem)) {
             throw new RuntimeException("无法获取缓存系统名，请检查flea-cache-config.xml配置【<cache-item key=" + CacheConstants.FleaCacheConfigConstants.SYSTEM_NAME + " >】\"");
         }
         return cacheItem.getValue();

@@ -1,5 +1,6 @@
 package com.huazie.frame.db.jpa.common;
 
+import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.MapUtils;
 import com.huazie.frame.common.util.NumberUtils;
@@ -108,10 +109,11 @@ public final class FleaJPAQuery implements Closeable {
      * <p> 初始化查询实体 </p>
      *
      * @param entity 实体类实例
-     * @return
-     * @throws Exception
+     * @return FleaJPAQuery对象
+     * @throws CommonException 通用异常
+     * @since 1.0.0
      */
-    public FleaJPAQuery initQueryEntity(Object entity) throws Exception {
+    public FleaJPAQuery initQueryEntity(Object entity) throws CommonException {
 
         if (ObjectUtils.isEmpty(entity) || (ObjectUtils.isNotEmpty(sourceClazz) && !sourceClazz.isInstance(entity))) {
             return this;

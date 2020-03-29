@@ -1,5 +1,6 @@
 package com.huazie.frame.common.util;
 
+import com.huazie.frame.common.exception.CommonException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -89,4 +90,37 @@ public class ObjectUtils {
         }
         return null;
     }
+
+    /**
+     * <p> 校验obj对象，如果空，则抛出异常 </p>
+     *
+     * @param obj            待校验对象
+     * @param exceptionClazz 通用异常子类类对象
+     * @param params         通用异常子类构造参数
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    public static void checkEmpty(Object obj, Class<? extends CommonException> exceptionClazz, Object... params) throws CommonException {
+        if (isEmpty(obj)) {
+            Object exceptionInstance = ReflectUtils.newInstance(exceptionClazz, params);
+            throw exceptionClazz.cast(exceptionInstance);
+        }
+    }
+
+    /**
+     * <p> 校验obj对象，如果非空，则抛出异常 </p>
+     *
+     * @param obj            待校验对象
+     * @param exceptionClazz 通用异常子类类对象
+     * @param params         通用异常子类构造参数
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    public static void checkNotEmpty(Object obj, Class<? extends CommonException> exceptionClazz, Object... params) throws CommonException {
+        if (isNotEmpty(obj)) {
+            Object exceptionInstance = ReflectUtils.newInstance(exceptionClazz, params);
+            throw exceptionClazz.cast(exceptionInstance);
+        }
+    }
+
 }
