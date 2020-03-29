@@ -21,6 +21,12 @@ public class RedisClientInvocationHandler extends FleaInvocationHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RedisClientInvocationHandler.class);
 
+    /**
+     * <p> 带参数的构造方法 </p>
+     *
+     * @param proxyObject 代理对象
+     * @since 1.0.0
+     */
     public RedisClientInvocationHandler(Object proxyObject) {
         super(proxyObject);
     }

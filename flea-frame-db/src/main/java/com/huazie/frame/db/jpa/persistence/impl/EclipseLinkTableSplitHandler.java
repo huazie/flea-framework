@@ -1,5 +1,6 @@
 package com.huazie.frame.db.jpa.persistence.impl;
 
+import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
@@ -25,7 +26,7 @@ import java.util.Set;
 public class EclipseLinkTableSplitHandler implements IFleaJPATableSplitHandler {
 
     @Override
-    public void handle(CriteriaQuery criteriaQuery, Object entity) throws Exception {
+    public void handle(CriteriaQuery criteriaQuery, Object entity) throws CommonException {
 
         if (ObjectUtils.isEmpty(criteriaQuery) || ObjectUtils.isEmpty(entity)) {
             return;
@@ -45,7 +46,7 @@ public class EclipseLinkTableSplitHandler implements IFleaJPATableSplitHandler {
     }
 
     @Override
-    public void handle(EntityManager entityManager, Object entity, boolean isRead) throws Exception {
+    public void handle(EntityManager entityManager, Object entity, boolean isRead) throws CommonException {
 
         if (ObjectUtils.isEmpty(entityManager) || ObjectUtils.isEmpty(entity)) {
             return;

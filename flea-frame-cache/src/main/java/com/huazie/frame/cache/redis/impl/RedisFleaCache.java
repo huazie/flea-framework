@@ -28,6 +28,7 @@ public class RedisFleaCache extends AbstractFleaCache {
      * @param name        缓存主关键字
      * @param expiry      失效时长
      * @param redisClient Redis客户端
+     * @since 1.0.0
      */
     public RedisFleaCache(String name, long expiry, RedisClient redisClient) {
         super(name, expiry);

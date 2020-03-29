@@ -4,7 +4,7 @@ import com.huazie.frame.common.util.DateUtils;
 import com.huazie.frame.core.base.cfgdata.bean.FleaConfigDataSpringBean;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyI18nErrorMapping;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaJerseyI18nErrorMappingSV;
-import com.huazie.frame.core.common.EntityStateEnum;
+import com.huazie.frame.common.EntityStateEnum;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -183,7 +183,7 @@ public class FleaJerseyI18NErrorMappingSVImplTest {
     public void testFleaConfigDataSpringBean() {
         FleaConfigDataSpringBean bean = (FleaConfigDataSpringBean) applicationContext.getBean("fleaConfigDataSpringBean");
         try {
-            bean.getMapping("jersey-filter-resource", "jersey-filter-service", "ERROR-JERSEY-FILTER0000000005");
+            bean.getMapping("jersey-filter-resource", "jersey-filter-service", "ERROR-JERSEY-FILTER0000000003");
         } catch (Exception e) {
             LOGGER.error("Exception:", e);
         }

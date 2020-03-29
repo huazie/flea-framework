@@ -34,6 +34,16 @@ public class FleaUserImpl extends FleaCommonConfig implements IFleaUser {
     }
 
     @Override
+    public Long getSystemAcctId() {
+        return get(FleaJerseyConstants.RequestPublicDataConstants.SYSTEM_ACCT_ID, Long.class);
+    }
+
+    @Override
+    public void setSystemAcctId(Long systemAcctId) {
+        put(FleaJerseyConstants.RequestPublicDataConstants.SYSTEM_ACCT_ID, systemAcctId);
+    }
+
+    @Override
     public void set(String key, Object value) {
         put(key, value);
     }

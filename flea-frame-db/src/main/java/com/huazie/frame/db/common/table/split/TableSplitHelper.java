@@ -2,6 +2,7 @@ package com.huazie.frame.db.common.table.split;
 
 import com.huazie.frame.common.FleaConfigManager;
 import com.huazie.frame.common.config.ConfigItem;
+import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.ReflectUtils;
@@ -44,7 +45,7 @@ public class TableSplitHelper {
      * @throws Exception
      * @since 1.0.0
      */
-    public static String getRealTableName(String name, Column[] entityCols) throws Exception {
+    public static String getRealTableName(String name, Column[] entityCols) throws CommonException {
 
         String realTableName = name;
 

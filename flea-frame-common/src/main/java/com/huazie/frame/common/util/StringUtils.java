@@ -2,6 +2,7 @@ package com.huazie.frame.common.util;
 
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.PinyinEnum;
+import com.huazie.frame.common.exception.CommonException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,6 +44,38 @@ public class StringUtils {
      */
     public static boolean isNotBlank(String value) {
         return !isBlank(value);
+    }
+
+    /**
+     * <p> 校验value字符串对象，如果空，则抛出异常 </p>
+     *
+     * @param value          字符串对象
+     * @param exceptionClazz 通用异常子类类对象
+     * @param params         通用异常子类构造参数
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    public static void checkBlank(String value, Class<? extends CommonException> exceptionClazz, Object... params) throws CommonException {
+        if (isBlank(value)) {
+            Object exceptionInstance = ReflectUtils.newInstance(exceptionClazz, params);
+            throw exceptionClazz.cast(exceptionInstance);
+        }
+    }
+
+    /**
+     * <p> 校验value字符串对象，如果非空，则抛出异常 </p>
+     *
+     * @param value          字符串对象
+     * @param exceptionClazz 通用异常子类类对象
+     * @param params         通用异常子类构造参数
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    public static void checkNotBlank(String value, Class<? extends CommonException> exceptionClazz, Object... params) throws CommonException {
+        if (isNotBlank(value)) {
+            Object exceptionInstance = ReflectUtils.newInstance(exceptionClazz, params);
+            throw exceptionClazz.cast(exceptionInstance);
+        }
     }
 
     /**

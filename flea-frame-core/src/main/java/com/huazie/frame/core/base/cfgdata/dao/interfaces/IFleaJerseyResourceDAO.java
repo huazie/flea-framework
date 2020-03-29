@@ -1,5 +1,6 @@
 package com.huazie.frame.core.base.cfgdata.dao.interfaces;
 
+import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResource;
 import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 
@@ -19,18 +20,18 @@ public interface IFleaJerseyResourceDAO extends IAbstractFleaJPADAO<FleaJerseyRe
      *
      * @param resourceCode 资源编码
      * @return 资源
-     * @throws Exception
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    List<FleaJerseyResource> getResource(String resourceCode) throws Exception;
+    List<FleaJerseyResource> getResource(String resourceCode) throws CommonException;
 
     /**
      * <p> 获取全部资源包名 </p>
      *
      * @return 所有资源包名列表
-     * @throws Exception
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    List<String> getResourcePackages() throws Exception;
+    List<String> getResourcePackages() throws CommonException;
 
 }

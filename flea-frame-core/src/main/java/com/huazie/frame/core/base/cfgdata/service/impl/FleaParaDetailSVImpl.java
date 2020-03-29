@@ -23,9 +23,12 @@ import java.util.List;
 @Service("fleaParaDetailSV")
 public class FleaParaDetailSVImpl extends AbstractFleaJPASVImpl<FleaParaDetail> implements IFleaParaDetailSV {
 
+    private final IFleaParaDetailDAO fleaParaDetailDao;
+
     @Autowired
-    @Qualifier("fleaParaDetailDAO")
-    private IFleaParaDetailDAO fleaParaDetailDao;
+    public FleaParaDetailSVImpl(@Qualifier("fleaParaDetailDAO") IFleaParaDetailDAO fleaParaDetailDao) {
+        this.fleaParaDetailDao = fleaParaDetailDao;
+    }
 
     @Override
     @Cacheable(value = "fleaparadetail", key = "#paraType")

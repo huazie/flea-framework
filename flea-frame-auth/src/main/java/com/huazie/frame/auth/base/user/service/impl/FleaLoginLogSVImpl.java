@@ -19,9 +19,12 @@ import org.springframework.stereotype.Service;
 @Service("fleaLoginLogSV")
 public class FleaLoginLogSVImpl extends AbstractFleaJPASVImpl<FleaLoginLog> implements IFleaLoginLogSV {
 
+    private final IFleaLoginLogDAO fleaLoginLogDao;
+
     @Autowired
-    @Qualifier("fleaLoginLogDAO")
-    private IFleaLoginLogDAO fleaLoginLogDao;
+    public FleaLoginLogSVImpl(@Qualifier("fleaLoginLogDAO") IFleaLoginLogDAO fleaLoginLogDao) {
+        this.fleaLoginLogDao = fleaLoginLogDao;
+    }
 
     @Override
     protected IAbstractFleaJPADAO<FleaLoginLog> getDAO() {

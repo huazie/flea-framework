@@ -3,6 +3,7 @@ package com.huazie.frame.cache.common;
 import com.huazie.frame.cache.config.Cache;
 import com.huazie.frame.cache.config.CacheData;
 import com.huazie.frame.cache.config.CacheDatas;
+import com.huazie.frame.cache.config.CacheFiles;
 import com.huazie.frame.cache.config.CacheGroup;
 import com.huazie.frame.cache.config.CacheGroups;
 import com.huazie.frame.cache.config.CacheItem;
@@ -12,6 +13,7 @@ import com.huazie.frame.cache.config.CacheParams;
 import com.huazie.frame.cache.config.CacheServer;
 import com.huazie.frame.cache.config.CacheServers;
 import com.huazie.frame.cache.config.Caches;
+import com.huazie.frame.cache.config.FleaCache;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 
@@ -28,14 +30,30 @@ public class CacheConfigManager {
 
     /**
      * <p> 根据指定的缓存主关键字，获取Flea缓存定义 </p>
+     * <p> 相同的缓存Key，先取缓存定义文件靠前的配置 </p>
      *
      * @param key 缓存主关键字
      * @return Flea缓存
      * @since 1.0.0
      */
     public static Cache getCache(String key) {
-        Caches caches = CacheXmlDigesterHelper.getInstance().getFleaCache().getCaches();
-        return caches.getFleaCache(key);
+        Cache cache = null;
+        FleaCache fleaCache = CacheXmlDigesterHelper.getInstance().getFleaCache();
+        if (ObjectUtils.isNotEmpty(fleaCache)) {
+            Caches caches = fleaCache.getCaches();
+            if (ObjectUtils.isNotEmpty(caches)) {
+                // 从主缓存文件中获取
+                cache = caches.getFleaCache(key);
+                if (ObjectUtils.isEmpty(cache)) {
+                    // 从其他引入的缓存文件中获取
+                    CacheFiles cacheFiles = fleaCache.getCacheFiles();
+                    if (ObjectUtils.isNotEmpty(cacheFiles)) {
+                        cache = cacheFiles.getFleaCache(key);
+                    }
+                }
+            }
+        }
+        return cache;
     }
 
     /**

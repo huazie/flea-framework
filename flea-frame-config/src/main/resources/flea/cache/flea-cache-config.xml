@@ -4,10 +4,10 @@
 
     <!-- 缓存初始化配置项集 -->
     <cache-items key="FleaCacheInit" desc="缓存初始化配置项">
-        <cache-item key="systemName" desc="缓存所属系统名">FleaFS</cache-item>
+        <cache-item key="systemName" desc="缓存所属系统名">FleaFrame</cache-item>
     </cache-items>
 
-    <!-- Flea缓存配置项集 -->
+    <!-- Flea缓存建造者配置项集 -->
     <cache-items key="FleaCacheBuilder" desc="Flea缓存建造者实现">
         <cache-item key="MemCached" desc="MemCached的Flea缓存建造者实现">com.huazie.frame.cache.memcached.MemCachedFleaCacheBuilder</cache-item>
         <cache-item key="Redis" desc="Redis的Flea缓存建造者实现">com.huazie.frame.cache.redis.RedisFleaCacheBuilder</cache-item>
@@ -44,9 +44,9 @@
 
     <!-- Flea缓存数据集 -->
     <cache-datas>
-        <cache-data type="auth" desc="Flea权限缓存数据所在组配置">authGroup</cache-data>
-        <cache-data type="jersey" desc="Flea Jersey缓存数据所在组配置">configGroup</cache-data>
-        <cache-data type="fleafs" desc="FleaFs配置数据所在组配置">configGroup</cache-data>
+        <cache-data type="fleaAuth" desc="Flea Auth缓存数据所在组配置">authGroup</cache-data>
+        <cache-data type="fleaJersey" desc="Flea Jersey缓存数据所在组配置">configGroup</cache-data>
+        <cache-data type="fleaFrame" desc="Flea Frame配置数据所在组配置">configGroup</cache-data>
     </cache-datas>
 
     <!-- Flea缓存组集 -->

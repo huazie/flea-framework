@@ -36,10 +36,26 @@ public interface IFleaUser {
     /**
      * <p> 设置账户编号 </p>
      *
-     * @param acctId
+     * @param acctId 账户编号
      * @since 1.0.0
      */
     void setAcctId(Long acctId);
+
+    /**
+     * <p> 获取系统账户编号 </p>
+     *
+     * @return 系统账户编号
+     * @since 1.0.0
+     */
+    Long getSystemAcctId();
+
+    /**
+     * <p> 设置系统账户编号 </p>
+     *
+     * @param systemAcctId 系统账户编号
+     * @since 1.0.0
+     */
+    void setSystemAcctId(Long systemAcctId);
 
     /**
      * <p> 获取用户其他信息 </p>

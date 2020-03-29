@@ -25,19 +25,14 @@ import java.util.List;
 @Component
 public class FleaConfigDataSpringBean {
 
-    @Resource(name = "i18nErrorMappingSV")
     private IFleaJerseyI18nErrorMappingSV mappingSV;
 
-    @Resource(name = "fleaParaDetailSV")
     private IFleaParaDetailSV paraDetailSV;
 
-    @Resource(name = "resServiceSV")
     private IFleaJerseyResServiceSV resServiceSV;
 
-    @Resource(name = "resClientSV")
     private IFleaJerseyResClientSV resClientSV;
 
-    @Resource(name = "resourceSV")
     private IFleaJerseyResourceSV resourceSV;
 
     /**
@@ -126,5 +121,30 @@ public class FleaConfigDataSpringBean {
      */
     public List<String> getResourcePackages() throws Exception {
         return resourceSV.getResourcePackages();
+    }
+
+    @Resource(name = "i18nErrorMappingSV")
+    public void setMappingSV(IFleaJerseyI18nErrorMappingSV mappingSV) {
+        this.mappingSV = mappingSV;
+    }
+
+    @Resource(name = "fleaParaDetailSV")
+    public void setParaDetailSV(IFleaParaDetailSV paraDetailSV) {
+        this.paraDetailSV = paraDetailSV;
+    }
+
+    @Resource(name = "resServiceSV")
+    public void setResServiceSV(IFleaJerseyResServiceSV resServiceSV) {
+        this.resServiceSV = resServiceSV;
+    }
+
+    @Resource(name = "resClientSV")
+    public void setResClientSV(IFleaJerseyResClientSV resClientSV) {
+        this.resClientSV = resClientSV;
+    }
+
+    @Resource(name = "resourceSV")
+    public void setResourceSV(IFleaJerseyResourceSV resourceSV) {
+        this.resourceSV = resourceSV;
     }
 }

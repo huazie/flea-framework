@@ -4,6 +4,7 @@ import com.huazie.frame.cache.common.CacheEnum;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
+import com.huazie.frame.common.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +22,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractFleaCache.class);
 
-    private final String name;  // 缓存主要关键字（用于区分）
+    private final String name;  // 缓存数据主关键字
 
     private final long expiry;  // 有效期(单位：秒)
 
@@ -210,42 +211,25 @@ public abstract class AbstractFleaCache implements IFleaCache {
     public abstract String getSystemName();
 
     /**
-     * <p> 获取实际存储的缓存键（缓存所属系统名 + 缓存名（缓存主关键字） + 缓存数据键（缓存关键字）） </p>
+     * <p> 获取实际存储的缓存键（缓存所属系统名 + 缓存名（缓存主关键字） + 缓存数据键（缓存数据关键字）） </p>
      *
      * @param key 缓存数据键关键字
      * @return 实际存储的缓存键
      * @since 1.0.0
      */
     private String getNativeKey(String key) {
-        return getNativeCacheKey(name) + getNativeDataKey(key);
+        return StringUtils.strCat(getNativeCacheKey(name), CommonConstants.SymbolConstants.UNDERLINE, key);
     }
 
     /**
      * <p> 获取缓存主键（包含缓存所属系统名 + 缓存名（缓存主关键字））  </p>
      *
+     * @param name 缓存名（缓存主关键字）
      * @return 缓存主键（缓存所属系统名 + 缓存名（缓存主关键字））
      * @since 1.0.0
      */
     protected String getNativeCacheKey(String name) {
-        StringBuilder nativeCacheKey = new StringBuilder();
-        nativeCacheKey.append(getSystemName());
-        nativeCacheKey.append(CommonConstants.SymbolConstants.UNDERLINE);
-        nativeCacheKey.append(name);
-        return nativeCacheKey.toString();
-    }
-
-    /**
-     * <p> 获取缓存实际存储的数据键 </p>
-     *
-     * @param key 缓存数据键关键字
-     * @return 缓存数据键
-     * @since 1.0.0
-     */
-    protected String getNativeDataKey(String key) {
-        StringBuilder nativeDataKey = new StringBuilder();
-        nativeDataKey.append(CommonConstants.SymbolConstants.UNDERLINE);
-        nativeDataKey.append(key);
-        return nativeDataKey.toString();
+        return StringUtils.strCat(getSystemName(), CommonConstants.SymbolConstants.UNDERLINE, name);
     }
 
     public String getName() {
