@@ -5,7 +5,6 @@ import com.huazie.frame.common.util.ObjectUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -26,7 +25,8 @@ public class CacheFiles {
     /**
      * <p> 添加一个缓存定义配置文件 </p>
      *
-     * @param cacheFile
+     * @param cacheFile 缓存定义配置文件
+     * @since 1.0.0
      */
     public void addCacheFile(CacheFile cacheFile) {
         cacheFiles.add(cacheFile);
