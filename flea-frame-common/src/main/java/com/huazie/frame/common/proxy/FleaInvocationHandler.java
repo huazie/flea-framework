@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +24,12 @@ public class FleaInvocationHandler implements InvocationHandler {
 
     protected Object proxyObject;
 
+    /**
+     * <p> 带参数的构造方法 </p>
+     *
+     * @param proxyObject 代理对象
+     * @since 1.0.0
+     */
     public FleaInvocationHandler(Object proxyObject) {
         this.proxyObject = proxyObject;
     }
