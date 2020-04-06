@@ -9,7 +9,7 @@ import com.huazie.frame.jersey.common.data.FleaJerseyFileContext;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
 import com.huazie.frame.jersey.common.exception.FleaJerseyCommonException;
-import com.huazie.frame.jersey.server.filter.FilterChainManager;
+import com.huazie.frame.jersey.server.filter.FleaJerseyFilterChainManager;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import org.slf4j.Logger;
@@ -65,7 +65,7 @@ public abstract class Resource {
      */
     protected FleaJerseyResponse doResource(FleaJerseyRequest fleaJerseyRequest) {
         initContext();
-        return FilterChainManager.getManager().doFilter(fleaJerseyRequest);
+        return FleaJerseyFilterChainManager.getManager().doFilter(fleaJerseyRequest);
     }
 
     /**
@@ -77,7 +77,7 @@ public abstract class Resource {
      */
     protected FleaJerseyResponse doResource(String requestData) {
         initContext();
-        return FilterChainManager.getManager().doFilter(requestData);
+        return FleaJerseyFilterChainManager.getManager().doFilter(requestData);
     }
 
     /**

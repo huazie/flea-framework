@@ -11,13 +11,13 @@ import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class FilterChainManager {
+public class FleaJerseyFilterChainManager {
 
-    private static volatile FilterChainManager manager;
+    private static volatile FleaJerseyFilterChainManager manager;
 
     private FleaJerseyFilterChain filterChain;
 
-    private FilterChainManager(FleaJerseyFilterChain filterChain) {
+    private FleaJerseyFilterChainManager(FleaJerseyFilterChain filterChain) {
         this.filterChain = filterChain;
     }
 
@@ -27,11 +27,11 @@ public class FilterChainManager {
      * @return 过滤器链管理类对象
      * @since 1.0.0
      */
-    public static FilterChainManager getManager() {
+    public static FleaJerseyFilterChainManager getManager() {
         if (ObjectUtils.isEmpty(manager)) {
-            synchronized (FilterChainManager.class) {
+            synchronized (FleaJerseyFilterChainManager.class) {
                 if (ObjectUtils.isEmpty(manager)) {
-                    manager = new FilterChainManager(new FleaJerseyFilterChain());
+                    manager = new FleaJerseyFilterChainManager(new FleaJerseyFilterChain());
                 }
             }
         }
