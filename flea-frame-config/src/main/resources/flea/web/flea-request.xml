@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flea-request>
+
+    <flea-session>
+        <session-key>FleaAccount</session-key>
+        <idle-time>3600</idle-time>
+    </flea-session>
+
+    <flea-url>
+        <!-- 重定向至登录页面 -->
+        <redirect-url>/login.html</redirect-url>
+        <!-- 不需校验的URL -->
+        <uncheck-urls>
+            <uncheck-url>/business/fleaMgmtLogin!login.flea</uncheck-url>
+            <uncheck-url>/resources</uncheck-url>
+        </uncheck-urls>
+        <!-- 需要校验的URL -->
+        <check-urls>
+            <check-url>/index.html</check-url>
+            <check-url>/mgmt/</check-url>
+            <check-url>/auth/</check-url>
+        </check-urls>
+        <!-- URL前缀 -->
+        <url-prefix>
+            <business>/business</business>
+        </url-prefix>
+        <!-- URL非法字符 -->
+        <url-illegal-string>alert|document.cookie|href|script|select|insert|update|delete|truncate|exec|drop</url-illegal-string>
+    </flea-url>
+
+</flea-request>
