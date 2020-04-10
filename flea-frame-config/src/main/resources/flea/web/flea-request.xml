@@ -2,13 +2,17 @@
 <flea-request>
 
     <flea-session>
-        <session-key>FleaAccount</session-key>
+        <user-session-key>FleaUser</user-session-key>
         <idle-time>3600</idle-time>
     </flea-session>
 
     <flea-url>
-        <!-- 重定向至登录页面 -->
-        <redirect-url>/login.html</redirect-url>
+        <redirect-url>
+            <!-- 重定向至登录页面 -->
+            <property key="login" desc="登录页面重定向URL配置">/login.html</property>
+            <!-- 重定向至错误页面 -->
+            <property key="error" desc="错误页面重定向URL配置">/WEB-INF/error.html/</property>
+        </redirect-url>
         <!-- 不需校验的URL -->
         <uncheck-urls>
             <uncheck-url>/business/fleaMgmtLogin!login.flea</uncheck-url>
@@ -22,10 +26,10 @@
         </check-urls>
         <!-- URL前缀 -->
         <url-prefix>
-            <business>/business</business>
+            <property key="business" desc="业务URL前缀配置">/business</property>
         </url-prefix>
         <!-- URL非法字符 -->
-        <url-illegal-string>alert|document.cookie|href|script|select|insert|update|delete|truncate|exec|drop</url-illegal-string>
+        <url-illegal-char>&lt;|&gt;|alert|document.cookie|href|script|select|insert|update|delete|truncate|exec|drop</url-illegal-char>
     </flea-url>
 
 </flea-request>

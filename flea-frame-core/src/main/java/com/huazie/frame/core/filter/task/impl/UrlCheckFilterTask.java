@@ -7,7 +7,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 /**
- * <p> </p>
+ * <p> URL校验过滤器任务 </p>
  *
  * @author huazie
  * @version 1.0.0
