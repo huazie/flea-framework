@@ -3,7 +3,11 @@ package com.huazie.frame.core.filter;
 import com.huazie.frame.common.XmlDigesterHelper;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.core.common.FleaCoreConstants;
+import com.huazie.frame.core.filter.config.FilterTask;
+import com.huazie.frame.core.filter.config.FilterTaskChain;
+import com.huazie.frame.core.filter.config.FilterTasks;
 import com.huazie.frame.core.filter.config.FleaRequest;
+import com.huazie.frame.core.filter.config.FleaRequestFilter;
 import com.huazie.frame.core.filter.config.FleaSession;
 import com.huazie.frame.core.filter.config.FleaUrl;
 import com.huazie.frame.core.filter.config.Property;
@@ -31,6 +35,7 @@ public class FleaRequestXmlDigesterHelper {
     private static Boolean isFleaRequestFilterInit = Boolean.FALSE;
 
     private static FleaRequest fleaRequest;
+    private static FleaRequestFilter fleaRequestFilter;
 
     /**
      * <p> 只允许通过getInstance()获取 XML解析类 </p>
@@ -97,7 +102,6 @@ public class FleaRequestXmlDigesterHelper {
         FleaRequest obj = XmlDigesterHelper.parse(fileName, digester, FleaRequest.class);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaRequestXmlDigesterHelper##newFleaRequest() Config = {}", obj);
             LOGGER.debug("FleaRequestXmlDigesterHelper##newFleaRequest() End to parse the flea-request.xml");
         }
 
@@ -157,6 +161,85 @@ public class FleaRequestXmlDigesterHelper {
         digester.addSetNext("flea-request/flea-url/url-prefix/property", "addProperty", Property.class.getName());
 
         digester.addCallMethod("flea-request/flea-url/url-illegal-char", "setUrlIllegalChar", 0);
+        return digester;
+    }
+
+    /**
+     * <p> 获取Flea请求过滤器 </p>
+     *
+     * @return Flea请求过滤器
+     * @since 1.0.0
+     */
+    public FleaRequestFilter getFleaRequestFilter() {
+        if (isFleaRequestFilterInit.equals(Boolean.FALSE)) {
+            synchronized (isFleaRequestFilterInit) {
+                if (isFleaRequestFilterInit.equals(Boolean.FALSE)) {
+                    try {
+                        isFleaRequestFilterInit = Boolean.TRUE;
+                        fleaRequestFilter = newFleaRequestFilter();
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        }
+        return fleaRequestFilter;
+    }
+
+    private FleaRequestFilter newFleaRequestFilter() {
+
+        String fileName = FleaCoreConstants.FleaRequestConfigConstants.FLEA_REQUEST_FILTER_FILE_NAME;
+        if (StringUtils.isNotBlank(System.getProperty(FleaCoreConstants.FleaRequestConfigConstants.FLEA_REQUEST_FILTER_FILE_SYSTEM_KEY))) {
+            fileName = StringUtils.trim(System.getProperty(FleaCoreConstants.FleaRequestConfigConstants.FLEA_REQUEST_FILTER_FILE_SYSTEM_KEY));
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("FleaRequestXmlDigesterHelper##newFleaRequestFilter() Use the specified flea-request-filter.xml : " + fileName);
+            }
+        }
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("FleaRequestXmlDigesterHelper##newFleaRequestFilter() Use the current flea-request-filter.xml : " + fileName);
+            LOGGER.debug("FleaRequestXmlDigesterHelper##newFleaRequestFilter() Start to parse the flea-request-filter.xml");
+        }
+
+        Digester digester = newFleaRequestFilterFileDigester();
+        FleaRequestFilter obj = XmlDigesterHelper.parse(fileName, digester, FleaRequestFilter.class);
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("FleaRequestXmlDigesterHelper##newFleaRequestFilter() End to parse the flea-request-filter.xml");
+        }
+
+        return obj;
+    }
+
+    /**
+     * <p> 解析flea-request-filter.xml的Digester对象 </p>
+     *
+     * @return Digester对象
+     * @since 1.0.0
+     */
+    private Digester newFleaRequestFilterFileDigester() {
+        Digester digester = new Digester();
+        digester.setValidating(false);
+
+        digester.addObjectCreate("flea-request-filter", FleaRequestFilter.class.getName());
+        digester.addSetProperties("flea-request-filter");
+
+        // filter-task-chain
+        digester.addObjectCreate("flea-request-filter/filter-task-chain", FilterTaskChain.class.getName());
+        digester.addSetProperties("flea-request-filter/filter-task-chain");
+
+        // filter-tasks
+        digester.addObjectCreate("flea-request-filter/filter-task-chain/filter-tasks", FilterTasks.class.getName());
+        digester.addSetProperties("flea-request-filter/filter-task-chain/filter-tasks");
+
+        // filter-task
+        digester.addObjectCreate("flea-request-filter/filter-task-chain/filter-tasks/filter-task", FilterTask.class.getName());
+        digester.addSetProperties("flea-request-filter/filter-task-chain/filter-tasks/filter-task");
+
+        digester.addSetNext("flea-request-filter/filter-task-chain", "setFilterTaskChain", FilterTaskChain.class.getName());
+        digester.addSetNext("flea-request-filter/filter-task-chain/filter-tasks", "setFilterTasks", FilterTasks.class.getName());
+        digester.addSetNext("flea-request-filter/filter-task-chain/filter-tasks/filter-task", "addFilterTask", FilterTask.class.getName());
+
         return digester;
     }
 
