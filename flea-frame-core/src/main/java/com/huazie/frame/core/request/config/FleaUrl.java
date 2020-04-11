@@ -1,4 +1,4 @@
-package com.huazie.frame.core.filter.config;
+package com.huazie.frame.core.request.config;
 
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.MapUtils;

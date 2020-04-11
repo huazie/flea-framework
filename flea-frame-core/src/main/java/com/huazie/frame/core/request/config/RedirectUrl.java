@@ -1,4 +1,4 @@
-package com.huazie.frame.core.filter.config;
+package com.huazie.frame.core.request.config;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
@@ -6,18 +6,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p> URL 前缀，flea-request.xml 配置 {@code <url-prefix> </url-prefix>} 节点 </p>
+ * <p> 重定向URL，flea-request.xml 配置 {@code <redirect-url> </redirect-url>} 节点 </p>
  *
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0
  */
-public class UrlPrefix {
+public class RedirectUrl {
 
-    private List<Property> urlPrefixList = new ArrayList<Property>(); // URL前缀列表
+    private List<Property> redirectUrlList = new ArrayList<Property>(); // 重定向URL列表
 
-    public List<Property> getUrlPrefixList() {
-        return urlPrefixList;
+    public List<Property> getRedirectUrlList() {
+        return redirectUrlList;
     }
 
     /**
@@ -27,7 +27,7 @@ public class UrlPrefix {
      * @since 1.0.0
      */
     public void addProperty(Property property) {
-        urlPrefixList.add(property);
+        redirectUrlList.add(property);
     }
 
     @Override

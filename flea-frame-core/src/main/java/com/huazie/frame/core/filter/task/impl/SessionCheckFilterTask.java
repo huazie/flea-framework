@@ -1,7 +1,7 @@
 package com.huazie.frame.core.filter.task.impl;
 
 import com.huazie.frame.common.exception.CommonException;
-import com.huazie.frame.core.filter.config.FleaRequestConfig;
+import com.huazie.frame.core.request.config.FleaRequestConfig;
 import com.huazie.frame.core.filter.task.IFleaFilterTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

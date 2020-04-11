@@ -4,8 +4,8 @@ import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.ReflectUtils;
-import com.huazie.frame.core.filter.config.FilterTask;
-import com.huazie.frame.core.filter.config.FleaRequestConfig;
+import com.huazie.frame.core.request.config.FilterTask;
+import com.huazie.frame.core.request.config.FleaRequestConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

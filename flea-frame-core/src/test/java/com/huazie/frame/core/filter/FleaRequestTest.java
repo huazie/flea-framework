@@ -1,8 +1,9 @@
 package com.huazie.frame.core.filter;
 
 import com.huazie.frame.common.exception.CommonException;
-import com.huazie.frame.core.filter.config.FleaRequestConfig;
-import com.huazie.frame.core.filter.task.FleaFilterTaskChainManager;
+import com.huazie.frame.core.request.FleaRequestUtil;
+import com.huazie.frame.core.request.FleaRequestXmlDigesterHelper;
+import com.huazie.frame.core.request.config.FleaRequestConfig;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +47,7 @@ public class FleaRequestTest {
     @Test
     public void testDoFilterTask() {
         try {
-            FleaFilterTaskChainManager.getManager().doFilterTask(null, null);
+            FleaRequestUtil.doFilterTask(null, null);
         } catch (CommonException e) {
             LOGGER.error("Exception =", e);
         }
