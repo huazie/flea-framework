@@ -1,4 +1,4 @@
-package com.huazie.frame.core.filter.config;
+package com.huazie.frame.core.request.config;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 

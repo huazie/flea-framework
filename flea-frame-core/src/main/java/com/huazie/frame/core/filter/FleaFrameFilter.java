@@ -1,5 +1,8 @@
 package com.huazie.frame.core.filter;
 
+import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.core.request.FleaRequestUtil;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -24,6 +27,14 @@ public class FleaFrameFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+
+        try {
+            // 过滤器任务链执行
+            FleaRequestUtil.doFilterTask(servletRequest, servletResponse);
+        } catch (CommonException e) {
+            // 跳转至错误页面
+            FleaRequestUtil.sendRedirectToErrorPage(servletRequest, servletResponse);
+        }
 
         filterChain.doFilter(servletRequest, servletResponse);
     }
