@@ -3,7 +3,7 @@ package com.huazie.frame.core.request;
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.core.common.FleaCoreConstants;
-import com.huazie.frame.core.filter.task.FleaFilterTaskChainManager;
+import com.huazie.frame.core.filter.taskchain.FleaFilterTaskChainManager;
 import com.huazie.frame.core.request.config.FleaRequestConfig;
 import com.huazie.frame.core.request.config.Property;
 import org.apache.commons.lang.StringUtils;
@@ -41,8 +41,12 @@ public class FleaRequestUtil {
      * @param servletResponse 响应对象
      * @since 1.0.0
      */
-    public static void sendRedirectToErrorPage(ServletRequest servletRequest, ServletResponse servletResponse) throws IOException {
-        sendRedirectToOtherPage(servletRequest, servletResponse, FleaCoreConstants.FleaRequestConfigConstants.REDIRECT_URL_ERROR_KEY);
+    public static void sendRedirectToErrorPage(ServletRequest servletRequest, ServletResponse servletResponse, Throwable throwable) throws IOException {
+        if (ObjectUtils.isEmpty(throwable)) {
+            return;
+        }
+        String errorMsg = "?ERROR_MSG=" + throwable.getMessage();
+        sendRedirectToOtherPage(servletRequest, servletResponse, FleaCoreConstants.FleaRequestConfigConstants.REDIRECT_URL_ERROR_KEY, errorMsg);
     }
 
     /**
@@ -53,7 +57,7 @@ public class FleaRequestUtil {
      * @since 1.0.0
      */
     public static void sendRedirectToLoginPage(ServletRequest servletRequest, ServletResponse servletResponse) throws IOException {
-        sendRedirectToOtherPage(servletRequest, servletResponse, FleaCoreConstants.FleaRequestConfigConstants.REDIRECT_URL_LOGIN_KEY);
+        sendRedirectToOtherPage(servletRequest, servletResponse, FleaCoreConstants.FleaRequestConfigConstants.REDIRECT_URL_LOGIN_KEY, null);
     }
 
     /**
@@ -64,12 +68,16 @@ public class FleaRequestUtil {
      * @param redirectUrlKey  重定向URL配置KEY
      * @since 1.0.0
      */
-    public static void sendRedirectToOtherPage(ServletRequest servletRequest, ServletResponse servletResponse, String redirectUrlKey) throws IOException {
+    public static void sendRedirectToOtherPage(ServletRequest servletRequest, ServletResponse servletResponse, String redirectUrlKey, String urlParam) throws IOException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         Property redirectUrlProp = FleaRequestConfig.getFleaUrl().getRedirectUrlProperty(redirectUrlKey);
         if (ObjectUtils.isNotEmpty(response) && ObjectUtils.isNotEmpty(redirectUrlProp) && StringUtils.isNotEmpty(redirectUrlProp.getValue())) {
-            response.sendRedirect(request.getContextPath() + redirectUrlProp.getValue());
+            if (StringUtils.isNotBlank(urlParam)) {
+                response.sendRedirect(request.getContextPath() + redirectUrlProp.getValue() + urlParam);
+            } else {
+                response.sendRedirect(request.getContextPath() + redirectUrlProp.getValue());
+            }
         }
     }
 

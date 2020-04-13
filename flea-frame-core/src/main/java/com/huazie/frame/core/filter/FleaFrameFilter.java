@@ -33,7 +33,7 @@ public class FleaFrameFilter implements Filter {
             FleaRequestUtil.doFilterTask(servletRequest, servletResponse);
         } catch (CommonException e) {
             // 跳转至错误页面
-            FleaRequestUtil.sendRedirectToErrorPage(servletRequest, servletResponse);
+            FleaRequestUtil.sendRedirectToErrorPage(servletRequest, servletResponse, e);
         }
 
         filterChain.doFilter(servletRequest, servletResponse);

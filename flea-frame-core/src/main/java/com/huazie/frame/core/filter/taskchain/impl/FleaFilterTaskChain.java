@@ -1,9 +1,11 @@
-package com.huazie.frame.core.filter.task;
+package com.huazie.frame.core.filter.taskchain.impl;
 
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.ReflectUtils;
+import com.huazie.frame.core.filter.task.IFilterTask;
+import com.huazie.frame.core.filter.taskchain.IFilterTaskChain;
 import com.huazie.frame.core.request.config.FilterTask;
 import com.huazie.frame.core.request.config.FleaRequestConfig;
 import org.slf4j.Logger;
@@ -21,11 +23,13 @@ import java.util.List;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class FleaFilterTaskChain {
+public class FleaFilterTaskChain implements IFilterTaskChain{
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FleaFilterTaskChain.class);
 
-    private List<IFleaFilterTask> filterTaskList; // 过滤器任务
+    private List<IFilterTask> filterTaskList; // 过滤器任务
+
+    private int currentPosition = 0; // 当前执行的过滤器任务
 
     public FleaFilterTaskChain() {
         initFleaFilterTaskChain();
@@ -55,13 +59,13 @@ public class FleaFilterTaskChain {
      * @return 过滤器链实现类集合
      * @since 1.0.0
      */
-    private List<IFleaFilterTask> convert(List<FilterTask> filterTasks) {
-        List<IFleaFilterTask> fleaFilterTaskList = null;
+    private List<IFilterTask> convert(List<FilterTask> filterTasks) {
+        List<IFilterTask> fleaFilterTaskList = null;
         if (CollectionUtils.isNotEmpty(filterTasks)) {
-            fleaFilterTaskList = new ArrayList<IFleaFilterTask>();
+            fleaFilterTaskList = new ArrayList<IFilterTask>();
             for (FilterTask filterTask : filterTasks) {
                 if (ObjectUtils.isNotEmpty(filterTask)) {
-                    IFleaFilterTask fleaFilterTask = (IFleaFilterTask) ReflectUtils.newInstance(filterTask.getClazz());
+                    IFilterTask fleaFilterTask = (IFilterTask) ReflectUtils.newInstance(filterTask.getClazz());
                     if (ObjectUtils.isNotEmpty(fleaFilterTask)) {
                         fleaFilterTaskList.add(fleaFilterTask);
                     }
@@ -80,25 +84,11 @@ public class FleaFilterTaskChain {
      * @since 1.0.0
      */
     public void doFilterTask(ServletRequest servletRequest, ServletResponse servletResponse) throws CommonException {
-        doFilterTask(filterTaskList, servletRequest, servletResponse);
-    }
-
-    /**
-     * <p> 执行过滤器任务链 </p>
-     *
-     * @param filters         过滤器任务集合
-     * @param servletRequest  请求对象
-     * @param servletResponse 响应对象
-     * @throws CommonException 通用异常
-     * @since 1.0.0
-     */
-    private void doFilterTask(List<IFleaFilterTask> filters, ServletRequest servletRequest, ServletResponse servletResponse) throws CommonException {
-        if (CollectionUtils.isNotEmpty(filters)) {
-            for (IFleaFilterTask filter : filters) {
-                if (ObjectUtils.isNotEmpty(filter)) {
-                    filter.doFilterTask(servletRequest, servletResponse);
-                }
-            }
+        if (currentPosition < filterTaskList.size()) {
+            IFilterTask filterTask = filterTaskList.get(currentPosition);
+            ++currentPosition;
+            filterTask.doFilterTask(servletRequest, servletResponse, this);
         }
     }
+
 }
