@@ -21,7 +21,7 @@ public class FleaI18NTest {
     public void fleaI18NConfigTest() {
         FleaI18nConfig config = FleaI18nConfig.getConfig();
         try {
-            config.getI18NData("ERROR0000000001", "error", Locale.US);
+            config.getI18NData("ERROR-CORE-FILTER0000000001", "error", Locale.US);
         } catch (Exception e) {
             LOGGER.error("Exception={}", e);
         }
@@ -30,7 +30,7 @@ public class FleaI18NTest {
     @Test
     public void fleaI18NHelperTest() {
         try {
-            FleaI18nHelper.i18n("ERROR0000000001", "error", Locale.US);
+            FleaI18nHelper.i18n("ERROR-CORE-FILTER0000000001", "error", Locale.US);
         } catch (Exception e) {
             LOGGER.error("Exception={}", e);
         }
