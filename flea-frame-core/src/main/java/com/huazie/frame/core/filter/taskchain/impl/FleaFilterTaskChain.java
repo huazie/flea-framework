@@ -15,6 +15,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * <p> Flea过滤器任务链 </p>
@@ -23,13 +24,13 @@ import java.util.List;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class FleaFilterTaskChain implements IFilterTaskChain{
+public class FleaFilterTaskChain implements IFilterTaskChain {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FleaFilterTaskChain.class);
 
     private List<IFilterTask> filterTaskList; // 过滤器任务
 
-    private int currentPosition = 0; // 当前执行的过滤器任务
+    private static ThreadLocal<Integer> sCurrentPosition = new ThreadLocal<Integer>();
 
     public FleaFilterTaskChain() {
         initFleaFilterTaskChain();
@@ -84,11 +85,36 @@ public class FleaFilterTaskChain implements IFilterTaskChain{
      * @since 1.0.0
      */
     public void doFilterTask(ServletRequest servletRequest, ServletResponse servletResponse) throws CommonException {
+        Integer currentPosition = getCurrentPostion();
         if (currentPosition < filterTaskList.size()) {
             IFilterTask filterTask = filterTaskList.get(currentPosition);
-            ++currentPosition;
+            setsCurrentPosition(++currentPosition);
             filterTask.doFilterTask(servletRequest, servletResponse, this);
         }
+    }
+
+    /**
+     * <p> 获取当前过滤器任务链中处理的过滤器任务位置 </p>
+     *
+     * @return 返回当前过滤器任务链中处理的过滤器任务位置
+     * @since 1.0.0
+     */
+    private Integer getCurrentPostion() {
+        Integer currentPosition = sCurrentPosition.get();
+        if (ObjectUtils.isEmpty(currentPosition)) {
+            currentPosition = 0;
+        }
+        return currentPosition;
+    }
+
+    /**
+     * <p> 设置当前过滤器任务链中处理的过滤器任务位置 </p>
+     *
+     * @param currentPosition 过滤器任务位置
+     * @since 1.0.0
+     */
+    private void setsCurrentPosition(Integer currentPosition) {
+        sCurrentPosition.set(currentPosition);
     }
 
 }
