@@ -1,6 +1,7 @@
 package com.huazie.frame.core.filter.task.impl;
 
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.PatternMatcherUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.core.filter.task.FleaFilterTaskException;
@@ -31,27 +32,33 @@ public class UrlCheckFilterTask implements IFilterTask {
     @Override
     public void doFilterTask(ServletRequest servletRequest, ServletResponse servletResponse, IFilterTaskChain filterTaskChain) throws CommonException {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("UrlCheckFilterTask##doFilterTask(ServletRequest, ServletResponse) Start");
+            LOGGER.debug("UrlCheckFilterTask##doFilterTask(ServletRequest, ServletResponse, IFilterTaskChain) Start");
         }
 
-        String illegalChar = FleaRequestConfig.getFleaUrl().getUrlIllegalChar();
-        if (StringUtils.isBlank(illegalChar)) {
-            illegalChar = URL_ILLEGAL_CHAR;
+        String urlIllegalChar = FleaRequestConfig.getFleaUrl().getUrlIllegalChar();
+        if (StringUtils.isBlank(urlIllegalChar)) {
+            urlIllegalChar = URL_ILLEGAL_CHAR;
+        }
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("UrlCheckFilterTask##doFilterTask(ServletRequest, ServletResponse, IFilterTaskChain) URL_ILLEGAL_CHAR = {}", urlIllegalChar);
         }
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        String queryString = request.getQueryString();
+        if (ObjectUtils.isNotEmpty(request)) {
+            String queryString = request.getQueryString();
 
-        if (PatternMatcherUtils.matches(illegalChar, queryString, Pattern.CASE_INSENSITIVE)) {
-            // 检测到浏览器请求地址栏中存在非法的字符，已限制访问！！！
-            throw new FleaFilterTaskException("ERROR-CORE-FILTER0000000001");
+            if (PatternMatcherUtils.matches(urlIllegalChar, queryString, Pattern.CASE_INSENSITIVE)) {
+                // 检测到浏览器请求地址栏中存在非法的字符，已限制访问！！！
+                throw new FleaFilterTaskException("ERROR-CORE-FILTER0000000001");
+            }
         }
 
         // 执行下一条过滤器任务
         filterTaskChain.doFilterTask(servletRequest, servletResponse);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("UrlCheckFilterTask##doFilterTask(ServletRequest, ServletResponse) End");
+            LOGGER.debug("UrlCheckFilterTask##doFilterTask(ServletRequest, ServletResponse, IFilterTaskChain) End");
         }
     }
 }

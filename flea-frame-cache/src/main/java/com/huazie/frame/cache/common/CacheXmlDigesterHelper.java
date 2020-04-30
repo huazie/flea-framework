@@ -64,8 +64,8 @@ public class CacheXmlDigesterHelper {
         if (isInit.equals(Boolean.FALSE)) {
             synchronized (isInit) {
                 if (isInit.equals(Boolean.FALSE)) {
-                    isInit = Boolean.TRUE;
                     xmlDigester = new CacheXmlDigesterHelper();
+                    isInit = Boolean.TRUE;
                 }
             }
         }
@@ -83,8 +83,8 @@ public class CacheXmlDigesterHelper {
             synchronized (isFleaCacheInit) {
                 if (isFleaCacheInit.equals(Boolean.FALSE)) {
                     try {
-                        isFleaCacheInit = Boolean.TRUE;
                         fleaCache = newFleaCache();
+                        isFleaCacheInit = Boolean.TRUE;
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -190,8 +190,8 @@ public class CacheXmlDigesterHelper {
             synchronized (isFleaCacheConfigInit) {
                 if (isFleaCacheConfigInit.equals(Boolean.FALSE)) {
                     try {
-                        isFleaCacheConfigInit = Boolean.TRUE;
                         fleaCacheConfig = newFleaCacheConfig();
+                        isFleaCacheConfigInit = Boolean.TRUE;
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }

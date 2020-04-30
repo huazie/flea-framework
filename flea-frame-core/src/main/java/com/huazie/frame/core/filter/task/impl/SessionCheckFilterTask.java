@@ -23,7 +23,7 @@ public class SessionCheckFilterTask implements IFilterTask {
     @Override
     public void doFilterTask(ServletRequest servletRequest, ServletResponse servletResponse, IFilterTaskChain filterTaskChain) throws CommonException {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("SessionCheckFilterTask##doFilterTask(ServletRequest, ServletResponse) Start");
+            LOGGER.debug("SessionCheckFilterTask##doFilterTask(ServletRequest, ServletResponse, IFilterTaskChain) Start");
         }
 
         
@@ -31,7 +31,7 @@ public class SessionCheckFilterTask implements IFilterTask {
         filterTaskChain.doFilterTask(servletRequest, servletResponse);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("SessionCheckFilterTask##doFilterTask(ServletRequest, ServletResponse) End");
+            LOGGER.debug("SessionCheckFilterTask##doFilterTask(ServletRequest, ServletResponse, IFilterTaskChain) End");
         }
     }
 
