@@ -53,8 +53,8 @@ public class FleaRequestXmlDigesterHelper {
         if (isInit.equals(Boolean.FALSE)) {
             synchronized (isInit) {
                 if (isInit.equals(Boolean.FALSE)) {
-                    isInit = Boolean.TRUE;
                     xmlDigester = new FleaRequestXmlDigesterHelper();
+                    isInit = Boolean.TRUE;
                 }
             }
         }
@@ -72,8 +72,8 @@ public class FleaRequestXmlDigesterHelper {
             synchronized (isFleaRequestInit) {
                 if (isFleaRequestInit.equals(Boolean.FALSE)) {
                     try {
-                        isFleaRequestInit = Boolean.TRUE;
                         fleaRequest = newFleaRequest();
+                        isFleaRequestInit = Boolean.TRUE;
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -175,8 +175,8 @@ public class FleaRequestXmlDigesterHelper {
             synchronized (isFleaRequestFilterInit) {
                 if (isFleaRequestFilterInit.equals(Boolean.FALSE)) {
                     try {
-                        isFleaRequestFilterInit = Boolean.TRUE;
                         fleaRequestFilter = newFleaRequestFilter();
+                        isFleaRequestFilterInit = Boolean.TRUE;
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }

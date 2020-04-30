@@ -52,8 +52,8 @@ public class JerseyXmlDigesterHelper {
         if (isInit.equals(Boolean.FALSE)) {
             synchronized (isInit) {
                 if (isInit.equals(Boolean.FALSE)) {
-                    isInit = Boolean.TRUE;
                     xmlDigester = new JerseyXmlDigesterHelper();
+                    isInit = Boolean.TRUE;
                 }
             }
         }
