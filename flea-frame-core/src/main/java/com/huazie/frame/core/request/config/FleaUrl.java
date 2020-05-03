@@ -24,6 +24,11 @@ public class FleaUrl {
     public static final String UNCHECK_URL = "UNCHECK_URL";
     public static final String CHECK_URL = "CHECK_URL";
 
+    public static final String REDIRECT_URL_LOGIN_KEY = "login"; // 重定向登录页面请求配置KEY
+    public static final String REDIRECT_URL_ERROR_KEY = "error"; // 重定向错误页面请求配置KEY
+
+    public static final String URL_PREFIX_BUSINESS_KEY = "business"; // 业务请求URL前缀配置
+
     private RedirectUrl redirectUrl; // 重定向URL
 
     private List<String> unCheckUrls = new ArrayList<String>(); // 不需要校验的URL列表
@@ -90,7 +95,7 @@ public class FleaUrl {
      *
      * @param url  待判断的URL字符串
      * @param type 指定类型(UNCHECK_URL: 不需要校验的URL CHECK_URL: 需要校验的URL)
-     * @return true : 包含 false ：不包含
+     * @return true : 包含, false : 不包含
      * @since 1.0.0
      */
     public boolean contains(String url, String type) {
@@ -108,7 +113,7 @@ public class FleaUrl {
      *
      * @param url      待判断的URL字符串
      * @param mUrlList 指定的URL列表
-     * @return true : 包含 false ：不包含
+     * @return true : 包含, false : 不包含
      * @since 1.0.0
      */
     private boolean contains(String url, List<String> mUrlList) {
@@ -133,13 +138,30 @@ public class FleaUrl {
     }
 
     /**
+     * <p> URL是否包含指定类型的URL前缀</p>
+     *
+     * @param url  URL字符串
+     * @param type 指定类型的URL前缀
+     * @return true : 包含, false : 不包含
+     * @since 1.0.0
+     */
+    public boolean containsUrlPrefix(String url, String type) {
+        boolean isContains = false;
+        Property urlPrefixProperty = getUrlPrefixProperty(type);
+        if (ObjectUtils.isNotEmpty(urlPrefixProperty) && StringUtils.isNotBlank(url)) {
+            isContains = url.contains(urlPrefixProperty.getValue());
+        }
+        return isContains;
+    }
+
+    /**
      * <p> 获取指定属性key对应的URL前缀 </p>
      *
      * @param key 属性key
      * @return URL前缀
      * @since 1.0.0
      */
-    public Property getUrlPrefixProperty(String key) {
+    private Property getUrlPrefixProperty(String key) {
         return getProperty(urlPrefix.getUrlPrefixList(), key);
     }
 
@@ -152,12 +174,29 @@ public class FleaUrl {
     }
 
     /**
+     * <p> 根据属性Key获取指定的属性 </p>
+     *
+     * @param propertyList 属性列表
+     * @param key          属性key
+     * @return 属性
+     * @since 1.0.0
+     */
+    private Property getProperty(List<Property> propertyList, String key) {
+        Property property = null;
+        Map<String, Property> propertyMap = toPropertyMap(propertyList);
+        if (MapUtils.isNotEmpty(propertyMap)) {
+            property = propertyMap.get(key);
+        }
+        return property;
+    }
+
+    /**
      * <p> 获取属性列表Map， 便于根据属性key查找 </p>
      *
      * @return 属性列表Map
      * @since 1.0.0
      */
-    public Map<String, Property> toPropertyMap(List<Property> propertyList) {
+    private Map<String, Property> toPropertyMap(List<Property> propertyList) {
         Map<String, Property> propertyMap = new HashMap<String, Property>();
         Iterator<Property> propertyIt = propertyList.iterator();
         while (propertyIt.hasNext()) {
@@ -167,23 +206,6 @@ public class FleaUrl {
             }
         }
         return propertyMap;
-    }
-
-    /**
-     * <p> 根据属性Key获取指定的属性 </p>
-     *
-     * @param propertyList 属性列表
-     * @param key          属性key
-     * @return 属性
-     * @since 1.0.0
-     */
-    public Property getProperty(List<Property> propertyList, String key) {
-        Property property = null;
-        Map<String, Property> propertyMap = toPropertyMap(propertyList);
-        if (MapUtils.isNotEmpty(propertyMap)) {
-            property = propertyMap.get(key);
-        }
-        return property;
     }
 
     @Override

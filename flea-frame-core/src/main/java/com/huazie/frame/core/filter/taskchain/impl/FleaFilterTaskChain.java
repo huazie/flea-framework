@@ -1,5 +1,6 @@
 package com.huazie.frame.core.filter.taskchain.impl;
 
+import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
@@ -15,7 +16,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * <p> Flea过滤器任务链 </p>
@@ -30,7 +30,7 @@ public class FleaFilterTaskChain implements IFilterTaskChain {
 
     private List<IFilterTask> filterTaskList; // 过滤器任务
 
-    private static ThreadLocal<Integer> sCurrentPosition = new ThreadLocal<Integer>();
+    private static ThreadLocal<Integer> sCurrentPosition = new ThreadLocal<Integer>(); // 过滤器任务执行位置
 
     public FleaFilterTaskChain() {
         initFleaFilterTaskChain();
@@ -85,10 +85,15 @@ public class FleaFilterTaskChain implements IFilterTaskChain {
      * @since 1.0.0
      */
     public void doFilterTask(ServletRequest servletRequest, ServletResponse servletResponse) throws CommonException {
-        Integer currentPosition = getCurrentPostion();
+        Integer currentPosition = getCurrentPosition();
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("***************************************************************************************");
+            LOGGER.debug("FleaFilterTaskChain##doFilterTask(ServletRequest, ServletResponse) CurrentPosition = {}", currentPosition);
+            LOGGER.debug("***************************************************************************************");
+        }
         if (currentPosition < filterTaskList.size()) {
             IFilterTask filterTask = filterTaskList.get(currentPosition);
-            setsCurrentPosition(++currentPosition);
+            setCurrentPosition(++currentPosition);
             filterTask.doFilterTask(servletRequest, servletResponse, this);
         }
     }
@@ -99,10 +104,10 @@ public class FleaFilterTaskChain implements IFilterTaskChain {
      * @return 返回当前过滤器任务链中处理的过滤器任务位置
      * @since 1.0.0
      */
-    private Integer getCurrentPostion() {
+    private Integer getCurrentPosition() {
         Integer currentPosition = sCurrentPosition.get();
         if (ObjectUtils.isEmpty(currentPosition)) {
-            currentPosition = 0;
+            currentPosition = CommonConstants.NumeralConstants.INT_ZERO;
         }
         return currentPosition;
     }
@@ -113,7 +118,7 @@ public class FleaFilterTaskChain implements IFilterTaskChain {
      * @param currentPosition 过滤器任务位置
      * @since 1.0.0
      */
-    private void setsCurrentPosition(Integer currentPosition) {
+    public void setCurrentPosition(Integer currentPosition) {
         sCurrentPosition.set(currentPosition);
     }
 

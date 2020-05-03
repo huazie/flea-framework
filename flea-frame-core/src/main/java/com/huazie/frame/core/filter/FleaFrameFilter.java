@@ -32,8 +32,12 @@ public class FleaFrameFilter implements Filter {
             // 过滤器任务链执行
             FleaRequestUtil.doFilterTask(servletRequest, servletResponse);
         } catch (CommonException e) {
-            // 跳转至错误页面
-            FleaRequestUtil.sendRedirectToErrorPage(servletRequest, servletResponse, e);
+            try {
+                // 跳转至错误页面
+                FleaRequestUtil.sendRedirectToErrorPage(servletRequest, servletResponse, e);
+            } catch (CommonException ex) {
+                throw new IOException(ex);
+            }
         }
 
         filterChain.doFilter(servletRequest, servletResponse);
