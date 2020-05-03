@@ -1,5 +1,6 @@
 package com.huazie.frame.core.filter.taskchain;
 
+import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.core.filter.taskchain.impl.FleaFilterTaskChain;
@@ -51,6 +52,8 @@ public class FleaFilterTaskChainManager {
      */
     public void doFilterTask(ServletRequest servletRequest, ServletResponse servletResponse) throws CommonException {
         fleaFilterTaskChain.doFilterTask(servletRequest, servletResponse);
+        // 过滤器任务链执行完毕，当前线程重置过滤器任务执行位置
+        fleaFilterTaskChain.setCurrentPosition(CommonConstants.NumeralConstants.INT_ZERO);
     }
 
 }

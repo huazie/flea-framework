@@ -32,14 +32,6 @@ public interface FleaCoreConstants {
          */
         String FLEA_REQUEST_FILTER_FILE_SYSTEM_KEY = "fleaframe.request.flea.request.filter.filename";
 
-        /**
-         * <p> 重定向登录页面请求配置KEY </p>
-         */
-        String REDIRECT_URL_LOGIN_KEY = "login";
-        /**
-         * <p> 重定向错误页面请求配置KEY </p>
-         */
-        String REDIRECT_URL_ERROR_KEY = "error";
     }
 
 }
