@@ -22,7 +22,6 @@
         <check-urls>
             <check-url>/index.html</check-url>
             <check-url>/mgmt/</check-url>
-            <check-url>/auth/</check-url>
         </check-urls>
         <!-- URL前缀 -->
         <url-prefix>

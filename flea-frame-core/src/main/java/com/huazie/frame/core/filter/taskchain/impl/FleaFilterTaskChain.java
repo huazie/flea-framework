@@ -7,13 +7,12 @@ import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.ReflectUtils;
 import com.huazie.frame.core.filter.task.IFilterTask;
 import com.huazie.frame.core.filter.taskchain.IFilterTaskChain;
+import com.huazie.frame.core.request.FleaRequestContext;
 import com.huazie.frame.core.request.config.FilterTask;
 import com.huazie.frame.core.request.config.FleaRequestConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,12 +78,11 @@ public class FleaFilterTaskChain implements IFilterTaskChain {
     /**
      * <p> 执行过滤器任务链 </p>
      *
-     * @param servletRequest  请求对象
-     * @param servletResponse 响应对象
+     * @param fleaRequestContext Flea请求上下文
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public void doFilterTask(ServletRequest servletRequest, ServletResponse servletResponse) throws CommonException {
+    public void doFilterTask(FleaRequestContext fleaRequestContext) throws CommonException {
         Integer currentPosition = getCurrentPosition();
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("***************************************************************************************");
@@ -94,7 +92,7 @@ public class FleaFilterTaskChain implements IFilterTaskChain {
         if (currentPosition < filterTaskList.size()) {
             IFilterTask filterTask = filterTaskList.get(currentPosition);
             setCurrentPosition(++currentPosition);
-            filterTask.doFilterTask(servletRequest, servletResponse, this);
+            filterTask.doFilterTask(fleaRequestContext, this);
         }
     }
 
@@ -118,8 +116,17 @@ public class FleaFilterTaskChain implements IFilterTaskChain {
      * @param currentPosition 过滤器任务位置
      * @since 1.0.0
      */
-    public void setCurrentPosition(Integer currentPosition) {
+    private void setCurrentPosition(Integer currentPosition) {
         sCurrentPosition.set(currentPosition);
+    }
+
+    /**
+     * <p> 过滤器任务链执行完毕，当前线程重置过滤器任务执行位置 </p>
+     *
+     * @since 1.0.0
+     */
+    public void reset() {
+        setCurrentPosition(CommonConstants.NumeralConstants.INT_ZERO);
     }
 
 }

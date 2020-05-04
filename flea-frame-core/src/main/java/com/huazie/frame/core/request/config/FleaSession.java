@@ -11,6 +11,8 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  */
 public class FleaSession {
 
+    public static final String SESSION_ACTIVE_TIME = "SESSION_ACTIVE_TIME"; // Session激活时间（业务请求重置改时间）
+
     private String userSessionKey; // 用户SESSION信息键
 
     private String idleTime; // 用户SESSION空闲保持时间（单位：秒）

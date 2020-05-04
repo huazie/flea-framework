@@ -7,12 +7,11 @@ import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.core.filter.task.FleaFilterTaskException;
 import com.huazie.frame.core.filter.task.IFilterTask;
 import com.huazie.frame.core.filter.taskchain.IFilterTaskChain;
+import com.huazie.frame.core.request.FleaRequestContext;
 import com.huazie.frame.core.request.FleaRequestUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.util.regex.Pattern;
 
@@ -30,7 +29,7 @@ public class UrlCheckFilterTask implements IFilterTask {
     private static final String URL_ILLEGAL_CHAR = "<|>|alert|document.cookie|href|script|select|insert|update|delete|truncate|exec|drop";
 
     @Override
-    public void doFilterTask(ServletRequest servletRequest, ServletResponse servletResponse, IFilterTaskChain filterTaskChain) throws CommonException {
+    public void doFilterTask(FleaRequestContext fleaRequestContext, IFilterTaskChain filterTaskChain) throws CommonException {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("UrlCheckFilterTask##doFilterTask(ServletRequest, ServletResponse, IFilterTaskChain) Start");
         }
@@ -44,7 +43,7 @@ public class UrlCheckFilterTask implements IFilterTask {
             LOGGER.debug("UrlCheckFilterTask##doFilterTask(ServletRequest, ServletResponse, IFilterTaskChain) URL_ILLEGAL_CHAR = {}", urlIllegalChar);
         }
 
-        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletRequest request = (HttpServletRequest) fleaRequestContext.getServletRequest();
         if (ObjectUtils.isNotEmpty(request)) {
             String queryString = request.getQueryString();
             if (StringUtils.isNotBlank(queryString) && PatternMatcherUtils.matches(urlIllegalChar, queryString, Pattern.CASE_INSENSITIVE)) {
@@ -71,13 +70,13 @@ public class UrlCheckFilterTask implements IFilterTask {
                     LOGGER.debug("UrlCheckFilterTask##doFilterTask(ServletRequest, ServletResponse, IFilterTaskChain) Check URL, Redirect to Login Page");
                 }
                 // 重定向到登录页面
-                FleaRequestUtil.sendRedirectToLoginPage(servletRequest, servletResponse);
+                FleaRequestUtil.sendRedirectToLoginPage(fleaRequestContext);
                 return;
             }
         }
 
         // 执行下一条过滤器任务
-        filterTaskChain.doFilterTask(servletRequest, servletResponse);
+        filterTaskChain.doFilterTask(fleaRequestContext);
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("UrlCheckFilterTask##doFilterTask(ServletRequest, ServletResponse, IFilterTaskChain) End");
