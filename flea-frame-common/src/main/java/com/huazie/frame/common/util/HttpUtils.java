@@ -64,6 +64,10 @@ public class HttpUtils {
             LOGGER.debug("HttpUtils#getIp(HttpServletRequest) IP ={}", ip);
         }
 
+        if (StringUtils.isBlank(ip)) {
+            ip = "0.0.0.0";
+        }
+
         return ip;
     }
 

@@ -1,7 +1,7 @@
 package com.huazie.frame.auth.common.service.impl;
 
 import com.huazie.frame.auth.common.service.interfaces.IFleaAuthSV;
-import com.huazie.frame.common.FleaFrameManager;
+import com.huazie.frame.common.FleaSessionManager;
 import com.huazie.frame.common.IFleaUser;
 import com.huazie.frame.common.object.FleaObjectFactory;
 import com.huazie.frame.common.util.MapUtils;
@@ -23,7 +23,7 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
 
     @Override
     public void initUserInfo(Long userId, Long acctId, Long systemAcctId, Map<String, Object> otherAttrs, FleaObjectFactory<IFleaUser> fleaObjectFactory) {
-        IFleaUser fleaUser = FleaFrameManager.getManager().getUserInfo();
+        IFleaUser fleaUser = FleaSessionManager.getUserInfo();
         if (ObjectUtils.isEmpty(fleaUser)) {
             fleaUser = fleaObjectFactory.newObject().getObject();
 
@@ -47,7 +47,10 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
                 }
             }
 
-            FleaFrameManager.getManager().setUserInfo(fleaUser);
+            FleaSessionManager.setUserInfo(fleaUser);
+
+            // 初始化Flea对象信息
+            fleaObjectFactory.initObject();
         }
     }
 

@@ -1,12 +1,9 @@
 package com.huazie.frame.core.filter.taskchain;
 
-import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.core.filter.taskchain.impl.FleaFilterTaskChain;
-
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import com.huazie.frame.core.request.FleaRequestContext;
 
 /**
  * <p> 过滤器任务链管理类 </p>
@@ -45,15 +42,14 @@ public class FleaFilterTaskChainManager {
     /**
      * <p> 执行过滤器任务链 </p>
      *
-     * @param servletRequest  请求对象
-     * @param servletResponse 响应对象
+     * @param fleaRequestContext Flea请求上下文
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public void doFilterTask(ServletRequest servletRequest, ServletResponse servletResponse) throws CommonException {
-        fleaFilterTaskChain.doFilterTask(servletRequest, servletResponse);
+    public void doFilterTask(FleaRequestContext fleaRequestContext) throws CommonException {
+        fleaFilterTaskChain.doFilterTask(fleaRequestContext);
         // 过滤器任务链执行完毕，当前线程重置过滤器任务执行位置
-        fleaFilterTaskChain.setCurrentPosition(CommonConstants.NumeralConstants.INT_ZERO);
+        fleaFilterTaskChain.reset();
     }
 
 }

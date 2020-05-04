@@ -1,6 +1,7 @@
 package com.huazie.frame.core.filter;
 
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.core.request.FleaRequestContext;
 import com.huazie.frame.core.request.FleaRequestUtil;
 
 /**
@@ -33,7 +34,7 @@ public class FleaRequestMainTest {
         @Override
         public void run() {
             try {
-                FleaRequestUtil.doFilterTask(null, null);
+                FleaRequestUtil.doFilterTask(new FleaRequestContext());
             } catch (CommonException e) {
 
             }

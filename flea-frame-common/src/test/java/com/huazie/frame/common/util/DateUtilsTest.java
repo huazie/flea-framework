@@ -5,6 +5,8 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Date;
+
 /**
  *  
  * @author huazie
@@ -29,5 +31,12 @@ public class DateUtilsTest {
 		LOGGER.debug("DATE1: {}", DateUtils.string2Date(dateStr, DateFormatEnum.YYYY_MM_DD.getFormat()));
 		LOGGER.debug("DATE2: {}", DateUtils.string2Date(dateStr, DateFormatEnum.YYYY_MM));
 		LOGGER.debug("DATE3: {}", DateUtils.string2Date(dateStr));
+	}
+
+	@Test
+	public void testTime() {
+		Date date1 = DateUtils.string2Date("20200504180100", DateFormatEnum.YYMMDDHHMMSS.getFormat());
+		Date date2 = DateUtils.string2Date("20200504180110", DateFormatEnum.YYMMDDHHMMSS.getFormat());
+		LOGGER.debug("Time: {}", date2.getTime() - date1.getTime());
 	}
 }
