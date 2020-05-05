@@ -20,6 +20,14 @@ public class FleaRequestContext extends FleaCommonConfig {
 
     private ServletResponse servletResponse;
 
+    public FleaRequestContext() {
+    }
+
+    public FleaRequestContext(ServletRequest servletRequest, ServletResponse servletResponse) {
+        this.servletRequest = servletRequest;
+        this.servletResponse = servletResponse;
+    }
+
     public ServletRequest getServletRequest() {
         return servletRequest;
     }
