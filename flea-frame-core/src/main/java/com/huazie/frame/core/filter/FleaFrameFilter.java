@@ -30,9 +30,7 @@ public class FleaFrameFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 
-        FleaRequestContext fleaRequestContext = new FleaRequestContext();
-        fleaRequestContext.setServletRequest(servletRequest);
-        fleaRequestContext.setServletResponse(servletResponse);
+        FleaRequestContext fleaRequestContext = new FleaRequestContext(servletRequest, servletResponse);
         try {
             // 过滤器任务链执行
             FleaRequestUtil.doFilterTask(fleaRequestContext);
