@@ -86,7 +86,7 @@ public class FleaFilterTaskChain implements IFilterTaskChain {
         Integer currentPosition = getCurrentPosition();
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("***************************************************************************************");
-            LOGGER.debug("FleaFilterTaskChain##doFilterTask(ServletRequest, ServletResponse) CurrentPosition = {}", currentPosition);
+            LOGGER.debug("FleaFilterTaskChain##doFilterTask(FleaRequestContext) CurrentPosition = {}", currentPosition);
             LOGGER.debug("***************************************************************************************");
         }
         if (currentPosition < filterTaskList.size()) {
