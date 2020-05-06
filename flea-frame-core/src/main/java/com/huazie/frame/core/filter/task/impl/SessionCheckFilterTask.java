@@ -38,7 +38,7 @@ public class SessionCheckFilterTask implements IFilterTask {
         String userSessionKey = FleaRequestUtil.getUserSessionKey();
         if (ObjectUtils.isEmpty(userSessionKey)) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("SessionCheckFilterTask##doFilterTask(ServletRequest, ServletResponse, IFilterTaskChain) <user-session-key> is not configured or is Empty");
+                LOGGER.error("SessionCheckFilterTask##doFilterTask(FleaRequestContext, IFilterTaskChain) <user-session-key> is not configured or is Empty");
             }
             filterTaskChain.doFilterTask(fleaRequestContext);
             return;
@@ -53,7 +53,7 @@ public class SessionCheckFilterTask implements IFilterTask {
                 // 用户没有登录
                 if (!isLogin(httpSession, userSessionKey)) {
                     if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug("UrlCheckFilterTask##doFilterTask(ServletRequest, ServletResponse, IFilterTaskChain) Business Request And User Not Login, Redirect to Login Page");
+                        LOGGER.debug("UrlCheckFilterTask##doFilterTask(FleaRequestContext, IFilterTaskChain) Business Request And User Not Login, Redirect to Login Page");
                     }
                     // 重定向到登录页面
                     FleaRequestUtil.sendRedirectToLoginPage(fleaRequestContext);
@@ -62,7 +62,7 @@ public class SessionCheckFilterTask implements IFilterTask {
                 // 用户登录已失效
                 if (isLoginExpired(httpSession, userSessionKey)) {
                     if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug("UrlCheckFilterTask##doFilterTask(ServletRequest, ServletResponse, IFilterTaskChain) Business Request And User Session Has Expired, Redirect to Login Page");
+                        LOGGER.debug("UrlCheckFilterTask##doFilterTask(FleaRequestContext, IFilterTaskChain) Business Request And User Session Has Expired, Redirect to Login Page");
                     }
                     // 重定向到登录页面
                     FleaRequestUtil.sendRedirectToLoginPage(fleaRequestContext);
@@ -74,7 +74,7 @@ public class SessionCheckFilterTask implements IFilterTask {
         filterTaskChain.doFilterTask(fleaRequestContext);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("SessionCheckFilterTask##doFilterTask(ServletRequest, ServletResponse, IFilterTaskChain) End");
+            LOGGER.debug("SessionCheckFilterTask##doFilterTask(FleaRequestContext, IFilterTaskChain) End");
         }
     }
 
