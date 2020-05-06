@@ -15,7 +15,7 @@
         </redirect-url>
         <!-- 不需校验的URL -->
         <uncheck-urls>
-            <uncheck-url>/business/fleaMgmtLogin!login.flea</uncheck-url>
+            <uncheck-url>/business/fleamgmtLogin!login.flea</uncheck-url>
             <uncheck-url>/resources</uncheck-url>
         </uncheck-urls>
         <!-- 需要校验的URL，一般配置其他页面在项目中的相对路径 -->
