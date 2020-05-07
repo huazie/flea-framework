@@ -25,7 +25,8 @@
         </check-urls>
         <!-- URL前缀 -->
         <url-prefix>
-            <property key="business" desc="业务URL前缀配置">/business</property>
+            <property key="business" desc="业务请求URL前缀配置">/business</property>
+            <property key="page" desc="页面跳转请求URL前缀配置">/page</property>
         </url-prefix>
         <!-- URL非法字符 -->
         <url-illegal-char>&lt;|&gt;|alert|document.cookie|href|script|select|insert|update|delete|truncate|exec|drop</url-illegal-char>

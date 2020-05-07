@@ -28,6 +28,7 @@ public class FleaUrl {
     public static final String REDIRECT_URL_ERROR_KEY = "error"; // 重定向错误页面请求配置KEY
 
     public static final String URL_PREFIX_BUSINESS_KEY = "business"; // 业务请求URL前缀配置
+    public static final String URL_PREFIX_PAGE_KEY = "page"; // 页面跳转请求URL前缀配置
 
     private RedirectUrl redirectUrl; // 重定向URL
 
