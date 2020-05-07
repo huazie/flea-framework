@@ -186,6 +186,22 @@ public class FleaRequestUtil {
     }
 
     /**
+     * <p> 判断是否是页面跳转URL </p>
+     *
+     * @param url 待校验的URL
+     * @return true: 是 false: 不是
+     * @throws CommonException 通用异常类
+     * @since 1.0.0
+     */
+    public static boolean isPageUrl(String url) throws CommonException {
+        boolean isPageUrl = false;
+        if (getFleaUrl().containsUrlPrefix(url, FleaUrl.URL_PREFIX_PAGE_KEY)) {
+            isPageUrl = true;
+        }
+        return isPageUrl;
+    }
+
+    /**
      * <p> 获取FleaUrl对象 </p>
      *
      * @return FleaUrl对象，如果对象为空，则抛出异常

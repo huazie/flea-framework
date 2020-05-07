@@ -49,7 +49,7 @@ public class SessionCheckFilterTask implements IFilterTask {
             String uri = request.getRequestURI();
             HttpSession httpSession = request.getSession();
             // 业务请求
-            if (ObjectUtils.isNotEmpty(httpSession) && FleaRequestUtil.isBusinessUrl(uri)) {
+            if (ObjectUtils.isNotEmpty(httpSession) && (FleaRequestUtil.isBusinessUrl(uri) || FleaRequestUtil.isPageUrl(uri))) {
                 // 用户没有登录
                 if (!isLogin(httpSession, userSessionKey)) {
                     if (LOGGER.isDebugEnabled()) {
