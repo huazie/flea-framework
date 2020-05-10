@@ -3,6 +3,7 @@ package com.huazie.frame.auth.base.user.service.impl;
 import com.huazie.frame.auth.base.user.dao.interfaces.IFleaLoginLogDAO;
 import com.huazie.frame.auth.base.user.entity.FleaLoginLog;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaLoginLogSV;
+import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import com.huazie.frame.db.jpa.service.impl.AbstractFleaJPASVImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,11 @@ public class FleaLoginLogSVImpl extends AbstractFleaJPASVImpl<FleaLoginLog> impl
     @Autowired
     public FleaLoginLogSVImpl(@Qualifier("fleaLoginLogDAO") IFleaLoginLogDAO fleaLoginLogDao) {
         this.fleaLoginLogDao = fleaLoginLogDao;
+    }
+
+    @Override
+    public FleaLoginLog queryLastUserLoginLog(Long accountId) throws CommonException {
+        return fleaLoginLogDao.queryLastUserLoginLog(accountId);
     }
 
     @Override
