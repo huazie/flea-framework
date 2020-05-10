@@ -9,6 +9,7 @@ import com.huazie.frame.auth.common.pojo.user.login.FleaUserLoginPOJO;
 import com.huazie.frame.auth.common.service.interfaces.IFleaUserLoginSV;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.util.DateUtils;
 import com.huazie.frame.common.util.HttpUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
@@ -96,11 +97,22 @@ public class FleaUserLoginSVImpl implements IFleaUserLoginSV {
                 }
             }
         }
-
     }
 
     @Override
     public void saveQuitLog(Long accountId) throws CommonException {
 
+        if (ObjectUtils.isNotEmpty(accountId) && accountId > CommonConstants.NumeralConstants.ZERO) {
+            // 获取当月用户最近一次的登录日志
+            FleaLoginLog fleaLoginLog = fleaLoginLogSV.queryLastUserLoginLog(accountId);
+            if (null != fleaLoginLog) {
+                fleaLoginLog.setLoginState(FleaLoginLog.LOGIN_STATE_2);
+                fleaLoginLog.setLogoutTime(DateUtils.getCurrentTime());
+                fleaLoginLog.setDoneDate(fleaLoginLog.getLoginTime());
+                fleaLoginLog.setRemarks("用户已退出");
+                // 更新当月用户最近一次的登录日志的登录状态（2：已退出）
+                fleaLoginLogSV.update(fleaLoginLog);
+            }
+        }
     }
 }

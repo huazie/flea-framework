@@ -105,4 +105,14 @@ public class UserAuthTest {
             LOGGER.error("Exception = ", e);
         }
     }
+
+    @Test
+    public void testSaveQuitLog() {
+        IFleaUserLoginSV fleaUserLoginSV = (IFleaUserLoginSV) applicationContext.getBean("fleaUserLoginSV");
+        try {
+            fleaUserLoginSV.saveQuitLog(1L);
+        } catch (CommonException e) {
+            LOGGER.error("Exception = ", e);
+        }
+    }
 }
