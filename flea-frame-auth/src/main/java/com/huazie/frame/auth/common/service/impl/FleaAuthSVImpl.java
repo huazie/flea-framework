@@ -23,35 +23,34 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
 
     @Override
     public void initUserInfo(Long userId, Long acctId, Long systemAcctId, Map<String, Object> otherAttrs, FleaObjectFactory<IFleaUser> fleaObjectFactory) {
-        IFleaUser fleaUser = FleaSessionManager.getUserInfo();
-        if (ObjectUtils.isEmpty(fleaUser)) {
-            fleaUser = fleaObjectFactory.newObject().getObject();
 
-            if (ObjectUtils.isNotEmpty(userId)) {
-                fleaUser.setUserId(userId);
-            }
+        IFleaUser fleaUser = fleaObjectFactory.newObject().getObject();
 
-            if (ObjectUtils.isNotEmpty(acctId)) {
-                fleaUser.setAcctId(acctId);
-            }
-
-            if (ObjectUtils.isNotEmpty(systemAcctId)) {
-                fleaUser.setSystemAcctId(systemAcctId);
-            }
-
-            if (MapUtils.isNotEmpty(otherAttrs)) {
-                Set<String> attrKeySet = otherAttrs.keySet();
-                for (String key : attrKeySet) {
-                    Object value = otherAttrs.get(key);
-                    fleaUser.set(key, value);
-                }
-            }
-
-            FleaSessionManager.setUserInfo(fleaUser);
-
-            // 初始化Flea对象信息
-            fleaObjectFactory.initObject();
+        if (ObjectUtils.isNotEmpty(userId)) {
+            fleaUser.setUserId(userId);
         }
+
+        if (ObjectUtils.isNotEmpty(acctId)) {
+            fleaUser.setAcctId(acctId);
+        }
+
+        if (ObjectUtils.isNotEmpty(systemAcctId)) {
+            fleaUser.setSystemAcctId(systemAcctId);
+        }
+
+        if (MapUtils.isNotEmpty(otherAttrs)) {
+            Set<String> attrKeySet = otherAttrs.keySet();
+            for (String key : attrKeySet) {
+                Object value = otherAttrs.get(key);
+                fleaUser.set(key, value);
+            }
+        }
+
+        FleaSessionManager.setUserInfo(fleaUser);
+
+        // 初始化Flea对象信息
+        fleaObjectFactory.initObject();
+
     }
 
 }
