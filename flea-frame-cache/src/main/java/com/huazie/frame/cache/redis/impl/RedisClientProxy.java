@@ -42,9 +42,9 @@ public class RedisClientProxy extends FleaProxy<RedisClient> {
                     // 新建一个Flea Redis客户端类， 用于被代理
                     RedisClient originRedisClient;
                     if(CommonConstants.FleaPoolConstants.DEFAUTL_POOL_NAME.equals(poolName)) {
-                        originRedisClient = new FleaRedisClient();
+                        originRedisClient = new FleaRedisClient.Builder().build();
                     } else {
-                        originRedisClient = new FleaRedisClient(poolName);
+                        originRedisClient = new FleaRedisClient.Builder(poolName).build();
                     }
                     RedisClient proxyRedisClient = newProxyInstance(originRedisClient.getClass().getClassLoader(), originRedisClient.getClass().getInterfaces(), new RedisClientInvocationHandler(originRedisClient), RedisClient.class);
                     redisClients.put(poolName, proxyRedisClient);
