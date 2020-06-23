@@ -3,6 +3,7 @@ package com.huazie.frame.auth.common.service.interfaces;
 import com.huazie.frame.common.IFleaUser;
 import com.huazie.frame.common.object.FleaObjectFactory;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -25,4 +26,19 @@ public interface IFleaAuthSV {
      */
     void initUserInfo(Long userId, Long acctId, Long systemAcctId, Map<String, Object> otherAttrs, FleaObjectFactory<IFleaUser> fleaObjectFactory);
 
+    /**
+     * <p> 保存用户登录日志 </p>
+     *
+     * @param accountId 账户编号
+     * @since 1.0.0
+     */
+    void saveLoginLog(Long accountId, HttpServletRequest request);
+
+    /**
+     * <p> 保存用户退出日志 </p>
+     *
+     * @param accountId 账户编号
+     * @since 1.0.0
+     */
+    void saveQuitLog(Long accountId);
 }

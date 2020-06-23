@@ -36,7 +36,7 @@ public class FleaLoginLogDAOImpl extends FleaAuthDAOImpl<FleaLoginLog> implement
                 .equal(FleaAuthEntityConstants.AccountEntityConstants.ACCOUNT_ID)
                 .equal(FleaLoginLog.LOGIN_STATE)
                 .addOrderby(FleaLoginLog.LOGIN_TIME, DBConstants.SQLConstants.SQL_ORDER_DESC)
-                .getResultList(0, 5);
+                .getResultList(0, 1);
 
         if (CollectionUtils.isNotEmpty(fleaLoginLogList)) {
             fleaLoginLogEntity = fleaLoginLogList.get(0);
