@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flea-request-filter>
+
+    <filter-task-chain>
+
+        <filter-tasks>
+
+            <filter-task clazz="com.huazie.frame.core.filter.task.impl.UrlCheckFilterTask" order="0" desc="URL校验过滤器任务" />
+
+            <filter-task clazz="com.huazie.frame.core.filter.task.impl.SessionCheckFilterTask" order="1" desc="SESSION信息校验过滤器任务" />
+
+        </filter-tasks>
+
+    </filter-task-chain>
+
+</flea-request-filter>

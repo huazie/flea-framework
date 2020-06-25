@@ -15,8 +15,19 @@ public class TimeUtil {
      * <p> 获取系统当前时间戳 </p>
      *
      * @return 系统当前时间戳
+     * @since 1.0.0
      */
-    public Timestamp getSystemCurrentTime() {
+    public static Timestamp getSystemCurrentTime() {
         return new Timestamp(System.currentTimeMillis());
+    }
+
+    /**
+     * <p> 获取系统当前时间戳（long类型） </p>
+     *
+     * @return 系统当前时间戳（long类型）
+     * @since 1.0.0
+     */
+    public static long getSystemCurrentTimeForLong() {
+        return System.currentTimeMillis();
     }
 }

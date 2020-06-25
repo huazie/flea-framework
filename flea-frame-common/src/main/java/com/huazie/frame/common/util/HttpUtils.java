@@ -60,6 +60,10 @@ public class HttpUtils {
             ip = ip.substring(ip.lastIndexOf(",") + 1).trim();
         }
 
+        if (StringUtils.isBlank(ip) || "null".equals(ip)) {
+            ip = "0.0.0.0";
+        }
+
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("HttpUtils#getIp(HttpServletRequest) IP ={}", ip);
         }

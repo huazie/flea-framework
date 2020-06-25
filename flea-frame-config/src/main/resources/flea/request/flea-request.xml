@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flea-request>
+
+    <flea-session>
+        <user-session-key>FleaUser</user-session-key>
+        <idle-time>3600</idle-time>
+    </flea-session>
+
+    <flea-url>
+        <redirect-url>
+            <!-- 重定向至登录页面 -->
+            <property key="login" desc="登录页面重定向URL配置">/login.html</property>
+            <!-- 重定向至错误页面 -->
+            <property key="error" desc="错误页面重定向URL配置">/WEB-INF/error.html/</property>
+        </redirect-url>
+        <!-- 不需校验的URL -->
+        <uncheck-urls>
+            <uncheck-url>/business/fleamgmtLogin!login.flea</uncheck-url>
+            <uncheck-url>/resources</uncheck-url>
+        </uncheck-urls>
+        <!-- 需要校验的URL，一般配置其他页面在项目中的相对路径 -->
+        <check-urls>
+            <check-url>/index.html</check-url>
+            <check-url>/mgmt/</check-url>
+        </check-urls>
+        <!-- URL前缀 -->
+        <url-prefix>
+            <property key="business" desc="业务请求URL前缀配置">/business</property>
+            <property key="page" desc="页面跳转请求URL前缀配置">/page</property>
+        </url-prefix>
+        <!-- URL非法字符 -->
+        <url-illegal-char>&lt;|&gt;|alert|document.cookie|href|script|select|insert|update|delete|truncate|exec|drop</url-illegal-char>
+    </flea-url>
+
+</flea-request>

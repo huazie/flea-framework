@@ -63,8 +63,8 @@ public class DBXmlDigesterHelper {
         if (isInit.equals(Boolean.FALSE)) {
             synchronized (isInit) {
                 if (isInit.equals(Boolean.FALSE)) {
-                    isInit = Boolean.TRUE;
                     xmlDigester = new DBXmlDigesterHelper();
+                    isInit = Boolean.TRUE;
                 }
             }
         }

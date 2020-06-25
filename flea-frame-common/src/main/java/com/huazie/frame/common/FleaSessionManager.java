@@ -12,6 +12,26 @@ import com.huazie.frame.common.util.ObjectUtils;
 public class FleaSessionManager {
 
     /**
+     * <p> 获取当前线程的用户信息 </p>
+     *
+     * @return 当前线程的用户信息
+     * @since 1.0.0
+     */
+    public static IFleaUser getUserInfo() {
+        return FleaFrameManager.getManager().getUserInfo();
+    }
+
+    /**
+     * <p> 设置当前线程的用户信息 </p>
+     *
+     * @param fleaUser 用户信息
+     * @since 1.0.0
+     */
+    public static void setUserInfo(IFleaUser fleaUser) {
+        FleaFrameManager.getManager().setUserInfo(fleaUser);
+    }
+
+    /**
      * <p> 获取当前操作账户编号 </p>
      *
      * @return 当前操作账户编号
@@ -19,7 +39,7 @@ public class FleaSessionManager {
      */
     public static Long getUserId() {
         Long userId = CommonConstants.NumeralConstants.MINUS_ONE;
-        IFleaUser fleaUser = FleaFrameManager.getManager().getUserInfo();
+        IFleaUser fleaUser = getUserInfo();
         if (ObjectUtils.isNotEmpty(fleaUser)) {
             userId = fleaUser.getUserId();
             if (ObjectUtils.isEmpty(userId)) {
@@ -37,7 +57,7 @@ public class FleaSessionManager {
      */
     public static Long getAcctId() {
         Long acctId = CommonConstants.NumeralConstants.MINUS_ONE;
-        IFleaUser fleaUser = FleaFrameManager.getManager().getUserInfo();
+        IFleaUser fleaUser = getUserInfo();
         if (ObjectUtils.isNotEmpty(fleaUser)) {
             acctId = fleaUser.getAcctId();
             if (ObjectUtils.isEmpty(acctId)) {
@@ -55,7 +75,7 @@ public class FleaSessionManager {
      */
     public static Long getSystemAcctId() {
         Long systemAcctId = CommonConstants.NumeralConstants.MINUS_ONE;
-        IFleaUser fleaUser = FleaFrameManager.getManager().getUserInfo();
+        IFleaUser fleaUser = getUserInfo();
         if (ObjectUtils.isNotEmpty(fleaUser)) {
             systemAcctId = fleaUser.getSystemAcctId();
             if (ObjectUtils.isEmpty(systemAcctId)) {
@@ -76,7 +96,7 @@ public class FleaSessionManager {
      */
     public static <T> T get(String key, Class<T> clazz) {
         T t = null;
-        IFleaUser fleaUser = FleaFrameManager.getManager().getUserInfo();
+        IFleaUser fleaUser = getUserInfo();
         if (ObjectUtils.isNotEmpty(fleaUser)) {
             t = fleaUser.get(key, clazz);
         }

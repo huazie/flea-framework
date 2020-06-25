@@ -50,13 +50,12 @@ public class FleaJerseyFilterChain {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FleaJerseyFilterChain##initFilterChain() Start");
         }
-        FleaJerseyFilterConfig config = FleaJerseyFilterConfig.getConfig();
-        if (ObjectUtils.isNotEmpty(config)) {
-            beforeFilters = convert(config.getBeforeFilters());
-            serviceFilters = convert(config.getServiceFilters());
-            afterFilters = convert(config.getAfterFilters());
-            errorFilters = convertError(config.getErrorFilters());
-        }
+
+        beforeFilters = convert(FleaJerseyFilterConfig.getBeforeFilters());
+        serviceFilters = convert(FleaJerseyFilterConfig.getServiceFilters());
+        afterFilters = convert(FleaJerseyFilterConfig.getAfterFilters());
+        errorFilters = convertError(FleaJerseyFilterConfig.getErrorFilters());
+
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FleaJerseyFilterChain##initFilterChain() End");
         }

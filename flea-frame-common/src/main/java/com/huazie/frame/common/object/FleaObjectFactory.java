@@ -17,4 +17,11 @@ public interface FleaObjectFactory<T> {
      */
     FleaObject<T> newObject();
 
+    /**
+     * <p> 初始Flea对象相关信息（自定义） </p>
+     *
+     * @since 1.0.0
+     */
+    void initObject();
+
 }

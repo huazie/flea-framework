@@ -30,7 +30,7 @@ public class FleaJerseyResourceTest {
         FleaJerseyResource resource = new FleaJerseyResource();
         resource.setResourceCode("upload");
         resource.setResourceName("上传资源");
-        resource.setResourcePackages("com.huazie.ffs.module.upload.web");
+        resource.setResourcePackages("com.huazie.ffs.module.upload.request");
         resource.setState(EntityStateEnum.IN_USE.getValue());
         resource.setCreateDate(DateUtils.getCurrentTime());
         try {
@@ -46,7 +46,7 @@ public class FleaJerseyResourceTest {
         FleaJerseyResource resource = new FleaJerseyResource();
         resource.setResourceCode("download");
         resource.setResourceName("下载资源");
-        resource.setResourcePackages("com.huazie.ffs.module.download.web");
+        resource.setResourcePackages("com.huazie.ffs.module.download.request");
         resource.setState(EntityStateEnum.IN_USE.getValue());
         resource.setCreateDate(DateUtils.getCurrentTime());
         try {
