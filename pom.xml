@@ -117,7 +117,7 @@
             <dependency>
                 <groupId>commons-beanutils</groupId>
                 <artifactId>commons-beanutils</artifactId>
-                <version>1.9.2</version>
+                <version>1.9.4</version>
             </dependency>
 
             <!-- 用来处理常用的编码方法的工具类包，例如DES、SHA1、MD5、Base64等等 -->
