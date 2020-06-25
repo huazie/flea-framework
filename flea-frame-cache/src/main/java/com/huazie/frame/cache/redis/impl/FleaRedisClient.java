@@ -30,7 +30,7 @@ public class FleaRedisClient implements RedisClient {
      *
      * @since 1.0.0
      */
-    public FleaRedisClient() {
+    private FleaRedisClient() {
         this(null);
     }
 
@@ -40,7 +40,7 @@ public class FleaRedisClient implements RedisClient {
      * @param poolName 连接池名
      * @since 1.0.0
      */
-    public FleaRedisClient(String poolName) {
+    private FleaRedisClient(String poolName) {
         this.poolName = poolName;
         init();
     }
@@ -244,5 +244,48 @@ public class FleaRedisClient implements RedisClient {
     public void setPoolName(String poolName) {
         this.poolName = poolName;
         init();
+    }
+
+    /**
+     * <p> 内部建造者类 </p>
+     *
+     * @author huazie
+     * @since 1.0.0
+     */
+    public static class Builder {
+
+        private String poolName; // 连接池名
+
+        /**
+         * <p> 默认构造器 </p>
+         *
+         * @since 1.0.0
+         */
+        public Builder() {
+        }
+
+        /**
+         * <p> 指定连接池的构造器 </p>
+         *
+         * @param poolName 连接池名
+         * @since 1.0.0
+         */
+        public Builder(String poolName) {
+            this.poolName = poolName;
+        }
+
+        /**
+         * <p> 构建Redis客户端对象 </p>
+         *
+         * @return Redis客户端
+         * @since 1.0.0
+         */
+        public RedisClient build() {
+            if (StringUtils.isBlank(poolName)) {
+                return new FleaRedisClient();
+            } else {
+                return new FleaRedisClient(poolName);
+            }
+        }
     }
 }

@@ -26,26 +26,22 @@ public class FleaJerseyFilterConfigTest {
 
     @Test
     public void testJerseyFilterConfigOfBefore() {
-        FleaJerseyFilterConfig config = FleaJerseyFilterConfig.getConfig();
-        LOGGER.debug("before={}", config.getBeforeFilters());
+        LOGGER.debug("before={}", FleaJerseyFilterConfig.getBeforeFilters());
     }
 
     @Test
     public void testJerseyFilterConfigOfService() {
-        FleaJerseyFilterConfig config = FleaJerseyFilterConfig.getConfig();
-        LOGGER.debug("service={}", config.getServiceFilters());
+        LOGGER.debug("service={}", FleaJerseyFilterConfig.getServiceFilters());
     }
 
     @Test
     public void testJerseyFilterConfigOfAfter() {
-        FleaJerseyFilterConfig config = FleaJerseyFilterConfig.getConfig();
-        LOGGER.debug("after={}", config.getAfterFilters());
+        LOGGER.debug("after={}", FleaJerseyFilterConfig.getAfterFilters());
     }
 
     @Test
     public void testJerseyFilterConfigOfError() {
-        FleaJerseyFilterConfig config = FleaJerseyFilterConfig.getConfig();
-        LOGGER.debug("error={}", config.getErrorFilters());
+        LOGGER.debug("error={}", FleaJerseyFilterConfig.getErrorFilters());
     }
 
 }

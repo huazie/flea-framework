@@ -67,6 +67,19 @@ public class LoginLogAuthTest {
     }
 
     @Test
+    public void testLastUserLoginLogQuery() {
+        try {
+            IFleaLoginLogSV fleaLoginLogSV = (IFleaLoginLogSV) applicationContext.getBean("fleaLoginLogSV");
+
+            FleaLoginLog fleaLoginLog = fleaLoginLogSV.queryLastUserLoginLog(1L);
+            LOGGER.debug("FleaLoginLog = {}", fleaLoginLog);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
     public void testFleaLoginLogUpdate() {
 
         try {

@@ -62,10 +62,6 @@ public class XmlDigesterHelper {
 
         T config = null;
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("XmlDigesterHelper##parse(InputStream, Digester, Class<T>) Start to parse the file");
-        }
-
         if (ObjectUtils.isNotEmpty(input)) {
             Object obj = digester.parse(input);
             if (clazz.isInstance(obj)) {
@@ -75,7 +71,6 @@ public class XmlDigesterHelper {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("XmlDigesterHelper##parse(InputStream, Digester, Class<T>) Config = {}", config);
-            LOGGER.debug("XmlDigesterHelper##parse(InputStream, Digester, Class<T>) End to parse the file");
         }
 
         return config;

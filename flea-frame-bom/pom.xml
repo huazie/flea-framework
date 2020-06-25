@@ -65,7 +65,7 @@
             <dependency>
                 <groupId>commons-beanutils</groupId>
                 <artifactId>commons-beanutils</artifactId>
-                <version>1.8.0</version>
+                <version>1.9.2</version>
             </dependency>
 
             <!-- 用来处理常用的编码方法的工具类包，例如DES、SHA1、MD5、Base64等等 -->
@@ -79,7 +79,7 @@
             <dependency>
                 <groupId>commons-collections</groupId>
                 <artifactId>commons-collections</artifactId>
-                <version>3.2.1</version>
+                <version>3.2.2</version>
             </dependency>
 
             <!-- 实现对象池化框架 -->

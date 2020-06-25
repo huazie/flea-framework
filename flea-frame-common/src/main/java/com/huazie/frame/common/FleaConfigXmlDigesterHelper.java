@@ -46,8 +46,8 @@ public class FleaConfigXmlDigesterHelper {
         if (isInit.equals(Boolean.FALSE)) {
             synchronized (isInit) {
                 if (isInit.equals(Boolean.FALSE)) {
-                    isInit = Boolean.TRUE;
                     xmlDigester = new FleaConfigXmlDigesterHelper();
+                    isInit = Boolean.TRUE;
                 }
             }
         }

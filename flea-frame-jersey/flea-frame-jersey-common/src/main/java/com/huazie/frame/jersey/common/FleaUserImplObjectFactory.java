@@ -20,4 +20,8 @@ public class FleaUserImplObjectFactory implements FleaObjectFactory<IFleaUser> {
         return new DefaultFleaObject<IFleaUser>(fleaUser);
     }
 
+    @Override
+    public void initObject() {
+        // 空实现
+    }
 }
