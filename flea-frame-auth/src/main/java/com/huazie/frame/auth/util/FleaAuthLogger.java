@@ -4,6 +4,7 @@ import com.huazie.frame.common.FleaSessionManager;
 import com.huazie.frame.common.util.concurrent.FleaAsyncTask;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
@@ -14,6 +15,8 @@ import java.util.concurrent.Executors;
  * @since 1.0.0
  */
 public class FleaAuthLogger {
+
+    private static final ExecutorService executorService = Executors.newCachedThreadPool();
 
     private static final String METHOD_SAVE_LOGIN_LOG = "saveLoginLog";
     private static final String METHOD_SAVE_QUIT_LOG = "saveQuitLog";
@@ -27,10 +30,10 @@ public class FleaAuthLogger {
      * @since 1.0.0
      */
     public static void asyncSaveLoginLog(Object asyncTaskExecObj, Long accountId, HttpServletRequest request) {
-        Class<?>[] paramTypes = {accountId.getClass(), request.getClass()};
+        Class<?>[] paramTypes = {accountId.getClass(), HttpServletRequest.class};
         Object[] params = {accountId, request};
         FleaAsyncTask fleaAsyncTask = new FleaAsyncTask(FleaSessionManager.getUserInfo(), asyncTaskExecObj, METHOD_SAVE_LOGIN_LOG, paramTypes, params);
-        Executors.newSingleThreadExecutor().execute(fleaAsyncTask);
+        executorService.execute(fleaAsyncTask);
     }
 
     /**
@@ -44,6 +47,6 @@ public class FleaAuthLogger {
         Class<?>[] paramTypes = {accountId.getClass()};
         Object[] params = {accountId};
         FleaAsyncTask fleaAsyncTask = new FleaAsyncTask(FleaSessionManager.getUserInfo(), asyncTaskExecObj, METHOD_SAVE_QUIT_LOG, paramTypes, params);
-        Executors.newSingleThreadExecutor().execute(fleaAsyncTask);
+        executorService.execute(fleaAsyncTask);
     }
 }
