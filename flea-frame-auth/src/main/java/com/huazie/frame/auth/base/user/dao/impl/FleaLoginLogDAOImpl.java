@@ -39,9 +39,9 @@ public class FleaLoginLogDAOImpl extends FleaAuthDAOImpl<FleaLoginLog> implement
                 .getResultList(0, 1);
 
         if (CollectionUtils.isNotEmpty(fleaLoginLogList)) {
-            fleaLoginLogEntity = fleaLoginLogList.get(0);
+            return fleaLoginLogList.get(0);
+        } else {
+            return null;
         }
-
-        return fleaLoginLogEntity;
     }
 }

@@ -9,9 +9,7 @@ import com.huazie.frame.auth.common.pojo.user.register.FleaUserRegisterPOJO;
 import com.huazie.frame.auth.common.service.interfaces.IFleaAuthSV;
 import com.huazie.frame.auth.common.service.interfaces.IFleaUserLoginSV;
 import com.huazie.frame.auth.common.service.interfaces.IFleaUserRegisterSV;
-import com.huazie.frame.common.FleaSessionManager;
 import com.huazie.frame.common.exception.CommonException;
-import com.huazie.frame.common.util.concurrent.FleaAsyncVoidTask;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -21,7 +19,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ForkJoinPool;
 
 /**
  * <p></p>
@@ -47,7 +44,7 @@ public class UserAuthTest {
 
         FleaUserLoginPOJO fleaUserLoginInfo = new FleaUserLoginPOJO();
         fleaUserLoginInfo.setAccountCode("13218010892");
-        fleaUserLoginInfo.setAccountPwd("123asd");
+        fleaUserLoginInfo.setAccountPwd("123qwe");
 
         IFleaUserLoginSV fleaUserLoginSV = (IFleaUserLoginSV) applicationContext.getBean("fleaUserLoginSV");
 
@@ -112,23 +109,8 @@ public class UserAuthTest {
 
     @Test
     public void testSaveQuitLog() throws Exception {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                IFleaAuthSV fleaUserLoginSV = (IFleaAuthSV) applicationContext.getBean("fleaAuthSV");
-                fleaUserLoginSV.saveQuitLog(1L);
-            }
-        });
-        thread.start();
+        IFleaAuthSV fleaUserLoginSV = (IFleaAuthSV) applicationContext.getBean("fleaAuthSV");
+        fleaUserLoginSV.saveQuitLog(1L);
     }
 
-    @Test
-    public void testAsyncSaveQuitLog() throws Exception {
-        IFleaAuthSV fleaUserLoginSV = (IFleaAuthSV) applicationContext.getBean("fleaAuthSV");
-        Long accountId = 1L;
-        FleaAsyncVoidTask fleaAsyncVoidTask = new FleaAsyncVoidTask(FleaSessionManager.getUserInfo(), fleaUserLoginSV,
-                "saveQuitLog", new Class<?>[]{Long.class}, new Object[]{accountId});
-        ForkJoinPool forkJoinPool = new ForkJoinPool(1);
-        forkJoinPool.execute(fleaAsyncVoidTask);
-    }
 }

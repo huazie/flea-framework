@@ -3,18 +3,14 @@ package com.huazie.frame.common.util.concurrent;
 import com.huazie.frame.common.FleaSessionManager;
 import com.huazie.frame.common.IFleaUser;
 
-import java.util.concurrent.RecursiveAction;
-
 /**
- * <p> Flea RecursiveAction </p>
+ * <p> Flea Runnable </p>
  *
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0
  */
-public abstract class FleaRecursiveAction extends RecursiveAction {
-
-    private static final long serialVersionUID = -7536024386915815575L;
+public abstract class FleaRunnable implements Runnable {
 
     private IFleaUser fleaUser; // Flea用户信息
 
@@ -24,21 +20,21 @@ public abstract class FleaRecursiveAction extends RecursiveAction {
      * @param fleaUser Flea用户信息
      * @since 1.0.0
      */
-    public FleaRecursiveAction(IFleaUser fleaUser) {
+    public FleaRunnable(IFleaUser fleaUser) {
         this.fleaUser = fleaUser;
     }
 
     @Override
-    protected void compute() {
+    public void run() {
         FleaSessionManager.setUserInfo(fleaUser);
-        subCompute();
+        subRun();
         FleaSessionManager.setUserInfo(null);
     }
 
     /**
-     * <p> 子类实现该方法，完成具体的计算工作 </p>
+     * <p> 子类实现该方法，完成具体的线程任务 </p>
      *
      * @since 1.0.0
      */
-    protected abstract void subCompute();
+    protected abstract void subRun();
 }
