@@ -1211,7 +1211,7 @@ public final class FleaJPAQuery implements Closeable {
     private Date getDateAttrValue(String attrName) throws DaoException {
         Object attrValue = getAttrValue(attrName);
         Date value = null;
-        if (ObjectUtils.isNotEmpty(attrValue) && Date.class.isInstance(attrValue)) {
+        if (ObjectUtils.isNotEmpty(attrValue) && attrValue instanceof Date) {
             value = (Date) attrValue;
         }
         return value;
