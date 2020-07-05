@@ -42,7 +42,7 @@ public class FleaJerseyResServiceTest {
         resService.setServiceMethod("uploadAuth");
         resService.setServiceInput("com.huazie.ffs.pojo.upload.input.InputUploadAuthInfo");
         resService.setServiceOutput("com.huazie.ffs.pojo.upload.output.OutputUploadAuthInfo");
-        resService.setState(EntityStateEnum.IN_USE.getValue());
+        resService.setState(EntityStateEnum.IN_USE.getState());
         resService.setCreateDate(DateUtils.getCurrentTime());
         try {
             fleaJerseyResServiceSV.save(resService);
@@ -62,7 +62,7 @@ public class FleaJerseyResServiceTest {
         resService.setServiceMethod("fileUpload");
         resService.setServiceInput("com.huazie.ffs.pojo.upload.input.InputFileUploadInfo");
         resService.setServiceOutput("com.huazie.ffs.pojo.upload.output.OutputFileUploadInfo");
-        resService.setState(EntityStateEnum.IN_USE.getValue());
+        resService.setState(EntityStateEnum.IN_USE.getState());
         resService.setCreateDate(DateUtils.getCurrentTime());
         try {
             fleaJerseyResServiceSV.save(resService);
@@ -82,7 +82,7 @@ public class FleaJerseyResServiceTest {
         resService.setServiceMethod("fileDownload");
         resService.setServiceInput("com.huazie.ffs.pojo.download.input.InputFileDownloadInfo");
         resService.setServiceOutput("com.huazie.ffs.pojo.download.output.OutputFileDownloadInfo");
-        resService.setState(EntityStateEnum.IN_USE.getValue());
+        resService.setState(EntityStateEnum.IN_USE.getState());
         resService.setCreateDate(DateUtils.getCurrentTime());
         try {
             fleaJerseyResServiceSV.save(resService);
@@ -102,7 +102,7 @@ public class FleaJerseyResServiceTest {
         resService.setServiceMethod("downloadAuth");
         resService.setServiceInput("com.huazie.ffs.pojo.download.input.InputDownloadAuthInfo");
         resService.setServiceOutput("com.huazie.ffs.pojo.download.output.OutputDownloadAuthInfo");
-        resService.setState(EntityStateEnum.IN_USE.getValue());
+        resService.setState(EntityStateEnum.IN_USE.getState());
         resService.setCreateDate(DateUtils.getCurrentTime());
         try {
             fleaJerseyResServiceSV.save(resService);

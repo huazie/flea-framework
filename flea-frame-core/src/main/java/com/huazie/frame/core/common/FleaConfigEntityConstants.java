@@ -11,18 +11,18 @@ import com.huazie.frame.common.FleaEntityConstants;
  */
 public interface FleaConfigEntityConstants extends FleaEntityConstants {
 
-    String S_PARA_TYPE = "paraType";
+    String E_PARA_TYPE = "paraType";
 
-    String S_PARA_CODE = "paraCode";
+    String E_PARA_CODE = "paraCode";
 
-    String S_PARA_STATE = "paraState";
+    String E_PARA_STATE = "paraState";
 
-    String S_RESOURCE_CODE = "resourceCode";
+    String E_RESOURCE_CODE = "resourceCode";
 
-    String S_SERVICE_CODE = "serviceCode";
+    String E_SERVICE_CODE = "serviceCode";
 
-    String S_I18N_CODE = "i18nCode";
+    String E_I18N_CODE = "i18nCode";
 
-    String S_CLIENT_CODE = "clientCode";
+    String E_CLIENT_CODE = "clientCode";
 
 }
