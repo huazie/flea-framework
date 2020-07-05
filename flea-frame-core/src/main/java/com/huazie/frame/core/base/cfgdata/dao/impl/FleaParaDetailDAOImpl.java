@@ -28,9 +28,9 @@ public class FleaParaDetailDAOImpl extends FleaConfigDAOImpl<FleaParaDetail> imp
     public List<FleaParaDetail> getParaDetail(String paraType, String paraCode) throws CommonException {
 
         List<FleaParaDetail> fleaParaDetailList = getQuery(null)
-                .equal(FleaConfigEntityConstants.S_PARA_TYPE, paraType)
-                .equal(FleaConfigEntityConstants.S_PARA_CODE, paraCode)
-                .equal(FleaConfigEntityConstants.S_PARA_STATE, EntityStateEnum.IN_USE.getValue()) // 查在用状态的配置数据
+                .equal(FleaConfigEntityConstants.E_PARA_TYPE, paraType)
+                .equal(FleaConfigEntityConstants.E_PARA_CODE, paraCode)
+                .equal(FleaConfigEntityConstants.E_PARA_STATE, EntityStateEnum.IN_USE.getState()) // 查在用状态的配置数据
                 .getResultList();
 
         if (LOGGER.isDebugEnabled()) {

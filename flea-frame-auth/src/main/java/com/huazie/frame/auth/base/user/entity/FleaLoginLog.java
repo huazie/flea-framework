@@ -33,9 +33,6 @@ public class FleaLoginLog extends FleaEntity {
     public static final Integer LOGIN_STATE_1 = 1; // 登录中
     public static final Integer LOGIN_STATE_2 = 2; // 已退出
 
-    public static final String LOGIN_STATE = "loginState";
-    public static final String LOGIN_TIME = "loginTime";
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "FLEA_LOGIN_LOG_SEQ")
     @SequenceGenerator(name = "FLEA_LOGIN_LOG_SEQ")
@@ -104,7 +101,7 @@ public class FleaLoginLog extends FleaEntity {
         this.loginIp4 = loginIp4;
         this.loginIp6 = loginIp6;
         this.loginArea = loginArea;
-        this.loginState = EntityStateEnum.IN_USE.getValue();
+        this.loginState = EntityStateEnum.IN_USE.getState();
         this.loginTime = DateUtils.getCurrentTime();
         this.createDate = DateUtils.getCurrentTime();
         this.remarks = remarks;

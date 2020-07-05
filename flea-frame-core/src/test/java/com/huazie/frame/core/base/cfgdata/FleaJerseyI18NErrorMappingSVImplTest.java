@@ -40,7 +40,7 @@ public class FleaJerseyI18NErrorMappingSVImplTest {
         mapping.setI18nCode("ERROR-JERSEY-FILTER0000000003");
         mapping.setErrorCode("100001");
         mapping.setReturnMess("请求报文不能为空");
-        mapping.setState(EntityStateEnum.IN_USE.getValue());
+        mapping.setState(EntityStateEnum.IN_USE.getState());
         mapping.setCreateDate(DateUtils.getCurrentTime());
         try {
             fleaJerseyI18nErrorMappingSV.save(mapping);
@@ -58,7 +58,7 @@ public class FleaJerseyI18NErrorMappingSVImplTest {
         mapping.setI18nCode("ERROR-JERSEY-FILTER0000000004");
         mapping.setErrorCode("100002");
         mapping.setReturnMess("请求公共报文不能为空");
-        mapping.setState(EntityStateEnum.IN_USE.getValue());
+        mapping.setState(EntityStateEnum.IN_USE.getState());
         mapping.setCreateDate(DateUtils.getCurrentTime());
         try {
             fleaJerseyI18nErrorMappingSV.save(mapping);
@@ -76,7 +76,7 @@ public class FleaJerseyI18NErrorMappingSVImplTest {
         mapping.setI18nCode("ERROR-JERSEY-FILTER0000000005");
         mapping.setErrorCode("100003");
         mapping.setReturnMess("请求业务报文不能为空");
-        mapping.setState(EntityStateEnum.IN_USE.getValue());
+        mapping.setState(EntityStateEnum.IN_USE.getState());
         mapping.setCreateDate(DateUtils.getCurrentTime());
         try {
             fleaJerseyI18nErrorMappingSV.save(mapping);
@@ -94,7 +94,7 @@ public class FleaJerseyI18NErrorMappingSVImplTest {
         mapping.setI18nCode("ERROR-JERSEY-FILTER0000000006");
         mapping.setErrorCode("100004");
         mapping.setReturnMess("请求公共报文入参【{0}】不能为空");
-        mapping.setState(EntityStateEnum.IN_USE.getValue());
+        mapping.setState(EntityStateEnum.IN_USE.getState());
         mapping.setCreateDate(DateUtils.getCurrentTime());
         try {
             fleaJerseyI18nErrorMappingSV.save(mapping);
@@ -112,7 +112,7 @@ public class FleaJerseyI18NErrorMappingSVImplTest {
         mapping.setI18nCode("ERROR-JERSEY-FILTER0000000008");
         mapping.setErrorCode("100005");
         mapping.setReturnMess("未能找到指定资源服务配置数据【service_code = {0} , resource_code = {1}】");
-        mapping.setState(EntityStateEnum.IN_USE.getValue());
+        mapping.setState(EntityStateEnum.IN_USE.getState());
         mapping.setCreateDate(DateUtils.getCurrentTime());
         try {
             fleaJerseyI18nErrorMappingSV.save(mapping);
@@ -130,7 +130,7 @@ public class FleaJerseyI18NErrorMappingSVImplTest {
         mapping.setI18nCode("ERROR-JERSEY-FILTER0000000009");
         mapping.setErrorCode("100006");
         mapping.setReturnMess("资源【{0}】下的服务【{1}】请求异常：配置的出参【{2}】与服务方法【{3}】出参【{4}】类型不一致");
-        mapping.setState(EntityStateEnum.IN_USE.getValue());
+        mapping.setState(EntityStateEnum.IN_USE.getState());
         mapping.setCreateDate(DateUtils.getCurrentTime());
         try {
             fleaJerseyI18nErrorMappingSV.save(mapping);
@@ -148,7 +148,7 @@ public class FleaJerseyI18NErrorMappingSVImplTest {
         mapping.setI18nCode("ERROR-SERVICE0000000001");
         mapping.setErrorCode("110001");
         mapping.setReturnMess("入参【{0}】不能为空");
-        mapping.setState(EntityStateEnum.IN_USE.getValue());
+        mapping.setState(EntityStateEnum.IN_USE.getState());
         mapping.setCreateDate(DateUtils.getCurrentTime());
         try {
             fleaJerseyI18nErrorMappingSV.save(mapping);

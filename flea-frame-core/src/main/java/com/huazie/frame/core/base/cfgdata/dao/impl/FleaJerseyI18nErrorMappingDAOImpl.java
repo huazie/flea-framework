@@ -29,9 +29,9 @@ public class FleaJerseyI18nErrorMappingDAOImpl extends FleaConfigDAOImpl<FleaJer
     public List<FleaJerseyI18nErrorMapping> getMappings(String resourceCode, String serviceCode) throws CommonException {
 
         List<FleaJerseyI18nErrorMapping> mappingList = getQuery(null)
-                .equal(FleaConfigEntityConstants.S_RESOURCE_CODE, resourceCode)
-                .equal(FleaConfigEntityConstants.S_SERVICE_CODE, serviceCode)
-                .equal(FleaConfigEntityConstants.S_STATE, EntityStateEnum.IN_USE.getValue())
+                .equal(FleaConfigEntityConstants.E_RESOURCE_CODE, resourceCode)
+                .equal(FleaConfigEntityConstants.E_SERVICE_CODE, serviceCode)
+                .equal(FleaConfigEntityConstants.E_STATE, EntityStateEnum.IN_USE.getState())
                 .getResultList();
 
         if (LOGGER.isDebugEnabled()) {
@@ -47,10 +47,10 @@ public class FleaJerseyI18nErrorMappingDAOImpl extends FleaConfigDAOImpl<FleaJer
     public FleaJerseyI18nErrorMapping getMapping(String resourceCode, String serviceCode, String i18nCode) throws CommonException {
 
         List<FleaJerseyI18nErrorMapping> mappingList = getQuery(null)
-                .equal(FleaConfigEntityConstants.S_RESOURCE_CODE, resourceCode)
-                .equal(FleaConfigEntityConstants.S_SERVICE_CODE, serviceCode)
-                .equal(FleaConfigEntityConstants.S_I18N_CODE, i18nCode)
-                .equal(FleaConfigEntityConstants.S_STATE, EntityStateEnum.IN_USE.getValue())
+                .equal(FleaConfigEntityConstants.E_RESOURCE_CODE, resourceCode)
+                .equal(FleaConfigEntityConstants.E_SERVICE_CODE, serviceCode)
+                .equal(FleaConfigEntityConstants.E_I18N_CODE, i18nCode)
+                .equal(FleaConfigEntityConstants.E_STATE, EntityStateEnum.IN_USE.getState())
                 .getResultList();
 
         FleaJerseyI18nErrorMapping mapping = null;

@@ -35,11 +35,11 @@ public class FleaAccountDAOImpl extends FleaAuthDAOImpl<FleaAccount> implements 
         Date currentDate = DateUtils.getCurrentTime();
 
         List<FleaAccount> accountList = getQuery(null)
-                .equal(FleaAuthEntityConstants.AccountEntityConstants.ACCOUNT_CODE, accountCode)
-                .equal(FleaAuthEntityConstants.AccountEntityConstants.ACCOUNT_PWD, accountPwd)
-                .equal(FleaAuthEntityConstants.AccountEntityConstants.ACCOUNT_STATE, UserStateEnum.IN_USE.getValue())
-                .lessThan(FleaAuthEntityConstants.EFFECTIVE_DATE, currentDate)
-                .greaterThan(FleaAuthEntityConstants.EXPIRY_DATE, currentDate)
+                .equal(FleaAuthEntityConstants.UserEntityConstants.E_ACCOUNT_CODE, accountCode)
+                .equal(FleaAuthEntityConstants.UserEntityConstants.E_ACCOUNT_PWD, accountPwd)
+                .equal(FleaAuthEntityConstants.UserEntityConstants.E_ACCOUNT_STATE, UserStateEnum.IN_USE.getState())
+                .lessThan(FleaAuthEntityConstants.E_EFFECTIVE_DATE, currentDate)
+                .greaterThan(FleaAuthEntityConstants.E_EXPIRY_DATE, currentDate)
                 .getResultList();
 
         FleaAccount fleaAccount = null;
@@ -62,14 +62,14 @@ public class FleaAccountDAOImpl extends FleaAuthDAOImpl<FleaAccount> implements 
         Date currentDate = DateUtils.getCurrentTime();
 
         List<Integer> accountStateList = new ArrayList<Integer>();
-        accountStateList.add(UserStateEnum.IN_USE.getValue());
-        accountStateList.add(UserStateEnum.IN_AUDITING.getValue());
+        accountStateList.add(UserStateEnum.IN_USE.getState());
+        accountStateList.add(UserStateEnum.IN_AUDITING.getState());
 
         List<FleaAccount> accountList = getQuery(null)
-                .equal(FleaAuthEntityConstants.AccountEntityConstants.ACCOUNT_CODE, accountCode)
-                .in(FleaAuthEntityConstants.AccountEntityConstants.ACCOUNT_STATE, accountStateList)
-                .lessThan(FleaAuthEntityConstants.EFFECTIVE_DATE, currentDate)
-                .greaterThan(FleaAuthEntityConstants.EXPIRY_DATE, currentDate)
+                .equal(FleaAuthEntityConstants.UserEntityConstants.E_ACCOUNT_CODE, accountCode)
+                .in(FleaAuthEntityConstants.UserEntityConstants.E_ACCOUNT_STATE, accountStateList)
+                .lessThan(FleaAuthEntityConstants.E_EFFECTIVE_DATE, currentDate)
+                .greaterThan(FleaAuthEntityConstants.E_EXPIRY_DATE, currentDate)
                 .getResultList();
 
         FleaAccount fleaAccount = null;

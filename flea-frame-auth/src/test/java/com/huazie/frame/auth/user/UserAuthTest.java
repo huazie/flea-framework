@@ -64,7 +64,7 @@ public class UserAuthTest {
 
         fleaUserRegisterPOJO.setAccountCode("13218010892");
         fleaUserRegisterPOJO.setAccountPwd("123qwe");
-        fleaUserRegisterPOJO.setState(UserStateEnum.IN_USE.getValue());
+        fleaUserRegisterPOJO.setState(UserStateEnum.IN_USE.getState());
 
         // 添加用户属性
         List<FleaUserAttrPOJO> fleaUserAttrInfoList = new ArrayList<FleaUserAttrPOJO>();

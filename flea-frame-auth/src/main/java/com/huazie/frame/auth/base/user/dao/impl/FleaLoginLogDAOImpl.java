@@ -33,9 +33,9 @@ public class FleaLoginLogDAOImpl extends FleaAuthDAOImpl<FleaLoginLog> implement
 
         List<FleaLoginLog> fleaLoginLogList = getQuery(null)
                 .initQueryEntity(fleaLoginLogEntity)
-                .equal(FleaAuthEntityConstants.AccountEntityConstants.ACCOUNT_ID)
-                .equal(FleaLoginLog.LOGIN_STATE)
-                .addOrderby(FleaLoginLog.LOGIN_TIME, DBConstants.SQLConstants.SQL_ORDER_DESC)
+                .equal(FleaAuthEntityConstants.UserEntityConstants.E_ACCOUNT_ID)
+                .equal(FleaAuthEntityConstants.UserEntityConstants.E_LOGIN_STATE)
+                .addOrderby(FleaAuthEntityConstants.UserEntityConstants.E_LOGIN_TIME, DBConstants.SQLConstants.SQL_ORDER_DESC)
                 .getResultList(0, 1);
 
         if (CollectionUtils.isNotEmpty(fleaLoginLogList)) {

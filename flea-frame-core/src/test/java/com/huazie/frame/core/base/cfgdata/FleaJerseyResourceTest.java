@@ -31,7 +31,7 @@ public class FleaJerseyResourceTest {
         resource.setResourceCode("upload");
         resource.setResourceName("上传资源");
         resource.setResourcePackages("com.huazie.ffs.module.upload.request");
-        resource.setState(EntityStateEnum.IN_USE.getValue());
+        resource.setState(EntityStateEnum.IN_USE.getState());
         resource.setCreateDate(DateUtils.getCurrentTime());
         try {
             fleaJerseyResourceSV.save(resource);
@@ -47,7 +47,7 @@ public class FleaJerseyResourceTest {
         resource.setResourceCode("download");
         resource.setResourceName("下载资源");
         resource.setResourcePackages("com.huazie.ffs.module.download.request");
-        resource.setState(EntityStateEnum.IN_USE.getValue());
+        resource.setState(EntityStateEnum.IN_USE.getState());
         resource.setCreateDate(DateUtils.getCurrentTime());
         try {
             fleaJerseyResourceSV.save(resource);

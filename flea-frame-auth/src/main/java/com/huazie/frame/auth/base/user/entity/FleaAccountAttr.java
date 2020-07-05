@@ -90,7 +90,7 @@ public class FleaAccountAttr extends FleaEntity {
         this.accountId = accountId;
         this.attrCode = attrCode;
         this.attrValue = attrValue;
-        this.state = EntityStateEnum.IN_USE.getValue(); // 默认正常状态
+        this.state = EntityStateEnum.IN_USE.getState(); // 默认正常状态
         this.createDate = DateUtils.getCurrentTime();
         if (ObjectUtils.isEmpty(effectiveDate)) {
             // 默认取系统当前时间
