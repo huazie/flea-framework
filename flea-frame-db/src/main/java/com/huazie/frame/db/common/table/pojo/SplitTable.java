@@ -13,6 +13,8 @@ public class SplitTable {
 
     private String splitTableName; // 分表名
 
+    private String pkColumnValue; // 生成器表中的主键值 【如果存在分表，则是对应分表的主键值】
+
     public String getTableName() {
         return tableName;
     }
@@ -27,5 +29,13 @@ public class SplitTable {
 
     public void setSplitTableName(String splitTableName) {
         this.splitTableName = splitTableName;
+    }
+
+    public String getPkColumnValue() {
+        return pkColumnValue;
+    }
+
+    public void setPkColumnValue(String pkColumnValue) {
+        this.pkColumnValue = pkColumnValue;
     }
 }
