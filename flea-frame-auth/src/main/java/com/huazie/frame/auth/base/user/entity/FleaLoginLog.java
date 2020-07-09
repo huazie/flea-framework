@@ -33,12 +33,12 @@ public class FleaLoginLog extends FleaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "FLEA_LOGIN_LOG_GENERATOR")
     @TableGenerator(
-            name = "FLEA_LOGIN_LOG_GENERATOR",      // 唯一的生成器名称，可以由一个或多个类引用以作为id值的生成器。
-            table = "flea_id_generator",            // 存储生成的ID值的表的名称
-            pkColumnName = "id_generator_key",      // 表中主键列的名称
-            valueColumnName = "id_generator_value", // 存储最后生成的主键值的列的名称
-            pkColumnValue = "pk_flea_login_log",    // 生成器表中的主键值，用于将该生成值集与其他可能存储在表中的值区分开
-            allocationSize = 1                      // 从生成器分配ID号时增加的数量
+            name = "FLEA_LOGIN_LOG_GENERATOR",                  // 唯一的生成器名称，可以由一个或多个类引用以作为id值的生成器。
+            table = "flea_id_generator",                        // 存储生成的ID值的表的名称
+            pkColumnName = "id_generator_key",                  // 表中主键列的名称
+            valueColumnName = "id_generator_value",             // 存储最后生成的主键值的列的名称
+            pkColumnValue = "pk_flea_login_log_(CREATE_DATE)",  // ID生成器表中的主键值模板，用于将该生成值集与其他可能存储在表中的值区分开
+            allocationSize = 1                                  // 从ID生成器表中分配ID号时增加的数量
     )
     @Column(name = "login_log_id", unique = true, nullable = false)
     private Long loginLogId; // 登录日志编号
