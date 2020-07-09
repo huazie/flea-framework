@@ -124,7 +124,7 @@ CREATE TABLE `flea_id_generator` (
 -- ----------------------------
 -- Records of flea_id_generator
 -- ----------------------------
-INSERT INTO `flea_id_generator` VALUES ('pk_flea_login_log', '0');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_login_log_202007', '0');
 
 -- ----------------------------
 -- Table structure for `flea_login_log`

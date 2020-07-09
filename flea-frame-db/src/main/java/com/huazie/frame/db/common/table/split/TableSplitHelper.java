@@ -63,7 +63,8 @@ public class TableSplitHelper {
         SplitTable splitTable = new SplitTable();
         splitTable.setTableName(tableName); // 设置主表名
         splitTable.setSplitTableName(tableName); // 设置分表名默认为主表名
-        splitTable.setPkColumnValue(pkColumnValue); // 生成器表中的主键值，默认为主键中@TableGenerator中的pkColumnValue
+        splitTable.setPkColumnValue(pkColumnValue); // 生成器表中的主键值，为主键中@TableGenerator中的pkColumnValue
+        splitTable.setSplitTablePkColumnValue(pkColumnValue); // 生成器表中分表的主键值，默认为主键中@TableGenerator中的pkColumnValue
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("The name of main table = {}", tableName);
         }
@@ -143,8 +144,8 @@ public class TableSplitHelper {
                         }
                         // 设置分表名
                         splitTable.setSplitTableName(tableNameBuilder.toString());
-                        // 设置生成器表中的主键值
-                        splitTable.setPkColumnValue(pkColumnValueBuilder.toString());
+                        // 设置生成器表中分表的主键值
+                        splitTable.setSplitTablePkColumnValue(pkColumnValueBuilder.toString());
                     }
                 }
             }
@@ -152,7 +153,8 @@ public class TableSplitHelper {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("The real name of table = {}", splitTable.getSplitTableName());
-            LOGGER.debug("pkColumnValue of table = {}", splitTable.getPkColumnValue());
+            LOGGER.debug("The origin of pkColumnValue of table = {}", splitTable.getPkColumnValue());
+            LOGGER.debug("The pkColumnValue of split table = {}", splitTable.getSplitTablePkColumnValue());
         }
 
         return splitTable;
