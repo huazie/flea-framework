@@ -21,6 +21,12 @@ public class %FLEA_PERSISTENCE_UNIT_ALIAS_NAME%DAOImpl<T> extends AbstractFleaJP
 
     @Override
     @Transactional("%FLEA_PERSISTENCE_UNIT_ALIAS_NAME_1%TransactionManager")
+    public Long getFleaNextValue(T entity) throws CommonException {
+        return super.getFleaNextValue(entity);
+    }
+
+    @Override
+    @Transactional("%FLEA_PERSISTENCE_UNIT_ALIAS_NAME_1%TransactionManager")
     public T queryNew(long entityId, T entity) throws Exception {
         return super.queryNew(entityId, entity);
     }
