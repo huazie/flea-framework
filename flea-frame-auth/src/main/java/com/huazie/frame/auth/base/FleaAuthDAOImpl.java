@@ -87,11 +87,6 @@ public class FleaAuthDAOImpl<T> extends AbstractFleaJPADAOImpl<T> {
     }
 
     @Override
-    public List<T> query(String relationId, T entity) throws CommonException {
-        return super.query(relationId, entity);
-    }
-
-    @Override
     @Transactional("fleaAuthTransactionManager")
     public int insert(String relationId, T entity) throws CommonException {
         return super.insert(relationId, entity);

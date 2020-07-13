@@ -22,6 +22,12 @@ public class FleaConfigDAOImpl<T> extends AbstractFleaJPADAOImpl<T> {
 	protected EntityManager entityManager;
 
 	@Override
+	@Transactional("fleaAuthTransactionManager")
+	public Long getFleaNextValue(T entity) throws CommonException {
+		return super.getFleaNextValue(entity);
+	}
+
+	@Override
 	@Transactional("fleaConfigTransactionManager")
 	public T queryNew(long entityId, T entity) throws CommonException {
 		return super.queryNew(entityId, entity);
@@ -79,11 +85,6 @@ public class FleaConfigDAOImpl<T> extends AbstractFleaJPADAOImpl<T> {
 	@Transactional("fleaConfigTransactionManager")
 	public void batchSave(List<T> entities) throws CommonException {
 		super.batchSave(entities);
-	}
-
-	@Override
-	public List<T> query(String relationId, T entity) throws CommonException {
-		return super.query(relationId, entity);
 	}
 
 	@Override
