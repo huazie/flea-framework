@@ -16,6 +16,16 @@ import java.util.Set;
 public interface IFleaJPABaseDataHandler<T> {
 
     /**
+     * <p> 获取下一个的主键值 </p>
+     *
+     * @param entity 实体类对象实例【主要适用于分表，非分表的场景提前获取主键可传null】
+     * @return 下一个的主键值
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    Long getFleaNextValue(T entity) throws CommonException;
+
+    /**
      * <p> 根据主键查询 </p>
      *
      * @param entityId 主键编号

@@ -40,6 +40,10 @@ public class LoginLogAuthTest {
             fleaLoginLog.setLoginState(1);
             fleaLoginLog.setLoginTime(DateUtils.getCurrentTime());
             fleaLoginLog.setCreateDate(DateUtils.getCurrentTime());
+
+            Long fleaLoginId = fleaLoginLogSV.getFleaNextValue(fleaLoginLog);
+            fleaLoginLog.setLoginLogId(fleaLoginId);
+
             // 保存至分表
             fleaLoginLogSV.save(fleaLoginLog);
         } catch (Exception e) {

@@ -59,6 +59,11 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     }
 
     @Override
+    public Long getFleaNextValue(T entity) throws CommonException {
+        return TableSplitHelper.findTableSplitHandle().getNextSequenceValue(getEntityManager(entity), clazz);
+    }
+
+    @Override
     public T query(long entityId) throws CommonException {
         return queryById(entityId, null);
     }
@@ -88,7 +93,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
      */
     protected T queryById(Object entityId, T entity) throws CommonException {
         checkPrimaryKey(entityId);
-        T t = getEntityManager(entity, true).find(clazz, entityId);
+        T t = getEntityManager(entity).find(clazz, entityId);
         return t;
     }
 
@@ -231,7 +236,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         checkPrimaryKey(entityId);
         final T old = queryById(entityId, entity);
         if (ObjectUtils.isNotEmpty(old)) {
-            getEntityManager(entity, false).remove(old);
+            getEntityManager(entity).remove(old);
             return true;
         } else {
             return false;
@@ -243,7 +248,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         if (ObjectUtils.isEmpty(entity)) {
             throw new DaoException("ERROR-DB-DAO0000000012");
         }
-        return getEntityManager(entity, false).merge(entity);
+        return getEntityManager(entity).merge(entity);
     }
 
     @Override
@@ -252,7 +257,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
             throw new DaoException("ERROR-DB-DAO0000000013");
         }
         for (T t : entities) {
-            getEntityManager(t, false).merge(t);
+            getEntityManager(t).merge(t);
         }
         return entities;
     }
@@ -262,7 +267,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         if (ObjectUtils.isEmpty(entity)) {
             throw new DaoException("ERROR-DB-DAO0000000012");
         }
-        getEntityManager(entity, false).persist(entity);
+        getEntityManager(entity).persist(entity);
     }
 
     @Override
@@ -271,7 +276,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
             throw new DaoException("ERROR-DB-DAO0000000013");
         }
         for (T t : entities) {
-            getEntityManager(t, false).persist(t);
+            getEntityManager(t).persist(t);
         }
     }
 
@@ -454,10 +459,10 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
      * @return JPA持久化对象
      * @since 1.0.0
      */
-    protected EntityManager getEntityManager(T entity, boolean isRead) throws CommonException {
+    protected EntityManager getEntityManager(T entity) throws CommonException {
         EntityManager entityManager = getEntityManager();
         // 处理并添加分表信息，如果不存在分表则不处理
-        TableSplitHelper.findTableSplitHandle().handle(entityManager, entity, isRead);
+        TableSplitHelper.findTableSplitHandle().handle(entityManager, entity);
         return entityManager;
     }
 
