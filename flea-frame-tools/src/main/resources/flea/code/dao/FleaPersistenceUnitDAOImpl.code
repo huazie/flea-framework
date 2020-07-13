@@ -86,11 +86,6 @@ public class %FLEA_PERSISTENCE_UNIT_ALIAS_NAME%DAOImpl<T> extends AbstractFleaJP
     }
 
     @Override
-    public List<T> query(String relationId, T entity) throws Exception {
-        return super.query(relationId, entity);
-    }
-
-    @Override
     @Transactional("%FLEA_PERSISTENCE_UNIT_ALIAS_NAME_1%TransactionManager")
     public int insert(String relationId, T entity) throws Exception {
         return super.insert(relationId, entity);
