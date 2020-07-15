@@ -29,8 +29,8 @@ public class FleaJerseyResClientDAOImpl extends FleaConfigDAOImpl<FleaJerseyResC
     public FleaJerseyResClient getResClient(String clientCode) throws CommonException {
 
         List<FleaJerseyResClient> resClientList = getQuery(null)
-                .equal(FleaConfigEntityConstants.S_CLIENT_CODE, clientCode)
-                .equal(FleaConfigEntityConstants.S_STATE, EntityStateEnum.IN_USE.getValue())
+                .equal(FleaConfigEntityConstants.E_CLIENT_CODE, clientCode)
+                .equal(FleaConfigEntityConstants.E_STATE, EntityStateEnum.IN_USE.getState())
                 .getResultList();
 
         FleaJerseyResClient resClient = null;

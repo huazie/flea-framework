@@ -128,6 +128,7 @@ public class EntityUtils {
                 boolean isPrimarykey = false;// 判断当前的属性是否是主键
                 boolean isNullable = false;// 判断当前的属性是否可空
                 boolean isUnique = false;// 判断当前的属性是否唯一
+                String pkColumnValue = ""; // ID生成器表中的主键值模板
 
                 Annotation[] annotations = fields[i].getAnnotations();// 获取属性上的注解
                 if (ArrayUtils.isEmpty(annotations)) {// 表示属性上没有注解
@@ -163,17 +164,23 @@ public class EntityUtils {
                         isPrimarykey = true;// true表示该字段是主键
                     }
                     // 兼容JPA
-                    if (javax.persistence.Column.class.getName().equals(an.annotationType().getName())) {// 含有Column注解
+                    if (javax.persistence.Column.class.getName().equals(an.annotationType().getName())) {
                         javax.persistence.Column col = (javax.persistence.Column) an;
                         colName = col.name();
                         isNullable = col.nullable();
                         isUnique = col.unique();
+                    }
+                    // 兼容JPA
+                    if (javax.persistence.TableGenerator.class.getName().equals(an.annotationType().getName())) {
+                        javax.persistence.TableGenerator tableGenerator = (javax.persistence.TableGenerator) an;
+                        pkColumnValue = tableGenerator.pkColumnValue();
                     }
                 }
                 column.setTabColumnName(colName);
                 column.setPrimaryKey(isPrimarykey);
                 column.setNullable(isNullable);
                 column.setUnique(isUnique);
+                column.setPkColumnValue(pkColumnValue);
 
                 columns.add(column);
             }
@@ -234,7 +241,7 @@ public class EntityUtils {
      *
      * @param entity 实体类对象实例
      * @return 真实的表名，如是分表，则返回相应的分表名
-     * @throws Exception
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public static SplitTable getSplitTable(Object entity) throws CommonException {
@@ -250,13 +257,7 @@ public class EntityUtils {
             // 请检查初始实体类（实体类的属性列相关信息不存在）
             throw new DaoException("ERROR-DB-SQT0000000016");
         }
-        String splitTableName = TableSplitHelper.getRealTableName(tableName, entityCols);
-        SplitTable splitTable = new SplitTable();
-        splitTable.setTableName(tableName);
-        if (!tableName.equals(splitTableName)) {
-            splitTable.setSplitTableName(splitTableName);
-        }
-        return splitTable;
+        return TableSplitHelper.getSplitTable(tableName, entityCols);
     }
 
 }

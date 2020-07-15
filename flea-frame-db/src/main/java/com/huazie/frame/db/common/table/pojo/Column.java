@@ -35,6 +35,8 @@ public class Column implements Serializable {
 
     private Boolean unique; // 是否唯一
 
+    private String pkColumnValue; // ID生成器表中的主键值模板
+
     public Class<?> getAttrType() {
         return attrType;
     }
@@ -97,6 +99,14 @@ public class Column implements Serializable {
 
     public void setUnique(Boolean unique) {
         this.unique = unique;
+    }
+
+    public String getPkColumnValue() {
+        return pkColumnValue;
+    }
+
+    public void setPkColumnValue(String pkColumnValue) {
+        this.pkColumnValue = pkColumnValue;
     }
 
     @Override

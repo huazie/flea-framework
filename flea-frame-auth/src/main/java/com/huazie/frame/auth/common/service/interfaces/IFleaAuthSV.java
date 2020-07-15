@@ -30,6 +30,7 @@ public interface IFleaAuthSV {
      * <p> 保存用户登录日志 </p>
      *
      * @param accountId 账户编号
+     * @param request HTTP请求对象
      * @since 1.0.0
      */
     void saveLoginLog(Long accountId, HttpServletRequest request);

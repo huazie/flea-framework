@@ -29,9 +29,9 @@ public class FleaJerseyResServiceDAOImpl extends FleaConfigDAOImpl<FleaJerseyRes
     public FleaJerseyResService getResService(String serviceCode, String resourceCode) throws CommonException {
 
         List<FleaJerseyResService> resServiceList = getQuery(null)
-                .equal(FleaConfigEntityConstants.S_SERVICE_CODE, serviceCode)
-                .equal(FleaConfigEntityConstants.S_RESOURCE_CODE, resourceCode)
-                .equal(FleaConfigEntityConstants.S_STATE, EntityStateEnum.IN_USE.getValue()) // 查询在用状态的资源服务
+                .equal(FleaConfigEntityConstants.E_SERVICE_CODE, serviceCode)
+                .equal(FleaConfigEntityConstants.E_RESOURCE_CODE, resourceCode)
+                .equal(FleaConfigEntityConstants.E_STATE, EntityStateEnum.IN_USE.getState()) // 查询在用状态的资源服务
                 .getResultList();
 
         FleaJerseyResService resService = null;

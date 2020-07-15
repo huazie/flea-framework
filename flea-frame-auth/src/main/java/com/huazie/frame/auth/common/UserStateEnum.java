@@ -14,17 +14,17 @@ public enum UserStateEnum {
     BE_FORBIDDEN(2, "禁用状态"),
     IN_AUDITING(3, "待审核状态");
 
-    private int value;
+    private int state;
 
     private String desc;
 
-    UserStateEnum(int value, String desc) {
-        this.value = value;
+    UserStateEnum(int state, String desc) {
+        this.state = state;
         this.desc = desc;
     }
 
-    public int getValue() {
-        return value;
+    public int getState() {
+        return state;
     }
 
     public String getDesc() {

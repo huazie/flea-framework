@@ -107,7 +107,7 @@ public class FleaUser extends FleaEntity {
         this.groupId = groupId;
         if (ObjectUtils.isEmpty(userState)) {
             // 默认用户状态为 3 : 待审核
-            userState = UserStateEnum.IN_AUDITING.getValue();
+            userState = UserStateEnum.IN_AUDITING.getState();
         }
         this.userState = userState;
         createDate = DateUtils.getCurrentTime();

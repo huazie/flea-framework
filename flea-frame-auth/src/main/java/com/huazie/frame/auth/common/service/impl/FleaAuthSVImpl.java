@@ -2,6 +2,7 @@ package com.huazie.frame.auth.common.service.impl;
 
 import com.huazie.frame.auth.base.user.entity.FleaLoginLog;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaLoginLogSV;
+import com.huazie.frame.auth.common.FleaAuthConstants;
 import com.huazie.frame.auth.common.service.interfaces.IFleaAuthSV;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.FleaSessionManager;
@@ -107,7 +108,7 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
                 // 获取当月用户最近一次的登录日志
                 FleaLoginLog fleaLoginLog = fleaLoginLogSV.queryLastUserLoginLog(accountId);
                 if (null != fleaLoginLog) {
-                    fleaLoginLog.setLoginState(FleaLoginLog.LOGIN_STATE_2);
+                    fleaLoginLog.setLoginState(FleaAuthConstants.UserConstants.LOGIN_STATE_2);
                     fleaLoginLog.setLogoutTime(DateUtils.getCurrentTime());
                     fleaLoginLog.setDoneDate(fleaLoginLog.getLoginTime());
                     fleaLoginLog.setRemarks("用户已退出");

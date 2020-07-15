@@ -32,5 +32,15 @@ public interface IFleaJPATableSplitHandler {
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    void handle(EntityManager entityManager, Object entity, boolean isRead) throws CommonException;
+    void handle(EntityManager entityManager, Object entity) throws CommonException;
+
+    /**
+     * <p> 获取下一个主键值 </p>
+     *
+     * @param entityManager 持久化接口对象实例
+     * @param clazz         实体类Class对象实例
+     * @return 下一个主键值
+     * @since 1.0.0
+     */
+    Long getNextSequenceValue(EntityManager entityManager, Class<?> clazz);
 }

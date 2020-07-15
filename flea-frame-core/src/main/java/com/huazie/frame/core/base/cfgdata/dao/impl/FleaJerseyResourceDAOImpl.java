@@ -34,8 +34,8 @@ public class FleaJerseyResourceDAOImpl extends FleaConfigDAOImpl<FleaJerseyResou
     public List<FleaJerseyResource> getResource(String resourceCode) throws CommonException {
 
         List<FleaJerseyResource> resourceList = getQuery(null)
-                .equal(FleaConfigEntityConstants.S_RESOURCE_CODE, resourceCode)
-                .equal(FleaConfigEntityConstants.S_STATE, EntityStateEnum.IN_USE.getValue()) // 查询在用状态的资源定义数据
+                .equal(FleaConfigEntityConstants.E_RESOURCE_CODE, resourceCode)
+                .equal(FleaConfigEntityConstants.E_STATE, EntityStateEnum.IN_USE.getState()) // 查询在用状态的资源定义数据
                 .getResultList();
 
         if (LOGGER.isDebugEnabled()) {

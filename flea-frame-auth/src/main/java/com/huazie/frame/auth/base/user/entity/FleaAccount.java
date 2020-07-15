@@ -91,7 +91,7 @@ public class FleaAccount extends FleaEntity {
         this.accountPwd = accountPwd;
         if (ObjectUtils.isEmpty(accountState)) {
             // 默认账户状态为 3 : 待审核
-            accountState = UserStateEnum.IN_AUDITING.getValue();
+            accountState = UserStateEnum.IN_AUDITING.getState();
         }
         this.accountState = accountState;
         createDate = DateUtils.getCurrentTime();

@@ -12,17 +12,17 @@ public enum EntityStateEnum {
     IN_USE(1, "在用状态"),
     BE_DELETED(0, "删除状态");
 
-    private int value;
+    private int state;
 
     private String desc;
 
-    EntityStateEnum(int value, String desc) {
-        this.value = value;
+    EntityStateEnum(int state, String desc) {
+        this.state = state;
         this.desc = desc;
     }
 
-    public int getValue() {
-        return value;
+    public int getState() {
+        return state;
     }
 
     public String getDesc() {
