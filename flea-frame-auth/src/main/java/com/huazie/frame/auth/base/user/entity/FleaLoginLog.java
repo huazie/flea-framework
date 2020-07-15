@@ -11,8 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
@@ -30,15 +30,16 @@ public class FleaLoginLog extends FleaEntity {
 
     private static final long serialVersionUID = -3509005972594017615L;
 
-    public static final Integer LOGIN_STATE_1 = 1; // 登录中
-    public static final Integer LOGIN_STATE_2 = 2; // 已退出
-
-    public static final String LOGIN_STATE = "loginState";
-    public static final String LOGIN_TIME = "loginTime";
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "FLEA_LOGIN_LOG_SEQ")
-    @SequenceGenerator(name = "FLEA_LOGIN_LOG_SEQ")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "FLEA_LOGIN_LOG_GENERATOR")
+    @TableGenerator(
+            name = "FLEA_LOGIN_LOG_GENERATOR",                  // 唯一的生成器名称，可以由一个或多个类引用以作为id值的生成器。
+            table = "flea_id_generator",                        // 存储生成的ID值的表的名称
+            pkColumnName = "id_generator_key",                  // 表中主键列的名称
+            valueColumnName = "id_generator_value",             // 存储最后生成的主键值的列的名称
+            pkColumnValue = "pk_flea_login_log_(CREATE_DATE)",  // ID生成器表中的主键值模板，用于将该生成值集与其他可能存储在表中的值区分开
+            allocationSize = 1                                  // 从ID生成器表中分配ID号时增加的数量
+    )
     @Column(name = "login_log_id", unique = true, nullable = false)
     private Long loginLogId; // 登录日志编号
 
@@ -104,7 +105,7 @@ public class FleaLoginLog extends FleaEntity {
         this.loginIp4 = loginIp4;
         this.loginIp6 = loginIp6;
         this.loginArea = loginArea;
-        this.loginState = EntityStateEnum.IN_USE.getValue();
+        this.loginState = EntityStateEnum.IN_USE.getState();
         this.loginTime = DateUtils.getCurrentTime();
         this.createDate = DateUtils.getCurrentTime();
         this.remarks = remarks;

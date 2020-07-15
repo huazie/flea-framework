@@ -9,7 +9,8 @@ import com.huazie.frame.db.common.util.EntityUtils;
 import com.huazie.frame.db.jpa.persistence.IFleaJPATableSplitHandler;
 import org.eclipse.persistence.internal.jpa.metamodel.EntityTypeImpl;
 import org.eclipse.persistence.internal.sessions.AbstractSession;
-import org.eclipse.persistence.internal.sessions.RepeatableWriteUnitOfWork;
+import org.eclipse.persistence.sequencing.Sequence;
+import org.eclipse.persistence.sequencing.TableSequence;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaQuery;
@@ -46,7 +47,7 @@ public class EclipseLinkTableSplitHandler implements IFleaJPATableSplitHandler {
     }
 
     @Override
-    public void handle(EntityManager entityManager, Object entity, boolean isRead) throws CommonException {
+    public void handle(EntityManager entityManager, Object entity) throws CommonException {
 
         if (ObjectUtils.isEmpty(entityManager) || ObjectUtils.isEmpty(entity)) {
             return;
@@ -58,14 +59,36 @@ public class EclipseLinkTableSplitHandler implements IFleaJPATableSplitHandler {
         // 存在分表，则需要操作具体分表
         if (StringUtils.isNotBlank(splitTable.getSplitTableName())) {
             // 获取可用的数据库会话对象
-            AbstractSession session;
-            if (isRead) {
-                session = entityManager.unwrap(AbstractSession.class);
-            } else {
-                session = entityManager.unwrap(RepeatableWriteUnitOfWork.class);
-            }
+            AbstractSession session = getDatabaseSession(entityManager);
             // 重新设置 查询的分表表名
             session.getDescriptor(entity.getClass()).setTableName(splitTable.getSplitTableName());
+            // 获取实体类上定义的Sequence对象实例
+            Sequence sequence = session.getDatasourcePlatform().getSequence(splitTable.getPkColumnValue());
+            if (sequence instanceof TableSequence) {
+                TableSequence tableSequence = (TableSequence) sequence;
+                // 为分表重新设置ID生成器的主键值
+                tableSequence.setName(splitTable.getSplitTablePkColumnValue());
+                // 为分表重新设置 更新语句上的 ID生成器的主键值
+                tableSequence.getUpdateQuery().setName(splitTable.getSplitTablePkColumnValue());
+                // 为分表重新设置 查询语句上的 ID生成器的主键值
+                tableSequence.getSelectQuery().setName(splitTable.getSplitTablePkColumnValue());
+            }
         }
+    }
+
+    @Override
+    public Long getNextSequenceValue(EntityManager entityManager, Class<?> clazz) {
+        return (Long) getDatabaseSession(entityManager).getNextSequenceNumberValue(clazz);
+    }
+
+    /**
+     * <p> 获取可用的数据库会话对象 </p>
+     *
+     * @param entityManager 持久化接口对象实例
+     * @return 可用的数据库会话对象
+     * @since 1.0.0
+     */
+    private AbstractSession getDatabaseSession(EntityManager entityManager) {
+        return entityManager.unwrap(AbstractSession.class);
     }
 }

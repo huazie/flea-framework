@@ -10,7 +10,7 @@
 			<!-- 定义分表后缀
 				key : 分表类型关键字 (可查看 com.huazie.frame.db.common.table.split.TableSplitEnum )
 				column : 分表属性列字段名
-				implClass : 分表后缀转换实现类
+				implClass : 分表字段值转换实现类
 			-->
 			<split key="twohex" column="file_id" implClass="com.huazie.frame.db.common.table.split.impl.TwoHexTableSplitImpl"/>
 		</splits>

@@ -13,6 +13,10 @@ public class SplitTable {
 
     private String splitTableName; // 分表名
 
+    private String pkColumnValue; // ID生成器表中的主键值
+
+    private String splitTablePkColumnValue; // ID生成器表中分表的主键值
+
     public String getTableName() {
         return tableName;
     }
@@ -27,5 +31,21 @@ public class SplitTable {
 
     public void setSplitTableName(String splitTableName) {
         this.splitTableName = splitTableName;
+    }
+
+    public String getPkColumnValue() {
+        return pkColumnValue;
+    }
+
+    public void setPkColumnValue(String pkColumnValue) {
+        this.pkColumnValue = pkColumnValue;
+    }
+
+    public String getSplitTablePkColumnValue() {
+        return splitTablePkColumnValue;
+    }
+
+    public void setSplitTablePkColumnValue(String splitTablePkColumnValue) {
+        this.splitTablePkColumnValue = splitTablePkColumnValue;
     }
 }

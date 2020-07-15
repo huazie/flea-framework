@@ -18,6 +18,11 @@ import java.util.Set;
 public abstract class AbstractFleaJPASVImpl<T> implements IAbstractFleaJPASV<T> {
 
     @Override
+    public Long getFleaNextValue(T entity) throws CommonException {
+        return getDAO().getFleaNextValue(entity);
+    }
+
+    @Override
     public T query(long entityId) throws CommonException {
         return getDAO().query(entityId);
     }

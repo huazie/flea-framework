@@ -9,14 +9,39 @@ package com.huazie.frame.common;
  */
 public interface FleaEntityConstants {
 
-    String CREATE_DATE = "createDate";
+    /**
+     * <p> 创建日期 </p>
+     */
+    String E_CREATE_DATE = "createDate";
 
-    String DONE_DATE = "doneDate";
+    /**
+     * <p> 修改日期 </p>
+     */
+    String E_DONE_DATE = "doneDate";
 
-    String EFFECTIVE_DATE = "effectiveDate";
+    /**
+     * <p> 生效日期 </p>
+     */
+    String E_EFFECTIVE_DATE = "effectiveDate";
 
-    String EXPIRY_DATE = "expiryDate";
+    /**
+     * <p> 失效日期 </p>
+     */
+    String E_EXPIRY_DATE = "expiryDate";
 
-    String S_STATE = "state";
+    /**
+     * <p> 状态 </p>
+     */
+    String E_STATE = "state";
+
+    /**
+     * <p> 属性码 </p>
+     */
+    String E_ATTR_CODE = "attrCode";
+
+    /**
+     * <p> 属性值 </p>
+     */
+    String E_ATTR_VALUE = "attrValue";
 
 }

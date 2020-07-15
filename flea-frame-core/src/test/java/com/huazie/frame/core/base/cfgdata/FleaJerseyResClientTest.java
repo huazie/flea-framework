@@ -43,7 +43,7 @@ public class FleaJerseyResClientTest {
         resClient.setMediaType("application/xml");
         resClient.setClientInput("com.huazie.ffs.pojo.upload.input.InputUploadAuthInfo");
         resClient.setClientOutput("com.huazie.ffs.pojo.upload.output.OutputUploadAuthInfo");
-        resClient.setState(EntityStateEnum.IN_USE.getValue());
+        resClient.setState(EntityStateEnum.IN_USE.getState());
         resClient.setCreateDate(DateUtils.getCurrentTime());
         resClient.setRemarks("上传鉴权服务");
         try {
@@ -65,7 +65,7 @@ public class FleaJerseyResClientTest {
         resClient.setMediaType("multipart/form-data");
         resClient.setClientInput("com.huazie.ffs.pojo.upload.input.InputFileUploadInfo");
         resClient.setClientOutput("com.huazie.ffs.pojo.upload.output.OutputFileUploadInfo");
-        resClient.setState(EntityStateEnum.IN_USE.getValue());
+        resClient.setState(EntityStateEnum.IN_USE.getState());
         resClient.setCreateDate(DateUtils.getCurrentTime());
         resClient.setRemarks("文件上传服务");
         try {
@@ -87,7 +87,7 @@ public class FleaJerseyResClientTest {
         resClient.setMediaType("application/xml");
         resClient.setClientInput("com.huazie.ffs.pojo.download.input.InputDownloadAuthInfo");
         resClient.setClientOutput("com.huazie.ffs.pojo.download.output.OutputDownloadAuthInfo");
-        resClient.setState(EntityStateEnum.IN_USE.getValue());
+        resClient.setState(EntityStateEnum.IN_USE.getState());
         resClient.setCreateDate(DateUtils.getCurrentTime());
         resClient.setRemarks("下载鉴权服务");
         try {
@@ -109,7 +109,7 @@ public class FleaJerseyResClientTest {
         resClient.setMediaType("multipart/form-data");
         resClient.setClientInput("com.huazie.ffs.pojo.download.input.InputFileDownloadInfo");
         resClient.setClientOutput("com.huazie.ffs.pojo.download.output.OutputFileDownloadInfo");
-        resClient.setState(EntityStateEnum.IN_USE.getValue());
+        resClient.setState(EntityStateEnum.IN_USE.getState());
         resClient.setCreateDate(DateUtils.getCurrentTime());
         resClient.setRemarks("文件下载服务");
         try {
