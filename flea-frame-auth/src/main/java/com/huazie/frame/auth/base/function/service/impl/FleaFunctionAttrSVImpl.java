@@ -19,10 +19,11 @@ import org.springframework.stereotype.Service;
 @Service("fleaFunctionAttrSV")
 public class FleaFunctionAttrSVImpl extends AbstractFleaJPASVImpl<FleaFunctionAttr> implements IFleaFunctionAttrSV {
 
-    private final IFleaFunctionAttrDAO fleaFunctionAttrDao;
+    private IFleaFunctionAttrDAO fleaFunctionAttrDao;
 
     @Autowired
-    public FleaFunctionAttrSVImpl(@Qualifier("fleaFunctionAttrDAO") IFleaFunctionAttrDAO fleaFunctionAttrDao) {
+    @Qualifier("fleaFunctionAttrDAO")
+    public void setFleaFunctionAttrDao(IFleaFunctionAttrDAO fleaFunctionAttrDao) {
         this.fleaFunctionAttrDao = fleaFunctionAttrDao;
     }
 

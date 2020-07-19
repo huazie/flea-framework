@@ -8,8 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
@@ -25,11 +25,24 @@ import java.util.Date;
 @Table(name = "flea_user_rel")
 public class FleaUserRel extends FleaEntity {
 
-    private static final long serialVersionUID = -6060032995811415159L;
+    private static final long serialVersionUID = 1784774054256023787L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "FLEA_USER_REL_SEQ")
-    @SequenceGenerator(name = "FLEA_USER_REL_SEQ")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "FLEA_USER_REL_GENERATOR")
+    @TableGenerator(
+        // 唯一的生成器名称，可以由一个或多个类引用以作为id值的生成器。
+        name = "FLEA_USER_REL_GENERATOR",
+        // 存储生成的ID值的表的名称
+        table = "flea_id_generator",
+        // 表中主键列的名称
+        pkColumnName = "id_generator_key",
+        // 存储最后生成的主键值的列的名称
+        valueColumnName = "id_generator_value",
+        // ID生成器表中的主键值模板，用于将该生成值集与其他可能存储在表中的值区分开
+        pkColumnValue = "pk_flea_user_rel",
+        // 从ID生成器表中分配ID号时增加的数量
+        allocationSize = 1
+    )
     @Column(name = "user_rel_id", unique = true, nullable = false)
     private Long userRelId; // 用户关联编号
 

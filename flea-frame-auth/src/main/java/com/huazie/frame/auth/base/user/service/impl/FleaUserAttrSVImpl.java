@@ -28,10 +28,11 @@ import java.util.List;
 @Service("fleaUserAttrSV")
 public class FleaUserAttrSVImpl extends AbstractFleaJPASVImpl<FleaUserAttr> implements IFleaUserAttrSV {
 
-    private final IFleaUserAttrDAO fleaUserAttrDao;
+    private IFleaUserAttrDAO fleaUserAttrDao;
 
     @Autowired
-    public FleaUserAttrSVImpl(@Qualifier("fleaUserAttrDAO") IFleaUserAttrDAO fleaUserAttrDao) {
+    @Qualifier("fleaUserAttrDAO")
+    public void setFleaUserAttrDao(IFleaUserAttrDAO fleaUserAttrDao) {
         this.fleaUserAttrDao = fleaUserAttrDao;
     }
 

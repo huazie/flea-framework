@@ -8,7 +8,7 @@ import com.huazie.frame.db.jpa.service.interfaces.IAbstractFleaJPASV;
 import java.util.List;
 
 /**
- * <p> Flea帐户属性SV层接口定义 </p>
+ * <p> Flea账户属性SV层接口定义 </p>
  *
  * @author huazie
  * @version 1.0.0

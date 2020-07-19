@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**
- * <p> Flea帐户信息SV层实现类 </p>
+ * <p> Flea账户信息SV层实现类 </p>
  *
  * @author huazie
  * @version 1.0.0
@@ -29,10 +29,11 @@ public class FleaAccountSVImpl extends AbstractFleaJPASVImpl<FleaAccount> implem
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FleaAccountSVImpl.class);
 
-    private final IFleaAccountDAO fleaAccountDao;
+    private IFleaAccountDAO fleaAccountDao;
 
     @Autowired
-    public FleaAccountSVImpl(@Qualifier("fleaAccountDAO") IFleaAccountDAO fleaAccountDao) {
+    @Qualifier("fleaAccountDAO")
+    public void setFleaAccountDao(IFleaAccountDAO fleaAccountDao) {
         this.fleaAccountDao = fleaAccountDao;
     }
 
