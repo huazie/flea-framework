@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p> Flea帐户属性SV层实现类 </p>
+ * <p> Flea账户属性SV层实现类 </p>
  *
  * @author huazie
  * @version 1.0.0
@@ -28,10 +28,11 @@ import java.util.List;
 @Service("fleaAccountAttrSV")
 public class FleaAccountAttrSVImpl extends AbstractFleaJPASVImpl<FleaAccountAttr> implements IFleaAccountAttrSV {
 
-    private final IFleaAccountAttrDAO fleaAccountAttrDao;
+    private IFleaAccountAttrDAO fleaAccountAttrDao;
 
     @Autowired
-    public FleaAccountAttrSVImpl(@Qualifier("fleaAccountAttrDAO") IFleaAccountAttrDAO fleaAccountAttrDao) {
+    @Qualifier("fleaAccountAttrDAO")
+    public void setFleaAccountAttrDao(IFleaAccountAttrDAO fleaAccountAttrDao) {
         this.fleaAccountAttrDao = fleaAccountAttrDao;
     }
 

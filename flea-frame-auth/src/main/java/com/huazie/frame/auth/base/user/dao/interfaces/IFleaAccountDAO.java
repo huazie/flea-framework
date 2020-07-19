@@ -5,7 +5,7 @@ import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 
 /**
- * <p> Flea帐户信息DAO层接口 </p>
+ * <p> Flea账户信息DAO层接口 </p>
  *
  * @author huazie
  * @version 1.0.0

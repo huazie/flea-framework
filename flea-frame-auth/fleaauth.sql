@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50538
 File Encoding         : 65001
 
-Date: 2020-07-07 00:01:14
+Date: 2020-07-19 21:58:39
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -124,7 +124,27 @@ CREATE TABLE `flea_id_generator` (
 -- ----------------------------
 -- Records of flea_id_generator
 -- ----------------------------
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_account', '0');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_account_attr', '0');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_element', '0');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_function_attr', '0');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_login_log_202007', '0');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_menu', '0');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_operation', '0');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_privilege', '0');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_privilege_group', '0');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_privilege_group_rel', '0');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_privilege_rel', '0');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_real_name_info', '0');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_role', '0');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_role_group', '0');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_role_group_rel', '0');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_role_rel', '0');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_user', '0');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_user_attr', '0');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_user_group', '0');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_user_group_rel', '0');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_user_rel', '0');
 
 -- ----------------------------
 -- Table structure for `flea_login_log`

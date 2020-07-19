@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * <p> Flea帐户信息DAO层实现类 </p>
+ * <p> Flea账户信息DAO层实现类 </p>
  *
  * @author huazie
  * @version 1.0.0
