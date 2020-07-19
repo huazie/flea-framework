@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
@@ -28,15 +29,19 @@ public class LoginLogAuthMainTest {
 
         IFleaLoginLogSV fleaLoginLogSV = (IFleaLoginLogSV) applicationContext.getBean("fleaLoginLogSV");
 
-        Executors.newCachedThreadPool().execute(new FleaRunable(fleaLoginLogSV));
-        Executors.newCachedThreadPool().execute(new FleaRunable(fleaLoginLogSV));
-        Executors.newCachedThreadPool().execute(new FleaRunable(fleaLoginLogSV));
-        Executors.newCachedThreadPool().execute(new FleaRunable(fleaLoginLogSV));
-        Executors.newCachedThreadPool().execute(new FleaRunable(fleaLoginLogSV));
-        Executors.newCachedThreadPool().execute(new FleaRunable(fleaLoginLogSV));
-        Executors.newCachedThreadPool().execute(new FleaRunable(fleaLoginLogSV));
-        Executors.newCachedThreadPool().execute(new FleaRunable(fleaLoginLogSV));
-        Executors.newCachedThreadPool().execute(new FleaRunable(fleaLoginLogSV));
+        ExecutorService executorService = Executors.newCachedThreadPool();
+
+        // 测试多线程获取主键
+        executorService.execute(new FleaRunable(fleaLoginLogSV));
+        executorService.execute(new FleaRunable(fleaLoginLogSV));
+        executorService.execute(new FleaRunable(fleaLoginLogSV));
+        executorService.execute(new FleaRunable(fleaLoginLogSV));
+        executorService.execute(new FleaRunable(fleaLoginLogSV));
+        executorService.execute(new FleaRunable(fleaLoginLogSV));
+        executorService.execute(new FleaRunable(fleaLoginLogSV));
+        executorService.execute(new FleaRunable(fleaLoginLogSV));
+        executorService.execute(new FleaRunable(fleaLoginLogSV));
+        executorService.execute(new FleaRunable(fleaLoginLogSV));
     }
 
     static class FleaRunable implements Runnable {

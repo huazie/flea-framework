@@ -10,25 +10,13 @@ import com.huazie.frame.tools.common.ToolsHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JSeparator;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
+import javax.persistence.GenerationType;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,7 +28,7 @@ import java.util.Map;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class FleaCodePanel extends JPanel implements ActionListener {
+public class FleaCodePanel extends JPanel implements ActionListener, ItemListener {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FleaCodePanel.class);
 
@@ -51,6 +39,20 @@ public class FleaCodePanel extends JPanel implements ActionListener {
     private JTextField tableNameTextField; // 表名
 
     private JTextField tableNameDescTextField; // 表名描述
+
+    private JComboBox<String> idGeneratorStrategyComboBox; // 主键生成策略下拉框
+
+    private JLabel idGeneratorTableLabel; // 主键生成器表标签
+
+    private JTextField idGeneratorTableTextField; // 主键生成器表文本域
+
+    private JLabel pkColumnNameLabel; // 主键列名
+
+    private JTextField pkColumnNameTextField; // 主键列名文本域
+
+    private JLabel valueColumnNameLabel; // 主键值列名
+
+    private JTextField valueColumnNameTextField; // 主键值列名文本域
 
     private JTextField authorTextField; // 作者
 
@@ -107,6 +109,7 @@ public class FleaCodePanel extends JPanel implements ActionListener {
         configGridBagLayout = new GridBagLayout();
         configPanel = new JPanel(configGridBagLayout);
         configGridBagConstraints = new GridBagConstraints();
+        configGridBagConstraints.fill = GridBagConstraints.BOTH;
 
         initElements(); // 初始化页面元素
 
@@ -116,6 +119,12 @@ public class FleaCodePanel extends JPanel implements ActionListener {
     private void initElements() {
         // 初始化数据库配置页面元素
         initDBConfig();
+
+        // 添加分隔线
+        addSeparator();
+
+        // 初始化主键生成策略配置页面元素
+        initIDGeneratorConfig();
 
         // 添加分隔线
         addSeparator();
@@ -138,229 +147,111 @@ public class FleaCodePanel extends JPanel implements ActionListener {
 
     private void initDBConfig() {
         // 数据库配置
-        JLabel dbConfigLabel = new JLabel(FleaI18nHelper.i18nForCommon("COMMON_CODE_00001"), JLabel.LEFT);
-        dbConfigLabel.setFont(new Font("宋体", Font.PLAIN, 20)); // 字体
+        showTitleConfig("COMMON_CODE_00001");
 
-        configGridBagConstraints.fill = GridBagConstraints.BOTH;
-        configGridBagConstraints.weightx = 1.0;
-        configGridBagConstraints.insets = new Insets(5, 20, 2, 0);
-        configGridBagLayout.setConstraints(dbConfigLabel, configGridBagConstraints);
-        configPanel.add(dbConfigLabel);
-        configGridBagConstraints.insets = new Insets(5, 5, 2, 0);
-        JLabel other1 = new JLabel(" ");
-        configGridBagLayout.setConstraints(other1, configGridBagConstraints);
-        configPanel.add(other1);
-        JLabel other2 = new JLabel(" ");
-        configGridBagLayout.setConstraints(other2, configGridBagConstraints);
-        configPanel.add(other2);
-        JLabel other3 = new JLabel(" ");
-        configGridBagLayout.setConstraints(other3, configGridBagConstraints);
-        configPanel.add(other3);
-        JLabel other4 = new JLabel(" ");
-        configGridBagLayout.setConstraints(other4, configGridBagConstraints);
-        configPanel.add(other4);
-        JLabel other5 = new JLabel(" ");
-        configGridBagLayout.setConstraints(other5, configGridBagConstraints);
-        configPanel.add(other5);
-        JLabel other6 = new JLabel(" ");
-        configGridBagLayout.setConstraints(other6, configGridBagConstraints);
-        configPanel.add(other6);
-        JLabel other7 = new JLabel(" ");
-        configGridBagLayout.setConstraints(other7, configGridBagConstraints);
-        configPanel.add(other7);
-        JLabel other8 = new JLabel(" ");
-        configGridBagLayout.setConstraints(other8, configGridBagConstraints);
-        configPanel.add(other8);
-        JLabel other9 = new JLabel(" ");
-        configGridBagConstraints.gridwidth = GridBagConstraints.REMAINDER; // end row
-        configGridBagLayout.setConstraints(other9, configGridBagConstraints);
-        configPanel.add(other9);
+        configGridBagConstraints.insets = new Insets(2, 0, 2, 0);
+        configGridBagConstraints.weightx = 0.0;
 
-        // 数据库系统
-        JLabel dbSystemLabel = new JLabel(FleaI18nHelper.i18nForCommon("COMMON_CODE_00002") + ":", JLabel.RIGHT);
-        dbSystemLabel.setFont(new Font("宋体", Font.PLAIN, 15)); // 字体
+        // 数据库系统下拉框
         dbSystemComboBox = new JComboBox<String>();
         dbSystemComboBox.addItem(DBSystemEnum.MySQL.getName());
         dbSystemComboBox.addItem(DBSystemEnum.Oracle.getName());
 
-        // 数据库名
-        JLabel dbNameLabel = new JLabel(FleaI18nHelper.i18nForCommon("COMMON_CODE_00003") + ":", JLabel.RIGHT);
-        dbNameLabel.setFont(new Font("宋体", Font.PLAIN, 15)); // 字体
+        // 数据库系统
+        showOneContentConfig(null, "COMMON_CODE_00002", dbSystemComboBox, 4, false);
+
+        // 数据库名文本域
         dbNameTextField = new JTextField();
+        // 数据库名
+        showOneContentConfig(null, "COMMON_CODE_00003", dbNameTextField, 4, true);
 
-        configGridBagConstraints.insets = new Insets(2, 0, 2, 0);
-        configGridBagConstraints.weightx = 0.0;
-        configGridBagConstraints.gridwidth = 1;
-        configGridBagLayout.setConstraints(dbSystemLabel, configGridBagConstraints);
-        configPanel.add(dbSystemLabel);
-        configGridBagConstraints.gridwidth = 4;
-        configGridBagLayout.setConstraints(dbSystemComboBox, configGridBagConstraints);
-        configPanel.add(dbSystemComboBox);
-        configGridBagConstraints.gridwidth = 1;
-        configGridBagLayout.setConstraints(dbNameLabel, configGridBagConstraints);
-        configPanel.add(dbNameLabel);
-        configGridBagConstraints.gridwidth = GridBagConstraints.REMAINDER; // end row
-        configGridBagLayout.setConstraints(dbNameTextField, configGridBagConstraints);
-        configPanel.add(dbNameTextField);
-
-        // 表名
-        JLabel tableNameLabel = new JLabel(FleaI18nHelper.i18nForCommon("COMMON_CODE_00004") + ":", JLabel.RIGHT);
-        tableNameLabel.setFont(new Font("宋体", Font.PLAIN, 15)); // 字体
+        // 表名文本域
         tableNameTextField = new JTextField();
+        // 表名
+        showOneContentConfig(null, "COMMON_CODE_00004", tableNameTextField, 4, false);
 
-        // 表名描述
-        JLabel tableNameDescLabel = new JLabel(FleaI18nHelper.i18nForCommon("COMMON_CODE_00005") + ":", JLabel.RIGHT);
-        tableNameDescLabel.setFont(new Font("宋体", Font.PLAIN, 15)); // 字体
+        // 表名描述文本域
         tableNameDescTextField = new JTextField();
+        // 表名描述
+        showOneContentConfig(null, "COMMON_CODE_00005", tableNameDescTextField, 4, true);
+    }
 
-        configGridBagConstraints.gridwidth = 1;
-        configGridBagLayout.setConstraints(tableNameLabel, configGridBagConstraints);
-        configPanel.add(tableNameLabel);
-        configGridBagConstraints.gridwidth = 4;
-        configGridBagLayout.setConstraints(tableNameTextField, configGridBagConstraints);
-        configPanel.add(tableNameTextField);
-        configGridBagConstraints.gridwidth = 1;
-        configGridBagLayout.setConstraints(tableNameDescLabel, configGridBagConstraints);
-        configPanel.add(tableNameDescLabel);
+    private void initIDGeneratorConfig() {
+        // 主键生成策略配置
+        showTitleConfig("COMMON_CODE_00021");
+
+        // 主键生成策略下拉框
+        idGeneratorStrategyComboBox = new JComboBox<String>();
+        idGeneratorStrategyComboBox.addItem(GenerationType.TABLE.name());
+        idGeneratorStrategyComboBox.addItem(GenerationType.IDENTITY.name());
+        idGeneratorStrategyComboBox.addItem(GenerationType.SEQUENCE.name());
+        idGeneratorStrategyComboBox.addItemListener(this);
+        // 主键生成策略
+        showOneContentConfig(null, "COMMON_CODE_00022", idGeneratorStrategyComboBox, 4, false);
+
+        addEmptyLabel();
+        addEmptyLabel();
+        addEmptyLabel();
+        addEmptyLabel();
         configGridBagConstraints.gridwidth = GridBagConstraints.REMAINDER; // end row
-        configGridBagLayout.setConstraints(tableNameDescTextField, configGridBagConstraints);
-        configPanel.add(tableNameDescTextField);
+        addEmptyLabel();
+
+        // 主键生成器表标签
+        idGeneratorTableLabel = new JLabel(FleaI18nHelper.i18nForCommon("COMMON_CODE_00023") + ":", JLabel.RIGHT);
+        // 主键生成器表文本域
+        idGeneratorTableTextField = new JTextField();
+        // 主键生成策略
+        showOneContentConfig(idGeneratorTableLabel, "", idGeneratorTableTextField, 3, false);
+
+        // 主键列名标签
+        pkColumnNameLabel = new JLabel(FleaI18nHelper.i18nForCommon("COMMON_CODE_00024") + ":", JLabel.RIGHT);
+        // 主键列名文本域
+        pkColumnNameTextField = new JTextField();
+        showOneContentConfig(pkColumnNameLabel, "", pkColumnNameTextField, 3, false);
+
+        // 主键值列名标签
+        valueColumnNameLabel = new JLabel(FleaI18nHelper.i18nForCommon("COMMON_CODE_00025") + ":", JLabel.RIGHT);
+        // 主键值列名文本域
+        valueColumnNameTextField = new JTextField();
+        showOneContentConfig(valueColumnNameLabel, "", valueColumnNameTextField, 0, true);
+
     }
 
     private void initCodeConfig() {
         // 代码配置
-        JLabel codeConfigLabel = new JLabel(FleaI18nHelper.i18nForCommon("COMMON_CODE_00006"), JLabel.LEFT);
-        codeConfigLabel.setFont(new Font("宋体", Font.PLAIN, 20)); // 字体
+        showTitleConfig("COMMON_CODE_00006");
 
-        configGridBagConstraints.weightx = 1.0;
-        configGridBagConstraints.gridwidth = 1;
-        configGridBagConstraints.insets = new Insets(2, 20, 2, 0);
-        configGridBagLayout.setConstraints(codeConfigLabel, configGridBagConstraints);
-        configPanel.add(codeConfigLabel);
-        configGridBagConstraints.insets = new Insets(5, 5, 2, 0);
-        JLabel codeOther1 = new JLabel(" ");
-        configGridBagLayout.setConstraints(codeOther1, configGridBagConstraints);
-        configPanel.add(codeOther1);
-        JLabel codeOther2 = new JLabel(" ");
-        configGridBagLayout.setConstraints(codeOther2, configGridBagConstraints);
-        configPanel.add(codeOther2);
-        JLabel codeOther3 = new JLabel(" ");
-        configGridBagLayout.setConstraints(codeOther3, configGridBagConstraints);
-        configPanel.add(codeOther3);
-        JLabel codeOther4 = new JLabel(" ");
-        configGridBagLayout.setConstraints(codeOther4, configGridBagConstraints);
-        configPanel.add(codeOther4);
-        JLabel codeOther5 = new JLabel(" ");
-        configGridBagLayout.setConstraints(codeOther5, configGridBagConstraints);
-        configPanel.add(codeOther5);
-        JLabel codeOther6 = new JLabel(" ");
-        configGridBagLayout.setConstraints(codeOther6, configGridBagConstraints);
-        configPanel.add(codeOther6);
-        JLabel codeOther7 = new JLabel(" ");
-        configGridBagLayout.setConstraints(codeOther7, configGridBagConstraints);
-        configPanel.add(codeOther7);
-        JLabel codeOther8 = new JLabel(" ");
-        configGridBagLayout.setConstraints(codeOther8, configGridBagConstraints);
-        configPanel.add(codeOther8);
-        JLabel codeOther9 = new JLabel(" ");
-        configGridBagConstraints.gridwidth = GridBagConstraints.REMAINDER; // end row
-        configGridBagLayout.setConstraints(codeOther9, configGridBagConstraints);
-        configPanel.add(codeOther9);
-
-        // 作者
-        JLabel authorLabel = new JLabel(FleaI18nHelper.i18nForCommon("COMMON_CODE_00007") + ":", JLabel.RIGHT);
-        authorLabel.setFont(new Font("宋体", Font.PLAIN, 15)); // 字体
+        // 作者文本域
         authorTextField = new JTextField();
+        // 作者
+        showOneContentConfig(null, "COMMON_CODE_00007", authorTextField, 4, false);
 
-        // 版本
-        JLabel versionLabel = new JLabel(FleaI18nHelper.i18nForCommon("COMMON_CODE_00008") + ":", JLabel.RIGHT);
-        versionLabel.setFont(new Font("宋体", Font.PLAIN, 15)); // 字体
+        // 版本文本域
         versionTextField = new JTextField();
+        // 版本
+        showOneContentConfig(null, "COMMON_CODE_00008", versionTextField, 4, true);
 
-        configGridBagConstraints.insets = new Insets(2, 0, 2, 0);
-        configGridBagConstraints.weightx = 0.0;
-        configGridBagConstraints.gridwidth = 1;
-        configGridBagLayout.setConstraints(authorLabel, configGridBagConstraints);
-        configPanel.add(authorLabel);
-        configGridBagConstraints.gridwidth = 4;
-        configGridBagLayout.setConstraints(authorTextField, configGridBagConstraints);
-        configPanel.add(authorTextField);
-        configGridBagConstraints.gridwidth = 1;
-        configGridBagLayout.setConstraints(versionLabel, configGridBagConstraints);
-        configPanel.add(versionLabel);
-        configGridBagConstraints.gridwidth = GridBagConstraints.REMAINDER; // end row
-        configGridBagLayout.setConstraints(versionTextField, configGridBagConstraints);
-        configPanel.add(versionTextField);
-
-        // 根目录
-        JLabel rootPathLabel = new JLabel(FleaI18nHelper.i18nForCommon("COMMON_CODE_00009") + ":", JLabel.RIGHT);
-        rootPathLabel.setFont(new Font("宋体", Font.PLAIN, 15)); // 字体
+        // 根目录文本域
         rootPathTextField = new JTextField();
+        // 根目录
+        showOneContentConfig(null, "COMMON_CODE_00009", rootPathTextField, 9, false);
+
+        // 根目录选择按钮
         rootPathSelectButton = new JButton(FleaI18nHelper.i18nForCommon("COMMON_I18N_00008"));
         rootPathSelectButton.addActionListener(this);
-
-        configGridBagConstraints.gridwidth = 1;
-        configGridBagLayout.setConstraints(rootPathLabel, configGridBagConstraints);
-        configPanel.add(rootPathLabel);
-        configGridBagConstraints.gridwidth = 8;
-        configGridBagLayout.setConstraints(rootPathTextField, configGridBagConstraints);
-        configPanel.add(rootPathTextField);
         configGridBagConstraints.gridwidth = GridBagConstraints.REMAINDER; // end row
         configGridBagLayout.setConstraints(rootPathSelectButton, configGridBagConstraints);
         configPanel.add(rootPathSelectButton);
 
-        // 包名
-        JLabel codePackageLabel = new JLabel(FleaI18nHelper.i18nForCommon("COMMON_CODE_00010") + ":", JLabel.RIGHT);
-        codePackageLabel.setFont(new Font("宋体", Font.PLAIN, 15)); // 字体
+        // 包名文本域
         codePackageTextField = new JTextField();
-
-        configGridBagConstraints.gridwidth = 1;
-        configGridBagLayout.setConstraints(codePackageLabel, configGridBagConstraints);
-        configPanel.add(codePackageLabel);
-        configGridBagConstraints.gridwidth = GridBagConstraints.REMAINDER; // end row
-        configGridBagLayout.setConstraints(codePackageTextField, configGridBagConstraints);
-        configPanel.add(codePackageTextField);
+        // 包名
+        showOneContentConfig(null, "COMMON_CODE_00010", codePackageTextField, 0, true);
     }
 
     private void initPersistenceUnitConfig() {
         // 持久化单元配置
-        JLabel puConfigLabel = new JLabel(FleaI18nHelper.i18nForCommon("COMMON_CODE_00020"), JLabel.LEFT);
-        puConfigLabel.setFont(new Font("宋体", Font.PLAIN, 20)); // 字体
-
-        configGridBagConstraints.weightx = 1.0;
-        configGridBagConstraints.gridwidth = 1;
-        configGridBagConstraints.insets = new Insets(2, 20, 2, 0);
-        configGridBagLayout.setConstraints(puConfigLabel, configGridBagConstraints);
-        configPanel.add(puConfigLabel);
-        configGridBagConstraints.insets = new Insets(5, 5, 2, 0);
-        JLabel puOther1 = new JLabel(" ");
-        configGridBagLayout.setConstraints(puOther1, configGridBagConstraints);
-        configPanel.add(puOther1);
-        JLabel puOther2 = new JLabel(" ");
-        configGridBagLayout.setConstraints(puOther2, configGridBagConstraints);
-        configPanel.add(puOther2);
-        JLabel puOther3 = new JLabel(" ");
-        configGridBagLayout.setConstraints(puOther3, configGridBagConstraints);
-        configPanel.add(puOther3);
-        JLabel puOther4 = new JLabel(" ");
-        configGridBagLayout.setConstraints(puOther4, configGridBagConstraints);
-        configPanel.add(puOther4);
-        JLabel puOther5 = new JLabel(" ");
-        configGridBagLayout.setConstraints(puOther5, configGridBagConstraints);
-        configPanel.add(puOther5);
-        JLabel puOther6 = new JLabel(" ");
-        configGridBagLayout.setConstraints(puOther6, configGridBagConstraints);
-        configPanel.add(puOther6);
-        JLabel puOther7 = new JLabel(" ");
-        configGridBagLayout.setConstraints(puOther7, configGridBagConstraints);
-        configPanel.add(puOther7);
-        JLabel puOther8 = new JLabel(" ");
-        configGridBagLayout.setConstraints(puOther8, configGridBagConstraints);
-        configPanel.add(puOther8);
-        JLabel puOther9 = new JLabel(" ");
-        configGridBagConstraints.gridwidth = GridBagConstraints.REMAINDER; // end row
-        configGridBagLayout.setConstraints(puOther9, configGridBagConstraints);
-        configPanel.add(puOther9);
+        showTitleConfig("COMMON_CODE_00020");
 
         // 持久化单元DAO层实现 单元框， 新建 或 现有
         JLabel puDaoClassLabel = new JLabel(FleaI18nHelper.i18nForCommon("COMMON_CODE_00011") + ":", JLabel.RIGHT);
@@ -390,51 +281,28 @@ public class FleaCodePanel extends JPanel implements ActionListener {
         configGridBagLayout.setConstraints(radioLabel, configGridBagConstraints);
         configPanel.add(radioLabel);
 
-        // 持久化单元DAO层实现类包名
-        JLabel puDAOClassPackageLabel = new JLabel(FleaI18nHelper.i18nForCommon("COMMON_CODE_00010") + ":", JLabel.RIGHT);
-        puDAOClassPackageLabel.setFont(new Font("宋体", Font.PLAIN, 15)); // 字体
+        // 持久化单元DAO层实现类包名文本域
         puDaoPackageTextField = new JTextField();
-
-        configGridBagConstraints.gridwidth = 1;
-        configGridBagLayout.setConstraints(puDAOClassPackageLabel, configGridBagConstraints);
-        configPanel.add(puDAOClassPackageLabel);
-        configGridBagConstraints.gridwidth = GridBagConstraints.REMAINDER; // end row
-        configGridBagLayout.setConstraints(puDaoPackageTextField, configGridBagConstraints);
-        configPanel.add(puDaoPackageTextField);
+        // 持久化单元DAO层实现类包名
+        showOneContentConfig(null, "COMMON_CODE_00010", puDaoPackageTextField, 0, true);
 
         // 持久化单元DAO层实现类名
         puDAOClassNameLabel = new JLabel(FleaI18nHelper.i18nForCommon("COMMON_CODE_00016") + ":", JLabel.RIGHT);
-        puDAOClassNameLabel.setFont(new Font("宋体", Font.PLAIN, 15)); // 字体
+        // 持久化单元DAO层实现类名文本域
         puDaoClassNameTextField = new JTextField();
-
-        configGridBagConstraints.gridwidth = 1;
-        configGridBagLayout.setConstraints(puDAOClassNameLabel, configGridBagConstraints);
-        configPanel.add(puDAOClassNameLabel);
-        configGridBagConstraints.gridwidth = GridBagConstraints.REMAINDER; // end row
-        configGridBagLayout.setConstraints(puDaoClassNameTextField, configGridBagConstraints);
-        configPanel.add(puDaoClassNameTextField);
+        showOneContentConfig(puDAOClassNameLabel, "", puDaoClassNameTextField, 0, true);
 
         // 持久化单元名
         persistenceUnitNameLabel = new JLabel(FleaI18nHelper.i18nForCommon("COMMON_CODE_00014") + ":", JLabel.RIGHT);
-        persistenceUnitNameLabel.setFont(new Font("宋体", Font.PLAIN, 15)); // 字体
+        // 持久化单元名文本域
         puNameTextField = new JTextField();
+        showOneContentConfig(persistenceUnitNameLabel, "", puNameTextField, 4, false);
+
         // 持久化单元别名 （单词首字母大写）
         persistenceUnitAliasNameLabel = new JLabel(FleaI18nHelper.i18nForCommon("COMMON_CODE_00015") + ":", JLabel.RIGHT);
-        persistenceUnitAliasNameLabel.setFont(new Font("宋体", Font.PLAIN, 15)); // 字体
+        // 持久化单元别名文本域
         puAliasNameTextField = new JTextField();
-
-        configGridBagConstraints.gridwidth = 1;
-        configGridBagLayout.setConstraints(persistenceUnitNameLabel, configGridBagConstraints);
-        configPanel.add(persistenceUnitNameLabel);
-        configGridBagConstraints.gridwidth = 4;
-        configGridBagLayout.setConstraints(puNameTextField, configGridBagConstraints);
-        configPanel.add(puNameTextField);
-        configGridBagConstraints.gridwidth = 1;
-        configGridBagLayout.setConstraints(persistenceUnitAliasNameLabel, configGridBagConstraints);
-        configPanel.add(persistenceUnitAliasNameLabel);
-        configGridBagConstraints.gridwidth = GridBagConstraints.REMAINDER; // end row
-        configGridBagLayout.setConstraints(puAliasNameTextField, configGridBagConstraints);
-        configPanel.add(puAliasNameTextField);
+        showOneContentConfig(persistenceUnitAliasNameLabel, "", puAliasNameTextField, 0, true);
 
         // 初始化
         // 设置第一个单选按钮选中
@@ -443,6 +311,68 @@ public class FleaCodePanel extends JPanel implements ActionListener {
         puNameTextField.setVisible(false);
         persistenceUnitAliasNameLabel.setVisible(false);
         puAliasNameTextField.setVisible(false);
+    }
+
+    /**
+     * <p> 处理配置标题展示 </p>
+     *
+     * @param titleNameKey 标题配置标签名称i18n key
+     * @since 1.0.0
+     */
+    private void showTitleConfig(String titleNameKey) {
+
+        JLabel configTitleLabel = new JLabel(FleaI18nHelper.i18nForCommon(titleNameKey), JLabel.LEFT);
+        configTitleLabel.setFont(new Font("宋体", Font.PLAIN, 20)); // 字体
+
+        configGridBagConstraints.weightx = 1.0;
+        configGridBagConstraints.gridwidth = 1;
+        configGridBagConstraints.insets = new Insets(5, 20, 2, 0);
+        configGridBagLayout.setConstraints(configTitleLabel, configGridBagConstraints);
+        configPanel.add(configTitleLabel);
+        configGridBagConstraints.insets = new Insets(5, 5, 2, 0);
+        addEmptyLabel();
+        addEmptyLabel();
+        addEmptyLabel();
+        addEmptyLabel();
+        addEmptyLabel();
+        addEmptyLabel();
+        addEmptyLabel();
+        addEmptyLabel();
+        configGridBagConstraints.gridwidth = GridBagConstraints.REMAINDER; // end row
+        addEmptyLabel();
+    }
+
+    /**
+     * <p> 添加一个空标签【占位】 </p>
+     */
+    private void addEmptyLabel() {
+        JLabel other = new JLabel(" ");
+        configGridBagLayout.setConstraints(other, configGridBagConstraints);
+        configPanel.add(other);
+    }
+
+    /**
+     * <p> 展示一个内容配置  </p>
+     *
+     * @param labelNameKey 内容配置标签名称i18n key
+     * @since 1.0.0
+     */
+    private void showOneContentConfig(JComponent labelJComponent, String labelNameKey, JComponent contentJComponent, int contentGridWidth, boolean isNewLine) {
+        if (null == labelJComponent) {
+            labelJComponent = new JLabel(FleaI18nHelper.i18nForCommon(labelNameKey) + ":", JLabel.RIGHT);
+        }
+        labelJComponent.setFont(new Font("宋体", Font.PLAIN, 15)); // 字体
+
+        configGridBagConstraints.gridwidth = 1;
+        configGridBagLayout.setConstraints(labelJComponent, configGridBagConstraints);
+        configPanel.add(labelJComponent);
+        if (isNewLine) {
+            configGridBagConstraints.gridwidth = GridBagConstraints.REMAINDER; // end row
+        } else {
+            configGridBagConstraints.gridwidth = contentGridWidth;
+        }
+        configGridBagLayout.setConstraints(contentJComponent, configGridBagConstraints);
+        configPanel.add(contentJComponent);
     }
 
     private void addSeparator() {
@@ -520,6 +450,54 @@ public class FleaCodePanel extends JPanel implements ActionListener {
         }
     }
 
+    @Override
+    public void itemStateChanged(ItemEvent e) {
+        try {
+            if (ItemEvent.DESELECTED == e.getStateChange()) {
+                return;
+            }
+            Object source = e.getSource();
+            if (idGeneratorStrategyComboBox == source) {
+                Object dbSystemObj = dbSystemComboBox.getSelectedItem();
+                Object idGeneratorStrategyObj = idGeneratorStrategyComboBox.getSelectedItem();
+                if (ObjectUtils.isNotEmpty(dbSystemObj) && ObjectUtils.isNotEmpty(idGeneratorStrategyObj)) {
+                    String dbSystemName = dbSystemObj.toString();
+                    String idGeneratorStrategy = idGeneratorStrategyObj.toString();
+                    if (GenerationType.TABLE.name().equals(idGeneratorStrategy)) {
+                        setGenerationTypeTableVisible(true);
+                    } else if (GenerationType.IDENTITY.name().equals(idGeneratorStrategy)) {
+                        if (DBSystemEnum.Oracle.getName().equals(dbSystemName)) {
+                            // Oracle不支持GenerationType.IDENTITY
+                            throw new Exception(FleaI18nHelper.i18nForCommon("COMMON_I18N_00017"));
+                        }
+                        setGenerationTypeTableVisible(false);
+                    } else if (GenerationType.SEQUENCE.name().equals(idGeneratorStrategy)) {
+                        if (DBSystemEnum.MySQL.getName().equals(dbSystemName)) {
+                            // MySQL不支持GenerationType.SEQUENCE
+                            throw new Exception(FleaI18nHelper.i18nForCommon("COMMON_I18N_00018"));
+                        }
+                        setGenerationTypeTableVisible(false);
+                    }
+                }
+            }
+        } catch (Exception e1) {
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("Exception = {}", e1);
+            }
+            ToolsHelper.showTips(FleaI18nHelper.i18nForCommon("COMMON_I18N_00010"), e1.getMessage(), JOptionPane.ERROR_MESSAGE);
+            idGeneratorStrategyComboBox.setSelectedIndex(0); // 重新选择TABLE
+        }
+    }
+
+    private void setGenerationTypeTableVisible(boolean isShow) {
+        idGeneratorTableLabel.setVisible(isShow);
+        idGeneratorTableTextField.setVisible(isShow);
+        pkColumnNameLabel.setVisible(isShow);
+        pkColumnNameTextField.setVisible(isShow);
+        valueColumnNameLabel.setVisible(isShow);
+        valueColumnNameTextField.setVisible(isShow);
+    }
+
     private void code() throws Exception {
         // 编写代码
         FleaCodeProgrammer.code(createParamMap());
@@ -537,23 +515,45 @@ public class FleaCodePanel extends JPanel implements ActionListener {
      */
     private void reset() {
         // 数据库配置
+        resetDBConfig();
+
+        // 主键生成策略配置
+        resetIDGeneratorStrategyConfig();
+
+        // 代码配置
+        resetCodeConfig();
+
+        // 持久化单元配置
+        resetPersistenceUnitConfig();
+    }
+
+    private void resetDBConfig() {
         dbSystemComboBox.setSelectedIndex(0);
         dbNameTextField.setText("");
         tableNameTextField.setText("");
         tableNameDescTextField.setText("");
+    }
 
-        // 代码配置
+    private void resetIDGeneratorStrategyConfig() {
+        idGeneratorStrategyComboBox.setSelectedIndex(0);
+        setGenerationTypeTableVisible(true);
+        idGeneratorTableTextField.setText("");
+        pkColumnNameTextField.setText("");
+        valueColumnNameTextField.setText("");
+    }
+
+    private void resetCodeConfig() {
         authorTextField.setText("");
         versionTextField.setText("");
         rootPathTextField.setText("");
         codePackageTextField.setText("");
+    }
 
-        // 持久化单元配置
+    private void resetPersistenceUnitConfig() {
         puDaoPackageTextField.setText("");
         puDaoClassNameTextField.setText("");
         puNameTextField.setText("");
         puAliasNameTextField.setText("");
-
     }
 
     /**
@@ -566,6 +566,9 @@ public class FleaCodePanel extends JPanel implements ActionListener {
         dbNameTextField.setText(config.getDbName());
         tableNameTextField.setText(config.getTableName());
         tableNameDescTextField.setText(config.getTableNameDesc());
+        idGeneratorTableTextField.setText(config.getIdGeneratorTable());
+        pkColumnNameTextField.setText(config.getPkColumnName());
+        valueColumnNameTextField.setText(config.getValueColumnName());
         authorTextField.setText(config.getAuthor());
         versionTextField.setText(config.getVersion());
         rootPathTextField.setText(config.getRootPath());
@@ -596,7 +599,7 @@ public class FleaCodePanel extends JPanel implements ActionListener {
 
         // 1. 数据库配置
         // 获取数据库系统名
-        String dbSystemName = dbSystemComboBox.getSelectedItem().toString();
+        String dbSystemName = StringUtils.valueOf(dbSystemComboBox.getSelectedItem());
         param.put(ToolsConstants.CodeConstants.DB_SYSTEM_NAME, dbSystemName);
         // 获取数据库名
         String dbName = dbNameTextField.getText();
@@ -617,7 +620,27 @@ public class FleaCodePanel extends JPanel implements ActionListener {
         }
         param.put(ToolsConstants.CodeConstants.TABLE_DESC, tableNameDesc);
 
-        // 2. 代码配置
+        // 2主键生成策略配置
+        // 获取主键生成策略
+        String idGeneratorStrategy = StringUtils.valueOf(idGeneratorStrategyComboBox.getSelectedItem());
+        param.put(ToolsConstants.CodeConstants.ID_GENERATOR_STRATEGY, idGeneratorStrategy);
+        // 获取主键生成器表
+        String idGeneratorTable = idGeneratorTableTextField.getText();
+        if (StringUtils.isNotBlank(idGeneratorTable)) {
+            param.put(ToolsConstants.CodeConstants.ID_GENERATOR_TABLE, idGeneratorTable);
+        }
+        // 获取主键列名
+        String pkColumnName = pkColumnNameTextField.getText();
+        if (StringUtils.isNotBlank(pkColumnName)) {
+            param.put(ToolsConstants.CodeConstants.PK_COLUMN_NAME, pkColumnName);
+        }
+        // 获取主键值列名
+        String valueColumnName = valueColumnNameTextField.getText();
+        if (StringUtils.isNotBlank(valueColumnName)) {
+            param.put(ToolsConstants.CodeConstants.VALUE_COLUMN_NAME, valueColumnName);
+        }
+
+        // 3. 代码配置
         // 获取作者
         String author = authorTextField.getText();
         if (StringUtils.isBlank(author)) {
@@ -643,7 +666,7 @@ public class FleaCodePanel extends JPanel implements ActionListener {
         }
         param.put(ToolsConstants.CodeConstants.CODE_PACKAGE, codePackage);
 
-        // 3. 持久化单元配置
+        // 4. 持久化单元配置
         String puDaoClassPackage = puDaoPackageTextField.getText();
         if (StringUtils.isBlank(puDaoClassPackage)) {
             throw new ToolsException("COMMON_I18N_00013", FleaI18nHelper.i18nForCommon("COMMON_CODE_00011") + FleaI18nHelper.i18nForCommon("COMMON_CODE_00010"));

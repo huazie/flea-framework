@@ -1,0 +1,18 @@
+    @Id
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "%TABLE_NAME_1%_GENERATOR")
+    @TableGenerator(
+        // 唯一的生成器名称，可以由一个或多个类引用以作为id值的生成器。
+        name = "%TABLE_NAME_1%_GENERATOR",
+        // 存储生成的ID值的表的名称
+        table = "%ID_GENERATOR_TABLE%",
+        // 表中主键列的名称
+        pkColumnName = "%PK_COLUMN_NAME%",
+        // 存储最后生成的主键值的列的名称
+        valueColumnName = "%VALUE_COLUMN_NAME%",
+        // ID生成器表中的主键值模板，用于将该生成值集与其他可能存储在表中的值区分开
+        pkColumnValue = "pk_%TABLE_NAME%",
+        // 从ID生成器表中分配ID号时增加的数量
+        allocationSize = 1
+    )
+    @Column(name = "%COLUMN_NAME%", unique = true, nullable = false)
+    private %VAR_TYPE% %VARIABLE%; // %COLUMN_DESC%
