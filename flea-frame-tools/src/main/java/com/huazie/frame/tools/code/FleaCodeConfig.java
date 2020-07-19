@@ -27,6 +27,12 @@ public class FleaCodeConfig {
 
     private String tableNameDesc; // 表名描述
 
+    private String idGeneratorTable; // 主键生成器表
+
+    private String pkColumnName; // 主键列名
+
+    private String valueColumnName; // 主键值列名
+
     private String author; // 作者
 
     private String version; // 版本
@@ -68,6 +74,9 @@ public class FleaCodeConfig {
         config.setDbName(PropertiesUtil.getStringValue(prop, ToolsConstants.CodeConfigConstants.DB_NAME));
         config.setTableName(PropertiesUtil.getStringValue(prop, ToolsConstants.CodeConfigConstants.TABLE_NAME));
         config.setTableNameDesc(PropertiesUtil.getStringValue(prop, ToolsConstants.CodeConfigConstants.TABLE_NAME_DESC));
+        config.setIdGeneratorTable(PropertiesUtil.getStringValue(prop, ToolsConstants.CodeConfigConstants.ID_GENERATOR_TABLE));
+        config.setPkColumnName(PropertiesUtil.getStringValue(prop, ToolsConstants.CodeConfigConstants.PK_COLUMN_NAME));
+        config.setValueColumnName(PropertiesUtil.getStringValue(prop, ToolsConstants.CodeConfigConstants.VALUE_COLUMN_NAME));
         config.setAuthor(PropertiesUtil.getStringValue(prop, ToolsConstants.CodeConfigConstants.AUTHOR));
         config.setVersion(PropertiesUtil.getStringValue(prop, ToolsConstants.CodeConfigConstants.VERSION));
         config.setRootPath(PropertiesUtil.getStringValue(prop, ToolsConstants.CodeConfigConstants.ROOT_PATH));
@@ -102,6 +111,30 @@ public class FleaCodeConfig {
 
     public void setTableNameDesc(String tableNameDesc) {
         this.tableNameDesc = tableNameDesc;
+    }
+
+    public String getIdGeneratorTable() {
+        return idGeneratorTable;
+    }
+
+    public void setIdGeneratorTable(String idGeneratorTable) {
+        this.idGeneratorTable = idGeneratorTable;
+    }
+
+    public String getPkColumnName() {
+        return pkColumnName;
+    }
+
+    public void setPkColumnName(String pkColumnName) {
+        this.pkColumnName = pkColumnName;
+    }
+
+    public String getValueColumnName() {
+        return valueColumnName;
+    }
+
+    public void setValueColumnName(String valueColumnName) {
+        this.valueColumnName = valueColumnName;
     }
 
     public String getAuthor() {
