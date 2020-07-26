@@ -104,7 +104,7 @@ public class FleaJerseyManager {
      * <p> 获取Flea文件对象 </p>
      *
      * @return Flea文件对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaFileObject getFileObject() throws CommonException {
@@ -122,7 +122,7 @@ public class FleaJerseyManager {
      * <p> 获取文件表单信息 </p>
      *
      * @return 文件表单数据
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FormDataBodyPart getFileFormDataBodyPart() throws CommonException {
@@ -134,7 +134,7 @@ public class FleaJerseyManager {
      *
      * @param formDataKey 表单数据键
      * @return 表单数据
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FormDataBodyPart getFormDataBodyPart(String formDataKey) throws CommonException {
@@ -172,7 +172,7 @@ public class FleaJerseyManager {
      * <p> 添加文件表单信息 </p>
      *
      * @param file 文件对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public void addFileDataBodyPart(File file) throws CommonException {
@@ -184,7 +184,7 @@ public class FleaJerseyManager {
      *
      * @param formDataStr 表单数据字符串
      * @param formDataKey 表单数据键
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public void addFormDataBodyPart(String formDataStr, String formDataKey) throws CommonException {
@@ -197,7 +197,7 @@ public class FleaJerseyManager {
      * @param formDataObj 表单数据对象
      * @param formDataKey 表单数据键
      * @param <T>         表单数据类型
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public <T> void addFormDataBodyPart(T formDataObj, String formDataKey, MediaType formDataMediaType) throws CommonException {

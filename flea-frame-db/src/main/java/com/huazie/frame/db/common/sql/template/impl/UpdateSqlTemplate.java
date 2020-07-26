@@ -143,7 +143,7 @@ public class UpdateSqlTemplate<T> extends SqlTemplate<T> {
      * @param setMap     SET子句的map集合（key：属性列， map：属性列变量）
      * @param whereMap   WHERE子句的map集合（key：属性列， map：属性列变量）
      * @return set 和 where子句对应的实体类对象的属性数组
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     private Column[] check(final Column[] entityCols, Map<String, String> setMap, Map<String, String> whereMap) throws CommonException {

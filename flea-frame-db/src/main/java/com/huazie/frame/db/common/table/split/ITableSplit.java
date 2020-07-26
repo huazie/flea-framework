@@ -18,7 +18,7 @@ public interface ITableSplit extends Serializable {
      *
      * @param tableSplitColumn 分表字段
      * @return 分表后缀名
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      */
     String convert(Object tableSplitColumn) throws CommonException;
 }

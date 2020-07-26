@@ -158,7 +158,7 @@ public class InsertSqlTemplate<T> extends SqlTemplate<T> {
      * @param cols       表属性列数组
      * @param values     表属性列对应值数组
      * @return 模板配置中对应的实体类对象的属性数组
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     private Column[] check(final Column[] entityCols, String[] cols, String[] values) throws CommonException {

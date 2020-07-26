@@ -230,7 +230,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
      * <p> SQL模板校验规则 </p>
      *
      * @param templateValue SQL模板原始值
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     private void checkRule(String templateValue) throws CommonException {
@@ -360,7 +360,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
      * @param propMap         模板参数属性Map集合
      * @param sqlTemplateEnum SQL模板关键字枚举
      * @return 指定关键字的模板参数属性值
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     protected String checkProperty(Map<String, Property> propMap, SqlTemplateEnum sqlTemplateEnum) throws CommonException {
@@ -380,7 +380,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
      * @param entityCols    属性列数组
      * @param tabColumnName 属性列名
      * @return 指定的属性列对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     protected Column checkColumn(final Column[] entityCols, String tabColumnName) throws CommonException {
@@ -398,7 +398,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
      * @param entityCols 实体类的属性列数组
      * @param map        map的key存表字段列，value存变量
      * @return 校验通过的属性列数组
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     protected Column[] checkOneByOne(final Column[] entityCols, Map<String, String> map, SqlTemplateEnum sqlTemplateEnum) throws CommonException {
@@ -582,7 +582,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
      * @param params     SQL参数
      * @param entityCols 实体类T的对象的属性列相关信息
      * @param propMap    模板属性配置信息
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     protected abstract void initSqlTemplate(StringBuilder sql, Map<String, Object> params, final Column[] entityCols, Map<String, Property> propMap) throws CommonException;

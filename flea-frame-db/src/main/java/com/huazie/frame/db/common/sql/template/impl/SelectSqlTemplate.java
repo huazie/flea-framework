@@ -161,7 +161,7 @@ public class SelectSqlTemplate<T> extends SqlTemplate<T> {
      * @param cols       查询显示列数组
      * @param whereMap   WHERE子句的map集合（key：属性列， map：属性列变量）
      * @return where子句对应的实体类对象的属性数组
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     private Column[] check(final Column[] entityCols, String[] cols, Map<String, String> whereMap, String condStr) throws CommonException {

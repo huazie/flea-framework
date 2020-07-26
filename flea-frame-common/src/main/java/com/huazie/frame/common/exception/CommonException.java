@@ -9,7 +9,7 @@ import com.huazie.frame.common.util.ObjectUtils;
 import java.util.Locale;
 
 /**
- * <p> Flea I18n 通用异常实现 </p>
+ * <p> Flea I18N 通用异常 </p>
  *
  * @author huazie
  * @version 1.0.0
