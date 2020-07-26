@@ -1,6 +1,8 @@
 package com.huazie.frame.jersey.common;
 
 import com.huazie.frame.common.XmlDigesterHelper;
+import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.IOUtils;
 import com.huazie.frame.common.util.StringUtils;
@@ -82,8 +84,8 @@ public class JerseyXmlDigesterHelper {
         return jersey;
     }
 
-    private Jersey newJerseyFilter() throws Exception {
-        Jersey obj;
+    private Jersey newJerseyFilter() throws CommonException {
+        Jersey obj = null;
 
         String fileName = FleaJerseyConstants.JerseyFilterConstants.JSERSY_FILTER_FILE_PATH;
         if (StringUtils.isNotBlank(System.getProperty(FleaJerseyConstants.JerseyFilterConstants.JERSEY_FILTER_FILE_SYSTEM_KEY))) {
@@ -102,14 +104,14 @@ public class JerseyXmlDigesterHelper {
 
             if (ObjectUtils.isEmpty(input)) {
                 // 该路径下【0】找不到指定配置文件
-                throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000001", fileName);
+                ExceptionUtils.throwCommonException(FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000001", fileName);
             }
 
             obj = XmlDigesterHelper.parse(input, newFleaJerseyFilterFileDigester(), Jersey.class);
 
         } catch (Exception e) {
             // XML转化异常：
-            throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000002", e);
+            ExceptionUtils.throwCommonException(FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000002", e);
         }
 
         if (LOGGER.isDebugEnabled()) {

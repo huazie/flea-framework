@@ -1,6 +1,7 @@
 package com.huazie.frame.jersey.server.filter;
 
 import com.huazie.frame.common.util.CollectionUtils;
+import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.ReflectUtils;
 import com.huazie.frame.common.util.StringUtils;
@@ -85,7 +86,7 @@ public class FleaJerseyFilterChain {
         try {
             if (StringUtils.isBlank(requestData)) {
                 // 请求报文不能为空
-                throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000003");
+                ExceptionUtils.throwCommonException(FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000003");
             }
             FleaJerseyRequest request = JABXUtils.fromXml(requestData, FleaJerseyRequest.class);
             response = doFilter(request, response);
@@ -233,7 +234,7 @@ public class FleaJerseyFilterChain {
     private List<IFleaJerseyFilter> convert(List<Filter> filters) {
         List<IFleaJerseyFilter> jerseyFilters = null;
         if (CollectionUtils.isNotEmpty(filters)) {
-            jerseyFilters = new ArrayList<IFleaJerseyFilter>();
+            jerseyFilters = new ArrayList<>();
             for (Filter filter : filters) {
                 if (ObjectUtils.isNotEmpty(filter)) {
                     IFleaJerseyFilter jerseyFilter = (IFleaJerseyFilter) ReflectUtils.newInstance(filter.getClazz());
@@ -256,7 +257,7 @@ public class FleaJerseyFilterChain {
     private List<IFleaJerseyErrorFilter> convertError(List<Filter> filters) {
         List<IFleaJerseyErrorFilter> jerseyErrorFilters = null;
         if (CollectionUtils.isNotEmpty(filters)) {
-            jerseyErrorFilters = new ArrayList<IFleaJerseyErrorFilter>();
+            jerseyErrorFilters = new ArrayList<>();
             for (Filter filter : filters) {
                 if (ObjectUtils.isNotEmpty(filter)) {
                     IFleaJerseyErrorFilter jerseyErrorFilter = (IFleaJerseyErrorFilter) ReflectUtils.newInstance(filter.getClazz());

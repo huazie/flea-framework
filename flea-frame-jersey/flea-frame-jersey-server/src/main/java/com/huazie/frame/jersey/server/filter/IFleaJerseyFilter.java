@@ -1,5 +1,6 @@
 package com.huazie.frame.jersey.server.filter;
 
+import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
 
@@ -12,6 +13,14 @@ import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
  */
 public interface IFleaJerseyFilter {
 
-    void doFilter(FleaJerseyRequest request, FleaJerseyResponse response) throws Exception;
+    /**
+     * <p> 执行过滤器 </p>
+     *
+     * @param request  请求对象
+     * @param response 响应对象
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    void doFilter(FleaJerseyRequest request, FleaJerseyResponse response) throws CommonException;
 
 }

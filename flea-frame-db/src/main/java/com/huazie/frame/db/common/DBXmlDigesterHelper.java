@@ -1,6 +1,8 @@
 package com.huazie.frame.db.common;
 
 import com.huazie.frame.common.XmlDigesterHelper;
+import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.IOUtils;
 import com.huazie.frame.common.util.StringUtils;
@@ -93,8 +95,8 @@ public class DBXmlDigesterHelper {
         return tables;
     }
 
-    private Tables newTables() throws TableSplitException {
-        Tables tabs;
+    private Tables newTables() throws CommonException {
+        Tables tabs = null;
         String fileName = DBConstants.TableSplitConstants.TABLE_SPLIT_FILE_PATH;
         if (StringUtils.isNotBlank(System.getProperty(DBConstants.TableSplitConstants.TABLE_SPLIT_FILE_SYSTEM_KEY))) {
             fileName = StringUtils.trim(System.getProperty(DBConstants.TableSplitConstants.TABLE_SPLIT_FILE_SYSTEM_KEY));
@@ -112,14 +114,14 @@ public class DBXmlDigesterHelper {
 
             if (ObjectUtils.isEmpty(input)) {
                 // 该路径下【0】找不到指定配置文件
-                throw new TableSplitException("ERROR-DB-SQT0000000030", fileName);
+                ExceptionUtils.throwCommonException(TableSplitException.class, "ERROR-DB-SQT0000000030", fileName);
             }
 
             tabs = XmlDigesterHelper.parse(input, newFleaTableSplitFileDigester(), Tables.class);
 
         } catch (Exception e) {
             // XML转化异常：
-            throw new TableSplitException("ERROR-DB-SQT0000000031", e);
+            ExceptionUtils.throwCommonException(TableSplitException.class, "ERROR-DB-SQT0000000031", e);
         }
 
         if (LOGGER.isDebugEnabled()) {
@@ -179,8 +181,8 @@ public class DBXmlDigesterHelper {
         return sql;
     }
 
-    private Sql newSqlTemplate() throws SqlTemplateException {
-        Sql sqlTemplate;
+    private Sql newSqlTemplate() throws CommonException {
+        Sql sqlTemplate = null;
 
         String fileName = DBConstants.SqlTemplateConstants.SQL_TEMPLATE_FILE_PATH;
         if (StringUtils.isNotBlank(System.getProperty(DBConstants.SqlTemplateConstants.SQL_TEMPLATE_FILE_SYSTEM_KEY))) {
@@ -199,14 +201,14 @@ public class DBXmlDigesterHelper {
 
             if (ObjectUtils.isEmpty(input)) {
                 // 该路径下【0】找不到指定配置文件
-                throw new SqlTemplateException("ERROR-DB-SQT0000000030", fileName);
+                ExceptionUtils.throwCommonException(SqlTemplateException.class, "ERROR-DB-SQT0000000030", fileName);
             }
 
             sqlTemplate = XmlDigesterHelper.parse(input, newFleaSqlTemplateFileDigester(), Sql.class);
 
         } catch (Exception e) {
             // XML转化异常：
-            throw new SqlTemplateException("ERROR-DB-SQT0000000031", e);
+            ExceptionUtils.throwCommonException(SqlTemplateException.class, "ERROR-DB-SQT0000000031", e);
         }
 
         if (LOGGER.isDebugEnabled()) {

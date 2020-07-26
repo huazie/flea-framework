@@ -1,5 +1,6 @@
 package com.huazie.frame.jersey.server.filter.impl;
 
+import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
 import com.huazie.frame.jersey.server.filter.IFleaJerseyFilter;
@@ -18,7 +19,7 @@ public class JerseyLoggerFilter implements IFleaJerseyFilter {
     private static final Logger LOGGER = LoggerFactory.getLogger(JerseyLoggerFilter.class);
 
     @Override
-    public void doFilter(FleaJerseyRequest request, FleaJerseyResponse response) throws Exception {
+    public void doFilter(FleaJerseyRequest request, FleaJerseyResponse response) throws CommonException {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("JerseyLoggerFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) Start");
         }

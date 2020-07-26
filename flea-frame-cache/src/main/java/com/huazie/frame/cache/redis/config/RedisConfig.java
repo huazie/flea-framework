@@ -120,8 +120,10 @@ public class RedisConfig {
                                     }
 
                                     // 只有一一对应，才设置，否则取默认权重
-                                    if (ArrayUtils.isSameLength(serverArr, passwordArr)) {
-                                        weight = Integer.parseInt(weightArr[i]);
+                                    if (ArrayUtils.isSameLength(serverArr, weightArr)) {
+                                        if (ObjectUtils.isNotEmpty(weightArr)) {
+                                            weight = Integer.parseInt(weightArr[i]);
+                                        }
                                     }
 
                                     // 获取Redis客户端socket连接超时时间
@@ -140,7 +142,9 @@ public class RedisConfig {
 
                                     // 只有一一对应，才设置，否则认为没有设置密码
                                     if (ArrayUtils.isSameLength(serverArr, passwordArr)) {
-                                        jedisShardInfo.setPassword(passwordArr[i]);
+                                        if (ObjectUtils.isNotEmpty(passwordArr)) {
+                                            jedisShardInfo.setPassword(passwordArr[i]);
+                                        }
                                     }
 
                                     jedisShardInfos.add(jedisShardInfo);

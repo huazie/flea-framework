@@ -18,7 +18,6 @@ public interface IFleaJerseyErrorFilter {
      * @param request   Flea Jersey 请求对象
      * @param response  Flea Jersey 响应对象
      * @param throwable 异常类
-     * @throws Exception
      * @since 1.0.0
      */
     void doFilter(FleaJerseyRequest request, FleaJerseyResponse response, Throwable throwable);

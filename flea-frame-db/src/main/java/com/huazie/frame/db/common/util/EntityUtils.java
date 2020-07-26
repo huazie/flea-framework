@@ -2,6 +2,7 @@ package com.huazie.frame.db.common.util;
 
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.ArrayUtils;
+import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.ReflectUtils;
 import com.huazie.frame.common.util.StringUtils;
@@ -137,7 +138,7 @@ public class EntityUtils {
                         annotations = method.getAnnotations();// 获取方法上的注解
                         if (ArrayUtils.isEmpty(annotations)) {// 表示方法上没有注解
                             // 实体类上 [{0}] 没有注解
-                            throw new DaoException("ERROR-DB-DAO0000000014", entity.getClass().getSimpleName());
+                            ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000014", entity.getClass().getSimpleName());
                         }
                     }
                 }
@@ -149,16 +150,16 @@ public class EntityUtils {
                             if (long.class == fields[i].getType() || Long.class == fields[i].getType()) {// 该实体的主键是long类型
                                 if (Long.valueOf(value.toString()) <= 0) {
                                     // 主键字段必须是正整数
-                                    throw new DaoException("ERROR-DB-DAO0000000009");
+                                    ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000009");
                                 }
                             } else if (String.class == fields[i].getType()) {// 该实体的主键是String类型
                                 if (ObjectUtils.isEmpty(value)) {
                                     // 主键字段不能为空
-                                    throw new DaoException("ERROR-DB-DAO0000000010");
+                                    ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000010");
                                 }
                             } else {
                                 // 主键必须是long(Long) 或 String
-                                throw new DaoException("ERROR-DB-DAO0000000011");
+                                ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000011");
                             }
                         }
                         isPrimarykey = true;// true表示该字段是主键
@@ -249,13 +250,13 @@ public class EntityUtils {
         String tableName = getTableName(entity);
         if (StringUtils.isBlank(tableName)) {
             // 请检查初始实体类(其上的注解@Table或者@FleaTable对应的表名不能为空)
-            throw new DaoException("ERROR-DB-SQT0000000012");
+            ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-SQT0000000012");
         }
         // 获取实体类T的对象的属性列相关信息
         Column[] entityCols = toColumnsArray(entity);
         if (ArrayUtils.isEmpty(entityCols)) {
             // 请检查初始实体类（实体类的属性列相关信息不存在）
-            throw new DaoException("ERROR-DB-SQT0000000016");
+            ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-SQT0000000016");
         }
         return TableSplitHelper.getSplitTable(tableName, entityCols);
     }

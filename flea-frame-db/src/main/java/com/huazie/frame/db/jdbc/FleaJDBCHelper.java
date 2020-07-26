@@ -3,6 +3,7 @@ package com.huazie.frame.db.jdbc;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.CollectionUtils;
+import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.exception.DaoException;
@@ -506,7 +507,7 @@ public class FleaJDBCHelper {
         Connection connection = FleaJDBCConfig.getConfig().getConnection();
         if (ObjectUtils.isEmpty(connection)) {
             // 无法获取数据库连接
-            throw new DaoException("ERROR-DB-DAO0000000016");
+            ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000016");
         }
 
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -618,10 +619,10 @@ public class FleaJDBCHelper {
                 String[] columnNameArr = StringUtils.split(columnName, CommonConstants.SymbolConstants.UNDERLINE);
                 if (ArrayUtils.isNotEmpty(columnNameArr)) {
                     for (int n = 0; n < columnNameArr.length; n++) {
-                        if (CommonConstants.NumeralConstants.INT_ZERO == n) {
+                        if (CommonConstants.NumeralConstants.INT_ZERO == n) { // 第一个单词小写
                             columnNameArr[n] = columnNameArr[n].toLowerCase();
-                        } else {
-                            columnNameArr[n] = StringUtils.toUpperCase(columnNameArr[n]);
+                        } else { // 后面单词，首字母大写，其余小写
+                            columnNameArr[n] = StringUtils.toUpperCaseFirstAndLowerCaseLeft(columnNameArr[n]);
                         }
                     }
                 }

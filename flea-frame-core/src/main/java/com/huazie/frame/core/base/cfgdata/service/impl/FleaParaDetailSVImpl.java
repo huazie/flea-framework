@@ -1,5 +1,6 @@
 package com.huazie.frame.core.base.cfgdata.service.impl;
 
+import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.core.base.cfgdata.dao.interfaces.IFleaParaDetailDAO;
 import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
@@ -32,15 +33,13 @@ public class FleaParaDetailSVImpl extends AbstractFleaJPASVImpl<FleaParaDetail> 
 
     @Override
     @Cacheable(value = "fleaparadetail", key = "#paraType")
-    public List<FleaParaDetail> getParaDetails(String paraType, String paraCode) throws Exception {
-
-        List<FleaParaDetail> fleaParaDetailValues = fleaParaDetailDao.getParaDetail(paraType, paraCode);
-        return fleaParaDetailValues;
+    public List<FleaParaDetail> getParaDetails(String paraType, String paraCode) throws CommonException {
+        return fleaParaDetailDao.getParaDetail(paraType, paraCode);
     }
 
     @Override
     @Cacheable(value = "fleaparadetail", key = "#paraType + '_' + #paraCode")
-    public FleaParaDetail getParaDetail(String paraType, String paraCode) throws Exception {
+    public FleaParaDetail getParaDetail(String paraType, String paraCode) throws CommonException {
 
         List<FleaParaDetail> fleaParaDetails = fleaParaDetailDao.getParaDetail(paraType, paraCode);
         FleaParaDetail fleaParaDetailValue = null;

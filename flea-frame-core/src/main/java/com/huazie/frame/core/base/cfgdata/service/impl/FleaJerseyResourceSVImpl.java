@@ -1,5 +1,6 @@
 package com.huazie.frame.core.base.cfgdata.service.impl;
 
+import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.core.base.cfgdata.dao.interfaces.IFleaJerseyResourceDAO;
@@ -33,7 +34,7 @@ public class FleaJerseyResourceSVImpl extends AbstractFleaJPASVImpl<FleaJerseyRe
 
     @Override
     @Cacheable(value = "fleajerseyresource", key = "#resourceCode")
-    public FleaJerseyResource getResource(String resourceCode) throws Exception {
+    public FleaJerseyResource getResource(String resourceCode) throws CommonException {
         FleaJerseyResource resource = null;
         if (StringUtils.isNotBlank(resourceCode)) {
             List<FleaJerseyResource> resourceList = fleaJerseyResourceDAO.getResource(resourceCode);
@@ -46,7 +47,7 @@ public class FleaJerseyResourceSVImpl extends AbstractFleaJPASVImpl<FleaJerseyRe
 
     @Override
     @Cacheable(value = "fleajerseyresource", key = "'packages'")
-    public List<String> getResourcePackages() throws Exception {
+    public List<String> getResourcePackages() throws CommonException {
         return fleaJerseyResourceDAO.getResourcePackages();
     }
 

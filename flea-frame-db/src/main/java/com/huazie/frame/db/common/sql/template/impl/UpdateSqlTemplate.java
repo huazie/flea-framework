@@ -1,9 +1,10 @@
 package com.huazie.frame.db.common.sql.template.impl;
 
+import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.MapUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.DBConstants;
-import com.huazie.frame.db.common.exception.SqlTemplateException;
 import com.huazie.frame.db.common.sql.template.SqlTemplate;
 import com.huazie.frame.db.common.sql.template.SqlTemplateEnum;
 import com.huazie.frame.db.common.sql.template.TemplateTypeEnum;
@@ -111,7 +112,7 @@ public class UpdateSqlTemplate<T> extends SqlTemplate<T> {
     }
 
     @Override
-    protected void initSqlTemplate(StringBuilder sql, Map<String, Object> params, Column[] entityCols, Map<String, Property> propMap) throws SqlTemplateException {
+    protected void initSqlTemplate(StringBuilder sql, Map<String, Object> params, Column[] entityCols, Map<String, Property> propMap) throws CommonException {
         // 获取【key=sets】的属性， 存储SET子句的内容（ para1 = :para1, para2 = :para2）
         String setStr = checkProperty(propMap, SqlTemplateEnum.SETS);
 
@@ -142,18 +143,18 @@ public class UpdateSqlTemplate<T> extends SqlTemplate<T> {
      * @param setMap     SET子句的map集合（key：属性列， map：属性列变量）
      * @param whereMap   WHERE子句的map集合（key：属性列， map：属性列变量）
      * @return set 和 where子句对应的实体类对象的属性数组
-     * @throws SqlTemplateException SQL模板异常类
+     * @throws CommonException 通用异常类
      * @since 1.0.0
      */
-    private Column[] check(final Column[] entityCols, Map<String, String> setMap, Map<String, String> whereMap) throws SqlTemplateException {
+    private Column[] check(final Column[] entityCols, Map<String, String> setMap, Map<String, String> whereMap) throws CommonException {
         if (MapUtils.isEmpty(setMap)) {
             // 请检查SQL模板参数【id="{0}"】配置(属性【key="{1}"】中的【value】不能为空)
-            throw new SqlTemplateException("ERROR-DB-SQT0000000013", paramId, SqlTemplateEnum.SETS.getKey());
+            ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000013", paramId, SqlTemplateEnum.SETS.getKey());
         }
 
         if (MapUtils.isEmpty(whereMap)) {
             // 请检查SQL模板参数【id="{0}"】配置(属性【key="{1}"】中的【value】不能为空)
-            throw new SqlTemplateException("ERROR-DB-SQT0000000013", paramId, SqlTemplateEnum.CONDITIONS.getKey());
+            ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000013", paramId, SqlTemplateEnum.CONDITIONS.getKey());
         }
 
         // 校验SET子句中的属性列和属性变量是否一一对应，并获取SET子句相关的属性列集合
@@ -168,7 +169,7 @@ public class UpdateSqlTemplate<T> extends SqlTemplate<T> {
                     if (setCol.getTabColumnName().equals(whereCol.getTabColumnName())
                             && setCol.getAttrName().equals(whereCol.getAttrName())) {
                         // 请检查SQL模板参数【id="{0}"】配置（属性【key="columns"】 和属性【key="conditions"】存在相同的项【{1}】）
-                        throw new SqlTemplateException("ERROR-DB-SQT0000000029", paramId, setCol.getTabColumnName());
+                        ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000029", paramId, setCol.getTabColumnName());
                     }
                 }
             }

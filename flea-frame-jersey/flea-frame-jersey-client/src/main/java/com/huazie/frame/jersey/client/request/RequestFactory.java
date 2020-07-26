@@ -1,5 +1,7 @@
 package com.huazie.frame.jersey.client.request;
 
+import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.ReflectUtils;
 import com.huazie.frame.common.util.StringUtils;
@@ -45,26 +47,26 @@ public class RequestFactory {
      *
      * @param config 请求配置
      * @return Flea请求
-     * @throws Exception
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public Request buildFleaRequest(RequestConfig config) throws Exception {
+    public Request buildFleaRequest(RequestConfig config) throws CommonException {
+
+        if (ObjectUtils.isEmpty(config) || config.isEmpty()) {
+            // 未初始化请求配置，请检查！！！
+            ExceptionUtils.throwCommonException(FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000000");
+        }
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("RequestFactory##buildFleaRequest(RequestConfig) Start");
             LOGGER.debug("RequestFactory##buildFleaRequest(RequestConfig) RequestConfig = {}", config.getConfig());
         }
 
-        if (ObjectUtils.isEmpty(config) || config.isEmpty()) {
-            // 未初始化请求配置，请检查！！！
-            throw new FleaJerseyClientException("ERROR-JERSEY-CLIENT0000000000");
-        }
-
         // 获取请求方式
         String requestMode = config.getRequestMode();
         if (StringUtils.isBlank(requestMode)) {
             // 【{0}】未配置，请检查！！！
-            throw new FleaJerseyClientException("ERROR-JERSEY-CLIENT0000000008", RequestConfigEnum.REQUEST_MODE.getKey());
+            ExceptionUtils.throwCommonException(FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000008", RequestConfigEnum.REQUEST_MODE.getKey());
         }
 
         // 获取请求模式类型枚举
@@ -74,7 +76,7 @@ public class RequestFactory {
             requestModeEnum = RequestModeEnum.valueOf(requestMode.toUpperCase());
         } catch (IllegalArgumentException e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("RequestFactory##buildFleaRequest(RequestConfig) Exception = {}", e.getMessage());
+                LOGGER.error("RequestFactory##buildFleaRequest(RequestConfig) Exception = ", e);
             }
         }
 
