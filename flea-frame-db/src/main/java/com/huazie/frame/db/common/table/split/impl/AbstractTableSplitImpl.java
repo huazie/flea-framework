@@ -28,7 +28,7 @@ public abstract class AbstractTableSplitImpl implements ITableSplit {
      * @param tableSplitColumn 分表字段
      * @param dateFormatEnum   日期格式化类型枚举
      * @return 分表后缀名
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     protected String convert(Object tableSplitColumn, DateFormatEnum dateFormatEnum) throws CommonException {
@@ -55,7 +55,7 @@ public abstract class AbstractTableSplitImpl implements ITableSplit {
      * @param tableSplitColumn 分表字段
      * @param len              分表后缀长度
      * @return 分表后缀名
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     protected String convert(Object tableSplitColumn, int len) throws CommonException {

@@ -147,7 +147,7 @@ public final class FleaJPAQuery implements Closeable {
      * @param attrName 属性名
      * @param value    属性值
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery equal(String attrName, Object value) throws CommonException {
@@ -160,7 +160,7 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrNames 实体属性名集合
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery equal(Set<String> attrNames) throws CommonException {
@@ -172,7 +172,7 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param paramMap 参数集合
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery equal(Map<String, Object> paramMap) throws CommonException {
@@ -185,7 +185,7 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery notEqual(String attrName) throws CommonException {
@@ -198,7 +198,7 @@ public final class FleaJPAQuery implements Closeable {
      * @param attrName 属性名
      * @param value    属性值
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery notEqual(String attrName, Object value) throws CommonException {
@@ -211,7 +211,7 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrNames 实体属性名集合
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery notEqual(Set<String> attrNames) throws CommonException {
@@ -223,7 +223,7 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param paramMap 条件集合
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery notEqual(Map<String, Object> paramMap) throws CommonException {
@@ -237,7 +237,7 @@ public final class FleaJPAQuery implements Closeable {
      * @param value    属性值
      * @param isEqual  true: 构建equal表达式; false: 构建notEqual表达式
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     private FleaJPAQuery newEqualExpression(String attrName, Object value, boolean isEqual) throws CommonException {
@@ -269,7 +269,7 @@ public final class FleaJPAQuery implements Closeable {
      * @param attrNames 属性名集合
      * @param isEqual   true: 构建equal表达式; false: 构建notEqual表达式
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     private FleaJPAQuery newEqualExpression(Set<String> attrNames, boolean isEqual) throws CommonException {
@@ -307,7 +307,7 @@ public final class FleaJPAQuery implements Closeable {
      * @param paramMap 条件集合
      * @param isEqual  true: 构建equal表达式; false: 构建notEqual表达式
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     private FleaJPAQuery newEqualExpression(Map<String, Object> paramMap, boolean isEqual) throws CommonException {
@@ -341,7 +341,7 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery isNull(String attrName) throws CommonException {
@@ -353,7 +353,7 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery isNotNull(String attrName) throws CommonException {
@@ -366,7 +366,7 @@ public final class FleaJPAQuery implements Closeable {
      * @param attrName 属性名
      * @param isNull   true: 构建isNull表达式; false: 构建isNotNull表达式
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     private FleaJPAQuery newIsNullExpression(String attrName, boolean isNull) throws CommonException {
@@ -394,7 +394,7 @@ public final class FleaJPAQuery implements Closeable {
      * @param attrName 属性名称
      * @param value    值集合
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery in(String attrName, Collection value) throws CommonException {
@@ -407,7 +407,7 @@ public final class FleaJPAQuery implements Closeable {
      * @param attrName 属性名称
      * @param value    值集合
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery notIn(String attrName, Collection value) throws CommonException {
@@ -420,7 +420,7 @@ public final class FleaJPAQuery implements Closeable {
      * @param attrName 属性名称
      * @param value    值集合
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     private FleaJPAQuery newInExpression(String attrName, Collection value, boolean isIn) throws CommonException {
@@ -457,7 +457,7 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名称
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery like(String attrName) throws CommonException {
@@ -470,7 +470,7 @@ public final class FleaJPAQuery implements Closeable {
      * @param attrName 属性名称
      * @param value    属性值
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery like(String attrName, String value) throws CommonException {
@@ -497,7 +497,7 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名称
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery le(String attrName) throws CommonException {
@@ -510,7 +510,7 @@ public final class FleaJPAQuery implements Closeable {
      * @param attrName 属性名称
      * @param value    属性值
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery le(String attrName, Number value) throws CommonException {
@@ -534,7 +534,7 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名称
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery lt(String attrName) throws CommonException {
@@ -547,7 +547,7 @@ public final class FleaJPAQuery implements Closeable {
      * @param attrName 属性名称
      * @param value    属性值
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery lt(String attrName, Number value) throws CommonException {
@@ -571,7 +571,7 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名称
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery ge(String attrName) throws CommonException {
@@ -584,7 +584,7 @@ public final class FleaJPAQuery implements Closeable {
      * @param attrName 属性名称
      * @param value    属性值
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery ge(String attrName, Number value) throws CommonException {
@@ -608,7 +608,7 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名称
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery gt(String attrName) throws CommonException {
@@ -621,7 +621,7 @@ public final class FleaJPAQuery implements Closeable {
      * @param attrName 属性名称
      * @param value    属性值
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery gt(String attrName, Number value) throws CommonException {
@@ -646,7 +646,7 @@ public final class FleaJPAQuery implements Closeable {
      * @param startTime 开始时间
      * @param endTime   结束时间
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery between(String attrName, Date startTime, Date endTime) throws CommonException {
@@ -674,7 +674,7 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery greaterThan(String attrName) throws CommonException {
@@ -687,7 +687,7 @@ public final class FleaJPAQuery implements Closeable {
      * @param attrName 属性名
      * @param value    指定日期值
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery greaterThan(String attrName, Date value) throws CommonException {
@@ -711,7 +711,7 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery greaterThanOrEqualTo(String attrName) throws CommonException {
@@ -724,7 +724,7 @@ public final class FleaJPAQuery implements Closeable {
      * @param attrName 属性名
      * @param value    指定日期值
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery greaterThanOrEqualTo(String attrName, Date value) throws CommonException {
@@ -748,7 +748,7 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery lessThan(String attrName) throws CommonException {
@@ -761,7 +761,7 @@ public final class FleaJPAQuery implements Closeable {
      * @param attrName 属性名
      * @param value    指定日期值
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery lessThan(String attrName, Date value) throws CommonException {
@@ -785,7 +785,7 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery lessThanOrEqualTo(String attrName) throws CommonException {
@@ -798,7 +798,7 @@ public final class FleaJPAQuery implements Closeable {
      * @param attrName 属性名
      * @param value    指定日期值
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery lessThanOrEqualTo(String attrName, Date value) throws CommonException {
@@ -850,7 +850,7 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery max(String attrName) throws CommonException {
@@ -869,7 +869,7 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery min(String attrName) throws CommonException {
@@ -888,7 +888,7 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery avg(String attrName) throws CommonException {
@@ -907,7 +907,7 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery sum(String attrName) throws CommonException {
@@ -926,7 +926,7 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery sumAsLong(String attrName) throws CommonException {
@@ -945,7 +945,7 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery sumAsDouble(String attrName) throws CommonException {
@@ -964,7 +964,7 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery distinct(String attrName) throws CommonException {
@@ -984,7 +984,7 @@ public final class FleaJPAQuery implements Closeable {
      * @param attrName 属性名
      * @param orderBy  排序顺序
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery addOrderby(String attrName, String orderBy) throws CommonException {
@@ -1013,7 +1013,7 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public FleaJPAQuery addGroupBy(String attrName) throws CommonException {
@@ -1036,7 +1036,7 @@ public final class FleaJPAQuery implements Closeable {
      * <p> 获取查询的记录行结果集合 </p>
      *
      * @return 记录行结果集合
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public List getResultList() throws CommonException {
@@ -1054,7 +1054,7 @@ public final class FleaJPAQuery implements Closeable {
      * @param start 开始查询记录行
      * @param max   最大查询数量
      * @return 记录行结果集合
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public List getResultList(int start, int max) throws CommonException {
@@ -1076,7 +1076,7 @@ public final class FleaJPAQuery implements Closeable {
      * <p> 需要先调用 distinct，否则默认返回行记录结果集合 </p>
      *
      * @return 单个属性列结果集合
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public List getSingleResultList() throws CommonException {
@@ -1095,7 +1095,7 @@ public final class FleaJPAQuery implements Closeable {
      * @param start 开始查询记录行
      * @param max   最大查询数量
      * @return 单个属性列结果集合
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public List getSingleResultList(int start, int max) throws CommonException {
@@ -1117,7 +1117,7 @@ public final class FleaJPAQuery implements Closeable {
      * <p> select 提前调用 (count, countDistinct, max, min, avg, sum, sumAsLong, sumAsDouble) </p>
      *
      * @return 查询的单个结果
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public Object getSingleResult() throws CommonException {
@@ -1133,7 +1133,7 @@ public final class FleaJPAQuery implements Closeable {
      * <p> 创建查询对象 </p>
      *
      * @return 查询对象
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     private TypedQuery createQuery(boolean isSingle) throws CommonException {
@@ -1163,7 +1163,7 @@ public final class FleaJPAQuery implements Closeable {
      * <p> 属性列名非空校验 </p>
      *
      * @param attrName 属性列名
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     private void checkAttrName(String attrName) throws CommonException {
@@ -1178,7 +1178,7 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性列名
      * @return 属性值
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     private Object getAttrValue(String attrName) throws CommonException {
@@ -1196,7 +1196,7 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性列名
      * @return 属性值
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     private Number getNumberAttrValue(String attrName) throws CommonException {
@@ -1208,7 +1208,7 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性列名
      * @return 属性值
-     * @throws CommonException 通用异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     private Date getDateAttrValue(String attrName) throws CommonException {
