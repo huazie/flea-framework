@@ -4,7 +4,7 @@
 
     <caches>
 
-        <cache key="fleaauth" type="fleaAuth" expiry="86400" desc="Flea权限数据缓存" />
+        <cache key="fleaauthmenu" type="fleaAuth" expiry="86400" desc="Flea权限数据缓存" />
 
     </caches>
 

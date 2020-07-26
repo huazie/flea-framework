@@ -1,6 +1,9 @@
 package com.huazie.frame.auth.user;
 
 import com.huazie.frame.auth.base.user.entity.FleaAccount;
+import com.huazie.frame.auth.base.user.entity.FleaUserRel;
+import com.huazie.frame.auth.base.user.service.interfaces.IFleaUserRelSV;
+import com.huazie.frame.auth.common.AuthRelTypeEnum;
 import com.huazie.frame.auth.common.UserStateEnum;
 import com.huazie.frame.auth.common.pojo.account.attr.FleaAccountAttrPOJO;
 import com.huazie.frame.auth.common.pojo.user.attr.FleaUserAttrPOJO;
@@ -9,7 +12,9 @@ import com.huazie.frame.auth.common.pojo.user.register.FleaUserRegisterPOJO;
 import com.huazie.frame.auth.common.service.interfaces.IFleaAuthSV;
 import com.huazie.frame.auth.common.service.interfaces.IFleaUserLoginSV;
 import com.huazie.frame.auth.common.service.interfaces.IFleaUserRegisterSV;
+import com.huazie.frame.common.EntityStateEnum;
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.util.DateUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -108,9 +113,28 @@ public class UserAuthTest {
     }
 
     @Test
-    public void testSaveQuitLog() throws Exception {
+    public void testSaveQuitLog() {
         IFleaAuthSV fleaUserLoginSV = (IFleaAuthSV) applicationContext.getBean("fleaAuthSV");
         fleaUserLoginSV.saveQuitLog(1L);
+    }
+
+    @Test
+    public void testInsertUserRel() {
+
+        FleaUserRel fleaUserRel = new FleaUserRel();
+        fleaUserRel.setUserId(1L);
+        fleaUserRel.setRelatId(1L);
+        fleaUserRel.setRelatType(AuthRelTypeEnum.USER_REL_ROLE.getRelType());
+        fleaUserRel.setRelatState(EntityStateEnum.IN_USE.getState());
+        fleaUserRel.setCreateDate(DateUtils.getCurrentTime());
+        fleaUserRel.setRemarks("【13218010892】用户绑定【超级管理员】角色");
+
+        try {
+            IFleaUserRelSV fleaUserRelSV = (IFleaUserRelSV) applicationContext.getBean("fleaUserRelSV");
+            fleaUserRelSV.save(fleaUserRel);
+        } catch (CommonException e) {
+            LOGGER.error("Exception = ", e);
+        }
     }
 
 }
