@@ -3,6 +3,8 @@ package com.huazie.frame.db.common.sql.template;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.FleaEntity;
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.util.ArrayUtils;
+import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.MapUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.PatternMatcherUtils;
@@ -19,7 +21,6 @@ import com.huazie.frame.db.common.sql.template.config.Template;
 import com.huazie.frame.db.common.table.pojo.Column;
 import com.huazie.frame.db.common.table.split.TableSplitHelper;
 import com.huazie.frame.db.common.util.EntityUtils;
-import org.apache.commons.lang.ArrayUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -69,6 +70,8 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
     // 实体属性变量和表字段对应关系（主要是应对where子句中表字段对应多个实体属性变量的场景）， K ：实体属性变量名 V ：表字段名
     private Map<String, String> paramTabCols = new HashMap<String, String>();
 
+    protected static final Class<? extends CommonException> SQT_CLASS = SqlTemplateException.class;
+
     public SqlTemplate() {
     }
 
@@ -96,47 +99,47 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
     public void initialize() throws CommonException {
         if (ObjectUtils.isEmpty(relation)) {
             // 请检查SQL关系配置（没有找到指定关系编号【id="{0}"】的SQL关系配置信息）
-            throw new SqlTemplateException("ERROR-DB-SQT0000000001", getId());
+            ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000001", getId());
         }
 
         if (StringUtils.isBlank(templateId)) {
             // 请检查SQL关系【id="{0}"】配置（SQL关系配置的SQL模板编号【templateId】不能为空）
-            throw new SqlTemplateException("ERROR-DB-SQT0000000002", getId());
+            ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000002", getId());
         }
 
         if (StringUtils.isBlank(paramId)) {
             // 请检查SQL关系【id="{0}"】配置（SQL关系配置的SQL模板参数编号【paramId】不能为空）
-            throw new SqlTemplateException("ERROR-DB-SQT0000000003", getId());
+            ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000003", getId());
         }
 
         if (ObjectUtils.isEmpty(template)) {
             // 请检查SQL模板配置（没有找到指定模板编号【id="{0}"】的SQL模板配置信息）
-            throw new SqlTemplateException("ERROR-DB-SQT0000000004", templateId);
+            ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000004", templateId);
         }
 
         if (ObjectUtils.isEmpty(param)) {
             // 请检查SQL模板参数配置（没有找到指定模板参数编号【id="{0}"】的SQL模板参数配置信息）
-            throw new SqlTemplateException("ERROR-DB-SQT0000000005", paramId);
+            ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000005", paramId);
         }
 
         // 获取SQL模板配置的属性信息
         Map<String, Property> templatePropMap = template.toPropMap();
         if (MapUtils.isEmpty(templatePropMap)) {
             // 请检查SQL模板【id="{0}"】配置（该SQL模板没有配置相关属性）
-            throw new SqlTemplateException("ERROR-DB-SQT0000000006", templateId);
+            ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000006", templateId);
         }
 
         // 获取key="template"的属性(即SQL模板原始值)
         Property templateProp = templatePropMap.get(SqlTemplateEnum.TEMPLATE.getKey());
         if (ObjectUtils.isEmpty(templateProp)) {
             // 请检查SQL模板【id="{0}"】配置（该SQL模板没有配置【key="{1}"】的模板属性）
-            throw new SqlTemplateException("ERROR-DB-SQT0000000007", templateId, SqlTemplateEnum.TEMPLATE.getKey());
+            ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000007", templateId, SqlTemplateEnum.TEMPLATE.getKey());
         }
 
         String templateValue = templateProp.getValue();
         if (StringUtils.isBlank(templateValue)) {
             // 请检查SQL模板【id="{0}"】配置（属性【key="{1}"】中的【value】不能为空）
-            throw new SqlTemplateException("ERROR-DB-SQT0000000008", templateId, SqlTemplateEnum.TEMPLATE.getKey());
+            ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000008", templateId, SqlTemplateEnum.TEMPLATE.getKey());
         }
 
         // SQL模板规则校验
@@ -146,33 +149,33 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
         Property typeProp = templatePropMap.get(SqlTemplateEnum.TYPE.getKey());
         if (ObjectUtils.isEmpty(typeProp)) {
             // 请检查SQL模板【id="{0}"】配置（该SQL模板没有配置【key="{1}"】的模板属性）
-            throw new SqlTemplateException("ERROR-DB-SQT0000000007", templateId, SqlTemplateEnum.TYPE.getKey());
+            ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000007", templateId, SqlTemplateEnum.TYPE.getKey());
         }
 
         String typeValue = typeProp.getValue(); // 模板类型
         if (StringUtils.isBlank(typeValue)) {
             // 请检查SQL模板【id="{0}"】配置（属性【key="{1}"】中的【value】不能为空）
-            throw new SqlTemplateException("ERROR-DB-SQT0000000008", templateId, SqlTemplateEnum.TYPE.getKey());
+            ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000008", templateId, SqlTemplateEnum.TYPE.getKey());
         }
 
         // 校验配置的模板类型和初始化的模板类型是否一致
         if (!templateType.getKey().equalsIgnoreCase(typeProp.getValue())) {
             // 请检查SQL模板【id="{0}"】配置（属性【key="type"】的值【value="{1}"】和初始化的模板类型【{2}】不一致）
-            throw new SqlTemplateException("ERROR-DB-SQT0000000009", templateId, typeProp.getValue(), templateType.getKey());
+            ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000009", templateId, typeProp.getValue(), templateType.getKey());
         }
 
         // 获取SQL模板参数的配置属性
         Map<String, Property> paramPropMap = param.toPropMap();
         if (MapUtils.isEmpty(paramPropMap)) {
             // 请检查SQL模板参数【id="{0}"】配置（该SQL模板参数没有配置相关属性）
-            throw new SqlTemplateException("ERROR-DB-SQT0000000010", paramId);
+            ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000010", paramId);
         }
 
         // 获取key=table的属性(即表名)
         Property tableProp = paramPropMap.get(SqlTemplateEnum.TABLE.getKey());
         if (ObjectUtils.isEmpty(tableProp)) {
             // 请检查SQL模板参数【id="{0}"】配置（该SQL模板参数没有配置【key="{1}"】的模板参数属性）
-            throw new SqlTemplateException("ERROR-DB-SQT0000000011", paramId, SqlTemplateEnum.TABLE.getKey());
+            ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000011", paramId, SqlTemplateEnum.TABLE.getKey());
         }
 
         // 初始化模板
@@ -184,23 +187,23 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
             tableName = EntityUtils.getTableName(entity);// 从实体类上获取表名
             if (StringUtils.isBlank(tableName)) {
                 // 请检查初始实体类(其上的注解@Table或者@FleaTable对应的表名不能为空)
-                throw new SqlTemplateException("ERROR-DB-SQT0000000012");
+                ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000012");
             }
         }
 
         if (StringUtils.isBlank(tName)) {
             // 请检查SQL模板参数【id="{0}"】配置(属性【key="{1}"】中的【value】不能为空)
-            throw new SqlTemplateException("ERROR-DB-SQT0000000013", paramId, SqlTemplateEnum.TABLE.getKey());
+            ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000013", paramId, SqlTemplateEnum.TABLE.getKey());
         }
 
         if (!tableName.equals(tName)) {
             // 请检查SQL模板参数【id="{0}"】配置(【key="table"】属性值【{1}】和初始化的表名【{2}】两者不一致)
-            throw new SqlTemplateException("ERROR-DB-SQT0000000014", paramId, tName, tableName);
+            ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000014", paramId, tName, tableName);
         }
 
         if (ObjectUtils.isEmpty(entity)) {
             // 请检查初始实体类（该实体类对象没有被初始化）
-            throw new SqlTemplateException("ERROR-DB-SQT0000000015");
+            ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000015");
         }
 
         // 获取实体类T的对象的属性列相关信息
@@ -208,7 +211,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
 
         if (ArrayUtils.isEmpty(entityCols)) {
             // 请检查初始实体类（实体类的属性列相关信息不存在）
-            throw new SqlTemplateException("ERROR-DB-SQT0000000016");
+            ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000016");
         }
 
         // 获取真实表名，如是分表，则获取分表名
@@ -227,13 +230,13 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
      * <p> SQL模板校验规则 </p>
      *
      * @param templateValue SQL模板原始值
-     * @throws SqlTemplateException SQL模板异常类
+     * @throws CommonException 通用异常类
      * @since 1.0.0
      */
-    private void checkRule(String templateValue) throws SqlTemplateException {
+    private void checkRule(String templateValue) throws CommonException {
         if (ObjectUtils.isEmpty(rule)) {
             // 请检查SQL模板【id="{0}"】配置（未找到指定的校验规则【ruleId="{1}"】）
-            throw new SqlTemplateException("ERROR-DB-SQT0000000017", templateId, template.getRuleId());
+            ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000017", templateId, template.getRuleId());
         }
         // 获取校验规则的属性值
         Map<String, Property> propMap = rule.toPropMap();
@@ -242,17 +245,17 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
             Property prop = propMap.get(SqlTemplateEnum.SQL.getKey());
             if (ObjectUtils.isEmpty(prop)) {
                 // 请检查SQL模板【id="{0}"】配置（其关联的校验规则【id="{1}"】未找到【key="{2}"】的属性）
-                throw new SqlTemplateException("ERROR-DB-SQT0000000018", templateId, template.getRuleId(), SqlTemplateEnum.SQL.getKey());
+                ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000018", templateId, template.getRuleId(), SqlTemplateEnum.SQL.getKey());
             }
             // 获取校验规则模式匹配正则表达式
             String regExp = prop.getValue();
             if (StringUtils.isBlank(regExp)) {
                 // 请检查SQL模板【id="{0}"】配置（其关联的校验规则【id="{1}"】的属性【key="{2}"】中的【value】不能为空）
-                throw new SqlTemplateException("ERROR-DB-SQT0000000019", templateId, template.getRuleId(), SqlTemplateEnum.SQL.getKey());
+                ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000019", templateId, template.getRuleId(), SqlTemplateEnum.SQL.getKey());
             }
             if (!PatternMatcherUtils.matches(regExp, templateValue, Pattern.CASE_INSENSITIVE)) { // SQL模板不满足校验规则配置
                 // 请检查SQL模板【id="{0}"】配置（属性【key="{1}"】中的【value】配置有误）
-                throw new SqlTemplateException("ERROR-DB-SQT0000000020", templateId, SqlTemplateEnum.TEMPLATE.getKey());
+                ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000020", templateId, SqlTemplateEnum.TEMPLATE.getKey());
             }
         }
     }
@@ -280,7 +283,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
             return;
         }
         if (ObjectUtils.isEmpty(paramMap)) {
-            paramMap = new HashMap<String, Object>();
+            paramMap = new HashMap<>();
         }
         for (int i = 0; i < entityCols.length; i++) {
             Column column = entityCols[i];
@@ -313,7 +316,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
 
         if (!ArrayUtils.isEmpty(singleConnAttr)) {
 
-            map = new HashMap<String, String>();
+            map = new HashMap<>();
 
             for (String singleConn : singleConnAttr) {
                 String[] connAttr = StringUtils.split(singleConn, DBConstants.SQLConstants.SQL_EQUAL,
@@ -321,6 +324,9 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
                         DBConstants.SQLConstants.SQL_LE, DBConstants.SQLConstants.SQL_LT,
                         DBConstants.SQLConstants.SQL_LIKE, DBConstants.SQLConstants.SQL_LOWER_LIKE,
                         DBConstants.SQLConstants.SQL_IN, DBConstants.SQLConstants.SQL_LOWER_IN);
+                if (ArrayUtils.isEmpty(connAttr)) {
+                    continue;
+                }
                 if (connAttr.length == CommonConstants.NumeralConstants.INT_ONE) {
                     if (connAttr[0].contains(DBConstants.SQLConstants.SQL_COLON)) { // 目前这里就只有 limit
                         map.put(StringUtils.trim(DBConstants.SQLConstants.SQL_LIMIT), connAttr[0]);
@@ -354,15 +360,15 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
      * @param propMap         模板参数属性Map集合
      * @param sqlTemplateEnum SQL模板关键字枚举
      * @return 指定关键字的模板参数属性值
-     * @throws SqlTemplateException SQL模板异常类
+     * @throws CommonException 通用异常类
      * @since 1.0.0
      */
-    protected String checkProperty(Map<String, Property> propMap, SqlTemplateEnum sqlTemplateEnum) throws SqlTemplateException {
+    protected String checkProperty(Map<String, Property> propMap, SqlTemplateEnum sqlTemplateEnum) throws CommonException {
         Property property = propMap.get(sqlTemplateEnum.getKey());
 
         if (ObjectUtils.isEmpty(property)) {
             // 请检查SQL模板参数【id="{0}"】配置(属性【key="{1}"】中的【value】不能为空)
-            throw new SqlTemplateException("ERROR-DB-SQT0000000013", paramId, sqlTemplateEnum.getKey());
+            ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000013", paramId, sqlTemplateEnum.getKey());
         }
 
         return property.getValue();
@@ -374,14 +380,14 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
      * @param entityCols    属性列数组
      * @param tabColumnName 属性列名
      * @return 指定的属性列对象
-     * @throws SqlTemplateException SQL模板异常类
+     * @throws CommonException 通用异常类
      * @since 1.0.0
      */
-    protected Column checkColumn(final Column[] entityCols, String tabColumnName) throws SqlTemplateException {
+    protected Column checkColumn(final Column[] entityCols, String tabColumnName) throws CommonException {
         Column column = (Column) EntityUtils.getEntity(entityCols, Column.COLUMN_TAB_COL_NAME, tabColumnName);
         if (ObjectUtils.isEmpty(column)) {
             // 请检查SQL模板参数【id="{0}"】配置（属性【key="columns"】中的字段【{1}】在实体类【{2}】中不存在)
-            throw new SqlTemplateException("ERROR-DB-SQT0000000027", paramId, tabColumnName, entity.getClass().getName());
+            ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000027", paramId, tabColumnName, entity.getClass().getName());
         }
         return column;
     }
@@ -392,10 +398,10 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
      * @param entityCols 实体类的属性列数组
      * @param map        map的key存表字段列，value存变量
      * @return 校验通过的属性列数组
-     * @throws SqlTemplateException SQL模板异常类
+     * @throws CommonException 通用异常类
      * @since 1.0.0
      */
-    protected Column[] checkOneByOne(final Column[] entityCols, Map<String, String> map, SqlTemplateEnum sqlTemplateEnum) throws SqlTemplateException {
+    protected Column[] checkOneByOne(final Column[] entityCols, Map<String, String> map, SqlTemplateEnum sqlTemplateEnum) throws CommonException {
 
         if (MapUtils.isEmpty(map)) {
             return null;
@@ -411,13 +417,13 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
 
             if (StringUtils.isBlank(attrName)) {
                 // 请检查SQL模板参数【id="{0}"】配置（属性【key="{1}"】中的字段{2}对应的属性变量为空）
-                throw new SqlTemplateException("ERROR-DB-SQT0000000021", paramId, sqlTemplateEnum.getKey(), tabColName);
+                ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000021", paramId, sqlTemplateEnum.getKey(), tabColName);
             }
 
             Column column = (Column) EntityUtils.getEntity(entityCols, Column.COLUMN_TAB_COL_NAME, tabColName);
             if (ObjectUtils.isEmpty(column) && !StringUtils.trim(DBConstants.SQLConstants.SQL_LIMIT).equals(tabColName)) {
                 // 请检查SQL模板参数【id="{0}"】配置（属性【key="{1}"】中的字段【{2}】在实体类【{3}】中不存在）
-                throw new SqlTemplateException("ERROR-DB-SQT0000000022", paramId, sqlTemplateEnum.getKey(), tabColName, entity.getClass().getName());
+                ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000022", paramId, sqlTemplateEnum.getKey(), tabColName, entity.getClass().getName());
             }
 
             if (ObjectUtils.isNotEmpty(column)) {
@@ -427,14 +433,14 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
                 } else {
                     if (!checkAttrName(attrName, cols, tabColName)) {
                         // 请检查SQL模板参数【id="{0}"】配置（属性【key="{1}"】中的属性列{2}与属性变量{3}不一一对应）
-                        throw new SqlTemplateException("ERROR-DB-SQT0000000023", paramId, sqlTemplateEnum.getKey(), tabColName, attrName);
+                        ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000023", paramId, sqlTemplateEnum.getKey(), tabColName, attrName);
                     }
                 }
             } else {
                 if (StringUtils.trim(DBConstants.SQLConstants.SQL_LIMIT).equals(tabColName)) {
                     if (!checkAttrName(attrName, cols, tabColName)) {
                         // 请检查SQL模板参数【id="{0}"】配置（属性【key="{1}"】中的LIMIT子句里的变量{2}）
-                        throw new SqlTemplateException("ERROR-DB-SQT0000000032", paramId, sqlTemplateEnum.getKey(), attrName);
+                        ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000032", paramId, sqlTemplateEnum.getKey(), attrName);
                     }
                 }
             }
@@ -576,10 +582,10 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
      * @param params     SQL参数
      * @param entityCols 实体类T的对象的属性列相关信息
      * @param propMap    模板属性配置信息
-     * @throws SqlTemplateException SQL模板异常类
+     * @throws CommonException 通用异常类
      * @since 1.0.0
      */
-    protected abstract void initSqlTemplate(StringBuilder sql, Map<String, Object> params, final Column[] entityCols, Map<String, Property> propMap) throws SqlTemplateException;
+    protected abstract void initSqlTemplate(StringBuilder sql, Map<String, Object> params, final Column[] entityCols, Map<String, Property> propMap) throws CommonException;
 
     @Override
     public String getId() {

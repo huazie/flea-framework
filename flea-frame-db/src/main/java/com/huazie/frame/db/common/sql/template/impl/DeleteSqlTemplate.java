@@ -1,8 +1,9 @@
 package com.huazie.frame.db.common.sql.template.impl;
 
+import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.MapUtils;
 import com.huazie.frame.common.util.StringUtils;
-import com.huazie.frame.db.common.exception.SqlTemplateException;
 import com.huazie.frame.db.common.sql.template.SqlTemplate;
 import com.huazie.frame.db.common.sql.template.SqlTemplateEnum;
 import com.huazie.frame.db.common.sql.template.TemplateTypeEnum;
@@ -109,7 +110,7 @@ public class DeleteSqlTemplate<T> extends SqlTemplate<T> {
     }
 
     @Override
-    protected void initSqlTemplate(StringBuilder sql, Map<String, Object> params, Column[] entityCols, Map<String, Property> propMap) throws SqlTemplateException {
+    protected void initSqlTemplate(StringBuilder sql, Map<String, Object> params, Column[] entityCols, Map<String, Property> propMap) throws CommonException {
         // 获取【key=conditions】的属性，存储WHERE子句部分的内容 （para_id = :paraId and para_type = :paraType）
         String condStr = checkProperty(propMap, SqlTemplateEnum.CONDITIONS);
         // 构建条件Map集合
@@ -129,14 +130,14 @@ public class DeleteSqlTemplate<T> extends SqlTemplate<T> {
      * @param entityCols 实体类对象的属性数组
      * @param whereMap   WHERE子句的map集合（key：属性列， map：属性列变量）
      * @return where子句对应的实体类对象的属性数组
-     * @throws SqlTemplateException SQL模板异常类
+     * @throws CommonException 通用异常类
      * @since 1.0.0
      */
-    private Column[] check(final Column[] entityCols, Map<String, String> whereMap) throws SqlTemplateException {
+    private Column[] check(final Column[] entityCols, Map<String, String> whereMap) throws CommonException {
 
         if (MapUtils.isEmpty(whereMap)) {
             // 请检查SQL模板参数【id="{0}"】配置(属性【key="{1}"】中的【value】不能为空)
-            throw new SqlTemplateException("ERROR-DB-SQT0000000013", paramId, SqlTemplateEnum.CONDITIONS.getKey());
+            ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000013", paramId, SqlTemplateEnum.CONDITIONS.getKey());
         }
 
         // 校验WHERE子句中的属性列和属性变量是否一一对应，并获取WHERE子句相关的属性列集合

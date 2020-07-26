@@ -1,11 +1,12 @@
 package com.huazie.frame.db.common.sql.template.impl;
 
+import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.MapUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.PatternMatcherUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.DBConstants;
-import com.huazie.frame.db.common.exception.SqlTemplateException;
 import com.huazie.frame.db.common.sql.template.SqlTemplate;
 import com.huazie.frame.db.common.sql.template.SqlTemplateEnum;
 import com.huazie.frame.db.common.sql.template.TemplateTypeEnum;
@@ -120,7 +121,7 @@ public class SelectSqlTemplate<T> extends SqlTemplate<T> {
     }
 
     @Override
-    protected void initSqlTemplate(StringBuilder sql, Map<String, Object> params, Column[] entityCols, Map<String, Property> propMap) throws SqlTemplateException {
+    protected void initSqlTemplate(StringBuilder sql, Map<String, Object> params, Column[] entityCols, Map<String, Property> propMap) throws CommonException {
 
         // 获取【key="columns"】的属性， 存储SELECT子句的内容（ para_id, para_type, para_code等等）
         String colStr = checkProperty(propMap, SqlTemplateEnum.COLUMNS);
@@ -160,19 +161,19 @@ public class SelectSqlTemplate<T> extends SqlTemplate<T> {
      * @param cols       查询显示列数组
      * @param whereMap   WHERE子句的map集合（key：属性列， map：属性列变量）
      * @return where子句对应的实体类对象的属性数组
-     * @throws SqlTemplateException SQL模板异常类
+     * @throws CommonException 通用异常类
      * @since 1.0.0
      */
-    private Column[] check(final Column[] entityCols, String[] cols, Map<String, String> whereMap, String condStr) throws SqlTemplateException {
+    private Column[] check(final Column[] entityCols, String[] cols, Map<String, String> whereMap, String condStr) throws CommonException {
 
         if (ArrayUtils.isEmpty(cols)) {
             // 请检查SQL模板参数【id="{0}"】配置(属性【key="{1}"】中的【value】不能为空)
-            throw new SqlTemplateException("ERROR-DB-SQT0000000013", paramId, SqlTemplateEnum.COLUMNS.getKey());
+            ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000013", paramId, SqlTemplateEnum.COLUMNS.getKey());
         }
 
         if (MapUtils.isEmpty(whereMap) && !PatternMatcherUtils.matches(EQUAL_EXP, condStr, Pattern.CASE_INSENSITIVE)) {
             // 请检查SQL模板参数【id="{0}"】配置(属性【key="{1}"】中的【value】不能为空)
-            throw new SqlTemplateException("ERROR-DB-SQT0000000013", paramId, SqlTemplateEnum.CONDITIONS.getKey());
+            ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000013", paramId, SqlTemplateEnum.CONDITIONS.getKey());
         }
 
         for (int n = 0; n < cols.length; n++) {
@@ -180,7 +181,7 @@ public class SelectSqlTemplate<T> extends SqlTemplate<T> {
             Column column = (Column) EntityUtils.getEntity(entityCols, Column.COLUMN_TAB_COL_NAME, tabColumnName);
             if (ObjectUtils.isEmpty(column) && !PatternMatcherUtils.matches(SINGLE_SELECT_RESULT_EXP, tabColumnName, Pattern.CASE_INSENSITIVE)) {
                 // 请检查SQL模板参数【id="{0}"】配置（属性【key="{1}"】中的字段【{2}】在实体类【{3}】中不存在）
-                throw new SqlTemplateException("ERROR-DB-SQT0000000022", paramId, SqlTemplateEnum.COLUMNS.getKey(), tabColumnName, getEntity().getClass().getName());
+                ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000022", paramId, SqlTemplateEnum.COLUMNS.getKey(), tabColumnName, getEntity().getClass().getName());
             }
         }
 

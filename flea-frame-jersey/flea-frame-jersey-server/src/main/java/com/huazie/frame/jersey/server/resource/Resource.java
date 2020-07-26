@@ -1,5 +1,6 @@
 package com.huazie.frame.jersey.server.resource;
 
+import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.xml.JABXUtils;
 import com.huazie.frame.jersey.common.FleaJerseyConstants;
@@ -8,7 +9,6 @@ import com.huazie.frame.jersey.common.data.FleaJerseyContext;
 import com.huazie.frame.jersey.common.data.FleaJerseyFileContext;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
-import com.huazie.frame.jersey.common.exception.FleaJerseyCommonException;
 import com.huazie.frame.jersey.server.filter.FleaJerseyFilterChainManager;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
@@ -129,7 +129,7 @@ public abstract class Resource {
             // 将响应数据添加到表单中
             FleaJerseyManager.getManager().addFormDataBodyPart(responseData, FleaJerseyConstants.FormDataConstants.FORM_DATA_KEY_RESPONSE);
             formDataMultiPart = FleaJerseyManager.getManager().getFileContext().getFormDataMultiPart();
-        } catch (FleaJerseyCommonException e) {
+        } catch (CommonException e) {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("Exception occurs : \n", e);
             }

@@ -45,6 +45,10 @@ public interface CommonConstants {
          * <p> 整数 2 , int类型 </p>
          */
         int INT_TWO = 2;
+        /**
+         * <p> 整数 3 , int类型 </p>
+         */
+        int INT_THREE = 3;
     }
 
     /**

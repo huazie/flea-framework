@@ -1,5 +1,6 @@
 package com.huazie.frame.core.base.cfgdata.service.impl;
 
+import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.core.base.cfgdata.dao.interfaces.IFleaJerseyResServiceDAO;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResService;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaJerseyResServiceSV;
@@ -29,7 +30,7 @@ public class FleaJerseyResServiceSVImpl extends AbstractFleaJPASVImpl<FleaJersey
 
     @Override
     @Cacheable(value = "fleajerseyresservice", key = "#serviceCode + '_' + #resourceCode")
-    public FleaJerseyResService getResService(String serviceCode, String resourceCode) throws Exception {
+    public FleaJerseyResService getResService(String serviceCode, String resourceCode) throws CommonException {
         return resServiceDAO.getResService(serviceCode, resourceCode);
     }
 

@@ -1,5 +1,6 @@
 package com.huazie.frame.core.base.cfgdata.service.impl;
 
+import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.core.base.cfgdata.dao.interfaces.IFleaJerseyI18nErrorMappingDAO;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyI18nErrorMapping;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaJerseyI18nErrorMappingSV;
@@ -31,13 +32,13 @@ public class FleaJerseyI18nErrorMappingSVImpl extends AbstractFleaJPASVImpl<Flea
 
     @Override
     @Cacheable(value = "fleajerseyi18nerrormapping", key = "#resourceCode + '_' + #serviceCode")
-    public List<FleaJerseyI18nErrorMapping> getMappings(String resourceCode, String serviceCode) throws Exception {
+    public List<FleaJerseyI18nErrorMapping> getMappings(String resourceCode, String serviceCode) throws CommonException {
         return i18NErrorMappingDAO.getMappings(resourceCode, serviceCode);
     }
 
     @Override
     @Cacheable(value = "fleajerseyi18nerrormapping", key = "#resourceCode + '_' + #serviceCode + '_' + #i18nCode")
-    public FleaJerseyI18nErrorMapping getMapping(String resourceCode, String serviceCode, String i18nCode) throws Exception {
+    public FleaJerseyI18nErrorMapping getMapping(String resourceCode, String serviceCode, String i18nCode) throws CommonException {
         return i18NErrorMappingDAO.getMapping(resourceCode, serviceCode, i18nCode);
     }
 

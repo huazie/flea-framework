@@ -69,4 +69,34 @@ public class StringsUtilsTest {
 			LOGGER.debug("null");
 		}
 	}
+
+	@Test
+	public void testToLowerCaseInitial() {
+		String aa = "a";
+		LOGGER.debug("aa = {}", StringUtils.toLowerCaseInitial(aa));
+		String bb = "A";
+		LOGGER.debug("bb = {}", StringUtils.toLowerCaseInitial(bb));
+		String cc = "AbCD";
+		LOGGER.debug("cc = {}", StringUtils.toLowerCaseInitial(cc));
+	}
+
+	@Test
+	public void testToUpperCaseInitial() {
+		String aa = "a";
+		LOGGER.debug("aa = {}", StringUtils.toUpperCaseInitial(aa));
+		String bb = "A";
+		LOGGER.debug("bb = {}", StringUtils.toUpperCaseInitial(bb));
+		String cc = "abCD";
+		LOGGER.debug("cc = {}", StringUtils.toUpperCaseInitial(cc));
+	}
+
+	@Test
+	public void testToUpperCaseFirstAndLowerCaseLeft() {
+		String aa = "a";
+		LOGGER.debug("aa = {}", StringUtils.toUpperCaseFirstAndLowerCaseLeft(aa));
+		String bb = "A";
+		LOGGER.debug("bb = {}", StringUtils.toUpperCaseFirstAndLowerCaseLeft(bb));
+		String cc = "abCD";
+		LOGGER.debug("cc = {}", StringUtils.toUpperCaseFirstAndLowerCaseLeft(cc));
+	}
 }

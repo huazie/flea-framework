@@ -1,5 +1,6 @@
 package com.huazie.frame.core.base.cfgdata.service.interfaces;
 
+import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
 import com.huazie.frame.db.jpa.service.interfaces.IAbstractFleaJPASV;
 
@@ -21,10 +22,10 @@ public interface IFleaParaDetailSV extends IAbstractFleaJPASV<FleaParaDetail> {
      * @param paraType 参数配置数据类型
      * @param paraCode 参数配置数据编码
      * @return 参数配置数据集合
-     * @throws Exception
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    List<FleaParaDetail> getParaDetails(String paraType, String paraCode) throws Exception;
+    List<FleaParaDetail> getParaDetails(String paraType, String paraCode) throws CommonException;
 
     /**
      * <p> 获取单个参数配置数据 </p>
@@ -32,8 +33,8 @@ public interface IFleaParaDetailSV extends IAbstractFleaJPASV<FleaParaDetail> {
      * @param paraType 参数配置数据类型
      * @param paraCode 参数配置数据编码
      * @return 单个参数配置数据
-     * @throws Exception
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    FleaParaDetail getParaDetail(String paraType, String paraCode) throws Exception;
+    FleaParaDetail getParaDetail(String paraType, String paraCode) throws CommonException;
 }

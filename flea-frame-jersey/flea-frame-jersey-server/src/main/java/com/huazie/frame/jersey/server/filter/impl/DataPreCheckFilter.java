@@ -1,5 +1,7 @@
 package com.huazie.frame.jersey.server.filter.impl;
 
+import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.jersey.common.FleaJerseyConstants;
@@ -28,7 +30,7 @@ public class DataPreCheckFilter implements IFleaJerseyFilter {
     private static final Logger LOGGER = LoggerFactory.getLogger(DataPreCheckFilter.class);
 
     @Override
-    public void doFilter(FleaJerseyRequest request, FleaJerseyResponse response) throws Exception {
+    public void doFilter(FleaJerseyRequest request, FleaJerseyResponse response) throws CommonException {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("DataPreCheckFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) Start");
@@ -54,49 +56,49 @@ public class DataPreCheckFilter implements IFleaJerseyFilter {
 
         if (ObjectUtils.isEmpty(request)) {
             // 请求报文不能为空
-            throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000003");
+            ExceptionUtils.throwCommonException(FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000003");
         }
 
         FleaJerseyRequestData requestData = request.getRequestData();
         if (ObjectUtils.isEmpty(requestData)) {
             // 请求报文不能为空
-            throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000003");
+            ExceptionUtils.throwCommonException(FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000003");
         }
 
         RequestPublicData requestPublicData = requestData.getPublicData();
         if (ObjectUtils.isEmpty(requestPublicData)) {
             // 请求公共报文不能为空
-            throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000004");
+            ExceptionUtils.throwCommonException(FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000004");
         }
 
         String systemAcctId = requestPublicData.getSystemAccountId();
         if (StringUtils.isBlank(systemAcctId)) {
             // 请求公共报文入参【{0}】不能为空
-            throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000006", FleaJerseyConstants.RequestPublicDataConstants.SYSTEM_ACCT_ID);
+            ExceptionUtils.throwCommonException(FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000006", FleaJerseyConstants.RequestPublicDataConstants.SYSTEM_ACCT_ID);
         }
 
         String systemAcctPwd = requestPublicData.getSystemAccountPassword();
         if (StringUtils.isBlank(systemAcctPwd)) {
             // 请求公共报文入参【{0}】不能为空
-            throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000006", FleaJerseyConstants.RequestPublicDataConstants.SYSTEM_ACCT_PWD);
+            ExceptionUtils.throwCommonException(FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000006", FleaJerseyConstants.RequestPublicDataConstants.SYSTEM_ACCT_PWD);
         }
 
         String acctId = requestPublicData.getAccountId();
         if (StringUtils.isBlank(acctId)) {
             // 请求公共报文入参【{0}】不能为空
-            throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000006", FleaJerseyConstants.RequestPublicDataConstants.ACCT_ID);
+            ExceptionUtils.throwCommonException(FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000006", FleaJerseyConstants.RequestPublicDataConstants.ACCT_ID);
         }
 
         String resourceCode = requestPublicData.getResourceCode();
         if (StringUtils.isBlank(resourceCode)) {
             // 请求公共报文入参【{0}】不能为空
-            throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000006", FleaJerseyConstants.RequestPublicDataConstants.RESOURCE_CODE);
+            ExceptionUtils.throwCommonException(FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000006", FleaJerseyConstants.RequestPublicDataConstants.RESOURCE_CODE);
         }
 
         String serviceCode = requestPublicData.getServiceCode();
         if (StringUtils.isBlank(serviceCode)) {
             // 请求公共报文入参【{0}】不能为空
-            throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000006", FleaJerseyConstants.RequestPublicDataConstants.SERVICE_CODE);
+            ExceptionUtils.throwCommonException(FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000006", FleaJerseyConstants.RequestPublicDataConstants.SERVICE_CODE);
         }
 
         if (LOGGER.isDebugEnabled()) {
@@ -106,13 +108,13 @@ public class DataPreCheckFilter implements IFleaJerseyFilter {
         RequestBusinessData requestBusinessData = requestData.getBusinessData();
         if (ObjectUtils.isEmpty(requestBusinessData)) {
             // 请求业务报文不能为空
-            throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000005");
+            ExceptionUtils.throwCommonException(FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000005");
         }
 
         String input = requestBusinessData.getInput();
         if (StringUtils.isBlank(input)) {
             // 请求业务报文不能为空
-            throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000005");
+            ExceptionUtils.throwCommonException(FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000005");
         }
 
         if (LOGGER.isDebugEnabled()) {

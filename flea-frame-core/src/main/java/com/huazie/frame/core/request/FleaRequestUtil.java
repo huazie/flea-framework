@@ -1,6 +1,7 @@
 package com.huazie.frame.core.request;
 
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.core.common.FleaCoreCommonException;
 import com.huazie.frame.core.filter.taskchain.FleaFilterTaskChainManager;
@@ -83,7 +84,8 @@ public class FleaRequestUtil {
                 }
                 fleaRequestContext.put(FleaRequestContext.REDIRECT_FLAG, redirectUrlKey);
             } catch (IOException e) {
-                throw new FleaCoreCommonException("ERROR-CORE-COMMON0000000000", e.getMessage());
+                // {0}
+                ExceptionUtils.throwCommonException(FleaCoreCommonException.class, "ERROR-CORE-COMMON0000000000", e.getMessage());
             }
         }
     }
@@ -121,7 +123,7 @@ public class FleaRequestUtil {
         FleaSession fleaSession = FleaRequestConfig.getFleaSession();
         if (ObjectUtils.isEmpty(fleaSession)) {
             // {0}不能为空，请检查
-            throw new FleaCoreCommonException("ERROR-CORE-COMMON0000000001", "【FleaSession】");
+            ExceptionUtils.throwCommonException(FleaCoreCommonException.class, "ERROR-CORE-COMMON0000000001", "【FleaSession】");
         }
         return fleaSession;
     }
@@ -212,7 +214,7 @@ public class FleaRequestUtil {
         FleaUrl fleaUrl = FleaRequestConfig.getFleaUrl();
         if (ObjectUtils.isEmpty(fleaUrl)) {
             // {0}不能为空，请检查
-            throw new FleaCoreCommonException("ERROR-CORE-COMMON0000000001", "【FleaUrl】");
+            ExceptionUtils.throwCommonException(FleaCoreCommonException.class, "ERROR-CORE-COMMON0000000001", "【FleaUrl】");
         }
         return fleaUrl;
     }

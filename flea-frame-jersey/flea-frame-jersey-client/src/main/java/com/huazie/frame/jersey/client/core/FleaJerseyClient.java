@@ -1,5 +1,6 @@
 package com.huazie.frame.jersey.client.core;
 
+import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.core.base.cfgdata.bean.FleaConfigDataSpringBean;
@@ -54,17 +55,17 @@ public class FleaJerseyClient {
 
         if (StringUtils.isBlank(clientCode)) {
             // 客户端编码不能为空
-            throw new FleaJerseyClientException("ERROR-JERSEY-CLIENT0000000001");
+            ExceptionUtils.throwCommonException(FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000001");
         }
 
         if (ObjectUtils.isEmpty(input)) {
             // 业务入参不能为空
-            throw new FleaJerseyClientException("ERROR-JERSEY-CLIENT0000000002");
+            ExceptionUtils.throwCommonException(FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000002");
         }
 
         if (ObjectUtils.isEmpty(outputClazz)) {
             // 业务出参类不能为空
-            throw new FleaJerseyClientException("ERROR-JERSEY-CLIENT0000000003");
+            ExceptionUtils.throwCommonException(FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000003");
         }
 
         // 未注入Bean，直接返回null
@@ -76,7 +77,7 @@ public class FleaJerseyClient {
         FleaJerseyResClient resClient = springBean.getResClient(clientCode);
         if (ObjectUtils.isEmpty(resClient)) {
             // 请检查客户端配置【client_code = {0}】：资源服务客户端未配置
-            throw new FleaJerseyClientException("ERROR-JERSEY-CLIENT0000000009", clientCode);
+            ExceptionUtils.throwCommonException(FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000009", clientCode);
         }
 
         // 客户端编码
