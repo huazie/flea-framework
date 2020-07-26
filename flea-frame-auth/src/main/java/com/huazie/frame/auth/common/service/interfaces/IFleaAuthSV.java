@@ -1,9 +1,12 @@
 package com.huazie.frame.auth.common.service.interfaces;
 
+import com.huazie.frame.auth.base.function.entity.FleaMenu;
 import com.huazie.frame.common.IFleaUser;
+import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.object.FleaObjectFactory;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,7 +33,7 @@ public interface IFleaAuthSV {
      * <p> 保存用户登录日志 </p>
      *
      * @param accountId 账户编号
-     * @param request HTTP请求对象
+     * @param request   HTTP请求对象
      * @since 1.0.0
      */
     void saveLoginLog(Long accountId, HttpServletRequest request);
@@ -42,4 +45,16 @@ public interface IFleaAuthSV {
      * @since 1.0.0
      */
     void saveQuitLog(Long accountId);
+
+    /**
+     * <p> 获取所有可以访问的菜单 </p>
+     *
+     * @param accountId    操作账户编号
+     * @param systemAcctId 系统帐户编号
+     * @return 所有可以访问的菜单
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    List<FleaMenu> getAllAccessibleMenus(Long accountId, Long systemAcctId) throws CommonException;
+
 }

@@ -6,7 +6,10 @@ import com.huazie.frame.auth.base.function.service.interfaces.IFleaFunctionAttrS
 import com.huazie.frame.auth.base.function.service.interfaces.IFleaMenuSV;
 import com.huazie.frame.auth.common.FleaAuthConstants;
 import com.huazie.frame.auth.common.FunctionTypeEnum;
+import com.huazie.frame.auth.common.MenuLevelEnum;
 import com.huazie.frame.auth.user.UserAuthTest;
+import com.huazie.frame.common.CommonConstants;
+import com.huazie.frame.common.EntityStateEnum;
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.DateUtils;
 import org.junit.Before;
@@ -44,9 +47,9 @@ public class FunctionAuthTest {
         fleaMenu.setMenuIcon("dashboard"); // 菜单FontAwesome小图标
         fleaMenu.setMenuSort(1);  // 菜单展示顺序(同一个父菜单下)
         fleaMenu.setMenuView("mgmt/console.html"); // 菜单对应页面（非叶子菜单的可以为空）
-        fleaMenu.setMenuLevel(1); // 菜单层级（1：一级菜单 2；二级菜单 3：三级菜单 4：四级菜单）
-        fleaMenu.setMenuState(1); // 菜单状态（0:下线，1: 在用 ）
-        fleaMenu.setParentId(0L); // 父菜单编号
+        fleaMenu.setMenuLevel(MenuLevelEnum.LEVEL_ONE.getLevel()); // 菜单层级（1：一级菜单 2；二级菜单 3：三级菜单 4：四级菜单）
+        fleaMenu.setMenuState(EntityStateEnum.IN_USE.getState()); // 菜单状态（0:下线，1: 在用 ）
+        fleaMenu.setParentId(CommonConstants.NumeralConstants.MINUS_ONE); // 父菜单编号
         fleaMenu.setCreateDate(DateUtils.getCurrentTime());
         fleaMenu.setEffectiveDate(fleaMenu.getCreateDate());
         fleaMenu.setExpiryDate(DateUtils.getExpiryTimeForever());
@@ -75,7 +78,7 @@ public class FunctionAuthTest {
         // 属性值
         fleaFunctionAttr.setAttrValue("1000");
         // 属性状态(0: 删除 1: 正常）
-        fleaFunctionAttr.setState(1);
+        fleaFunctionAttr.setState(EntityStateEnum.IN_USE.getState());
         fleaFunctionAttr.setCreateDate(DateUtils.getCurrentTime());
         fleaFunctionAttr.setEffectiveDate(fleaFunctionAttr.getCreateDate());
         fleaFunctionAttr.setExpiryDate(DateUtils.getExpiryTimeForever());
