@@ -65,7 +65,7 @@ public class FleaUserRegisterSVImpl implements IFleaUserRegisterSV {
 
         // 校验用户注册信息对象是否为空
         // ERROR-AUTH-COMMON0000000001 【{0}】不能为空
-        ObjectUtils.checkEmpty(fleaUserRegisterPOJO, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", new String[]{"FleaUserRegisterPOJO"});
+        ObjectUtils.checkEmpty(fleaUserRegisterPOJO, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", "FleaUserRegisterPOJO");
 
         // 校验账号是否为空
         // ERROR-AUTH-COMMON0000000002 账号不能为空！
@@ -75,7 +75,7 @@ public class FleaUserRegisterSVImpl implements IFleaUserRegisterSV {
         // 校验待注册账户是否已存在
         // ERROR-AUTH-COMMON0000000003 【{0}】已存在！
         FleaAccount oldFleaAccount = fleaAccountSV.queryValidAccount(accountCode);
-        ObjectUtils.checkNotEmpty(oldFleaAccount, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000005", new String[]{accountCode});
+        ObjectUtils.checkNotEmpty(oldFleaAccount, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000005", accountCode);
 
         // 校验密码是否为空
         // ERROR-AUTH-COMMON0000000003 密码不能为空！
