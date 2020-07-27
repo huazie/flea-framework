@@ -505,10 +505,8 @@ public class FleaJDBCHelper {
     private static FleaDBOperationHandler getDBOperationHandler(String sql, List<SqlParam> sqlParams, String templateType) throws Exception {
 
         Connection connection = FleaJDBCConfig.getConfig().getConnection();
-        if (ObjectUtils.isEmpty(connection)) {
-            // 无法获取数据库连接
-            ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000016");
-        }
+        // 无法获取数据库连接
+        ObjectUtils.checkEmpty(connection, DaoException.class, "ERROR-DB-DAO0000000016");
 
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
 

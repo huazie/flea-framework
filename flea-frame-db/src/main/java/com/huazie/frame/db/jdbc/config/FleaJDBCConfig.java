@@ -96,10 +96,8 @@ public class FleaJDBCConfig {
 
         try {
 
-            if (ObjectUtils.isEmpty(fleaDBUnit)) {
-                // 请正确初始化数据库管理系统和数据库（或数据库用户）
-                ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000015");
-            }
+            // 请正确初始化数据库管理系统和数据库（或数据库用户）
+            ObjectUtils.checkEmpty(fleaDBUnit, DaoException.class, "ERROR-DB-DAO0000000015");
 
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("JDBCConfig##getConnection() 数据库配置键名：{}", dbConfigKey);

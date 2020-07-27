@@ -1,6 +1,7 @@
 package com.huazie.frame.db.common.sql.template.impl;
 
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
@@ -10,7 +11,6 @@ import com.huazie.frame.db.common.sql.template.SqlTemplateEnum;
 import com.huazie.frame.db.common.sql.template.TemplateTypeEnum;
 import com.huazie.frame.db.common.sql.template.config.Property;
 import com.huazie.frame.db.common.table.pojo.Column;
-import org.apache.commons.lang.ArrayUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -162,15 +162,12 @@ public class InsertSqlTemplate<T> extends SqlTemplate<T> {
      * @since 1.0.0
      */
     private Column[] check(final Column[] entityCols, String[] cols, String[] values) throws CommonException {
-        if (ArrayUtils.isEmpty(cols)) {
-            // 请检查SQL模板参数【id="{0}"】配置(属性【key="{1}"】中的【value】不能为空)
-            ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000013", paramId, SqlTemplateEnum.COLUMNS.getKey());
-        }
 
-        if (ArrayUtils.isEmpty(values)) {
-            // 请检查SQL模板参数【id="{0}"】配置(属性【key="{1}"】中的【value】不能为空)
-            ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000013", paramId, SqlTemplateEnum.VALUES.getKey());
-        }
+        // 请检查SQL模板参数【id="{0}"】配置(属性【key="{1}"】中的【value】不能为空)
+        ArrayUtils.checkEmpty(cols, SQT_CLASS, "ERROR-DB-SQT0000000013", paramId, SqlTemplateEnum.COLUMNS.getKey());
+
+        // 请检查SQL模板参数【id="{0}"】配置(属性【key="{1}"】中的【value】不能为空)
+        ArrayUtils.checkEmpty(values, SQT_CLASS, "ERROR-DB-SQT0000000013", paramId, SqlTemplateEnum.VALUES.getKey());
 
         if (!ArrayUtils.isSameLength(cols, values)) {
             // 请检查SQL模板参数【id="{0}"】配置（属性【key="columns"】和【key="values"】中配置字段个数不一致）
@@ -182,10 +179,9 @@ public class InsertSqlTemplate<T> extends SqlTemplate<T> {
             String tabColumnName = StringUtils.trim(cols[n]);//表字段名
             String attrName = StringUtils.trim(values[n]);//该表字段对应的属性变量值 (如 :paraId )
 
-            if (StringUtils.isBlank(attrName)) {
-                // 请检查SQL模板参数【id="{0}"】配置（属性【key="columns"】中的字段【{1}】对应属性【key="values"】中的字段不存在）
-                ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000026", paramId, tabColumnName);
-            }
+            // 请检查SQL模板参数【id="{0}"】配置（属性【key="columns"】中的字段【{1}】对应属性【key="values"】中的字段不存在）
+            StringUtils.checkBlank(attrName, SQT_CLASS, "ERROR-DB-SQT0000000026", paramId, tabColumnName);
+
             // 校验是否存在指定属性列名的属性列对象
             Column column = checkColumn(entityCols, tabColumnName);
             // 取属性列对应的实体类中的变量名

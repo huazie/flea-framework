@@ -246,19 +246,15 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 
     @Override
     public T update(T entity) throws CommonException {
-        if (ObjectUtils.isEmpty(entity)) {
-            // 实体对象不能为空
-            ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000012");
-        }
+        // 实体对象不能为空
+        ObjectUtils.checkEmpty(entity, DaoException.class, "ERROR-DB-DAO0000000012");
         return getEntityManager(entity).merge(entity);
     }
 
     @Override
     public List<T> batchUpdate(List<T> entities) throws CommonException {
-        if (CollectionUtils.isEmpty(entities)) {
-            // 实体对象集合不能为空
-            ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000013");
-        }
+        // 实体对象集合不能为空
+        CollectionUtils.checkEmpty(entities, DaoException.class, "ERROR-DB-DAO0000000013");
         for (T t : entities) {
             getEntityManager(t).merge(t);
         }
@@ -267,19 +263,15 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 
     @Override
     public void save(T entity) throws CommonException {
-        if (ObjectUtils.isEmpty(entity)) {
-            // 实体对象不能为空
-            ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000012");
-        }
+        // 实体对象不能为空
+        ObjectUtils.checkEmpty(entity, DaoException.class, "ERROR-DB-DAO0000000012");
         getEntityManager(entity).persist(entity);
     }
 
     @Override
     public void batchSave(List<T> entities) throws CommonException {
-        if (CollectionUtils.isEmpty(entities)) {
-            // 实体对象集合不能为空
-            ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000013");
-        }
+        // 实体对象集合不能为空
+        CollectionUtils.checkEmpty(entities, DaoException.class, "ERROR-DB-DAO0000000013");
         for (T t : entities) {
             getEntityManager(t).persist(t);
         }
@@ -387,10 +379,8 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
                 ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000009");
             }
         } else if (entityId.getClass() == String.class) {
-            if (ObjectUtils.isEmpty(entityId)) {
-                // 主键字段不能为空
-                ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000010");
-            }
+            // 主键字段不能为空
+            ObjectUtils.checkEmpty(entityId, DaoException.class, "ERROR-DB-DAO0000000010");
         } else {
             // 主键必须是long(Long) 或 String
             ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000011");

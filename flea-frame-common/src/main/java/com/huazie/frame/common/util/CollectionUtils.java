@@ -1,5 +1,7 @@
 package com.huazie.frame.common.util;
 
+import com.huazie.frame.common.exception.CommonException;
+
 import java.util.Collection;
 
 /**
@@ -36,4 +38,33 @@ public class CollectionUtils {
         return !isEmpty(collection);
     }
 
+    /**
+     * <p> 校验collection集合对象，如果空，则抛出异常 </p>
+     *
+     * @param collection     待校验集合对象
+     * @param exceptionClazz 通用异常子类类对象
+     * @param params         通用异常子类构造参数
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    public static void checkEmpty(Collection collection, Class<? extends CommonException> exceptionClazz, Object... params) throws CommonException {
+        if (isEmpty(collection)) {
+            ExceptionUtils.throwCommonException(exceptionClazz, params);
+        }
+    }
+
+    /**
+     * <p> 校验collection集合对象，如果非空，则抛出异常 </p>
+     *
+     * @param collection     待校验集合对象
+     * @param exceptionClazz 通用异常子类类对象
+     * @param params         通用异常子类构造参数
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    public static void checkNotEmpty(Collection collection, Class<? extends CommonException> exceptionClazz, Object... params) throws CommonException {
+        if (isNotEmpty(collection)) {
+            ExceptionUtils.throwCommonException(exceptionClazz, params);
+        }
+    }
 }

@@ -112,10 +112,8 @@ public class DBXmlDigesterHelper {
 
         try (InputStream input = IOUtils.getInputStreamFromClassPath(fileName)) {
 
-            if (ObjectUtils.isEmpty(input)) {
-                // 该路径下【0】找不到指定配置文件
-                ExceptionUtils.throwCommonException(TableSplitException.class, "ERROR-DB-SQT0000000030", fileName);
-            }
+            // 该路径下【0】找不到指定配置文件
+            ObjectUtils.checkEmpty(input, TableSplitException.class, "ERROR-DB-SQT0000000030", fileName);
 
             tabs = XmlDigesterHelper.parse(input, newFleaTableSplitFileDigester(), Tables.class);
 
@@ -199,10 +197,8 @@ public class DBXmlDigesterHelper {
 
         try (InputStream input = IOUtils.getInputStreamFromClassPath(fileName)) {
 
-            if (ObjectUtils.isEmpty(input)) {
-                // 该路径下【0】找不到指定配置文件
-                ExceptionUtils.throwCommonException(SqlTemplateException.class, "ERROR-DB-SQT0000000030", fileName);
-            }
+            // 该路径下【0】找不到指定配置文件
+            ObjectUtils.checkEmpty(input, SqlTemplateException.class, "ERROR-DB-SQT0000000030", fileName);
 
             sqlTemplate = XmlDigesterHelper.parse(input, newFleaSqlTemplateFileDigester(), Sql.class);
 
