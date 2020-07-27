@@ -1,6 +1,7 @@
 package com.huazie.frame.db.common.sql.template.impl;
 
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.MapUtils;
 import com.huazie.frame.common.util.ObjectUtils;
@@ -13,7 +14,6 @@ import com.huazie.frame.db.common.sql.template.TemplateTypeEnum;
 import com.huazie.frame.db.common.sql.template.config.Property;
 import com.huazie.frame.db.common.table.pojo.Column;
 import com.huazie.frame.db.common.util.EntityUtils;
-import org.apache.commons.lang.ArrayUtils;
 
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -166,10 +166,8 @@ public class SelectSqlTemplate<T> extends SqlTemplate<T> {
      */
     private Column[] check(final Column[] entityCols, String[] cols, Map<String, String> whereMap, String condStr) throws CommonException {
 
-        if (ArrayUtils.isEmpty(cols)) {
-            // 请检查SQL模板参数【id="{0}"】配置(属性【key="{1}"】中的【value】不能为空)
-            ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000013", paramId, SqlTemplateEnum.COLUMNS.getKey());
-        }
+        // 请检查SQL模板参数【id="{0}"】配置(属性【key="{1}"】中的【value】不能为空)
+        ArrayUtils.checkEmpty(cols, SQT_CLASS, "ERROR-DB-SQT0000000013", paramId, SqlTemplateEnum.COLUMNS.getKey());
 
         if (MapUtils.isEmpty(whereMap) && !PatternMatcherUtils.matches(EQUAL_EXP, condStr, Pattern.CASE_INSENSITIVE)) {
             // 请检查SQL模板参数【id="{0}"】配置(属性【key="{1}"】中的【value】不能为空)

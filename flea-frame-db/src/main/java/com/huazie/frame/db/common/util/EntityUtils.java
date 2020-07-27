@@ -248,16 +248,14 @@ public class EntityUtils {
     public static SplitTable getSplitTable(Object entity) throws CommonException {
         // 从实体类上获取表名
         String tableName = getTableName(entity);
-        if (StringUtils.isBlank(tableName)) {
-            // 请检查初始实体类(其上的注解@Table或者@FleaTable对应的表名不能为空)
-            ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-SQT0000000012");
-        }
+        // 请检查初始实体类(其上的注解@Table或者@FleaTable对应的表名不能为空)
+        StringUtils.checkBlank(tableName, DaoException.class, "ERROR-DB-SQT0000000012");
+
         // 获取实体类T的对象的属性列相关信息
         Column[] entityCols = toColumnsArray(entity);
-        if (ArrayUtils.isEmpty(entityCols)) {
-            // 请检查初始实体类（实体类的属性列相关信息不存在）
-            ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-SQT0000000016");
-        }
+        // 请检查初始实体类（实体类的属性列相关信息不存在）
+        ArrayUtils.checkEmpty(entityCols, DaoException.class, "ERROR-DB-SQT0000000016");
+
         return TableSplitHelper.getSplitTable(tableName, entityCols);
     }
 

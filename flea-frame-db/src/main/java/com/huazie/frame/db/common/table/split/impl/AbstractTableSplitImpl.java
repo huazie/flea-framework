@@ -42,10 +42,8 @@ public abstract class AbstractTableSplitImpl implements ITableSplit {
             // 分表属性列必须是日期类型
             ExceptionUtils.throwCommonException(TableSplitException.class, "ERROR-DB-TSP0000000002");
         }
-        if (StringUtils.isBlank(tSplitPrefix)) {
-            // 获取【{0}】分表后缀异常
-            ExceptionUtils.throwCommonException(TableSplitException.class, "ERROR-DB-TSP0000000001", dateFormatEnum.getFormat());
-        }
+        // 获取【{0}】分表后缀异常
+        StringUtils.checkBlank(tSplitPrefix, TableSplitException.class, "ERROR-DB-TSP0000000001", dateFormatEnum.getFormat());
         return tSplitPrefix;
     }
 

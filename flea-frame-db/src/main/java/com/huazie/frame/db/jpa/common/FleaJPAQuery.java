@@ -1137,10 +1137,10 @@ public final class FleaJPAQuery implements Closeable {
      * @since 1.0.0
      */
     private TypedQuery createQuery(boolean isSingle) throws CommonException {
-        if (ObjectUtils.isEmpty(sourceClazz)) {
-            // 查询非法，实体类类对象为空
-            ExceptionUtils.throwCommonException(CommonException.class, "ERROR-DB-DAO0000000008");
-        }
+
+        // 查询非法，实体类类对象为空
+        ObjectUtils.checkEmpty(sourceClazz, CommonException.class, "ERROR-DB-DAO0000000008");
+
         if (!isSingle) {
             criteriaQuery.select(root);
         }
@@ -1167,10 +1167,8 @@ public final class FleaJPAQuery implements Closeable {
      * @since 1.0.0
      */
     private void checkAttrName(String attrName) throws CommonException {
-        if (StringUtils.isBlank(attrName)) {
-            // 属性列名不能为空
-            ExceptionUtils.throwCommonException(CommonException.class, "ERROR-DB-DAO0000000001");
-        }
+        // 属性列名不能为空
+        StringUtils.checkBlank(attrName, CommonException.class, "ERROR-DB-DAO0000000001");
     }
 
     /**

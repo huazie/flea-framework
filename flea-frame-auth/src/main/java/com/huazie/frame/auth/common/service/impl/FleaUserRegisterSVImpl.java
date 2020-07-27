@@ -60,7 +60,7 @@ public class FleaUserRegisterSVImpl implements IFleaUserRegisterSV {
     }
 
     @Override
-    @Transactional("fleaAuthTransactionManager")
+    @Transactional(value = "fleaAuthTransactionManager", rollbackFor = Exception.class)
     public FleaAccount register(FleaUserRegisterPOJO fleaUserRegisterPOJO) throws CommonException {
 
         // 校验用户注册信息对象是否为空

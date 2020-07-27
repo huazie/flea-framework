@@ -102,10 +102,8 @@ public class JerseyXmlDigesterHelper {
 
         try (InputStream input = IOUtils.getInputStreamFromClassPath(fileName)) {
 
-            if (ObjectUtils.isEmpty(input)) {
-                // 该路径下【0】找不到指定配置文件
-                ExceptionUtils.throwCommonException(FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000001", fileName);
-            }
+            // 该路径下【0】找不到指定配置文件
+            ObjectUtils.checkEmpty(input, FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000001", fileName);
 
             obj = XmlDigesterHelper.parse(input, newFleaJerseyFilterFileDigester(), Jersey.class);
 

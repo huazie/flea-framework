@@ -1,7 +1,6 @@
 package com.huazie.frame.db.common.sql.template.impl;
 
 import com.huazie.frame.common.exception.CommonException;
-import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.MapUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.sql.template.SqlTemplate;
@@ -135,10 +134,8 @@ public class DeleteSqlTemplate<T> extends SqlTemplate<T> {
      */
     private Column[] check(final Column[] entityCols, Map<String, String> whereMap) throws CommonException {
 
-        if (MapUtils.isEmpty(whereMap)) {
-            // 请检查SQL模板参数【id="{0}"】配置(属性【key="{1}"】中的【value】不能为空)
-            ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000013", paramId, SqlTemplateEnum.CONDITIONS.getKey());
-        }
+        // 请检查SQL模板参数【id="{0}"】配置(属性【key="{1}"】中的【value】不能为空)
+        MapUtils.checkEmpty(whereMap, SQT_CLASS, "ERROR-DB-SQT0000000013", paramId, SqlTemplateEnum.CONDITIONS.getKey());
 
         // 校验WHERE子句中的属性列和属性变量是否一一对应，并获取WHERE子句相关的属性列集合
         Column[] whereCols = checkOneByOne(entityCols, whereMap, SqlTemplateEnum.CONDITIONS);
