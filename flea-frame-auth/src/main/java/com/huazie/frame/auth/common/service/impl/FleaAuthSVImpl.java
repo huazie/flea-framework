@@ -16,7 +16,6 @@ import com.huazie.frame.common.IFleaUser;
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.object.FleaObjectFactory;
 import com.huazie.frame.common.util.DateUtils;
-import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.HttpUtils;
 import com.huazie.frame.common.util.MapUtils;
 import com.huazie.frame.common.util.ObjectUtils;
@@ -162,25 +161,20 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
 
         // 根据操作帐户编号accountId查询帐户信息
         FleaAccount fleaAccount = fleaAccountSV.query(accountId);
-        if (ObjectUtils.isEmpty(fleaAccount)) {
-            // 账户【account_id = {0}】不存在！
-            ExceptionUtils.throwCommonException(FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000006", accountId);
-        }
+        // 账户【account_id = {0}】不存在！
+        ObjectUtils.checkEmpty(fleaAccount, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000006", accountId);
 
         Long userId = fleaAccount.getUserId();
         // 根据操作用户编号userId查询用户信息
         FleaUser fleaUser = fleaUserSV.query(userId);
-        if (ObjectUtils.isEmpty(fleaUser)) {
-            // 用户【user_id = {0}】不存在！
-            ExceptionUtils.throwCommonException(FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000007", userId);
-        }
+        // 用户【user_id = {0}】不存在！
+        ObjectUtils.checkEmpty(fleaUser, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000007", userId);
 
         Long groupId = fleaUser.getGroupId(); // 获取用户组编号
         if (CommonConstants.NumeralConstants.MINUS_ONE != groupId) { // 用户关联了用户组
             // 获取用户组关联的角色
 
         }
-
 
 
         return null;

@@ -81,47 +81,36 @@ public abstract class FleaRequest implements Request {
 
         // 客户端编码
         String clientCode = config.getClientCode();
-        if (StringUtils.isBlank(clientCode)) {
-            // 【{0}】未配置，请检查！！！
-            ExceptionUtils.throwCommonException(FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000008", RequestConfigEnum.CLIENT_CODE.getKey());
-        }
+        // 【{0}】未配置，请检查！！！
+        StringUtils.checkBlank(clientCode, FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000008", RequestConfigEnum.CLIENT_CODE.getKey());
 
         // 业务入参
         Object input = config.getInputObj();
-        if (ObjectUtils.isEmpty(input)) {
-            // 【{0}】未配置，请检查！！！
-            ExceptionUtils.throwCommonException(FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000008", RequestConfigEnum.INPUT_OBJECT.getKey());
-        }
+        // 【{0}】未配置，请检查！！！
+        ObjectUtils.checkEmpty(input, FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000008", RequestConfigEnum.INPUT_OBJECT.getKey());
 
         // 资源地址
         String resourceUrl = config.getResourceUrl();
-        if (StringUtils.isBlank(resourceUrl)) {
-            // 【{0}】未配置，请检查！！！
-            ExceptionUtils.throwCommonException(FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000008", RequestConfigEnum.RESOURCE_URL.getKey());
-        }
+        // 【{0}】未配置，请检查！！！
+        StringUtils.checkBlank(resourceUrl, FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000008", RequestConfigEnum.RESOURCE_URL.getKey());
 
         // 资源编码
         String resourceCode = config.getResourceCode();
-        if (StringUtils.isBlank(resourceCode)) {
-            // 【{0}】未配置，请检查！！！
-            ExceptionUtils.throwCommonException(FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000008", RequestConfigEnum.RESOURCE_CODE.getKey());
-        }
+        // 【{0}】未配置，请检查！！！
+        StringUtils.checkBlank(resourceCode, FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000008", RequestConfigEnum.RESOURCE_CODE.getKey());
 
         // 服务编码
         String serviceCode = config.getServiceCode();
-        if (StringUtils.isBlank(serviceCode)) {
-            // 【{0}】未配置，请检查！！！
-            ExceptionUtils.throwCommonException(FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000008", RequestConfigEnum.SERVICE_CODE.getKey());
-        }
+        // 【{0}】未配置，请检查！！！
+        StringUtils.checkBlank(serviceCode, FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000008", RequestConfigEnum.SERVICE_CODE.getKey());
 
         // 业务入参
         String clientInput = config.getClientInput();
         Class inputClazz = ReflectUtils.forName(clientInput);
-        if (ObjectUtils.isEmpty(inputClazz)) {
-            // 请检查客户端配置【client_code = {0}】: 【{1} = {2}】非法
-            ExceptionUtils.throwCommonException(FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000010", clientCode,
-                    RequestConfigEnum.CLIENT_INPUT.getKey(), clientInput);
-        }
+        // 请检查客户端配置【client_code = {0}】: 【{1} = {2}】非法
+        ObjectUtils.checkEmpty(inputClazz, FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000010", clientCode,
+                RequestConfigEnum.CLIENT_INPUT.getKey(), clientInput);
+
         if (!inputClazz.isInstance(input)) {
             // 请检查客户端配置【client_code = {0}】：配置的入参【client_input = {1}】类型和实际传入的入参【{2}】类型不一致
             ExceptionUtils.throwCommonException(FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000004", clientCode,
@@ -131,11 +120,10 @@ public abstract class FleaRequest implements Request {
         // 业务出参
         String clientOutput = config.getClientOutput();
         Class mClazz = ReflectUtils.forName(clientOutput);
-        if (ObjectUtils.isEmpty(mClazz)) {
-            // 请检查客户端配置【client_code = {0}】: 【{1} = {2}】非法
-            ExceptionUtils.throwCommonException(FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000010", clientCode,
-                    RequestConfigEnum.CLIENT_OUTPUT.getKey(), clientOutput);
-        }
+        // 请检查客户端配置【client_code = {0}】: 【{1} = {2}】非法
+        ObjectUtils.checkEmpty(mClazz, FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000010", clientCode,
+                RequestConfigEnum.CLIENT_OUTPUT.getKey(), clientOutput);
+
         if (!mClazz.equals(clazz)) {
             // 请检查客户端配置【client_code = {0}】：配置的出参【client_output = {1}】类型和实际需要返回的出参【{2}】类型不一致
             ExceptionUtils.throwCommonException(FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000007", clientCode, clientOutput, clazz.getName());
@@ -150,22 +138,16 @@ public abstract class FleaRequest implements Request {
         }
 
         FleaJerseyResponse response = request(target, request);
-        if (ObjectUtils.isEmpty(response)) {
-            // 资源服务请求异常：响应报文为空
-            ExceptionUtils.throwCommonException(FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000005");
-        }
+        // 资源服务请求异常：响应报文为空
+        ObjectUtils.checkEmpty(response, FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000005");
 
         FleaJerseyResponseData responseData = response.getResponseData();
-        if (ObjectUtils.isEmpty(responseData)) {
-            // 资源服务请求异常：响应报文为空
-            ExceptionUtils.throwCommonException(FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000005");
-        }
+        // 资源服务请求异常：响应报文为空
+        ObjectUtils.checkEmpty(responseData, FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000005");
 
         ResponsePublicData responsePublicData = responseData.getPublicData();
-        if (ObjectUtils.isEmpty(responsePublicData)) {
-            // 资源服务请求异常：响应公共报文为空
-            ExceptionUtils.throwCommonException(FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000006");
-        }
+        // 资源服务请求异常：响应公共报文为空
+        ObjectUtils.checkEmpty(responsePublicData, FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000006");
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FleaRequest##doRequest(Class<T>) FleaJerseyResponse = \n{}", JABXUtils.toXml(response, true));
@@ -207,10 +189,8 @@ public abstract class FleaRequest implements Request {
     protected MediaType toMediaType() throws CommonException {
         // 媒体类型
         String mediaTypeStr = config.getMediaType();
-        if (StringUtils.isBlank(mediaTypeStr)) {
-            // 【{0}】未配置，请检查！！！
-            ExceptionUtils.throwCommonException(FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000008", RequestConfigEnum.MEDIA9_TYPE.getKey());
-        }
+        // 【{0}】未配置，请检查！！！
+        StringUtils.checkBlank(mediaTypeStr, FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000008", RequestConfigEnum.MEDIA_TYPE.getKey());
 
         MediaType mediaType = null;
 
@@ -222,7 +202,7 @@ public abstract class FleaRequest implements Request {
             }
             // 请检查客户端配置【client_code = {0}】: 【{1} = {2}】非法
             ExceptionUtils.throwCommonException(FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000010", config.getClientCode(),
-                    RequestConfigEnum.MEDIA9_TYPE.getKey(), mediaTypeStr);
+                    RequestConfigEnum.MEDIA_TYPE.getKey(), mediaTypeStr);
         }
         return mediaType;
     }

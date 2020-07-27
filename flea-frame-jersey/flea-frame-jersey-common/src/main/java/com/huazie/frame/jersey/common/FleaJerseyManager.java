@@ -2,7 +2,6 @@ package com.huazie.frame.jersey.common;
 
 import com.huazie.frame.common.FleaFrameManager;
 import com.huazie.frame.common.exception.CommonException;
-import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.jersey.common.data.FleaFileObject;
@@ -28,7 +27,7 @@ public class FleaJerseyManager {
 
     private static volatile FleaJerseyManager manager;
 
-    private static ThreadLocal<FleaJerseyContext> sContext = new ThreadLocal<FleaJerseyContext>(); // Flea Jersey 上下文
+    private static ThreadLocal<FleaJerseyContext> sContext = new ThreadLocal<>(); // Flea Jersey 上下文
 
     /**
      * <p> 构造器私有，只能通过getManager()获取实例 </p>
@@ -139,31 +138,23 @@ public class FleaJerseyManager {
      */
     public FormDataBodyPart getFormDataBodyPart(String formDataKey) throws CommonException {
 
-        if (StringUtils.isBlank(formDataKey)) {
-            // {0}不能为空，请检查
-            ExceptionUtils.throwCommonException(FleaJerseyCommonException.class, "ERROR-JERSEY-COMMON0000000001", "【Form Data Key】");
-        }
+        // {0}不能为空，请检查
+        StringUtils.checkBlank(formDataKey, FleaJerseyCommonException.class, "ERROR-JERSEY-COMMON0000000001", "【Form Data Key】");
 
         // 获取文件上下文信息
         FleaJerseyFileContext fleaJerseyFileContext = getFileContext();
-        if (ObjectUtils.isEmpty(fleaJerseyFileContext)) {
-            // {0}获取失败，请检查
-            ExceptionUtils.throwCommonException(FleaJerseyCommonException.class, "ERROR-JERSEY-COMMON0000000000", "【FleaJerseyFileContext】");
-        }
+        // {0}获取失败，请检查
+        ObjectUtils.checkEmpty(fleaJerseyFileContext, FleaJerseyCommonException.class, "ERROR-JERSEY-COMMON0000000000", "【FleaJerseyFileContext】");
 
         // 获取表单数据
         FormDataMultiPart formDataMultiPart = fleaJerseyFileContext.getFormDataMultiPart();
-        if (ObjectUtils.isEmpty(formDataMultiPart)) {
-            // {0}获取失败，请检查
-            ExceptionUtils.throwCommonException(FleaJerseyCommonException.class, "ERROR-JERSEY-COMMON0000000000", "【FormDataMultiPart】");
-        }
+        // {0}获取失败，请检查
+        ObjectUtils.checkEmpty(formDataMultiPart, FleaJerseyCommonException.class, "ERROR-JERSEY-COMMON0000000000", "【FormDataMultiPart】");
 
         // 获取文件表单数据内容
         FormDataBodyPart fileFormDataBodyPart = formDataMultiPart.getField(formDataKey);
-        if (ObjectUtils.isEmpty(fileFormDataBodyPart)) {
-            // {0}获取失败，请检查
-            ExceptionUtils.throwCommonException(FleaJerseyCommonException.class, "ERROR-JERSEY-COMMON0000000000", "【FILE = FormDataBodyPart】");
-        }
+        // {0}获取失败，请检查
+        ObjectUtils.checkEmpty(fileFormDataBodyPart, FleaJerseyCommonException.class, "ERROR-JERSEY-COMMON0000000000", "【FILE = FormDataBodyPart】");
 
         return fileFormDataBodyPart;
     }
@@ -202,15 +193,11 @@ public class FleaJerseyManager {
      */
     public <T> void addFormDataBodyPart(T formDataObj, String formDataKey, MediaType formDataMediaType) throws CommonException {
 
-        if (ObjectUtils.isEmpty(formDataObj)) {
-            // {0}不能为空，请检查
-            ExceptionUtils.throwCommonException(FleaJerseyCommonException.class, "ERROR-JERSEY-COMMON0000000001", "【Form Data】");
-        }
+        // {0}不能为空，请检查
+        ObjectUtils.checkEmpty(formDataObj, FleaJerseyCommonException.class, "ERROR-JERSEY-COMMON0000000001", "【Form Data】");
 
-        if (StringUtils.isBlank(formDataKey)) {
-            // {0}不能为空，请检查
-            ExceptionUtils.throwCommonException(FleaJerseyCommonException.class, "ERROR-JERSEY-COMMON0000000001", "【Form Data Key】");
-        }
+        // {0}不能为空，请检查
+        StringUtils.checkBlank(formDataKey, FleaJerseyCommonException.class, "ERROR-JERSEY-COMMON0000000001", "【Form Data Key】");
 
         // 获取文件上下文信息
         FleaJerseyFileContext fileContext = getFileContext();

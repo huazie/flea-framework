@@ -3,7 +3,6 @@ package com.huazie.frame.db.jdbc;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.CollectionUtils;
-import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.exception.DaoException;
@@ -506,7 +505,7 @@ public class FleaJDBCHelper {
 
         Connection connection = FleaJDBCConfig.getConfig().getConnection();
         // 无法获取数据库连接
-        ObjectUtils.checkEmpty(connection, DaoException.class, "ERROR-DB-DAO0000000016");
+        ObjectUtils.checkEmpty(connection, DaoException.class, "ERROR-DB-DAO0000000014");
 
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
 

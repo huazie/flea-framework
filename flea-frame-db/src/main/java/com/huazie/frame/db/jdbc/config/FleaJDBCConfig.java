@@ -4,7 +4,6 @@ import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.FleaConfigManager;
 import com.huazie.frame.common.FleaFrameManager;
 import com.huazie.frame.common.util.ArrayUtils;
-import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.DBConstants;
@@ -97,7 +96,7 @@ public class FleaJDBCConfig {
         try {
 
             // 请正确初始化数据库管理系统和数据库（或数据库用户）
-            ObjectUtils.checkEmpty(fleaDBUnit, DaoException.class, "ERROR-DB-DAO0000000015");
+            ObjectUtils.checkEmpty(fleaDBUnit, DaoException.class, "ERROR-DB-DAO0000000013");
 
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("JDBCConfig##getConnection() 数据库配置键名：{}", dbConfigKey);

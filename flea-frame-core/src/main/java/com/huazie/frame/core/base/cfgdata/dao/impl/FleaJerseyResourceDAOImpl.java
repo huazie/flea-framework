@@ -55,7 +55,7 @@ public class FleaJerseyResourceDAOImpl extends FleaConfigDAOImpl<FleaJerseyResou
         List<String> resPackageList = null;
         // 遍历资源
         if (CollectionUtils.isNotEmpty(resourceList)) {
-            resPackageList = new ArrayList<String>();
+            resPackageList = new ArrayList<>();
             for (FleaJerseyResource resource : resourceList) {
                 if (ObjectUtils.isNotEmpty(resource)) {
                     // 获取资源包名

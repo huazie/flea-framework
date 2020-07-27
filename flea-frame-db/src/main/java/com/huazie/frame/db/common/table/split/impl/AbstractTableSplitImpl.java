@@ -57,15 +57,14 @@ public abstract class AbstractTableSplitImpl implements ITableSplit {
      * @since 1.0.0
      */
     protected String convert(Object tableSplitColumn, int len) throws CommonException {
-        if (ObjectUtils.isEmpty(tableSplitColumn)) {
-            // 分表属性列值不能为空
-            ExceptionUtils.throwCommonException(TableSplitException.class, "ERROR-DB-TSP0000000003");
-        }
+
+        // 分表属性列值不能为空
+        ObjectUtils.checkEmpty(tableSplitColumn, TableSplitException.class, "ERROR-DB-TSP0000000003");
+
         String tSplitCol = tableSplitColumn.toString();
-        if (StringUtils.isBlank(tSplitCol)) {
-            // 分表属性列值不能为空
-            ExceptionUtils.throwCommonException(TableSplitException.class, "ERROR-DB-TSP0000000003");
-        }
+        // 分表属性列值不能为空
+        StringUtils.checkBlank(tSplitCol, TableSplitException.class, "ERROR-DB-TSP0000000003");
+
         String tSplitPrefix = StringUtils.subStrLast(tSplitCol, len);
         return tSplitPrefix.toLowerCase();
     }

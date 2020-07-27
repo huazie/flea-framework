@@ -1,7 +1,6 @@
 package com.huazie.frame.jersey.server.filter;
 
 import com.huazie.frame.common.util.CollectionUtils;
-import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.ReflectUtils;
 import com.huazie.frame.common.util.StringUtils;
@@ -84,10 +83,8 @@ public class FleaJerseyFilterChain {
             LOGGER.debug("FleaJerseyFilterChain##doFilter(String) RequestData = {}", requestData);
         }
         try {
-            if (StringUtils.isBlank(requestData)) {
-                // 请求报文不能为空
-                ExceptionUtils.throwCommonException(FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000003");
-            }
+            // 请求报文不能为空
+            StringUtils.checkBlank(requestData, FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000003");
             FleaJerseyRequest request = JABXUtils.fromXml(requestData, FleaJerseyRequest.class);
             response = doFilter(request, response);
         } catch (Exception e) {

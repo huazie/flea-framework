@@ -64,10 +64,8 @@ public class RequestFactory {
 
         // 获取请求方式
         String requestMode = config.getRequestMode();
-        if (StringUtils.isBlank(requestMode)) {
-            // 【{0}】未配置，请检查！！！
-            ExceptionUtils.throwCommonException(FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000008", RequestConfigEnum.REQUEST_MODE.getKey());
-        }
+        // 【{0}】未配置，请检查！！！
+        StringUtils.checkBlank(requestMode, FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000008", RequestConfigEnum.REQUEST_MODE.getKey());
 
         // 获取请求模式类型枚举
         RequestModeEnum requestModeEnum = null;
