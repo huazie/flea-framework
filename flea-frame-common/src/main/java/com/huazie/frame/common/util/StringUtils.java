@@ -361,11 +361,12 @@ public class StringUtils {
      * @since 1.0.0
      */
     public static Map<String, String> split(String[] values, String placeholder) {
-        Map<String, String> map = null;
+
         if (ArrayUtils.isEmpty(values) || isBlank(placeholder)) {
-            return map;
+            return null;
         }
-        map = new HashMap<>();
+
+        Map<String, String> map = new HashMap<>();
         for (String str : values) {
             String[] ss = split(str, placeholder);
             if (ss.length == 2) {
@@ -384,6 +385,7 @@ public class StringUtils {
      * @since 1.0.0
      */
     public static String[] split(String value, String... placeholders) {
+
         if (isBlank(value) || ArrayUtils.isEmpty(placeholders)) {
             return null;
         }

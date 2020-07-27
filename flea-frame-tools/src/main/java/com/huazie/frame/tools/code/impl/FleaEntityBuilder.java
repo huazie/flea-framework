@@ -177,7 +177,7 @@ public class FleaEntityBuilder extends FleaCodeBuilder {
         String methodContent = "";
         if (ObjectUtils.isNotEmpty(column)) {
             methodContent = IOUtils.toNativeStringFromResource("flea/code/entity/MethodGetAndSet.code");
-            Map<String, Object> param = new HashMap<String, Object>();
+            Map<String, Object> param = new HashMap<>();
             param.put(ToolsConstants.CodeConstants.VAR_TYPE, column.getAttrType().getSimpleName());
             param.put(ToolsConstants.CodeConstants.VARIABLE, column.getAttrName());
             param.put(ToolsConstants.CodeConstants.VARIABLE_1, StringUtils.toUpperCaseInitial(column.getAttrName()));

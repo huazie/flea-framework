@@ -97,7 +97,7 @@ public class MemCachedConfig {
                         }
 
                         String allWeight = PropertiesUtil.getStringValue(prop, CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_WEIGHT);
-                        List<Integer> weightList = new ArrayList<Integer>();
+                        List<Integer> weightList = new ArrayList<>();
                         if (StringUtils.isNotBlank(allWeight)) {
                             String[] weightStrArr = StringUtils.split(allWeight, CommonConstants.SymbolConstants.COMMA);
                             if (ArrayUtils.isSameLength(serverArr, weightStrArr)) {

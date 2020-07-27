@@ -136,10 +136,8 @@ public class EntityUtils {
                     Method method = ReflectUtils.getObjectAttrMethod(entity, attrName);
                     if (ObjectUtils.isNotEmpty(method)) {
                         annotations = method.getAnnotations();// 获取方法上的注解
-                        if (ArrayUtils.isEmpty(annotations)) {// 表示方法上没有注解
-                            // 实体类上 [{0}] 没有注解
-                            ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000014", entity.getClass().getSimpleName());
-                        }
+                        // 实体类上 [{0}] 没有注解
+                        ArrayUtils.checkEmpty(annotations, DaoException.class, "ERROR-DB-DAO0000000012", entity.getClass().getSimpleName());
                     }
                 }
                 // 遍历属性或get方法上的注解（注解一般要么全部写在属性上，要么全部写在get方法上）
@@ -150,16 +148,14 @@ public class EntityUtils {
                             if (long.class == fields[i].getType() || Long.class == fields[i].getType()) {// 该实体的主键是long类型
                                 if (Long.valueOf(value.toString()) <= 0) {
                                     // 主键字段必须是正整数
-                                    ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000009");
+                                    ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000007");
                                 }
                             } else if (String.class == fields[i].getType()) {// 该实体的主键是String类型
-                                if (ObjectUtils.isEmpty(value)) {
-                                    // 主键字段不能为空
-                                    ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000010");
-                                }
+                                // 主键字段不能为空
+                                ObjectUtils.checkEmpty(value, DaoException.class, "ERROR-DB-DAO0000000008");
                             } else {
                                 // 主键必须是long(Long) 或 String
-                                ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000011");
+                                ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000009");
                             }
                         }
                         isPrimarykey = true;// true表示该字段是主键

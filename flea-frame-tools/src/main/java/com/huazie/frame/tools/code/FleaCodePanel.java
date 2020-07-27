@@ -603,21 +603,20 @@ public class FleaCodePanel extends JPanel implements ActionListener, ItemListene
         param.put(ToolsConstants.CodeConstants.DB_SYSTEM_NAME, dbSystemName);
         // 获取数据库名
         String dbName = dbNameTextField.getText();
-        if (StringUtils.isBlank(dbName)) {
-            throw new ToolsException("COMMON_I18N_00013", FleaI18nHelper.i18nForCommon("COMMON_CODE_00003"));
-        }
+        // 大佬，请您先输入{0}内容哦~
+        StringUtils.checkBlank(dbName, ToolsException.class, "COMMON_I18N_00013", FleaI18nHelper.i18nForCommon("COMMON_CODE_00003"));
         param.put(ToolsConstants.CodeConstants.DB_NAME, dbName);
+
         // 获取表名
         String tableName = tableNameTextField.getText();
-        if (StringUtils.isBlank(tableName)) {
-            throw new ToolsException("COMMON_I18N_00013", FleaI18nHelper.i18nForCommon("COMMON_CODE_00004"));
-        }
+        // 大佬，请您先输入{0}内容哦~
+        StringUtils.checkBlank(tableName, ToolsException.class, "COMMON_I18N_00013", FleaI18nHelper.i18nForCommon("COMMON_CODE_00004"));
         param.put(ToolsConstants.CodeConstants.TABLE_NAME, tableName);
+
         // 获取表名描述
         String tableNameDesc = tableNameDescTextField.getText();
-        if (StringUtils.isBlank(tableNameDesc)) {
-            throw new ToolsException("COMMON_I18N_00013", FleaI18nHelper.i18nForCommon("COMMON_CODE_00005"));
-        }
+        // 大佬，请您先输入{0}内容哦~
+        StringUtils.checkBlank(tableNameDesc, ToolsException.class, "COMMON_I18N_00013", FleaI18nHelper.i18nForCommon("COMMON_CODE_00005"));
         param.put(ToolsConstants.CodeConstants.TABLE_DESC, tableNameDesc);
 
         // 2主键生成策略配置
@@ -643,55 +642,52 @@ public class FleaCodePanel extends JPanel implements ActionListener, ItemListene
         // 3. 代码配置
         // 获取作者
         String author = authorTextField.getText();
-        if (StringUtils.isBlank(author)) {
-            throw new ToolsException("COMMON_I18N_00013", FleaI18nHelper.i18nForCommon("COMMON_CODE_00007"));
-        }
+        // 大佬，请您先输入{0}内容哦~
+        StringUtils.checkBlank(author, ToolsException.class, "COMMON_I18N_00013", FleaI18nHelper.i18nForCommon("COMMON_CODE_00007"));
         param.put(ToolsConstants.CodeConstants.AUTHOR, author);
+
         // 获取版本
         String version = versionTextField.getText();
-        if (StringUtils.isBlank(version)) {
-            throw new ToolsException("COMMON_I18N_00013", FleaI18nHelper.i18nForCommon("COMMON_CODE_00008"));
-        }
+        // 大佬，请您先输入{0}内容哦~
+        StringUtils.checkBlank(version, ToolsException.class, "COMMON_I18N_00013", FleaI18nHelper.i18nForCommon("COMMON_CODE_00008"));
         param.put(ToolsConstants.CodeConstants.VERSION, version);
+
         // 获取根目录
         String rootPath = rootPathTextField.getText();
-        if (StringUtils.isBlank(rootPath)) {
-            throw new ToolsException("COMMON_I18N_00013", FleaI18nHelper.i18nForCommon("COMMON_CODE_00009"));
-        }
+        // 大佬，请您先输入{0}内容哦~
+        StringUtils.checkBlank(rootPath, ToolsException.class, "COMMON_I18N_00013", FleaI18nHelper.i18nForCommon("COMMON_CODE_00009"));
         param.put(ToolsConstants.CodeConstants.ROOT_PACKAGE, rootPath);
+
         // 获取代码包名
         String codePackage = codePackageTextField.getText();
-        if (StringUtils.isBlank(codePackage)) {
-            throw new ToolsException("COMMON_I18N_00013", FleaI18nHelper.i18nForCommon("COMMON_CODE_00010"));
-        }
+        // 大佬，请您先输入{0}内容哦~
+        StringUtils.checkBlank(codePackage, ToolsException.class, "COMMON_I18N_00013", FleaI18nHelper.i18nForCommon("COMMON_CODE_00010"));
         param.put(ToolsConstants.CodeConstants.CODE_PACKAGE, codePackage);
 
         // 4. 持久化单元配置
         String puDaoClassPackage = puDaoPackageTextField.getText();
-        if (StringUtils.isBlank(puDaoClassPackage)) {
-            throw new ToolsException("COMMON_I18N_00013", FleaI18nHelper.i18nForCommon("COMMON_CODE_00011") + FleaI18nHelper.i18nForCommon("COMMON_CODE_00010"));
-        }
+        // 大佬，请您先输入{0}内容哦~
+        StringUtils.checkBlank(puDaoClassPackage, ToolsException.class, "COMMON_I18N_00013", FleaI18nHelper.i18nForCommon("COMMON_CODE_00011") + FleaI18nHelper.i18nForCommon("COMMON_CODE_00010"));
         param.put(ToolsConstants.CodeConstants.FLEA_PERSISTENCE_UNIT_DAO_CLASS_PACKAGE, puDaoClassPackage);
+
         // 获取单选按钮
         if (btnGroup.isSelected(newRadioButton.getModel())) { // 选择新建
             // 持久化单元名
             String fleaPersistenceUnitName = puNameTextField.getText();
-            if (StringUtils.isBlank(fleaPersistenceUnitName)) {
-                throw new ToolsException("COMMON_I18N_00013", FleaI18nHelper.i18nForCommon("COMMON_CODE_00014"));
-            }
+            // 大佬，请您先输入{0}内容哦~
+            StringUtils.checkBlank(fleaPersistenceUnitName, ToolsException.class, "COMMON_I18N_00013", FleaI18nHelper.i18nForCommon("COMMON_CODE_00014"));
             param.put(ToolsConstants.CodeConstants.FLEA_PERSISTENCE_UNIT_NAME, fleaPersistenceUnitName);
+
             // 持久化单元别名
             String fleaPersistenceUnitAliasName = puAliasNameTextField.getText();
-            if (StringUtils.isBlank(fleaPersistenceUnitAliasName)) {
-                throw new ToolsException("COMMON_I18N_00013", FleaI18nHelper.i18nForCommon("COMMON_CODE_00015"));
-            }
+            // 大佬，请您先输入{0}内容哦~
+            StringUtils.checkBlank(fleaPersistenceUnitAliasName, ToolsException.class, "COMMON_I18N_00013", FleaI18nHelper.i18nForCommon("COMMON_CODE_00015"));
             param.put(ToolsConstants.CodeConstants.FLEA_PERSISTENCE_UNIT_ALIAS_NAME, fleaPersistenceUnitAliasName);
         } else { // 选择现有
             // 持久化单元DAO层实现类名
             String fleaPersistenceUnitDaoClassName = puDaoClassNameTextField.getText();
-            if (StringUtils.isBlank(fleaPersistenceUnitDaoClassName)) {
-                throw new ToolsException("COMMON_I18N_00013", FleaI18nHelper.i18nForCommon("COMMON_CODE_00016"));
-            }
+            // 大佬，请您先输入{0}内容哦~
+            StringUtils.checkBlank(fleaPersistenceUnitDaoClassName, ToolsException.class, "COMMON_I18N_00013", FleaI18nHelper.i18nForCommon("COMMON_CODE_00016"));
             param.put(ToolsConstants.CodeConstants.FLEA_PERSISTENCE_UNIT_DAO_CLASS_NAME, fleaPersistenceUnitDaoClassName);
         }
 

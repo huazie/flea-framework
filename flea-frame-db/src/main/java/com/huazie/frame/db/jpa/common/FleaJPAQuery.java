@@ -273,10 +273,10 @@ public final class FleaJPAQuery implements Closeable {
      * @since 1.0.0
      */
     private FleaJPAQuery newEqualExpression(Set<String> attrNames, boolean isEqual) throws CommonException {
-        if (CollectionUtils.isEmpty(attrNames)) {
-            // 条件参数Map不能为空
-            ExceptionUtils.throwCommonException(CommonException.class, "ERROR-DB-DAO0000000003");
-        }
+
+        // 【{0}】不能为空
+        CollectionUtils.checkEmpty(attrNames, CommonException.class, "ERROR-DB-DAO0000000002", "attrNames");
+
         if (LOGGER.isDebugEnabled()) {
             if (isEqual) {
                 LOGGER.debug("FMJPAQuery##equal(Set<String> attrNames) -->> attrNames = {}", attrNames);
@@ -311,10 +311,10 @@ public final class FleaJPAQuery implements Closeable {
      * @since 1.0.0
      */
     private FleaJPAQuery newEqualExpression(Map<String, Object> paramMap, boolean isEqual) throws CommonException {
-        if (MapUtils.isEmpty(paramMap)) {
-            // 条件参数Map不能为空
-            ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000003");
-        }
+
+        // 【{0}】不能为空
+        MapUtils.checkEmpty(paramMap, DaoException.class, "ERROR-DB-DAO0000000002", "paramMap");
+
         if (LOGGER.isDebugEnabled()) {
             if (isEqual) {
                 LOGGER.debug("FMJPAQuery##equal(Map<String, Object>) -->> paramMap = {}", paramMap);
@@ -428,9 +428,10 @@ public final class FleaJPAQuery implements Closeable {
         checkAttrName(attrName);
 
         if (CollectionUtils.isEmpty(value)) {
-            // 条件参数Collection不能为空
-            ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000004");
+            // 不做处理，直接返回即可
+            return this;
         }
+
         if (LOGGER.isDebugEnabled()) {
             if (isIn) {
                 LOGGER.debug("FMJPAQuery##in(attrName, value) -->> AttrName = {}, Value = {}", attrName, value);
@@ -655,11 +656,11 @@ public final class FleaJPAQuery implements Closeable {
 
         if (ObjectUtils.isEmpty(startTime) || ObjectUtils.isEmpty(endTime)) {
             // 开始时间或结束时间为空
-            ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000005");
+            ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000003");
         }
         if (startTime.after(endTime)) {
             // 开始时间必须小于结束时间
-            ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000006");
+            ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000004");
         }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FMJPAQuery##between(attrName, startTime, endTime) -->> AttrName = {}, StartTime = {}, EndTime = {}", attrName, startTime, endTime);
@@ -1000,7 +1001,7 @@ public final class FleaJPAQuery implements Closeable {
             orders.add(criteriaBuilder.desc(root.get(attrName)));
         } else {
             // 排序关键字【{0}】非法, 必须是【asc, ASC】 或【desc, DESC】
-            ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000007", orderBy);
+            ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000005", orderBy);
         }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FMJPAQuery##addOrderby(attrName, orderBy) -->> AttrName = {}, OrderBy = {}", attrName, orderBy);
@@ -1139,7 +1140,7 @@ public final class FleaJPAQuery implements Closeable {
     private TypedQuery createQuery(boolean isSingle) throws CommonException {
 
         // 查询非法，实体类类对象为空
-        ObjectUtils.checkEmpty(sourceClazz, CommonException.class, "ERROR-DB-DAO0000000008");
+        ObjectUtils.checkEmpty(sourceClazz, CommonException.class, "ERROR-DB-DAO0000000006");
 
         if (!isSingle) {
             criteriaQuery.select(root);
