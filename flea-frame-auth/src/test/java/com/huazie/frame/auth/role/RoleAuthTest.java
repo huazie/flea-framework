@@ -59,9 +59,9 @@ public class RoleAuthTest {
 
         FleaRoleRel fleaRoleRel = new FleaRoleRel();
         fleaRoleRel.setRoleId(1L);
-        fleaRoleRel.setRelatId(1L);
-        fleaRoleRel.setRelatType(AuthRelTypeEnum.ROLE_REL_PRIVILEGE_GROUP.getRelType()); // 角色关联权限组
-        fleaRoleRel.setRelatState(EntityStateEnum.IN_USE.getState());
+        fleaRoleRel.setRelId(1L);
+        fleaRoleRel.setRelType(AuthRelTypeEnum.ROLE_REL_PRIVILEGE_GROUP.getRelType()); // 角色关联权限组
+        fleaRoleRel.setRelState(EntityStateEnum.IN_USE.getState());
         fleaRoleRel.setCreateDate(DateUtils.getCurrentTime());
         fleaRoleRel.setRemarks("【超级管理员】角色绑定【菜单访问】权限组");
 

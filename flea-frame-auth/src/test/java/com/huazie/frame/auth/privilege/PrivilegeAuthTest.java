@@ -80,9 +80,9 @@ public class PrivilegeAuthTest {
 
         FleaPrivilegeRel fleaPrivilegeRel = new FleaPrivilegeRel();
         fleaPrivilegeRel.setPrivilegeId(1L);
-        fleaPrivilegeRel.setRelatId(1L);
-        fleaPrivilegeRel.setRelatType(AuthRelTypeEnum.PRIVILEGE_REL_MENU.getRelType());
-        fleaPrivilegeRel.setRelatState(EntityStateEnum.IN_USE.getState());
+        fleaPrivilegeRel.setRelId(1L);
+        fleaPrivilegeRel.setRelType(AuthRelTypeEnum.PRIVILEGE_REL_MENU.getRelType());
+        fleaPrivilegeRel.setRelState(EntityStateEnum.IN_USE.getState());
         fleaPrivilegeRel.setCreateDate(DateUtils.getCurrentTime());
         fleaPrivilegeRel.setRemarks("【控制台】菜单绑定【访问《控制台》菜单】权限, 新增菜单时自动生成");
 
@@ -99,9 +99,9 @@ public class PrivilegeAuthTest {
 
         FleaPrivilegeGroupRel fleaPrivilegeGroupRel = new FleaPrivilegeGroupRel();
         fleaPrivilegeGroupRel.setPrivilegeGroupId(1L);
-        fleaPrivilegeGroupRel.setRelatId(1L);
-        fleaPrivilegeGroupRel.setRelatType(AuthRelTypeEnum.PRIVILEGE_GROUP_REL_PRIVILEGE.getRelType());
-        fleaPrivilegeGroupRel.setRelatState(EntityStateEnum.IN_USE.getState());
+        fleaPrivilegeGroupRel.setRelId(1L);
+        fleaPrivilegeGroupRel.setRelType(AuthRelTypeEnum.PRIVILEGE_GROUP_REL_PRIVILEGE.getRelType());
+        fleaPrivilegeGroupRel.setRelState(EntityStateEnum.IN_USE.getState());
         fleaPrivilegeGroupRel.setCreateDate(DateUtils.getCurrentTime());
         fleaPrivilegeGroupRel.setRemarks("【菜单访问】权限组关联【访问《控制台》菜单】权限");
 

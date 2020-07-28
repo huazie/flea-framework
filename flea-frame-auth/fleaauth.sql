@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50538
 File Encoding         : 65001
 
-Date: 2020-07-19 21:58:39
+Date: 2020-07-28 15:18:56
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -297,21 +297,21 @@ DROP TABLE IF EXISTS `flea_privilege_group_rel`;
 CREATE TABLE `flea_privilege_group_rel` (
   `privilege_group_rel_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '权限组关联编号',
   `privilege_group_id` int(11) NOT NULL COMMENT '权限组编号',
-  `relat_id` int(11) NOT NULL COMMENT '关联编号',
-  `relat_type` varchar(50) NOT NULL COMMENT '关联类型',
-  `relat_state` tinyint(4) NOT NULL COMMENT '关联状态(0: 删除 1: 正常)',
+  `rel_id` int(11) NOT NULL COMMENT '关联编号',
+  `rel_type` varchar(50) NOT NULL COMMENT '关联类型',
+  `rel_state` tinyint(4) NOT NULL COMMENT '关联状态(0: 删除 1: 正常)',
   `create_date` datetime NOT NULL COMMENT '创建日期',
   `done_date` datetime DEFAULT NULL COMMENT '修改日期',
   `remarks` varchar(1024) DEFAULT NULL COMMENT '备注信息',
-  `relat_ext_a` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段A',
-  `relat_ext_b` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段B',
-  `relat_ext_c` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段C',
-  `relat_ext_x` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段X',
-  `relat_ext_y` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Y',
-  `relat_ext_z` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Z',
+  `rel_ext_a` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段A',
+  `rel_ext_b` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段B',
+  `rel_ext_c` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段C',
+  `rel_ext_x` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段X',
+  `rel_ext_y` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Y',
+  `rel_ext_z` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Z',
   PRIMARY KEY (`privilege_group_rel_id`),
   KEY `INDEX_PRIVILEGE_GROUP_ID` (`privilege_group_id`) USING BTREE,
-  KEY `INDEX_RELAT_ID` (`relat_id`) USING BTREE
+  KEY `INDEX_REL_ID` (`rel_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -325,21 +325,21 @@ DROP TABLE IF EXISTS `flea_privilege_rel`;
 CREATE TABLE `flea_privilege_rel` (
   `privilege_rel_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '权限关联编号',
   `privilege_id` int(11) NOT NULL COMMENT '权限编号',
-  `relat_id` int(11) NOT NULL COMMENT '关联编号',
-  `relat_type` varchar(50) NOT NULL COMMENT '关联类型',
-  `relat_state` tinyint(4) NOT NULL COMMENT '关联状态(0: 删除 1: 正常)',
+  `rel_id` int(11) NOT NULL COMMENT '关联编号',
+  `rel_type` varchar(50) NOT NULL COMMENT '关联类型',
+  `rel_state` tinyint(4) NOT NULL COMMENT '关联状态(0: 删除 1: 正常)',
   `create_date` datetime NOT NULL COMMENT '创建日期',
   `done_date` datetime DEFAULT NULL COMMENT '修改日期',
   `remarks` varchar(1024) DEFAULT NULL COMMENT '备注信息',
-  `relat_ext_a` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段A',
-  `relat_ext_b` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段B',
-  `relat_ext_c` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段C',
-  `relat_ext_x` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段X',
-  `relat_ext_y` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Y',
-  `relat_ext_z` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Z',
+  `rel_ext_a` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段A',
+  `rel_ext_b` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段B',
+  `rel_ext_c` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段C',
+  `rel_ext_x` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段X',
+  `rel_ext_y` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Y',
+  `rel_ext_z` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Z',
   PRIMARY KEY (`privilege_rel_id`),
   KEY `INDEX_PRIVILEGE_ID` (`privilege_id`) USING BTREE,
-  KEY `INDEX_RELAT_ID` (`relat_id`) USING BTREE
+  KEY `INDEX_REL_ID` (`rel_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -418,21 +418,21 @@ DROP TABLE IF EXISTS `flea_role_group_rel`;
 CREATE TABLE `flea_role_group_rel` (
   `role_group_rel_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '角色组关联编号',
   `role_group_id` int(11) NOT NULL COMMENT '角色组编号',
-  `relat_id` int(11) NOT NULL COMMENT '关联编号',
-  `relat_type` varchar(50) NOT NULL COMMENT '关联类型',
-  `relat_state` tinyint(4) NOT NULL COMMENT '关联状态(0: 删除 1: 正常)',
+  `rel_id` int(11) NOT NULL COMMENT '关联编号',
+  `rel_type` varchar(50) NOT NULL COMMENT '关联类型',
+  `rel_state` tinyint(4) NOT NULL COMMENT '关联状态(0: 删除 1: 正常)',
   `create_date` datetime NOT NULL COMMENT '创建日期',
   `done_date` datetime DEFAULT NULL COMMENT '修改日期',
   `remarks` varchar(1024) DEFAULT NULL COMMENT '备注信息',
-  `relat_ext_a` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段A',
-  `relat_ext_b` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段B',
-  `relat_ext_c` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段C',
-  `relat_ext_x` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段X',
-  `relat_ext_y` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Y',
-  `relat_ext_z` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Z',
+  `rel_ext_a` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段A',
+  `rel_ext_b` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段B',
+  `rel_ext_c` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段C',
+  `rel_ext_x` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段X',
+  `rel_ext_y` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Y',
+  `rel_ext_z` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Z',
   PRIMARY KEY (`role_group_rel_id`),
   KEY `INDEX_ROLE_GROUP_ID` (`role_group_id`) USING BTREE,
-  KEY `INDEX_RELAT_ID` (`relat_id`) USING BTREE
+  KEY `INDEX_REL_ID` (`rel_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -446,21 +446,21 @@ DROP TABLE IF EXISTS `flea_role_rel`;
 CREATE TABLE `flea_role_rel` (
   `role_rel_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '角色关联编号',
   `role_id` int(11) NOT NULL COMMENT '角色编号',
-  `relat_id` int(11) NOT NULL COMMENT '关联编号',
-  `relat_type` varchar(50) NOT NULL COMMENT '关联类型',
-  `relat_state` tinyint(4) NOT NULL COMMENT '关联状态(0: 删除 1: 正常)',
+  `rel_id` int(11) NOT NULL COMMENT '关联编号',
+  `rel_type` varchar(50) NOT NULL COMMENT '关联类型',
+  `rel_state` tinyint(4) NOT NULL COMMENT '关联状态(0: 删除 1: 正常)',
   `create_date` datetime NOT NULL COMMENT '创建日期',
   `done_date` datetime DEFAULT NULL COMMENT '修改日期',
   `remarks` varchar(1024) DEFAULT NULL COMMENT '备注信息',
-  `relat_ext_a` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段A',
-  `relat_ext_b` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段B',
-  `relat_ext_c` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段C',
-  `relat_ext_x` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段X',
-  `relat_ext_y` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Y',
-  `relat_ext_z` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Z',
+  `rel_ext_a` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段A',
+  `rel_ext_b` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段B',
+  `rel_ext_c` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段C',
+  `rel_ext_x` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段X',
+  `rel_ext_y` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Y',
+  `rel_ext_z` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Z',
   PRIMARY KEY (`role_rel_id`),
   KEY `INDEX_ROLE_ID` (`role_id`) USING BTREE,
-  KEY `INDEX_RELAT_ID` (`relat_id`) USING BTREE
+  KEY `INDEX_REL_ID` (`rel_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -545,23 +545,23 @@ CREATE TABLE `flea_user_group` (
 -- ----------------------------
 DROP TABLE IF EXISTS `flea_user_group_rel`;
 CREATE TABLE `flea_user_group_rel` (
-  `user_group_relat_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户组关联编号',
+  `user_group_rel_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户组关联编号',
   `user_group_id` int(11) NOT NULL COMMENT '用户组编号',
-  `relat_id` int(11) NOT NULL COMMENT '关联编号',
-  `relat_type` varchar(50) NOT NULL COMMENT '关联类型',
-  `relat_state` tinyint(4) NOT NULL COMMENT '关联状态(0: 删除 1: 正常)',
+  `rel_id` int(11) NOT NULL COMMENT '关联编号',
+  `rel_type` varchar(50) NOT NULL COMMENT '关联类型',
+  `rel_state` tinyint(4) NOT NULL COMMENT '关联状态(0: 删除 1: 正常)',
   `create_date` datetime NOT NULL COMMENT '创建日期',
   `done_date` datetime DEFAULT NULL COMMENT '修改日期',
   `remarks` varchar(1024) DEFAULT NULL COMMENT '备注信息',
-  `relat_ext_a` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段A',
-  `relat_ext_b` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段B',
-  `relat_ext_c` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段C',
-  `relat_ext_x` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段X',
-  `relat_ext_y` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Y',
-  `relat_ext_z` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Z',
-  PRIMARY KEY (`user_group_relat_id`),
+  `rel_ext_a` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段A',
+  `rel_ext_b` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段B',
+  `rel_ext_c` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段C',
+  `rel_ext_x` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段X',
+  `rel_ext_y` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Y',
+  `rel_ext_z` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Z',
+  PRIMARY KEY (`user_group_rel_id`),
   KEY `INDEX_USER_GROUP_ID` (`user_group_id`) USING BTREE,
-  KEY `INDEX_RELAT_ID` (`relat_id`) USING BTREE
+  KEY `INDEX_REL_ID` (`rel_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -575,21 +575,21 @@ DROP TABLE IF EXISTS `flea_user_rel`;
 CREATE TABLE `flea_user_rel` (
   `user_rel_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户关联编号',
   `user_id` int(11) NOT NULL COMMENT '用户编号',
-  `relat_id` int(11) NOT NULL COMMENT '关联编号',
-  `relat_type` varchar(50) NOT NULL COMMENT '关联类型',
-  `relat_state` tinyint(4) NOT NULL COMMENT '关联状态(0: 删除 1: 正常)',
+  `rel_id` int(11) NOT NULL COMMENT '关联编号',
+  `rel_type` varchar(50) NOT NULL COMMENT '关联类型',
+  `rel_state` tinyint(4) NOT NULL COMMENT '关联状态(0: 删除 1: 正常)',
   `create_date` datetime NOT NULL COMMENT '创建日期',
   `done_date` datetime DEFAULT NULL COMMENT '修改日期',
   `remarks` varchar(1024) DEFAULT NULL COMMENT '备注信息',
-  `relat_ext_a` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段A',
-  `relat_ext_b` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段B',
-  `relat_ext_c` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段C',
-  `relat_ext_x` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段X',
-  `relat_ext_y` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Y',
-  `relat_ext_z` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Z',
+  `rel_ext_a` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段A',
+  `rel_ext_b` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段B',
+  `rel_ext_c` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段C',
+  `rel_ext_x` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段X',
+  `rel_ext_y` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Y',
+  `rel_ext_z` varchar(1024) DEFAULT NULL COMMENT '关联扩展字段Z',
   PRIMARY KEY (`user_rel_id`),
   KEY `INDEX_USER_ID` (`user_id`) USING BTREE,
-  KEY `INDEX_RELAT_ID` (`relat_id`) USING BTREE
+  KEY `INDEX_REL_ID` (`rel_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
