@@ -25,7 +25,7 @@ import java.util.Date;
 @Table(name = "flea_user_group_rel")
 public class FleaUserGroupRel extends FleaEntity {
 
-    private static final long serialVersionUID = 8479069730959260804L;
+    private static final long serialVersionUID = -6984735518813605804L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "FLEA_USER_GROUP_REL_GENERATOR")
@@ -43,20 +43,20 @@ public class FleaUserGroupRel extends FleaEntity {
         // 从ID生成器表中分配ID号时增加的数量
         allocationSize = 1
     )
-    @Column(name = "user_group_relat_id", unique = true, nullable = false)
-    private Long userGroupRelatId; // 用户组关联编号
+    @Column(name = "user_group_rel_id", unique = true, nullable = false)
+    private Long userGroupRelId; // 用户组关联编号
 
     @Column(name = "user_group_id", nullable = false)
     private Long userGroupId; // 用户组编号
 
-    @Column(name = "relat_id", nullable = false)
-    private Long relatId; // 关联编号
+    @Column(name = "rel_id", nullable = false)
+    private Long relId; // 关联编号
 
-    @Column(name = "relat_type", nullable = false)
-    private String relatType; // 关联类型
+    @Column(name = "rel_type", nullable = false)
+    private String relType; // 关联类型
 
-    @Column(name = "relat_state", nullable = false)
-    private Integer relatState; // 关联状态(0: 删除 1: 正常)
+    @Column(name = "rel_state", nullable = false)
+    private Integer relState; // 关联状态(0: 删除 1: 正常)
 
     @Column(name = "create_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -69,30 +69,30 @@ public class FleaUserGroupRel extends FleaEntity {
     @Column(name = "remarks")
     private String remarks; // 备注信息
 
-    @Column(name = "relat_ext_a")
-    private String relatExtA; // 关联扩展字段A
+    @Column(name = "rel_ext_a")
+    private String relExtA; // 关联扩展字段A
 
-    @Column(name = "relat_ext_b")
-    private String relatExtB; // 关联扩展字段B
+    @Column(name = "rel_ext_b")
+    private String relExtB; // 关联扩展字段B
 
-    @Column(name = "relat_ext_c")
-    private String relatExtC; // 关联扩展字段C
+    @Column(name = "rel_ext_c")
+    private String relExtC; // 关联扩展字段C
 
-    @Column(name = "relat_ext_x")
-    private String relatExtX; // 关联扩展字段X
+    @Column(name = "rel_ext_x")
+    private String relExtX; // 关联扩展字段X
 
-    @Column(name = "relat_ext_y")
-    private String relatExtY; // 关联扩展字段Y
+    @Column(name = "rel_ext_y")
+    private String relExtY; // 关联扩展字段Y
 
-    @Column(name = "relat_ext_z")
-    private String relatExtZ; // 关联扩展字段Z
+    @Column(name = "rel_ext_z")
+    private String relExtZ; // 关联扩展字段Z
 
-    public Long getUserGroupRelatId() {
-        return userGroupRelatId;
+    public Long getUserGroupRelId() {
+        return userGroupRelId;
     }
 
-    public void setUserGroupRelatId(Long userGroupRelatId) {
-        this.userGroupRelatId = userGroupRelatId;
+    public void setUserGroupRelId(Long userGroupRelId) {
+        this.userGroupRelId = userGroupRelId;
     }
 
     public Long getUserGroupId() {
@@ -103,28 +103,28 @@ public class FleaUserGroupRel extends FleaEntity {
         this.userGroupId = userGroupId;
     }
 
-    public Long getRelatId() {
-        return relatId;
+    public Long getRelId() {
+        return relId;
     }
 
-    public void setRelatId(Long relatId) {
-        this.relatId = relatId;
+    public void setRelId(Long relId) {
+        this.relId = relId;
     }
 
-    public String getRelatType() {
-        return relatType;
+    public String getRelType() {
+        return relType;
     }
 
-    public void setRelatType(String relatType) {
-        this.relatType = relatType;
+    public void setRelType(String relType) {
+        this.relType = relType;
     }
 
-    public Integer getRelatState() {
-        return relatState;
+    public Integer getRelState() {
+        return relState;
     }
 
-    public void setRelatState(Integer relatState) {
-        this.relatState = relatState;
+    public void setRelState(Integer relState) {
+        this.relState = relState;
     }
 
     public Date getCreateDate() {
@@ -151,52 +151,52 @@ public class FleaUserGroupRel extends FleaEntity {
         this.remarks = remarks;
     }
 
-    public String getRelatExtA() {
-        return relatExtA;
+    public String getRelExtA() {
+        return relExtA;
     }
 
-    public void setRelatExtA(String relatExtA) {
-        this.relatExtA = relatExtA;
+    public void setRelExtA(String relExtA) {
+        this.relExtA = relExtA;
     }
 
-    public String getRelatExtB() {
-        return relatExtB;
+    public String getRelExtB() {
+        return relExtB;
     }
 
-    public void setRelatExtB(String relatExtB) {
-        this.relatExtB = relatExtB;
+    public void setRelExtB(String relExtB) {
+        this.relExtB = relExtB;
     }
 
-    public String getRelatExtC() {
-        return relatExtC;
+    public String getRelExtC() {
+        return relExtC;
     }
 
-    public void setRelatExtC(String relatExtC) {
-        this.relatExtC = relatExtC;
+    public void setRelExtC(String relExtC) {
+        this.relExtC = relExtC;
     }
 
-    public String getRelatExtX() {
-        return relatExtX;
+    public String getRelExtX() {
+        return relExtX;
     }
 
-    public void setRelatExtX(String relatExtX) {
-        this.relatExtX = relatExtX;
+    public void setRelExtX(String relExtX) {
+        this.relExtX = relExtX;
     }
 
-    public String getRelatExtY() {
-        return relatExtY;
+    public String getRelExtY() {
+        return relExtY;
     }
 
-    public void setRelatExtY(String relatExtY) {
-        this.relatExtY = relatExtY;
+    public void setRelExtY(String relExtY) {
+        this.relExtY = relExtY;
     }
 
-    public String getRelatExtZ() {
-        return relatExtZ;
+    public String getRelExtZ() {
+        return relExtZ;
     }
 
-    public void setRelatExtZ(String relatExtZ) {
-        this.relatExtZ = relatExtZ;
+    public void setRelExtZ(String relExtZ) {
+        this.relExtZ = relExtZ;
     }
 
     @Override

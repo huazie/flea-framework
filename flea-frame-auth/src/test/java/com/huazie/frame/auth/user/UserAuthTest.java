@@ -123,9 +123,9 @@ public class UserAuthTest {
 
         FleaUserRel fleaUserRel = new FleaUserRel();
         fleaUserRel.setUserId(1L);
-        fleaUserRel.setRelatId(1L);
-        fleaUserRel.setRelatType(AuthRelTypeEnum.USER_REL_ROLE.getRelType());
-        fleaUserRel.setRelatState(EntityStateEnum.IN_USE.getState());
+        fleaUserRel.setRelId(1L);
+        fleaUserRel.setRelType(AuthRelTypeEnum.USER_REL_ROLE.getRelType());
+        fleaUserRel.setRelState(EntityStateEnum.IN_USE.getState());
         fleaUserRel.setCreateDate(DateUtils.getCurrentTime());
         fleaUserRel.setRemarks("【13218010892】用户绑定【超级管理员】角色");
 
