@@ -2,7 +2,6 @@ package com.huazie.frame.common.util;
 
 import com.huazie.frame.common.exception.CommonException;
 
-import java.util.Collection;
 import java.util.Map;
 
 /**

@@ -33,7 +33,7 @@ public class FleaJDBCConfig {
 
     private static volatile FleaJDBCConfig config;
 
-    private static ConcurrentMap<String, FleaDBUnit> fleaDBUnits = new ConcurrentHashMap<String, FleaDBUnit>();
+    private static ConcurrentMap<String, FleaDBUnit> fleaDBUnits = new ConcurrentHashMap<>();
 
     private FleaJDBCConfig() {
     }

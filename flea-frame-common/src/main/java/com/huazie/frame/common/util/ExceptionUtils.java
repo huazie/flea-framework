@@ -67,7 +67,7 @@ public class ExceptionUtils {
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public static void throwException(Class<? extends CommonException> exceptionClazz, String i18nKey) throws CommonException {
+    private static void throwException(Class<? extends CommonException> exceptionClazz, String i18nKey) throws CommonException {
         Object exceptionInstance = ReflectUtils.newInstance(exceptionClazz, i18nKey);
         if (ObjectUtils.isNotEmpty(exceptionInstance)) {
             throw exceptionClazz.cast(exceptionInstance);
@@ -83,7 +83,7 @@ public class ExceptionUtils {
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public static void throwException(Class<? extends CommonException> exceptionClazz, String i18nKey, String... params) throws CommonException {
+    private static void throwException(Class<? extends CommonException> exceptionClazz, String i18nKey, String... params) throws CommonException {
         Object exceptionInstance = ReflectUtils.newInstance(exceptionClazz, i18nKey, params);
         if (ObjectUtils.isNotEmpty(exceptionInstance)) {
             throw exceptionClazz.cast(exceptionInstance);
@@ -99,7 +99,7 @@ public class ExceptionUtils {
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public static void throwException(Class<? extends CommonException> exceptionClazz, String i18nKey, Throwable cause) throws CommonException {
+    private static void throwException(Class<? extends CommonException> exceptionClazz, String i18nKey, Throwable cause) throws CommonException {
         Object exceptionInstance = ReflectUtils.newInstance(exceptionClazz, new Object[]{i18nKey, cause}, new Class<?>[]{String.class, Throwable.class});
         if (ObjectUtils.isNotEmpty(exceptionInstance)) {
             throw exceptionClazz.cast(exceptionInstance);
@@ -116,7 +116,7 @@ public class ExceptionUtils {
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public static void throwException(Class<? extends CommonException> exceptionClazz, String i18nKey, Throwable cause, String... params) throws CommonException {
+    private static void throwException(Class<? extends CommonException> exceptionClazz, String i18nKey, Throwable cause, String... params) throws CommonException {
 
         if (ArrayUtils.isEmpty(params)) {
             return;
