@@ -4,9 +4,12 @@ import com.huazie.frame.auth.base.function.entity.FleaMenu;
 import com.huazie.frame.auth.base.user.entity.FleaAccount;
 import com.huazie.frame.auth.base.user.entity.FleaLoginLog;
 import com.huazie.frame.auth.base.user.entity.FleaUser;
+import com.huazie.frame.auth.base.user.entity.FleaUserGroupRel;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaAccountSV;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaLoginLogSV;
+import com.huazie.frame.auth.base.user.service.interfaces.IFleaUserGroupRelSV;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaUserSV;
+import com.huazie.frame.auth.common.AuthRelTypeEnum;
 import com.huazie.frame.auth.common.FleaAuthConstants;
 import com.huazie.frame.auth.common.exception.FleaAuthCommonException;
 import com.huazie.frame.auth.common.service.interfaces.IFleaAuthSV;
@@ -49,6 +52,8 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
 
     private IFleaUserSV fleaUserSV; // Flea用户信息服务
 
+    private IFleaUserGroupRelSV fleaUserGroupRelSV; // Flea用户组关联服务
+
     @Autowired
     @Qualifier("fleaLoginLogSV")
     public void setFleaLoginLogSV(IFleaLoginLogSV fleaLoginLogSV) {
@@ -65,6 +70,12 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
     @Qualifier("fleaUserSV")
     public void setFleaUserSV(IFleaUserSV fleaUserSV) {
         this.fleaUserSV = fleaUserSV;
+    }
+
+    @Autowired
+    @Qualifier("fleaUserGroupRelSV")
+    public void setFleaUserGroupRelSV(IFleaUserGroupRelSV fleaUserGroupRelSV) {
+        this.fleaUserGroupRelSV = fleaUserGroupRelSV;
     }
 
     @Override
@@ -172,9 +183,18 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
 
         Long groupId = fleaUser.getGroupId(); // 获取用户组编号
         if (CommonConstants.NumeralConstants.MINUS_ONE != groupId) { // 用户关联了用户组
+            // 获取用户组关联的角色组
+            List<FleaUserGroupRel> userGroupRelRoleGroups = fleaUserGroupRelSV.getUserGroupRelList(groupId, AuthRelTypeEnum.USER_GROUP_REL_ROLE_GROUP.getRelType());
+
             // 获取用户组关联的角色
+            List<FleaUserGroupRel> userGroupRelRoles = fleaUserGroupRelSV.getUserGroupRelList(groupId, AuthRelTypeEnum.USER_GROUP_REL_ROLE.getRelType());
 
         }
+
+        // 获取用户关联的角色组
+
+
+        // 获取用户关联的角色
 
 
         return null;

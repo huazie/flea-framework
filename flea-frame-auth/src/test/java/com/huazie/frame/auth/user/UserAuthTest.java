@@ -2,6 +2,7 @@ package com.huazie.frame.auth.user;
 
 import com.huazie.frame.auth.base.user.entity.FleaAccount;
 import com.huazie.frame.auth.base.user.entity.FleaUserRel;
+import com.huazie.frame.auth.base.user.service.interfaces.IFleaUserGroupRelSV;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaUserRelSV;
 import com.huazie.frame.auth.common.AuthRelTypeEnum;
 import com.huazie.frame.auth.common.UserStateEnum;
@@ -132,6 +133,17 @@ public class UserAuthTest {
         try {
             IFleaUserRelSV fleaUserRelSV = (IFleaUserRelSV) applicationContext.getBean("fleaUserRelSV");
             fleaUserRelSV.save(fleaUserRel);
+        } catch (CommonException e) {
+            LOGGER.error("Exception = ", e);
+        }
+    }
+
+    @Test
+    public void testQueryUserGroupRel() {
+
+        try {
+            IFleaUserGroupRelSV fleaUserGroupRelSV = (IFleaUserGroupRelSV) applicationContext.getBean("fleaUserGroupRelSV");
+            fleaUserGroupRelSV.getUserGroupRelList(1L, AuthRelTypeEnum.USER_GROUP_REL_ROLE.getRelType());
         } catch (CommonException e) {
             LOGGER.error("Exception = ", e);
         }

@@ -43,6 +43,11 @@ public interface FleaAuthEntityConstants extends FleaEntityConstants {
         String E_USER_ID = "userId";
 
         /**
+         * <p> 用户组编号 </p>
+         */
+        String E_USER_GROUP_ID = "userGroupId";
+
+        /**
          * <p> 登录状态 </p>
          */
         String E_LOGIN_STATE = "loginState";
@@ -110,5 +115,29 @@ public interface FleaAuthEntityConstants extends FleaEntityConstants {
          * <p> 角色编号 </p>
          */
         String E_ROLE_ID = "roleId";
+    }
+
+    /**
+     * <p> Flea关联表实体常量 </p>
+     *
+     * @since 1.0.0
+     */
+    interface FleaRelEntityConstants {
+
+        /**
+         * <p> 关联编号 </p>
+         */
+        String E_REL_ID = "relId";
+
+        /**
+         * <p> 关联类型 </p>
+         */
+        String E_REL_TYPE = "relType";
+
+        /**
+         * <p> 关联状态 </p>
+         */
+        String E_REL_STATE = "relState";
+
     }
 }
