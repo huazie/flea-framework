@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50538
 File Encoding         : 65001
 
-Date: 2020-07-28 15:18:56
+Date: 2020-07-28 23:00:37
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -129,6 +129,7 @@ INSERT INTO `flea_id_generator` VALUES ('pk_flea_account_attr', '0');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_element', '0');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_function_attr', '0');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_login_log_202007', '0');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_login_log_202008', '0');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_menu', '0');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_operation', '0');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_privilege', '0');
@@ -200,6 +201,34 @@ CREATE TABLE `flea_login_log_202007` (
 
 -- ----------------------------
 -- Records of flea_login_log_202007
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `flea_login_log_202008`
+-- ----------------------------
+DROP TABLE IF EXISTS `flea_login_log_202008`;
+CREATE TABLE `flea_login_log_202008` (
+  `login_log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '登录日志编号',
+  `account_id` int(11) NOT NULL COMMENT '账户编号',
+  `system_account_id` int(11) NOT NULL COMMENT '系统账户编号',
+  `login_ip4` varchar(15) NOT NULL COMMENT 'ip4地址',
+  `login_ip6` varchar(40) DEFAULT NULL COMMENT 'ip6地址',
+  `login_area` varchar(15) DEFAULT NULL COMMENT '登录地区',
+  `login_state` tinyint(4) NOT NULL COMMENT '登录状态（1：登录中，2：已退出）',
+  `login_time` datetime NOT NULL COMMENT '登录时间',
+  `logout_time` datetime DEFAULT NULL COMMENT '退出时间',
+  `create_date` datetime NOT NULL COMMENT '创建日期',
+  `done_date` datetime DEFAULT NULL COMMENT '修改日期',
+  `remarks` varchar(1024) DEFAULT NULL COMMENT '描述信息',
+  `ext1` varchar(1024) DEFAULT NULL COMMENT '扩展字段1',
+  `ext2` varchar(1024) DEFAULT NULL COMMENT '扩展字段2',
+  PRIMARY KEY (`login_log_id`),
+  KEY `INDEX_ACCOUNT_ID` (`account_id`) USING BTREE,
+  KEY `INDEX_SYS_ACCOUNT_ID` (`system_account_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of flea_login_log_202008
 -- ----------------------------
 
 -- ----------------------------
