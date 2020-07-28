@@ -33,7 +33,7 @@ public class IDGeneratorTest {
         try {
             FleaJDBCConfig.init(DBSystemEnum.MySQL.getName(), "fleaauth");
             String sql = "insert into flea_id_generator (id_generator_key, id_generator_value) values(?, ?)";
-            String pkColumnValue = "pk_flea_menu";
+            String pkColumnValue = "pk_flea_login_log_202008";
             List<Object> params = new ArrayList<Object>();
             params.add(pkColumnValue);
             params.add(0L);
