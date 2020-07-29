@@ -149,4 +149,15 @@ public class UserAuthTest {
         }
     }
 
+    @Test
+    public void testQueryUserRel() {
+
+        try {
+            IFleaUserRelSV fleaUserRelSV = (IFleaUserRelSV) applicationContext.getBean("fleaUserRelSV");
+            fleaUserRelSV.getUserRelList(1L, AuthRelTypeEnum.USER_REL_ROLE.getRelType());
+        } catch (CommonException e) {
+            LOGGER.error("Exception = ", e);
+        }
+    }
+
 }

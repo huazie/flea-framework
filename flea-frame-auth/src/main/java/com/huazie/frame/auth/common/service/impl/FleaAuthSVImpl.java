@@ -5,9 +5,11 @@ import com.huazie.frame.auth.base.user.entity.FleaAccount;
 import com.huazie.frame.auth.base.user.entity.FleaLoginLog;
 import com.huazie.frame.auth.base.user.entity.FleaUser;
 import com.huazie.frame.auth.base.user.entity.FleaUserGroupRel;
+import com.huazie.frame.auth.base.user.entity.FleaUserRel;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaAccountSV;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaLoginLogSV;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaUserGroupRelSV;
+import com.huazie.frame.auth.base.user.service.interfaces.IFleaUserRelSV;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaUserSV;
 import com.huazie.frame.auth.common.AuthRelTypeEnum;
 import com.huazie.frame.auth.common.FleaAuthConstants;
@@ -54,6 +56,8 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
 
     private IFleaUserGroupRelSV fleaUserGroupRelSV; // Flea用户组关联服务
 
+    private IFleaUserRelSV fleaUserRelSV; // Flea用户关联服务
+
     @Autowired
     @Qualifier("fleaLoginLogSV")
     public void setFleaLoginLogSV(IFleaLoginLogSV fleaLoginLogSV) {
@@ -76,6 +80,12 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
     @Qualifier("fleaUserGroupRelSV")
     public void setFleaUserGroupRelSV(IFleaUserGroupRelSV fleaUserGroupRelSV) {
         this.fleaUserGroupRelSV = fleaUserGroupRelSV;
+    }
+
+    @Autowired
+    @Qualifier("fleaUserRelSV")
+    public void setFleaUserRelSV(IFleaUserRelSV fleaUserRelSV) {
+        this.fleaUserRelSV = fleaUserRelSV;
     }
 
     @Override
@@ -192,10 +202,10 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
         }
 
         // 获取用户关联的角色组
-
+        List<FleaUserRel> userRelRoleGroups = fleaUserRelSV.getUserRelList(userId, AuthRelTypeEnum.USER_REL_ROLE_GROUP.getRelType());
 
         // 获取用户关联的角色
-
+        List<FleaUserRel> userRelRoles = fleaUserRelSV.getUserRelList(userId, AuthRelTypeEnum.USER_REL_ROLE.getRelType());
 
         return null;
     }
