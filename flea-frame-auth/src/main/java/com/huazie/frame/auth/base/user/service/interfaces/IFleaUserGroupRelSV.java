@@ -16,9 +16,9 @@ import java.util.List;
 public interface IFleaUserGroupRelSV extends IAbstractFleaJPASV<FleaUserGroupRel> {
 
     /**
-     * <p> 获取用户组userGroupId关联的指定授权关联类型authRelType的用户组关联信息 </p>
+     * <p> 获取指定用户组编号【userGroupId】关联的指定授权关联类型【authRelType】的用户组关联信息 </p>
      *
-     * @param userGroupId 用户组边
+     * @param userGroupId 用户组编号
      * @param authRelType 授权关联类型
      * @return 用户组关联信息
      * @throws CommonException 通用异常
