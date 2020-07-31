@@ -20,10 +20,12 @@ import com.huazie.frame.common.FleaSessionManager;
 import com.huazie.frame.common.IFleaUser;
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.object.FleaObjectFactory;
+import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.DateUtils;
 import com.huazie.frame.common.util.HttpUtils;
 import com.huazie.frame.common.util.MapUtils;
 import com.huazie.frame.common.util.ObjectUtils;
+import com.huazie.frame.common.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -191,22 +194,94 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
         // 用户【user_id = {0}】不存在！
         ObjectUtils.checkEmpty(fleaUser, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000007", userId);
 
+        List<Long> roleIdList = new ArrayList<>(); // 角色编号列表
+
         Long groupId = fleaUser.getGroupId(); // 获取用户组编号
         if (CommonConstants.NumeralConstants.MINUS_ONE != groupId) { // 用户关联了用户组
             // 获取用户组关联的角色组
             List<FleaUserGroupRel> userGroupRelRoleGroups = fleaUserGroupRelSV.getUserGroupRelList(groupId, AuthRelTypeEnum.USER_GROUP_REL_ROLE_GROUP.getRelType());
+            // 处理用户组关联的角色组数据
+            handleUserGroupRel(roleIdList, userGroupRelRoleGroups, AuthRelTypeEnum.USER_GROUP_REL_ROLE_GROUP.getRelType());
 
             // 获取用户组关联的角色
             List<FleaUserGroupRel> userGroupRelRoles = fleaUserGroupRelSV.getUserGroupRelList(groupId, AuthRelTypeEnum.USER_GROUP_REL_ROLE.getRelType());
-
+            // 处理用户组关联的角色数据
+            handleUserGroupRel(roleIdList, userGroupRelRoles, AuthRelTypeEnum.USER_GROUP_REL_ROLE.getRelType());
         }
 
         // 获取用户关联的角色组
         List<FleaUserRel> userRelRoleGroups = fleaUserRelSV.getUserRelList(userId, AuthRelTypeEnum.USER_REL_ROLE_GROUP.getRelType());
+        // 处理用户关联的角色组数据
+        handleUserRel(roleIdList, userRelRoleGroups, AuthRelTypeEnum.USER_REL_ROLE_GROUP.getRelType());
 
         // 获取用户关联的角色
         List<FleaUserRel> userRelRoles = fleaUserRelSV.getUserRelList(userId, AuthRelTypeEnum.USER_REL_ROLE.getRelType());
+        // 处理用户关联的角色数据
+        handleUserRel(roleIdList, userRelRoles, AuthRelTypeEnum.USER_REL_ROLE.getRelType());
 
         return null;
+    }
+
+    /**
+     * <p> 处理用户组关联数据 </p>
+     *
+     * @param roleIdList       角色编号列表
+     * @param userGroupRelList 用户组关联信息
+     * @param authRelType      授权关联类型
+     * @since 1.0.0
+     */
+    private void handleUserGroupRel(List<Long> roleIdList, List<FleaUserGroupRel> userGroupRelList, String authRelType) {
+        if (CollectionUtils.isNotEmpty(userGroupRelList)) {
+            for (FleaUserGroupRel userGroupRel : userGroupRelList) {
+                if (AuthRelTypeEnum.USER_GROUP_REL_ROLE_GROUP.getRelType().equals(authRelType)) { // 用户组关联角色组
+                    // 用户组关联中rel_ext_a用于指定用户组关联的角色组中实际指定的角色编号
+                    String relExtA = userGroupRel.getRelExtA();
+                    if (StringUtils.isNotBlank(relExtA)) {
+                        addRoleId(Long.valueOf(relExtA), roleIdList);
+                    }
+                } else if (AuthRelTypeEnum.USER_GROUP_REL_ROLE.getRelType().equals(authRelType)) { // 用户组关联角色
+                    // 用户组关联角色，直接取关联编号rel_id即可
+                    addRoleId(userGroupRel.getRelId(), roleIdList);
+                }
+            }
+        }
+    }
+
+    /**
+     * <p> 处理用户关联数据 </p>
+     *
+     * @param roleIdList  角色编号列表
+     * @param userRelList 用户关联信息
+     * @param authRelType 授权关联类型
+     * @since 1.0.0
+     */
+    private void handleUserRel(List<Long> roleIdList, List<FleaUserRel> userRelList, String authRelType) {
+        if (CollectionUtils.isNotEmpty(userRelList)) {
+            for (FleaUserRel userRel : userRelList) {
+                if (AuthRelTypeEnum.USER_REL_ROLE_GROUP.getRelType().equals(authRelType)) { // 用户关联角色组
+                    // 用户关联中rel_ext_a用于指定用户关联的角色组中实际指定的角色编号
+                    String relExtA = userRel.getRelExtA();
+                    if (StringUtils.isNotBlank(relExtA)) {
+                        addRoleId(Long.valueOf(relExtA), roleIdList);
+                    }
+                } else if (AuthRelTypeEnum.USER_REL_ROLE.getRelType().equals(authRelType)) { // 用户关联角色
+                    // 用户关联角色，直接取关联编号rel_id即可
+                    addRoleId(userRel.getRelId(), roleIdList);
+                }
+            }
+        }
+    }
+
+    /**
+     * <p> 添加角色信息 </p>
+     *
+     * @param relRoleId  关联角色编号
+     * @param roleIdList 角色编号列表
+     * @since 1.0.0
+     */
+    private void addRoleId(Long relRoleId, List<Long> roleIdList) {
+        if (!roleIdList.contains(relRoleId)) {
+            roleIdList.add(relRoleId);
+        }
     }
 }
