@@ -2,6 +2,7 @@ package com.huazie.frame.auth.role;
 
 import com.huazie.frame.auth.base.role.entity.FleaRole;
 import com.huazie.frame.auth.base.role.entity.FleaRoleRel;
+import com.huazie.frame.auth.base.role.service.interfaces.IFleaRoleGroupRelSV;
 import com.huazie.frame.auth.base.role.service.interfaces.IFleaRoleRelSV;
 import com.huazie.frame.auth.base.role.service.interfaces.IFleaRoleSV;
 import com.huazie.frame.auth.common.AuthRelTypeEnum;
@@ -70,6 +71,26 @@ public class RoleAuthTest {
             fleaRoleRelSV.save(fleaRoleRel);
         } catch (CommonException e) {
             LOGGER.error("Exception :", e);
+        }
+    }
+
+    @Test
+    public void testQueryRoleRel() {
+        try {
+            IFleaRoleRelSV fleaRoleRelSV = (IFleaRoleRelSV) applicationContext.getBean("fleaRoleRelSV");
+            fleaRoleRelSV.getRoleRelList(1L, AuthRelTypeEnum.ROLE_REL_PRIVILEGE_GROUP.getRelType());
+        } catch (CommonException e) {
+            LOGGER.error("Exception = ", e);
+        }
+    }
+
+    @Test
+    public void testQueryRoleGroupRel() {
+        try {
+            IFleaRoleGroupRelSV fleaRoleGroupRelSV = (IFleaRoleGroupRelSV) applicationContext.getBean("fleaRoleGroupRelSV");
+            fleaRoleGroupRelSV.getRoleGroupRelList(1L, AuthRelTypeEnum.ROLE_GROUP_REL_ROLE.getRelType());
+        } catch (CommonException e) {
+            LOGGER.error("Exception = ", e);
         }
     }
 }

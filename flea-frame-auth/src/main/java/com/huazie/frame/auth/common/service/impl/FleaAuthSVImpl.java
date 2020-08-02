@@ -1,6 +1,13 @@
 package com.huazie.frame.auth.common.service.impl;
 
 import com.huazie.frame.auth.base.function.entity.FleaMenu;
+import com.huazie.frame.auth.base.privilege.entity.FleaPrivilegeGroupRel;
+import com.huazie.frame.auth.base.privilege.service.interfaces.IFleaPrivilegeGroupRelSV;
+import com.huazie.frame.auth.base.privilege.service.interfaces.IFleaPrivilegeRelSV;
+import com.huazie.frame.auth.base.role.entity.FleaRoleGroupRel;
+import com.huazie.frame.auth.base.role.entity.FleaRoleRel;
+import com.huazie.frame.auth.base.role.service.interfaces.IFleaRoleGroupRelSV;
+import com.huazie.frame.auth.base.role.service.interfaces.IFleaRoleRelSV;
 import com.huazie.frame.auth.base.user.entity.FleaAccount;
 import com.huazie.frame.auth.base.user.entity.FleaLoginLog;
 import com.huazie.frame.auth.base.user.entity.FleaUser;
@@ -20,6 +27,7 @@ import com.huazie.frame.common.FleaSessionManager;
 import com.huazie.frame.common.IFleaUser;
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.object.FleaObjectFactory;
+import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.DateUtils;
 import com.huazie.frame.common.util.HttpUtils;
@@ -61,6 +69,14 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
 
     private IFleaUserRelSV fleaUserRelSV; // Flea用户关联服务
 
+    private IFleaRoleGroupRelSV fleaRoleGroupRelSV; // Flea角色组关联服务
+
+    private IFleaRoleRelSV fleaRoleRelSV; // Flea角色关联服务
+
+    private IFleaPrivilegeGroupRelSV fleaPrivilegeGroupRelSV; // Flea权限组关联服务
+
+    private IFleaPrivilegeRelSV fleaPrivilegeRelSV; // Flea权限关联服务
+
     @Autowired
     @Qualifier("fleaLoginLogSV")
     public void setFleaLoginLogSV(IFleaLoginLogSV fleaLoginLogSV) {
@@ -89,6 +105,30 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
     @Qualifier("fleaUserRelSV")
     public void setFleaUserRelSV(IFleaUserRelSV fleaUserRelSV) {
         this.fleaUserRelSV = fleaUserRelSV;
+    }
+
+    @Autowired
+    @Qualifier("fleaRoleGroupRelSV")
+    public void setFleaRoleGroupRelSV(IFleaRoleGroupRelSV fleaRoleGroupRelSV) {
+        this.fleaRoleGroupRelSV = fleaRoleGroupRelSV;
+    }
+
+    @Autowired
+    @Qualifier("fleaRoleRelSV")
+    public void setFleaRoleRelSV(IFleaRoleRelSV fleaRoleRelSV) {
+        this.fleaRoleRelSV = fleaRoleRelSV;
+    }
+
+    @Autowired
+    @Qualifier("fleaPrivilegeGroupRelSV")
+    public void setFleaPrivilegeGroupRelSV(IFleaPrivilegeGroupRelSV fleaPrivilegeGroupRelSV) {
+        this.fleaPrivilegeGroupRelSV = fleaPrivilegeGroupRelSV;
+    }
+
+    @Autowired
+    @Qualifier("fleaPrivilegeRelSV")
+    public void setFleaPrivilegeRelSV(IFleaPrivilegeRelSV fleaPrivilegeRelSV) {
+        this.fleaPrivilegeRelSV = fleaPrivilegeRelSV;
     }
 
     @Override
@@ -200,88 +240,194 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
         if (CommonConstants.NumeralConstants.MINUS_ONE != groupId) { // 用户关联了用户组
             // 获取用户组关联的角色组
             List<FleaUserGroupRel> userGroupRelRoleGroups = fleaUserGroupRelSV.getUserGroupRelList(groupId, AuthRelTypeEnum.USER_GROUP_REL_ROLE_GROUP.getRelType());
-            // 处理用户组关联的角色组数据
+            // 处理用户组关联的角色组信息
             handleUserGroupRel(roleIdList, userGroupRelRoleGroups, AuthRelTypeEnum.USER_GROUP_REL_ROLE_GROUP.getRelType());
 
             // 获取用户组关联的角色
             List<FleaUserGroupRel> userGroupRelRoles = fleaUserGroupRelSV.getUserGroupRelList(groupId, AuthRelTypeEnum.USER_GROUP_REL_ROLE.getRelType());
-            // 处理用户组关联的角色数据
+            // 处理用户组关联的角色信息
             handleUserGroupRel(roleIdList, userGroupRelRoles, AuthRelTypeEnum.USER_GROUP_REL_ROLE.getRelType());
         }
 
         // 获取用户关联的角色组
         List<FleaUserRel> userRelRoleGroups = fleaUserRelSV.getUserRelList(userId, AuthRelTypeEnum.USER_REL_ROLE_GROUP.getRelType());
-        // 处理用户关联的角色组数据
+        // 处理用户关联的角色组信息
         handleUserRel(roleIdList, userRelRoleGroups, AuthRelTypeEnum.USER_REL_ROLE_GROUP.getRelType());
 
         // 获取用户关联的角色
         List<FleaUserRel> userRelRoles = fleaUserRelSV.getUserRelList(userId, AuthRelTypeEnum.USER_REL_ROLE.getRelType());
-        // 处理用户关联的角色数据
+        // 处理用户关联的角色信息
         handleUserRel(roleIdList, userRelRoles, AuthRelTypeEnum.USER_REL_ROLE.getRelType());
+
+        List<Long> privilegeIdList = new ArrayList<>(); // 权限列表
+
+        if (CollectionUtils.isNotEmpty(roleIdList)) {
+            for (Long roleId : roleIdList) {
+                // 获取角色关联的权限组
+                List<FleaRoleRel> roleRelPrivilegeGroups = fleaRoleRelSV.getRoleRelList(roleId, AuthRelTypeEnum.ROLE_REL_PRIVILEGE_GROUP.getRelType());
+                // 处理角色关联的权限组信息
+                handleRoleRel(privilegeIdList, roleRelPrivilegeGroups, AuthRelTypeEnum.ROLE_REL_PRIVILEGE_GROUP.getRelType());
+
+                // 获取角色关联的权限
+                List<FleaRoleRel> roleRelPrivileges = fleaRoleRelSV.getRoleRelList(roleId, AuthRelTypeEnum.ROLE_REL_PRIVILEGE.getRelType());
+                // 处理角色关联的权限信息
+                handleRoleRel(privilegeIdList, roleRelPrivileges, AuthRelTypeEnum.ROLE_REL_PRIVILEGE.getRelType());
+            }
+        }
+
+        
 
         return null;
     }
 
     /**
-     * <p> 处理用户组关联数据 </p>
+     * <p> 处理用户组关联信息 </p>
      *
      * @param roleIdList       角色编号列表
      * @param userGroupRelList 用户组关联信息
      * @param authRelType      授权关联类型
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    private void handleUserGroupRel(List<Long> roleIdList, List<FleaUserGroupRel> userGroupRelList, String authRelType) {
+    private void handleUserGroupRel(List<Long> roleIdList, List<FleaUserGroupRel> userGroupRelList, String authRelType) throws CommonException {
         if (CollectionUtils.isNotEmpty(userGroupRelList)) {
             for (FleaUserGroupRel userGroupRel : userGroupRelList) {
                 if (AuthRelTypeEnum.USER_GROUP_REL_ROLE_GROUP.getRelType().equals(authRelType)) { // 用户组关联角色组
-                    // 用户组关联中rel_ext_a用于指定用户组关联的角色组中实际指定的角色编号
+                    // 用户组关联中rel_ext_a用于指定用户组关联的角色组中实际指定的角色编号【存在多个，以逗号分隔】
                     String relExtA = userGroupRel.getRelExtA();
                     if (StringUtils.isNotBlank(relExtA)) {
-                        addRoleId(Long.valueOf(relExtA), roleIdList);
+                        addRelIds(relExtA, roleIdList);
+                    } else { // 用户组关联中rel_ext_a为空，表示关联其角色组【rel_id = 角色组编号】下所有角色
+                        handleRoleGroupRel(userGroupRel.getRelId(), roleIdList);
                     }
                 } else if (AuthRelTypeEnum.USER_GROUP_REL_ROLE.getRelType().equals(authRelType)) { // 用户组关联角色
                     // 用户组关联角色，直接取关联编号rel_id即可
-                    addRoleId(userGroupRel.getRelId(), roleIdList);
+                    addRelId(userGroupRel.getRelId(), roleIdList);
                 }
             }
         }
     }
 
     /**
-     * <p> 处理用户关联数据 </p>
+     * <p> 处理用户关联信息 </p>
      *
      * @param roleIdList  角色编号列表
      * @param userRelList 用户关联信息
      * @param authRelType 授权关联类型
      * @since 1.0.0
      */
-    private void handleUserRel(List<Long> roleIdList, List<FleaUserRel> userRelList, String authRelType) {
+    private void handleUserRel(List<Long> roleIdList, List<FleaUserRel> userRelList, String authRelType) throws CommonException {
         if (CollectionUtils.isNotEmpty(userRelList)) {
             for (FleaUserRel userRel : userRelList) {
                 if (AuthRelTypeEnum.USER_REL_ROLE_GROUP.getRelType().equals(authRelType)) { // 用户关联角色组
                     // 用户关联中rel_ext_a用于指定用户关联的角色组中实际指定的角色编号
                     String relExtA = userRel.getRelExtA();
                     if (StringUtils.isNotBlank(relExtA)) {
-                        addRoleId(Long.valueOf(relExtA), roleIdList);
+                        addRelIds(relExtA, roleIdList);
+                    } else { // 用户组关联中rel_ext_a为空，表示关联其角色组【rel_id = 角色组编号】下所有角色
+                        handleRoleGroupRel(userRel.getRelId(), roleIdList);
                     }
                 } else if (AuthRelTypeEnum.USER_REL_ROLE.getRelType().equals(authRelType)) { // 用户关联角色
                     // 用户关联角色，直接取关联编号rel_id即可
-                    addRoleId(userRel.getRelId(), roleIdList);
+                    addRelId(userRel.getRelId(), roleIdList);
                 }
             }
         }
     }
 
     /**
-     * <p> 添加角色信息 </p>
+     * <p> 处理角色组关联信息 </p>
      *
-     * @param relRoleId  关联角色编号
-     * @param roleIdList 角色编号列表
+     * @param roleGroupId 角色组编号
+     * @param roleIdList  角色编号列表
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    private void addRoleId(Long relRoleId, List<Long> roleIdList) {
-        if (!roleIdList.contains(relRoleId)) {
-            roleIdList.add(relRoleId);
+    private void handleRoleGroupRel(Long roleGroupId, List<Long> roleIdList) throws CommonException {
+        // 获取角色组关联的所有角色
+        List<FleaRoleGroupRel> roleGroupRelRoles = fleaRoleGroupRelSV.getRoleGroupRelList(roleGroupId, AuthRelTypeEnum.ROLE_GROUP_REL_ROLE.getRelType());
+        if (CollectionUtils.isNotEmpty(roleGroupRelRoles)) {
+            for (FleaRoleGroupRel roleGroupRel : roleGroupRelRoles) {
+                if (ObjectUtils.isNotEmpty(roleGroupRel)) {
+                    addRelId(roleGroupRel.getRelId(), roleIdList);
+                }
+            }
+        }
+    }
+
+    /**
+     * <p> 处理角色关联信息 </p>
+     *
+     * @param privilegeIdList 权限编号列表
+     * @param roleRelList     角色关联信息
+     * @param authRelType     授权关联类型
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    private void handleRoleRel(List<Long> privilegeIdList, List<FleaRoleRel> roleRelList, String authRelType) throws CommonException {
+        if (CollectionUtils.isNotEmpty(roleRelList)) {
+            for (FleaRoleRel roleRel : roleRelList) {
+                if (AuthRelTypeEnum.ROLE_REL_PRIVILEGE_GROUP.getRelType().equals(authRelType)) { // 角色关联权限组
+                    // 角色关联中rel_ext_a用于指定角色关联的权限组中实际指定的权限编号
+                    String relExtA = roleRel.getRelExtA();
+                    if (StringUtils.isNotBlank(relExtA)) {
+                        addRelIds(relExtA, privilegeIdList);
+                    } else { // 角色关联中rel_ext_a为空，则表示关联其权限组【rel_id = 权限组编号】下所有权限
+                        handlePrivilegeGroupRel(roleRel.getRelId(), privilegeIdList);
+                    }
+                } else if (AuthRelTypeEnum.ROLE_REL_PRIVILEGE.getRelType().equals(authRelType)) { // 角色关联权限
+                    addRelId(roleRel.getRelId(), privilegeIdList);
+                }
+            }
+        }
+    }
+
+    /**
+     * <p> 处理权限组关联信息 </p>
+     *
+     * @param privilegeGroupId 权限组编号
+     * @param privilegeIdList  权权限编号列表
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    private void handlePrivilegeGroupRel(Long privilegeGroupId, List<Long> privilegeIdList) throws CommonException {
+        // 获取权限组关联的所有权限
+        List<FleaPrivilegeGroupRel> privilegeGroupRelPrivileges = fleaPrivilegeGroupRelSV.getPrivilegeGroupRelList(privilegeGroupId, AuthRelTypeEnum.PRIVILEGE_GROUP_REL_PRIVILEGE.getRelType());
+        if (CollectionUtils.isNotEmpty(privilegeGroupRelPrivileges)) {
+            for (FleaPrivilegeGroupRel privilegeGroupRel : privilegeGroupRelPrivileges) {
+                if (ObjectUtils.isNotEmpty(privilegeGroupRel)) {
+                    addRelId(privilegeGroupRel.getRelId(), privilegeIdList);
+                }
+            }
+        }
+    }
+
+    /**
+     * <p> 添加多个关联信息 </p>
+     *
+     * @param relIdStr  关联编号字符串【逗号分隔】
+     * @param relIdList 关联编号列表
+     * @since 1.0.0
+     */
+    private void addRelIds(String relIdStr, List<Long> relIdList) {
+        String[] relIdArr = StringUtils.split(relIdStr, CommonConstants.SymbolConstants.COMMA);
+        if (ArrayUtils.isNotEmpty(relIdArr)) {
+            for (String relId : relIdArr) {
+                addRelId(Long.valueOf(relId), relIdList);
+            }
+        }
+    }
+
+    /**
+     * <p> 添加关联信息 </p>
+     *
+     * @param relId     关联编号
+     * @param relIdList 关联编号列表
+     * @since 1.0.0
+     */
+    private void addRelId(Long relId, List<Long> relIdList) {
+        if (!relIdList.contains(relId)) {
+            relIdList.add(relId);
         }
     }
 }

@@ -114,4 +114,24 @@ public class PrivilegeAuthTest {
 
     }
 
+    @Test
+    public void testQueryPrivilegeRel() {
+        try {
+            IFleaPrivilegeRelSV fleaPrivilegeRelSV = (IFleaPrivilegeRelSV) applicationContext.getBean("fleaPrivilegeRelSV");
+            fleaPrivilegeRelSV.getPrivilegeRelList(1L, AuthRelTypeEnum.PRIVILEGE_REL_MENU.getRelType());
+        } catch (CommonException e) {
+            LOGGER.error("Exception = ", e);
+        }
+    }
+
+    @Test
+    public void testQueryPrivilegeGroupRel() {
+        try {
+            IFleaPrivilegeGroupRelSV fleaPrivilegeGroupRelSV = (IFleaPrivilegeGroupRelSV) applicationContext.getBean("fleaPrivilegeGroupRelSV");
+            fleaPrivilegeGroupRelSV.getPrivilegeGroupRelList(1L, AuthRelTypeEnum.PRIVILEGE_GROUP_REL_PRIVILEGE.getRelType());
+        } catch (CommonException e) {
+            LOGGER.error("Exception = ", e);
+        }
+    }
+
 }

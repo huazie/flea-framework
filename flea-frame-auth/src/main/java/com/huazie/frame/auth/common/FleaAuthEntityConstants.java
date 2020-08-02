@@ -102,6 +102,11 @@ public interface FleaAuthEntityConstants extends FleaEntityConstants {
          * <p> 权限编号 </p>
          */
         String E_PRIVILEGE_ID = "privilegeId";
+
+        /**
+         * <p> 权限组编号 </p>
+         */
+        String E_PRIVILEGE_GROUP_ID = "privilegeGroupId";
     }
 
     /**
@@ -115,6 +120,11 @@ public interface FleaAuthEntityConstants extends FleaEntityConstants {
          * <p> 角色编号 </p>
          */
         String E_ROLE_ID = "roleId";
+
+        /**
+         * <p> 角色组编号 </p>
+         */
+        String E_ROLE_GROUP_ID = "roleGroupId";
     }
 
     /**
