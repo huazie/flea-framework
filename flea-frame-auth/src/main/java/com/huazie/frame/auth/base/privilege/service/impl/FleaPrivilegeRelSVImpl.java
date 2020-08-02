@@ -3,11 +3,14 @@ package com.huazie.frame.auth.base.privilege.service.impl;
 import com.huazie.frame.auth.base.privilege.dao.interfaces.IFleaPrivilegeRelDAO;
 import com.huazie.frame.auth.base.privilege.entity.FleaPrivilegeRel;
 import com.huazie.frame.auth.base.privilege.service.interfaces.IFleaPrivilegeRelSV;
+import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import com.huazie.frame.db.jpa.service.impl.AbstractFleaJPASVImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p> Flea权限关联（菜单， 操作， 元素）SV层实现类 </p>
@@ -25,6 +28,11 @@ public class FleaPrivilegeRelSVImpl extends AbstractFleaJPASVImpl<FleaPrivilegeR
     @Qualifier("fleaPrivilegeRelDAO")
     public void setFleaPrivilegeRelDao(IFleaPrivilegeRelDAO fleaPrivilegeRelDao) {
         this.fleaPrivilegeRelDao = fleaPrivilegeRelDao;
+    }
+
+    @Override
+    public List<FleaPrivilegeRel> getPrivilegeRelList(Long privilegeId, String authRelType) throws CommonException {
+        return fleaPrivilegeRelDao.getPrivilegeRelList(privilegeId, authRelType);
     }
 
     @Override
