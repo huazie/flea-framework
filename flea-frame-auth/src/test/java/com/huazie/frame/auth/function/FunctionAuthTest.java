@@ -92,4 +92,16 @@ public class FunctionAuthTest {
         }
 
     }
+
+    @Test
+    public void testFunctionAttrQuery() {
+
+        try {
+            IFleaFunctionAttrSV fleaFunctionAttrSV = (IFleaFunctionAttrSV) applicationContext.getBean("fleaFunctionAttrSV");
+            fleaFunctionAttrSV.getFunctionAttrList(null, FunctionTypeEnum.MENU.getType(), FleaAuthConstants.FunctionConstants.MENU_ATTR_CODE_SYSTEM_IN_USE);
+        } catch (CommonException e) {
+            LOGGER.error("Exception: ", e);
+        }
+
+    }
 }

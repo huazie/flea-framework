@@ -1,7 +1,11 @@
 package com.huazie.frame.auth.common.service.impl;
 
+import com.huazie.frame.auth.base.function.entity.FleaFunctionAttr;
 import com.huazie.frame.auth.base.function.entity.FleaMenu;
+import com.huazie.frame.auth.base.function.service.interfaces.IFleaFunctionAttrSV;
+import com.huazie.frame.auth.base.function.service.interfaces.IFleaMenuSV;
 import com.huazie.frame.auth.base.privilege.entity.FleaPrivilegeGroupRel;
+import com.huazie.frame.auth.base.privilege.entity.FleaPrivilegeRel;
 import com.huazie.frame.auth.base.privilege.service.interfaces.IFleaPrivilegeGroupRelSV;
 import com.huazie.frame.auth.base.privilege.service.interfaces.IFleaPrivilegeRelSV;
 import com.huazie.frame.auth.base.role.entity.FleaRoleGroupRel;
@@ -20,6 +24,7 @@ import com.huazie.frame.auth.base.user.service.interfaces.IFleaUserRelSV;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaUserSV;
 import com.huazie.frame.auth.common.AuthRelTypeEnum;
 import com.huazie.frame.auth.common.FleaAuthConstants;
+import com.huazie.frame.auth.common.FunctionTypeEnum;
 import com.huazie.frame.auth.common.exception.FleaAuthCommonException;
 import com.huazie.frame.auth.common.service.interfaces.IFleaAuthSV;
 import com.huazie.frame.common.CommonConstants;
@@ -77,6 +82,10 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
 
     private IFleaPrivilegeRelSV fleaPrivilegeRelSV; // Flea权限关联服务
 
+    private IFleaMenuSV fleaMenuSV; // Flea菜单服务
+
+    private IFleaFunctionAttrSV fleaFunctionAttrSV; // Flea扩展属性服务
+
     @Autowired
     @Qualifier("fleaLoginLogSV")
     public void setFleaLoginLogSV(IFleaLoginLogSV fleaLoginLogSV) {
@@ -129,6 +138,18 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
     @Qualifier("fleaPrivilegeRelSV")
     public void setFleaPrivilegeRelSV(IFleaPrivilegeRelSV fleaPrivilegeRelSV) {
         this.fleaPrivilegeRelSV = fleaPrivilegeRelSV;
+    }
+
+    @Autowired
+    @Qualifier("fleaMenuSV")
+    public void setFleaMenuSV(IFleaMenuSV fleaMenuSV) {
+        this.fleaMenuSV = fleaMenuSV;
+    }
+
+    @Autowired
+    @Qualifier("fleaFunctionAttrSV")
+    public void setFleaFunctionAttrSV(IFleaFunctionAttrSV fleaFunctionAttrSV) {
+        this.fleaFunctionAttrSV = fleaFunctionAttrSV;
     }
 
     @Override
@@ -275,7 +296,24 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
             }
         }
 
-        
+        List<Long> menuIdList = new ArrayList<>(); // 菜单列表
+
+        if (CollectionUtils.isNotEmpty(privilegeIdList)) {
+            for (Long privilegeId : privilegeIdList) {
+                // 获取权限关联的菜单
+                List<FleaPrivilegeRel> privilegeRelMenus = fleaPrivilegeRelSV.getPrivilegeRelList(privilegeId, AuthRelTypeEnum.PRIVILEGE_REL_MENU.getRelType());
+                // 处理权限关联的菜单信息
+                handlePrivilegeRel(menuIdList, privilegeRelMenus);
+            }
+        }
+
+        List<Long> systemRelMenuIdList = new ArrayList<>(); // 系统关联的菜单编号列表
+
+        // 获取系统账户下关联的菜单
+        // 取 功能类型 function_type = MENU, ATTR_CODE = SYSTEM_IN_USE
+        List<FleaFunctionAttr> fleaFunctionAttrList = fleaFunctionAttrSV.getFunctionAttrList(null, FunctionTypeEnum.MENU.getType(), FleaAuthConstants.FunctionConstants.MENU_ATTR_CODE_SYSTEM_IN_USE);
+        // 处理系统账户下关联的菜单信息
+        handleFunctionAttr(systemRelMenuIdList, fleaFunctionAttrList, systemAcctId);
 
         return null;
     }
@@ -397,6 +435,43 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
             for (FleaPrivilegeGroupRel privilegeGroupRel : privilegeGroupRelPrivileges) {
                 if (ObjectUtils.isNotEmpty(privilegeGroupRel)) {
                     addRelId(privilegeGroupRel.getRelId(), privilegeIdList);
+                }
+            }
+        }
+    }
+
+    /**
+     * <p> 处理权限关联信息 </p>
+     *
+     * @param relIdList        关联ID列表
+     * @param privilegeRelList 权限关联信息
+     * @since 1.0.0
+     */
+    private void handlePrivilegeRel(List<Long> relIdList, List<FleaPrivilegeRel> privilegeRelList) {
+        if (CollectionUtils.isNotEmpty(privilegeRelList)) {
+            for (FleaPrivilegeRel privilegeRel : privilegeRelList) {
+                if (ObjectUtils.isNotEmpty(privilegeRel)) {
+                    addRelId(privilegeRel.getRelId(), relIdList);
+                }
+            }
+        }
+    }
+
+    /**
+     * <p> 处理功能扩展属性信息 </p>
+     *
+     * @param functionIdList   功能编号列表
+     * @param functionAttrList 功能参数列表
+     * @param systemAcctId     系统账号编号
+     * @since 1.0.0
+     */
+    private void handleFunctionAttr(List<Long> functionIdList, List<FleaFunctionAttr> functionAttrList, Long systemAcctId) {
+        if (CollectionUtils.isNotEmpty(functionAttrList)) {
+            for (FleaFunctionAttr functionAttr : functionAttrList) {
+                if (ObjectUtils.isNotEmpty(functionAttr)) {
+                    if (!functionIdList.contains(functionAttr.getFunctionId()) && StringUtils.valueOf(systemAcctId).equals(functionAttr.getAttrValue())) {
+                        functionIdList.add(functionAttr.getFunctionId());
+                    }
                 }
             }
         }
