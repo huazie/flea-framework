@@ -35,7 +35,7 @@ public class FleaUserLoginSVImpl implements IFleaUserLoginSV {
 
         // 校验用户登录信息对象是否为空
         // ERROR-AUTH-COMMON0000000001 【{0}】不能为空
-        ObjectUtils.checkEmpty(fleaUserLoginPOJO, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", new String[]{"FleaUserLoginPOJO"});
+        ObjectUtils.checkEmpty(fleaUserLoginPOJO, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", FleaUserLoginPOJO.class.getSimpleName());
 
         // 校验账号是否为空
         // ERROR-AUTH-COMMON0000000002 账号不能为空！

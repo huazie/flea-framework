@@ -74,7 +74,7 @@ public abstract class FleaCodeBuilder implements IFleaCodeBuilder {
         String[] tableNameArr = StringUtils.split(tableName, CommonConstants.SymbolConstants.UNDERLINE);
         if (ArrayUtils.isNotEmpty(tableNameArr)) {
             for (int n = 0; n < tableNameArr.length; n++) {
-                tableNameArr[n] = StringUtils.toUpperCase(tableNameArr[n]);
+                tableNameArr[n] = StringUtils.toUpperCaseFirstAndLowerCaseLeft(tableNameArr[n]);
             }
             // 实体类名
             return StringUtils.strCat("", tableNameArr);

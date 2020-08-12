@@ -1,7 +1,9 @@
 package com.huazie.frame.db.common.table.split.impl;
 
 import com.huazie.frame.common.DateFormatEnum;
+import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.DateUtils;
+import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.exception.TableSplitException;
@@ -26,9 +28,10 @@ public abstract class AbstractTableSplitImpl implements ITableSplit {
      * @param tableSplitColumn 分表字段
      * @param dateFormatEnum   日期格式化类型枚举
      * @return 分表后缀名
-     * @throws TableSplitException 分表转换异常类
+     * @throws CommonException 通用异常
+     * @since 1.0.0
      */
-    protected String convert(Object tableSplitColumn, DateFormatEnum dateFormatEnum) throws TableSplitException {
+    protected String convert(Object tableSplitColumn, DateFormatEnum dateFormatEnum) throws CommonException {
         String tSplitPrefix = "";
         if (ObjectUtils.isEmpty(tableSplitColumn)) {
             tSplitPrefix = DateUtils.date2String(null, dateFormatEnum);
@@ -37,12 +40,10 @@ public abstract class AbstractTableSplitImpl implements ITableSplit {
             tSplitPrefix = DateUtils.date2String((Date) tableSplitColumn, dateFormatEnum);
         } else {
             // 分表属性列必须是日期类型
-            throw new TableSplitException("ERROR-DB-TSP0000000002");
+            ExceptionUtils.throwCommonException(TableSplitException.class, "ERROR-DB-TSP0000000002");
         }
-        if (StringUtils.isBlank(tSplitPrefix)) {
-            // 获取【{0}】分表后缀异常
-            throw new TableSplitException("ERROR-DB-TSP0000000001", dateFormatEnum.getFormat());
-        }
+        // 获取【{0}】分表后缀异常
+        StringUtils.checkBlank(tSplitPrefix, TableSplitException.class, "ERROR-DB-TSP0000000001", dateFormatEnum.getFormat());
         return tSplitPrefix;
     }
 
@@ -52,18 +53,18 @@ public abstract class AbstractTableSplitImpl implements ITableSplit {
      * @param tableSplitColumn 分表字段
      * @param len              分表后缀长度
      * @return 分表后缀名
-     * @throws TableSplitException 分表转换异常类
+     * @throws CommonException 通用异常
+     * @since 1.0.0
      */
-    protected String convert(Object tableSplitColumn, int len) throws TableSplitException {
-        if (ObjectUtils.isEmpty(tableSplitColumn)) {
-            // 分表属性列值不能为空
-            throw new TableSplitException("ERROR-DB-TSP0000000003");
-        }
+    protected String convert(Object tableSplitColumn, int len) throws CommonException {
+
+        // 分表属性列值不能为空
+        ObjectUtils.checkEmpty(tableSplitColumn, TableSplitException.class, "ERROR-DB-TSP0000000003");
+
         String tSplitCol = tableSplitColumn.toString();
-        if (StringUtils.isBlank(tSplitCol)) {
-            // 分表属性列值不能为空
-            throw new TableSplitException("ERROR-DB-TSP0000000003");
-        }
+        // 分表属性列值不能为空
+        StringUtils.checkBlank(tSplitCol, TableSplitException.class, "ERROR-DB-TSP0000000003");
+
         String tSplitPrefix = StringUtils.subStrLast(tSplitCol, len);
         return tSplitPrefix.toLowerCase();
     }

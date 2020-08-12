@@ -38,6 +38,11 @@ public interface ToolsConstants {
 
         String DB_SYSTEM_NAME = "DB_SYSTEM_NAME";
         String DB_NAME = "DB_NAME";
+
+        String ID_GENERATOR_STRATEGY = "ID_GENERATOR_STRATEGY";
+        String ID_GENERATOR_TABLE = "ID_GENERATOR_TABLE";
+        String PK_COLUMN_NAME = "PK_COLUMN_NAME";
+        String VALUE_COLUMN_NAME = "VALUE_COLUMN_NAME";
     }
 
     interface CodeConfigConstants {
@@ -51,6 +56,12 @@ public interface ToolsConstants {
         String TABLE_NAME = "tableName";
 
         String TABLE_NAME_DESC = "tableNameDesc";
+
+        String ID_GENERATOR_TABLE = "idGeneratorTable";
+
+        String PK_COLUMN_NAME = "pkColumnName";
+
+        String VALUE_COLUMN_NAME = "valueColumnName";
 
         String AUTHOR = "author";
 

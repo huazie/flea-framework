@@ -1,6 +1,6 @@
 package com.huazie.frame.db.common.table.split;
 
-import com.huazie.frame.db.common.exception.TableSplitException;
+import com.huazie.frame.common.exception.CommonException;
 
 import java.io.Serializable;
 
@@ -18,7 +18,7 @@ public interface ITableSplit extends Serializable {
      *
      * @param tableSplitColumn 分表字段
      * @return 分表后缀名
-     * @throws TableSplitException 分表实现异常类
+     * @throws CommonException 通用异常
      */
-    String convert(Object tableSplitColumn) throws TableSplitException;
+    String convert(Object tableSplitColumn) throws CommonException;
 }

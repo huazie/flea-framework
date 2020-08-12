@@ -19,10 +19,11 @@ import org.springframework.stereotype.Service;
 @Service("fleaRoleGroupSV")
 public class FleaRoleGroupSVImpl extends AbstractFleaJPASVImpl<FleaRoleGroup> implements IFleaRoleGroupSV {
 
-    private final IFleaRoleGroupDAO fleaRoleGroupDao;
+    private IFleaRoleGroupDAO fleaRoleGroupDao;
 
     @Autowired
-    public FleaRoleGroupSVImpl(@Qualifier("fleaRoleGroupDAO") IFleaRoleGroupDAO fleaRoleGroupDao) {
+    @Qualifier("fleaRoleGroupDAO")
+    public void setFleaRoleGroupDao(IFleaRoleGroupDAO fleaRoleGroupDao) {
         this.fleaRoleGroupDao = fleaRoleGroupDao;
     }
 

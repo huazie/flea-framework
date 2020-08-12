@@ -6,7 +6,7 @@ import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.db.jpa.service.interfaces.IAbstractFleaJPASV;
 
 /**
- * <p> Flea帐户信息SV层接口定义 </p>
+ * <p> Flea账户信息SV层接口定义 </p>
  *
  * @author huazie
  * @version 1.0.0
@@ -50,7 +50,7 @@ public interface IFleaAccountSV extends IAbstractFleaJPASV<FleaAccount> {
      *
      * @param originalAccountPwd 原始账户密码
      * @return 加密后的密码
-     * @throws CommonException 通用异常
+     * @since 1.0.0
      */
     String encrypt(String originalAccountPwd);
 

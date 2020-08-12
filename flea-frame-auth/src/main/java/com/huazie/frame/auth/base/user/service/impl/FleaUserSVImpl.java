@@ -3,6 +3,7 @@ package com.huazie.frame.auth.base.user.service.impl;
 import com.huazie.frame.auth.base.user.dao.interfaces.IFleaUserDAO;
 import com.huazie.frame.auth.base.user.entity.FleaUser;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaUserSV;
+import com.huazie.frame.auth.common.FleaAuthEntityConstants;
 import com.huazie.frame.auth.common.exception.FleaAuthCommonException;
 import com.huazie.frame.auth.common.pojo.user.FleaUserPOJO;
 import com.huazie.frame.common.exception.CommonException;
@@ -24,10 +25,11 @@ import org.springframework.stereotype.Service;
 @Service("fleaUserSV")
 public class FleaUserSVImpl extends AbstractFleaJPASVImpl<FleaUser> implements IFleaUserSV {
 
-    private final IFleaUserDAO fleaUserDao;
+    private IFleaUserDAO fleaUserDao;
 
     @Autowired
-    public FleaUserSVImpl(@Qualifier("fleaUserDAO") IFleaUserDAO fleaUserDao) {
+    @Qualifier("fleaUserDAO")
+    public void setFleaUserDao(IFleaUserDAO fleaUserDao) {
         this.fleaUserDao = fleaUserDao;
     }
 
@@ -54,11 +56,11 @@ public class FleaUserSVImpl extends AbstractFleaJPASVImpl<FleaUser> implements I
 
         // 校验Flea用户POJO类对象是否为空
         // ERROR-AUTH-COMMON0000000001 【{0}】不能为空
-        ObjectUtils.checkEmpty(fleaUserPOJO, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", new String[]{"FleaUserPOJO"});
+        ObjectUtils.checkEmpty(fleaUserPOJO, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", FleaUserPOJO.class.getSimpleName());
 
         // 校验用户昵称是否为空
         String userName = fleaUserPOJO.getUserName();
-        StringUtils.checkBlank(userName, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", new String[]{"userName"});
+        StringUtils.checkBlank(userName, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", FleaAuthEntityConstants.UserEntityConstants.E_USER_NAME);
 
         return new FleaUser(userName,
                 fleaUserPOJO.getGroupId(),

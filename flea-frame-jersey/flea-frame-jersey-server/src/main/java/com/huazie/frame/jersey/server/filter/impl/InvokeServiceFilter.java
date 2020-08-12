@@ -1,6 +1,9 @@
 package com.huazie.frame.jersey.server.filter.impl;
 
+import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
+import com.huazie.frame.common.util.ReflectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.common.util.json.GsonUtils;
 import com.huazie.frame.core.base.cfgdata.bean.FleaConfigDataSpringBean;
@@ -17,8 +20,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.lang.reflect.Method;
-
 /**
  * <p> 服务调用过滤器 </p>
  *
@@ -31,7 +32,7 @@ public class InvokeServiceFilter implements IFleaJerseyFilter {
     private static final Logger LOGGER = LoggerFactory.getLogger(InvokeServiceFilter.class);
 
     @Override
-    public void doFilter(FleaJerseyRequest request, FleaJerseyResponse response) throws Exception {
+    public void doFilter(FleaJerseyRequest request, FleaJerseyResponse response) throws CommonException {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("InvokeServiceFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) Start");
         }
@@ -52,10 +53,8 @@ public class InvokeServiceFilter implements IFleaJerseyFilter {
         FleaConfigDataSpringBean fleaConfigDataSpringBean = webApplicationContext.getBean(FleaConfigDataSpringBean.class);
         // 根据资源编码 和 服务编码 获取 资源服务配置数据
         FleaJerseyResService resService = fleaConfigDataSpringBean.getResService(serviceCode, resourceCode);
-        if (ObjectUtils.isEmpty(resService)) {
-            // 未能找到指定资源服务配置数据【service_code = {0} , resource_code = {1}】
-            throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000008", serviceCode, resourceCode);
-        }
+        // 未能找到指定资源服务配置数据【service_code = {0} , resource_code = {1}】
+        ObjectUtils.checkEmpty(resService, FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000008", serviceCode, resourceCode);
 
         // 获取资源服务接口
         String serviceInterfaces = resService.getServiceInterfaces();
@@ -65,15 +64,23 @@ public class InvokeServiceFilter implements IFleaJerseyFilter {
         String inputParam = resService.getServiceInput();
         // 获取资源服务业务出参
         String outputParam = resService.getServiceOutput();
+
+        Class<?> serviceInterfacesClazz = ReflectUtils.forName(serviceInterfaces);
+        // 请检查服务端配置【service_code = {0} , resource_code = {1}】: 【{2} = {3}】非法
+        ObjectUtils.checkEmpty(serviceInterfacesClazz, FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000009", serviceCode,
+                resourceCode, "service_interfaces", serviceInterfaces);
+
         // 根据服务接口，从Web应用上下文中获取Spring注入的服务
-        Object obj = webApplicationContext.getBean(Class.forName(serviceInterfaces));
+        Object obj = webApplicationContext.getBean(serviceInterfacesClazz);
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("InvokeServiceFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) Impl = {}", obj);
         }
 
-        Class inputClazz = Class.forName(inputParam);
-        Method method = obj.getClass().getMethod(serviceMethod, inputClazz);
+        Class inputClazz = ReflectUtils.forName(inputParam);
+        // 请检查服务端配置【service_code = {0} , resource_code = {1}】: 【{2} = {3}】非法
+        ObjectUtils.checkEmpty(inputClazz, FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000009", serviceCode,
+                resourceCode, "service_input", inputParam);
 
         String inputJson = requestBusinessData.getInput();
         Object inputObj = GsonUtils.toEntity(inputJson, inputClazz);
@@ -84,16 +91,21 @@ public class InvokeServiceFilter implements IFleaJerseyFilter {
             LOGGER.debug("InvokeServiceFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) INPUT OBJ   = {}", inputObj);
         }
 
-        Object outputObj = method.invoke(obj, inputObj);
+        Object outputObj = ReflectUtils.invoke(obj, serviceMethod, inputObj, inputClazz);
 
         Class outputClazz = null;
         if (StringUtils.isNotBlank(outputParam)) {
-            outputClazz = Class.forName(outputParam);
+            outputClazz = ReflectUtils.forName(outputParam);
         }
 
-        if (null != outputClazz && !outputClazz.isInstance(outputObj)) {
+        // 请检查服务端配置【service_code = {0} , resource_code = {1}】: 【{2} = {3}】非法
+        ObjectUtils.checkEmpty(outputClazz, FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000009", serviceCode,
+                resourceCode, "service_output", outputParam);
+
+        if (ObjectUtils.isNotEmpty(outputClazz) && !outputClazz.isInstance(outputObj)) {
             // 资源【{0}】下的服务【{1}】请求异常：配置的出参【{2}】与服务方法【{3}】出参【{4}】类型不一致
-            throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000009", resourceCode, serviceCode, outputParam, serviceMethod, outputObj.getClass().getName());
+            ExceptionUtils.throwCommonException(FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000010", resourceCode,
+                    serviceCode, outputParam, serviceMethod, outputObj.getClass().getName());
         }
 
         // 获取响应业务报文

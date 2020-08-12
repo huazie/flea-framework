@@ -1,5 +1,6 @@
 package com.huazie.frame.core.base.cfgdata.service.interfaces;
 
+import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResClient;
 import com.huazie.frame.db.jpa.service.interfaces.IAbstractFleaJPASV;
 
@@ -17,9 +18,9 @@ public interface IFleaJerseyResClientSV extends IAbstractFleaJPASV<FleaJerseyRes
      *
      * @param clientCode 客户端编码
      * @return 资源客户端配置数据
-     * @throws Exception
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    FleaJerseyResClient getResClient(String clientCode) throws Exception;
+    FleaJerseyResClient getResClient(String clientCode) throws CommonException;
 
 }

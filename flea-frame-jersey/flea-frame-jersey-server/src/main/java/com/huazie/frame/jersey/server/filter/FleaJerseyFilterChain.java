@@ -83,10 +83,8 @@ public class FleaJerseyFilterChain {
             LOGGER.debug("FleaJerseyFilterChain##doFilter(String) RequestData = {}", requestData);
         }
         try {
-            if (StringUtils.isBlank(requestData)) {
-                // 请求报文不能为空
-                throw new FleaJerseyFilterException("ERROR-JERSEY-FILTER0000000003");
-            }
+            // 请求报文不能为空
+            StringUtils.checkBlank(requestData, FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000003");
             FleaJerseyRequest request = JABXUtils.fromXml(requestData, FleaJerseyRequest.class);
             response = doFilter(request, response);
         } catch (Exception e) {
@@ -233,7 +231,7 @@ public class FleaJerseyFilterChain {
     private List<IFleaJerseyFilter> convert(List<Filter> filters) {
         List<IFleaJerseyFilter> jerseyFilters = null;
         if (CollectionUtils.isNotEmpty(filters)) {
-            jerseyFilters = new ArrayList<IFleaJerseyFilter>();
+            jerseyFilters = new ArrayList<>();
             for (Filter filter : filters) {
                 if (ObjectUtils.isNotEmpty(filter)) {
                     IFleaJerseyFilter jerseyFilter = (IFleaJerseyFilter) ReflectUtils.newInstance(filter.getClazz());
@@ -256,7 +254,7 @@ public class FleaJerseyFilterChain {
     private List<IFleaJerseyErrorFilter> convertError(List<Filter> filters) {
         List<IFleaJerseyErrorFilter> jerseyErrorFilters = null;
         if (CollectionUtils.isNotEmpty(filters)) {
-            jerseyErrorFilters = new ArrayList<IFleaJerseyErrorFilter>();
+            jerseyErrorFilters = new ArrayList<>();
             for (Filter filter : filters) {
                 if (ObjectUtils.isNotEmpty(filter)) {
                     IFleaJerseyErrorFilter jerseyErrorFilter = (IFleaJerseyErrorFilter) ReflectUtils.newInstance(filter.getClazz());

@@ -8,8 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
@@ -28,8 +28,21 @@ public class FleaFunctionAttr extends FleaEntity {
     private static final long serialVersionUID = -1325218604346017313L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "FLEA_FUNCTION_ATTR_SEQ")
-    @SequenceGenerator(name = "FLEA_FUNCTION_ATTR_SEQ")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "FLEA_FUNCTION_ATTR_GENERATOR")
+    @TableGenerator(
+        // 唯一的生成器名称，可以由一个或多个类引用以作为id值的生成器。
+        name = "FLEA_FUNCTION_ATTR_GENERATOR",
+        // 存储生成的ID值的表的名称
+        table = "flea_id_generator",
+        // 表中主键列的名称
+        pkColumnName = "id_generator_key",
+        // 存储最后生成的主键值的列的名称
+        valueColumnName = "id_generator_value",
+        // ID生成器表中的主键值模板，用于将该生成值集与其他可能存储在表中的值区分开
+        pkColumnValue = "pk_flea_function_attr",
+        // 从ID生成器表中分配ID号时增加的数量
+        allocationSize = 1
+    )
     @Column(name = "attr_id", unique = true, nullable = false)
     private Long attrId; // 属性编号
 
@@ -37,7 +50,7 @@ public class FleaFunctionAttr extends FleaEntity {
     private Long functionId; // 功能编号
 
     @Column(name = "function_type", nullable = false)
-    private String functionType; // 功能类型(菜单、操作、元素)
+    private String functionType; // 功能类型(菜单、操作、元素) 
 
     @Column(name = "attr_code", nullable = false)
     private String attrCode; // 属性码

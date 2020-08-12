@@ -1,6 +1,7 @@
 package com.huazie.frame.core.filter.task.impl;
 
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.PatternMatcherUtils;
 import com.huazie.frame.common.util.StringUtils;
@@ -48,7 +49,7 @@ public class UrlCheckFilterTask implements IFilterTask {
             String queryString = request.getQueryString();
             if (StringUtils.isNotBlank(queryString) && PatternMatcherUtils.matches(urlIllegalChar, queryString, Pattern.CASE_INSENSITIVE)) {
                 // 检测到浏览器请求地址栏中存在非法的字符，已限制访问！！！
-                throw new FleaFilterTaskException("ERROR-CORE-FILTER0000000001");
+                ExceptionUtils.throwCommonException(FleaFilterTaskException.class, "ERROR-CORE-FILTER0000000001");
             }
 
             String uri = request.getRequestURI();

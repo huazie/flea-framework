@@ -1,0 +1,137 @@
+package com.huazie.frame.auth.privilege;
+
+import com.huazie.frame.auth.base.privilege.entity.FleaPrivilege;
+import com.huazie.frame.auth.base.privilege.entity.FleaPrivilegeGroup;
+import com.huazie.frame.auth.base.privilege.entity.FleaPrivilegeGroupRel;
+import com.huazie.frame.auth.base.privilege.entity.FleaPrivilegeRel;
+import com.huazie.frame.auth.base.privilege.service.interfaces.IFleaPrivilegeGroupRelSV;
+import com.huazie.frame.auth.base.privilege.service.interfaces.IFleaPrivilegeGroupSV;
+import com.huazie.frame.auth.base.privilege.service.interfaces.IFleaPrivilegeRelSV;
+import com.huazie.frame.auth.base.privilege.service.interfaces.IFleaPrivilegeSV;
+import com.huazie.frame.auth.common.AuthRelTypeEnum;
+import com.huazie.frame.common.EntityStateEnum;
+import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.util.DateUtils;
+import org.junit.Before;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+/**
+ * <p>  </p>
+ *
+ * @author huazie
+ * @version 1.0.0
+ * @since 1.0.0
+ */
+public class PrivilegeAuthTest {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(PrivilegeAuthTest.class);
+
+    private ApplicationContext applicationContext;
+
+    @Before
+    public void init() {
+        applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+        LOGGER.debug("ApplicationContext={}", applicationContext);
+    }
+
+    @Test
+    public void testInsertPrivilegeGroup() {
+
+        FleaPrivilegeGroup fleaPrivilegeGroup = new FleaPrivilegeGroup();
+        fleaPrivilegeGroup.setPrivilegeGroupName("菜单访问");
+        fleaPrivilegeGroup.setPrivilegeGroupDesc("与访问菜单相关的权限归属的权限组");
+        fleaPrivilegeGroup.setPrivilegeGroupState(EntityStateEnum.IN_USE.getState());
+        fleaPrivilegeGroup.setCreateDate(DateUtils.getCurrentTime());
+        fleaPrivilegeGroup.setRemarks("该权限组包含了访问菜单相关的权限");
+
+        try {
+            IFleaPrivilegeGroupSV fleaPrivilegeGroupSV = (IFleaPrivilegeGroupSV) applicationContext.getBean("fleaPrivilegeGroupSV");
+            fleaPrivilegeGroupSV.save(fleaPrivilegeGroup);
+        } catch (CommonException e) {
+            LOGGER.error("Exception :", e);
+        }
+    }
+
+    @Test
+    public void testInsertPrivilege() {
+
+        FleaPrivilege fleaPrivilege = new FleaPrivilege();
+        fleaPrivilege.setPrivilegeName("访问《控制台》菜单");
+        fleaPrivilege.setPrivilegeDesc("拥有可以访问《控制台》菜单的权限");
+        fleaPrivilege.setGroupId(1L);
+        fleaPrivilege.setPrivilegeState(EntityStateEnum.IN_USE.getState());
+        fleaPrivilege.setCreateDate(DateUtils.getCurrentTime());
+        fleaPrivilege.setRemarks("【访问《控制台》菜单】权限对应【控制台】菜单，新增菜单时自动生成");
+
+        try {
+            IFleaPrivilegeSV fleaPrivilegeSV = (IFleaPrivilegeSV) applicationContext.getBean("fleaPrivilegeSV");
+            fleaPrivilegeSV.save(fleaPrivilege);
+        } catch (CommonException e) {
+            LOGGER.error("Exception :", e);
+        }
+    }
+
+    @Test
+    public void testInsertPrivilegeRel() {
+
+        FleaPrivilegeRel fleaPrivilegeRel = new FleaPrivilegeRel();
+        fleaPrivilegeRel.setPrivilegeId(1L);
+        fleaPrivilegeRel.setRelId(1L);
+        fleaPrivilegeRel.setRelType(AuthRelTypeEnum.PRIVILEGE_REL_MENU.getRelType());
+        fleaPrivilegeRel.setRelState(EntityStateEnum.IN_USE.getState());
+        fleaPrivilegeRel.setCreateDate(DateUtils.getCurrentTime());
+        fleaPrivilegeRel.setRemarks("【控制台】菜单绑定【访问《控制台》菜单】权限, 新增菜单时自动生成");
+
+        try {
+            IFleaPrivilegeRelSV fleaPrivilegeRelSV = (IFleaPrivilegeRelSV) applicationContext.getBean("fleaPrivilegeRelSV");
+            fleaPrivilegeRelSV.save(fleaPrivilegeRel);
+        } catch (CommonException e) {
+            LOGGER.error("Exception :", e);
+        }
+    }
+
+    @Test
+    public void testInsertPrivilegeGroupRel() {
+
+        FleaPrivilegeGroupRel fleaPrivilegeGroupRel = new FleaPrivilegeGroupRel();
+        fleaPrivilegeGroupRel.setPrivilegeGroupId(1L);
+        fleaPrivilegeGroupRel.setRelId(1L);
+        fleaPrivilegeGroupRel.setRelType(AuthRelTypeEnum.PRIVILEGE_GROUP_REL_PRIVILEGE.getRelType());
+        fleaPrivilegeGroupRel.setRelState(EntityStateEnum.IN_USE.getState());
+        fleaPrivilegeGroupRel.setCreateDate(DateUtils.getCurrentTime());
+        fleaPrivilegeGroupRel.setRemarks("【菜单访问】权限组关联【访问《控制台》菜单】权限");
+
+        try {
+            IFleaPrivilegeGroupRelSV fleaPrivilegeGroupRelSV = (IFleaPrivilegeGroupRelSV) applicationContext.getBean("fleaPrivilegeGroupRelSV");
+            fleaPrivilegeGroupRelSV.save(fleaPrivilegeGroupRel);
+        } catch (CommonException e) {
+            LOGGER.error("Exception :", e);
+        }
+
+    }
+
+    @Test
+    public void testQueryPrivilegeRel() {
+        try {
+            IFleaPrivilegeRelSV fleaPrivilegeRelSV = (IFleaPrivilegeRelSV) applicationContext.getBean("fleaPrivilegeRelSV");
+            fleaPrivilegeRelSV.getPrivilegeRelList(1L, AuthRelTypeEnum.PRIVILEGE_REL_MENU.getRelType());
+        } catch (CommonException e) {
+            LOGGER.error("Exception = ", e);
+        }
+    }
+
+    @Test
+    public void testQueryPrivilegeGroupRel() {
+        try {
+            IFleaPrivilegeGroupRelSV fleaPrivilegeGroupRelSV = (IFleaPrivilegeGroupRelSV) applicationContext.getBean("fleaPrivilegeGroupRelSV");
+            fleaPrivilegeGroupRelSV.getPrivilegeGroupRelList(1L, AuthRelTypeEnum.PRIVILEGE_GROUP_REL_PRIVILEGE.getRelType());
+        } catch (CommonException e) {
+            LOGGER.error("Exception = ", e);
+        }
+    }
+
+}

@@ -94,7 +94,7 @@ public class ReflectUtils {
             }
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("当前类反射出错，Class={}, Exception={}", className, e.getMessage());
+                LOGGER.error("当前类反射出错，Class={}, Exception={}", className, e);
             }
         }
         return obj;
@@ -112,6 +112,48 @@ public class ReflectUtils {
         Object obj = null;
         if (ObjectUtils.isNotEmpty(clazz)) {
             obj = newInstance(clazz.getName(), params);
+        }
+        return obj;
+    }
+
+    /**
+     * <p> 获取类实例化后的对象 </p>
+     *
+     * @param className  类名
+     * @param params     构造方法参数
+     * @param paramTypes 构造方法参数类型
+     * @return 类实例化后的对象
+     * @since 1.0.0
+     */
+    public static Object newInstance(String className, Object[] params, Class<?>[] paramTypes) {
+        Object obj = null;
+        try {
+            Class<?> clazz = Class.forName(className);
+            if (ArrayUtils.isNotEmpty(params) && ArrayUtils.isNotEmpty(paramTypes) && params.length == paramTypes.length) {
+                Constructor<?> constructor = clazz.getConstructor(paramTypes);
+                obj = constructor.newInstance(params);
+            }
+        } catch (Exception e) {
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("当前类反射出错，Class={}, Exception={}", className, e);
+            }
+        }
+        return obj;
+    }
+
+    /**
+     * <p> 获取类实例化后的对象 </p>
+     *
+     * @param clazz      类对象
+     * @param params     构造方法参数
+     * @param paramTypes 构造方法参数类型
+     * @return 类实例化后的对象
+     * @since 1.0.0
+     */
+    public static Object newInstance(Class<?> clazz, Object[] params, Class<?>[] paramTypes) {
+        Object obj = null;
+        if (ObjectUtils.isNotEmpty(clazz)) {
+            obj = newInstance(clazz.getName(), params, paramTypes);
         }
         return obj;
     }
@@ -156,6 +198,32 @@ public class ReflectUtils {
             }
         }
         return method;
+    }
+
+    /**
+     * <p> 反射调用obj对象指定方法并返回 </p>
+     *
+     * @param obj        实例对象
+     * @param methodName 方法名
+     * @param inputObj   入参对象
+     * @param inputClazz 入参对象Class
+     * @return 出参对象
+     * @since 1.0.0
+     */
+    public static Object invoke(Object obj, String methodName, Object inputObj, Class inputClazz) {
+
+        Object outputObj = null;
+
+        try {
+            Method method = obj.getClass().getMethod(methodName, inputClazz);
+            outputObj = method.invoke(obj, inputObj);
+        } catch (Exception e) {
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("反射调用对象指定方法出错，Exception = ", e);
+            }
+        }
+
+        return outputObj;
     }
 
 }
