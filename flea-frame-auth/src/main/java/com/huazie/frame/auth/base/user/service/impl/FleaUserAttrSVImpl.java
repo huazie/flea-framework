@@ -3,6 +3,7 @@ package com.huazie.frame.auth.base.user.service.impl;
 import com.huazie.frame.auth.base.user.dao.interfaces.IFleaUserAttrDAO;
 import com.huazie.frame.auth.base.user.entity.FleaUserAttr;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaUserAttrSV;
+import com.huazie.frame.auth.common.FleaAuthEntityConstants;
 import com.huazie.frame.auth.common.exception.FleaAuthCommonException;
 import com.huazie.frame.auth.common.pojo.user.attr.FleaUserAttrPOJO;
 import com.huazie.frame.common.exception.CommonException;
@@ -80,15 +81,15 @@ public class FleaUserAttrSVImpl extends AbstractFleaJPASVImpl<FleaUserAttr> impl
 
         // 校验Flea用户扩展属性POJO类对象是否为空
         // ERROR-AUTH-COMMON0000000001 【{0}】不能为空
-        ObjectUtils.checkEmpty(fleaUserAttrPOJO, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", new String[]{"FleaUserAttrInfo"});
+        ObjectUtils.checkEmpty(fleaUserAttrPOJO, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", FleaUserAttrPOJO.class.getSimpleName());
 
         // 校验用户编号是否为空
         Long userId = fleaUserAttrPOJO.getUserId();
-        ObjectUtils.checkEmpty(userId, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", new String[]{"userId"});
+        ObjectUtils.checkEmpty(userId, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", FleaAuthEntityConstants.UserEntityConstants.E_USER_ID);
 
         // 校验扩展属性码是否为空
         String attrCode = fleaUserAttrPOJO.getAttrCode();
-        StringUtils.checkBlank(attrCode, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", new String[]{"attrCode"});
+        StringUtils.checkBlank(attrCode, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", FleaAuthEntityConstants.E_ATTR_CODE);
 
         return new FleaUserAttr(userId, attrCode,
                 fleaUserAttrPOJO.getAttrValue(),

@@ -24,6 +24,7 @@ import com.huazie.frame.auth.base.user.service.interfaces.IFleaUserRelSV;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaUserSV;
 import com.huazie.frame.auth.common.AuthRelTypeEnum;
 import com.huazie.frame.auth.common.FleaAuthConstants;
+import com.huazie.frame.auth.common.FleaAuthEntityConstants;
 import com.huazie.frame.auth.common.FunctionTypeEnum;
 import com.huazie.frame.auth.common.exception.FleaAuthCommonException;
 import com.huazie.frame.auth.common.service.interfaces.IFleaAuthSV;
@@ -238,7 +239,7 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
 
         // 校验操作账户编号
         // ERROR-AUTH-COMMON0000000001 【{0}】不能为空
-        ObjectUtils.checkEmpty(accountId, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", "accountId");
+        ObjectUtils.checkEmpty(accountId, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", FleaAuthEntityConstants.UserEntityConstants.E_ACCOUNT_ID);
 
         // 校验系统账户编号
         // ERROR-AUTH-COMMON0000000001 【{0}】不能为空
