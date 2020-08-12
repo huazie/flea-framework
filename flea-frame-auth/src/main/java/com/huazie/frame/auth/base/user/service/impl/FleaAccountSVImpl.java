@@ -3,6 +3,7 @@ package com.huazie.frame.auth.base.user.service.impl;
 import com.huazie.frame.auth.base.user.dao.interfaces.IFleaAccountDAO;
 import com.huazie.frame.auth.base.user.entity.FleaAccount;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaAccountSV;
+import com.huazie.frame.auth.common.FleaAuthEntityConstants;
 import com.huazie.frame.auth.common.exception.FleaAuthCommonException;
 import com.huazie.frame.auth.common.pojo.account.FleaAccountPOJO;
 import com.huazie.frame.common.exception.CommonException;
@@ -79,7 +80,7 @@ public class FleaAccountSVImpl extends AbstractFleaJPASVImpl<FleaAccount> implem
 
         // 校验Flea账户POJO类对象是否为空
         // ERROR-AUTH-COMMON0000000001 【{0}】不能为空
-        ObjectUtils.checkEmpty(fleaAccountPOJO, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", new String[]{"FleaAccountPOJO"});
+        ObjectUtils.checkEmpty(fleaAccountPOJO, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", FleaAccountPOJO.class.getSimpleName());
 
         // 校验账号是否为空
         // ERROR-AUTH-COMMON0000000002 账号不能为空！
@@ -88,7 +89,7 @@ public class FleaAccountSVImpl extends AbstractFleaJPASVImpl<FleaAccount> implem
 
         // 校验用户编号是否为空
         Long userId = fleaAccountPOJO.getUserId();
-        ObjectUtils.checkEmpty(userId, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", new String[]{"userId"});
+        ObjectUtils.checkEmpty(userId, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", FleaAuthEntityConstants.UserEntityConstants.E_USER_ID);
 
         // 校验密码是否为空
         // ERROR-AUTH-COMMON0000000003 密码不能为空！
