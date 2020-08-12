@@ -14,7 +14,7 @@ public enum RequestConfigEnum {
     RESOURCE_CODE("resource_code", "资源编码"),
     SERVICE_CODE("service_code", "服务编码"),
     REQUEST_MODE("request_mode", "请求方式"),
-    MEDIA9_TYPE("media_type", "媒体类型"),
+    MEDIA_TYPE("media_type", "媒体类型"),
     INPUT_OBJECT("input_object", "业务入参实例对象"),
     CLIENT_INPUT("client_input", "业务入参完整类名字符串"),
     CLIENT_OUTPUT("client_output", "业务出参完整类名字符串");

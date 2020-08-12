@@ -1,7 +1,7 @@
 package com.huazie.frame.db.common.table.split.impl;
 
 import com.huazie.frame.common.DateFormatEnum;
-import com.huazie.frame.db.common.exception.TableSplitException;
+import com.huazie.frame.common.exception.CommonException;
 
 /**
  * <p> 按年分表实现 </p>
@@ -15,7 +15,7 @@ public class YYYYTableSplitImpl extends AbstractTableSplitImpl {
     private static final long serialVersionUID = -5650362256544321307L;
 
     @Override
-    public String convert(Object tableSplitColumn) throws TableSplitException {
+    public String convert(Object tableSplitColumn) throws CommonException {
         return convert(tableSplitColumn, DateFormatEnum.YYYY);
     }
 

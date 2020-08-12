@@ -1,6 +1,7 @@
 package com.huazie.frame.jersey.common;
 
 import com.huazie.frame.common.FleaFrameManager;
+import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.jersey.common.data.FleaFileObject;
@@ -26,7 +27,7 @@ public class FleaJerseyManager {
 
     private static volatile FleaJerseyManager manager;
 
-    private static ThreadLocal<FleaJerseyContext> sContext = new ThreadLocal<FleaJerseyContext>(); // Flea Jersey 上下文
+    private static ThreadLocal<FleaJerseyContext> sContext = new ThreadLocal<>(); // Flea Jersey 上下文
 
     /**
      * <p> 构造器私有，只能通过getManager()获取实例 </p>
@@ -102,10 +103,10 @@ public class FleaJerseyManager {
      * <p> 获取Flea文件对象 </p>
      *
      * @return Flea文件对象
-     * @throws FleaJerseyCommonException Flea Jersey通用异常
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaFileObject getFileObject() throws FleaJerseyCommonException {
+    public FleaFileObject getFileObject() throws CommonException {
         FormDataBodyPart fileFormDataBodyPart = getFileFormDataBodyPart();
         FormDataContentDisposition formDataContentDisposition = fileFormDataBodyPart.getFormDataContentDisposition();
         FleaFileObject fileObject = new FleaFileObject();
@@ -120,10 +121,10 @@ public class FleaJerseyManager {
      * <p> 获取文件表单信息 </p>
      *
      * @return 文件表单数据
-     * @throws FleaJerseyCommonException Flea Jersey通用异常
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FormDataBodyPart getFileFormDataBodyPart() throws FleaJerseyCommonException {
+    public FormDataBodyPart getFileFormDataBodyPart() throws CommonException {
         return getFormDataBodyPart(FleaJerseyConstants.FormDataConstants.FORM_DATA_KEY_FILE);
     }
 
@@ -132,36 +133,28 @@ public class FleaJerseyManager {
      *
      * @param formDataKey 表单数据键
      * @return 表单数据
-     * @throws FleaJerseyCommonException Flea Jersey通用异常
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FormDataBodyPart getFormDataBodyPart(String formDataKey) throws FleaJerseyCommonException {
+    public FormDataBodyPart getFormDataBodyPart(String formDataKey) throws CommonException {
 
-        if (StringUtils.isBlank(formDataKey)) {
-            // {0}不能为空，请检查
-            throw new FleaJerseyCommonException("ERROR-JERSEY-COMMON0000000001", "【Form Data Key】");
-        }
+        // {0}不能为空，请检查
+        StringUtils.checkBlank(formDataKey, FleaJerseyCommonException.class, "ERROR-JERSEY-COMMON0000000001", "【Form Data Key】");
 
         // 获取文件上下文信息
         FleaJerseyFileContext fleaJerseyFileContext = getFileContext();
-        if (ObjectUtils.isEmpty(fleaJerseyFileContext)) {
-            // {0}获取失败，请检查
-            throw new FleaJerseyCommonException("ERROR-JERSEY-COMMON0000000000", "【FleaJerseyFileContext】");
-        }
+        // {0}获取失败，请检查
+        ObjectUtils.checkEmpty(fleaJerseyFileContext, FleaJerseyCommonException.class, "ERROR-JERSEY-COMMON0000000000", "【FleaJerseyFileContext】");
 
         // 获取表单数据
         FormDataMultiPart formDataMultiPart = fleaJerseyFileContext.getFormDataMultiPart();
-        if (ObjectUtils.isEmpty(formDataMultiPart)) {
-            // {0}获取失败，请检查
-            throw new FleaJerseyCommonException("ERROR-JERSEY-COMMON0000000000", "【FormDataMultiPart】");
-        }
+        // {0}获取失败，请检查
+        ObjectUtils.checkEmpty(formDataMultiPart, FleaJerseyCommonException.class, "ERROR-JERSEY-COMMON0000000000", "【FormDataMultiPart】");
 
         // 获取文件表单数据内容
         FormDataBodyPart fileFormDataBodyPart = formDataMultiPart.getField(formDataKey);
-        if (ObjectUtils.isEmpty(fileFormDataBodyPart)) {
-            // {0}获取失败，请检查
-            throw new FleaJerseyCommonException("ERROR-JERSEY-COMMON0000000000", "【FILE = FormDataBodyPart】");
-        }
+        // {0}获取失败，请检查
+        ObjectUtils.checkEmpty(fileFormDataBodyPart, FleaJerseyCommonException.class, "ERROR-JERSEY-COMMON0000000000", "【FILE = FormDataBodyPart】");
 
         return fileFormDataBodyPart;
     }
@@ -170,10 +163,10 @@ public class FleaJerseyManager {
      * <p> 添加文件表单信息 </p>
      *
      * @param file 文件对象
-     * @throws FleaJerseyCommonException Flea Jersey通用异常
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public void addFileDataBodyPart(File file) throws FleaJerseyCommonException {
+    public void addFileDataBodyPart(File file) throws CommonException {
         addFormDataBodyPart(file, FleaJerseyConstants.FormDataConstants.FORM_DATA_KEY_FILE, null);
     }
 
@@ -182,10 +175,10 @@ public class FleaJerseyManager {
      *
      * @param formDataStr 表单数据字符串
      * @param formDataKey 表单数据键
-     * @throws FleaJerseyCommonException Flea Jersey通用异常
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public void addFormDataBodyPart(String formDataStr, String formDataKey) throws FleaJerseyCommonException {
+    public void addFormDataBodyPart(String formDataStr, String formDataKey) throws CommonException {
         addFormDataBodyPart(formDataStr, formDataKey, null);
     }
 
@@ -195,20 +188,16 @@ public class FleaJerseyManager {
      * @param formDataObj 表单数据对象
      * @param formDataKey 表单数据键
      * @param <T>         表单数据类型
-     * @throws FleaJerseyCommonException Flea Jersey通用异常
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public <T> void addFormDataBodyPart(T formDataObj, String formDataKey, MediaType formDataMediaType) throws FleaJerseyCommonException {
+    public <T> void addFormDataBodyPart(T formDataObj, String formDataKey, MediaType formDataMediaType) throws CommonException {
 
-        if (ObjectUtils.isEmpty(formDataObj)) {
-            // {0}不能为空，请检查
-            throw new FleaJerseyCommonException("ERROR-JERSEY-COMMON0000000001", "【Form Data】");
-        }
+        // {0}不能为空，请检查
+        ObjectUtils.checkEmpty(formDataObj, FleaJerseyCommonException.class, "ERROR-JERSEY-COMMON0000000001", "【Form Data】");
 
-        if (StringUtils.isBlank(formDataKey)) {
-            // {0}不能为空，请检查
-            throw new FleaJerseyCommonException("ERROR-JERSEY-COMMON0000000001", "【Form Data Key】");
-        }
+        // {0}不能为空，请检查
+        StringUtils.checkBlank(formDataKey, FleaJerseyCommonException.class, "ERROR-JERSEY-COMMON0000000001", "【Form Data Key】");
 
         // 获取文件上下文信息
         FleaJerseyFileContext fileContext = getFileContext();

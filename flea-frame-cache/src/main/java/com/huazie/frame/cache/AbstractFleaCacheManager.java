@@ -18,9 +18,9 @@ import java.util.concurrent.ConcurrentMap;
  */
 public abstract class AbstractFleaCacheManager {
 
-    private static final ConcurrentMap<String, AbstractFleaCache> cacheMap = new ConcurrentHashMap<String, AbstractFleaCache>();
+    private static final ConcurrentMap<String, AbstractFleaCache> cacheMap = new ConcurrentHashMap<>();
 
-    private Map<String, Long> configMap = new HashMap<String, Long>();   // 各缓存的时间Map
+    private Map<String, Long> configMap = new HashMap<>();   // 各缓存的时间Map
 
     /**
      * <p> 获取所有的Flea缓存 </p>

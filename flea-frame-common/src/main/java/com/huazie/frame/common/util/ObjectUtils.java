@@ -102,8 +102,7 @@ public class ObjectUtils {
      */
     public static void checkEmpty(Object obj, Class<? extends CommonException> exceptionClazz, Object... params) throws CommonException {
         if (isEmpty(obj)) {
-            Object exceptionInstance = ReflectUtils.newInstance(exceptionClazz, params);
-            throw exceptionClazz.cast(exceptionInstance);
+            ExceptionUtils.throwCommonException(exceptionClazz, params);
         }
     }
 
@@ -118,8 +117,7 @@ public class ObjectUtils {
      */
     public static void checkNotEmpty(Object obj, Class<? extends CommonException> exceptionClazz, Object... params) throws CommonException {
         if (isNotEmpty(obj)) {
-            Object exceptionInstance = ReflectUtils.newInstance(exceptionClazz, params);
-            throw exceptionClazz.cast(exceptionInstance);
+            ExceptionUtils.throwCommonException(exceptionClazz, params);
         }
     }
 

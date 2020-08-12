@@ -2,6 +2,7 @@ package com.huazie.frame.db.jpa.common;
 
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.CollectionUtils;
+import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.MapUtils;
 import com.huazie.frame.common.util.NumberUtils;
 import com.huazie.frame.common.util.ObjectUtils;
@@ -133,10 +134,10 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery equal(String attrName) throws DaoException {
+    public FleaJPAQuery equal(String attrName) throws CommonException {
         return equal(attrName, getAttrValue(attrName));
     }
 
@@ -146,10 +147,10 @@ public final class FleaJPAQuery implements Closeable {
      * @param attrName 属性名
      * @param value    属性值
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery equal(String attrName, Object value) throws DaoException {
+    public FleaJPAQuery equal(String attrName, Object value) throws CommonException {
         return newEqualExpression(attrName, value, true);
     }
 
@@ -159,10 +160,10 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrNames 实体属性名集合
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery equal(Set<String> attrNames) throws DaoException {
+    public FleaJPAQuery equal(Set<String> attrNames) throws CommonException {
         return newEqualExpression(attrNames, true);
     }
 
@@ -171,10 +172,10 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param paramMap 参数集合
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery equal(Map<String, Object> paramMap) throws DaoException {
+    public FleaJPAQuery equal(Map<String, Object> paramMap) throws CommonException {
         return newEqualExpression(paramMap, true);
     }
 
@@ -184,10 +185,10 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery notEqual(String attrName) throws DaoException {
+    public FleaJPAQuery notEqual(String attrName) throws CommonException {
         return notEqual(attrName, getAttrValue(attrName));
     }
 
@@ -197,10 +198,10 @@ public final class FleaJPAQuery implements Closeable {
      * @param attrName 属性名
      * @param value    属性值
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery notEqual(String attrName, Object value) throws DaoException {
+    public FleaJPAQuery notEqual(String attrName, Object value) throws CommonException {
         return newEqualExpression(attrName, value, false);
     }
 
@@ -210,10 +211,10 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrNames 实体属性名集合
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery notEqual(Set<String> attrNames) throws DaoException {
+    public FleaJPAQuery notEqual(Set<String> attrNames) throws CommonException {
         return newEqualExpression(attrNames, false);
     }
 
@@ -222,10 +223,10 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param paramMap 条件集合
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery notEqual(Map<String, Object> paramMap) throws DaoException {
+    public FleaJPAQuery notEqual(Map<String, Object> paramMap) throws CommonException {
         return newEqualExpression(paramMap, false);
     }
 
@@ -236,10 +237,10 @@ public final class FleaJPAQuery implements Closeable {
      * @param value    属性值
      * @param isEqual  true: 构建equal表达式; false: 构建notEqual表达式
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    private FleaJPAQuery newEqualExpression(String attrName, Object value, boolean isEqual) throws DaoException {
+    private FleaJPAQuery newEqualExpression(String attrName, Object value, boolean isEqual) throws CommonException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -268,14 +269,14 @@ public final class FleaJPAQuery implements Closeable {
      * @param attrNames 属性名集合
      * @param isEqual   true: 构建equal表达式; false: 构建notEqual表达式
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    private FleaJPAQuery newEqualExpression(Set<String> attrNames, boolean isEqual) throws DaoException {
-        if (CollectionUtils.isEmpty(attrNames)) {
-            // 条件参数Map不能为空
-            throw new DaoException("ERROR-DB-DAO0000000003");
-        }
+    private FleaJPAQuery newEqualExpression(Set<String> attrNames, boolean isEqual) throws CommonException {
+
+        // 【{0}】不能为空
+        CollectionUtils.checkEmpty(attrNames, CommonException.class, "ERROR-DB-DAO0000000002", "attrNames");
+
         if (LOGGER.isDebugEnabled()) {
             if (isEqual) {
                 LOGGER.debug("FMJPAQuery##equal(Set<String> attrNames) -->> attrNames = {}", attrNames);
@@ -306,14 +307,14 @@ public final class FleaJPAQuery implements Closeable {
      * @param paramMap 条件集合
      * @param isEqual  true: 构建equal表达式; false: 构建notEqual表达式
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    private FleaJPAQuery newEqualExpression(Map<String, Object> paramMap, boolean isEqual) throws DaoException {
-        if (MapUtils.isEmpty(paramMap)) {
-            // 条件参数Map不能为空
-            throw new DaoException("ERROR-DB-DAO0000000003");
-        }
+    private FleaJPAQuery newEqualExpression(Map<String, Object> paramMap, boolean isEqual) throws CommonException {
+
+        // 【{0}】不能为空
+        MapUtils.checkEmpty(paramMap, DaoException.class, "ERROR-DB-DAO0000000002", "paramMap");
+
         if (LOGGER.isDebugEnabled()) {
             if (isEqual) {
                 LOGGER.debug("FMJPAQuery##equal(Map<String, Object>) -->> paramMap = {}", paramMap);
@@ -340,10 +341,10 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery isNull(String attrName) throws DaoException {
+    public FleaJPAQuery isNull(String attrName) throws CommonException {
         return newIsNullExpression(attrName, true);
     }
 
@@ -352,10 +353,10 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery isNotNull(String attrName) throws DaoException {
+    public FleaJPAQuery isNotNull(String attrName) throws CommonException {
         return newIsNullExpression(attrName, false);
     }
 
@@ -365,10 +366,10 @@ public final class FleaJPAQuery implements Closeable {
      * @param attrName 属性名
      * @param isNull   true: 构建isNull表达式; false: 构建isNotNull表达式
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    private FleaJPAQuery newIsNullExpression(String attrName, boolean isNull) throws DaoException {
+    private FleaJPAQuery newIsNullExpression(String attrName, boolean isNull) throws CommonException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -393,10 +394,10 @@ public final class FleaJPAQuery implements Closeable {
      * @param attrName 属性名称
      * @param value    值集合
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery in(String attrName, Collection value) throws DaoException {
+    public FleaJPAQuery in(String attrName, Collection value) throws CommonException {
         return newInExpression(attrName, value, true);
     }
 
@@ -406,10 +407,10 @@ public final class FleaJPAQuery implements Closeable {
      * @param attrName 属性名称
      * @param value    值集合
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery notIn(String attrName, Collection value) throws DaoException {
+    public FleaJPAQuery notIn(String attrName, Collection value) throws CommonException {
         return newInExpression(attrName, value, false);
     }
 
@@ -419,17 +420,18 @@ public final class FleaJPAQuery implements Closeable {
      * @param attrName 属性名称
      * @param value    值集合
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    private FleaJPAQuery newInExpression(String attrName, Collection value, boolean isIn) throws DaoException {
+    private FleaJPAQuery newInExpression(String attrName, Collection value, boolean isIn) throws CommonException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
         if (CollectionUtils.isEmpty(value)) {
-            // 条件参数Collection不能为空
-            throw new DaoException("ERROR-DB-DAO0000000004");
+            // 不做处理，直接返回即可
+            return this;
         }
+
         if (LOGGER.isDebugEnabled()) {
             if (isIn) {
                 LOGGER.debug("FMJPAQuery##in(attrName, value) -->> AttrName = {}, Value = {}", attrName, value);
@@ -456,10 +458,10 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名称
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery like(String attrName) throws DaoException {
+    public FleaJPAQuery like(String attrName) throws CommonException {
         return like(attrName, StringUtils.valueOf(getAttrValue(attrName)));
     }
 
@@ -469,10 +471,10 @@ public final class FleaJPAQuery implements Closeable {
      * @param attrName 属性名称
      * @param value    属性值
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery like(String attrName, String value) throws DaoException {
+    public FleaJPAQuery like(String attrName, String value) throws CommonException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -496,10 +498,10 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名称
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery le(String attrName) throws DaoException {
+    public FleaJPAQuery le(String attrName) throws CommonException {
         return le(attrName, getNumberAttrValue(attrName));
     }
 
@@ -509,10 +511,10 @@ public final class FleaJPAQuery implements Closeable {
      * @param attrName 属性名称
      * @param value    属性值
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery le(String attrName, Number value) throws DaoException {
+    public FleaJPAQuery le(String attrName, Number value) throws CommonException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -533,10 +535,10 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名称
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery lt(String attrName) throws DaoException {
+    public FleaJPAQuery lt(String attrName) throws CommonException {
         return lt(attrName, getNumberAttrValue(attrName));
     }
 
@@ -546,10 +548,10 @@ public final class FleaJPAQuery implements Closeable {
      * @param attrName 属性名称
      * @param value    属性值
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery lt(String attrName, Number value) throws DaoException {
+    public FleaJPAQuery lt(String attrName, Number value) throws CommonException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -570,10 +572,10 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名称
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery ge(String attrName) throws DaoException {
+    public FleaJPAQuery ge(String attrName) throws CommonException {
         return ge(attrName, getNumberAttrValue(attrName));
     }
 
@@ -583,10 +585,10 @@ public final class FleaJPAQuery implements Closeable {
      * @param attrName 属性名称
      * @param value    属性值
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery ge(String attrName, Number value) throws DaoException {
+    public FleaJPAQuery ge(String attrName, Number value) throws CommonException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -607,10 +609,10 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名称
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery gt(String attrName) throws DaoException {
+    public FleaJPAQuery gt(String attrName) throws CommonException {
         return gt(attrName, getNumberAttrValue(attrName));
     }
 
@@ -620,10 +622,10 @@ public final class FleaJPAQuery implements Closeable {
      * @param attrName 属性名称
      * @param value    属性值
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery gt(String attrName, Number value) throws DaoException {
+    public FleaJPAQuery gt(String attrName, Number value) throws CommonException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -645,20 +647,20 @@ public final class FleaJPAQuery implements Closeable {
      * @param startTime 开始时间
      * @param endTime   结束时间
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery between(String attrName, Date startTime, Date endTime) throws DaoException {
+    public FleaJPAQuery between(String attrName, Date startTime, Date endTime) throws CommonException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
         if (ObjectUtils.isEmpty(startTime) || ObjectUtils.isEmpty(endTime)) {
             // 开始时间或结束时间为空
-            throw new DaoException("ERROR-DB-DAO0000000005");
+            ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000003");
         }
         if (startTime.after(endTime)) {
             // 开始时间必须小于结束时间
-            throw new DaoException("ERROR-DB-DAO0000000006");
+            ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000004");
         }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FMJPAQuery##between(attrName, startTime, endTime) -->> AttrName = {}, StartTime = {}, EndTime = {}", attrName, startTime, endTime);
@@ -673,10 +675,10 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery greaterThan(String attrName) throws DaoException {
+    public FleaJPAQuery greaterThan(String attrName) throws CommonException {
         return greaterThan(attrName, getDateAttrValue(attrName));
     }
 
@@ -686,10 +688,10 @@ public final class FleaJPAQuery implements Closeable {
      * @param attrName 属性名
      * @param value    指定日期值
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery greaterThan(String attrName, Date value) throws DaoException {
+    public FleaJPAQuery greaterThan(String attrName, Date value) throws CommonException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -710,10 +712,10 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery greaterThanOrEqualTo(String attrName) throws DaoException {
+    public FleaJPAQuery greaterThanOrEqualTo(String attrName) throws CommonException {
         return greaterThanOrEqualTo(attrName, getDateAttrValue(attrName));
     }
 
@@ -723,10 +725,10 @@ public final class FleaJPAQuery implements Closeable {
      * @param attrName 属性名
      * @param value    指定日期值
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery greaterThanOrEqualTo(String attrName, Date value) throws DaoException {
+    public FleaJPAQuery greaterThanOrEqualTo(String attrName, Date value) throws CommonException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -747,10 +749,10 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery lessThan(String attrName) throws DaoException {
+    public FleaJPAQuery lessThan(String attrName) throws CommonException {
         return lessThan(attrName, getDateAttrValue(attrName));
     }
 
@@ -760,10 +762,10 @@ public final class FleaJPAQuery implements Closeable {
      * @param attrName 属性名
      * @param value    指定日期值
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery lessThan(String attrName, Date value) throws DaoException {
+    public FleaJPAQuery lessThan(String attrName, Date value) throws CommonException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -784,10 +786,10 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery lessThanOrEqualTo(String attrName) throws DaoException {
+    public FleaJPAQuery lessThanOrEqualTo(String attrName) throws CommonException {
         return lessThanOrEqualTo(attrName, getDateAttrValue(attrName));
     }
 
@@ -797,10 +799,10 @@ public final class FleaJPAQuery implements Closeable {
      * @param attrName 属性名
      * @param value    指定日期值
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery lessThanOrEqualTo(String attrName, Date value) throws DaoException {
+    public FleaJPAQuery lessThanOrEqualTo(String attrName, Date value) throws CommonException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -832,7 +834,7 @@ public final class FleaJPAQuery implements Closeable {
      * @return Flea JPA查询对象
      * @since 1.0.0
      */
-    public FleaJPAQuery countDistinct(String attrName) throws DaoException {
+    public FleaJPAQuery countDistinct(String attrName) throws CommonException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -849,10 +851,10 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery max(String attrName) throws DaoException {
+    public FleaJPAQuery max(String attrName) throws CommonException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -868,10 +870,10 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery min(String attrName) throws DaoException {
+    public FleaJPAQuery min(String attrName) throws CommonException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -887,10 +889,10 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery avg(String attrName) throws DaoException {
+    public FleaJPAQuery avg(String attrName) throws CommonException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -906,10 +908,10 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery sum(String attrName) throws DaoException {
+    public FleaJPAQuery sum(String attrName) throws CommonException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -925,10 +927,10 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery sumAsLong(String attrName) throws DaoException {
+    public FleaJPAQuery sumAsLong(String attrName) throws CommonException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -944,10 +946,10 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery sumAsDouble(String attrName) throws DaoException {
+    public FleaJPAQuery sumAsDouble(String attrName) throws CommonException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -963,10 +965,10 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery distinct(String attrName) throws DaoException {
+    public FleaJPAQuery distinct(String attrName) throws CommonException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -983,15 +985,15 @@ public final class FleaJPAQuery implements Closeable {
      * @param attrName 属性名
      * @param orderBy  排序顺序
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery addOrderby(String attrName, String orderBy) throws DaoException {
+    public FleaJPAQuery addOrderby(String attrName, String orderBy) throws CommonException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
         if (CollectionUtils.isEmpty(orders)) {
-            orders = new ArrayList<Order>();
+            orders = new ArrayList<>();
         }
         if (orderBy.equalsIgnoreCase(DBConstants.SQLConstants.SQL_ORDER_ASC)) {
             orders.add(criteriaBuilder.asc(root.get(attrName)));
@@ -999,7 +1001,7 @@ public final class FleaJPAQuery implements Closeable {
             orders.add(criteriaBuilder.desc(root.get(attrName)));
         } else {
             // 排序关键字【{0}】非法, 必须是【asc, ASC】 或【desc, DESC】
-            throw new DaoException("ERROR-DB-DAO0000000007", orderBy);
+            ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000005", orderBy);
         }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FMJPAQuery##addOrderby(attrName, orderBy) -->> AttrName = {}, OrderBy = {}", attrName, orderBy);
@@ -1012,15 +1014,15 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery addGroupBy(String attrName) throws DaoException {
+    public FleaJPAQuery addGroupBy(String attrName) throws CommonException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
         if (CollectionUtils.isEmpty(groups)) {
-            groups = new ArrayList<Expression>();
+            groups = new ArrayList<>();
         }
 
         groups.add(root.get(attrName));
@@ -1035,10 +1037,10 @@ public final class FleaJPAQuery implements Closeable {
      * <p> 获取查询的记录行结果集合 </p>
      *
      * @return 记录行结果集合
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public List getResultList() throws DaoException {
+    public List getResultList() throws CommonException {
         try {
             return createQuery(false).getResultList();
         } finally {
@@ -1053,9 +1055,10 @@ public final class FleaJPAQuery implements Closeable {
      * @param start 开始查询记录行
      * @param max   最大查询数量
      * @return 记录行结果集合
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public List getResultList(int start, int max) throws DaoException {
+    public List getResultList(int start, int max) throws CommonException {
         try {
             TypedQuery query = createQuery(false);
             // 设置开始查询记录行
@@ -1074,10 +1077,10 @@ public final class FleaJPAQuery implements Closeable {
      * <p> 需要先调用 distinct，否则默认返回行记录结果集合 </p>
      *
      * @return 单个属性列结果集合
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public List getSingleResultList() throws DaoException {
+    public List getSingleResultList() throws CommonException {
         try {
             return createQuery(true).getResultList();
         } finally {
@@ -1092,10 +1095,11 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param start 开始查询记录行
      * @param max   最大查询数量
-     * @return 单个属性列结果集合（
+     * @return 单个属性列结果集合
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public List getSingleResultList(int start, int max) throws DaoException {
+    public List getSingleResultList(int start, int max) throws CommonException {
         try {
             TypedQuery query = createQuery(true);
             // 设置开始查询记录行
@@ -1114,10 +1118,10 @@ public final class FleaJPAQuery implements Closeable {
      * <p> select 提前调用 (count, countDistinct, max, min, avg, sum, sumAsLong, sumAsDouble) </p>
      *
      * @return 查询的单个结果
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public Object getSingleResult() throws DaoException {
+    public Object getSingleResult() throws CommonException {
         try {
             return createQuery(true).getSingleResult();
         } finally {
@@ -1130,14 +1134,14 @@ public final class FleaJPAQuery implements Closeable {
      * <p> 创建查询对象 </p>
      *
      * @return 查询对象
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    private TypedQuery createQuery(boolean isSingle) throws DaoException {
-        if (ObjectUtils.isEmpty(sourceClazz)) {
-            // 查询非法，实体类类对象为空
-            throw new DaoException("ERROR-DB-DAO0000000008");
-        }
+    private TypedQuery createQuery(boolean isSingle) throws CommonException {
+
+        // 查询非法，实体类类对象为空
+        ObjectUtils.checkEmpty(sourceClazz, CommonException.class, "ERROR-DB-DAO0000000006");
+
         if (!isSingle) {
             criteriaQuery.select(root);
         }
@@ -1160,14 +1164,12 @@ public final class FleaJPAQuery implements Closeable {
      * <p> 属性列名非空校验 </p>
      *
      * @param attrName 属性列名
-     * @throws DaoException 数据操作层异常类
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    private void checkAttrName(String attrName) throws DaoException {
-        if (StringUtils.isBlank(attrName)) {
-            // 属性列名不能为空
-            throw new DaoException("ERROR-DB-DAO0000000001");
-        }
+    private void checkAttrName(String attrName) throws CommonException {
+        // 属性列名不能为空
+        StringUtils.checkBlank(attrName, CommonException.class, "ERROR-DB-DAO0000000001");
     }
 
     /**
@@ -1175,10 +1177,10 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性列名
      * @return 属性值
-     * @throws DaoException
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    private Object getAttrValue(String attrName) throws DaoException {
+    private Object getAttrValue(String attrName) throws CommonException {
         checkAttrName(attrName);
 
         if (ObjectUtils.isEmpty(entity) || (ObjectUtils.isNotEmpty(sourceClazz) && !sourceClazz.isInstance(entity))) {
@@ -1193,10 +1195,10 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性列名
      * @return 属性值
-     * @throws DaoException
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    private Number getNumberAttrValue(String attrName) throws DaoException {
+    private Number getNumberAttrValue(String attrName) throws CommonException {
         return NumberUtils.toNumber(getAttrValue(attrName));
     }
 
@@ -1205,10 +1207,10 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param attrName 属性列名
      * @return 属性值
-     * @throws DaoException
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    private Date getDateAttrValue(String attrName) throws DaoException {
+    private Date getDateAttrValue(String attrName) throws CommonException {
         Object attrValue = getAttrValue(attrName);
         Date value = null;
         if (ObjectUtils.isNotEmpty(attrValue) && attrValue instanceof Date) {

@@ -5,6 +5,7 @@ import com.huazie.frame.common.config.ConfigItem;
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.CollectionUtils;
+import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.ReflectUtils;
 import com.huazie.frame.common.util.StringUtils;
@@ -77,10 +78,8 @@ public class TableSplitHelper {
             if (ObjectUtils.isNotEmpty(tab)) {// 当前表具有分表配置
                 // 获取分表名表达式
                 String exp = tab.getExp();
-                if (StringUtils.isBlank(exp)) {
-                    // 请检查分表配置信息（分表表达式【exp】不能为空）
-                    throw new TableSplitException("ERROR-DB-TSP0000000009");
-                }
+                // 请检查分表配置信息（分表表达式【exp】不能为空）
+                StringUtils.checkBlank(exp, TableSplitException.class, "ERROR-DB-TSP0000000009");
 
                 StringBuilder tableNameBuilder = new StringBuilder(exp);
                 String tableNamePlaceholder = DBConstants.SQLConstants.SQL_LEFT_ROUND_BRACKETS + DBConstants.TableSplitConstants.FLEA_TABLE_NAME + DBConstants.SQLConstants.SQL_RIGHT_ROUND_BRACKETS;
@@ -103,33 +102,26 @@ public class TableSplitHelper {
                             // 分表后缀转换实现类
                             String implClass = split.getImplClass();
 
-                            if (StringUtils.isBlank(key)) {
-                                // 请检查分表配置信息（分表类型关键字【key】不能为空）
-                                throw new TableSplitException("ERROR-DB-TSP0000000004");
-                            }
+                            // 请检查分表配置信息（分表类型关键字【key】不能为空）
+                            StringUtils.checkBlank(key, TableSplitException.class, "ERROR-DB-TSP0000000004");
 
-                            if (StringUtils.isBlank(column)) {
-                                // 请检查分表配置信息（分表属性列【column】不能为空）
-                                throw new TableSplitException("ERROR-DB-TSP0000000005");
-                            }
+                            // 请检查分表配置信息（分表属性列【column】不能为空）
+                            StringUtils.checkBlank(column, TableSplitException.class, "ERROR-DB-TSP0000000005");
 
-                            if (StringUtils.isBlank(implClass)) {
-                                // 请检查分表配置信息（分表后缀转换实现类【implClass】不能为空）
-                                throw new TableSplitException("ERROR-DB-TSP0000000006");
-                            }
+                            // 请检查分表配置信息（分表后缀转换实现类【implClass】不能为空）
+                            StringUtils.checkBlank(implClass, TableSplitException.class, "ERROR-DB-TSP0000000006");
 
                             TableSplitEnum tableSplitEnum = (TableSplitEnum) EntityUtils.getEntity(TableSplitEnum.values(), DBConstants.TableSplitConstants.KEY, key);
 
-                            if (null != tableSplitEnum && !implClass.equals(tableSplitEnum.getImplClass())) {
+                            if (ObjectUtils.isNotEmpty(tableSplitEnum) && !implClass.equals(tableSplitEnum.getImplClass())) {
                                 // 请检查分表配置信息（分表后缀转换实现类【implClass】非法）
-                                throw new TableSplitException("ERROR-DB-TSP0000000007");
+                                ExceptionUtils.throwCommonException(TableSplitException.class, "ERROR-DB-TSP0000000007");
                             }
 
                             Column entityCol = (Column) EntityUtils.getEntity(entityCols, Column.COLUMN_TAB_COL_NAME, column);
-                            if (ObjectUtils.isEmpty(entityCol)) {
-                                // 请检查分表配置信息（分表属性列【column】不存在）
-                                throw new TableSplitException("ERROR-DB-TSP0000000008");
-                            }
+                            // 请检查分表配置信息（分表属性列【column】不存在）
+                            ObjectUtils.checkEmpty(entityCol, TableSplitException.class, "ERROR-DB-TSP0000000008");
+
                             // 获取分表后缀转换实现类
                             ITableSplit tableSplit = (ITableSplit) ReflectUtils.newInstance(implClass);
                             // 获取分表字段值【即分表规则转换后的值】
@@ -169,7 +161,7 @@ public class TableSplitHelper {
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public static String getRealTableName(String tableName,  Column[] entityCols) throws CommonException {
+    public static String getRealTableName(String tableName, Column[] entityCols) throws CommonException {
         return getSplitTable(tableName, entityCols).getSplitTableName();
     }
 
@@ -203,12 +195,12 @@ public class TableSplitHelper {
      * @return 分表处理者实现类
      * @since 1.0.0
      */
-    private static IFleaJPATableSplitHandler newTableSplitHandle() throws Exception {
+    private static IFleaJPATableSplitHandler newTableSplitHandle() {
 
         ConfigItem configItem = FleaConfigManager.getConfigItem(DBConstants.FleaJPAConstants.FLEA_JPA, DBConstants.FleaJPAConstants.TABLE_SPLIT_HANDLER);
 
         if (ObjectUtils.isEmpty(configItem) || StringUtils.isBlank(configItem.getValue())) {
-            throw new Exception("请检查flea-config.xml中配置项【<config-items key=\"flea-jpa\" > <config-item key=\"table_split_handler\" >】");
+            throw new NullPointerException("请检查flea-config.xml中配置项【<config-items key=\"flea-jpa\" > <config-item key=\"table_split_handler\" >】");
         }
         // 获取分表处理者实现类配置
         String handlerClassStr = configItem.getValue();

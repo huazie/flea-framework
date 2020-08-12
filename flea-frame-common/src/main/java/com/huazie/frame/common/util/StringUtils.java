@@ -57,8 +57,7 @@ public class StringUtils {
      */
     public static void checkBlank(String value, Class<? extends CommonException> exceptionClazz, Object... params) throws CommonException {
         if (isBlank(value)) {
-            Object exceptionInstance = ReflectUtils.newInstance(exceptionClazz, params);
-            throw exceptionClazz.cast(exceptionInstance);
+            ExceptionUtils.throwCommonException(exceptionClazz, params);
         }
     }
 
@@ -73,8 +72,7 @@ public class StringUtils {
      */
     public static void checkNotBlank(String value, Class<? extends CommonException> exceptionClazz, Object... params) throws CommonException {
         if (isNotBlank(value)) {
-            Object exceptionInstance = ReflectUtils.newInstance(exceptionClazz, params);
-            throw exceptionClazz.cast(exceptionInstance);
+            ExceptionUtils.throwCommonException(exceptionClazz, params);
         }
     }
 
@@ -123,10 +121,20 @@ public class StringUtils {
      * @since 1.0.0
      */
     public static String toLowerCaseInitial(String value) {
-        if (Character.isLowerCase(value.charAt(0)))
+
+        if (isBlank(value)) {
+            return "";
+        }
+
+        if (Character.isLowerCase(value.charAt(0))) {
             return value;
-        else
-            return (new StringBuilder()).append(Character.toLowerCase(value.charAt(0))).append(value.substring(1)).toString();
+        } else {
+            if (CommonConstants.NumeralConstants.INT_ONE == value.length()) {
+                return Character.toLowerCase(value.charAt(0)) + "";
+            } else {
+                return Character.toLowerCase(value.charAt(0)) + value.substring(1);
+            }
+        }
     }
 
     /**
@@ -137,10 +145,20 @@ public class StringUtils {
      * @since 1.0.0
      */
     public static String toUpperCaseInitial(String value) {
-        if (Character.isUpperCase(value.charAt(0)))
+
+        if (isBlank(value)) {
+            return "";
+        }
+
+        if (Character.isUpperCase(value.charAt(0))) {
             return value;
-        else
-            return (new StringBuilder()).append(Character.toUpperCase(value.charAt(0))).append(value.substring(1)).toString();
+        } else {
+            if (CommonConstants.NumeralConstants.INT_ONE == value.length()) {
+                return Character.toUpperCase(value.charAt(0)) + "";
+            } else {
+                return Character.toUpperCase(value.charAt(0)) + value.substring(1);
+            }
+        }
     }
 
     /**
@@ -150,10 +168,12 @@ public class StringUtils {
      * @return 首字母转大写，其余字母转小写的字符串
      * @since 1.0.0
      */
-    public static String toUpperCase(String value) {
-        StringBuilder newValue = new StringBuilder();
-        newValue.append(Character.toUpperCase(value.charAt(0))).append(value.substring(1).toLowerCase());
-        return newValue.toString();
+    public static String toUpperCaseFirstAndLowerCaseLeft(String value) {
+        if (CommonConstants.NumeralConstants.INT_ONE == value.length()) {
+            return Character.toUpperCase(value.charAt(0)) + "";
+        } else {
+            return Character.toUpperCase(value.charAt(0)) + value.substring(1).toLowerCase();
+        }
     }
 
     /**
@@ -341,11 +361,12 @@ public class StringUtils {
      * @since 1.0.0
      */
     public static Map<String, String> split(String[] values, String placeholder) {
-        Map<String, String> map = null;
+
         if (ArrayUtils.isEmpty(values) || isBlank(placeholder)) {
-            return map;
+            return null;
         }
-        map = new HashMap<>();
+
+        Map<String, String> map = new HashMap<>();
         for (String str : values) {
             String[] ss = split(str, placeholder);
             if (ss.length == 2) {
@@ -364,6 +385,7 @@ public class StringUtils {
      * @since 1.0.0
      */
     public static String[] split(String value, String... placeholders) {
+
         if (isBlank(value) || ArrayUtils.isEmpty(placeholders)) {
             return null;
         }

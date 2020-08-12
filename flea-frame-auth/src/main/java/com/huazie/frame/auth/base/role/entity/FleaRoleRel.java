@@ -8,8 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
@@ -25,25 +25,38 @@ import java.util.Date;
 @Table(name = "flea_role_rel")
 public class FleaRoleRel extends FleaEntity {
 
-    private static final long serialVersionUID = -2369487692225087865L;
+    private static final long serialVersionUID = 6126332445172729513L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "FLEA_ROLE_REL_SEQ")
-    @SequenceGenerator(name = "FLEA_ROLE_REL_SEQ")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "FLEA_ROLE_REL_GENERATOR")
+    @TableGenerator(
+        // 唯一的生成器名称，可以由一个或多个类引用以作为id值的生成器。
+        name = "FLEA_ROLE_REL_GENERATOR",
+        // 存储生成的ID值的表的名称
+        table = "flea_id_generator",
+        // 表中主键列的名称
+        pkColumnName = "id_generator_key",
+        // 存储最后生成的主键值的列的名称
+        valueColumnName = "id_generator_value",
+        // ID生成器表中的主键值模板，用于将该生成值集与其他可能存储在表中的值区分开
+        pkColumnValue = "pk_flea_role_rel",
+        // 从ID生成器表中分配ID号时增加的数量
+        allocationSize = 1
+    )
     @Column(name = "role_rel_id", unique = true, nullable = false)
     private Long roleRelId; // 角色关联编号
 
     @Column(name = "role_id", nullable = false)
     private Long roleId; // 角色编号
 
-    @Column(name = "relat_id", nullable = false)
-    private Long relatId; // 关联编号
+    @Column(name = "rel_id", nullable = false)
+    private Long relId; // 关联编号
 
-    @Column(name = "relat_type", nullable = false)
-    private String relatType; // 关联类型
+    @Column(name = "rel_type", nullable = false)
+    private String relType; // 关联类型
 
-    @Column(name = "relat_state", nullable = false)
-    private Integer relatState; // 关联状态(0: 删除 1: 正常)
+    @Column(name = "rel_state", nullable = false)
+    private Integer relState; // 关联状态(0: 删除 1: 正常)
 
     @Column(name = "create_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -56,23 +69,23 @@ public class FleaRoleRel extends FleaEntity {
     @Column(name = "remarks")
     private String remarks; // 备注信息
 
-    @Column(name = "relat_ext_a")
-    private String relatExtA; // 关联扩展字段A
+    @Column(name = "rel_ext_a")
+    private String relExtA; // 关联扩展字段A
 
-    @Column(name = "relat_ext_b")
-    private String relatExtB; // 关联扩展字段B
+    @Column(name = "rel_ext_b")
+    private String relExtB; // 关联扩展字段B
 
-    @Column(name = "relat_ext_c")
-    private String relatExtC; // 关联扩展字段C
+    @Column(name = "rel_ext_c")
+    private String relExtC; // 关联扩展字段C
 
-    @Column(name = "relat_ext_x")
-    private String relatExtX; // 关联扩展字段X
+    @Column(name = "rel_ext_x")
+    private String relExtX; // 关联扩展字段X
 
-    @Column(name = "relat_ext_y")
-    private String relatExtY; // 关联扩展字段Y
+    @Column(name = "rel_ext_y")
+    private String relExtY; // 关联扩展字段Y
 
-    @Column(name = "relat_ext_z")
-    private String relatExtZ; // 关联扩展字段Z
+    @Column(name = "rel_ext_z")
+    private String relExtZ; // 关联扩展字段Z
 
     public Long getRoleRelId() {
         return roleRelId;
@@ -90,28 +103,28 @@ public class FleaRoleRel extends FleaEntity {
         this.roleId = roleId;
     }
 
-    public Long getRelatId() {
-        return relatId;
+    public Long getRelId() {
+        return relId;
     }
 
-    public void setRelatId(Long relatId) {
-        this.relatId = relatId;
+    public void setRelId(Long relId) {
+        this.relId = relId;
     }
 
-    public String getRelatType() {
-        return relatType;
+    public String getRelType() {
+        return relType;
     }
 
-    public void setRelatType(String relatType) {
-        this.relatType = relatType;
+    public void setRelType(String relType) {
+        this.relType = relType;
     }
 
-    public Integer getRelatState() {
-        return relatState;
+    public Integer getRelState() {
+        return relState;
     }
 
-    public void setRelatState(Integer relatState) {
-        this.relatState = relatState;
+    public void setRelState(Integer relState) {
+        this.relState = relState;
     }
 
     public Date getCreateDate() {
@@ -138,52 +151,52 @@ public class FleaRoleRel extends FleaEntity {
         this.remarks = remarks;
     }
 
-    public String getRelatExtA() {
-        return relatExtA;
+    public String getRelExtA() {
+        return relExtA;
     }
 
-    public void setRelatExtA(String relatExtA) {
-        this.relatExtA = relatExtA;
+    public void setRelExtA(String relExtA) {
+        this.relExtA = relExtA;
     }
 
-    public String getRelatExtB() {
-        return relatExtB;
+    public String getRelExtB() {
+        return relExtB;
     }
 
-    public void setRelatExtB(String relatExtB) {
-        this.relatExtB = relatExtB;
+    public void setRelExtB(String relExtB) {
+        this.relExtB = relExtB;
     }
 
-    public String getRelatExtC() {
-        return relatExtC;
+    public String getRelExtC() {
+        return relExtC;
     }
 
-    public void setRelatExtC(String relatExtC) {
-        this.relatExtC = relatExtC;
+    public void setRelExtC(String relExtC) {
+        this.relExtC = relExtC;
     }
 
-    public String getRelatExtX() {
-        return relatExtX;
+    public String getRelExtX() {
+        return relExtX;
     }
 
-    public void setRelatExtX(String relatExtX) {
-        this.relatExtX = relatExtX;
+    public void setRelExtX(String relExtX) {
+        this.relExtX = relExtX;
     }
 
-    public String getRelatExtY() {
-        return relatExtY;
+    public String getRelExtY() {
+        return relExtY;
     }
 
-    public void setRelatExtY(String relatExtY) {
-        this.relatExtY = relatExtY;
+    public void setRelExtY(String relExtY) {
+        this.relExtY = relExtY;
     }
 
-    public String getRelatExtZ() {
-        return relatExtZ;
+    public String getRelExtZ() {
+        return relExtZ;
     }
 
-    public void setRelatExtZ(String relatExtZ) {
-        this.relatExtZ = relatExtZ;
+    public void setRelExtZ(String relExtZ) {
+        this.relExtZ = relExtZ;
     }
 
     @Override

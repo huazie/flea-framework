@@ -26,10 +26,10 @@ public class FleaJerseyClient {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FleaJerseyClient.class);
 
-    private final FleaConfigDataSpringBean springBean;
+    private FleaConfigDataSpringBean springBean;
 
     @Autowired
-    public FleaJerseyClient(FleaConfigDataSpringBean springBean) {
+    public void setSpringBean(FleaConfigDataSpringBean springBean) {
         this.springBean = springBean;
     }
 
@@ -52,20 +52,14 @@ public class FleaJerseyClient {
 
         RequestConfig config = new RequestConfig();
 
-        if (StringUtils.isBlank(clientCode)) {
-            // 客户端编码不能为空
-            throw new FleaJerseyClientException("ERROR-JERSEY-CLIENT0000000001");
-        }
+        // 客户端编码不能为空
+        StringUtils.checkBlank(clientCode, FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000001");
 
-        if (ObjectUtils.isEmpty(input)) {
-            // 业务入参不能为空
-            throw new FleaJerseyClientException("ERROR-JERSEY-CLIENT0000000002");
-        }
+        // 业务入参不能为空
+        ObjectUtils.checkEmpty(input, FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000002");
 
-        if (ObjectUtils.isEmpty(outputClazz)) {
-            // 业务出参类不能为空
-            throw new FleaJerseyClientException("ERROR-JERSEY-CLIENT0000000003");
-        }
+        // 业务出参类不能为空
+        ObjectUtils.checkEmpty(outputClazz, FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000003");
 
         // 未注入Bean，直接返回null
         if (ObjectUtils.isEmpty(springBean)) {
@@ -74,10 +68,8 @@ public class FleaJerseyClient {
 
         // 获取Jersey客户端配置
         FleaJerseyResClient resClient = springBean.getResClient(clientCode);
-        if (ObjectUtils.isEmpty(resClient)) {
-            // 请检查客户端配置【client_code = {0}】：资源服务客户端未配置
-            throw new FleaJerseyClientException("ERROR-JERSEY-CLIENT0000000009", clientCode);
-        }
+        // 请检查客户端配置【client_code = {0}】：资源服务客户端未配置
+        ObjectUtils.checkEmpty(resClient, FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000009", clientCode);
 
         // 客户端编码
         config.addClientCode(clientCode);

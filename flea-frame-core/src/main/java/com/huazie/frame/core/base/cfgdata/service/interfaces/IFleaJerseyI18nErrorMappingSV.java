@@ -1,5 +1,6 @@
 package com.huazie.frame.core.base.cfgdata.service.interfaces;
 
+import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyI18nErrorMapping;
 import com.huazie.frame.db.jpa.service.interfaces.IAbstractFleaJPASV;
 
@@ -20,10 +21,10 @@ public interface IFleaJerseyI18nErrorMappingSV extends IAbstractFleaJPASV<FleaJe
      * @param resourceCode 资源编码
      * @param serviceCode  服务编码
      * @return 国际码和错误码映射数据集合
-     * @throws Exception
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    List<FleaJerseyI18nErrorMapping> getMappings(String resourceCode, String serviceCode) throws Exception;
+    List<FleaJerseyI18nErrorMapping> getMappings(String resourceCode, String serviceCode) throws CommonException;
 
     /**
      * <p> 获取国际码和错误码映射数据 </p>
@@ -31,8 +32,8 @@ public interface IFleaJerseyI18nErrorMappingSV extends IAbstractFleaJPASV<FleaJe
      * @param resourceCode 资源编码
      * @param serviceCode  服务编码
      * @return 国际码和错误码映射数据
-     * @throws Exception
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    FleaJerseyI18nErrorMapping getMapping(String resourceCode, String serviceCode, String i18nCode) throws Exception;
+    FleaJerseyI18nErrorMapping getMapping(String resourceCode, String serviceCode, String i18nCode) throws CommonException;
 }

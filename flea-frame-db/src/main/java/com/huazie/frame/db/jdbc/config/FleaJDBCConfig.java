@@ -4,7 +4,6 @@ import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.FleaConfigManager;
 import com.huazie.frame.common.FleaFrameManager;
 import com.huazie.frame.common.util.ArrayUtils;
-import com.huazie.frame.common.util.MapUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.DBConstants;
@@ -18,8 +17,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -36,7 +33,7 @@ public class FleaJDBCConfig {
 
     private static volatile FleaJDBCConfig config;
 
-    private static ConcurrentMap<String, FleaDBUnit> fleaDBUnits = new ConcurrentHashMap<String, FleaDBUnit>();
+    private static ConcurrentMap<String, FleaDBUnit> fleaDBUnits = new ConcurrentHashMap<>();
 
     private FleaJDBCConfig() {
     }
@@ -98,10 +95,8 @@ public class FleaJDBCConfig {
 
         try {
 
-            if (ObjectUtils.isEmpty(fleaDBUnit)) {
-                // 请正确初始化数据库管理系统和数据库（或数据库用户）
-                throw new DaoException("ERROR-DB-DAO0000000015");
-            }
+            // 请正确初始化数据库管理系统和数据库（或数据库用户）
+            ObjectUtils.checkEmpty(fleaDBUnit, DaoException.class, "ERROR-DB-DAO0000000013");
 
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("JDBCConfig##getConnection() 数据库配置键名：{}", dbConfigKey);

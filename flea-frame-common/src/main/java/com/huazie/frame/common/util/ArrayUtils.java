@@ -1,5 +1,9 @@
 package com.huazie.frame.common.util;
 
+import com.huazie.frame.common.exception.CommonException;
+
+import java.util.Map;
+
 /**
  * <p>数组操作工具类</p>
  *
@@ -254,6 +258,36 @@ public class ArrayUtils {
         }
 
         return false;
+    }
+
+    /**
+     * <p> 校验map集合对象，如果空，则抛出异常 </p>
+     *
+     * @param values         对象数组
+     * @param exceptionClazz 通用异常子类类对象
+     * @param params         通用异常子类构造参数
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    public static void checkEmpty(Object[] values, Class<? extends CommonException> exceptionClazz, Object... params) throws CommonException {
+        if (isEmpty(values)) {
+            ExceptionUtils.throwCommonException(exceptionClazz, params);
+        }
+    }
+
+    /**
+     * <p> 校验map集合对象，如果非空，则抛出异常 </p>
+     *
+     * @param values         对象数组
+     * @param exceptionClazz 通用异常子类类对象
+     * @param params         通用异常子类构造参数
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    public static void checkNotEmpty(Object[] values, Class<? extends CommonException> exceptionClazz, Object... params) throws CommonException {
+        if (isNotEmpty(values)) {
+            ExceptionUtils.throwCommonException(exceptionClazz, params);
+        }
     }
 
 }

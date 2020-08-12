@@ -2,7 +2,6 @@ package com.huazie.frame.jersey.client.request;
 
 import com.huazie.frame.common.FleaCommonConfig;
 import com.huazie.frame.common.util.StringUtils;
-import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
  * <p> 请求配置 </p>
@@ -131,7 +130,7 @@ public class RequestConfig extends FleaCommonConfig {
      */
     public void addMediaType(String mediaType) {
         if (StringUtils.isNotBlank(mediaType)) {
-            put(RequestConfigEnum.MEDIA9_TYPE.getKey(), mediaType);
+            put(RequestConfigEnum.MEDIA_TYPE.getKey(), mediaType);
         }
     }
 
@@ -142,7 +141,7 @@ public class RequestConfig extends FleaCommonConfig {
      * @since 1.0.0
      */
     public String getMediaType() {
-        return get(RequestConfigEnum.MEDIA9_TYPE.getKey(), String.class);
+        return get(RequestConfigEnum.MEDIA_TYPE.getKey(), String.class);
     }
 
     /**

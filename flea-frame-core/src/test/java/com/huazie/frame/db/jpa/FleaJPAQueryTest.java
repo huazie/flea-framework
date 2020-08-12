@@ -1,9 +1,9 @@
 package com.huazie.frame.db.jpa;
 
+import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.pool.FleaObjectPoolFactory;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResource;
 import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
-import com.huazie.frame.db.common.exception.DaoException;
 import com.huazie.frame.db.jpa.common.FleaJPAQuery;
 import com.huazie.frame.db.jpa.common.FleaJPAQueryPool;
 import org.junit.AfterClass;
@@ -76,7 +76,7 @@ public class FleaJPAQueryTest {
             List<FleaJerseyResource> resourceList = query1.getResultList();
             LOGGER.debug("Resource List : {}", resourceList);
 
-        } catch (DaoException e) {
+        } catch (CommonException e) {
             LOGGER.error("Exception:", e);
         }
     }
