@@ -256,6 +256,10 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
         // 用户【user_id = {0}】不存在！
         ObjectUtils.checkEmpty(fleaUser, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000007", userId);
 
+        FleaAccount systemFleaAccount = fleaAccountSV.query(systemAcctId);
+        // 账户【account_id = {0}】不存在！
+        ObjectUtils.checkEmpty(systemFleaAccount, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000006", systemAcctId);
+
         List<Long> roleIdList = new ArrayList<>(); // 角色编号列表
 
         Long groupId = fleaUser.getGroupId(); // 获取用户组编号
@@ -316,7 +320,7 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
         // 处理系统账户下关联的菜单信息
         handleFunctionAttr(systemRelMenuIdList, fleaFunctionAttrList, systemAcctId);
 
-        return null;
+        return fleaMenuSV.getAllAccessibleMenus(systemRelMenuIdList, menuIdList);
     }
 
     /**
