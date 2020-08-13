@@ -114,6 +114,46 @@ public class UserAuthTest {
     }
 
     @Test
+    public void systemUserRegisterTest() {
+        FleaUserRegisterPOJO fleaUserRegisterPOJO = new FleaUserRegisterPOJO();
+
+        fleaUserRegisterPOJO.setSystemId(1000L);
+        fleaUserRegisterPOJO.setAccountCode("SYS_FLEA_MGMT");
+        fleaUserRegisterPOJO.setAccountPwd("123456qwertyASDFGH");
+        fleaUserRegisterPOJO.setState(UserStateEnum.IN_USE.getState());
+
+        // 添加用户属性
+        List<FleaUserAttrPOJO> fleaUserAttrInfoList = new ArrayList<FleaUserAttrPOJO>();
+
+        FleaUserAttrPOJO fleaUserAttrInfo1 = new FleaUserAttrPOJO();
+        fleaUserAttrInfo1.setAttrCode("USER_TYPE");
+        fleaUserAttrInfo1.setAttrValue("SYSTEM");
+        fleaUserAttrInfoList.add(fleaUserAttrInfo1);
+
+        // 添加账户属性
+        List<FleaAccountAttrPOJO> fleaAccountAttrInfoList = new ArrayList<FleaAccountAttrPOJO>();
+
+        FleaAccountAttrPOJO fleaAccountAttrInfo1 = new FleaAccountAttrPOJO();
+        fleaAccountAttrInfo1.setAttrCode("ACCOUNT_TYPE");
+        fleaAccountAttrInfo1.setAttrValue("SYSTEM");
+        fleaAccountAttrInfoList.add(fleaAccountAttrInfo1);
+
+        fleaUserRegisterPOJO.setUserAttrList(fleaUserAttrInfoList);
+        fleaUserRegisterPOJO.setAccountAttrList(fleaAccountAttrInfoList);
+
+        fleaUserRegisterPOJO.setRemarks("【跳蚤管家】");
+
+        IFleaUserRegisterSV fleaUserRegisterSV = (IFleaUserRegisterSV) applicationContext.getBean("fleaUserRegisterSV");
+
+        try {
+            FleaAccount fleaAccount = fleaUserRegisterSV.register(fleaUserRegisterPOJO);
+            LOGGER.debug("FleaAccount = {}", fleaAccount);
+        } catch (CommonException e) {
+            LOGGER.error("Exception = ", e);
+        }
+    }
+
+    @Test
     public void testSaveQuitLog() {
         IFleaAuthSV fleaUserLoginSV = (IFleaAuthSV) applicationContext.getBean("fleaAuthSV");
         fleaUserLoginSV.saveQuitLog(1L);
