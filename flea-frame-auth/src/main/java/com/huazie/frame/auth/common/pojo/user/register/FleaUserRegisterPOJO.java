@@ -23,6 +23,8 @@ public class FleaUserRegisterPOJO extends FleaUserLoginPOJO {
 
     private static final long serialVersionUID = -2040583042633897645L;
 
+    private Long systemId; // 系统编号（用于系统账户和用户的生成）
+
     private Long groupId; // 用户组编号
 
     private Integer state; // 状态（0：删除，1：正常 ，2：禁用，3：待审核）
@@ -36,6 +38,14 @@ public class FleaUserRegisterPOJO extends FleaUserLoginPOJO {
     private List<FleaUserAttrPOJO> userAttrList; // Flea用户属性POJO类List集合
 
     private List<FleaAccountAttrPOJO> accountAttrList; // Flea账户属性POJO类List集合
+
+    public Long getSystemId() {
+        return systemId;
+    }
+
+    public void setSystemId(Long systemId) {
+        this.systemId = systemId;
+    }
 
     public Long getGroupId() {
         return groupId;
@@ -149,6 +159,7 @@ public class FleaUserRegisterPOJO extends FleaUserLoginPOJO {
      */
     public FleaUserPOJO newFleaUserPOJO() {
         FleaUserPOJO fleaUserPOJO = new FleaUserPOJO();
+        fleaUserPOJO.setUserId(systemId);
         fleaUserPOJO.setGroupId(groupId);
         fleaUserPOJO.setUserName(getAccountCode());
         fleaUserPOJO.setUserState(state);
@@ -167,6 +178,7 @@ public class FleaUserRegisterPOJO extends FleaUserLoginPOJO {
      */
     public FleaAccountPOJO newFleaAccountPOJO(Long userId) {
         FleaAccountPOJO fleaAccountPOJO = new FleaAccountPOJO();
+        fleaAccountPOJO.setAccountId(systemId);
         fleaAccountPOJO.setUserId(userId);
         fleaAccountPOJO.setAccountCode(getAccountCode());
         fleaAccountPOJO.setAccountPwd(getAccountPwd());

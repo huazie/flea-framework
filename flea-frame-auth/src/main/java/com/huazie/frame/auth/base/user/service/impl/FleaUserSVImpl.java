@@ -6,6 +6,7 @@ import com.huazie.frame.auth.base.user.service.interfaces.IFleaUserSV;
 import com.huazie.frame.auth.common.FleaAuthEntityConstants;
 import com.huazie.frame.auth.common.exception.FleaAuthCommonException;
 import com.huazie.frame.auth.common.pojo.user.FleaUserPOJO;
+import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
@@ -38,6 +39,12 @@ public class FleaUserSVImpl extends AbstractFleaJPASVImpl<FleaUser> implements I
 
         FleaUser fleaUser = newFleaUser(fleaUserPOJO);
 
+        // 系统用户生成时指定用户编号
+        Long userId = fleaUserPOJO.getUserId();
+        if (ObjectUtils.isNotEmpty(userId) && userId > CommonConstants.NumeralConstants.ZERO) {
+            fleaUser.setUserId(userId);
+        }
+
         // 保存Flea用户
         fleaUserDao.save(fleaUser);
 
@@ -45,7 +52,7 @@ public class FleaUserSVImpl extends AbstractFleaJPASVImpl<FleaUser> implements I
     }
 
     /**
-     * <p> 新建一个Flea用户</p>
+     * <p> 新建一个Flea用户 </p>
      *
      * @param fleaUserPOJO Flea用户POJO类实例
      * @return Flea用户实体类实例

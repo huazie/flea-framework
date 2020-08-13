@@ -6,6 +6,7 @@ import com.huazie.frame.auth.base.user.service.interfaces.IFleaAccountSV;
 import com.huazie.frame.auth.common.FleaAuthEntityConstants;
 import com.huazie.frame.auth.common.exception.FleaAuthCommonException;
 import com.huazie.frame.auth.common.pojo.account.FleaAccountPOJO;
+import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.SecurityUtils;
@@ -43,6 +44,12 @@ public class FleaAccountSVImpl extends AbstractFleaJPASVImpl<FleaAccount> implem
 
         FleaAccount fleaAccount = newFleaAccount(fleaAccountPOJO);
 
+        // 系统账号生成时指定账户编号
+        Long accountId = fleaAccountPOJO.getAccountId();
+        if (null != accountId && accountId > CommonConstants.NumeralConstants.ZERO) {
+            fleaAccount.setAccountId(accountId);
+        }
+
         // 保存Flea账户
         fleaAccountDao.save(fleaAccount);
 
@@ -76,6 +83,14 @@ public class FleaAccountSVImpl extends AbstractFleaJPASVImpl<FleaAccount> implem
         return encryptedAccountPwd;
     }
 
+    /**
+     * <p> 新建一个Flea账户 </p>
+     *
+     * @param fleaAccountPOJO Flea账户POJO类实例
+     * @return Flea账户
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
     private FleaAccount newFleaAccount(FleaAccountPOJO fleaAccountPOJO) throws CommonException {
 
         // 校验Flea账户POJO类对象是否为空

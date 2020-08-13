@@ -124,7 +124,7 @@ CREATE TABLE `flea_id_generator` (
 -- ----------------------------
 -- Records of flea_id_generator
 -- ----------------------------
-INSERT INTO `flea_id_generator` VALUES ('pk_flea_account', '0');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_account', '9999');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_account_attr', '0');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_element', '0');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_function_attr', '0');
@@ -141,7 +141,7 @@ INSERT INTO `flea_id_generator` VALUES ('pk_flea_role', '0');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_role_group', '0');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_role_group_rel', '0');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_role_rel', '0');
-INSERT INTO `flea_id_generator` VALUES ('pk_flea_user', '0');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_user', '9999');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_user_attr', '0');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_user_group', '0');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_user_group_rel', '0');
