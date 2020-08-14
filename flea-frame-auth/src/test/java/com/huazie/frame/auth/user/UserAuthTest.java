@@ -119,7 +119,7 @@ public class UserAuthTest {
 
         fleaUserRegisterPOJO.setSystemId(1000L);
         fleaUserRegisterPOJO.setAccountCode("SYS_FLEA_MGMT");
-        fleaUserRegisterPOJO.setAccountPwd("123456qwertyASDFGH");
+        fleaUserRegisterPOJO.setAccountPwd("2020#huazie");
         fleaUserRegisterPOJO.setState(UserStateEnum.IN_USE.getState());
 
         // 添加用户属性
