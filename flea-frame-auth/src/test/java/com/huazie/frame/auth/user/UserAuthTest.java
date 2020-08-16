@@ -4,8 +4,11 @@ import com.huazie.frame.auth.base.user.entity.FleaAccount;
 import com.huazie.frame.auth.base.user.entity.FleaUserRel;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaUserGroupRelSV;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaUserRelSV;
+import com.huazie.frame.auth.common.AccountTypeEnum;
 import com.huazie.frame.auth.common.AuthRelTypeEnum;
+import com.huazie.frame.auth.common.FleaAuthConstants;
 import com.huazie.frame.auth.common.UserStateEnum;
+import com.huazie.frame.auth.common.UserTypeEnum;
 import com.huazie.frame.auth.common.pojo.account.attr.FleaAccountAttrPOJO;
 import com.huazie.frame.auth.common.pojo.user.attr.FleaUserAttrPOJO;
 import com.huazie.frame.auth.common.pojo.user.login.FleaUserLoginPOJO;
@@ -76,27 +79,17 @@ public class UserAuthTest {
         List<FleaUserAttrPOJO> fleaUserAttrInfoList = new ArrayList<FleaUserAttrPOJO>();
 
         FleaUserAttrPOJO fleaUserAttrInfo1 = new FleaUserAttrPOJO();
-        fleaUserAttrInfo1.setAttrCode("USER_TEST1");
-        fleaUserAttrInfo1.setAttrValue("11111");
+        fleaUserAttrInfo1.setAttrCode(FleaAuthConstants.AttrCodeConstants.ATTR_CODE_USER_TYPE);
+        fleaUserAttrInfo1.setAttrValue(UserTypeEnum.OPERATOR_USER.getType());
         fleaUserAttrInfoList.add(fleaUserAttrInfo1);
-
-        FleaUserAttrPOJO fleaUserAttrInfo2 = new FleaUserAttrPOJO();
-        fleaUserAttrInfo2.setAttrCode("USER_TEST2");
-        fleaUserAttrInfo2.setAttrValue("22222");
-        fleaUserAttrInfoList.add(fleaUserAttrInfo2);
 
         // 添加账户属性
         List<FleaAccountAttrPOJO> fleaAccountAttrInfoList = new ArrayList<FleaAccountAttrPOJO>();
 
         FleaAccountAttrPOJO fleaAccountAttrInfo1 = new FleaAccountAttrPOJO();
-        fleaAccountAttrInfo1.setAttrCode("ACCOUNT_TEST1");
-        fleaAccountAttrInfo1.setAttrValue("11111");
+        fleaAccountAttrInfo1.setAttrCode(FleaAuthConstants.AttrCodeConstants.ATTR_CODE_ACCOUNT_TYPE);
+        fleaAccountAttrInfo1.setAttrValue(AccountTypeEnum.OPERATOR_ACCOUNT.getType());
         fleaAccountAttrInfoList.add(fleaAccountAttrInfo1);
-
-        FleaAccountAttrPOJO fleaAccountAttrInfo2 = new FleaAccountAttrPOJO();
-        fleaAccountAttrInfo2.setAttrCode("ACCOUNT_TEST2");
-        fleaAccountAttrInfo2.setAttrValue("22222");
-        fleaAccountAttrInfoList.add(fleaAccountAttrInfo2);
 
         fleaUserRegisterPOJO.setUserAttrList(fleaUserAttrInfoList);
         fleaUserRegisterPOJO.setAccountAttrList(fleaAccountAttrInfoList);
@@ -126,16 +119,16 @@ public class UserAuthTest {
         List<FleaUserAttrPOJO> fleaUserAttrInfoList = new ArrayList<FleaUserAttrPOJO>();
 
         FleaUserAttrPOJO fleaUserAttrInfo1 = new FleaUserAttrPOJO();
-        fleaUserAttrInfo1.setAttrCode("USER_TYPE");
-        fleaUserAttrInfo1.setAttrValue("SYSTEM");
+        fleaUserAttrInfo1.setAttrCode(FleaAuthConstants.AttrCodeConstants.ATTR_CODE_USER_TYPE);
+        fleaUserAttrInfo1.setAttrValue(UserTypeEnum.SYSTEM_USER.getType());
         fleaUserAttrInfoList.add(fleaUserAttrInfo1);
 
         // 添加账户属性
         List<FleaAccountAttrPOJO> fleaAccountAttrInfoList = new ArrayList<FleaAccountAttrPOJO>();
 
         FleaAccountAttrPOJO fleaAccountAttrInfo1 = new FleaAccountAttrPOJO();
-        fleaAccountAttrInfo1.setAttrCode("ACCOUNT_TYPE");
-        fleaAccountAttrInfo1.setAttrValue("SYSTEM");
+        fleaAccountAttrInfo1.setAttrCode(FleaAuthConstants.AttrCodeConstants.ATTR_CODE_ACCOUNT_TYPE);
+        fleaAccountAttrInfo1.setAttrValue(AccountTypeEnum.SYSTEM_ACCOUNT.getType());
         fleaAccountAttrInfoList.add(fleaAccountAttrInfo1);
 
         fleaUserRegisterPOJO.setUserAttrList(fleaUserAttrInfoList);

@@ -316,7 +316,7 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
 
         // 获取系统账户下关联的菜单
         // 取 功能类型 function_type = MENU, ATTR_CODE = SYSTEM_IN_USE
-        List<FleaFunctionAttr> fleaFunctionAttrList = fleaFunctionAttrSV.getFunctionAttrList(null, FunctionTypeEnum.MENU.getType(), FleaAuthConstants.FunctionConstants.MENU_ATTR_CODE_SYSTEM_IN_USE);
+        List<FleaFunctionAttr> fleaFunctionAttrList = fleaFunctionAttrSV.getFunctionAttrList(null, FunctionTypeEnum.MENU.getType(), FleaAuthConstants.AttrCodeConstants.ATTR_CODE_SYSTEM_IN_USE);
         // 处理系统账户下关联的菜单信息
         handleFunctionAttr(systemRelMenuIdList, fleaFunctionAttrList, systemAcctId);
 
