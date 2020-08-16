@@ -62,7 +62,7 @@ public class PrivilegeAuthTest {
         FleaPrivilege fleaPrivilege = new FleaPrivilege();
         fleaPrivilege.setPrivilegeName("访问《控制台》菜单");
         fleaPrivilege.setPrivilegeDesc("拥有可以访问《控制台》菜单的权限");
-        fleaPrivilege.setGroupId(1L);
+        fleaPrivilege.setGroupId(1000L);
         fleaPrivilege.setPrivilegeState(EntityStateEnum.IN_USE.getState());
         fleaPrivilege.setCreateDate(DateUtils.getCurrentTime());
         fleaPrivilege.setRemarks("【访问《控制台》菜单】权限对应【控制台】菜单，新增菜单时自动生成");
@@ -79,8 +79,8 @@ public class PrivilegeAuthTest {
     public void testInsertPrivilegeRel() {
 
         FleaPrivilegeRel fleaPrivilegeRel = new FleaPrivilegeRel();
-        fleaPrivilegeRel.setPrivilegeId(1L);
-        fleaPrivilegeRel.setRelId(1L);
+        fleaPrivilegeRel.setPrivilegeId(1000L);
+        fleaPrivilegeRel.setRelId(1000L);
         fleaPrivilegeRel.setRelType(AuthRelTypeEnum.PRIVILEGE_REL_MENU.getRelType());
         fleaPrivilegeRel.setRelState(EntityStateEnum.IN_USE.getState());
         fleaPrivilegeRel.setCreateDate(DateUtils.getCurrentTime());
@@ -98,8 +98,8 @@ public class PrivilegeAuthTest {
     public void testInsertPrivilegeGroupRel() {
 
         FleaPrivilegeGroupRel fleaPrivilegeGroupRel = new FleaPrivilegeGroupRel();
-        fleaPrivilegeGroupRel.setPrivilegeGroupId(1L);
-        fleaPrivilegeGroupRel.setRelId(1L);
+        fleaPrivilegeGroupRel.setPrivilegeGroupId(1000L);
+        fleaPrivilegeGroupRel.setRelId(1000L);
         fleaPrivilegeGroupRel.setRelType(AuthRelTypeEnum.PRIVILEGE_GROUP_REL_PRIVILEGE.getRelType());
         fleaPrivilegeGroupRel.setRelState(EntityStateEnum.IN_USE.getState());
         fleaPrivilegeGroupRel.setCreateDate(DateUtils.getCurrentTime());
@@ -118,7 +118,7 @@ public class PrivilegeAuthTest {
     public void testQueryPrivilegeRel() {
         try {
             IFleaPrivilegeRelSV fleaPrivilegeRelSV = (IFleaPrivilegeRelSV) applicationContext.getBean("fleaPrivilegeRelSV");
-            fleaPrivilegeRelSV.getPrivilegeRelList(1L, AuthRelTypeEnum.PRIVILEGE_REL_MENU.getRelType());
+            fleaPrivilegeRelSV.getPrivilegeRelList(1000L, AuthRelTypeEnum.PRIVILEGE_REL_MENU.getRelType());
         } catch (CommonException e) {
             LOGGER.error("Exception = ", e);
         }
@@ -128,7 +128,7 @@ public class PrivilegeAuthTest {
     public void testQueryPrivilegeGroupRel() {
         try {
             IFleaPrivilegeGroupRelSV fleaPrivilegeGroupRelSV = (IFleaPrivilegeGroupRelSV) applicationContext.getBean("fleaPrivilegeGroupRelSV");
-            fleaPrivilegeGroupRelSV.getPrivilegeGroupRelList(1L, AuthRelTypeEnum.PRIVILEGE_GROUP_REL_PRIVILEGE.getRelType());
+            fleaPrivilegeGroupRelSV.getPrivilegeGroupRelList(1000L, AuthRelTypeEnum.PRIVILEGE_GROUP_REL_PRIVILEGE.getRelType());
         } catch (CommonException e) {
             LOGGER.error("Exception = ", e);
         }

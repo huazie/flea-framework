@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50538
 File Encoding         : 65001
 
-Date: 2020-07-28 23:00:37
+Date: 2020-08-16 23:52:42
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -33,11 +33,13 @@ CREATE TABLE `flea_account` (
   PRIMARY KEY (`account_id`),
   KEY `INDEX_CODE_PWD` (`account_code`,`account_pwd`(255)) USING BTREE,
   KEY `INDEX_USER_ID` (`user_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10001 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of flea_account
 -- ----------------------------
+INSERT INTO `flea_account` VALUES ('1000', '1000', 'SYS_FLEA_MGMT', '31DAA1C5BA8F0874A2383145686D90CCD238483F', '1', '2020-08-16 20:25:52', null, '2020-08-16 20:25:52', '2999-12-31 23:59:59', '【跳蚤管家】');
+INSERT INTO `flea_account` VALUES ('10000', '10000', 'huazie', '31DAA1C5BA8F0874A2383145686D90CCD238483F', '1', '2020-08-16 20:32:33', null, '2020-08-16 20:32:33', '2999-12-31 23:59:59', '用户自己注册时新增数据');
 
 -- ----------------------------
 -- Table structure for `flea_account_attr`
@@ -57,11 +59,13 @@ CREATE TABLE `flea_account_attr` (
   PRIMARY KEY (`attr_id`),
   KEY `INDEX_ACCOUNT_ID` (`account_id`) USING BTREE,
   KEY `INDEX_ATTR_CODE` (`attr_code`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of flea_account_attr
 -- ----------------------------
+INSERT INTO `flea_account_attr` VALUES ('1', '1000', 'ACCOUNT_TYPE', 'SYSTEM', '1', '2020-08-16 20:25:52', null, '2020-08-16 20:25:52', '2999-12-31 23:59:59', '【跳蚤管家】');
+INSERT INTO `flea_account_attr` VALUES ('2', '10000', 'ACCOUNT_TYPE', 'OPERATOR', '1', '2020-08-16 20:32:33', null, '2020-08-16 20:32:33', '2999-12-31 23:59:59', '用户自己注册时新增数据');
 
 -- ----------------------------
 -- Table structure for `flea_element`
@@ -105,11 +109,12 @@ CREATE TABLE `flea_function_attr` (
   PRIMARY KEY (`attr_id`),
   KEY `INDEX_FUNCTION_ID` (`function_id`) USING BTREE,
   KEY `INDEX_ATTR_CODE` (`attr_code`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of flea_function_attr
 -- ----------------------------
+INSERT INTO `flea_function_attr` VALUES ('1', '1000', 'MENU', 'SYSTEM_IN_USE', '1000', '1', '2020-08-16 23:43:13', null, '2020-08-16 23:43:13', '2999-12-31 23:59:59', '【跳蚤管家】正在使用中');
 
 -- ----------------------------
 -- Table structure for `flea_id_generator`
@@ -124,28 +129,28 @@ CREATE TABLE `flea_id_generator` (
 -- ----------------------------
 -- Records of flea_id_generator
 -- ----------------------------
-INSERT INTO `flea_id_generator` VALUES ('pk_flea_account', '9999');
-INSERT INTO `flea_id_generator` VALUES ('pk_flea_account_attr', '0');
-INSERT INTO `flea_id_generator` VALUES ('pk_flea_element', '0');
-INSERT INTO `flea_id_generator` VALUES ('pk_flea_function_attr', '0');
-INSERT INTO `flea_id_generator` VALUES ('pk_flea_login_log_202007', '0');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_account', '10000');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_account_attr', '2');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_element', '999');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_function_attr', '1');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_login_log_202008', '0');
-INSERT INTO `flea_id_generator` VALUES ('pk_flea_menu', '0');
-INSERT INTO `flea_id_generator` VALUES ('pk_flea_operation', '0');
-INSERT INTO `flea_id_generator` VALUES ('pk_flea_privilege', '0');
-INSERT INTO `flea_id_generator` VALUES ('pk_flea_privilege_group', '0');
-INSERT INTO `flea_id_generator` VALUES ('pk_flea_privilege_group_rel', '0');
-INSERT INTO `flea_id_generator` VALUES ('pk_flea_privilege_rel', '0');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_login_log_202009', '0');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_menu', '1000');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_operation', '999');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_privilege', '1000');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_privilege_group', '1000');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_privilege_group_rel', '1');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_privilege_rel', '1');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_real_name_info', '0');
-INSERT INTO `flea_id_generator` VALUES ('pk_flea_role', '0');
-INSERT INTO `flea_id_generator` VALUES ('pk_flea_role_group', '0');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_role', '1000');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_role_group', '999');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_role_group_rel', '0');
-INSERT INTO `flea_id_generator` VALUES ('pk_flea_role_rel', '0');
-INSERT INTO `flea_id_generator` VALUES ('pk_flea_user', '9999');
-INSERT INTO `flea_id_generator` VALUES ('pk_flea_user_attr', '0');
-INSERT INTO `flea_id_generator` VALUES ('pk_flea_user_group', '0');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_role_rel', '1');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_user', '10000');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_user_attr', '2');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_user_group', '999');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_user_group_rel', '0');
-INSERT INTO `flea_id_generator` VALUES ('pk_flea_user_rel', '0');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_user_rel', '1');
 
 -- ----------------------------
 -- Table structure for `flea_login_log`
@@ -173,34 +178,6 @@ CREATE TABLE `flea_login_log` (
 
 -- ----------------------------
 -- Records of flea_login_log
--- ----------------------------
-
--- ----------------------------
--- Table structure for `flea_login_log_202007`
--- ----------------------------
-DROP TABLE IF EXISTS `flea_login_log_202007`;
-CREATE TABLE `flea_login_log_202007` (
-  `login_log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '登录日志编号',
-  `account_id` int(11) NOT NULL COMMENT '账户编号',
-  `system_account_id` int(11) NOT NULL COMMENT '系统账户编号',
-  `login_ip4` varchar(15) NOT NULL COMMENT 'ip4地址',
-  `login_ip6` varchar(40) DEFAULT NULL COMMENT 'ip6地址',
-  `login_area` varchar(15) DEFAULT NULL COMMENT '登录地区',
-  `login_state` tinyint(4) NOT NULL COMMENT '登录状态（1：登录中，2：已退出）',
-  `login_time` datetime NOT NULL COMMENT '登录时间',
-  `logout_time` datetime DEFAULT NULL COMMENT '退出时间',
-  `create_date` datetime NOT NULL COMMENT '创建日期',
-  `done_date` datetime DEFAULT NULL COMMENT '修改日期',
-  `remarks` varchar(1024) DEFAULT NULL COMMENT '描述信息',
-  `ext1` varchar(1024) DEFAULT NULL COMMENT '扩展字段1',
-  `ext2` varchar(1024) DEFAULT NULL COMMENT '扩展字段2',
-  PRIMARY KEY (`login_log_id`),
-  KEY `INDEX_ACCOUNT_ID` (`account_id`) USING BTREE,
-  KEY `INDEX_SYS_ACCOUNT_ID` (`system_account_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of flea_login_log_202007
 -- ----------------------------
 
 -- ----------------------------
@@ -232,6 +209,34 @@ CREATE TABLE `flea_login_log_202008` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for `flea_login_log_202009`
+-- ----------------------------
+DROP TABLE IF EXISTS `flea_login_log_202009`;
+CREATE TABLE `flea_login_log_202009` (
+  `login_log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '登录日志编号',
+  `account_id` int(11) NOT NULL COMMENT '账户编号',
+  `system_account_id` int(11) NOT NULL COMMENT '系统账户编号',
+  `login_ip4` varchar(15) NOT NULL COMMENT 'ip4地址',
+  `login_ip6` varchar(40) DEFAULT NULL COMMENT 'ip6地址',
+  `login_area` varchar(15) DEFAULT NULL COMMENT '登录地区',
+  `login_state` tinyint(4) NOT NULL COMMENT '登录状态（1：登录中，2：已退出）',
+  `login_time` datetime NOT NULL COMMENT '登录时间',
+  `logout_time` datetime DEFAULT NULL COMMENT '退出时间',
+  `create_date` datetime NOT NULL COMMENT '创建日期',
+  `done_date` datetime DEFAULT NULL COMMENT '修改日期',
+  `remarks` varchar(1024) DEFAULT NULL COMMENT '描述信息',
+  `ext1` varchar(1024) DEFAULT NULL COMMENT '扩展字段1',
+  `ext2` varchar(1024) DEFAULT NULL COMMENT '扩展字段2',
+  PRIMARY KEY (`login_log_id`),
+  KEY `INDEX_ACCOUNT_ID` (`account_id`) USING BTREE,
+  KEY `INDEX_SYS_ACCOUNT_ID` (`system_account_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of flea_login_log_202009
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for `flea_menu`
 -- ----------------------------
 DROP TABLE IF EXISTS `flea_menu`;
@@ -252,11 +257,12 @@ CREATE TABLE `flea_menu` (
   `remarks` varchar(1024) DEFAULT NULL COMMENT '菜单描述',
   PRIMARY KEY (`menu_id`),
   UNIQUE KEY `UNIQUE_MENU_CODE` (`menu_code`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of flea_menu
 -- ----------------------------
+INSERT INTO `flea_menu` VALUES ('1000', 'console', '控制台', 'dashboard', '1', 'mgmt/console.html', '1', '1', '-1', '2020-08-16 23:40:10', null, '2020-08-16 23:40:10', '2999-12-31 23:59:59', '控制台，展示收藏夹，快捷菜单入口');
 
 -- ----------------------------
 -- Table structure for `flea_operation`
@@ -294,11 +300,12 @@ CREATE TABLE `flea_privilege` (
   `remarks` varchar(1024) DEFAULT NULL COMMENT '备注信息',
   PRIMARY KEY (`privilege_id`),
   KEY `INDEX_GROUP_ID` (`group_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of flea_privilege
 -- ----------------------------
+INSERT INTO `flea_privilege` VALUES ('1000', '访问《控制台》菜单', '拥有可以访问《控制台》菜单的权限', '1000', '1', '2020-08-16 23:45:44', null, '【访问《控制台》菜单】权限对应【控制台】菜单，新增菜单时自动生成');
 
 -- ----------------------------
 -- Table structure for `flea_privilege_group`
@@ -313,11 +320,12 @@ CREATE TABLE `flea_privilege_group` (
   `done_date` datetime DEFAULT NULL COMMENT '修改日期',
   `remarks` varchar(1024) DEFAULT NULL COMMENT '备注信息',
   PRIMARY KEY (`privilege_group_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of flea_privilege_group
 -- ----------------------------
+INSERT INTO `flea_privilege_group` VALUES ('1000', '菜单访问', '与访问菜单相关的权限归属的权限组', '1', '2020-08-16 22:59:32', null, '该权限组包含了访问菜单相关的权限');
 
 -- ----------------------------
 -- Table structure for `flea_privilege_group_rel`
@@ -341,11 +349,12 @@ CREATE TABLE `flea_privilege_group_rel` (
   PRIMARY KEY (`privilege_group_rel_id`),
   KEY `INDEX_PRIVILEGE_GROUP_ID` (`privilege_group_id`) USING BTREE,
   KEY `INDEX_REL_ID` (`rel_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of flea_privilege_group_rel
 -- ----------------------------
+INSERT INTO `flea_privilege_group_rel` VALUES ('1', '1000', '1000', 'PRIVILEGE_GROUP_REL_PRIVILEGE', '1', '2020-08-16 23:49:12', null, '【菜单访问】权限组关联【访问《控制台》菜单】权限', null, null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `flea_privilege_rel`
@@ -369,11 +378,12 @@ CREATE TABLE `flea_privilege_rel` (
   PRIMARY KEY (`privilege_rel_id`),
   KEY `INDEX_PRIVILEGE_ID` (`privilege_id`) USING BTREE,
   KEY `INDEX_REL_ID` (`rel_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of flea_privilege_rel
 -- ----------------------------
+INSERT INTO `flea_privilege_rel` VALUES ('1', '1000', '1000', 'PRIVILEGE_REL_MENU', '1', '2020-08-16 23:46:42', null, '【控制台】菜单绑定【访问《控制台》菜单】权限, 新增菜单时自动生成', null, null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `flea_real_name_info`
@@ -415,11 +425,12 @@ CREATE TABLE `flea_role` (
   `remarks` varchar(1024) DEFAULT NULL COMMENT '备注信息',
   PRIMARY KEY (`role_id`),
   KEY `INDEX_GROUP_ID` (`group_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of flea_role
 -- ----------------------------
+INSERT INTO `flea_role` VALUES ('1000', '超级管理员', '系统最高权限拥有者', '-1', '1', '2020-08-16 20:27:26', null, '超级管理员拥有系统最高权限');
 
 -- ----------------------------
 -- Table structure for `flea_role_group`
@@ -490,11 +501,12 @@ CREATE TABLE `flea_role_rel` (
   PRIMARY KEY (`role_rel_id`),
   KEY `INDEX_ROLE_ID` (`role_id`) USING BTREE,
   KEY `INDEX_REL_ID` (`rel_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of flea_role_rel
 -- ----------------------------
+INSERT INTO `flea_role_rel` VALUES ('1', '1000', '1000', 'ROLE_REL_PRIVILEGE_GROUP', '1', '2020-08-16 23:01:29', null, '【超级管理员】角色绑定【菜单访问】权限组', null, null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `flea_user`
@@ -520,11 +532,13 @@ CREATE TABLE `flea_user` (
   KEY `INDEX_USER_BIRTHDAY` (`user_birthday`) USING BTREE,
   KEY `INDEX_USER_EMAIL` (`user_email`) USING BTREE,
   KEY `INDEX_USER_PHONE` (`user_phone`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10001 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of flea_user
 -- ----------------------------
+INSERT INTO `flea_user` VALUES ('1000', 'SYS_FLEA_MGMT', null, null, null, null, null, '-1', '1', '2020-08-16 20:25:52', null, '2020-08-16 20:25:52', '2999-12-31 23:59:59', '【跳蚤管家】');
+INSERT INTO `flea_user` VALUES ('10000', 'huazie', null, null, null, null, null, '-1', '1', '2020-08-16 20:32:33', null, '2020-08-16 20:32:33', '2999-12-31 23:59:59', '用户自己注册时新增数据');
 
 -- ----------------------------
 -- Table structure for `flea_user_attr`
@@ -544,11 +558,13 @@ CREATE TABLE `flea_user_attr` (
   PRIMARY KEY (`attr_id`),
   KEY `INDEX_USER_ID` (`user_id`) USING BTREE,
   KEY `INDEX_ATTR_CODE` (`attr_code`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of flea_user_attr
 -- ----------------------------
+INSERT INTO `flea_user_attr` VALUES ('1', '1000', 'USER_TYPE', 'SYSTEM', '1', '2020-08-16 20:25:52', null, '2020-08-16 20:25:52', '2999-12-31 23:59:59', '【跳蚤管家】');
+INSERT INTO `flea_user_attr` VALUES ('2', '10000', 'USER_TYPE', 'OPERATOR', '1', '2020-08-16 20:32:33', null, '2020-08-16 20:32:33', '2999-12-31 23:59:59', '用户自己注册时新增数据');
 
 -- ----------------------------
 -- Table structure for `flea_user_group`
@@ -619,8 +635,9 @@ CREATE TABLE `flea_user_rel` (
   PRIMARY KEY (`user_rel_id`),
   KEY `INDEX_USER_ID` (`user_id`) USING BTREE,
   KEY `INDEX_REL_ID` (`rel_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of flea_user_rel
 -- ----------------------------
+INSERT INTO `flea_user_rel` VALUES ('1', '10000', '1000', 'USER_REL_ROLE', '1', '2020-08-16 20:37:00', null, '用户【huazie】绑定【超级管理员】角色', null, null, null, null, null, null);
