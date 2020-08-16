@@ -71,8 +71,8 @@ public class UserAuthTest {
 
         FleaUserRegisterPOJO fleaUserRegisterPOJO = new FleaUserRegisterPOJO();
 
-        fleaUserRegisterPOJO.setAccountCode("13218010892");
-        fleaUserRegisterPOJO.setAccountPwd("123qwe");
+        fleaUserRegisterPOJO.setAccountCode("huazie");
+        fleaUserRegisterPOJO.setAccountPwd("2020#huazie");
         fleaUserRegisterPOJO.setState(UserStateEnum.IN_USE.getState());
 
         // 添加用户属性
@@ -156,12 +156,12 @@ public class UserAuthTest {
     public void testInsertUserRel() {
 
         FleaUserRel fleaUserRel = new FleaUserRel();
-        fleaUserRel.setUserId(1L);
-        fleaUserRel.setRelId(1L);
+        fleaUserRel.setUserId(10000L);
+        fleaUserRel.setRelId(1000L);
         fleaUserRel.setRelType(AuthRelTypeEnum.USER_REL_ROLE.getRelType());
         fleaUserRel.setRelState(EntityStateEnum.IN_USE.getState());
         fleaUserRel.setCreateDate(DateUtils.getCurrentTime());
-        fleaUserRel.setRemarks("【13218010892】用户绑定【超级管理员】角色");
+        fleaUserRel.setRemarks("用户【huazie】绑定【超级管理员】角色");
 
         try {
             IFleaUserRelSV fleaUserRelSV = (IFleaUserRelSV) applicationContext.getBean("fleaUserRelSV");
@@ -176,7 +176,7 @@ public class UserAuthTest {
 
         try {
             IFleaUserGroupRelSV fleaUserGroupRelSV = (IFleaUserGroupRelSV) applicationContext.getBean("fleaUserGroupRelSV");
-            fleaUserGroupRelSV.getUserGroupRelList(1L, AuthRelTypeEnum.USER_GROUP_REL_ROLE.getRelType());
+            fleaUserGroupRelSV.getUserGroupRelList(1000L, AuthRelTypeEnum.USER_GROUP_REL_ROLE.getRelType());
         } catch (CommonException e) {
             LOGGER.error("Exception = ", e);
         }
@@ -187,7 +187,7 @@ public class UserAuthTest {
 
         try {
             IFleaUserRelSV fleaUserRelSV = (IFleaUserRelSV) applicationContext.getBean("fleaUserRelSV");
-            fleaUserRelSV.getUserRelList(1L, AuthRelTypeEnum.USER_REL_ROLE.getRelType());
+            fleaUserRelSV.getUserRelList(10000L, AuthRelTypeEnum.USER_REL_ROLE.getRelType());
         } catch (CommonException e) {
             LOGGER.error("Exception = ", e);
         }

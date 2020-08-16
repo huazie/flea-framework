@@ -70,7 +70,7 @@ public class FunctionAuthTest {
         FleaFunctionAttr fleaFunctionAttr = new FleaFunctionAttr();
 
         // 功能编号
-        fleaFunctionAttr.setFunctionId(1L);
+        fleaFunctionAttr.setFunctionId(1000L);
         // 功能类型(菜单、操作、元素)
         fleaFunctionAttr.setFunctionType(FunctionTypeEnum.MENU.getType());
         // 属性码
@@ -82,7 +82,7 @@ public class FunctionAuthTest {
         fleaFunctionAttr.setCreateDate(DateUtils.getCurrentTime());
         fleaFunctionAttr.setEffectiveDate(fleaFunctionAttr.getCreateDate());
         fleaFunctionAttr.setExpiryDate(DateUtils.getExpiryTimeForever());
-        fleaFunctionAttr.setRemarks("配置正在使用中的系统");
+        fleaFunctionAttr.setRemarks("【跳蚤管家】正在使用中");
 
         try {
             IFleaFunctionAttrSV fleaFunctionAttrSV = (IFleaFunctionAttrSV) applicationContext.getBean("fleaFunctionAttrSV");
