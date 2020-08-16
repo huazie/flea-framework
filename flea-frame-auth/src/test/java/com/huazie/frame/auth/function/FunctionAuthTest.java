@@ -74,7 +74,7 @@ public class FunctionAuthTest {
         // 功能类型(菜单、操作、元素)
         fleaFunctionAttr.setFunctionType(FunctionTypeEnum.MENU.getType());
         // 属性码
-        fleaFunctionAttr.setAttrCode(FleaAuthConstants.FunctionConstants.MENU_ATTR_CODE_SYSTEM_IN_USE);
+        fleaFunctionAttr.setAttrCode(FleaAuthConstants.AttrCodeConstants.ATTR_CODE_SYSTEM_IN_USE);
         // 属性值
         fleaFunctionAttr.setAttrValue("1000");
         // 属性状态(0: 删除 1: 正常）
@@ -98,7 +98,7 @@ public class FunctionAuthTest {
 
         try {
             IFleaFunctionAttrSV fleaFunctionAttrSV = (IFleaFunctionAttrSV) applicationContext.getBean("fleaFunctionAttrSV");
-            fleaFunctionAttrSV.getFunctionAttrList(null, FunctionTypeEnum.MENU.getType(), FleaAuthConstants.FunctionConstants.MENU_ATTR_CODE_SYSTEM_IN_USE);
+            fleaFunctionAttrSV.getFunctionAttrList(null, FunctionTypeEnum.MENU.getType(), FleaAuthConstants.AttrCodeConstants.ATTR_CODE_SYSTEM_IN_USE);
         } catch (CommonException e) {
             LOGGER.error("Exception: ", e);
         }
