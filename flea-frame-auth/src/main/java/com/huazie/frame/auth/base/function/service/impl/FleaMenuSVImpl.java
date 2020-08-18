@@ -5,6 +5,7 @@ import com.huazie.frame.auth.base.function.entity.FleaMenu;
 import com.huazie.frame.auth.base.function.service.interfaces.IFleaMenuSV;
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.CollectionUtils;
+import com.huazie.frame.common.util.NumberUtils;
 import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import com.huazie.frame.db.jpa.service.impl.AbstractFleaJPASVImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,7 @@ public class FleaMenuSVImpl extends AbstractFleaJPASVImpl<FleaMenu> implements I
         if (CollectionUtils.isNotEmpty(systemRelMenuIdList)) {
             allAccessibleMenus = new ArrayList<>();
             for (Long menuId : systemRelMenuIdList) {
-                if (null != menuId && menuId > 0L) {
+                if (NumberUtils.isPositiveNumber(menuId)) {
                     FleaMenu fleaMenu = this.query(menuId);
                     if (null != fleaMenu) {
                         allAccessibleMenus.add(fleaMenu);
