@@ -21,7 +21,9 @@ public class FleaTree<T> implements Serializable {
 
     private static final int DEFAULT_ROOT_NODE_HEIGHT = 1;
 
-    private static final String TWO_BLANK = "  ";
+    private static final String TAB = "\t";
+
+    private static final String ENTER = "\n";
 
     private final Comparator<? super T> comparator;
 
@@ -59,6 +61,7 @@ public class FleaTree<T> implements Serializable {
 
         if (ObjectUtils.isEmpty(rootNode)) {
             rootNode = new TreeNode<>(element, DEFAULT_ROOT_NODE_ID, DEFAULT_ROOT_NODE_HEIGHT, null);
+            size++;
         }
     }
 
@@ -96,7 +99,7 @@ public class FleaTree<T> implements Serializable {
             addSubTreeNode(current, id, height, rootNode);
         } else {
             // 递归添加树节点
-            addTreeNode1(rootNode.subNotes, current, id, height, parent, pId, pHeight);
+            addTreeNode1(rootNode.subNotes, current, id, height, parent, pId, pHeight, true);
         }
     }
 
@@ -112,10 +115,12 @@ public class FleaTree<T> implements Serializable {
      * @param pHeight  父节点高度
      * @since 1.0.0
      */
-    private void addTreeNode1(LinkedList<TreeNode<T>> subNotes, T current, long id, int height, T parent, long pId, int pHeight) {
+    private void addTreeNode1(LinkedList<TreeNode<T>> subNotes, T current, long id, int height, T parent, long pId, int pHeight, boolean isFirst) {
 
         // 添加临时树节点
-        addTempTreeNode(current, id, height, parent, pId, pHeight);
+        if (isFirst) {
+            addTempTreeNode(current, id, height, parent, pId, pHeight);
+        }
 
         if (CollectionUtils.isNotEmpty(subNotes)) {
 
@@ -132,11 +137,8 @@ public class FleaTree<T> implements Serializable {
                     break;
                 }
 
-                // 遍历临时树节点，如果 mTreeNode为临时树节点的父节点，则添加进去
-                handleTempTreeNode(mTreeNode);
-
                 // 如果mTreeNode不是，则尝试添加到mTreeNode的子节点中【采用递归方式】
-                addTreeNode1(mTreeNode.subNotes, current, id, height, parent, pId, pHeight);
+                addTreeNode1(mTreeNode.subNotes, current, id, height, parent, pId, pHeight, false);
 
             }
 
@@ -195,7 +197,7 @@ public class FleaTree<T> implements Serializable {
                 TreeNode<T> tempParentTreeNode = tempTreeNode.parentNote;
                 if (mTreeNode.id == tempParentTreeNode.id && mTreeNode.height == tempParentTreeNode.height) {
                     // 添加现节点到 mTreeNode子节点中
-                    addSubTreeNode(tempTreeNode.element, tempTreeNode.id, tempTreeNode.height, mTreeNode);
+                    addSubTreeNode1(tempTreeNode.element, tempTreeNode.id, tempTreeNode.height, mTreeNode);
                     // 删除临时节点
                     tempTreeNodesIt.remove();
                 }
@@ -212,9 +214,24 @@ public class FleaTree<T> implements Serializable {
      * @param parent  父节点
      */
     private void addSubTreeNode(T current, long id, int height, TreeNode<T> parent) {
+        TreeNode<T> currentNode = addSubTreeNode1(current, id, height, parent);
+        // 遍历临时树节点，如果 mTreeNode为临时树节点的父节点，则添加进去
+        handleTempTreeNode(currentNode);
+    }
+
+    /**
+     * <p> 添加子节点 </p>
+     *
+     * @param current 现节点元素
+     * @param id      现节点编号
+     * @param height  现节点高度
+     * @param parent  父节点
+     */
+    private TreeNode<T> addSubTreeNode1(T current, long id, int height, TreeNode<T> parent) {
         TreeNode<T> currentNode = new TreeNode<>(current, id, height, parent);
         parent.insertSubNode(currentNode, comparator);
         size++;
+        return currentNode;
     }
 
     @Override
@@ -222,7 +239,7 @@ public class FleaTree<T> implements Serializable {
 
         StringBuilder fleaTreeString = new StringBuilder();
         T element = rootNode.element;
-        fleaTreeString.append(element.toString()).append("\n");
+        fleaTreeString.append(element.toString()).append(ENTER);
 
         LinkedList<TreeNode<T>> subNodes = rootNode.subNotes;
         toString(fleaTreeString, subNodes);
@@ -235,11 +252,12 @@ public class FleaTree<T> implements Serializable {
 
         if (CollectionUtils.isNotEmpty(subNodes)) {
 
-            ListIterator<TreeNode<T>> subNodesIt = tempTreeNodes.listIterator();
+            ListIterator<TreeNode<T>> subNodesIt = subNodes.listIterator();
             while (subNodesIt.hasNext()) {
                 TreeNode<T> treeNode = subNodesIt.next();
-                fleaTreeString.append(TWO_BLANK).append(treeNode.element).append("\n");
+                fleaTreeString.append(TAB).append(treeNode.element).append(ENTER);
                 toString(fleaTreeString, treeNode.subNotes);
+                fleaTreeString.append(TAB);
             }
 
         }
@@ -282,7 +300,7 @@ public class FleaTree<T> implements Serializable {
             }
 
             if (subNotes.isEmpty()) {
-                subNotes.add(subNote);
+                subNotes.addFirst(subNote);
             } else {
                 ListIterator<TreeNode<T>> subNoteListIt = subNotes.listIterator();
 
@@ -293,7 +311,10 @@ public class FleaTree<T> implements Serializable {
                     // 当前节点元素的顺序大于待添加节点的元素的顺序
                     if (comp > CommonConstants.NumeralConstants.INT_ZERO) {
                         // 将待添加节点插入到当前节点处
-                        subNotes.add(currentIndex, currentNode);
+                        subNotes.add(currentIndex, subNote);
+                        break;
+                    } else if (comp < CommonConstants.NumeralConstants.INT_ZERO && !subNoteListIt.hasNext()) {
+                        subNotes.addLast(subNote);
                         break;
                     }
                 }
