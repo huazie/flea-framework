@@ -203,6 +203,16 @@ public class FleaTree<T> implements Serializable {
                 }
             }
         }
+
+        // 取mTreeNode的子节点
+        LinkedList<TreeNode<T>> mSubTreeNotes = mTreeNode.subNotes;
+        if (CollectionUtils.isNotEmpty(mSubTreeNotes)) {
+            ListIterator<TreeNode<T>> mSubTreeNotesIt = mSubTreeNotes.listIterator();
+            while(mSubTreeNotesIt.hasNext()) {
+                TreeNode<T> subTreeNode = mSubTreeNotesIt.next();
+                handleTempTreeNode(subTreeNode);
+            }
+        }
     }
 
     /**
@@ -242,26 +252,24 @@ public class FleaTree<T> implements Serializable {
         fleaTreeString.append(element.toString()).append(ENTER);
 
         LinkedList<TreeNode<T>> subNodes = rootNode.subNotes;
-        toString(fleaTreeString, subNodes);
+        toString(fleaTreeString, subNodes, rootNode.height);
         return fleaTreeString.toString();
-
     }
 
     // 递归获取Flea树结构
-    private void toString(StringBuilder fleaTreeString, LinkedList<TreeNode<T>> subNodes) {
+    private void toString(StringBuilder fleaTreeString, LinkedList<TreeNode<T>> subNodes, int height) {
 
         if (CollectionUtils.isNotEmpty(subNodes)) {
-
             ListIterator<TreeNode<T>> subNodesIt = subNodes.listIterator();
             while (subNodesIt.hasNext()) {
                 TreeNode<T> treeNode = subNodesIt.next();
-                fleaTreeString.append(TAB).append(treeNode.element).append(ENTER);
-                toString(fleaTreeString, treeNode.subNotes);
-                fleaTreeString.append(TAB);
+                for (int i = 0; i < height; i++) {
+                    fleaTreeString.append(TAB);
+                }
+                fleaTreeString.append(treeNode.element).append(ENTER);
+                toString(fleaTreeString, treeNode.subNotes, treeNode.height);
             }
-
         }
-
     }
 
     static final class TreeNode<T> {
@@ -311,7 +319,7 @@ public class FleaTree<T> implements Serializable {
                     // 当前节点元素的顺序大于待添加节点的元素的顺序
                     if (comp > CommonConstants.NumeralConstants.INT_ZERO) {
                         // 将待添加节点插入到当前节点处
-                        subNotes.add(currentIndex, subNote);
+                        subNotes.add(currentIndex - 1, subNote);
                         break;
                     } else if (comp < CommonConstants.NumeralConstants.INT_ZERO && !subNoteListIt.hasNext()) {
                         subNotes.addLast(subNote);
@@ -319,7 +327,6 @@ public class FleaTree<T> implements Serializable {
                     }
                 }
             }
-
         }
 
         /**
