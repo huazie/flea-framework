@@ -61,6 +61,9 @@ public class MenuTreeTest {
         fleaTree.addTreeNote("a112", 112L, 4, "a11", 11L, 3);
         fleaTree.addTreeNote("a111", 111L, 4, "a11", 11L, 3);
         fleaTree.addTreeNote("a11", 11L, 3, "a1", 1L, 2);
+        fleaTree.addTreeNote("a422", 422L, 4, "a42", 42L, 3);
+        fleaTree.addTreeNote("a4221", 4221L, 5, "a422", 422L, 4);
+        fleaTree.addTreeNote("a4211", 4211L, 5, "a421", 421L, 4);
         fleaTree.addTreeNote("a4", 4L, 2, null, -1L, 1);
         LOGGER.debug("FleaTree = \n{}", fleaTree);
     }
