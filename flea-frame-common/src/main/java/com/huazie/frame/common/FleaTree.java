@@ -5,8 +5,10 @@ import com.huazie.frame.common.util.ObjectUtils;
 
 import java.io.Serializable;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.ListIterator;
+import java.util.Map;
 
 /**
  * <p> Flea树 </p>
@@ -21,7 +23,7 @@ public class FleaTree<T> implements Serializable {
 
     private static final int DEFAULT_ROOT_NODE_HEIGHT = 1;
 
-    private static final String TAB = "\t";
+    private static final String LAST_NODE_SYMBOL = "";
 
     private static final String ENTER = "\n";
 
@@ -141,7 +143,6 @@ public class FleaTree<T> implements Serializable {
                 addTreeNode1(mTreeNode.subNotes, current, id, height, parent, pId, pHeight, false);
 
             }
-
         }
     }
 
@@ -252,27 +253,33 @@ public class FleaTree<T> implements Serializable {
         fleaTreeString.append(element.toString()).append(ENTER);
 
         LinkedList<TreeNode<T>> subNodes = rootNode.subNotes;
-        toString(fleaTreeString, subNodes, rootNode.height);
+        toString(fleaTreeString, subNodes, rootNode.height, new HashMap<Integer, Boolean>());
         return fleaTreeString.toString();
     }
 
     // 递归获取Flea树结构
-    private void toString(StringBuilder fleaTreeString, LinkedList<TreeNode<T>> subNodes, int height) {
+    private void toString(StringBuilder fleaTreeString, LinkedList<TreeNode<T>> subNodes, int height, Map<Integer, Boolean> cHeightNodeLast) {
 
         if (CollectionUtils.isNotEmpty(subNodes)) {
             ListIterator<TreeNode<T>> subNodesIt = subNodes.listIterator();
             while (subNodesIt.hasNext()) {
                 TreeNode<T> treeNode = subNodesIt.next();
                 for (int i = 1; i < height; i++) {
-                    fleaTreeString.append("│  ");
+                    if (cHeightNodeLast.get(i)) {
+                        fleaTreeString.append("   ");
+                    } else {
+                        fleaTreeString.append("│  ");
+                    }
                 }
-                if (height > 1 && !subNodesIt.hasNext()) {
+                if (!subNodesIt.hasNext()) {
                     fleaTreeString.append("└─");
+                    cHeightNodeLast.put(height, true);
                 } else {
                     fleaTreeString.append("├─");
+                    cHeightNodeLast.put(height, false);
                 }
                 fleaTreeString.append(treeNode.element).append(ENTER);
-                toString(fleaTreeString, treeNode.subNotes, treeNode.height);
+                toString(fleaTreeString, treeNode.subNotes, treeNode.height, cHeightNodeLast);
             }
         }
     }
