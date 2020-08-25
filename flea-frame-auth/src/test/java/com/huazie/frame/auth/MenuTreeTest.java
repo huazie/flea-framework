@@ -67,4 +67,15 @@ public class MenuTreeTest {
         fleaTree.addTreeNote("a4", 4L, 2, null, -1L, 1);
         LOGGER.debug("FleaTree = \n{}", fleaTree);
     }
+
+    @Test
+    public void testSymbolLength() {
+
+        LOGGER.debug("├─ length = {}", "├─".length());
+        LOGGER.debug("└─ length = {}", "└─".length());
+        LOGGER.debug("│  ├─ length = {}", "│  ├─".length());
+        LOGGER.debug("│  │  ├─ length = {}", "│  │  ├─".length());
+        LOGGER.debug("│  │  │  ├─ length = {}", "│  │  │  ├─".length());
+
+    }
 }

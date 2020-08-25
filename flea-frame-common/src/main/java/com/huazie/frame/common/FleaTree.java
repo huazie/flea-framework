@@ -263,8 +263,13 @@ public class FleaTree<T> implements Serializable {
             ListIterator<TreeNode<T>> subNodesIt = subNodes.listIterator();
             while (subNodesIt.hasNext()) {
                 TreeNode<T> treeNode = subNodesIt.next();
-                for (int i = 0; i < height; i++) {
-                    fleaTreeString.append(TAB);
+                for (int i = 1; i < height; i++) {
+                    fleaTreeString.append("│  ");
+                }
+                if (height > 1 && !subNodesIt.hasNext()) {
+                    fleaTreeString.append("└─");
+                } else {
+                    fleaTreeString.append("├─");
                 }
                 fleaTreeString.append(treeNode.element).append(ENTER);
                 toString(fleaTreeString, treeNode.subNotes, treeNode.height);
