@@ -23,8 +23,6 @@ public class FleaTree<T> implements Serializable {
 
     private static final int DEFAULT_ROOT_NODE_HEIGHT = 1;
 
-    private static final String LAST_NODE_SYMBOL = "";
-
     private static final String ENTER = "\n";
 
     private final Comparator<? super T> comparator;
@@ -34,6 +32,8 @@ public class FleaTree<T> implements Serializable {
     private transient int size = 0; // 树的节点总数
 
     private transient LinkedList<TreeNode<T>> tempTreeNodes = new LinkedList<>(); // 临时存放暂时无法放置的树节点
+
+    private transient LinkedList<TreeNode<T>> treeLeafNodes = new LinkedList<>(); // 存放树的叶子节点
 
     public FleaTree() {
         this.comparator = null;
@@ -244,6 +244,8 @@ public class FleaTree<T> implements Serializable {
         size++;
         return currentNode;
     }
+
+
 
     @Override
     public String toString() {
