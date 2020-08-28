@@ -11,11 +11,21 @@ import java.util.ListIterator;
 import java.util.Map;
 
 /**
- * <p> Flea树 </p>
+ * 树 {@code FleaTree}，包含一个根节点，树下每个节点都可以有多个子节点；
+ *
+ * <p> 树节点 {@code TreeNode}，包含节点元素，节点编号，节点高度，父节点，子节点集合；
+ *
+ * <p> 节点高度 {@code height}，根节点高度为1，子节点依次+1；
+ *
+ * <p> 父节点 {@code parentNote}, 当前节点的上层节点，有且仅有一个；
+ *
+ * <p> 子节点集合 {@code subNotes}, 用 {@code LinkedList} 进行存储，
+ * 字节点的存储先后顺序取决于提供的比较器{@code comparator} 或者 节点元素自身实现的 {@code Comparable}接口；
  *
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0
+ * @param <T> Flea树中包含的元素的类型
  */
 public class FleaTree<T> implements Serializable {
 
