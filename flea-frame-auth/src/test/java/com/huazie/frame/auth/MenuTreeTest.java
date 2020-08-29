@@ -67,6 +67,8 @@ public class MenuTreeTest {
         fleaTree.addTreeNote("a4", 4L, 2, null, -1L, 1);
         LOGGER.debug("FleaTree = \n{}", fleaTree);
         LOGGER.debug("Size = {}", fleaTree.size());
+        LOGGER.debug("TreeLeaf List= {}", fleaTree.getAllTreeLeafElement());
+        LOGGER.debug("TreeLeaf = {}", fleaTree.getTreeLeafElement(22L));
     }
 
     @Test

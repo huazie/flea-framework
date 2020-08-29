@@ -4,9 +4,11 @@ import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
@@ -16,20 +18,24 @@ import java.util.Map;
  * <p> 树节点 {@code TreeNode}，包含节点元素，节点编号，节点高度，
  * 父节点，子节点集合；
  *
- * <p> 节点高度 {@code height}，根节点高度为1，子节点依次+1；
+ * <p> 节点高度 {@code height}，根节点高度为1，子节点高度根据节点位置依次+1；
  *
  * <p> 父节点 {@code parentNote}, 当前节点的上层节点，有且仅有一个；
  *
  * <p> 子节点集合 {@code subNotes}, 用 {@code LinkedList} 进行存储，
- * 子节点的存储先后顺序取决于提供的比较器{@code comparator}
- * 或者 节点元素自身实现的 {@code Comparable}接口；
+ * 子节点的存储先后顺序取决于提供的比较器{@code comparator} 或者
+ * 节点元素自身实现的 {@code Comparable}接口；
  *
+ * <p> 树叶子节点，不包含任何子节点的树节点；
+ *
+ * @param <T> Flea树中包含的元素的类型
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0
- * @param <T> Flea树中包含的元素的类型
  */
 public class FleaTree<T> implements Serializable {
+
+    private static final long serialVersionUID = 1775075091403620285L;
 
     private static final long DEFAULT_ROOT_NODE_ID = -1L;
 
@@ -115,6 +121,7 @@ public class FleaTree<T> implements Serializable {
             // 递归添加树节点
             addTreeNode1(rootNode.subNotes, current, id, height, parent, pId, pHeight, true);
         }
+
     }
 
     /**
@@ -220,9 +227,7 @@ public class FleaTree<T> implements Serializable {
         // 取mTreeNode的子节点
         LinkedList<TreeNode<T>> mSubTreeNotes = mTreeNode.subNotes;
         if (CollectionUtils.isNotEmpty(mSubTreeNotes)) {
-            ListIterator<TreeNode<T>> mSubTreeNotesIt = mSubTreeNotes.listIterator();
-            while(mSubTreeNotesIt.hasNext()) {
-                TreeNode<T> subTreeNode = mSubTreeNotesIt.next();
+            for (TreeNode<T> subTreeNode : mSubTreeNotes) {
                 handleTempTreeNode(subTreeNode);
             }
         }
@@ -252,12 +257,82 @@ public class FleaTree<T> implements Serializable {
      */
     private TreeNode<T> addSubTreeNode1(T current, long id, int height, TreeNode<T> parent) {
         TreeNode<T> currentNode = new TreeNode<>(current, id, height, parent);
+        // 将当前节点currentNode添加到其父节点parent中
         parent.insertSubNode(currentNode, comparator);
+        // 树节点个数+1
         size++;
+        // 处理叶子节点集合，剔除非叶子节点（即包含了子节点的节点）
+        handleTreeLeafNode(currentNode, parent);
         return currentNode;
     }
 
+    /**
+     * <p> 处理叶子节点集合 </p>
+     * <p> 叶子节点集合中存在节点是 当前待添加节点的父节点，
+     * 说明该节点有子节点，则需要从叶子节点集合中剔除 </p>
+     *
+     * @param parent 当前待添加节点的父节点
+     * @since 1.0.0
+     */
+    private void handleTreeLeafNode(TreeNode<T> currentNode, TreeNode<T> parent) {
 
+        // 遍历叶子节点集合
+        if (CollectionUtils.isNotEmpty(treeLeafNodes)) {
+            ListIterator<TreeNode<T>> treeLeafNodesIt = treeLeafNodes.listIterator();
+            while (treeLeafNodesIt.hasNext()) {
+                TreeNode<T> treeLeafNode = treeLeafNodesIt.next();
+                // 叶子节点集合中存在节点是 当前待添加节点的父节点
+                if (treeLeafNode.id == parent.id && treeLeafNode.height == parent.height) {
+                    // 将当前处理的节点从叶子节点集合中剔除
+                    treeLeafNodesIt.remove();
+                }
+            }
+        }
+
+        // 添加当前节点到叶子节点集合treeLeafNodes中
+        treeLeafNodes.add(currentNode);
+    }
+
+    /**
+     * <p> 获取指定编号的树叶子节点元素 </p>
+     *
+     * @param id 节点编号
+     * @return 指定编号的树叶子节点元素
+     * @since 1.0.0
+     */
+    public T getTreeLeafElement(long id) {
+
+        T element = null;
+
+        if (CollectionUtils.isNotEmpty(treeLeafNodes)) {
+            for (TreeNode<T> treeNode : treeLeafNodes) {
+                if (treeNode.id == id) {
+                    element = treeNode.element;
+                    break;
+                }
+            }
+        }
+        return element;
+    }
+
+    /**
+     * <p> 获取所有的树叶子节点元素 </p>
+     *
+     * @return 树叶子节点元素集合
+     * @since 1.0.0
+     */
+    public List<T> getAllTreeLeafElement() {
+
+        List<T> treeLeafElements = null;
+
+        if (CollectionUtils.isNotEmpty(treeLeafNodes)) {
+            treeLeafElements = new ArrayList<>();
+            for (TreeNode<T> treeNode : treeLeafNodes) {
+                treeLeafElements.add(treeNode.element);
+            }
+        }
+        return treeLeafElements;
+    }
 
     @Override
     public String toString() {

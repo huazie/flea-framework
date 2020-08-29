@@ -30,6 +30,10 @@ public interface CommonConstants {
          */
         long MINUS_ONE = -1L;
         /**
+         * 整数 -2， long类型
+         */
+        long MINUS_TWO = -2L;
+        /**
          * <p> 整数 0 , long类型 </p>
          */
         long ZERO = 0L;
