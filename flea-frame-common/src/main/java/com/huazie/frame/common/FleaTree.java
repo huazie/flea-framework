@@ -147,7 +147,7 @@ public class FleaTree<T> implements Serializable {
 
             ListIterator<TreeNode<T>> subNotesIt = subNotes.listIterator();
 
-            while (subNotesIt.hasNext()) {
+            for (; subNotesIt.hasNext(); ) {
                 TreeNode<T> mTreeNode = subNotesIt.next();
                 // mTreeNode 为 现节点的父节点
                 if (mTreeNode.id == pId && mTreeNode.height == pHeight) {

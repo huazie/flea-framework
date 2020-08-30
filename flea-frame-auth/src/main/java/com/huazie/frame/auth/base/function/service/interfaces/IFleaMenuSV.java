@@ -1,6 +1,7 @@
 package com.huazie.frame.auth.base.function.service.interfaces;
 
 import com.huazie.frame.auth.base.function.entity.FleaMenu;
+import com.huazie.frame.auth.common.pojo.function.menu.FleaMenuPOJO;
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.db.jpa.service.interfaces.IAbstractFleaJPASV;
 
@@ -25,4 +26,14 @@ public interface IFleaMenuSV extends IAbstractFleaJPASV<FleaMenu> {
      * @since 1.0.0
      */
     List<FleaMenu> getAllAccessibleMenus(List<Long> systemRelMenuIdList, List<Long> menuIdList) throws CommonException;
+
+    /**
+     * <p> 保存Flea菜单 </p>
+     *
+     * @param fleaMenuPOJO flea菜单POJO对象
+     * @return Flea菜单
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    FleaMenu saveFleaMenu(FleaMenuPOJO fleaMenuPOJO) throws CommonException;
 }

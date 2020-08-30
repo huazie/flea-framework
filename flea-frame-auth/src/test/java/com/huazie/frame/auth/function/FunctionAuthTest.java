@@ -7,6 +7,8 @@ import com.huazie.frame.auth.base.function.service.interfaces.IFleaMenuSV;
 import com.huazie.frame.auth.common.FleaAuthConstants;
 import com.huazie.frame.auth.common.FunctionTypeEnum;
 import com.huazie.frame.auth.common.MenuLevelEnum;
+import com.huazie.frame.auth.common.pojo.function.attr.FleaFunctionAttrPOJO;
+import com.huazie.frame.auth.common.pojo.function.menu.FleaMenuPOJO;
 import com.huazie.frame.auth.user.UserAuthTest;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.EntityStateEnum;
@@ -91,6 +93,135 @@ public class FunctionAuthTest {
             LOGGER.error("Exception: ", e);
         }
 
+    }
+
+    @Test
+    public void testSaveMenuForAuth() throws Exception {
+        Long parentId = addAuthMgmt();
+        addUserMgmt(parentId);
+        addRoleMgmt(parentId);
+        addPrivilegeMgmt(parentId);
+        addFunctionMgmt(parentId);
+    }
+
+    private Long addAuthMgmt() throws Exception {
+        FleaMenuPOJO fleaMenuPOJO = new FleaMenuPOJO();
+        fleaMenuPOJO.setMenuCode("auth_mgmt");
+        fleaMenuPOJO.setMenuName("授权管理");
+        fleaMenuPOJO.setMenuIcon("font");
+        fleaMenuPOJO.setMenuSort(2);
+        fleaMenuPOJO.setMenuLevel(MenuLevelEnum.LEVEL_ONE.getLevel());
+        fleaMenuPOJO.setRemarks("授权管理，包含用户管理，角色管理，权限管理，功能管理");
+
+        IFleaMenuSV fleaMenuSV = (IFleaMenuSV) applicationContext.getBean("fleaMenuSV");
+        FleaMenu fleaMenu = fleaMenuSV.saveFleaMenu(fleaMenuPOJO);
+
+        FleaFunctionAttrPOJO fleaFunctionAttrPOJO = new FleaFunctionAttrPOJO();
+        fleaFunctionAttrPOJO.setFunctionId(fleaMenu.getMenuId());
+        fleaFunctionAttrPOJO.setFunctionType(FunctionTypeEnum.MENU.getType());
+        fleaFunctionAttrPOJO.setAttrCode(FleaAuthConstants.AttrCodeConstants.ATTR_CODE_SYSTEM_IN_USE);
+        fleaFunctionAttrPOJO.setAttrValue("1000");
+        fleaFunctionAttrPOJO.setRemarks("【跳蚤管家】正在使用中");
+
+        IFleaFunctionAttrSV fleaFunctionAttrSV = (IFleaFunctionAttrSV) applicationContext.getBean("fleaFunctionAttrSV");
+        fleaFunctionAttrSV.saveFunctionAttr(fleaFunctionAttrPOJO);
+        return fleaMenu.getMenuId();
+    }
+
+    private void addUserMgmt(Long parentId) throws Exception {
+        FleaMenuPOJO fleaMenuPOJO = new FleaMenuPOJO();
+        fleaMenuPOJO.setMenuCode("user_mgmt");
+        fleaMenuPOJO.setMenuName("用户管理");
+        fleaMenuPOJO.setMenuIcon("users");
+        fleaMenuPOJO.setMenuSort(1);
+        fleaMenuPOJO.setMenuLevel(MenuLevelEnum.LEVEL_TWO.getLevel());
+        fleaMenuPOJO.setParentId(parentId);
+        fleaMenuPOJO.setRemarks("用户管理，包含用户注册，用户授权，用户组授权等");
+
+        IFleaMenuSV fleaMenuSV = (IFleaMenuSV) applicationContext.getBean("fleaMenuSV");
+        FleaMenu fleaMenu = fleaMenuSV.saveFleaMenu(fleaMenuPOJO);
+
+        FleaFunctionAttrPOJO fleaFunctionAttrPOJO = new FleaFunctionAttrPOJO();
+        fleaFunctionAttrPOJO.setFunctionId(fleaMenu.getMenuId());
+        fleaFunctionAttrPOJO.setFunctionType(FunctionTypeEnum.MENU.getType());
+        fleaFunctionAttrPOJO.setAttrCode(FleaAuthConstants.AttrCodeConstants.ATTR_CODE_SYSTEM_IN_USE);
+        fleaFunctionAttrPOJO.setAttrValue("1000");
+        fleaFunctionAttrPOJO.setRemarks("【跳蚤管家】正在使用中");
+
+        IFleaFunctionAttrSV fleaFunctionAttrSV = (IFleaFunctionAttrSV) applicationContext.getBean("fleaFunctionAttrSV");
+        fleaFunctionAttrSV.saveFunctionAttr(fleaFunctionAttrPOJO);
+    }
+
+    private void addRoleMgmt(Long parentId) throws Exception {
+        FleaMenuPOJO fleaMenuPOJO = new FleaMenuPOJO();
+        fleaMenuPOJO.setMenuCode("role_mgmt");
+        fleaMenuPOJO.setMenuName("角色管理");
+        fleaMenuPOJO.setMenuIcon("user");
+        fleaMenuPOJO.setMenuSort(2);
+        fleaMenuPOJO.setMenuLevel(MenuLevelEnum.LEVEL_TWO.getLevel());
+        fleaMenuPOJO.setParentId(parentId);
+        fleaMenuPOJO.setRemarks("角色管理，包含角色（组）新增，角色（组）变更，角色授权，角色组授权等");
+
+        IFleaMenuSV fleaMenuSV = (IFleaMenuSV) applicationContext.getBean("fleaMenuSV");
+        FleaMenu fleaMenu = fleaMenuSV.saveFleaMenu(fleaMenuPOJO);
+
+        FleaFunctionAttrPOJO fleaFunctionAttrPOJO = new FleaFunctionAttrPOJO();
+        fleaFunctionAttrPOJO.setFunctionId(fleaMenu.getMenuId());
+        fleaFunctionAttrPOJO.setFunctionType(FunctionTypeEnum.MENU.getType());
+        fleaFunctionAttrPOJO.setAttrCode(FleaAuthConstants.AttrCodeConstants.ATTR_CODE_SYSTEM_IN_USE);
+        fleaFunctionAttrPOJO.setAttrValue("1000");
+        fleaFunctionAttrPOJO.setRemarks("【跳蚤管家】正在使用中");
+
+        IFleaFunctionAttrSV fleaFunctionAttrSV = (IFleaFunctionAttrSV) applicationContext.getBean("fleaFunctionAttrSV");
+        fleaFunctionAttrSV.saveFunctionAttr(fleaFunctionAttrPOJO);
+    }
+
+    private void addPrivilegeMgmt(Long parentId) throws Exception {
+        FleaMenuPOJO fleaMenuPOJO = new FleaMenuPOJO();
+        fleaMenuPOJO.setMenuCode("privilege_mgmt");
+        fleaMenuPOJO.setMenuName("权限管理");
+        fleaMenuPOJO.setMenuIcon("lock");
+        fleaMenuPOJO.setMenuSort(3);
+        fleaMenuPOJO.setMenuLevel(MenuLevelEnum.LEVEL_TWO.getLevel());
+        fleaMenuPOJO.setParentId(parentId);
+        fleaMenuPOJO.setRemarks("权限管理，包含权限（组）新增，权限（组）变更，功能授权等");
+
+        IFleaMenuSV fleaMenuSV = (IFleaMenuSV) applicationContext.getBean("fleaMenuSV");
+        FleaMenu fleaMenu = fleaMenuSV.saveFleaMenu(fleaMenuPOJO);
+
+        FleaFunctionAttrPOJO fleaFunctionAttrPOJO = new FleaFunctionAttrPOJO();
+        fleaFunctionAttrPOJO.setFunctionId(fleaMenu.getMenuId());
+        fleaFunctionAttrPOJO.setFunctionType(FunctionTypeEnum.MENU.getType());
+        fleaFunctionAttrPOJO.setAttrCode(FleaAuthConstants.AttrCodeConstants.ATTR_CODE_SYSTEM_IN_USE);
+        fleaFunctionAttrPOJO.setAttrValue("1000");
+        fleaFunctionAttrPOJO.setRemarks("【跳蚤管家】正在使用中");
+
+        IFleaFunctionAttrSV fleaFunctionAttrSV = (IFleaFunctionAttrSV) applicationContext.getBean("fleaFunctionAttrSV");
+        fleaFunctionAttrSV.saveFunctionAttr(fleaFunctionAttrPOJO);
+    }
+
+    private void addFunctionMgmt(Long parentId) throws Exception {
+        FleaMenuPOJO fleaMenuPOJO = new FleaMenuPOJO();
+        fleaMenuPOJO.setMenuCode("function_mgmt");
+        fleaMenuPOJO.setMenuName("功能管理");
+        fleaMenuPOJO.setMenuIcon("gears");
+        fleaMenuPOJO.setMenuSort(4);
+        fleaMenuPOJO.setMenuLevel(MenuLevelEnum.LEVEL_TWO.getLevel());
+        fleaMenuPOJO.setParentId(parentId);
+        fleaMenuPOJO.setRemarks("功能管理，包含菜单管理，操作管理，元素管理等");
+
+        IFleaMenuSV fleaMenuSV = (IFleaMenuSV) applicationContext.getBean("fleaMenuSV");
+        FleaMenu fleaMenu = fleaMenuSV.saveFleaMenu(fleaMenuPOJO);
+
+        FleaFunctionAttrPOJO fleaFunctionAttrPOJO = new FleaFunctionAttrPOJO();
+        fleaFunctionAttrPOJO.setFunctionId(fleaMenu.getMenuId());
+        fleaFunctionAttrPOJO.setFunctionType(FunctionTypeEnum.MENU.getType());
+        fleaFunctionAttrPOJO.setAttrCode(FleaAuthConstants.AttrCodeConstants.ATTR_CODE_SYSTEM_IN_USE);
+        fleaFunctionAttrPOJO.setAttrValue("1000");
+        fleaFunctionAttrPOJO.setRemarks("【跳蚤管家】正在使用中");
+
+        IFleaFunctionAttrSV fleaFunctionAttrSV = (IFleaFunctionAttrSV) applicationContext.getBean("fleaFunctionAttrSV");
+        fleaFunctionAttrSV.saveFunctionAttr(fleaFunctionAttrPOJO);
     }
 
     @Test

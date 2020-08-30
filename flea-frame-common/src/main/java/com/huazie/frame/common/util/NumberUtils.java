@@ -1,6 +1,7 @@
 package com.huazie.frame.common.util;
 
 import com.huazie.frame.common.CommonConstants;
+import com.huazie.frame.common.exception.CommonException;
 
 /**
  * <p> 数字相关工具类 </p>
@@ -41,7 +42,7 @@ public class NumberUtils {
     /**
      * <p> 判断value是否是正数 </p>
      *
-     * @param value 对象值
+     * @param value 数字对象值
      * @return true：正数 ； false：非正数
      * @since 1.0.0
      */
@@ -87,5 +88,21 @@ public class NumberUtils {
             isPositive = true;
         }
         return isPositive;
+    }
+
+    /**
+     * <p> 校验是否是非正数（即小于等于0）
+     * 如果是，则抛出对应的异常；如果不是，则校验通过</p>
+     *
+     * @param value          数字对象值
+     * @param exceptionClazz 通用异常子类类对象
+     * @param params         通用异常子类构造参数
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    public static void checkNonPositiveNumber(Object value, Class<? extends CommonException> exceptionClazz, Object... params) throws CommonException {
+        if (!isPositiveNumber(value)) {
+            ExceptionUtils.throwCommonException(exceptionClazz, params);
+        }
     }
 }
