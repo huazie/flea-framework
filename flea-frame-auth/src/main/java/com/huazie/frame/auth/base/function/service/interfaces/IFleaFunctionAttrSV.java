@@ -1,6 +1,7 @@
 package com.huazie.frame.auth.base.function.service.interfaces;
 
 import com.huazie.frame.auth.base.function.entity.FleaFunctionAttr;
+import com.huazie.frame.auth.common.pojo.function.attr.FleaFunctionAttrPOJO;
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.db.jpa.service.interfaces.IAbstractFleaJPASV;
 
@@ -26,4 +27,14 @@ public interface IFleaFunctionAttrSV extends IAbstractFleaJPASV<FleaFunctionAttr
      * @since 1.0.0
      */
     List<FleaFunctionAttr> getFunctionAttrList(Long functionId, String functionType, String attrCode) throws CommonException;
+
+    /**
+     * <p> 保存功能扩展属性 </p>
+     *
+     * @param fleaFunctionAttrPOJO flea功能扩展属性POJO类
+     * @return 功能扩展属性
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    FleaFunctionAttr saveFunctionAttr(FleaFunctionAttrPOJO fleaFunctionAttrPOJO) throws CommonException;
 }

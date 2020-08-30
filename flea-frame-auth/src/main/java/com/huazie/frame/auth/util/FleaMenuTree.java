@@ -141,7 +141,7 @@ public class FleaMenuTree extends FleaTree<FleaMenu> {
                 // current的父菜单的菜单等级 = current的菜单等级 - 1 = fleaMenu的菜单等级
                 // current的父菜单编号 = fleaMenu的菜单编号
                 if (ObjectUtils.isNotEmpty(fleaMenu) && current.getMenuLevel() - 1 == fleaMenu.getMenuLevel()
-                        && current.getParentId() == fleaMenu.getMenuId()) {
+                        && current.getParentId().equals(fleaMenu.getMenuId())) {
                     parentMenu = fleaMenu;
                 }
             }

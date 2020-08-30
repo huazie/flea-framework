@@ -94,6 +94,26 @@ public interface FleaAuthEntityConstants extends FleaEntityConstants {
          * <p> 菜单名称 </p>
          */
         String E_MENU_NAME = "menuName";
+
+        /**
+         * <p> 菜单FontAwesome小图标 </p>
+         */
+        String E_MENU_ICON = "menuIcon";
+
+        /**
+         * <p> 同一个父菜单下的菜单展示顺序 </p>
+         */
+        String E_MENU_SORT = "menuSort";
+
+        /**
+         * <p> 菜单对应页面 </p>
+         */
+        String E_MENU_VIEW = "menuView";
+
+        /**
+         * <p> 菜单层级 </p>
+         */
+        String E_MENU_LEVEL = "menuLevel";
     }
 
     /**

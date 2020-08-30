@@ -81,4 +81,11 @@ public class MenuTreeTest {
         LOGGER.debug("│  │  │  ├─ length = {}", "│  │  │  ├─".length());
 
     }
+
+    @Test
+    public void testFleaMenuTree() {
+
+
+
+    }
 }
