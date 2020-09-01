@@ -62,6 +62,10 @@ public class FleaFunctionmgmtSVImpl implements IFleaFunctionmgmtSV {
 
         // 添加菜单访问权限
 
+        // 添加权限关联
+
+        // 添加权限组关联
+
         return null;
     }
 }
