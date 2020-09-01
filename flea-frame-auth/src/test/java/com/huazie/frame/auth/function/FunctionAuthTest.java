@@ -98,10 +98,14 @@ public class FunctionAuthTest {
     @Test
     public void testSaveMenuForAuth() throws Exception {
         Long parentId = addAuthMgmt();
-        addUserMgmt(parentId);
-        addRoleMgmt(parentId);
-        addPrivilegeMgmt(parentId);
-        addFunctionMgmt(parentId);
+        Long userParentId = addUserMgmt(parentId);
+        Long roleParentId = addRoleMgmt(parentId);
+        Long privilegeParentId = addPrivilegeMgmt(parentId);
+        Long functionParentId = addFunctionMgmt(parentId);
+        addUserMgmtSubMenu(userParentId);
+        addRoleMgmtSubMenu(roleParentId);
+        addPrivilegeMgmtSubMenu(privilegeParentId);
+        addFunctionMgmtSubMenu(functionParentId);
     }
 
     private Long addAuthMgmt() throws Exception {
@@ -128,7 +132,8 @@ public class FunctionAuthTest {
         return fleaMenu.getMenuId();
     }
 
-    private void addUserMgmt(Long parentId) throws Exception {
+    // 添加《用户管理》菜单
+    private Long addUserMgmt(Long parentId) throws Exception {
         FleaMenuPOJO fleaMenuPOJO = new FleaMenuPOJO();
         fleaMenuPOJO.setMenuCode("user_mgmt");
         fleaMenuPOJO.setMenuName("用户管理");
@@ -136,7 +141,7 @@ public class FunctionAuthTest {
         fleaMenuPOJO.setMenuSort(1);
         fleaMenuPOJO.setMenuLevel(MenuLevelEnum.LEVEL_TWO.getLevel());
         fleaMenuPOJO.setParentId(parentId);
-        fleaMenuPOJO.setRemarks("用户管理，包含用户注册，用户授权，用户组授权等");
+        fleaMenuPOJO.setRemarks("用户管理，包含用户（组）新增，用户（组）授权等");
 
         IFleaMenuSV fleaMenuSV = (IFleaMenuSV) applicationContext.getBean("fleaMenuSV");
         FleaMenu fleaMenu = fleaMenuSV.saveFleaMenu(fleaMenuPOJO);
@@ -150,9 +155,11 @@ public class FunctionAuthTest {
 
         IFleaFunctionAttrSV fleaFunctionAttrSV = (IFleaFunctionAttrSV) applicationContext.getBean("fleaFunctionAttrSV");
         fleaFunctionAttrSV.saveFunctionAttr(fleaFunctionAttrPOJO);
+        return fleaMenu.getMenuId();
     }
 
-    private void addRoleMgmt(Long parentId) throws Exception {
+    // 添加《角色管理》菜单
+    private Long addRoleMgmt(Long parentId) throws Exception {
         FleaMenuPOJO fleaMenuPOJO = new FleaMenuPOJO();
         fleaMenuPOJO.setMenuCode("role_mgmt");
         fleaMenuPOJO.setMenuName("角色管理");
@@ -160,7 +167,7 @@ public class FunctionAuthTest {
         fleaMenuPOJO.setMenuSort(2);
         fleaMenuPOJO.setMenuLevel(MenuLevelEnum.LEVEL_TWO.getLevel());
         fleaMenuPOJO.setParentId(parentId);
-        fleaMenuPOJO.setRemarks("角色管理，包含角色（组）新增，角色（组）变更，角色授权，角色组授权等");
+        fleaMenuPOJO.setRemarks("角色管理，包含角色（组）新增，角色（组）变更，角色（组）授权等");
 
         IFleaMenuSV fleaMenuSV = (IFleaMenuSV) applicationContext.getBean("fleaMenuSV");
         FleaMenu fleaMenu = fleaMenuSV.saveFleaMenu(fleaMenuPOJO);
@@ -174,9 +181,11 @@ public class FunctionAuthTest {
 
         IFleaFunctionAttrSV fleaFunctionAttrSV = (IFleaFunctionAttrSV) applicationContext.getBean("fleaFunctionAttrSV");
         fleaFunctionAttrSV.saveFunctionAttr(fleaFunctionAttrPOJO);
+        return fleaMenu.getMenuId();
     }
 
-    private void addPrivilegeMgmt(Long parentId) throws Exception {
+    // 添加《权限管理》菜单
+    private Long addPrivilegeMgmt(Long parentId) throws Exception {
         FleaMenuPOJO fleaMenuPOJO = new FleaMenuPOJO();
         fleaMenuPOJO.setMenuCode("privilege_mgmt");
         fleaMenuPOJO.setMenuName("权限管理");
@@ -198,9 +207,11 @@ public class FunctionAuthTest {
 
         IFleaFunctionAttrSV fleaFunctionAttrSV = (IFleaFunctionAttrSV) applicationContext.getBean("fleaFunctionAttrSV");
         fleaFunctionAttrSV.saveFunctionAttr(fleaFunctionAttrPOJO);
+        return fleaMenu.getMenuId();
     }
 
-    private void addFunctionMgmt(Long parentId) throws Exception {
+    // 添加《功能管理》菜单
+    private Long addFunctionMgmt(Long parentId) throws Exception {
         FleaMenuPOJO fleaMenuPOJO = new FleaMenuPOJO();
         fleaMenuPOJO.setMenuCode("function_mgmt");
         fleaMenuPOJO.setMenuName("功能管理");
@@ -222,6 +233,27 @@ public class FunctionAuthTest {
 
         IFleaFunctionAttrSV fleaFunctionAttrSV = (IFleaFunctionAttrSV) applicationContext.getBean("fleaFunctionAttrSV");
         fleaFunctionAttrSV.saveFunctionAttr(fleaFunctionAttrPOJO);
+        return fleaMenu.getMenuId();
+    }
+
+    // 添加用户管理子菜单
+    private void addUserMgmtSubMenu(Long parentId) throws Exception{
+
+    }
+
+    // 添加角色管理子菜单
+    private void addRoleMgmtSubMenu(Long parentId) throws Exception{
+
+    }
+
+    // 添加权限管理子菜单
+    private void addPrivilegeMgmtSubMenu(Long parentId) {
+
+    }
+
+    // 添加功能管理子菜单
+    private void addFunctionMgmtSubMenu(Long parentId) {
+
     }
 
     @Test
