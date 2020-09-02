@@ -3,7 +3,12 @@ package com.huazie.frame.auth.base.privilege.service.impl;
 import com.huazie.frame.auth.base.privilege.dao.interfaces.IFleaPrivilegeRelDAO;
 import com.huazie.frame.auth.base.privilege.entity.FleaPrivilegeRel;
 import com.huazie.frame.auth.base.privilege.service.interfaces.IFleaPrivilegeRelSV;
+import com.huazie.frame.auth.common.FleaAuthEntityConstants;
+import com.huazie.frame.auth.common.exception.FleaAuthCommonException;
+import com.huazie.frame.auth.common.pojo.privilege.FleaPrivilegeRelPOJO;
+import com.huazie.frame.auth.util.AuthCheck;
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import com.huazie.frame.db.jpa.service.impl.AbstractFleaJPASVImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +38,47 @@ public class FleaPrivilegeRelSVImpl extends AbstractFleaJPASVImpl<FleaPrivilegeR
     @Override
     public List<FleaPrivilegeRel> getPrivilegeRelList(Long privilegeId, String authRelType) throws CommonException {
         return fleaPrivilegeRelDao.getPrivilegeRelList(privilegeId, authRelType);
+    }
+
+    @Override
+    public FleaPrivilegeRel savePrivilegeRel(FleaPrivilegeRelPOJO fleaPrivilegeRelPOJO) throws CommonException {
+        FleaPrivilegeRel fleaPrivilegeRel = newFleaPrivilegeRel(fleaPrivilegeRelPOJO);
+        // 保存Flea权限关联
+        this.save(fleaPrivilegeRel);
+        return fleaPrivilegeRel;
+    }
+
+    /**
+     * <p> 新建一个Flea权限关联实体类对象 </p>
+     *
+     * @param fleaPrivilegeRelPOJO Flea权限关联POJO类对象
+     * @return Flea权限实体类对象
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    private FleaPrivilegeRel newFleaPrivilegeRel(FleaPrivilegeRelPOJO fleaPrivilegeRelPOJO) throws CommonException {
+
+        // 校验Flea权限关联POJO类对象是否为空
+        // ERROR-AUTH-COMMON0000000001 【{0}】不能为空
+        ObjectUtils.checkEmpty(fleaPrivilegeRelPOJO, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", FleaPrivilegeRelPOJO.class.getSimpleName());
+
+        // 校验权限编号不能为空
+        Long privilegeId = fleaPrivilegeRelPOJO.getPrivilegeId();
+        ObjectUtils.checkEmpty(privilegeId, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", FleaAuthEntityConstants.PrivilegeEntityConstants.E_PRIVILEGE_ID);
+
+        // 校验权限关联POJO类对象
+        AuthCheck.checkAuthRelPOJO(fleaPrivilegeRelPOJO);
+
+        return new FleaPrivilegeRel(privilegeId,
+                fleaPrivilegeRelPOJO.getRelId(),
+                fleaPrivilegeRelPOJO.getRelType(),
+                fleaPrivilegeRelPOJO.getRemarks(),
+                fleaPrivilegeRelPOJO.getRelExtA(),
+                fleaPrivilegeRelPOJO.getRelExtB(),
+                fleaPrivilegeRelPOJO.getRelExtC(),
+                fleaPrivilegeRelPOJO.getRelExtX(),
+                fleaPrivilegeRelPOJO.getRelExtY(),
+                fleaPrivilegeRelPOJO.getRelExtZ());
     }
 
     @Override
