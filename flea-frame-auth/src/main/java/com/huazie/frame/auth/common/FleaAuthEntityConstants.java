@@ -121,7 +121,7 @@ public interface FleaAuthEntityConstants extends FleaEntityConstants {
      *
      * @since 1.0.0
      */
-    interface PriviilegeEntityConstants {
+    interface PrivilegeEntityConstants {
 
         /**
          * <p> 权限编号 </p>
@@ -132,6 +132,16 @@ public interface FleaAuthEntityConstants extends FleaEntityConstants {
          * <p> 权限组编号 </p>
          */
         String E_PRIVILEGE_GROUP_ID = "privilegeGroupId";
+
+        /**
+         * <p> 权限名称 </p>
+         */
+        String E_PRIVILEGE_NAME = "privilegeName";
+
+        /**
+         * <p> 权限组名称 </p>
+         */
+        String E_PRIVILEGE_GROUP_NAME = "privilegeGroupName";
     }
 
     /**

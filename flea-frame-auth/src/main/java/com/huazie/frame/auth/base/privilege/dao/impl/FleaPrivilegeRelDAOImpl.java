@@ -29,7 +29,7 @@ public class FleaPrivilegeRelDAOImpl extends FleaAuthDAOImpl<FleaPrivilegeRel> i
     public List<FleaPrivilegeRel> getPrivilegeRelList(Long privilegeId, String authRelType) throws CommonException {
 
         List<FleaPrivilegeRel> privilegeRelList = getQuery(null)
-                .equal(FleaAuthEntityConstants.PriviilegeEntityConstants.E_PRIVILEGE_ID, privilegeId)
+                .equal(FleaAuthEntityConstants.PrivilegeEntityConstants.E_PRIVILEGE_ID, privilegeId)
                 .equal(FleaAuthEntityConstants.FleaRelEntityConstants.E_REL_TYPE, authRelType)
                 .equal(FleaAuthEntityConstants.FleaRelEntityConstants.E_REL_STATE, EntityStateEnum.IN_USE.getState())
                 .getResultList();

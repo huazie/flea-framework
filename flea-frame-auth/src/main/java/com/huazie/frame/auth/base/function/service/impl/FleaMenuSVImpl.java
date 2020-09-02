@@ -69,6 +69,14 @@ public class FleaMenuSVImpl extends AbstractFleaJPASVImpl<FleaMenu> implements I
         return fleaMenu;
     }
 
+    /**
+     * <p> 新建一个Flea菜单实体类对象 </p>
+     *
+     * @param fleaMenuPOJO flea菜单POJO对象
+     * @return Flea菜单
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
     private FleaMenu newFleaMenu(FleaMenuPOJO fleaMenuPOJO) throws CommonException {
 
         // 校验Flea菜单POJO类对象是否为空
@@ -91,7 +99,7 @@ public class FleaMenuSVImpl extends AbstractFleaJPASVImpl<FleaMenu> implements I
         Integer menuSort = fleaMenuPOJO.getMenuSort();
         ObjectUtils.checkEmpty(menuSort, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", FleaAuthEntityConstants.FunctionEntityConstants.E_MENU_SORT);
 
-        // 校验菜单层级不能为空
+        // 校验菜单层级必须是正数
         Integer menuLevel = fleaMenuPOJO.getMenuLevel();
         // 【{0}】必须是正数！
         NumberUtils.checkNonPositiveNumber(menuLevel, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000008", FleaAuthEntityConstants.FunctionEntityConstants.E_MENU_LEVEL);

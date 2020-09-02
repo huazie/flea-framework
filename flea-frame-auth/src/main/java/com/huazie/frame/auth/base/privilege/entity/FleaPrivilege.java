@@ -1,6 +1,10 @@
 package com.huazie.frame.auth.base.privilege.entity;
 
+import com.huazie.frame.common.CommonConstants;
+import com.huazie.frame.common.EntityStateEnum;
 import com.huazie.frame.common.FleaEntity;
+import com.huazie.frame.common.util.DateUtils;
+import com.huazie.frame.common.util.ObjectUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import javax.persistence.Column;
@@ -68,6 +72,35 @@ public class FleaPrivilege extends FleaEntity {
 
     @Column(name = "remarks")
     private String remarks; // 备注信息
+
+    /**
+     * <p> 无参数构造方法 </p>
+     *
+     * @since 1.0.0
+     */
+    public FleaPrivilege() {
+    }
+
+    /**
+     * <p> 带参数构造方法 </p>
+     *
+     * @param privilegeName 权限名称
+     * @param privilegeDesc 权限描述
+     * @param groupId       权限组编号
+     * @param remarks       备注信息
+     * @since 1.0.0
+     */
+    public FleaPrivilege(String privilegeName, String privilegeDesc, Long groupId, String remarks) {
+        this.privilegeName = privilegeName;
+        this.privilegeDesc = privilegeDesc;
+        if (ObjectUtils.isEmpty(groupId)) {
+            groupId = CommonConstants.NumeralConstants.MINUS_ONE;
+        }
+        this.groupId = groupId;
+        this.privilegeState = EntityStateEnum.IN_USE.getState();
+        this.createDate = DateUtils.getCurrentTime();
+        this.remarks = remarks;
+    }
 
     public Long getPrivilegeId() {
         return privilegeId;
