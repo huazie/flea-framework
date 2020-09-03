@@ -6,7 +6,7 @@ import com.huazie.frame.auth.base.privilege.service.interfaces.IFleaPrivilegeRel
 import com.huazie.frame.auth.common.FleaAuthEntityConstants;
 import com.huazie.frame.auth.common.exception.FleaAuthCommonException;
 import com.huazie.frame.auth.common.pojo.privilege.FleaPrivilegeRelPOJO;
-import com.huazie.frame.auth.util.AuthCheck;
+import com.huazie.frame.auth.util.FleaAuthCheck;
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
@@ -67,7 +67,7 @@ public class FleaPrivilegeRelSVImpl extends AbstractFleaJPASVImpl<FleaPrivilegeR
         ObjectUtils.checkEmpty(privilegeId, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", FleaAuthEntityConstants.PrivilegeEntityConstants.E_PRIVILEGE_ID);
 
         // 校验权限关联POJO类对象
-        AuthCheck.checkAuthRelPOJO(fleaPrivilegeRelPOJO);
+        FleaAuthCheck.checkAuthRelPOJO(fleaPrivilegeRelPOJO);
 
         return new FleaPrivilegeRel(privilegeId,
                 fleaPrivilegeRelPOJO.getRelId(),

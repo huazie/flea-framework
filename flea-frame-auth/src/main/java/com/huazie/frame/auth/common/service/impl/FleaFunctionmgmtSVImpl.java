@@ -4,15 +4,12 @@ import com.huazie.frame.auth.base.function.entity.FleaMenu;
 import com.huazie.frame.auth.base.function.service.interfaces.IFleaFunctionAttrSV;
 import com.huazie.frame.auth.base.function.service.interfaces.IFleaMenuSV;
 import com.huazie.frame.auth.base.privilege.entity.FleaPrivilege;
-import com.huazie.frame.auth.base.privilege.entity.FleaPrivilegeRel;
-import com.huazie.frame.auth.base.privilege.service.interfaces.IFleaPrivilegeGroupRelSV;
 import com.huazie.frame.auth.base.privilege.service.interfaces.IFleaPrivilegeRelSV;
 import com.huazie.frame.auth.base.privilege.service.interfaces.IFleaPrivilegeSV;
 import com.huazie.frame.auth.common.AuthRelTypeEnum;
 import com.huazie.frame.auth.common.FunctionTypeEnum;
 import com.huazie.frame.auth.common.pojo.function.attr.FleaFunctionAttrPOJO;
 import com.huazie.frame.auth.common.pojo.function.menu.FleaMenuPOJO;
-import com.huazie.frame.auth.common.pojo.privilege.FleaPrivilegeGroupRelPOJO;
 import com.huazie.frame.auth.common.pojo.privilege.FleaPrivilegePOJO;
 import com.huazie.frame.auth.common.pojo.privilege.FleaPrivilegeRelPOJO;
 import com.huazie.frame.auth.common.service.interfaces.IFleaFunctionmgmtSV;
@@ -45,8 +42,6 @@ public class FleaFunctionmgmtSVImpl implements IFleaFunctionmgmtSV {
 
     private IFleaPrivilegeRelSV fleaPrivilegeRelSV; // Flea权限关联服务
 
-    private IFleaPrivilegeGroupRelSV fleaPrivilegeGroupRelSV; // Flea权限组关联服务
-
     @Autowired
     @Qualifier("fleaMenuSV")
     public void setFleaMenuSV(IFleaMenuSV fleaMenuSV) {
@@ -69,12 +64,6 @@ public class FleaFunctionmgmtSVImpl implements IFleaFunctionmgmtSV {
     @Qualifier("fleaPrivilegeRelSV")
     public void setFleaPrivilegeRelSV(IFleaPrivilegeRelSV fleaPrivilegeRelSV) {
         this.fleaPrivilegeRelSV = fleaPrivilegeRelSV;
-    }
-
-    @Autowired
-    @Qualifier("fleaPrivilegeGroupRelSV")
-    public void setFleaPrivilegeGroupRelSV(IFleaPrivilegeGroupRelSV fleaPrivilegeGroupRelSV) {
-        this.fleaPrivilegeGroupRelSV = fleaPrivilegeGroupRelSV;
     }
 
     @Override
@@ -110,10 +99,6 @@ public class FleaFunctionmgmtSVImpl implements IFleaFunctionmgmtSV {
         Long privilegeId = fleaPrivilege.getPrivilegeId();
         // 添加权限关联
         fleaPrivilegeRelSV.savePrivilegeRel(newFleaPrivilegeRelPOJOForMenu(privilegeId, menuId, values));
-
-        // 添加权限组关联
-        // 【菜单访问】权限组关联 【访问《XXX》菜单】的权限
-        fleaPrivilegeGroupRelSV.saveFleaPrivilegeGroupRel(newFleaPrivilegeGroupRelPOJO(1000L, "菜单访问", privilegeId, fleaPrivilege.getPrivilegeName()));
 
         return menuId;
     }
@@ -153,25 +138,6 @@ public class FleaFunctionmgmtSVImpl implements IFleaFunctionmgmtSV {
         // 【{0}】菜单绑定【访问《{0}》菜单】权限, 新增菜单时自动生成
         fleaPrivilegeRelPOJO.setRemarks(FleaI18nHelper.i18n("AUTH-PRIVILEGE0000000004", values, FleaI18nResEnum.AUTH.getResName()));
         return fleaPrivilegeRelPOJO;
-    }
-
-    /**
-     * <p> 新建Flea权限组关联POJO对象 </p>
-     *
-     * @param privilegeGroupId 权限组编号
-     * @param privilegeGroupName 权限组名称
-     * @param relId            关联编号【这里是权限编号】
-     * @param relName 关联名称【这里是权限名称】
-     * @return Flea权限组关联POJO对象实例
-     */
-    private FleaPrivilegeGroupRelPOJO newFleaPrivilegeGroupRelPOJO(Long privilegeGroupId, String privilegeGroupName, Long relId, String relName) {
-        FleaPrivilegeGroupRelPOJO fleaPrivilegeGroupRelPOJO = new FleaPrivilegeGroupRelPOJO();
-        fleaPrivilegeGroupRelPOJO.setPrivilegeGroupId(privilegeGroupId);
-        fleaPrivilegeGroupRelPOJO.setRelId(relId);
-        fleaPrivilegeGroupRelPOJO.setRelType(AuthRelTypeEnum.PRIVILEGE_GROUP_REL_PRIVILEGE.getRelType());
-        // 【{0}】权限组关联【{1}】权限
-        fleaPrivilegeGroupRelPOJO.setRemarks(FleaI18nHelper.i18n("AUTH-PRIVILEGE0000000005", new String[] {privilegeGroupName, relName}, FleaI18nResEnum.AUTH.getResName()));
-        return fleaPrivilegeGroupRelPOJO;
     }
 
 }
