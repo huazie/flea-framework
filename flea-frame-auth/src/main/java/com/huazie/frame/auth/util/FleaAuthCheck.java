@@ -14,7 +14,7 @@ import com.huazie.frame.common.util.StringUtils;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class AuthCheck {
+public class FleaAuthCheck {
 
     /**
      * <p> 校验权限关联POJO类对象 </p>
