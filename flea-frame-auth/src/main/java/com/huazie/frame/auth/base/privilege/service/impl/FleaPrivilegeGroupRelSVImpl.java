@@ -42,7 +42,10 @@ public class FleaPrivilegeGroupRelSVImpl extends AbstractFleaJPASVImpl<FleaPrivi
 
     @Override
     public FleaPrivilegeGroupRel saveFleaPrivilegeGroupRel(FleaPrivilegeGroupRelPOJO fleaPrivilegeGroupRelPOJO) throws CommonException {
-        return null;
+        FleaPrivilegeGroupRel fleaPrivilegeGroupRel = newFleaPrivilegeGroupRel(fleaPrivilegeGroupRelPOJO);
+        // 保存权限组关联
+        this.save(fleaPrivilegeGroupRel);
+        return fleaPrivilegeGroupRel;
     }
 
     /**

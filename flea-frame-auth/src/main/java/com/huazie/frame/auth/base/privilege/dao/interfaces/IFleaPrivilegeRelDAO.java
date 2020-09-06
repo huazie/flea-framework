@@ -25,4 +25,14 @@ public interface IFleaPrivilegeRelDAO extends IAbstractFleaJPADAO<FleaPrivilegeR
      * @since 1.0.0
      */
     List<FleaPrivilegeRel> getPrivilegeRelList(Long privilegeId, String authRelType) throws CommonException;
+
+    /**
+     * <p> 获取指定菜单编号【menuId】关联的授权类型【rel_type = PRIVILEGE_REL_MENU】权限关联信息 </p>
+     *
+     * @param menuId 菜单编号
+     * @return 权限关联信息
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    FleaPrivilegeRel getPrivilegeRelMenu(Long menuId) throws CommonException;
 }

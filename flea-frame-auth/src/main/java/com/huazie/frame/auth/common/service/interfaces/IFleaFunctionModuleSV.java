@@ -13,7 +13,7 @@ import java.util.List;
  * @version 1.0.0
  * @since 1.0.0
  */
-public interface IFleaFunctionmgmtSV {
+public interface IFleaFunctionModuleSV {
 
     /**
      * <p> 添加菜单 </p>
