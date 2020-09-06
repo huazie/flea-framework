@@ -12,10 +12,9 @@ import com.huazie.frame.auth.common.pojo.function.attr.FleaFunctionAttrPOJO;
 import com.huazie.frame.auth.common.pojo.function.menu.FleaMenuPOJO;
 import com.huazie.frame.auth.common.pojo.privilege.FleaPrivilegePOJO;
 import com.huazie.frame.auth.common.pojo.privilege.FleaPrivilegeRelPOJO;
-import com.huazie.frame.auth.common.service.interfaces.IFleaFunctionmgmtSV;
+import com.huazie.frame.auth.common.service.interfaces.IFleaFunctionModuleSV;
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.i18n.FleaI18nHelper;
-import com.huazie.frame.common.i18n.FleaI18nResEnum;
 import com.huazie.frame.common.util.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -31,8 +30,8 @@ import java.util.List;
  * @version 1.0.0
  * @since 1.0.0
  */
-@Service("fleaFunctionmgmtSV")
-public class FleaFunctionmgmtSVImpl implements IFleaFunctionmgmtSV {
+@Service("fleaFunctionModuleSV")
+public class FleaFunctionModuleSVImpl implements IFleaFunctionModuleSV {
 
     private IFleaMenuSV fleaMenuSV; // Flea菜单服务
 
@@ -113,11 +112,11 @@ public class FleaFunctionmgmtSVImpl implements IFleaFunctionmgmtSV {
     private FleaPrivilegePOJO newFleaPrivilegePOJOForMenu(String[] values) {
         FleaPrivilegePOJO fleaPrivilegePOJO = new FleaPrivilegePOJO();
         // 访问《{0}》菜单
-        fleaPrivilegePOJO.setPrivilegeName(FleaI18nHelper.i18n("AUTH-PRIVILEGE0000000001", values, FleaI18nResEnum.AUTH.getResName()));
+        fleaPrivilegePOJO.setPrivilegeName(FleaI18nHelper.i18nForAuth("AUTH-PRIVILEGE0000000001", values));
         // 拥有可以访问《{0}》菜单的权限
-        fleaPrivilegePOJO.setPrivilegeDesc(FleaI18nHelper.i18n("AUTH-PRIVILEGE0000000002", values, FleaI18nResEnum.AUTH.getResName()));
+        fleaPrivilegePOJO.setPrivilegeDesc(FleaI18nHelper.i18nForAuth("AUTH-PRIVILEGE0000000002", values));
         // 【访问《{0}》菜单】权限对应【{0}】菜单，新增菜单时自动生成
-        fleaPrivilegePOJO.setRemarks(FleaI18nHelper.i18n("AUTH-PRIVILEGE0000000003", values, FleaI18nResEnum.AUTH.getResName()));
+        fleaPrivilegePOJO.setRemarks(FleaI18nHelper.i18nForAuth("AUTH-PRIVILEGE0000000003", values));
         return fleaPrivilegePOJO;
     }
 
@@ -136,7 +135,7 @@ public class FleaFunctionmgmtSVImpl implements IFleaFunctionmgmtSV {
         fleaPrivilegeRelPOJO.setRelId(relId);
         fleaPrivilegeRelPOJO.setRelType(AuthRelTypeEnum.PRIVILEGE_REL_MENU.getRelType());
         // 【{0}】菜单绑定【访问《{0}》菜单】权限, 新增菜单时自动生成
-        fleaPrivilegeRelPOJO.setRemarks(FleaI18nHelper.i18n("AUTH-PRIVILEGE0000000004", values, FleaI18nResEnum.AUTH.getResName()));
+        fleaPrivilegeRelPOJO.setRemarks(FleaI18nHelper.i18nForAuth("AUTH-PRIVILEGE0000000004", values));
         return fleaPrivilegeRelPOJO;
     }
 

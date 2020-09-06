@@ -14,12 +14,22 @@ public class FleaPrivilegeGroupRelPOJO extends FleaAuthRelPOJO {
 
     private Long privilegeGroupId; // 权限组编号
 
+    private String privilegeGroupName; // 权限组名称
+
     public Long getPrivilegeGroupId() {
         return privilegeGroupId;
     }
 
     public void setPrivilegeGroupId(Long privilegeGroupId) {
         this.privilegeGroupId = privilegeGroupId;
+    }
+
+    public String getPrivilegeGroupName() {
+        return privilegeGroupName;
+    }
+
+    public void setPrivilegeGroupName(String privilegeGroupName) {
+        this.privilegeGroupName = privilegeGroupName;
     }
 
     @Override

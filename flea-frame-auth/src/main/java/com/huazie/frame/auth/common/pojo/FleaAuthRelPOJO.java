@@ -13,6 +13,8 @@ public class FleaAuthRelPOJO extends FleaRemarksPOJO {
 
     private Long relId; // 关联编号
 
+    private String relName; // 关联名称
+
     private String relType; // 关联类型
 
     private String relExtA; // 关联扩展字段A
@@ -33,6 +35,14 @@ public class FleaAuthRelPOJO extends FleaRemarksPOJO {
 
     public void setRelId(Long relId) {
         this.relId = relId;
+    }
+
+    public String getRelName() {
+        return relName;
+    }
+
+    public void setRelName(String relName) {
+        this.relName = relName;
     }
 
     public String getRelType() {

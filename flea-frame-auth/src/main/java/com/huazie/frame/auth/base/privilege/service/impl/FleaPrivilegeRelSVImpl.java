@@ -41,6 +41,11 @@ public class FleaPrivilegeRelSVImpl extends AbstractFleaJPASVImpl<FleaPrivilegeR
     }
 
     @Override
+    public FleaPrivilegeRel getPrivilegeRelMenu(Long menuId) throws CommonException {
+        return fleaPrivilegeRelDao.getPrivilegeRelMenu(menuId);
+    }
+
+    @Override
     public FleaPrivilegeRel savePrivilegeRel(FleaPrivilegeRelPOJO fleaPrivilegeRelPOJO) throws CommonException {
         FleaPrivilegeRel fleaPrivilegeRel = newFleaPrivilegeRel(fleaPrivilegeRelPOJO);
         // 保存Flea权限关联
