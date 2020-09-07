@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50538
 File Encoding         : 65001
 
-Date: 2020-08-16 23:52:42
+Date: 2020-09-07 18:16:13
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -38,8 +38,8 @@ CREATE TABLE `flea_account` (
 -- ----------------------------
 -- Records of flea_account
 -- ----------------------------
-INSERT INTO `flea_account` VALUES ('1000', '1000', 'SYS_FLEA_MGMT', '31DAA1C5BA8F0874A2383145686D90CCD238483F', '1', '2020-08-16 20:25:52', null, '2020-08-16 20:25:52', '2999-12-31 23:59:59', '【跳蚤管家】');
-INSERT INTO `flea_account` VALUES ('10000', '10000', 'huazie', '31DAA1C5BA8F0874A2383145686D90CCD238483F', '1', '2020-08-16 20:32:33', null, '2020-08-16 20:32:33', '2999-12-31 23:59:59', '用户自己注册时新增数据');
+INSERT INTO `flea_account` VALUES ('1000', '1000', 'SYS_FLEA_MGMT', '31DAA1C5BA8F0874A2383145686D90CCD238483F', '1', '2020-09-07 18:14:29', null, '2020-09-07 18:14:29', '2999-12-31 23:59:59', '【跳蚤管家】');
+INSERT INTO `flea_account` VALUES ('10000', '10000', 'huazie', '31DAA1C5BA8F0874A2383145686D90CCD238483F', '1', '2020-09-07 18:15:27', null, '2020-09-07 18:15:27', '2999-12-31 23:59:59', '用户自己注册时新增数据');
 
 -- ----------------------------
 -- Table structure for `flea_account_attr`
@@ -64,8 +64,8 @@ CREATE TABLE `flea_account_attr` (
 -- ----------------------------
 -- Records of flea_account_attr
 -- ----------------------------
-INSERT INTO `flea_account_attr` VALUES ('1', '1000', 'ACCOUNT_TYPE', 'SYSTEM', '1', '2020-08-16 20:25:52', null, '2020-08-16 20:25:52', '2999-12-31 23:59:59', '【跳蚤管家】');
-INSERT INTO `flea_account_attr` VALUES ('2', '10000', 'ACCOUNT_TYPE', 'OPERATOR', '1', '2020-08-16 20:32:33', null, '2020-08-16 20:32:33', '2999-12-31 23:59:59', '用户自己注册时新增数据');
+INSERT INTO `flea_account_attr` VALUES ('1', '1000', 'ACCOUNT_TYPE', 'SYSTEM', '1', '2020-09-07 18:14:29', null, '2020-09-07 18:14:29', '2999-12-31 23:59:59', '【跳蚤管家】');
+INSERT INTO `flea_account_attr` VALUES ('2', '10000', 'ACCOUNT_TYPE', 'OPERATOR', '1', '2020-09-07 18:15:27', null, '2020-09-07 18:15:27', '2999-12-31 23:59:59', '用户自己注册时新增数据');
 
 -- ----------------------------
 -- Table structure for `flea_element`
@@ -537,8 +537,8 @@ CREATE TABLE `flea_user` (
 -- ----------------------------
 -- Records of flea_user
 -- ----------------------------
-INSERT INTO `flea_user` VALUES ('1000', 'SYS_FLEA_MGMT', null, null, null, null, null, '-1', '1', '2020-08-16 20:25:52', null, '2020-08-16 20:25:52', '2999-12-31 23:59:59', '【跳蚤管家】');
-INSERT INTO `flea_user` VALUES ('10000', 'huazie', null, null, null, null, null, '-1', '1', '2020-08-16 20:32:33', null, '2020-08-16 20:32:33', '2999-12-31 23:59:59', '用户自己注册时新增数据');
+INSERT INTO `flea_user` VALUES ('1000', '跳蚤管家', null, null, null, null, null, '-1', '1', '2020-09-07 18:14:29', null, '2020-09-07 18:14:29', '2999-12-31 23:59:59', '【跳蚤管家】');
+INSERT INTO `flea_user` VALUES ('10000', 'huazie', null, null, null, null, null, '-1', '1', '2020-09-07 18:15:27', null, '2020-09-07 18:15:27', '2999-12-31 23:59:59', '用户自己注册时新增数据');
 
 -- ----------------------------
 -- Table structure for `flea_user_attr`
@@ -563,8 +563,8 @@ CREATE TABLE `flea_user_attr` (
 -- ----------------------------
 -- Records of flea_user_attr
 -- ----------------------------
-INSERT INTO `flea_user_attr` VALUES ('1', '1000', 'USER_TYPE', 'SYSTEM', '1', '2020-08-16 20:25:52', null, '2020-08-16 20:25:52', '2999-12-31 23:59:59', '【跳蚤管家】');
-INSERT INTO `flea_user_attr` VALUES ('2', '10000', 'USER_TYPE', 'OPERATOR', '1', '2020-08-16 20:32:33', null, '2020-08-16 20:32:33', '2999-12-31 23:59:59', '用户自己注册时新增数据');
+INSERT INTO `flea_user_attr` VALUES ('1', '1000', 'USER_TYPE', 'SYSTEM', '1', '2020-09-07 18:14:29', null, '2020-09-07 18:14:29', '2999-12-31 23:59:59', '【跳蚤管家】');
+INSERT INTO `flea_user_attr` VALUES ('2', '10000', 'USER_TYPE', 'OPERATOR', '1', '2020-09-07 18:15:27', null, '2020-09-07 18:15:27', '2999-12-31 23:59:59', '用户自己注册时新增数据');
 
 -- ----------------------------
 -- Table structure for `flea_user_group`
