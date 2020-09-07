@@ -7,6 +7,7 @@ import com.huazie.frame.auth.common.pojo.user.attr.FleaUserAttrPOJO;
 import com.huazie.frame.auth.common.pojo.user.login.FleaUserLoginPOJO;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
+import com.huazie.frame.common.util.StringUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.util.Date;
@@ -24,6 +25,8 @@ public class FleaUserRegisterPOJO extends FleaUserLoginPOJO {
     private static final long serialVersionUID = -2040583042633897645L;
 
     private Long systemId; // 系统编号（用于系统账户和用户的生成）
+
+    private String userName; // 用户名称
 
     private Long groupId; // 用户组编号
 
@@ -45,6 +48,14 @@ public class FleaUserRegisterPOJO extends FleaUserLoginPOJO {
 
     public void setSystemId(Long systemId) {
         this.systemId = systemId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public Long getGroupId() {
@@ -161,7 +172,10 @@ public class FleaUserRegisterPOJO extends FleaUserLoginPOJO {
         FleaUserPOJO fleaUserPOJO = new FleaUserPOJO();
         fleaUserPOJO.setUserId(systemId);
         fleaUserPOJO.setGroupId(groupId);
-        fleaUserPOJO.setUserName(getAccountCode());
+        if (StringUtils.isBlank(userName)) {
+            userName = getAccountCode();
+        }
+        fleaUserPOJO.setUserName(userName);
         fleaUserPOJO.setUserState(state);
         fleaUserPOJO.setEffectiveDate(effectiveDate);
         fleaUserPOJO.setExpiryDate(expiryDate);

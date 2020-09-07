@@ -111,6 +111,7 @@ public class UserAuthTest {
         FleaUserRegisterPOJO fleaUserRegisterPOJO = new FleaUserRegisterPOJO();
 
         fleaUserRegisterPOJO.setSystemId(1000L);
+        fleaUserRegisterPOJO.setUserName("跳蚤管家");
         fleaUserRegisterPOJO.setAccountCode("SYS_FLEA_MGMT");
         fleaUserRegisterPOJO.setAccountPwd("2020#huazie");
         fleaUserRegisterPOJO.setState(UserStateEnum.IN_USE.getState());
