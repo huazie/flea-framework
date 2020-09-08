@@ -294,6 +294,16 @@ public class FleaTree<T> implements Serializable {
     }
 
     /**
+     * <p> 获取根节点元素 </p>
+     *
+     * @return 根节点元素
+     * @since 1.0.0
+     */
+    public T getRootElement() {
+        return rootNode.element;
+    }
+
+    /**
      * <p> 获取指定编号的树叶子节点元素 </p>
      *
      * @param id 节点编号
@@ -338,8 +348,7 @@ public class FleaTree<T> implements Serializable {
     public String toString() {
 
         StringBuilder fleaTreeString = new StringBuilder();
-        T element = rootNode.element;
-        fleaTreeString.append(element.toString()).append(ENTER);
+        fleaTreeString.append(toString(rootNode.element)).append(ENTER);
 
         LinkedList<TreeNode<T>> subNodes = rootNode.subNotes;
         toString(fleaTreeString, subNodes, rootNode.height, new HashMap<Integer, Boolean>());
@@ -361,16 +370,26 @@ public class FleaTree<T> implements Serializable {
                     }
                 }
                 if (!subNodesIt.hasNext()) {
-                    fleaTreeString.append("└─");
+                    fleaTreeString.append("└──");
                     cHeightNodeLast.put(height, true);
                 } else {
-                    fleaTreeString.append("├─");
+                    fleaTreeString.append("├──");
                     cHeightNodeLast.put(height, false);
                 }
-                fleaTreeString.append(treeNode.element).append(ENTER);
+                fleaTreeString.append(toString(treeNode.element)).append(ENTER);
                 toString(fleaTreeString, treeNode.subNotes, treeNode.height, cHeightNodeLast);
             }
         }
+    }
+
+    /**
+     * <p> 树形结构展示，默认显示数节点的元素 </p>
+     *
+     * @param element 元素
+     * @return 数节点的元素
+     */
+    protected String toString(T element) {
+        return element.toString();
     }
 
     static final class TreeNode<T> {

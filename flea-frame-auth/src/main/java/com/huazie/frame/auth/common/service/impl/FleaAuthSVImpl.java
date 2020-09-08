@@ -38,6 +38,7 @@ import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.DateUtils;
 import com.huazie.frame.common.util.HttpUtils;
 import com.huazie.frame.common.util.MapUtils;
+import com.huazie.frame.common.util.NumberUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import org.slf4j.Logger;
@@ -213,7 +214,7 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
     @Override
     public void saveQuitLog(Long accountId) {
 
-        if (ObjectUtils.isNotEmpty(accountId) && accountId > CommonConstants.NumeralConstants.ZERO) {
+        if (NumberUtils.isPositiveNumber(accountId)) {
             try {
                 // 获取当月用户最近一次的登录日志
                 FleaLoginLog fleaLoginLog = fleaLoginLogSV.queryLastUserLoginLog(accountId);

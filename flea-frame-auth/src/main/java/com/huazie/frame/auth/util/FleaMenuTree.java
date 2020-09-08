@@ -87,11 +87,11 @@ public class FleaMenuTree extends FleaTree<FleaMenu> {
 
         long id = fleaMenu.getMenuId();
         int menuLevel = fleaMenu.getMenuLevel();
-        int height = menuLevel - 1;
+        int height = menuLevel + 1;
 
         long pId = parentMenu.getMenuId();
         int pMenuLevel = parentMenu.getMenuLevel();
-        int pHeight = pMenuLevel - 1;
+        int pHeight = pMenuLevel + 1;
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FleaMenuTree#add(FleaMenu, FleaMenu) Start Adding Menu to MenuTree");
@@ -124,6 +124,11 @@ public class FleaMenuTree extends FleaTree<FleaMenu> {
         }
     }
 
+    @Override
+    protected String toString(FleaMenu element) {
+        return element.getMenuName();
+    }
+
     /**
      * <p> 从菜单集合中获取当前菜单对应的父菜单 </p>
      *
@@ -144,6 +149,10 @@ public class FleaMenuTree extends FleaTree<FleaMenu> {
                         && current.getParentId().equals(fleaMenu.getMenuId())) {
                     parentMenu = fleaMenu;
                 }
+            }
+            // 如果是一级菜单，则取根节点为父菜单
+            if (current.getMenuLevel() == CommonConstants.NumeralConstants.INT_ONE) {
+                parentMenu = getRootElement();
             }
         }
         return parentMenu;

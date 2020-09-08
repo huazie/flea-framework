@@ -1,11 +1,19 @@
 package com.huazie.frame.auth;
 
+import com.huazie.frame.auth.base.function.entity.FleaMenu;
+import com.huazie.frame.auth.common.service.interfaces.IFleaAuthSV;
+import com.huazie.frame.auth.util.FleaMenuTree;
 import com.huazie.frame.common.FleaTree;
+import com.huazie.frame.common.exception.CommonException;
+import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.ListIterator;
 
 /**
@@ -18,6 +26,14 @@ import java.util.ListIterator;
 public class MenuTreeTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MenuTreeTest.class);
+
+    private ApplicationContext applicationContext;
+
+    @Before
+    public void init() {
+        applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+        LOGGER.debug("ApplicationContext={}", applicationContext);
+    }
 
     @Test
     public void testLinkedList() {
@@ -85,7 +101,19 @@ public class MenuTreeTest {
     @Test
     public void testFleaMenuTree() {
 
+        IFleaAuthSV fleaAuthSV = (IFleaAuthSV) applicationContext.getBean("fleaAuthSV");
+        Long accountId = 10000L;
+        Long systemAcctId = 1000L;
+        try {
+            List<FleaMenu> fleaMenuList = fleaAuthSV.getAllAccessibleMenus(accountId, systemAcctId);
 
+            FleaMenuTree fleaMenuTree = new FleaMenuTree("跳蚤管家");
+            fleaMenuTree.addAll(fleaMenuList);
 
+            LOGGER.debug("MENU_TREE = \n{}", fleaMenuTree);
+
+        } catch (CommonException e) {
+            LOGGER.error("Exception: ", e);
+        }
     }
 }
