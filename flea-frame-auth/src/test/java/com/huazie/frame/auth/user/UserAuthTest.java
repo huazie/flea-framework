@@ -14,8 +14,7 @@ import com.huazie.frame.auth.common.pojo.user.attr.FleaUserAttrPOJO;
 import com.huazie.frame.auth.common.pojo.user.login.FleaUserLoginPOJO;
 import com.huazie.frame.auth.common.pojo.user.register.FleaUserRegisterPOJO;
 import com.huazie.frame.auth.common.service.interfaces.IFleaAuthSV;
-import com.huazie.frame.auth.common.service.interfaces.IFleaUserLoginSV;
-import com.huazie.frame.auth.common.service.interfaces.IFleaUserRegisterSV;
+import com.huazie.frame.auth.common.service.interfaces.IFleaUserModuleSV;
 import com.huazie.frame.common.EntityStateEnum;
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.DateUtils;
@@ -55,10 +54,10 @@ public class UserAuthTest {
         fleaUserLoginInfo.setAccountCode("13218010892");
         fleaUserLoginInfo.setAccountPwd("123qwe");
 
-        IFleaUserLoginSV fleaUserLoginSV = (IFleaUserLoginSV) applicationContext.getBean("fleaUserLoginSV");
+        IFleaUserModuleSV fleaUserModuleSV = (IFleaUserModuleSV) applicationContext.getBean("fleaUserModuleSV");
 
         try {
-            FleaAccount fleaAccount = fleaUserLoginSV.login(fleaUserLoginInfo);
+            FleaAccount fleaAccount = fleaUserModuleSV.login(fleaUserLoginInfo);
             LOGGER.debug("FleaAccount = {}", fleaAccount);
         } catch (CommonException e) {
             LOGGER.error("Exception = ", e);
@@ -96,10 +95,10 @@ public class UserAuthTest {
 
         fleaUserRegisterPOJO.setRemarks("用户自己注册时新增数据");
 
-        IFleaUserRegisterSV fleaUserRegisterSV = (IFleaUserRegisterSV) applicationContext.getBean("fleaUserRegisterSV");
+        IFleaUserModuleSV fleaUserModuleSV = (IFleaUserModuleSV) applicationContext.getBean("fleaUserModuleSV");
 
         try {
-            FleaAccount fleaAccount = fleaUserRegisterSV.register(fleaUserRegisterPOJO);
+            FleaAccount fleaAccount = fleaUserModuleSV.register(fleaUserRegisterPOJO);
             LOGGER.debug("FleaAccount = {}", fleaAccount);
         } catch (CommonException e) {
             LOGGER.error("Exception = ", e);
@@ -137,10 +136,10 @@ public class UserAuthTest {
 
         fleaUserRegisterPOJO.setRemarks("【跳蚤管家】");
 
-        IFleaUserRegisterSV fleaUserRegisterSV = (IFleaUserRegisterSV) applicationContext.getBean("fleaUserRegisterSV");
+        IFleaUserModuleSV fleaUserModuleSV = (IFleaUserModuleSV) applicationContext.getBean("fleaUserModuleSV");
 
         try {
-            FleaAccount fleaAccount = fleaUserRegisterSV.register(fleaUserRegisterPOJO);
+            FleaAccount fleaAccount = fleaUserModuleSV.register(fleaUserRegisterPOJO);
             LOGGER.debug("FleaAccount = {}", fleaAccount);
         } catch (CommonException e) {
             LOGGER.error("Exception = ", e);
