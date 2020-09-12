@@ -155,9 +155,10 @@ public class FunctionAuthTest {
         fleaMenuPOJO.setMenuSort(2);
         fleaMenuPOJO.setMenuLevel(MenuLevelEnum.LEVEL_ONE.getLevel());
         fleaMenuPOJO.setRemarks("授权管理，包含用户模块管理，角色模块管理，权限模块管理，功能模块管理");
+        fleaMenuPOJO.setFunctionAttrPOJOList(addFleaFunctionAttrPOJOList());
 
         IFleaFunctionModuleSV fleaFunctionModuleSV = (IFleaFunctionModuleSV) applicationContext.getBean("fleaFunctionModuleSV");
-        return fleaFunctionModuleSV.addFleaMenu(fleaMenuPOJO, addFleaFunctionAttrPOJOList());
+        return fleaFunctionModuleSV.addFleaMenu(fleaMenuPOJO);
     }
 
     // 添加《用户模块管理》菜单
@@ -170,9 +171,10 @@ public class FunctionAuthTest {
         fleaMenuPOJO.setMenuLevel(MenuLevelEnum.LEVEL_TWO.getLevel());
         fleaMenuPOJO.setParentId(parentId);
         fleaMenuPOJO.setRemarks("用户模块管理，包含用户管理，用户组管理");
+        fleaMenuPOJO.setFunctionAttrPOJOList(addFleaFunctionAttrPOJOList());
 
         IFleaFunctionModuleSV fleaFunctionModuleSV = (IFleaFunctionModuleSV) applicationContext.getBean("fleaFunctionModuleSV");
-        return fleaFunctionModuleSV.addFleaMenu(fleaMenuPOJO, addFleaFunctionAttrPOJOList());
+        return fleaFunctionModuleSV.addFleaMenu(fleaMenuPOJO);
     }
 
     // 添加《角色模块管理》菜单
@@ -185,9 +187,10 @@ public class FunctionAuthTest {
         fleaMenuPOJO.setMenuLevel(MenuLevelEnum.LEVEL_TWO.getLevel());
         fleaMenuPOJO.setParentId(parentId);
         fleaMenuPOJO.setRemarks("角色模块管理，包含角色管理，角色组管理");
+        fleaMenuPOJO.setFunctionAttrPOJOList(addFleaFunctionAttrPOJOList());
 
         IFleaFunctionModuleSV fleaFunctionModuleSV = (IFleaFunctionModuleSV) applicationContext.getBean("fleaFunctionModuleSV");
-        return fleaFunctionModuleSV.addFleaMenu(fleaMenuPOJO, addFleaFunctionAttrPOJOList());
+        return fleaFunctionModuleSV.addFleaMenu(fleaMenuPOJO);
     }
 
     // 添加《权限模块管理》菜单
@@ -200,9 +203,10 @@ public class FunctionAuthTest {
         fleaMenuPOJO.setMenuLevel(MenuLevelEnum.LEVEL_TWO.getLevel());
         fleaMenuPOJO.setParentId(parentId);
         fleaMenuPOJO.setRemarks("权限模块管理，包含权限管理，权限组管理");
+        fleaMenuPOJO.setFunctionAttrPOJOList(addFleaFunctionAttrPOJOList());
 
         IFleaFunctionModuleSV fleaFunctionModuleSV = (IFleaFunctionModuleSV) applicationContext.getBean("fleaFunctionModuleSV");
-        return fleaFunctionModuleSV.addFleaMenu(fleaMenuPOJO, addFleaFunctionAttrPOJOList());
+        return fleaFunctionModuleSV.addFleaMenu(fleaMenuPOJO);
     }
 
     // 添加《功能模块管理》菜单
@@ -215,9 +219,10 @@ public class FunctionAuthTest {
         fleaMenuPOJO.setMenuLevel(MenuLevelEnum.LEVEL_TWO.getLevel());
         fleaMenuPOJO.setParentId(parentId);
         fleaMenuPOJO.setRemarks("功能模块管理，包含菜单管理，操作管理，元素管理");
+        fleaMenuPOJO.setFunctionAttrPOJOList(addFleaFunctionAttrPOJOList());
 
         IFleaFunctionModuleSV fleaFunctionModuleSV = (IFleaFunctionModuleSV) applicationContext.getBean("fleaFunctionModuleSV");
-        return fleaFunctionModuleSV.addFleaMenu(fleaMenuPOJO, addFleaFunctionAttrPOJOList());
+        return fleaFunctionModuleSV.addFleaMenu(fleaMenuPOJO);
     }
 
     // 添加《用户管理》菜单
@@ -230,9 +235,10 @@ public class FunctionAuthTest {
         fleaMenuPOJO.setMenuLevel(MenuLevelEnum.LEVEL_THREE.getLevel());
         fleaMenuPOJO.setParentId(parentId);
         fleaMenuPOJO.setRemarks("用户管理，包含用户注册，用户变更，用户授权");
+        fleaMenuPOJO.setFunctionAttrPOJOList(addFleaFunctionAttrPOJOList());
 
         IFleaFunctionModuleSV fleaFunctionModuleSV = (IFleaFunctionModuleSV) applicationContext.getBean("fleaFunctionModuleSV");
-        return fleaFunctionModuleSV.addFleaMenu(fleaMenuPOJO, addFleaFunctionAttrPOJOList());
+        return fleaFunctionModuleSV.addFleaMenu(fleaMenuPOJO);
     }
 
     // 添加《用户组管理》菜单
@@ -245,9 +251,10 @@ public class FunctionAuthTest {
         fleaMenuPOJO.setMenuLevel(MenuLevelEnum.LEVEL_THREE.getLevel());
         fleaMenuPOJO.setParentId(parentId);
         fleaMenuPOJO.setRemarks("用户组管理，包含用户组新增，用户组变更，用户组授权");
+        fleaMenuPOJO.setFunctionAttrPOJOList(addFleaFunctionAttrPOJOList());
 
         IFleaFunctionModuleSV fleaFunctionModuleSV = (IFleaFunctionModuleSV) applicationContext.getBean("fleaFunctionModuleSV");
-        return fleaFunctionModuleSV.addFleaMenu(fleaMenuPOJO, addFleaFunctionAttrPOJOList());
+        return fleaFunctionModuleSV.addFleaMenu(fleaMenuPOJO);
     }
 
     // 添加《角色管理》菜单
@@ -260,9 +267,10 @@ public class FunctionAuthTest {
         fleaMenuPOJO.setMenuLevel(MenuLevelEnum.LEVEL_THREE.getLevel());
         fleaMenuPOJO.setParentId(parentId);
         fleaMenuPOJO.setRemarks("角色管理，包含角色新增，角色变更，角色授权");
+        fleaMenuPOJO.setFunctionAttrPOJOList(addFleaFunctionAttrPOJOList());
 
         IFleaFunctionModuleSV fleaFunctionModuleSV = (IFleaFunctionModuleSV) applicationContext.getBean("fleaFunctionModuleSV");
-        return fleaFunctionModuleSV.addFleaMenu(fleaMenuPOJO, addFleaFunctionAttrPOJOList());
+        return fleaFunctionModuleSV.addFleaMenu(fleaMenuPOJO);
     }
 
     // 添加《角色组管理》菜单
@@ -275,9 +283,10 @@ public class FunctionAuthTest {
         fleaMenuPOJO.setMenuLevel(MenuLevelEnum.LEVEL_THREE.getLevel());
         fleaMenuPOJO.setParentId(parentId);
         fleaMenuPOJO.setRemarks("角色组管理，包含角色组新增，角色组变更，角色组关联");
+        fleaMenuPOJO.setFunctionAttrPOJOList(addFleaFunctionAttrPOJOList());
 
         IFleaFunctionModuleSV fleaFunctionModuleSV = (IFleaFunctionModuleSV) applicationContext.getBean("fleaFunctionModuleSV");
-        return fleaFunctionModuleSV.addFleaMenu(fleaMenuPOJO, addFleaFunctionAttrPOJOList());
+        return fleaFunctionModuleSV.addFleaMenu(fleaMenuPOJO);
     }
 
     // 添加《权限管理》菜单
@@ -290,9 +299,10 @@ public class FunctionAuthTest {
         fleaMenuPOJO.setMenuLevel(MenuLevelEnum.LEVEL_THREE.getLevel());
         fleaMenuPOJO.setParentId(parentId);
         fleaMenuPOJO.setRemarks("权限管理，包含权限新增，权限变更");
+        fleaMenuPOJO.setFunctionAttrPOJOList(addFleaFunctionAttrPOJOList());
 
         IFleaFunctionModuleSV fleaFunctionModuleSV = (IFleaFunctionModuleSV) applicationContext.getBean("fleaFunctionModuleSV");
-        return fleaFunctionModuleSV.addFleaMenu(fleaMenuPOJO, addFleaFunctionAttrPOJOList());
+        return fleaFunctionModuleSV.addFleaMenu(fleaMenuPOJO);
     }
 
     // 添加《权限组管理》菜单
@@ -305,9 +315,10 @@ public class FunctionAuthTest {
         fleaMenuPOJO.setMenuLevel(MenuLevelEnum.LEVEL_THREE.getLevel());
         fleaMenuPOJO.setParentId(parentId);
         fleaMenuPOJO.setRemarks("权限组管理，包含权限组新增，权限组变更，权限组关联");
+        fleaMenuPOJO.setFunctionAttrPOJOList(addFleaFunctionAttrPOJOList());
 
         IFleaFunctionModuleSV fleaFunctionModuleSV = (IFleaFunctionModuleSV) applicationContext.getBean("fleaFunctionModuleSV");
-        return fleaFunctionModuleSV.addFleaMenu(fleaMenuPOJO, addFleaFunctionAttrPOJOList());
+        return fleaFunctionModuleSV.addFleaMenu(fleaMenuPOJO);
     }
 
     // 添加《菜单管理》菜单
@@ -320,9 +331,10 @@ public class FunctionAuthTest {
         fleaMenuPOJO.setMenuLevel(MenuLevelEnum.LEVEL_THREE.getLevel());
         fleaMenuPOJO.setParentId(parentId);
         fleaMenuPOJO.setRemarks("菜单管理，包含菜单新增，菜单变更，菜单授权");
+        fleaMenuPOJO.setFunctionAttrPOJOList(addFleaFunctionAttrPOJOList());
 
         IFleaFunctionModuleSV fleaFunctionModuleSV = (IFleaFunctionModuleSV) applicationContext.getBean("fleaFunctionModuleSV");
-        return fleaFunctionModuleSV.addFleaMenu(fleaMenuPOJO, addFleaFunctionAttrPOJOList());
+        return fleaFunctionModuleSV.addFleaMenu(fleaMenuPOJO);
     }
 
     // 添加《操作管理》菜单
@@ -335,9 +347,10 @@ public class FunctionAuthTest {
         fleaMenuPOJO.setMenuLevel(MenuLevelEnum.LEVEL_THREE.getLevel());
         fleaMenuPOJO.setParentId(parentId);
         fleaMenuPOJO.setRemarks("操作管理，包含操作新增，操作变更，操作授权");
+        fleaMenuPOJO.setFunctionAttrPOJOList(addFleaFunctionAttrPOJOList());
 
         IFleaFunctionModuleSV fleaFunctionModuleSV = (IFleaFunctionModuleSV) applicationContext.getBean("fleaFunctionModuleSV");
-        return fleaFunctionModuleSV.addFleaMenu(fleaMenuPOJO, addFleaFunctionAttrPOJOList());
+        return fleaFunctionModuleSV.addFleaMenu(fleaMenuPOJO);
     }
 
     // 添加《元素管理》菜单
@@ -350,9 +363,10 @@ public class FunctionAuthTest {
         fleaMenuPOJO.setMenuLevel(MenuLevelEnum.LEVEL_THREE.getLevel());
         fleaMenuPOJO.setParentId(parentId);
         fleaMenuPOJO.setRemarks("元素管理，包含元素新增，元素变更，元素授权");
+        fleaMenuPOJO.setFunctionAttrPOJOList(addFleaFunctionAttrPOJOList());
 
         IFleaFunctionModuleSV fleaFunctionModuleSV = (IFleaFunctionModuleSV) applicationContext.getBean("fleaFunctionModuleSV");
-        return fleaFunctionModuleSV.addFleaMenu(fleaMenuPOJO, addFleaFunctionAttrPOJOList());
+        return fleaFunctionModuleSV.addFleaMenu(fleaMenuPOJO);
     }
 
     // 添加 菜单属性

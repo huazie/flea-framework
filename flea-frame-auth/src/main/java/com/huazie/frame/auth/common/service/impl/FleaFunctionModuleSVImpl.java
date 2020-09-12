@@ -67,7 +67,7 @@ public class FleaFunctionModuleSVImpl implements IFleaFunctionModuleSV {
 
     @Override
     @Transactional(value = "fleaAuthTransactionManager", rollbackFor = Exception.class)
-    public Long addFleaMenu(FleaMenuPOJO fleaMenuPOJO, List<FleaFunctionAttrPOJO> fleaFunctionAttrPOJOList) throws CommonException {
+    public Long addFleaMenu(FleaMenuPOJO fleaMenuPOJO) throws CommonException {
 
         // 保存Flea菜单
         FleaMenu fleaMenu = fleaMenuSV.saveFleaMenu(fleaMenuPOJO);
@@ -77,8 +77,9 @@ public class FleaFunctionModuleSVImpl implements IFleaFunctionModuleSV {
         // 取菜单编号
         Long menuId = fleaMenu.getMenuId();
 
-        if (ObjectUtils.isNotEmpty(fleaFunctionAttrPOJOList)) {
-            for (FleaFunctionAttrPOJO fleaFunctionAttrPOJO : fleaFunctionAttrPOJOList) {
+        List<FleaFunctionAttrPOJO> functionAttrPOJOList = fleaMenuPOJO.getFunctionAttrPOJOList();
+        if (ObjectUtils.isNotEmpty(functionAttrPOJOList)) {
+            for (FleaFunctionAttrPOJO fleaFunctionAttrPOJO : functionAttrPOJOList) {
                 if (ObjectUtils.isNotEmpty(fleaFunctionAttrPOJO)) {
                     fleaFunctionAttrPOJO.setFunctionId(menuId);
                     fleaFunctionAttrPOJO.setFunctionType(FunctionTypeEnum.MENU.getType());
@@ -88,8 +89,7 @@ public class FleaFunctionModuleSVImpl implements IFleaFunctionModuleSV {
             }
         }
 
-        String menuName = fleaMenu.getMenuName();
-        String[] values = new String[]{menuName};
+        String[] values = new String[]{fleaMenu.getMenuName()};
         // 添加权限【访问《XXX》菜单】
         FleaPrivilege fleaPrivilege = fleaPrivilegeSV.savePrivilege(newFleaPrivilegePOJOForMenu(values));
         // 将Flea权限持久化到数据库中，否则同一事物下，无法获取privilegeId
