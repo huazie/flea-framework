@@ -4,6 +4,8 @@ import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.FleaCommonConfig;
 import com.huazie.frame.common.IFleaUser;
 
+import java.util.Map;
+
 /**
  * <p> 用户信息实现 </p>
  *
@@ -46,5 +48,10 @@ public class FleaUserImpl extends FleaCommonConfig implements IFleaUser {
     @Override
     public void set(String key, Object value) {
         put(key, value);
+    }
+
+    @Override
+    public Map<String, Object> toMap() {
+        return getConfig();
     }
 }

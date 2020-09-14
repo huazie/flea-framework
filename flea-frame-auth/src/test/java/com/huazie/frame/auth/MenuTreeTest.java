@@ -85,6 +85,7 @@ public class MenuTreeTest {
         LOGGER.debug("Size = {}", fleaTree.size());
         LOGGER.debug("TreeLeaf List= {}", fleaTree.getAllTreeLeafElement());
         LOGGER.debug("TreeLeaf = {}", fleaTree.getTreeLeafElement(22L));
+        LOGGER.debug("Tree = \n{}", fleaTree.toMapList());
     }
 
     @Test
@@ -111,6 +112,8 @@ public class MenuTreeTest {
             fleaMenuTree.addAll(fleaMenuList);
 
             LOGGER.debug("MENU_TREE = \n{}", fleaMenuTree);
+
+            LOGGER.debug("MENU = \n{}", fleaMenuTree.toMapList());
 
         } catch (CommonException e) {
             LOGGER.error("Exception: ", e);
