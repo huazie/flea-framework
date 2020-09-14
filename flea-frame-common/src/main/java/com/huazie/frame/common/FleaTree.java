@@ -37,6 +37,22 @@ public class FleaTree<T> implements Serializable {
 
     private static final long serialVersionUID = 1775075091403620285L;
 
+    public static final String TREE_NODE_ELEMENT = "ELEMENT";
+
+    public static final String TREE_NODE_ID = "ID";
+
+    public static final String TREE_NODE_HEIGHT = "HEIGHT";
+
+    public static final String TREE_NODE_P_ELEMENT = "P_ELEMENT";
+
+    public static final String TREE_NODE_P_ID = "P_ID";
+
+    public static final String TREE_NODE_P_HEIGHT = "P_HEIGHT";
+
+    public static final String TREE_SUB_NOTES = "SUB_NOTES";
+
+    public static final String HAS_SUB_NOTES = "HAS_SUB_NOTES";
+
     private static final long DEFAULT_ROOT_NODE_ID = -1L;
 
     private static final int DEFAULT_ROOT_NODE_HEIGHT = 1;
@@ -390,6 +406,77 @@ public class FleaTree<T> implements Serializable {
      */
     protected String toString(T element) {
         return element.toString();
+    }
+
+    /**
+     * <p> 以{@code List<Map<String, Object>>}形式返回 所有【不包含根节点】的树节点信息 </p>
+     *
+     * @return 树的节点信息
+     * @since 1.0.0
+     */
+    public List<Map<String, Object>> toMapList() {
+        return toMapList(rootNode.subNotes);
+    }
+
+    /**
+     * <p> 以List<Map<String, Object>>形式, 递归返回所有【不包含根节点】的树节点信息 </p>
+     *
+     * @param subNotes 树节点的子节点信息
+     * @return 树的节点信息
+     * @since 1.0.0
+     */
+    private List<Map<String, Object>> toMapList(LinkedList<TreeNode<T>> subNotes) {
+        List<Map<String, Object>> treeNodeMapList = null;
+
+        if (CollectionUtils.isNotEmpty(subNotes)) {
+            treeNodeMapList = new ArrayList<>();
+            for (TreeNode<T> subNote : subNotes) {
+                if (ObjectUtils.isNotEmpty(subNote)) {
+                    TreeNode<T> parentNode = subNote.parentNote;
+                    Map<String, Object> treeNodeMap = toMap(subNote.element, subNote.id, subNote.height, parentNode.element, parentNode.id, parentNode.height, CollectionUtils.isNotEmpty(subNote.subNotes));
+                    treeNodeMap.put(getMapKeyForSubNotes(), toMapList(subNote.subNotes));
+                    treeNodeMapList.add(treeNodeMap);
+                }
+            }
+        }
+
+        return treeNodeMapList;
+    }
+
+    /**
+     * <p> 以{@code Map<String, Object>}形式返回某个树节点信息 </p>
+     * <p> 子类可以重写该方法，实现返回自定义的树节点元素 </p>
+     *
+     * @param element  现节点元素
+     * @param id       现节点编号
+     * @param height   现节点高度
+     * @param pElement 父节点元素
+     * @param pId      父节点编号
+     * @param pHeight  父节点高度
+     * @return 某个树节点信息
+     * @since 1.0.0
+     */
+    protected Map<String, Object> toMap(T element, long id, int height, T pElement, long pId, int pHeight, boolean isHasSubNotes) {
+        Map<String, Object> map = new HashMap<>();
+        map.put(TREE_NODE_ELEMENT, element);
+        map.put(TREE_NODE_ID, id);
+        map.put(TREE_NODE_HEIGHT, height);
+        map.put(TREE_NODE_P_ELEMENT, pElement);
+        map.put(TREE_NODE_P_ID, pId);
+        map.put(TREE_NODE_P_HEIGHT, pHeight);
+        map.put(HAS_SUB_NOTES, isHasSubNotes);
+        return map;
+    }
+
+    /**
+     * <p> 获取现节点对应的子节点列表的{@code Map}键 </p>
+     * <p> 子类可以重写该方法，实现返回自定义的现节点对应的子节点列表的{@code Map}键 </p>
+     *
+     * @return 现节点对应的子节点列表的{@code Map}键
+     * @since 1.0.0
+     */
+    protected String getMapKeyForSubNotes() {
+        return TREE_SUB_NOTES;
     }
 
     static final class TreeNode<T> {

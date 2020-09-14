@@ -10,7 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 菜单树 {@code FleaMenuTree}, 根节点为菜单归属系统，子节点为
@@ -129,11 +131,28 @@ public class FleaMenuTree extends FleaTree<FleaMenu> {
         return element.getMenuName();
     }
 
+    @Override
+    protected Map<String, Object> toMap(FleaMenu element, long id, int height, FleaMenu pElement, long pId, int pHeight, boolean isHasSubNotes) {
+        Map<String, Object> menuMap = new HashMap<>();
+        menuMap.put("HAS_SUB_MENU", isHasSubNotes);
+        menuMap.put("IS_SELECT", false);
+        menuMap.put("MENU_CODE", element.getMenuCode());
+        menuMap.put("MENU_NAME", element.getMenuName());
+        menuMap.put("MENU_ICON", element.getMenuIcon());
+        menuMap.put("MENU_LEVEL", element.getMenuLevel());
+        return menuMap;
+    }
+
+    @Override
+    protected String getMapKeyForSubNotes() {
+        return "SUB_MENUS";
+    }
+
     /**
      * <p> 从菜单集合中获取当前菜单对应的父菜单 </p>
      *
      * @param current      当前菜单
-     * @param fleaMenuList 菜单集合
+     * @param fleaMenuList 菜单列表
      * @return 当前菜单对应的父菜单
      * @since 1.0.0
      */
@@ -150,11 +169,12 @@ public class FleaMenuTree extends FleaTree<FleaMenu> {
                     parentMenu = fleaMenu;
                 }
             }
-            // 如果是一级菜单，则取根节点为父菜单
-            if (current.getMenuLevel() == CommonConstants.NumeralConstants.INT_ONE) {
+            // 如果当前菜单对应的父菜单在菜单列表中不存在，即当前菜单是一级菜单，则取根节点为他的父菜单
+            if (ObjectUtils.isEmpty(parentMenu)) {
                 parentMenu = getRootElement();
             }
         }
         return parentMenu;
     }
+
 }
