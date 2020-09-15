@@ -1,6 +1,7 @@
 package com.huazie.frame.auth.common.service.interfaces;
 
 import com.huazie.frame.auth.base.function.entity.FleaMenu;
+import com.huazie.frame.auth.common.pojo.user.FleaUserModuleData;
 import com.huazie.frame.common.IFleaUser;
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.object.FleaObjectFactory;
@@ -57,4 +58,13 @@ public interface IFleaAuthSV {
      */
     List<FleaMenu> getAllAccessibleMenus(Long accountId, Long systemAcctId) throws CommonException;
 
+    /**
+     * <p> 根据账户编号获取用户模块数据 </p>
+     *
+     * @param accountId 账户编号
+     * @return 用户模块数据
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    FleaUserModuleData getFleaUserModuleData(Long accountId) throws CommonException;
 }

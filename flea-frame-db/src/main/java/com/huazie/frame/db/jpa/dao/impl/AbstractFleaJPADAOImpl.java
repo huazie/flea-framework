@@ -4,6 +4,7 @@ import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.pool.FleaObjectPoolFactory;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.ExceptionUtils;
+import com.huazie.frame.common.util.NumberUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.db.common.exception.DaoException;
 import com.huazie.frame.db.common.sql.pojo.SqlParam;
@@ -374,7 +375,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
      */
     private void checkPrimaryKey(Object entityId) throws CommonException {
         if (entityId.getClass() == long.class || entityId.getClass() == Long.class) {
-            if (Long.valueOf(entityId.toString()) <= 0) {
+            if (!NumberUtils.isPositiveNumber(Long.valueOf(entityId.toString()))) {
                 // 主键字段必须是正整数
                 ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000007");
             }

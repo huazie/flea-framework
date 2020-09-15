@@ -13,12 +13,18 @@ import com.huazie.frame.auth.base.role.entity.FleaRoleRel;
 import com.huazie.frame.auth.base.role.service.interfaces.IFleaRoleGroupRelSV;
 import com.huazie.frame.auth.base.role.service.interfaces.IFleaRoleRelSV;
 import com.huazie.frame.auth.base.user.entity.FleaAccount;
+import com.huazie.frame.auth.base.user.entity.FleaAccountAttr;
 import com.huazie.frame.auth.base.user.entity.FleaLoginLog;
+import com.huazie.frame.auth.base.user.entity.FleaRealNameInfo;
 import com.huazie.frame.auth.base.user.entity.FleaUser;
+import com.huazie.frame.auth.base.user.entity.FleaUserAttr;
 import com.huazie.frame.auth.base.user.entity.FleaUserGroupRel;
 import com.huazie.frame.auth.base.user.entity.FleaUserRel;
+import com.huazie.frame.auth.base.user.service.interfaces.IFleaAccountAttrSV;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaAccountSV;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaLoginLogSV;
+import com.huazie.frame.auth.base.user.service.interfaces.IFleaRealNameInfoSV;
+import com.huazie.frame.auth.base.user.service.interfaces.IFleaUserAttrSV;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaUserGroupRelSV;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaUserRelSV;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaUserSV;
@@ -27,6 +33,7 @@ import com.huazie.frame.auth.common.FleaAuthConstants;
 import com.huazie.frame.auth.common.FleaAuthEntityConstants;
 import com.huazie.frame.auth.common.FunctionTypeEnum;
 import com.huazie.frame.auth.common.exception.FleaAuthCommonException;
+import com.huazie.frame.auth.common.pojo.user.FleaUserModuleData;
 import com.huazie.frame.auth.common.service.interfaces.IFleaAuthSV;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.FleaSessionManager;
@@ -72,6 +79,12 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
 
     private IFleaUserSV fleaUserSV; // Flea用户信息服务
 
+    private IFleaAccountAttrSV fleaAccountAttrSV; // Flea账户扩展属性服务
+
+    private IFleaUserAttrSV fleaUserAttrSV; // Flea用户扩展属性服务
+
+    private IFleaRealNameInfoSV fleaRealNameInfoSV; // Flea实名信息服务
+
     private IFleaUserGroupRelSV fleaUserGroupRelSV; // Flea用户组关联服务
 
     private IFleaUserRelSV fleaUserRelSV; // Flea用户关联服务
@@ -104,6 +117,24 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
     @Qualifier("fleaUserSV")
     public void setFleaUserSV(IFleaUserSV fleaUserSV) {
         this.fleaUserSV = fleaUserSV;
+    }
+
+    @Autowired
+    @Qualifier("fleaAccountAttrSV")
+    public void setFleaAccountAttrSV(IFleaAccountAttrSV fleaAccountAttrSV) {
+        this.fleaAccountAttrSV = fleaAccountAttrSV;
+    }
+
+    @Autowired
+    @Qualifier("fleaUserAttrSV")
+    public void setFleaUserAttrSV(IFleaUserAttrSV fleaUserAttrSV) {
+        this.fleaUserAttrSV = fleaUserAttrSV;
+    }
+
+    @Autowired
+    @Qualifier("fleaRealNameInfoSV")
+    public void setFleaRealNameInfoSV(IFleaRealNameInfoSV fleaRealNameInfoSV) {
+        this.fleaRealNameInfoSV = fleaRealNameInfoSV;
     }
 
     @Autowired
@@ -510,5 +541,53 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
         if (!relIdList.contains(relId)) {
             relIdList.add(relId);
         }
+    }
+
+    @Override
+    @Cacheable(value = "fleaauthuser", key = "'accountId_' + #accountId")
+    public FleaUserModuleData getFleaUserModuleData(Long accountId) throws CommonException {
+
+        FleaUserModuleData fleaUserModuleData = new FleaUserModuleData();
+
+        // 校验账户编号
+        // 【{0}】必须是正数！
+        NumberUtils.checkNonPositiveNumber(accountId, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000008", FleaAuthEntityConstants.UserEntityConstants.E_ACCOUNT_ID);
+
+        // 获取有效的账户信息
+        FleaAccount fleaAccount = fleaAccountSV.queryValidAccount(accountId);
+
+        Long userId = 0L;
+        List<FleaAccountAttr> fleaAccountAttrs = null;
+        if (ObjectUtils.isNotEmpty(fleaAccount)) {
+            userId = fleaAccount.getUserId();
+            fleaAccountAttrs = fleaAccountAttrSV.queryValidAccountAttrs(accountId);
+        }
+
+        // 获取有效的用户信息
+        FleaUser fleaUser = null;
+        List<FleaUserAttr> fleaUserAttrs = null;
+        FleaRealNameInfo fleaRealNameInfo = null;
+        if (NumberUtils.isPositiveNumber(userId)) {
+            fleaUser = fleaUserSV.queryValidUser(userId);
+            fleaUserAttrs = fleaUserAttrSV.queryValidUserAttrs(userId);
+            // 从用户扩展属性中获取用户关联实名信息
+            Long realNameId = 0L;
+            if (CollectionUtils.isNotEmpty(fleaUserAttrs)) {
+                for (FleaUserAttr fleaUserAttr : fleaUserAttrs) {
+                    if (FleaAuthConstants.AttrCodeConstants.ATTR_CODE_REAL_NAME_ID.equals(fleaUserAttr.getAttrCode())) {
+                        realNameId = Long.parseLong(fleaUserAttr.getAttrValue());
+                    }
+                }
+            }
+            fleaRealNameInfo = fleaRealNameInfoSV.queryValidRealNameInfo(realNameId);
+        }
+
+        fleaUserModuleData.setFleaUser(fleaUser);
+        fleaUserModuleData.setFleaAccount(fleaAccount);
+        fleaUserModuleData.setFleaUserAttrs(fleaUserAttrs);
+        fleaUserModuleData.setFleaAccountAttrs(fleaAccountAttrs);
+        fleaUserModuleData.setFleaRealNameInfo(fleaRealNameInfo);
+
+        return fleaUserModuleData;
     }
 }

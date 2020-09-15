@@ -33,4 +33,14 @@ public interface IFleaAccountDAO extends IAbstractFleaJPADAO<FleaAccount> {
      * @since 1.0.0
      */
     FleaAccount queryValidAccount(String accountCode) throws CommonException;
+
+    /**
+     * <p> 根据账户编号查询有效的账户信息 （账户状态 1 正常，未失效）</p>
+     *
+     * @param accountId 账户编号
+     * @return 账户信息
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    FleaAccount queryValidAccount(Long accountId) throws CommonException;
 }

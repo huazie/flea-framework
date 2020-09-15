@@ -1,7 +1,7 @@
 package com.huazie.frame.auth.common.pojo.user.register;
 
-import com.huazie.frame.auth.common.pojo.account.FleaAccountPOJO;
-import com.huazie.frame.auth.common.pojo.account.attr.FleaAccountAttrPOJO;
+import com.huazie.frame.auth.common.pojo.user.FleaAccountPOJO;
+import com.huazie.frame.auth.common.pojo.user.attr.FleaAccountAttrPOJO;
 import com.huazie.frame.auth.common.pojo.user.FleaUserPOJO;
 import com.huazie.frame.auth.common.pojo.user.attr.FleaUserAttrPOJO;
 import com.huazie.frame.auth.common.pojo.user.login.FleaUserLoginPOJO;

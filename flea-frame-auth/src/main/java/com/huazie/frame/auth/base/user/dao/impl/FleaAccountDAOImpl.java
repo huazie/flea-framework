@@ -24,12 +24,12 @@ import java.util.List;
  * @since 1.0.0
  */
 @Repository("fleaAccountDAO")
+@SuppressWarnings(value = "unchecked")
 public class FleaAccountDAOImpl extends FleaAuthDAOImpl<FleaAccount> implements IFleaAccountDAO {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FleaAccountDAOImpl.class);
 
     @Override
-    @SuppressWarnings(value = "unchecked")
     public FleaAccount queryAccount(String accountCode, String accountPwd) throws CommonException {
 
         Date currentDate = DateUtils.getCurrentTime();
@@ -49,14 +49,13 @@ public class FleaAccountDAOImpl extends FleaAuthDAOImpl<FleaAccount> implements 
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaAccountDAOImpl##queryAccount(String, String) FleaAccount={}", fleaAccount);
+            LOGGER.debug("FleaAccountDAOImpl##queryAccount(String, String) FleaAccount = {}", fleaAccount);
         }
 
         return fleaAccount;
     }
 
     @Override
-    @SuppressWarnings(value = "unchecked")
     public FleaAccount queryValidAccount(String accountCode) throws CommonException {
 
         Date currentDate = DateUtils.getCurrentTime();
@@ -79,7 +78,32 @@ public class FleaAccountDAOImpl extends FleaAuthDAOImpl<FleaAccount> implements 
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaAccountDAOImpl##queryValidAccount(String) FleaAccount={}", fleaAccount);
+            LOGGER.debug("FleaAccountDAOImpl##queryValidAccount(String) FleaAccount = {}", fleaAccount);
+        }
+
+        return fleaAccount;
+    }
+
+    @Override
+    public FleaAccount queryValidAccount(Long accountId) throws CommonException {
+
+        Date currentDate = DateUtils.getCurrentTime();
+
+        List<FleaAccount> accountList = getQuery(null)
+                .equal(FleaAuthEntityConstants.UserEntityConstants.E_ACCOUNT_ID, accountId)
+                .equal(FleaAuthEntityConstants.UserEntityConstants.E_ACCOUNT_STATE, UserStateEnum.IN_USE.getState())
+                .lessThan(FleaAuthEntityConstants.E_EFFECTIVE_DATE, currentDate)
+                .greaterThan(FleaAuthEntityConstants.E_EXPIRY_DATE, currentDate)
+                .getResultList();
+
+        FleaAccount fleaAccount = null;
+
+        if (CollectionUtils.isNotEmpty(accountList)) {
+            fleaAccount = accountList.get(0);
+        }
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("FleaAccountDAOImpl##queryValidAccount(Long) FleaAccount = {}", fleaAccount);
         }
 
         return fleaAccount;
