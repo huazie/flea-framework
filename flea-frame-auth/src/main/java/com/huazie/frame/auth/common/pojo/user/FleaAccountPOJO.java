@@ -1,4 +1,4 @@
-package com.huazie.frame.auth.common.pojo.account;
+package com.huazie.frame.auth.common.pojo.user;
 
 import com.huazie.frame.auth.common.pojo.FleaEffExpDatePOJO;
 

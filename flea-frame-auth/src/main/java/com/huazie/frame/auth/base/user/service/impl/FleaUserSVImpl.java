@@ -78,6 +78,11 @@ public class FleaUserSVImpl extends AbstractFleaJPASVImpl<FleaUser> implements I
     }
 
     @Override
+    public FleaUser queryValidUser(Long userId) throws CommonException {
+        return fleaUserDao.queryValidUser(userId);
+    }
+
+    @Override
     protected IAbstractFleaJPADAO<FleaUser> getDAO() {
         return fleaUserDao;
     }

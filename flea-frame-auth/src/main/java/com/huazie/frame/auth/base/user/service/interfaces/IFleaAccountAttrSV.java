@@ -1,7 +1,7 @@
 package com.huazie.frame.auth.base.user.service.interfaces;
 
 import com.huazie.frame.auth.base.user.entity.FleaAccountAttr;
-import com.huazie.frame.auth.common.pojo.account.attr.FleaAccountAttrPOJO;
+import com.huazie.frame.auth.common.pojo.user.attr.FleaAccountAttrPOJO;
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.db.jpa.service.interfaces.IAbstractFleaJPASV;
 
@@ -36,4 +36,13 @@ public interface IFleaAccountAttrSV extends IAbstractFleaJPASV<FleaAccountAttr> 
      */
     List<FleaAccountAttr> saveFleaAccountAttrs(List<FleaAccountAttrPOJO> fleaAccountAttrPOJOList) throws CommonException;
 
+    /**
+     * <p> 根据账户编号获取账户扩展属性信息（属性状态 1 正常，未失效）</p>
+     *
+     * @param accountId 账户编号
+     * @return 账户扩展属性信息
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    List<FleaAccountAttr> queryValidAccountAttrs(Long accountId) throws CommonException;
 }

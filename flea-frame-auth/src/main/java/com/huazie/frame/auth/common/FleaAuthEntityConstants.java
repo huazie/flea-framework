@@ -53,6 +53,20 @@ public interface FleaAuthEntityConstants extends FleaEntityConstants {
         String E_USER_GROUP_ID = "userGroupId";
 
         /**
+         * <p> 用户状态 </p>
+         */
+        String E_USER_STATE = "userState";
+
+        /**
+         * <p> 实名编号 </p>
+         */
+        String E_REAL_NAME_ID = "realNameId";
+        /**
+         * <p> 实名状态 </p>
+         */
+        String E_REAL_NAME_STATE = "realNameState";
+
+        /**
          * <p> 登录状态 </p>
          */
         String E_LOGIN_STATE = "loginState";

@@ -3,6 +3,7 @@ package com.huazie.frame.db.common.util;
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.ExceptionUtils;
+import com.huazie.frame.common.util.NumberUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.ReflectUtils;
 import com.huazie.frame.common.util.StringUtils;
@@ -146,7 +147,7 @@ public class EntityUtils {
                     if (javax.persistence.Id.class.getName().equals(an.annotationType().getName())) {// 表示该属性是主键
                         if (ObjectUtils.isNotEmpty(value)) {
                             if (long.class == fields[i].getType() || Long.class == fields[i].getType()) {// 该实体的主键是long类型
-                                if (Long.valueOf(value.toString()) <= 0) {
+                                if (!NumberUtils.isPositiveNumber(Long.valueOf(value.toString()))) {
                                     // 主键字段必须是正整数
                                     ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000007");
                                 }

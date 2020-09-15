@@ -29,6 +29,11 @@ public interface FleaAuthConstants {
          * <p> 正在使用中的系统 </p>
          */
         String ATTR_CODE_SYSTEM_IN_USE = "SYSTEM_IN_USE";
+
+        /**
+         * <p> 用户关联的实名编号 </p>
+         */
+        String ATTR_CODE_REAL_NAME_ID = "REAL_NAME_ID";
     }
 
     /**

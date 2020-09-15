@@ -5,7 +5,7 @@ import com.huazie.frame.auth.base.user.entity.FleaAccount;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaAccountSV;
 import com.huazie.frame.auth.common.FleaAuthEntityConstants;
 import com.huazie.frame.auth.common.exception.FleaAuthCommonException;
-import com.huazie.frame.auth.common.pojo.account.FleaAccountPOJO;
+import com.huazie.frame.auth.common.pojo.user.FleaAccountPOJO;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.ObjectUtils;
@@ -65,6 +65,11 @@ public class FleaAccountSVImpl extends AbstractFleaJPASVImpl<FleaAccount> implem
     @Override
     public FleaAccount queryValidAccount(String accountCode) throws CommonException {
         return fleaAccountDao.queryValidAccount(accountCode);
+    }
+
+    @Override
+    public FleaAccount queryValidAccount(Long accountId) throws CommonException {
+        return fleaAccountDao.queryValidAccount(accountId);
     }
 
     @Override

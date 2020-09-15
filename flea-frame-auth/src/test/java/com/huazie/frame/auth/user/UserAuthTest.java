@@ -9,7 +9,8 @@ import com.huazie.frame.auth.common.AuthRelTypeEnum;
 import com.huazie.frame.auth.common.FleaAuthConstants;
 import com.huazie.frame.auth.common.UserStateEnum;
 import com.huazie.frame.auth.common.UserTypeEnum;
-import com.huazie.frame.auth.common.pojo.account.attr.FleaAccountAttrPOJO;
+import com.huazie.frame.auth.common.pojo.user.FleaUserModuleData;
+import com.huazie.frame.auth.common.pojo.user.attr.FleaAccountAttrPOJO;
 import com.huazie.frame.auth.common.pojo.user.attr.FleaUserAttrPOJO;
 import com.huazie.frame.auth.common.pojo.user.login.FleaUserLoginPOJO;
 import com.huazie.frame.auth.common.pojo.user.register.FleaUserRegisterPOJO;
@@ -188,6 +189,18 @@ public class UserAuthTest {
         try {
             IFleaUserRelSV fleaUserRelSV = (IFleaUserRelSV) applicationContext.getBean("fleaUserRelSV");
             fleaUserRelSV.getUserRelList(10000L, AuthRelTypeEnum.USER_REL_ROLE.getRelType());
+        } catch (CommonException e) {
+            LOGGER.error("Exception = ", e);
+        }
+    }
+
+    @Test
+    public void testQueryFleaUserModuleData() {
+
+        try {
+            IFleaAuthSV fleaAuthSV = (IFleaAuthSV) applicationContext.getBean("fleaAuthSV");
+            FleaUserModuleData fleaUserModuleData = fleaAuthSV.getFleaUserModuleData(1000L);
+            LOGGER.debug("FleaUserModuleData = {}", fleaUserModuleData);
         } catch (CommonException e) {
             LOGGER.error("Exception = ", e);
         }
