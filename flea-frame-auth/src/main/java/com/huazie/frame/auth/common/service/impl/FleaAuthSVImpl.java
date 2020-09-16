@@ -571,11 +571,12 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
             fleaUser = fleaUserSV.queryValidUser(userId);
             fleaUserAttrs = fleaUserAttrSV.queryValidUserAttrs(userId);
             // 从用户扩展属性中获取用户关联实名信息
-            Long realNameId = 0L;
+            long realNameId = 0L;
             if (CollectionUtils.isNotEmpty(fleaUserAttrs)) {
                 for (FleaUserAttr fleaUserAttr : fleaUserAttrs) {
                     if (FleaAuthConstants.AttrCodeConstants.ATTR_CODE_REAL_NAME_ID.equals(fleaUserAttr.getAttrCode())) {
                         realNameId = Long.parseLong(fleaUserAttr.getAttrValue());
+                        break;
                     }
                 }
             }

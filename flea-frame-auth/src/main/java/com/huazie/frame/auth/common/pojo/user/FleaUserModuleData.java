@@ -42,6 +42,7 @@ public class FleaUserModuleData {
 
     public void setFleaAccount(FleaAccount fleaAccount) {
         this.fleaAccount = fleaAccount;
+        this.fleaAccount.setAccountPwd(null); // 虽然已经加密过了，密码不透露出去
     }
 
     public List<FleaUserAttr> getFleaUserAttrs() {
