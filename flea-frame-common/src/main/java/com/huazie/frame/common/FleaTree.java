@@ -37,21 +37,21 @@ public class FleaTree<T> implements Serializable {
 
     private static final long serialVersionUID = 1775075091403620285L;
 
-    public static final String TREE_NODE_ELEMENT = "ELEMENT";
+    private static final String TREE_NODE_ELEMENT = "ELEMENT";
 
-    public static final String TREE_NODE_ID = "ID";
+    private static final String TREE_NODE_ID = "ID";
 
-    public static final String TREE_NODE_HEIGHT = "HEIGHT";
+    private static final String TREE_NODE_HEIGHT = "HEIGHT";
 
-    public static final String TREE_NODE_P_ELEMENT = "P_ELEMENT";
+    private static final String TREE_NODE_P_ELEMENT = "P_ELEMENT";
 
-    public static final String TREE_NODE_P_ID = "P_ID";
+    private static final String TREE_NODE_P_ID = "P_ID";
 
-    public static final String TREE_NODE_P_HEIGHT = "P_HEIGHT";
+    private static final String TREE_NODE_P_HEIGHT = "P_HEIGHT";
 
-    public static final String TREE_SUB_NOTES = "SUB_NOTES";
+    private static final String TREE_SUB_NOTES = "SUB_NOTES";
 
-    public static final String HAS_SUB_NOTES = "HAS_SUB_NOTES";
+    private static final String HAS_SUB_NOTES = "HAS_SUB_NOTES";
 
     private static final long DEFAULT_ROOT_NODE_ID = -1L;
 

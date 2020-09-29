@@ -35,6 +35,7 @@ import com.huazie.frame.auth.common.FunctionTypeEnum;
 import com.huazie.frame.auth.common.exception.FleaAuthCommonException;
 import com.huazie.frame.auth.common.pojo.user.FleaUserModuleData;
 import com.huazie.frame.auth.common.service.interfaces.IFleaAuthSV;
+import com.huazie.frame.auth.util.FleaMenuTree;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.FleaSessionManager;
 import com.huazie.frame.common.IFleaUser;
@@ -210,11 +211,36 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
             }
         }
 
+        // 操作账号acctId在系统账户systemAcctId下可以访问的所有菜单
+        fleaUser.set(FleaMenuTree.MENU_TREE, getFleaMenuTree(acctId, systemAcctId));
+
         FleaSessionManager.setUserInfo(fleaUser);
 
         // 初始化Flea对象信息
         fleaObjectFactory.initObject();
 
+    }
+
+    /**
+     * <p> 获取所有可以访问的菜单，并返回菜单树</p>
+     *
+     * @param acctId       操作账户编号
+     * @param systemAcctId 系统账户编号
+     * @return 所有可以访问的菜单树
+     * @since 1.0.0
+     */
+    private FleaMenuTree getFleaMenuTree(Long acctId, Long systemAcctId) {
+        FleaMenuTree fleaMenuTree = new FleaMenuTree("FleaFrameAuth");
+        try {
+            // 获取所有可以访问的菜单
+            List<FleaMenu> fleaMenuList = this.getAllAccessibleMenus(acctId, systemAcctId);
+            fleaMenuTree.addAll(fleaMenuList);
+        } catch (CommonException e) {
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("FleaAuthSVImpl##getFleaMenuTree(Long, Long) Getting All Accessible Menus Occurs Exception : \n", e);
+            }
+        }
+        return fleaMenuTree;
     }
 
     @Override

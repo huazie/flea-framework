@@ -6,6 +6,7 @@ import com.huazie.frame.common.EntityStateEnum;
 import com.huazie.frame.common.FleaTree;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
+import com.huazie.frame.common.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,6 +37,8 @@ public class FleaMenuTree extends FleaTree<FleaMenu> {
     private static final Logger LOGGER = LoggerFactory.getLogger(FleaMenuTree.class);
 
     private static final long serialVersionUID = 782100083467014824L;
+
+    public static final String MENU_TREE = "MENU_TREE";
 
     private String systemName; // 归属系统名称
 
@@ -74,6 +77,29 @@ public class FleaMenuTree extends FleaTree<FleaMenu> {
      */
     public String getSystemName() {
         return systemName;
+    }
+
+    /**
+     * <p> 获取指定菜单编码的叶子菜单 </p>
+     *
+     * @param menuCode 菜单编码
+     * @return 指定菜单编码的叶子菜单
+     */
+    public FleaMenu getTreeLeafMenu(String menuCode) {
+
+        FleaMenu treeLeafMenu = null;
+
+        // 获取所有的叶子菜单
+        List<FleaMenu> treeLeafMenuList = getAllTreeLeafElement();
+        if (CollectionUtils.isNotEmpty(treeLeafMenuList)) {
+            for (FleaMenu current : treeLeafMenuList) {
+                if (ObjectUtils.isNotEmpty(current) && StringUtils.isNotBlank(menuCode) && menuCode.equals(current.getMenuCode())) {
+                    treeLeafMenu = current;
+                    break;
+                }
+            }
+        }
+        return treeLeafMenu;
     }
 
     /**
