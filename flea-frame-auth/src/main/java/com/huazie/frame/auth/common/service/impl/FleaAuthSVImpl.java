@@ -74,8 +74,6 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FleaAuthSVImpl.class);
 
-    private IFleaLoginLogSV fleaLoginLogSV; // Flea登录日志服务
-
     private IFleaAccountSV fleaAccountSV; // Flea账户信息服务
 
     private IFleaUserSV fleaUserSV; // Flea用户信息服务
@@ -101,12 +99,6 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
     private IFleaMenuSV fleaMenuSV; // Flea菜单服务
 
     private IFleaFunctionAttrSV fleaFunctionAttrSV; // Flea扩展属性服务
-
-    @Autowired
-    @Qualifier("fleaLoginLogSV")
-    public void setFleaLoginLogSV(IFleaLoginLogSV fleaLoginLogSV) {
-        this.fleaLoginLogSV = fleaLoginLogSV;
-    }
 
     @Autowired
     @Qualifier("fleaAccountSV")
@@ -184,111 +176,6 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
     @Qualifier("fleaFunctionAttrSV")
     public void setFleaFunctionAttrSV(IFleaFunctionAttrSV fleaFunctionAttrSV) {
         this.fleaFunctionAttrSV = fleaFunctionAttrSV;
-    }
-
-    @Override
-    public void initUserInfo(Long userId, Long acctId, Long systemAcctId, Map<String, Object> otherAttrs, FleaObjectFactory<IFleaUser> fleaObjectFactory) {
-
-        IFleaUser fleaUser = fleaObjectFactory.newObject().getObject();
-
-        if (ObjectUtils.isNotEmpty(userId)) {
-            fleaUser.setUserId(userId);
-        }
-
-        if (ObjectUtils.isNotEmpty(acctId)) {
-            fleaUser.setAcctId(acctId);
-        }
-
-        if (ObjectUtils.isNotEmpty(systemAcctId)) {
-            fleaUser.setSystemAcctId(systemAcctId);
-        }
-
-        if (MapUtils.isNotEmpty(otherAttrs)) {
-            Set<String> attrKeySet = otherAttrs.keySet();
-            for (String key : attrKeySet) {
-                Object value = otherAttrs.get(key);
-                fleaUser.set(key, value);
-            }
-        }
-
-        // 操作账号acctId在系统账户systemAcctId下可以访问的所有菜单
-        fleaUser.set(FleaMenuTree.MENU_TREE, getFleaMenuTree(acctId, systemAcctId));
-
-        FleaSessionManager.setUserInfo(fleaUser);
-
-        // 初始化Flea对象信息
-        fleaObjectFactory.initObject();
-
-    }
-
-    /**
-     * <p> 获取所有可以访问的菜单，并返回菜单树</p>
-     *
-     * @param acctId       操作账户编号
-     * @param systemAcctId 系统账户编号
-     * @return 所有可以访问的菜单树
-     * @since 1.0.0
-     */
-    private FleaMenuTree getFleaMenuTree(Long acctId, Long systemAcctId) {
-        FleaMenuTree fleaMenuTree = new FleaMenuTree("FleaFrameAuth");
-        try {
-            // 获取所有可以访问的菜单
-            List<FleaMenu> fleaMenuList = this.getAllAccessibleMenus(acctId, systemAcctId);
-            fleaMenuTree.addAll(fleaMenuList);
-        } catch (CommonException e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("FleaAuthSVImpl##getFleaMenuTree(Long, Long) Getting All Accessible Menus Occurs Exception : \n", e);
-            }
-        }
-        return fleaMenuTree;
-    }
-
-    @Override
-    public void saveLoginLog(Long accountId, HttpServletRequest request) {
-
-        if (ObjectUtils.isNotEmpty(accountId) && accountId > CommonConstants.NumeralConstants.ZERO) {
-            // 获取用户登录的ip4地址
-            String ip4 = HttpUtils.getIp(request);
-
-            // TODO 获取用户登录的ip6地址
-            String ip6 = "";
-
-            // 获取用户登录的地市地址
-            String address = HttpUtils.getAddressByTaoBao(ip4);
-
-            try {
-                FleaLoginLog fleaLoginLog = new FleaLoginLog(accountId, ip4, ip6, address, "");
-                // 保存用户登录信息
-                fleaLoginLogSV.save(fleaLoginLog);
-            } catch (Exception e) {
-                if (LOGGER.isErrorEnabled()) {
-                    LOGGER.error("Exception occurs when saving login log : ", e);
-                }
-            }
-        }
-    }
-
-    @Override
-    public void saveQuitLog(Long accountId) {
-
-        if (NumberUtils.isPositiveNumber(accountId)) {
-            try {
-                // 获取当月用户最近一次的登录日志
-                FleaLoginLog fleaLoginLog = fleaLoginLogSV.queryLastUserLoginLog(accountId);
-                if (null != fleaLoginLog) {
-                    fleaLoginLog.setLoginState(FleaAuthConstants.UserConstants.LOGIN_STATE_2);
-                    fleaLoginLog.setLogoutTime(DateUtils.getCurrentTime());
-                    fleaLoginLog.setDoneDate(fleaLoginLog.getLoginTime());
-                    fleaLoginLog.setRemarks("用户已退出");
-                    // 更新当月用户最近一次的登录日志的登录状态（2：已退出）
-                    fleaLoginLogSV.update(fleaLoginLog);
-                }
-            } catch (CommonException e) {
-                if (LOGGER.isErrorEnabled()) {
-                    LOGGER.error("Exception occurs when saving quit log : ", e);
-                }
-            }
-        }
     }
 
     @Override
