@@ -149,8 +149,8 @@ public class UserAuthTest {
 
     @Test
     public void testSaveQuitLog() {
-        IFleaAuthSV fleaUserLoginSV = (IFleaAuthSV) applicationContext.getBean("fleaAuthSV");
-        fleaUserLoginSV.saveQuitLog(1L);
+        IFleaUserModuleSV fleaUserModuleSV = (IFleaUserModuleSV) applicationContext.getBean("fleaUserModuleSV");
+        fleaUserModuleSV.saveQuitLog(1L);
     }
 
     @Test
