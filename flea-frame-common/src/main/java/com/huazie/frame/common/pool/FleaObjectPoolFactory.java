@@ -34,7 +34,7 @@ public class FleaObjectPoolFactory {
      * @since 1.0.0
      */
     public static <T extends FleaObjectPool> T getFleaObjectPool(Class<?> objClazz, Class<T> objPoolClazz) {
-        return getFleaObjectPool(CommonConstants.FleaPoolConstants.DEFAUTL_POOL_NAME, objClazz, objPoolClazz);
+        return getFleaObjectPool(CommonConstants.FleaPoolConstants.DEFAULT_POOL_NAME, objClazz, objPoolClazz);
     }
 
     /**

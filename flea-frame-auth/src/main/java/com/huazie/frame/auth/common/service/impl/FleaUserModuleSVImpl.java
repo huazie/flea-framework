@@ -11,6 +11,7 @@ import com.huazie.frame.auth.base.user.service.interfaces.IFleaUserAttrSV;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaUserSV;
 import com.huazie.frame.auth.common.FleaAuthConstants;
 import com.huazie.frame.auth.common.exception.FleaAuthCommonException;
+import com.huazie.frame.auth.common.pojo.user.FleaUserModuleData;
 import com.huazie.frame.auth.common.pojo.user.login.FleaUserLoginPOJO;
 import com.huazie.frame.auth.common.pojo.user.register.FleaUserRegisterPOJO;
 import com.huazie.frame.auth.common.service.interfaces.IFleaAuthSV;
@@ -35,6 +36,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -125,7 +127,13 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
         }
 
         // 操作账号acctId在系统账户systemAcctId下可以访问的所有菜单
-        fleaUser.set(FleaMenuTree.MENU_TREE, getFleaMenuTree(acctId, systemAcctId));
+        fleaUser.set(FleaMenuTree.MENU_TREE, toFleaMenuTree(acctId, systemAcctId));
+
+        // 处理操作账户信息
+        handleOperationUserData(fleaUser, acctId);
+
+        // 处理系统账户信息
+        handleSystemUserData(fleaUser, systemAcctId);
 
         FleaSessionManager.setUserInfo(fleaUser);
 
@@ -142,7 +150,7 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
      * @return 所有可以访问的菜单树
      * @since 1.0.0
      */
-    private FleaMenuTree getFleaMenuTree(Long acctId, Long systemAcctId) {
+    private FleaMenuTree toFleaMenuTree(Long acctId, Long systemAcctId) {
         FleaMenuTree fleaMenuTree = new FleaMenuTree("FleaFrameAuth");
         try {
             // 获取所有可以访问的菜单
@@ -150,10 +158,81 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
             fleaMenuTree.addAll(fleaMenuList);
         } catch (CommonException e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("FleaAuthSVImpl##getFleaMenuTree(Long, Long) Getting All Accessible Menus Occurs Exception : \n", e);
+                LOGGER.error("FleaAuthSVImpl##toFleaMenuTree(Long, Long) Getting All Accessible Menus Occurs Exception : \n", e);
             }
         }
         return fleaMenuTree;
+    }
+
+    /**
+     * <p> 处理操作账户信息 </p>
+     *
+     * @param fleaUser 用户信息接口
+     * @param acctId   操作账户编号
+     * @since 1.0.0
+     */
+    private void handleOperationUserData(IFleaUser fleaUser, Long acctId) {
+        try {
+            // 获取操作账户信息
+            FleaUserModuleData operationUser = fleaAuthSV.getFleaUserModuleData(acctId);
+            FleaUser user = operationUser.getFleaUser();
+            // 昵称
+            fleaUser.set(FleaAuthConstants.UserConstants.USER_NAME, user.getUserName());
+            // 性别
+            Integer userSex = user.getUserSex();
+            if (ObjectUtils.isNotEmpty(userSex)) {
+                fleaUser.set(FleaAuthConstants.UserConstants.USER_SEX, userSex);
+            }
+            // 生日
+            Date userBirthday = user.getUserBirthday();
+            if (ObjectUtils.isNotEmpty(userBirthday)) {
+                fleaUser.set(FleaAuthConstants.UserConstants.USER_BIRTHDAY, DateUtils.date2String(userBirthday));
+            }
+            // 住址
+            String userAddress = user.getUserAddress();
+            if (StringUtils.isNotBlank(userAddress)) {
+                fleaUser.set(FleaAuthConstants.UserConstants.USER_ADDRESS, userAddress);
+            }
+            // 邮箱
+            String userEmail = user.getUserEmail();
+            if (StringUtils.isNotBlank(userEmail)) {
+                fleaUser.set(FleaAuthConstants.UserConstants.USER_EMAIL, userEmail);
+            }
+            // 手机
+            String userPhone = user.getUserPhone();
+            if (StringUtils.isNotBlank(userPhone)) {
+                fleaUser.set(FleaAuthConstants.UserConstants.USER_PHONE, userPhone);
+            }
+
+            FleaAccount fleaAccount = operationUser.getFleaAccount();
+            // 账号
+            fleaUser.set(FleaAuthConstants.UserConstants.ACCOUNT_CODE, fleaAccount.getAccountCode());
+
+        } catch (CommonException e) {
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("FleaAuthSVImpl##handleOperationUserData(IFleaUser, Long) Getting Operation User Occurs Exception : \n", e);
+            }
+        }
+    }
+
+    /**
+     * <p> 处理系统账户信息 </p>
+     *
+     * @param fleaUser     用户信息接口
+     * @param systemAcctId 系统账户编号
+     * @since 1.0.0
+     */
+    private void handleSystemUserData(IFleaUser fleaUser, Long systemAcctId) {
+        try {
+            // 获取操作账户信息
+            FleaUserModuleData systemUser = fleaAuthSV.getFleaUserModuleData(systemAcctId);
+            FleaUser user = systemUser.getFleaUser();
+            fleaUser.set(FleaAuthConstants.UserConstants.SYSTEM_USER_NAME, user.getUserName());
+        } catch (CommonException e) {
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("FleaAuthSVImpl##handleSystemUserData(IFleaUser, Long) Getting System User Occurs Exception : \n", e);
+            }
+        }
     }
 
     @Override

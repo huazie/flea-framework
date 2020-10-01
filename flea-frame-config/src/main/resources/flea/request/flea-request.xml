@@ -11,7 +11,7 @@
             <!-- 重定向至登录页面 -->
             <property key="login" desc="登录页面重定向URL配置">/login.html</property>
             <!-- 重定向至错误页面 -->
-            <property key="error" desc="错误页面重定向URL配置">/WEB-INF/error.html/</property>
+            <property key="error" desc="错误页面重定向URL配置">/WEB-INF/error.html</property>
         </redirect-url>
         <!-- 不需校验的URL -->
         <uncheck-urls>

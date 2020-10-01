@@ -1,6 +1,6 @@
 package com.huazie.frame.jersey.common;
 
-import com.huazie.frame.common.CommonConstants;
+import com.huazie.frame.auth.common.FleaAuthConstants;
 import com.huazie.frame.common.FleaCommonConfig;
 import com.huazie.frame.common.IFleaUser;
 
@@ -17,12 +17,12 @@ public class FleaUserImpl extends FleaCommonConfig implements IFleaUser {
 
     @Override
     public Long getUserId() {
-        return get(CommonConstants.FleaUserInfoConstants.USER_ID, Long.class);
+        return get(FleaAuthConstants.UserConstants.USER_ID, Long.class);
     }
 
     @Override
     public void setUserId(Long userId) {
-        put(CommonConstants.FleaUserInfoConstants.USER_ID, userId);
+        put(FleaAuthConstants.UserConstants.USER_ID, userId);
     }
 
     @Override

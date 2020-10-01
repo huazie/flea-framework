@@ -25,7 +25,7 @@ public class RedisClientProxy extends FleaProxy<RedisClient> {
      * @since 1.0.0
      */
     public static RedisClient getProxyInstance() {
-        return getProxyInstance(CommonConstants.FleaPoolConstants.DEFAUTL_POOL_NAME);
+        return getProxyInstance(CommonConstants.FleaPoolConstants.DEFAULT_POOL_NAME);
     }
 
     /**
@@ -41,7 +41,7 @@ public class RedisClientProxy extends FleaProxy<RedisClient> {
                 if (!redisClients.containsKey(poolName)) {
                     // 新建一个Flea Redis客户端类， 用于被代理
                     RedisClient originRedisClient;
-                    if(CommonConstants.FleaPoolConstants.DEFAUTL_POOL_NAME.equals(poolName)) {
+                    if(CommonConstants.FleaPoolConstants.DEFAULT_POOL_NAME.equals(poolName)) {
                         originRedisClient = new FleaRedisClient.Builder().build();
                     } else {
                         originRedisClient = new FleaRedisClient.Builder(poolName).build();

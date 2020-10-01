@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50538
 File Encoding         : 65001
 
-Date: 2020-09-07 18:16:13
+Date: 2020-10-01 17:29:59
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -109,12 +109,26 @@ CREATE TABLE `flea_function_attr` (
   PRIMARY KEY (`attr_id`),
   KEY `INDEX_FUNCTION_ID` (`function_id`) USING BTREE,
   KEY `INDEX_ATTR_CODE` (`attr_code`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of flea_function_attr
 -- ----------------------------
 INSERT INTO `flea_function_attr` VALUES ('1', '1000', 'MENU', 'SYSTEM_IN_USE', '1000', '1', '2020-08-16 23:43:13', null, '2020-08-16 23:43:13', '2999-12-31 23:59:59', '【跳蚤管家】正在使用中');
+INSERT INTO `flea_function_attr` VALUES ('2', '1001', 'MENU', 'SYSTEM_IN_USE', '1000', '1', '2020-09-12 23:57:48', null, '2020-09-12 23:57:48', '2999-12-31 23:59:59', '【跳蚤管家】正在使用中');
+INSERT INTO `flea_function_attr` VALUES ('3', '1002', 'MENU', 'SYSTEM_IN_USE', '1000', '1', '2020-09-12 23:57:48', null, '2020-09-12 23:57:48', '2999-12-31 23:59:59', '【跳蚤管家】正在使用中');
+INSERT INTO `flea_function_attr` VALUES ('4', '1003', 'MENU', 'SYSTEM_IN_USE', '1000', '1', '2020-09-12 23:57:48', null, '2020-09-12 23:57:48', '2999-12-31 23:59:59', '【跳蚤管家】正在使用中');
+INSERT INTO `flea_function_attr` VALUES ('5', '1004', 'MENU', 'SYSTEM_IN_USE', '1000', '1', '2020-09-12 23:57:48', null, '2020-09-12 23:57:48', '2999-12-31 23:59:59', '【跳蚤管家】正在使用中');
+INSERT INTO `flea_function_attr` VALUES ('6', '1005', 'MENU', 'SYSTEM_IN_USE', '1000', '1', '2020-09-12 23:57:48', null, '2020-09-12 23:57:48', '2999-12-31 23:59:59', '【跳蚤管家】正在使用中');
+INSERT INTO `flea_function_attr` VALUES ('7', '1006', 'MENU', 'SYSTEM_IN_USE', '1000', '1', '2020-09-12 23:57:48', null, '2020-09-12 23:57:48', '2999-12-31 23:59:59', '【跳蚤管家】正在使用中');
+INSERT INTO `flea_function_attr` VALUES ('8', '1007', 'MENU', 'SYSTEM_IN_USE', '1000', '1', '2020-09-12 23:57:48', null, '2020-09-12 23:57:48', '2999-12-31 23:59:59', '【跳蚤管家】正在使用中');
+INSERT INTO `flea_function_attr` VALUES ('9', '1008', 'MENU', 'SYSTEM_IN_USE', '1000', '1', '2020-09-12 23:57:48', null, '2020-09-12 23:57:48', '2999-12-31 23:59:59', '【跳蚤管家】正在使用中');
+INSERT INTO `flea_function_attr` VALUES ('10', '1009', 'MENU', 'SYSTEM_IN_USE', '1000', '1', '2020-09-12 23:57:48', null, '2020-09-12 23:57:48', '2999-12-31 23:59:59', '【跳蚤管家】正在使用中');
+INSERT INTO `flea_function_attr` VALUES ('11', '1010', 'MENU', 'SYSTEM_IN_USE', '1000', '1', '2020-09-12 23:57:48', null, '2020-09-12 23:57:48', '2999-12-31 23:59:59', '【跳蚤管家】正在使用中');
+INSERT INTO `flea_function_attr` VALUES ('12', '1011', 'MENU', 'SYSTEM_IN_USE', '1000', '1', '2020-09-12 23:57:48', null, '2020-09-12 23:57:48', '2999-12-31 23:59:59', '【跳蚤管家】正在使用中');
+INSERT INTO `flea_function_attr` VALUES ('13', '1012', 'MENU', 'SYSTEM_IN_USE', '1000', '1', '2020-09-12 23:57:48', null, '2020-09-12 23:57:48', '2999-12-31 23:59:59', '【跳蚤管家】正在使用中');
+INSERT INTO `flea_function_attr` VALUES ('14', '1013', 'MENU', 'SYSTEM_IN_USE', '1000', '1', '2020-09-12 23:57:48', null, '2020-09-12 23:57:48', '2999-12-31 23:59:59', '【跳蚤管家】正在使用中');
+INSERT INTO `flea_function_attr` VALUES ('15', '1014', 'MENU', 'SYSTEM_IN_USE', '1000', '1', '2020-09-12 23:57:48', null, '2020-09-12 23:57:48', '2999-12-31 23:59:59', '【跳蚤管家】正在使用中');
 
 -- ----------------------------
 -- Table structure for `flea_id_generator`
@@ -132,15 +146,14 @@ CREATE TABLE `flea_id_generator` (
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_account', '10000');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_account_attr', '2');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_element', '999');
-INSERT INTO `flea_id_generator` VALUES ('pk_flea_function_attr', '1');
-INSERT INTO `flea_id_generator` VALUES ('pk_flea_login_log_202008', '0');
-INSERT INTO `flea_id_generator` VALUES ('pk_flea_login_log_202009', '0');
-INSERT INTO `flea_id_generator` VALUES ('pk_flea_menu', '1000');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_function_attr', '15');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_login_log_202010', '0');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_menu', '1014');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_operation', '999');
-INSERT INTO `flea_id_generator` VALUES ('pk_flea_privilege', '1000');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_privilege', '1014');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_privilege_group', '1000');
-INSERT INTO `flea_id_generator` VALUES ('pk_flea_privilege_group_rel', '1');
-INSERT INTO `flea_id_generator` VALUES ('pk_flea_privilege_rel', '1');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_privilege_group_rel', '15');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_privilege_rel', '15');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_real_name_info', '0');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_role', '1000');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_role_group', '999');
@@ -181,10 +194,10 @@ CREATE TABLE `flea_login_log` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `flea_login_log_202008`
+-- Table structure for `flea_login_log_202010`
 -- ----------------------------
-DROP TABLE IF EXISTS `flea_login_log_202008`;
-CREATE TABLE `flea_login_log_202008` (
+DROP TABLE IF EXISTS `flea_login_log_202010`;
+CREATE TABLE `flea_login_log_202010` (
   `login_log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '登录日志编号',
   `account_id` int(11) NOT NULL COMMENT '账户编号',
   `system_account_id` int(11) NOT NULL COMMENT '系统账户编号',
@@ -205,35 +218,7 @@ CREATE TABLE `flea_login_log_202008` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of flea_login_log_202008
--- ----------------------------
-
--- ----------------------------
--- Table structure for `flea_login_log_202009`
--- ----------------------------
-DROP TABLE IF EXISTS `flea_login_log_202009`;
-CREATE TABLE `flea_login_log_202009` (
-  `login_log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '登录日志编号',
-  `account_id` int(11) NOT NULL COMMENT '账户编号',
-  `system_account_id` int(11) NOT NULL COMMENT '系统账户编号',
-  `login_ip4` varchar(15) NOT NULL COMMENT 'ip4地址',
-  `login_ip6` varchar(40) DEFAULT NULL COMMENT 'ip6地址',
-  `login_area` varchar(15) DEFAULT NULL COMMENT '登录地区',
-  `login_state` tinyint(4) NOT NULL COMMENT '登录状态（1：登录中，2：已退出）',
-  `login_time` datetime NOT NULL COMMENT '登录时间',
-  `logout_time` datetime DEFAULT NULL COMMENT '退出时间',
-  `create_date` datetime NOT NULL COMMENT '创建日期',
-  `done_date` datetime DEFAULT NULL COMMENT '修改日期',
-  `remarks` varchar(1024) DEFAULT NULL COMMENT '描述信息',
-  `ext1` varchar(1024) DEFAULT NULL COMMENT '扩展字段1',
-  `ext2` varchar(1024) DEFAULT NULL COMMENT '扩展字段2',
-  PRIMARY KEY (`login_log_id`),
-  KEY `INDEX_ACCOUNT_ID` (`account_id`) USING BTREE,
-  KEY `INDEX_SYS_ACCOUNT_ID` (`system_account_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of flea_login_log_202009
+-- Records of flea_login_log_202010
 -- ----------------------------
 
 -- ----------------------------
@@ -257,12 +242,26 @@ CREATE TABLE `flea_menu` (
   `remarks` varchar(1024) DEFAULT NULL COMMENT '菜单描述',
   PRIMARY KEY (`menu_id`),
   UNIQUE KEY `UNIQUE_MENU_CODE` (`menu_code`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1015 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of flea_menu
 -- ----------------------------
 INSERT INTO `flea_menu` VALUES ('1000', 'console', '控制台', 'dashboard', '1', 'mgmt/console.html', '1', '1', '-1', '2020-08-16 23:40:10', null, '2020-08-16 23:40:10', '2999-12-31 23:59:59', '控制台，展示收藏夹，快捷菜单入口');
+INSERT INTO `flea_menu` VALUES ('1001', 'auth_mgmt', '授权管理', 'font', '2', null, '1', '1', '-1', '2020-09-12 23:57:48', null, '2020-09-12 23:57:48', '2999-12-31 23:59:59', '授权管理，包含用户模块管理，角色模块管理，权限模块管理，功能模块管理');
+INSERT INTO `flea_menu` VALUES ('1002', 'user_module_mgmt', '用户模块管理', 'user-circle', '1', null, '2', '1', '1001', '2020-09-12 23:57:48', null, '2020-09-12 23:57:48', '2999-12-31 23:59:59', '用户模块管理，包含用户管理，用户组管理');
+INSERT INTO `flea_menu` VALUES ('1003', 'role_module_mgmt', '角色模块管理', 'user-secret', '2', null, '2', '1', '1001', '2020-09-12 23:57:48', null, '2020-09-12 23:57:48', '2999-12-31 23:59:59', '角色模块管理，包含角色管理，角色组管理');
+INSERT INTO `flea_menu` VALUES ('1004', 'privilege_module_mgmt', '权限模块管理', 'lock', '3', null, '2', '1', '1001', '2020-09-12 23:57:48', null, '2020-09-12 23:57:48', '2999-12-31 23:59:59', '权限模块管理，包含权限管理，权限组管理');
+INSERT INTO `flea_menu` VALUES ('1005', 'function_module_mgmt', '功能模块管理', 'gears', '4', null, '2', '1', '1001', '2020-09-12 23:57:48', null, '2020-09-12 23:57:48', '2999-12-31 23:59:59', '功能模块管理，包含菜单管理，操作管理，元素管理');
+INSERT INTO `flea_menu` VALUES ('1006', 'user_mgmt', '用户管理', 'user', '1', null, '3', '1', '1002', '2020-09-12 23:57:48', null, '2020-09-12 23:57:48', '2999-12-31 23:59:59', '用户管理，包含用户注册，用户变更，用户授权');
+INSERT INTO `flea_menu` VALUES ('1007', 'user_group_mgmt', '用户组管理', 'users', '2', null, '3', '1', '1002', '2020-09-12 23:57:48', null, '2020-09-12 23:57:48', '2999-12-31 23:59:59', '用户组管理，包含用户组新增，用户组变更，用户组授权');
+INSERT INTO `flea_menu` VALUES ('1008', 'role_mgmt', '角色管理', 'user', '1', null, '3', '1', '1003', '2020-09-12 23:57:48', null, '2020-09-12 23:57:48', '2999-12-31 23:59:59', '角色管理，包含角色新增，角色变更，角色授权');
+INSERT INTO `flea_menu` VALUES ('1009', 'role_group_mgmt', '角色组管理', 'users', '2', null, '3', '1', '1003', '2020-09-12 23:57:48', null, '2020-09-12 23:57:48', '2999-12-31 23:59:59', '角色组管理，包含角色组新增，角色组变更，角色组关联');
+INSERT INTO `flea_menu` VALUES ('1010', 'privilege_mgmt', '权限管理', 'tag', '1', null, '3', '1', '1004', '2020-09-12 23:57:48', null, '2020-09-12 23:57:48', '2999-12-31 23:59:59', '权限管理，包含权限新增，权限变更');
+INSERT INTO `flea_menu` VALUES ('1011', 'privilege_group_mgmt', '权限组管理', 'tags', '2', null, '3', '1', '1004', '2020-09-12 23:57:48', null, '2020-09-12 23:57:48', '2999-12-31 23:59:59', '权限组管理，包含权限组新增，权限组变更，权限组关联');
+INSERT INTO `flea_menu` VALUES ('1012', 'menu_mgmt', '菜单管理', 'list-alt', '1', null, '3', '1', '1005', '2020-09-12 23:57:48', null, '2020-09-12 23:57:48', '2999-12-31 23:59:59', '菜单管理，包含菜单新增，菜单变更，菜单授权');
+INSERT INTO `flea_menu` VALUES ('1013', 'operation_mgmt', '操作管理', 'wrench', '2', null, '3', '1', '1005', '2020-09-12 23:57:48', null, '2020-09-12 23:57:48', '2999-12-31 23:59:59', '操作管理，包含操作新增，操作变更，操作授权');
+INSERT INTO `flea_menu` VALUES ('1014', 'element_mgmt', '元素管理', 'code', '3', null, '3', '1', '1005', '2020-09-12 23:57:48', null, '2020-09-12 23:57:48', '2999-12-31 23:59:59', '元素管理，包含元素新增，元素变更，元素授权');
 
 -- ----------------------------
 -- Table structure for `flea_operation`
@@ -300,12 +299,26 @@ CREATE TABLE `flea_privilege` (
   `remarks` varchar(1024) DEFAULT NULL COMMENT '备注信息',
   PRIMARY KEY (`privilege_id`),
   KEY `INDEX_GROUP_ID` (`group_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1015 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of flea_privilege
 -- ----------------------------
 INSERT INTO `flea_privilege` VALUES ('1000', '访问《控制台》菜单', '拥有可以访问《控制台》菜单的权限', '1000', '1', '2020-08-16 23:45:44', null, '【访问《控制台》菜单】权限对应【控制台】菜单，新增菜单时自动生成');
+INSERT INTO `flea_privilege` VALUES ('1001', '访问《授权管理》菜单', '拥有可以访问《授权管理》菜单的权限', '1000', '1', '2020-09-12 23:57:48', '2020-09-12 23:57:48', '【访问《授权管理》菜单】权限对应【授权管理】菜单，新增菜单时自动生成');
+INSERT INTO `flea_privilege` VALUES ('1002', '访问《用户模块管理》菜单', '拥有可以访问《用户模块管理》菜单的权限', '1000', '1', '2020-09-12 23:57:48', '2020-09-12 23:57:48', '【访问《用户模块管理》菜单】权限对应【用户模块管理】菜单，新增菜单时自动生成');
+INSERT INTO `flea_privilege` VALUES ('1003', '访问《角色模块管理》菜单', '拥有可以访问《角色模块管理》菜单的权限', '1000', '1', '2020-09-12 23:57:48', '2020-09-12 23:57:48', '【访问《角色模块管理》菜单】权限对应【角色模块管理】菜单，新增菜单时自动生成');
+INSERT INTO `flea_privilege` VALUES ('1004', '访问《权限模块管理》菜单', '拥有可以访问《权限模块管理》菜单的权限', '1000', '1', '2020-09-12 23:57:48', '2020-09-12 23:57:48', '【访问《权限模块管理》菜单】权限对应【权限模块管理】菜单，新增菜单时自动生成');
+INSERT INTO `flea_privilege` VALUES ('1005', '访问《功能模块管理》菜单', '拥有可以访问《功能模块管理》菜单的权限', '1000', '1', '2020-09-12 23:57:48', '2020-09-12 23:57:48', '【访问《功能模块管理》菜单】权限对应【功能模块管理】菜单，新增菜单时自动生成');
+INSERT INTO `flea_privilege` VALUES ('1006', '访问《用户管理》菜单', '拥有可以访问《用户管理》菜单的权限', '1000', '1', '2020-09-12 23:57:48', '2020-09-12 23:57:48', '【访问《用户管理》菜单】权限对应【用户管理】菜单，新增菜单时自动生成');
+INSERT INTO `flea_privilege` VALUES ('1007', '访问《用户组管理》菜单', '拥有可以访问《用户组管理》菜单的权限', '1000', '1', '2020-09-12 23:57:48', '2020-09-12 23:57:48', '【访问《用户组管理》菜单】权限对应【用户组管理】菜单，新增菜单时自动生成');
+INSERT INTO `flea_privilege` VALUES ('1008', '访问《角色管理》菜单', '拥有可以访问《角色管理》菜单的权限', '1000', '1', '2020-09-12 23:57:48', '2020-09-12 23:57:48', '【访问《角色管理》菜单】权限对应【角色管理】菜单，新增菜单时自动生成');
+INSERT INTO `flea_privilege` VALUES ('1009', '访问《角色组管理》菜单', '拥有可以访问《角色组管理》菜单的权限', '1000', '1', '2020-09-12 23:57:48', '2020-09-12 23:57:48', '【访问《角色组管理》菜单】权限对应【角色组管理】菜单，新增菜单时自动生成');
+INSERT INTO `flea_privilege` VALUES ('1010', '访问《权限管理》菜单', '拥有可以访问《权限管理》菜单的权限', '1000', '1', '2020-09-12 23:57:48', '2020-09-12 23:57:48', '【访问《权限管理》菜单】权限对应【权限管理】菜单，新增菜单时自动生成');
+INSERT INTO `flea_privilege` VALUES ('1011', '访问《权限组管理》菜单', '拥有可以访问《权限组管理》菜单的权限', '1000', '1', '2020-09-12 23:57:48', '2020-09-12 23:57:48', '【访问《权限组管理》菜单】权限对应【权限组管理】菜单，新增菜单时自动生成');
+INSERT INTO `flea_privilege` VALUES ('1012', '访问《菜单管理》菜单', '拥有可以访问《菜单管理》菜单的权限', '1000', '1', '2020-09-12 23:57:48', '2020-09-12 23:57:48', '【访问《菜单管理》菜单】权限对应【菜单管理】菜单，新增菜单时自动生成');
+INSERT INTO `flea_privilege` VALUES ('1013', '访问《操作管理》菜单', '拥有可以访问《操作管理》菜单的权限', '1000', '1', '2020-09-12 23:57:48', '2020-09-12 23:57:48', '【访问《操作管理》菜单】权限对应【操作管理】菜单，新增菜单时自动生成');
+INSERT INTO `flea_privilege` VALUES ('1014', '访问《元素管理》菜单', '拥有可以访问《元素管理》菜单的权限', '1000', '1', '2020-09-12 23:57:48', '2020-09-12 23:57:48', '【访问《元素管理》菜单】权限对应【元素管理】菜单，新增菜单时自动生成');
 
 -- ----------------------------
 -- Table structure for `flea_privilege_group`
@@ -349,12 +362,26 @@ CREATE TABLE `flea_privilege_group_rel` (
   PRIMARY KEY (`privilege_group_rel_id`),
   KEY `INDEX_PRIVILEGE_GROUP_ID` (`privilege_group_id`) USING BTREE,
   KEY `INDEX_REL_ID` (`rel_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of flea_privilege_group_rel
 -- ----------------------------
 INSERT INTO `flea_privilege_group_rel` VALUES ('1', '1000', '1000', 'PRIVILEGE_GROUP_REL_PRIVILEGE', '1', '2020-08-16 23:49:12', null, '【菜单访问】权限组关联【访问《控制台》菜单】权限', null, null, null, null, null, null);
+INSERT INTO `flea_privilege_group_rel` VALUES ('2', '1000', '1001', 'PRIVILEGE_GROUP_REL_PRIVILEGE', '1', '2020-09-12 23:57:48', null, '【菜单访问】权限组关联【访问《授权管理》菜单】权限', null, null, null, null, null, null);
+INSERT INTO `flea_privilege_group_rel` VALUES ('3', '1000', '1002', 'PRIVILEGE_GROUP_REL_PRIVILEGE', '1', '2020-09-12 23:57:48', null, '【菜单访问】权限组关联【访问《用户模块管理》菜单】权限', null, null, null, null, null, null);
+INSERT INTO `flea_privilege_group_rel` VALUES ('4', '1000', '1003', 'PRIVILEGE_GROUP_REL_PRIVILEGE', '1', '2020-09-12 23:57:48', null, '【菜单访问】权限组关联【访问《角色模块管理》菜单】权限', null, null, null, null, null, null);
+INSERT INTO `flea_privilege_group_rel` VALUES ('5', '1000', '1004', 'PRIVILEGE_GROUP_REL_PRIVILEGE', '1', '2020-09-12 23:57:48', null, '【菜单访问】权限组关联【访问《权限模块管理》菜单】权限', null, null, null, null, null, null);
+INSERT INTO `flea_privilege_group_rel` VALUES ('6', '1000', '1005', 'PRIVILEGE_GROUP_REL_PRIVILEGE', '1', '2020-09-12 23:57:48', null, '【菜单访问】权限组关联【访问《功能模块管理》菜单】权限', null, null, null, null, null, null);
+INSERT INTO `flea_privilege_group_rel` VALUES ('7', '1000', '1006', 'PRIVILEGE_GROUP_REL_PRIVILEGE', '1', '2020-09-12 23:57:48', null, '【菜单访问】权限组关联【访问《用户管理》菜单】权限', null, null, null, null, null, null);
+INSERT INTO `flea_privilege_group_rel` VALUES ('8', '1000', '1007', 'PRIVILEGE_GROUP_REL_PRIVILEGE', '1', '2020-09-12 23:57:48', null, '【菜单访问】权限组关联【访问《用户组管理》菜单】权限', null, null, null, null, null, null);
+INSERT INTO `flea_privilege_group_rel` VALUES ('9', '1000', '1008', 'PRIVILEGE_GROUP_REL_PRIVILEGE', '1', '2020-09-12 23:57:48', null, '【菜单访问】权限组关联【访问《角色管理》菜单】权限', null, null, null, null, null, null);
+INSERT INTO `flea_privilege_group_rel` VALUES ('10', '1000', '1009', 'PRIVILEGE_GROUP_REL_PRIVILEGE', '1', '2020-09-12 23:57:48', null, '【菜单访问】权限组关联【访问《角色组管理》菜单】权限', null, null, null, null, null, null);
+INSERT INTO `flea_privilege_group_rel` VALUES ('11', '1000', '1010', 'PRIVILEGE_GROUP_REL_PRIVILEGE', '1', '2020-09-12 23:57:48', null, '【菜单访问】权限组关联【访问《权限管理》菜单】权限', null, null, null, null, null, null);
+INSERT INTO `flea_privilege_group_rel` VALUES ('12', '1000', '1011', 'PRIVILEGE_GROUP_REL_PRIVILEGE', '1', '2020-09-12 23:57:48', null, '【菜单访问】权限组关联【访问《权限组管理》菜单】权限', null, null, null, null, null, null);
+INSERT INTO `flea_privilege_group_rel` VALUES ('13', '1000', '1012', 'PRIVILEGE_GROUP_REL_PRIVILEGE', '1', '2020-09-12 23:57:48', null, '【菜单访问】权限组关联【访问《菜单管理》菜单】权限', null, null, null, null, null, null);
+INSERT INTO `flea_privilege_group_rel` VALUES ('14', '1000', '1013', 'PRIVILEGE_GROUP_REL_PRIVILEGE', '1', '2020-09-12 23:57:48', null, '【菜单访问】权限组关联【访问《操作管理》菜单】权限', null, null, null, null, null, null);
+INSERT INTO `flea_privilege_group_rel` VALUES ('15', '1000', '1014', 'PRIVILEGE_GROUP_REL_PRIVILEGE', '1', '2020-09-12 23:57:48', null, '【菜单访问】权限组关联【访问《元素管理》菜单】权限', null, null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `flea_privilege_rel`
@@ -378,12 +405,26 @@ CREATE TABLE `flea_privilege_rel` (
   PRIMARY KEY (`privilege_rel_id`),
   KEY `INDEX_PRIVILEGE_ID` (`privilege_id`) USING BTREE,
   KEY `INDEX_REL_ID` (`rel_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of flea_privilege_rel
 -- ----------------------------
 INSERT INTO `flea_privilege_rel` VALUES ('1', '1000', '1000', 'PRIVILEGE_REL_MENU', '1', '2020-08-16 23:46:42', null, '【控制台】菜单绑定【访问《控制台》菜单】权限, 新增菜单时自动生成', null, null, null, null, null, null);
+INSERT INTO `flea_privilege_rel` VALUES ('2', '1001', '1001', 'PRIVILEGE_REL_MENU', '1', '2020-09-12 23:57:48', null, '【授权管理】菜单绑定【访问《授权管理》菜单】权限, 新增菜单时自动生成', null, null, null, null, null, null);
+INSERT INTO `flea_privilege_rel` VALUES ('3', '1002', '1002', 'PRIVILEGE_REL_MENU', '1', '2020-09-12 23:57:48', null, '【用户模块管理】菜单绑定【访问《用户模块管理》菜单】权限, 新增菜单时自动生成', null, null, null, null, null, null);
+INSERT INTO `flea_privilege_rel` VALUES ('4', '1003', '1003', 'PRIVILEGE_REL_MENU', '1', '2020-09-12 23:57:48', null, '【角色模块管理】菜单绑定【访问《角色模块管理》菜单】权限, 新增菜单时自动生成', null, null, null, null, null, null);
+INSERT INTO `flea_privilege_rel` VALUES ('5', '1004', '1004', 'PRIVILEGE_REL_MENU', '1', '2020-09-12 23:57:48', null, '【权限模块管理】菜单绑定【访问《权限模块管理》菜单】权限, 新增菜单时自动生成', null, null, null, null, null, null);
+INSERT INTO `flea_privilege_rel` VALUES ('6', '1005', '1005', 'PRIVILEGE_REL_MENU', '1', '2020-09-12 23:57:48', null, '【功能模块管理】菜单绑定【访问《功能模块管理》菜单】权限, 新增菜单时自动生成', null, null, null, null, null, null);
+INSERT INTO `flea_privilege_rel` VALUES ('7', '1006', '1006', 'PRIVILEGE_REL_MENU', '1', '2020-09-12 23:57:48', null, '【用户管理】菜单绑定【访问《用户管理》菜单】权限, 新增菜单时自动生成', null, null, null, null, null, null);
+INSERT INTO `flea_privilege_rel` VALUES ('8', '1007', '1007', 'PRIVILEGE_REL_MENU', '1', '2020-09-12 23:57:48', null, '【用户组管理】菜单绑定【访问《用户组管理》菜单】权限, 新增菜单时自动生成', null, null, null, null, null, null);
+INSERT INTO `flea_privilege_rel` VALUES ('9', '1008', '1008', 'PRIVILEGE_REL_MENU', '1', '2020-09-12 23:57:48', null, '【角色管理】菜单绑定【访问《角色管理》菜单】权限, 新增菜单时自动生成', null, null, null, null, null, null);
+INSERT INTO `flea_privilege_rel` VALUES ('10', '1009', '1009', 'PRIVILEGE_REL_MENU', '1', '2020-09-12 23:57:48', null, '【角色组管理】菜单绑定【访问《角色组管理》菜单】权限, 新增菜单时自动生成', null, null, null, null, null, null);
+INSERT INTO `flea_privilege_rel` VALUES ('11', '1010', '1010', 'PRIVILEGE_REL_MENU', '1', '2020-09-12 23:57:48', null, '【权限管理】菜单绑定【访问《权限管理》菜单】权限, 新增菜单时自动生成', null, null, null, null, null, null);
+INSERT INTO `flea_privilege_rel` VALUES ('12', '1011', '1011', 'PRIVILEGE_REL_MENU', '1', '2020-09-12 23:57:48', null, '【权限组管理】菜单绑定【访问《权限组管理》菜单】权限, 新增菜单时自动生成', null, null, null, null, null, null);
+INSERT INTO `flea_privilege_rel` VALUES ('13', '1012', '1012', 'PRIVILEGE_REL_MENU', '1', '2020-09-12 23:57:48', null, '【菜单管理】菜单绑定【访问《菜单管理》菜单】权限, 新增菜单时自动生成', null, null, null, null, null, null);
+INSERT INTO `flea_privilege_rel` VALUES ('14', '1013', '1013', 'PRIVILEGE_REL_MENU', '1', '2020-09-12 23:57:48', null, '【操作管理】菜单绑定【访问《操作管理》菜单】权限, 新增菜单时自动生成', null, null, null, null, null, null);
+INSERT INTO `flea_privilege_rel` VALUES ('15', '1014', '1014', 'PRIVILEGE_REL_MENU', '1', '2020-09-12 23:57:48', null, '【元素管理】菜单绑定【访问《元素管理》菜单】权限, 新增菜单时自动生成', null, null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `flea_real_name_info`
