@@ -395,6 +395,28 @@ public class FunctionAuthTest {
     }
 
     @Test
+    public void testMenuAdd() throws Exception {
+
+        Long parentId = 1012L;
+        FleaMenuPOJO fleaMenuPOJO = new FleaMenuPOJO();
+        fleaMenuPOJO.setMenuCode("menu_add");
+        fleaMenuPOJO.setMenuName("菜单新增");
+        fleaMenuPOJO.setMenuIcon("plus-circle");
+        fleaMenuPOJO.setMenuSort(1);
+        fleaMenuPOJO.setMenuLevel(MenuLevelEnum.LEVEL_FOUR.getLevel());
+        fleaMenuPOJO.setMenuView("auth/function/menu/addMenu.html");
+        fleaMenuPOJO.setParentId(parentId);
+        fleaMenuPOJO.setRemarks("菜单新增，用于系统前台新增菜单使用");
+        fleaMenuPOJO.setFunctionAttrPOJOList(addFleaFunctionAttrPOJOList());
+
+        IFleaFunctionModuleSV fleaFunctionModuleSV = (IFleaFunctionModuleSV) applicationContext.getBean("fleaFunctionModuleSV");
+        Long menuId = fleaFunctionModuleSV.addFleaMenu(fleaMenuPOJO);
+
+        Long privilegeGroupId = 1000L;
+        addPrivilegeGroupRel(menuId, privilegeGroupId);
+    }
+
+    @Test
     public void testFunctionAttrQuery() {
 
         try {
