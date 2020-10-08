@@ -77,17 +77,35 @@ public class FleaRequestUtil {
         Property redirectUrlProp = getFleaUrl().getRedirectUrlProperty(redirectUrlKey);
         if (ObjectUtils.isNotEmpty(response) && ObjectUtils.isNotEmpty(redirectUrlProp) && StringUtils.isNotEmpty(redirectUrlProp.getValue())) {
             try {
+                String redirectUrl = redirectUrlProp.getValue();
                 if (StringUtils.isNotBlank(urlParam)) {
-                    response.sendRedirect(request.getContextPath() + redirectUrlProp.getValue() + urlParam);
-                } else {
-                    response.sendRedirect(request.getContextPath() + redirectUrlProp.getValue());
+                    redirectUrl += urlParam;
                 }
+                // ajax请求的重定向让前台跳转处理
+                if (isAjaxRequest(request)) {
+                    sendRedirectToOtherPageForAjax(response, redirectUrl);
+                } else { // 非ajax请求的重定向可以直接处理
+                    response.sendRedirect(redirectUrl);
+                }
+                // 设置重定向标识，过滤器将不执行后续逻辑
                 fleaRequestContext.put(FleaRequestContext.REDIRECT_FLAG, redirectUrlKey);
             } catch (IOException e) {
                 // {0}
                 ExceptionUtils.throwCommonException(FleaCoreCommonException.class, "ERROR-CORE-COMMON0000000000", e.getMessage());
             }
         }
+    }
+
+    /**
+     * <p> ajax请求重定向页面 </p>
+     *
+     * @param response    HTTP响应对象
+     * @param redirectUrl 重定向地址
+     */
+    private static void sendRedirectToOtherPageForAjax(HttpServletResponse response, String redirectUrl) throws IOException {
+        // 设置跳转地址，是用来给前端进行跳转时获取
+        response.setHeader(FleaRequestContext.REDIRECT_URL, redirectUrl);
+        response.flushBuffer();
     }
 
     /**
@@ -213,6 +231,21 @@ public class FleaRequestUtil {
         // {0}不能为空，请检查
         ObjectUtils.checkEmpty(fleaUrl, FleaCoreCommonException.class, "ERROR-CORE-COMMON0000000001", "【FleaUrl】");
         return fleaUrl;
+    }
+
+    /**
+     * <p> 是否是ajax请求 </p>
+     *
+     * @param request HTTP请求对象
+     * @return true: 是  false: 不是
+     */
+    public static boolean isAjaxRequest(HttpServletRequest request) {
+        boolean isAjaxRequest = false;
+        String xRequestWith = request.getHeader("X-Requested-With");
+        if ("XMLHttpRequest".equals(xRequestWith)) {
+            isAjaxRequest = true;
+        }
+        return isAjaxRequest;
     }
 
 }
