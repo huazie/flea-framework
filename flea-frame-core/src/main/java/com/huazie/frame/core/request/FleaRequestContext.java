@@ -16,6 +16,8 @@ public class FleaRequestContext extends FleaCommonConfig {
 
     public static final String REDIRECT_FLAG = "REDIRECT_FLAG"; // 重定向标识
 
+    public static final String REDIRECT_URL = "REDIRECT_URL"; // 重定向地址
+
     private ServletRequest servletRequest;
 
     private ServletResponse servletResponse;

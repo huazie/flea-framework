@@ -131,6 +131,8 @@ public class SessionCheckFilterTask implements IFilterTask {
             if (currentTime - oldActiveTime > idleTime * 1000) {
                 // 用户Session已经失效
                 isExpired = true;
+                // 去除上一次激活时间属性
+                session.removeAttribute(FleaSession.SESSION_ACTIVE_TIME);
             } else {
                 // 激活用户Session信息
                 activeUserSession(session, userSessionKey, currentTime);
