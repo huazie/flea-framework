@@ -29,7 +29,7 @@ public class FleaFilterTaskChain implements IFilterTaskChain {
 
     private List<IFilterTask> filterTaskList; // 过滤器任务
 
-    private static ThreadLocal<Integer> sCurrentPosition = new ThreadLocal<Integer>(); // 过滤器任务执行位置
+    private static ThreadLocal<Integer> sCurrentPosition = new ThreadLocal<>(); // 过滤器任务执行位置
 
     public FleaFilterTaskChain() {
         initFleaFilterTaskChain();
@@ -62,7 +62,7 @@ public class FleaFilterTaskChain implements IFilterTaskChain {
     private List<IFilterTask> convert(List<FilterTask> filterTasks) {
         List<IFilterTask> fleaFilterTaskList = null;
         if (CollectionUtils.isNotEmpty(filterTasks)) {
-            fleaFilterTaskList = new ArrayList<IFilterTask>();
+            fleaFilterTaskList = new ArrayList<>();
             for (FilterTask filterTask : filterTasks) {
                 if (ObjectUtils.isNotEmpty(filterTask)) {
                     IFilterTask fleaFilterTask = (IFilterTask) ReflectUtils.newInstance(filterTask.getClazz());
@@ -84,11 +84,6 @@ public class FleaFilterTaskChain implements IFilterTaskChain {
      */
     public void doFilterTask(FleaRequestContext fleaRequestContext) throws CommonException {
         Integer currentPosition = getCurrentPosition();
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("***************************************************************************************");
-            LOGGER.debug("FleaFilterTaskChain##doFilterTask(FleaRequestContext) CurrentPosition = {}", currentPosition);
-            LOGGER.debug("***************************************************************************************");
-        }
         if (currentPosition < filterTaskList.size()) {
             IFilterTask filterTask = filterTaskList.get(currentPosition);
             setCurrentPosition(++currentPosition);

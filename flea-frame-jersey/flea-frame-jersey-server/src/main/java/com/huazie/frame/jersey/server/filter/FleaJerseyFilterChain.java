@@ -35,7 +35,7 @@ public class FleaJerseyFilterChain {
 
     private List<IFleaJerseyErrorFilter> errorFilters; // 异常过滤器链
 
-    private static ThreadLocal<StringBuilder> sDoFilterStep = new ThreadLocal<StringBuilder>(); // 过滤器执行顺序
+    private static ThreadLocal<StringBuilder> sDoFilterStep = new ThreadLocal<>(); // 过滤器执行顺序
 
     public FleaJerseyFilterChain() {
         initFilterChain();
