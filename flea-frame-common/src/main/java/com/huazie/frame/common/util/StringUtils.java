@@ -332,8 +332,11 @@ public class StringUtils {
      */
     public static void replace(StringBuilder strBuilder, String placeholder, String value) {
         int start = strBuilder.indexOf(placeholder);
-        if (start != -1) {// 存在占位符，才用value替换占位符，否则还是保持原样
+        while (start != -1) {
+            // 存在占位符，才用value替换占位符，否则还是保持原样
             strBuilder.replace(start, start + placeholder.length(), value);
+            // 取下一个占位符的位置
+            start = strBuilder.indexOf(placeholder);
         }
     }
 

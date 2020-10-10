@@ -14,6 +14,7 @@ public enum FleaI18nResEnum {
     ERROR_DB("error_db", "FLEA FRAME DB异常信息国际码资源文件类型"),
     ERROR_JERSEY("error_jersey", "FLEA FRAME JERSEY异常信息国际码资源文件类型"),
     ERROR_AUTH("error_auth", "FLEA FRAME AUTH异常信息国际码资源文件类型"),
+    AUTH("auth", "FLEA FRAME AUTH 国际码资源文件类型"),
     COMMON("common", "公共信息国际码资源文件类型");
 
     private String resName;

@@ -30,6 +30,10 @@ public interface CommonConstants {
          */
         long MINUS_ONE = -1L;
         /**
+         * 整数 -2， long类型
+         */
+        long MINUS_TWO = -2L;
+        /**
          * <p> 整数 0 , long类型 </p>
          */
         long ZERO = 0L;
@@ -165,23 +169,11 @@ public interface CommonConstants {
         /**
          * <p> 默认池名 </p>
          */
-        String DEFAUTL_POOL_NAME = "default";
+        String DEFAULT_POOL_NAME = "default";
         /**
          * <p> Flea对象池配置 </p>
          */
         String FLEA_OBJECT_POOL = "flea-object-pool";
-    }
-
-    /**
-     * <p> Flea用户信息常量 </p>
-     *
-     * @since 1.0.0
-     */
-    interface FleaUserInfoConstants {
-        /**
-         * <p> 用户编号 </p>
-         */
-        String USER_ID = "USER_ID";
     }
 
     /**

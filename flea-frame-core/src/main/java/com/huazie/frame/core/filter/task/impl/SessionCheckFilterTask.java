@@ -53,7 +53,11 @@ public class SessionCheckFilterTask implements IFilterTask {
                 // 用户没有登录
                 if (!isLogin(httpSession, userSessionKey)) {
                     if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug("UrlCheckFilterTask##doFilterTask(FleaRequestContext, IFilterTaskChain) Business Request And User Not Login, Redirect to Login Page");
+                        if (FleaRequestUtil.isBusinessUrl(uri)) {
+                            LOGGER.debug("UrlCheckFilterTask##doFilterTask(FleaRequestContext, IFilterTaskChain) Business Request And User Not Login, Redirect to Login Page");
+                        } else if (FleaRequestUtil.isPageUrl(uri)) {
+                            LOGGER.debug("UrlCheckFilterTask##doFilterTask(FleaRequestContext, IFilterTaskChain) Page Request And User Not Login, Redirect to Login Page");
+                        }
                     }
                     // 重定向到登录页面
                     FleaRequestUtil.sendRedirectToLoginPage(fleaRequestContext);
@@ -62,7 +66,11 @@ public class SessionCheckFilterTask implements IFilterTask {
                 // 用户登录已失效
                 if (isLoginExpired(httpSession, userSessionKey)) {
                     if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug("UrlCheckFilterTask##doFilterTask(FleaRequestContext, IFilterTaskChain) Business Request And User Session Has Expired, Redirect to Login Page");
+                        if (FleaRequestUtil.isBusinessUrl(uri)) {
+                            LOGGER.debug("UrlCheckFilterTask##doFilterTask(FleaRequestContext, IFilterTaskChain) Business Request And User Session Has Expired, Redirect to Login Page");
+                        } else if (FleaRequestUtil.isPageUrl(uri)) {
+                            LOGGER.debug("UrlCheckFilterTask##doFilterTask(FleaRequestContext, IFilterTaskChain) Page Request And User Session Has Expired, Redirect to Login Page");
+                        }
                     }
                     // 重定向到登录页面
                     FleaRequestUtil.sendRedirectToLoginPage(fleaRequestContext);
@@ -131,6 +139,8 @@ public class SessionCheckFilterTask implements IFilterTask {
             if (currentTime - oldActiveTime > idleTime * 1000) {
                 // 用户Session已经失效
                 isExpired = true;
+                // 去除上一次激活时间属性
+                session.removeAttribute(FleaSession.SESSION_ACTIVE_TIME);
             } else {
                 // 激活用户Session信息
                 activeUserSession(session, userSessionKey, currentTime);

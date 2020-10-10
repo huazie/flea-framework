@@ -66,6 +66,28 @@ public class FleaPrivilegeGroup extends FleaEntity {
     @Column(name = "remarks")
     private String remarks; // 备注信息
 
+    /**
+     * <p> 无参数构造方法 </p>
+     *
+     * @since 1.0.0
+     */
+    public FleaPrivilegeGroup() {
+    }
+
+    /**
+     * <p> 带参数构造方法 </p>
+     *
+     * @param privilegeGroupName 权限组名称
+     * @param privilegeGroupDesc 权限组描述
+     * @param remarks            备注信息
+     * @since 1.0.0
+     */
+    public FleaPrivilegeGroup(String privilegeGroupName, String privilegeGroupDesc, String remarks) {
+        this.privilegeGroupName = privilegeGroupName;
+        this.privilegeGroupDesc = privilegeGroupDesc;
+        this.remarks = remarks;
+    }
+
     public Long getPrivilegeGroupId() {
         return privilegeGroupId;
     }

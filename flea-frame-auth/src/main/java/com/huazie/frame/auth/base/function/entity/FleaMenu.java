@@ -1,6 +1,10 @@
 package com.huazie.frame.auth.base.function.entity;
 
+import com.huazie.frame.common.CommonConstants;
+import com.huazie.frame.common.EntityStateEnum;
 import com.huazie.frame.common.FleaEntity;
+import com.huazie.frame.common.util.DateUtils;
+import com.huazie.frame.common.util.ObjectUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import javax.persistence.Column;
@@ -23,7 +27,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "flea_menu")
-public class FleaMenu extends FleaEntity {
+public class FleaMenu extends FleaEntity implements Comparable<FleaMenu> {
 
     private static final long serialVersionUID = 7136613747316056204L;
 
@@ -88,6 +92,53 @@ public class FleaMenu extends FleaEntity {
 
     @Column(name = "remarks")
     private String remarks; // 菜单描述
+
+    /**
+     * <p> 无参数构造方法 </p>
+     *
+     * @since 1.0.0
+     */
+    public FleaMenu() {
+    }
+
+    /**
+     * <p> 带参数构造方法 </p>
+     *
+     * @param menuCode      菜单编码
+     * @param menuName      菜单名称
+     * @param menuIcon      菜单FontAwesome小图标
+     * @param menuSort      菜单展示顺序(同一个父菜单下)
+     * @param menuView      菜单对应页面（非叶子菜单的可以为空）
+     * @param menuLevel     菜单层级（1：一级菜单 2；二级菜单 3：三级菜单 4：四级菜单）
+     * @param parentId      父菜单编号
+     * @param effectiveDate 生效日期
+     * @param expiryDate    失效日期
+     * @param remarks       备注
+     * @since 1.0.0
+     */
+    public FleaMenu(String menuCode, String menuName, String menuIcon, Integer menuSort, String menuView, Integer menuLevel, Long parentId, Date effectiveDate, Date expiryDate, String remarks) {
+        this.menuCode = menuCode;
+        this.menuName = menuName;
+        this.menuIcon = menuIcon;
+        this.menuSort = menuSort;
+        this.menuView = menuView;
+        this.menuLevel = menuLevel;
+        this.menuState = EntityStateEnum.IN_USE.getState();
+        if (ObjectUtils.isEmpty(parentId)) {
+            parentId = CommonConstants.NumeralConstants.MINUS_ONE;
+        }
+        this.parentId = parentId;
+        this.createDate = DateUtils.getCurrentTime();
+        if (ObjectUtils.isEmpty(effectiveDate)) {
+            effectiveDate = createDate;
+        }
+        this.effectiveDate = effectiveDate;
+        if (ObjectUtils.isEmpty(expiryDate)) {
+            expiryDate = DateUtils.getExpiryTimeForever();
+        }
+        this.expiryDate = expiryDate;
+        this.remarks = remarks;
+    }
 
     public Long getMenuId() {
         return menuId;
@@ -202,7 +253,13 @@ public class FleaMenu extends FleaEntity {
     }
 
     @Override
+    public int compareTo(FleaMenu fleaMenu) {
+        return Integer.compare(menuSort, fleaMenu.getMenuSort());
+    }
+
+    @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
     }
+
 }

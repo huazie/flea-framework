@@ -59,8 +59,8 @@ public class RoleAuthTest {
     public void testInsertRoleRel() {
 
         FleaRoleRel fleaRoleRel = new FleaRoleRel();
-        fleaRoleRel.setRoleId(1L);
-        fleaRoleRel.setRelId(1L);
+        fleaRoleRel.setRoleId(1000L);
+        fleaRoleRel.setRelId(1000L);
         fleaRoleRel.setRelType(AuthRelTypeEnum.ROLE_REL_PRIVILEGE_GROUP.getRelType()); // 角色关联权限组
         fleaRoleRel.setRelState(EntityStateEnum.IN_USE.getState());
         fleaRoleRel.setCreateDate(DateUtils.getCurrentTime());
@@ -78,7 +78,7 @@ public class RoleAuthTest {
     public void testQueryRoleRel() {
         try {
             IFleaRoleRelSV fleaRoleRelSV = (IFleaRoleRelSV) applicationContext.getBean("fleaRoleRelSV");
-            fleaRoleRelSV.getRoleRelList(1L, AuthRelTypeEnum.ROLE_REL_PRIVILEGE_GROUP.getRelType());
+            fleaRoleRelSV.getRoleRelList(1000L, AuthRelTypeEnum.ROLE_REL_PRIVILEGE_GROUP.getRelType());
         } catch (CommonException e) {
             LOGGER.error("Exception = ", e);
         }
@@ -88,7 +88,7 @@ public class RoleAuthTest {
     public void testQueryRoleGroupRel() {
         try {
             IFleaRoleGroupRelSV fleaRoleGroupRelSV = (IFleaRoleGroupRelSV) applicationContext.getBean("fleaRoleGroupRelSV");
-            fleaRoleGroupRelSV.getRoleGroupRelList(1L, AuthRelTypeEnum.ROLE_GROUP_REL_ROLE.getRelType());
+            fleaRoleGroupRelSV.getRoleGroupRelList(1000L, AuthRelTypeEnum.ROLE_GROUP_REL_ROLE.getRelType());
         } catch (CommonException e) {
             LOGGER.error("Exception = ", e);
         }

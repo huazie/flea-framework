@@ -1,4 +1,4 @@
-package com.huazie.frame.auth.common.pojo.account;
+package com.huazie.frame.auth.common.pojo.user;
 
 import com.huazie.frame.auth.common.pojo.FleaEffExpDatePOJO;
 
@@ -12,6 +12,8 @@ import com.huazie.frame.auth.common.pojo.FleaEffExpDatePOJO;
 public class FleaAccountPOJO extends FleaEffExpDatePOJO {
 
     private static final long serialVersionUID = 2231150805208668200L;
+
+    private Long accountId; // 账户编号
     
     private Long userId; // 用户编号
 
@@ -20,6 +22,14 @@ public class FleaAccountPOJO extends FleaEffExpDatePOJO {
     private String accountPwd; // 密码
 
     private Integer accountState; // 账户状态
+
+    public Long getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
+    }
 
     public Long getUserId() {
         return userId;

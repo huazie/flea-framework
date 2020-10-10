@@ -1,4 +1,4 @@
-package com.huazie.frame.auth.common.pojo.account.attr;
+package com.huazie.frame.auth.common.pojo.user.attr;
 
 import com.huazie.frame.auth.common.pojo.FleaAttrPOJO;
 import org.apache.commons.lang.builder.ToStringBuilder;

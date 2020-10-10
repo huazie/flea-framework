@@ -1,6 +1,8 @@
 package com.huazie.frame.auth.base.privilege.entity;
 
+import com.huazie.frame.common.EntityStateEnum;
 import com.huazie.frame.common.FleaEntity;
+import com.huazie.frame.common.util.DateUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import javax.persistence.Column;
@@ -86,6 +88,44 @@ public class FleaPrivilegeRel extends FleaEntity {
 
     @Column(name = "rel_ext_z")
     private String relExtZ; // 关联扩展字段Z
+
+    /**
+     * <p> 无参数构造方法 </p>
+     *
+     * @since 1.0.0
+     */
+    public FleaPrivilegeRel() {
+    }
+
+    /**
+     * <p> 带参数构造方法 </p>
+     *
+     * @param privilegeId 权限编号
+     * @param relId       关联编号
+     * @param relType     关联类型
+     * @param remarks     备注信息
+     * @param relExtA     关联扩展字段A
+     * @param relExtB     关联扩展字段B
+     * @param relExtC     关联扩展字段C
+     * @param relExtX     关联扩展字段X
+     * @param relExtY     关联扩展字段Y
+     * @param relExtZ     关联扩展字段Z
+     * @since 1.0.0
+     */
+    public FleaPrivilegeRel(Long privilegeId, Long relId, String relType, String remarks, String relExtA, String relExtB, String relExtC, String relExtX, String relExtY, String relExtZ) {
+        this.privilegeId = privilegeId;
+        this.relId = relId;
+        this.relType = relType;
+        this.relState = EntityStateEnum.IN_USE.getState();
+        this.createDate = DateUtils.getCurrentTime();
+        this.remarks = remarks;
+        this.relExtA = relExtA;
+        this.relExtB = relExtB;
+        this.relExtC = relExtC;
+        this.relExtX = relExtX;
+        this.relExtY = relExtY;
+        this.relExtZ = relExtZ;
+    }
 
     public Long getPrivilegeRelId() {
         return privilegeRelId;
