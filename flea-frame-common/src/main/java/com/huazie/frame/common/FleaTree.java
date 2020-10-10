@@ -435,6 +435,8 @@ public class FleaTree<T> implements Serializable {
                     TreeNode<T> parentNode = subNote.parentNote;
                     Map<String, Object> treeNodeMap = toMap(subNote.element, subNote.id, subNote.height, parentNode.element, parentNode.id, parentNode.height, CollectionUtils.isNotEmpty(subNote.subNotes));
                     treeNodeMap.put(getMapKeyForSubNotes(), toMapList(subNote.subNotes));
+                    // 重处理树节点信息，子类可实现更细粒度的功能
+                    reHandleTreeNodeMap(treeNodeMap);
                     treeNodeMapList.add(treeNodeMap);
                 }
             }
@@ -477,6 +479,15 @@ public class FleaTree<T> implements Serializable {
      */
     protected String getMapKeyForSubNotes() {
         return TREE_SUB_NOTES;
+    }
+
+    /**
+     * <p> 重新处理树节点信息 </p>
+     * <p> 子类可以重写该方法，实现更细粒度的树节点元素展示  </p>
+     *
+     * @param treeNodeMap 以{@code Map<String, Object>}形式返回某个树节点信息
+     */
+    protected void reHandleTreeNodeMap(Map<String, Object> treeNodeMap) {
     }
 
     static final class TreeNode<T> {
