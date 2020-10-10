@@ -3,6 +3,7 @@ package com.huazie.frame.auth;
 import com.huazie.frame.auth.base.function.entity.FleaMenu;
 import com.huazie.frame.auth.common.service.interfaces.IFleaAuthSV;
 import com.huazie.frame.auth.util.FleaMenuTree;
+import com.huazie.frame.auth.util.FueluxMenuTree;
 import com.huazie.frame.common.FleaTree;
 import com.huazie.frame.common.exception.CommonException;
 import org.junit.Before;
@@ -119,4 +120,26 @@ public class MenuTreeTest {
             LOGGER.error("Exception: ", e);
         }
     }
+
+    @Test
+    public void testFueluxMenuTree() {
+
+        IFleaAuthSV fleaAuthSV = (IFleaAuthSV) applicationContext.getBean("fleaAuthSV");
+        Long accountId = 10000L;
+        Long systemAcctId = 1000L;
+        try {
+            List<FleaMenu> fleaMenuList = fleaAuthSV.getAllAccessibleMenus(accountId, systemAcctId);
+
+            FueluxMenuTree fueluxMenuTree = new FueluxMenuTree("跳蚤管家");
+            fueluxMenuTree.addAll(fleaMenuList);
+
+            LOGGER.debug("MENU_TREE = \n{}", fueluxMenuTree);
+
+            LOGGER.debug("MENU = \n{}", fueluxMenuTree.toMapList());
+
+        } catch (CommonException e) {
+            LOGGER.error("Exception: ", e);
+        }
+    }
+
 }

@@ -40,6 +40,22 @@ public class FleaMenuTree extends FleaTree<FleaMenu> {
 
     public static final String MENU_TREE = "MENU_TREE";
 
+    public static final String HAS_SUB_MENU = "HAS_SUB_MENU";
+
+    public static final String IS_SELECT = "IS_SELECT";
+
+    public static final String MENU_ID = "MENU_ID";
+
+    public static final String MENU_CODE = "MENU_CODE";
+
+    public static final String MENU_NAME = "MENU_NAME";
+
+    public static final String MENU_ICON = "MENU_ICON";
+
+    public static final String MENU_LEVEL = "MENU_LEVEL";
+
+    public static final String PARENT_MENU_ID = "PARENT_MENU_ID";
+
     private String systemName; // 归属系统名称
 
     public FleaMenuTree(String systemName) {
@@ -160,12 +176,14 @@ public class FleaMenuTree extends FleaTree<FleaMenu> {
     @Override
     protected Map<String, Object> toMap(FleaMenu element, long id, int height, FleaMenu pElement, long pId, int pHeight, boolean isHasSubNotes) {
         Map<String, Object> menuMap = new HashMap<>();
-        menuMap.put("HAS_SUB_MENU", isHasSubNotes);
-        menuMap.put("IS_SELECT", false);
-        menuMap.put("MENU_CODE", element.getMenuCode());
-        menuMap.put("MENU_NAME", element.getMenuName());
-        menuMap.put("MENU_ICON", element.getMenuIcon());
-        menuMap.put("MENU_LEVEL", element.getMenuLevel());
+        menuMap.put(HAS_SUB_MENU, isHasSubNotes);
+        menuMap.put(IS_SELECT, false);
+        menuMap.put(MENU_ID, id);
+        menuMap.put(MENU_CODE, element.getMenuCode());
+        menuMap.put(MENU_NAME, element.getMenuName());
+        menuMap.put(MENU_ICON, element.getMenuIcon());
+        menuMap.put(MENU_LEVEL, element.getMenuLevel());
+        menuMap.put(PARENT_MENU_ID, pId);
         return menuMap;
     }
 
