@@ -3,9 +3,11 @@ package com.huazie.frame.auth.base.privilege.dao.impl;
 import com.huazie.frame.auth.base.FleaAuthDAOImpl;
 import com.huazie.frame.auth.base.privilege.dao.interfaces.IFleaPrivilegeRelDAO;
 import com.huazie.frame.auth.base.privilege.entity.FleaPrivilegeRel;
+import com.huazie.frame.auth.common.AuthRelTypeEnum;
 import com.huazie.frame.auth.common.FleaAuthEntityConstants;
 import com.huazie.frame.common.EntityStateEnum;
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.util.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -29,7 +31,7 @@ public class FleaPrivilegeRelDAOImpl extends FleaAuthDAOImpl<FleaPrivilegeRel> i
     public List<FleaPrivilegeRel> getPrivilegeRelList(Long privilegeId, String authRelType) throws CommonException {
 
         List<FleaPrivilegeRel> privilegeRelList = getQuery(null)
-                .equal(FleaAuthEntityConstants.PriviilegeEntityConstants.E_PRIVILEGE_ID, privilegeId)
+                .equal(FleaAuthEntityConstants.PrivilegeEntityConstants.E_PRIVILEGE_ID, privilegeId)
                 .equal(FleaAuthEntityConstants.FleaRelEntityConstants.E_REL_TYPE, authRelType)
                 .equal(FleaAuthEntityConstants.FleaRelEntityConstants.E_REL_STATE, EntityStateEnum.IN_USE.getState())
                 .getResultList();
@@ -39,5 +41,27 @@ public class FleaPrivilegeRelDAOImpl extends FleaAuthDAOImpl<FleaPrivilegeRel> i
         }
 
         return privilegeRelList;
+    }
+
+    @Override
+    @SuppressWarnings(value = "unchecked")
+    public FleaPrivilegeRel getPrivilegeRelMenu(Long menuId) throws CommonException {
+
+        List<FleaPrivilegeRel> privilegeRelList = getQuery(null)
+                .equal(FleaAuthEntityConstants.FleaRelEntityConstants.E_REL_ID, menuId)
+                .equal(FleaAuthEntityConstants.FleaRelEntityConstants.E_REL_TYPE, AuthRelTypeEnum.PRIVILEGE_REL_MENU.getRelType())
+                .equal(FleaAuthEntityConstants.FleaRelEntityConstants.E_REL_STATE, EntityStateEnum.IN_USE.getState())
+                .getResultList();
+
+        FleaPrivilegeRel fleaPrivilegeRel = null;
+        if (CollectionUtils.isNotEmpty(privilegeRelList)) {
+            fleaPrivilegeRel = privilegeRelList.get(0);
+        }
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("FleaPrivilegeRelDAOImpl##getPrivilegeRelMenu(Long) PrivilegeRelMenu = {}", fleaPrivilegeRel);
+        }
+
+        return fleaPrivilegeRel;
     }
 }

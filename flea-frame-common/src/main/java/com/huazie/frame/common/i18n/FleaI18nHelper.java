@@ -115,6 +115,54 @@ public class FleaI18nHelper {
     }
 
     /**
+     * <p> Auth 资源数据获取 </p>
+     *
+     * @param key 资源数据编码
+     * @return i18n资源数据
+     * @since 1.0.0
+     */
+    public static String i18nForAuth(String key) {
+        return i18n(key, FleaI18nResEnum.AUTH.getResName());
+    }
+
+    /**
+     * <p> Auth 资源数据获取 </p>
+     *
+     * @param key    资源数据编码
+     * @param values 待替换字符串数组
+     * @return i18n资源数据
+     * @since 1.0.0
+     */
+    public static String i18nForAuth(String key, String[] values) {
+        return i18n(key, values, FleaI18nResEnum.AUTH.getResName());
+    }
+
+    /**
+     * <p> Auth 资源数据获取 </p>
+     *
+     * @param key    资源数据编码
+     * @param locale 国际化标识
+     * @return i18n资源数据
+     * @since 1.0.0
+     */
+    public static String i18nForAuth(String key, Locale locale) {
+        return i18n(key, FleaI18nResEnum.AUTH.getResName(), locale);
+    }
+
+    /**
+     * <p> Auth 资源数据获取 </p>
+     *
+     * @param key    资源数据编码
+     * @param values 待替换字符串数组
+     * @param locale 国际化标识
+     * @return i18n资源数据
+     * @since 1.0.0
+     */
+    public static String i18nForAuth(String key, String[] values, Locale locale) {
+        return i18n(key, values, FleaI18nResEnum.AUTH.getResName(), locale);
+    }
+
+    /**
      * <p>公共资源数据获取</p>
      *
      * @param key 资源数据编码

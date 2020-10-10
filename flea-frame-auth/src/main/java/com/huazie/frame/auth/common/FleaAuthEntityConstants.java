@@ -53,6 +53,20 @@ public interface FleaAuthEntityConstants extends FleaEntityConstants {
         String E_USER_GROUP_ID = "userGroupId";
 
         /**
+         * <p> 用户状态 </p>
+         */
+        String E_USER_STATE = "userState";
+
+        /**
+         * <p> 实名编号 </p>
+         */
+        String E_REAL_NAME_ID = "realNameId";
+        /**
+         * <p> 实名状态 </p>
+         */
+        String E_REAL_NAME_STATE = "realNameState";
+
+        /**
          * <p> 登录状态 </p>
          */
         String E_LOGIN_STATE = "loginState";
@@ -94,6 +108,26 @@ public interface FleaAuthEntityConstants extends FleaEntityConstants {
          * <p> 菜单名称 </p>
          */
         String E_MENU_NAME = "menuName";
+
+        /**
+         * <p> 菜单FontAwesome小图标 </p>
+         */
+        String E_MENU_ICON = "menuIcon";
+
+        /**
+         * <p> 同一个父菜单下的菜单展示顺序 </p>
+         */
+        String E_MENU_SORT = "menuSort";
+
+        /**
+         * <p> 菜单对应页面 </p>
+         */
+        String E_MENU_VIEW = "menuView";
+
+        /**
+         * <p> 菜单层级 </p>
+         */
+        String E_MENU_LEVEL = "menuLevel";
     }
 
     /**
@@ -101,7 +135,7 @@ public interface FleaAuthEntityConstants extends FleaEntityConstants {
      *
      * @since 1.0.0
      */
-    interface PriviilegeEntityConstants {
+    interface PrivilegeEntityConstants {
 
         /**
          * <p> 权限编号 </p>
@@ -112,6 +146,16 @@ public interface FleaAuthEntityConstants extends FleaEntityConstants {
          * <p> 权限组编号 </p>
          */
         String E_PRIVILEGE_GROUP_ID = "privilegeGroupId";
+
+        /**
+         * <p> 权限名称 </p>
+         */
+        String E_PRIVILEGE_NAME = "privilegeName";
+
+        /**
+         * <p> 权限组名称 </p>
+         */
+        String E_PRIVILEGE_GROUP_NAME = "privilegeGroupName";
     }
 
     /**

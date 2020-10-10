@@ -36,4 +36,13 @@ public interface IFleaUserAttrSV extends IAbstractFleaJPASV<FleaUserAttr> {
      */
     List<FleaUserAttr> saveFleaUserAttrs(List<FleaUserAttrPOJO> fleaUserAttrPOJOList) throws CommonException;
 
+    /**
+     * <p> 根据用户编号获取用户扩展属性信息（属性状态 1 正常，未失效）</p>
+     *
+     * @param userId 用户编号
+     * @return 用户扩展属性信息
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    List<FleaUserAttr> queryValidUserAttrs(Long userId) throws CommonException;
 }

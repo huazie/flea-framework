@@ -109,7 +109,7 @@ public class FleaAccount extends FleaEntity {
         this.accountState = accountState;
         createDate = DateUtils.getCurrentTime();
         if (ObjectUtils.isEmpty(effectiveDate)) {
-            effectiveDate = DateUtils.getCurrentTime();
+            effectiveDate = createDate;
         }
         this.effectiveDate = effectiveDate;
         if (ObjectUtils.isEmpty(expiryDate)) {

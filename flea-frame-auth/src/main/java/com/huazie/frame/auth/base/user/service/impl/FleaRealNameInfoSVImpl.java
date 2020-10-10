@@ -3,6 +3,7 @@ package com.huazie.frame.auth.base.user.service.impl;
 import com.huazie.frame.auth.base.user.dao.interfaces.IFleaRealNameInfoDAO;
 import com.huazie.frame.auth.base.user.entity.FleaRealNameInfo;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaRealNameInfoSV;
+import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import com.huazie.frame.db.jpa.service.impl.AbstractFleaJPASVImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,11 @@ public class FleaRealNameInfoSVImpl extends AbstractFleaJPASVImpl<FleaRealNameIn
     @Qualifier("fleaRealNameInfoDAO")
     public void setFleaRealNameInfoDao(IFleaRealNameInfoDAO fleaRealNameInfoDao) {
         this.fleaRealNameInfoDao = fleaRealNameInfoDao;
+    }
+
+    @Override
+    public FleaRealNameInfo queryValidRealNameInfo(Long realNameId) throws CommonException {
+        return fleaRealNameInfoDao.queryValidRealNameInfo(realNameId);
     }
 
     @Override

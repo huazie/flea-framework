@@ -8,8 +8,8 @@
 
     <!-- flea-frame-jersey -->
     <config-items key="flea-jersey-client" desc="Flea Jersey 客户端配置">
-        <config-item key="system_acct_id" desc="系统账户编号">9999</config-item>
-        <config-item key="system_acct_pwd" desc="系统账户密码">E120EA280AA50693D5568D0071456460</config-item>
+        <config-item key="system_acct_id" desc="系统账户编号">1000</config-item>
+        <config-item key="system_acct_pwd" desc="系统账户密码">31DAA1C5BA8F0874A2383145686D90CCD238483F</config-item>
     </config-items>
 
     <!-- flea-frame-common -->

@@ -1,5 +1,7 @@
 package com.huazie.frame.core.request.config;
 
+import com.huazie.frame.common.CommonConstants;
+import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.MapUtils;
 import com.huazie.frame.common.util.ObjectUtils;
@@ -139,7 +141,7 @@ public class FleaUrl {
     }
 
     /**
-     * <p> URL是否包含指定类型的URL前缀</p>
+     * <p> URL是否包含指定类型的URL前缀 </p>
      *
      * @param url  URL字符串
      * @param type 指定类型的URL前缀
@@ -149,8 +151,30 @@ public class FleaUrl {
     public boolean containsUrlPrefix(String url, String type) {
         boolean isContains = false;
         Property urlPrefixProperty = getUrlPrefixProperty(type);
-        if (ObjectUtils.isNotEmpty(urlPrefixProperty) && StringUtils.isNotBlank(url)) {
-            isContains = url.contains(urlPrefixProperty.getValue());
+        if (ObjectUtils.isNotEmpty(urlPrefixProperty) && StringUtils.isNotBlank(urlPrefixProperty.getValue()) && StringUtils.isNotBlank(url)) {
+            isContains = containsUrlPrefix1(url, urlPrefixProperty.getValue());
+        }
+        return isContains;
+    }
+
+    /**
+     * <p> URL是否包含指定类型的URL前缀 </p>
+     *
+     * @param url            URL字符串
+     * @param urlPrefixValue URL前缀值，多个以逗号分隔
+     * @return true : 包含, false : 不包含
+     */
+    private boolean containsUrlPrefix1(String url, String urlPrefixValue) {
+        boolean isContains = false;
+        // 获取逗号分隔的URL前缀
+        String[] urlPrefixValues = StringUtils.split(urlPrefixValue, CommonConstants.SymbolConstants.COMMA);
+        if (ArrayUtils.isNotEmpty(urlPrefixValues)) {
+            for (String value : urlPrefixValues) {
+                if (url.contains(value)) {
+                    isContains = true;
+                    break;
+                }
+            }
         }
         return isContains;
     }

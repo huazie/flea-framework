@@ -16,11 +16,11 @@ public class FleaFrameManager {
 
     private static volatile FleaFrameManager manager;
 
-    private static ThreadLocal<Locale> sLocale = new ThreadLocal<Locale>();// 存储国际化标识，每个线程留有一个副本
+    private static ThreadLocal<Locale> sLocale = new ThreadLocal<>();// 存储国际化标识，每个线程留有一个副本
 
-    private static ThreadLocal<String> sDBLocal = new ThreadLocal<String>(); // 当前线程采用JDBC连的数据库前缀配置
+    private static ThreadLocal<String> sDBLocal = new ThreadLocal<>(); // 当前线程采用JDBC连的数据库前缀配置
 
-    private static ThreadLocal<IFleaUser> sFleaUser = new ThreadLocal<IFleaUser>(); // 当前用户信息
+    private static ThreadLocal<IFleaUser> sFleaUser = new ThreadLocal<>(); // 当前用户信息
 
     private FleaFrameManager() {
     }

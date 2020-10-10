@@ -1,6 +1,7 @@
 package com.huazie.frame.auth.base.privilege.service.interfaces;
 
 import com.huazie.frame.auth.base.privilege.entity.FleaPrivilegeGroupRel;
+import com.huazie.frame.auth.common.pojo.privilege.FleaPrivilegeGroupRelPOJO;
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.db.jpa.service.interfaces.IAbstractFleaJPASV;
 
@@ -25,4 +26,14 @@ public interface IFleaPrivilegeGroupRelSV extends IAbstractFleaJPASV<FleaPrivile
      * @since 1.0.0
      */
     List<FleaPrivilegeGroupRel> getPrivilegeGroupRelList(Long privilegeGroupId, String authRelType) throws CommonException;
+
+    /**
+     * <p> 保存Flea权限组关联 </p>
+     *
+     * @param fleaPrivilegeGroupRelPOJO Flea权限组关联POJO类对象
+     * @return Flea权限组关联实体类对象
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    FleaPrivilegeGroupRel saveFleaPrivilegeGroupRel(FleaPrivilegeGroupRelPOJO fleaPrivilegeGroupRelPOJO) throws CommonException;
 }

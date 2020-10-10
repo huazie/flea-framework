@@ -1,5 +1,7 @@
 package com.huazie.frame.common;
 
+import java.util.Map;
+
 /**
  * <p> 用户信息接口 </p>
  *
@@ -86,4 +88,11 @@ public interface IFleaUser {
      */
     void set(String key, Object value);
 
+    /**
+     * <p> 用户信息转Map </p>
+     *
+     * @return 用户信息Map集合
+     * @since 1.0.0
+     */
+    Map<String, Object> toMap();
 }
