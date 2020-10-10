@@ -14,7 +14,6 @@ import com.huazie.frame.auth.base.role.service.interfaces.IFleaRoleGroupRelSV;
 import com.huazie.frame.auth.base.role.service.interfaces.IFleaRoleRelSV;
 import com.huazie.frame.auth.base.user.entity.FleaAccount;
 import com.huazie.frame.auth.base.user.entity.FleaAccountAttr;
-import com.huazie.frame.auth.base.user.entity.FleaLoginLog;
 import com.huazie.frame.auth.base.user.entity.FleaRealNameInfo;
 import com.huazie.frame.auth.base.user.entity.FleaUser;
 import com.huazie.frame.auth.base.user.entity.FleaUserAttr;
@@ -22,7 +21,6 @@ import com.huazie.frame.auth.base.user.entity.FleaUserGroupRel;
 import com.huazie.frame.auth.base.user.entity.FleaUserRel;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaAccountAttrSV;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaAccountSV;
-import com.huazie.frame.auth.base.user.service.interfaces.IFleaLoginLogSV;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaRealNameInfoSV;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaUserAttrSV;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaUserGroupRelSV;
@@ -35,17 +33,10 @@ import com.huazie.frame.auth.common.FunctionTypeEnum;
 import com.huazie.frame.auth.common.exception.FleaAuthCommonException;
 import com.huazie.frame.auth.common.pojo.user.FleaUserModuleData;
 import com.huazie.frame.auth.common.service.interfaces.IFleaAuthSV;
-import com.huazie.frame.auth.util.FleaMenuTree;
 import com.huazie.frame.common.CommonConstants;
-import com.huazie.frame.common.FleaSessionManager;
-import com.huazie.frame.common.IFleaUser;
 import com.huazie.frame.common.exception.CommonException;
-import com.huazie.frame.common.object.FleaObjectFactory;
 import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.CollectionUtils;
-import com.huazie.frame.common.util.DateUtils;
-import com.huazie.frame.common.util.HttpUtils;
-import com.huazie.frame.common.util.MapUtils;
 import com.huazie.frame.common.util.NumberUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
@@ -56,11 +47,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * <p> Flea 授权服务实现类 </p>
