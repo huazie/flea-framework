@@ -168,7 +168,7 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
 
     @Override
     @Cacheable(value = "fleaauthmenu", key = "#accountId + '_' + #systemAcctId")
-    public List<FleaMenu> getAllAccessibleMenus(Long accountId, Long systemAcctId) throws CommonException {
+    public List<FleaMenu> queryAllAccessibleMenus(Long accountId, Long systemAcctId) throws CommonException {
 
         // 校验操作账户编号
         // ERROR-AUTH-COMMON0000000001 【{0}】不能为空
@@ -253,7 +253,7 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
         // 处理系统账户下关联的菜单信息
         handleFunctionAttr(systemRelMenuIdList, fleaFunctionAttrList, systemAcctId);
 
-        return fleaMenuSV.getAllAccessibleMenus(systemRelMenuIdList, menuIdList);
+        return fleaMenuSV.queryAllAccessibleMenus(systemRelMenuIdList, menuIdList);
     }
 
     /**

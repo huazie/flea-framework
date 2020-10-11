@@ -25,7 +25,30 @@ public interface IFleaMenuSV extends IAbstractFleaJPASV<FleaMenu> {
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    List<FleaMenu> getAllAccessibleMenus(List<Long> systemRelMenuIdList, List<Long> menuIdList) throws CommonException;
+    List<FleaMenu> queryAllAccessibleMenus(List<Long> systemRelMenuIdList, List<Long> menuIdList) throws CommonException;
+
+    /**
+     * <p> 获取有效的菜单信息 </p>
+     *
+     * @param menuId    菜单编号
+     * @param menuCode  菜单编码
+     * @param menuName  菜单名称
+     * @param menuLevel 菜单等级
+     * @param parentId  父菜单编号
+     * @return 有效的菜单信息列表
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    List<FleaMenu> queryValidMenus(Long menuId, String menuCode, String menuName, Integer menuLevel, Long parentId) throws CommonException;
+
+    /**
+     * <p> 获取所有有效的菜单信息 </p>
+     *
+     * @return 所有有效的菜单信息列表
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    List<FleaMenu> queryAllValidMenus() throws CommonException;
 
     /**
      * <p> 保存Flea菜单 </p>

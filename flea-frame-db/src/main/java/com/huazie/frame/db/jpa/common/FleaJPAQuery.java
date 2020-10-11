@@ -478,7 +478,7 @@ public final class FleaJPAQuery implements Closeable {
         // 属性列名非空校验
         checkAttrName(attrName);
 
-        if (ObjectUtils.isEmpty(value)) {
+        if (StringUtils.isBlank(value)) {
             // 不做处理，直接返回即可
             return this;
         }
