@@ -28,7 +28,7 @@ public interface IFleaAuthSV {
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    List<FleaMenu> getAllAccessibleMenus(Long accountId, Long systemAcctId) throws CommonException;
+    List<FleaMenu> queryAllAccessibleMenus(Long accountId, Long systemAcctId) throws CommonException;
 
     /**
      * <p> 根据账户编号获取用户模块数据 </p>

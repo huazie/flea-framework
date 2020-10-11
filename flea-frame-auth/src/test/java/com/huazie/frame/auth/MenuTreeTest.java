@@ -2,6 +2,7 @@ package com.huazie.frame.auth;
 
 import com.huazie.frame.auth.base.function.entity.FleaMenu;
 import com.huazie.frame.auth.common.service.interfaces.IFleaAuthSV;
+import com.huazie.frame.auth.common.service.interfaces.IFleaFunctionModuleSV;
 import com.huazie.frame.auth.util.FleaMenuTree;
 import com.huazie.frame.auth.util.FueluxMenuTree;
 import com.huazie.frame.common.FleaTree;
@@ -107,7 +108,7 @@ public class MenuTreeTest {
         Long accountId = 10000L;
         Long systemAcctId = 1000L;
         try {
-            List<FleaMenu> fleaMenuList = fleaAuthSV.getAllAccessibleMenus(accountId, systemAcctId);
+            List<FleaMenu> fleaMenuList = fleaAuthSV.queryAllAccessibleMenus(accountId, systemAcctId);
 
             FleaMenuTree fleaMenuTree = new FleaMenuTree("跳蚤管家");
             fleaMenuTree.addAll(fleaMenuList);
@@ -128,9 +129,9 @@ public class MenuTreeTest {
         Long accountId = 10000L;
         Long systemAcctId = 1000L;
         try {
-            List<FleaMenu> fleaMenuList = fleaAuthSV.getAllAccessibleMenus(accountId, systemAcctId);
+            List<FleaMenu> fleaMenuList = fleaAuthSV.queryAllAccessibleMenus(accountId, systemAcctId);
 
-            FueluxMenuTree fueluxMenuTree = new FueluxMenuTree("跳蚤管家");
+            FueluxMenuTree fueluxMenuTree = new FueluxMenuTree("跳蚤管家", null);
             fueluxMenuTree.addAll(fleaMenuList);
 
             LOGGER.debug("MENU_TREE = \n{}", fueluxMenuTree);
@@ -142,4 +143,22 @@ public class MenuTreeTest {
         }
     }
 
+    @Test
+    public void testFueluxMenuTree1() {
+
+        IFleaFunctionModuleSV fleaFunctionModuleSV = (IFleaFunctionModuleSV) applicationContext.getBean("fleaFunctionModuleSV");
+        try {
+            List<FleaMenu> fleaMenuList = fleaFunctionModuleSV.queryValidMenus(null);
+
+            FueluxMenuTree fueluxMenuTree = new FueluxMenuTree("FleaFrameAuth", null);
+            fueluxMenuTree.addAll(fleaMenuList);
+
+            LOGGER.debug("MENU_TREE = \n{}", fueluxMenuTree);
+
+            LOGGER.debug("MENU = \n{}", fueluxMenuTree.toMapList());
+
+        } catch (CommonException e) {
+            LOGGER.error("Exception: ", e);
+        }
+    }
 }

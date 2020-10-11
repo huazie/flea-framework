@@ -154,7 +154,7 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
         FleaMenuTree fleaMenuTree = new FleaMenuTree("FleaFrameAuth");
         try {
             // 获取所有可以访问的菜单
-            List<FleaMenu> fleaMenuList = fleaAuthSV.getAllAccessibleMenus(acctId, systemAcctId);
+            List<FleaMenu> fleaMenuList = fleaAuthSV.queryAllAccessibleMenus(acctId, systemAcctId);
             fleaMenuTree.addAll(fleaMenuList);
         } catch (CommonException e) {
             if (LOGGER.isErrorEnabled()) {
