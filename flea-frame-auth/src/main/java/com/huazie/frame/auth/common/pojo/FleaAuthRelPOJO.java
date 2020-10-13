@@ -1,5 +1,7 @@
 package com.huazie.frame.auth.common.pojo;
 
+import com.huazie.frame.common.pojo.FleaRemarksPOJO;
+
 /**
  * <p> Flea关联POJO类 </p>
  *

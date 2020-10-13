@@ -153,7 +153,7 @@ public class FleaCodePanel extends JPanel implements ActionListener, ItemListene
         configGridBagConstraints.weightx = 0.0;
 
         // 数据库系统下拉框
-        dbSystemComboBox = new JComboBox<String>();
+        dbSystemComboBox = new JComboBox<>();
         dbSystemComboBox.addItem(DBSystemEnum.MySQL.getName());
         dbSystemComboBox.addItem(DBSystemEnum.Oracle.getName());
 
@@ -181,7 +181,7 @@ public class FleaCodePanel extends JPanel implements ActionListener, ItemListene
         showTitleConfig("COMMON_CODE_00021");
 
         // 主键生成策略下拉框
-        idGeneratorStrategyComboBox = new JComboBox<String>();
+        idGeneratorStrategyComboBox = new JComboBox<>();
         idGeneratorStrategyComboBox.addItem(GenerationType.TABLE.name());
         idGeneratorStrategyComboBox.addItem(GenerationType.IDENTITY.name());
         idGeneratorStrategyComboBox.addItem(GenerationType.SEQUENCE.name());

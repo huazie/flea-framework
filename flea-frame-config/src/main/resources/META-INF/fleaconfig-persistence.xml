@@ -12,6 +12,7 @@
 		<class>com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResService</class>
 		<class>com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResClient</class>
 		<class>com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResource</class>
+		<class>com.huazie.frame.core.base.cfgdata.entity.FleaMenuFavorites</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		
 		<properties>

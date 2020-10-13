@@ -100,7 +100,7 @@ public class FleaMenuSVImpl extends AbstractFleaJPASVImpl<FleaMenu> implements I
 
         // 校验菜单名称不能为空
         String menuName = fleaMenuPOJO.getMenuName();
-        StringUtils.checkBlank(menuCode, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", FleaAuthEntityConstants.FunctionEntityConstants.E_MENU_NAME);
+        StringUtils.checkBlank(menuName, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", FleaAuthEntityConstants.FunctionEntityConstants.E_MENU_NAME);
 
         // 校验菜单FontAwesome小图标不能为空
         String menuIcon = fleaMenuPOJO.getMenuIcon();
