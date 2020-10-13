@@ -1,5 +1,7 @@
 package com.huazie.frame.auth.common.pojo;
 
+import com.huazie.frame.common.pojo.FleaEffExpDatePOJO;
+
 /**
  * <p> Flea属性POJO类 </p>
  *

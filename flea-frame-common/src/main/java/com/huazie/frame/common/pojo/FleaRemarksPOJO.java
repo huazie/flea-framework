@@ -1,6 +1,4 @@
-package com.huazie.frame.auth.common.pojo;
-
-import com.huazie.frame.common.pojo.FleaCommonPOJO;
+package com.huazie.frame.common.pojo;
 
 /**
  * <p> Flea备注POJO类 </p>

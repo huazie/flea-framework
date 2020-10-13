@@ -1,6 +1,6 @@
 package com.huazie.frame.auth.common.pojo.privilege;
 
-import com.huazie.frame.auth.common.pojo.FleaRemarksPOJO;
+import com.huazie.frame.common.pojo.FleaRemarksPOJO;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**

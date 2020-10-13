@@ -66,6 +66,7 @@ public class TableSplitHelper {
         splitTable.setSplitTableName(tableName); // 设置分表名默认为主表名
         splitTable.setPkColumnValue(pkColumnValue); // 生成器表中的主键值，为主键中@TableGenerator中的pkColumnValue
         splitTable.setSplitTablePkColumnValue(pkColumnValue); // 生成器表中分表的主键值，默认为主键中@TableGenerator中的pkColumnValue
+        splitTable.setExistSplitTable(false);
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("The name of main table = {}", tableName);
         }
@@ -138,6 +139,7 @@ public class TableSplitHelper {
                         splitTable.setSplitTableName(tableNameBuilder.toString());
                         // 设置生成器表中分表的主键值
                         splitTable.setSplitTablePkColumnValue(pkColumnValueBuilder.toString());
+                        splitTable.setExistSplitTable(true); // 存在分表
                     }
                 }
             }

@@ -5,12 +5,15 @@ import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyI18nErrorMapping;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResClient;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResService;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResource;
+import com.huazie.frame.core.base.cfgdata.entity.FleaMenuFavorites;
 import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaJerseyI18nErrorMappingSV;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaJerseyResClientSV;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaJerseyResServiceSV;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaJerseyResourceSV;
+import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaMenuFavoritesSV;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaParaDetailSV;
+import com.huazie.frame.core.common.pojo.FleaMenuFavoritesPOJO;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -36,6 +39,8 @@ public class FleaConfigDataSpringBean {
 
     private IFleaJerseyResourceSV resourceSV;
 
+    private IFleaMenuFavoritesSV fleaMenuFavoritesSV;
+
     @Resource(name = "i18nErrorMappingSV")
     public void setMappingSV(IFleaJerseyI18nErrorMappingSV mappingSV) {
         this.mappingSV = mappingSV;
@@ -59,6 +64,11 @@ public class FleaConfigDataSpringBean {
     @Resource(name = "resourceSV")
     public void setResourceSV(IFleaJerseyResourceSV resourceSV) {
         this.resourceSV = resourceSV;
+    }
+
+    @Resource(name = "fleaMenuFavoritesSV")
+    public void setFleaMenuFavoritesSV(IFleaMenuFavoritesSV fleaMenuFavoritesSV) {
+        this.fleaMenuFavoritesSV = fleaMenuFavoritesSV;
     }
 
     /**
@@ -149,4 +159,15 @@ public class FleaConfigDataSpringBean {
         return resourceSV.getResourcePackages();
     }
 
+    /**
+     * <p> 保存菜单收藏夹 </p>
+     *
+     * @param fleaMenuFavoritesPOJO 菜单收藏夹POJO类对象
+     * @return Flea菜单收藏夹
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    public FleaMenuFavorites saveFleaMenuFavorites(FleaMenuFavoritesPOJO fleaMenuFavoritesPOJO) throws CommonException {
+        return fleaMenuFavoritesSV.saveFleaMenuFavorites(fleaMenuFavoritesPOJO);
+    }
 }
