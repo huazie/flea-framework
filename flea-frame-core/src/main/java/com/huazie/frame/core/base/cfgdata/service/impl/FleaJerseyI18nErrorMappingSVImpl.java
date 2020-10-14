@@ -8,7 +8,6 @@ import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import com.huazie.frame.db.jpa.service.impl.AbstractFleaJPASVImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,13 +30,11 @@ public class FleaJerseyI18nErrorMappingSVImpl extends AbstractFleaJPASVImpl<Flea
     }
 
     @Override
-    @Cacheable(value = "fleajerseyi18nerrormapping", key = "#resourceCode + '_' + #serviceCode")
     public List<FleaJerseyI18nErrorMapping> getMappings(String resourceCode, String serviceCode) throws CommonException {
         return i18NErrorMappingDAO.getMappings(resourceCode, serviceCode);
     }
 
     @Override
-    @Cacheable(value = "fleajerseyi18nerrormapping", key = "#resourceCode + '_' + #serviceCode + '_' + #i18nCode")
     public FleaJerseyI18nErrorMapping getMapping(String resourceCode, String serviceCode, String i18nCode) throws CommonException {
         return i18NErrorMappingDAO.getMapping(resourceCode, serviceCode, i18nCode);
     }

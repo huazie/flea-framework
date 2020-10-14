@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p> Flea菜单收藏夹SV层实现类 </p>
  *
@@ -31,6 +33,11 @@ public class FleaMenuFavoritesSVImpl extends AbstractFleaJPASVImpl<FleaMenuFavor
     @Qualifier("fleaMenuFavoritesDAO")
     public void setFleaMenuFavoritesDao(IFleaMenuFavoritesDAO fleaMenuFavoritesDao) {
         this.fleaMenuFavoritesDao = fleaMenuFavoritesDao;
+    }
+
+    @Override
+    public List<FleaMenuFavorites> queryValidFleaMenuFavorites(Long accountId, String menuCode) throws CommonException {
+        return fleaMenuFavoritesDao.queryValidFleaMenuFavorites(accountId, menuCode);
     }
 
     @Override

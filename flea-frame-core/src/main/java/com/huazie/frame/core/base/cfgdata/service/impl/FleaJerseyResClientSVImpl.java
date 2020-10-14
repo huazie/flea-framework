@@ -8,7 +8,6 @@ import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import com.huazie.frame.db.jpa.service.impl.AbstractFleaJPASVImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -29,7 +28,6 @@ public class FleaJerseyResClientSVImpl extends AbstractFleaJPASVImpl<FleaJerseyR
     }
 
     @Override
-    @Cacheable(value = "fleajerseyresclient", key = "#clientCode")
     public FleaJerseyResClient getResClient(String clientCode) throws CommonException {
         return resClientDAO.getResClient(clientCode);
     }
