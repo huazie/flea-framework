@@ -25,4 +25,14 @@ public interface FleaConfigEntityConstants extends FleaEntityConstants {
 
     String E_CLIENT_CODE = "clientCode";
 
+    String E_ACCOUNT_ID = "accountId";
+
+    String E_MENU_CODE = "menuCode";
+
+    String E_MENU_NAME = "menuName";
+
+    String E_MENU_ICON = "menuIcon";
+
+    String E_FAVORITE_STATE = "favoritesState";
+
 }

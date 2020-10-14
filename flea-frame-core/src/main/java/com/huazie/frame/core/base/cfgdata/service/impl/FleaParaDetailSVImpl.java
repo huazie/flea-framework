@@ -9,7 +9,6 @@ import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import com.huazie.frame.db.jpa.service.impl.AbstractFleaJPASVImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,13 +31,11 @@ public class FleaParaDetailSVImpl extends AbstractFleaJPASVImpl<FleaParaDetail> 
     }
 
     @Override
-    @Cacheable(value = "fleaparadetail", key = "#paraType")
     public List<FleaParaDetail> getParaDetails(String paraType, String paraCode) throws CommonException {
         return fleaParaDetailDao.getParaDetail(paraType, paraCode);
     }
 
     @Override
-    @Cacheable(value = "fleaparadetail", key = "#paraType + '_' + #paraCode")
     public FleaParaDetail getParaDetail(String paraType, String paraCode) throws CommonException {
 
         List<FleaParaDetail> fleaParaDetails = fleaParaDetailDao.getParaDetail(paraType, paraCode);

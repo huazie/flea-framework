@@ -1,6 +1,8 @@
 package com.huazie.frame.core.base.cfgdata;
 
+import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.core.base.cfgdata.bean.FleaConfigDataSpringBean;
+import com.huazie.frame.core.base.cfgdata.entity.FleaMenuFavorites;
 import com.huazie.frame.core.common.pojo.FleaMenuFavoritesPOJO;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import java.util.List;
 
 /**
  * <p>  </p>
@@ -35,7 +39,7 @@ public class FleaMenuFavoritesTest {
 
         try {
             FleaMenuFavoritesPOJO fleaMenuFavoritesPOJO = new FleaMenuFavoritesPOJO();
-            fleaMenuFavoritesPOJO.setAccountId(1015L);
+            fleaMenuFavoritesPOJO.setAccountId(10000L);
             fleaMenuFavoritesPOJO.setMenuCode("menu_add");
             fleaMenuFavoritesPOJO.setMenuName("菜单新增");
             fleaMenuFavoritesPOJO.setMenuIcon("plus-circle");
@@ -44,6 +48,39 @@ public class FleaMenuFavoritesTest {
             bean.saveFleaMenuFavorites(fleaMenuFavoritesPOJO);
 
         } catch (Exception e) {
+            LOGGER.error("Exception:", e);
+        }
+    }
+
+    @Test
+    public void testQueryFleaMenuFavoritesByAccountId() {
+
+        FleaConfigDataSpringBean bean = (FleaConfigDataSpringBean) applicationContext.getBean("fleaConfigDataSpringBean");
+
+        try {
+            Long accountId = 10000L;
+            List<FleaMenuFavorites> fleaMenuFavoritesList = bean.queryValidFleaMenuFavorites(accountId);
+
+            LOGGER.debug("MENU FAVORITES LIST = {}", fleaMenuFavoritesList);
+
+        } catch (CommonException e) {
+            LOGGER.error("Exception:", e);
+        }
+    }
+
+    @Test
+    public void testQueryFleaMenuFavoritesByAccountIdAndMenuCode() {
+
+        FleaConfigDataSpringBean bean = (FleaConfigDataSpringBean) applicationContext.getBean("fleaConfigDataSpringBean");
+
+        try {
+            Long accountId = 10000L;
+            String menuCode = "menu_add";
+            FleaMenuFavorites fleaMenuFavorites = bean.queryValidFleaMenuFavorites(accountId, menuCode);
+
+            LOGGER.debug("MENU FAVORITES = {}", fleaMenuFavorites);
+
+        } catch (CommonException e) {
             LOGGER.error("Exception:", e);
         }
     }
