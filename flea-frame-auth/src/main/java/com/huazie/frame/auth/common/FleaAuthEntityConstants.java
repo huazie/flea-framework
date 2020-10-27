@@ -23,6 +23,11 @@ public interface FleaAuthEntityConstants extends FleaEntityConstants {
         String E_ACCOUNT_ID = "accountId";
 
         /**
+         *
+         */
+        String E_SYSTEM_ACCOUNT_ID = "system_account_id";
+
+        /**
          * <p> 账号 </p>
          */
         String E_ACCOUNT_CODE = "accountCode";
