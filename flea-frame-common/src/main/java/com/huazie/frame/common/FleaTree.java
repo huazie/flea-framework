@@ -360,6 +360,26 @@ public class FleaTree<T> implements Serializable {
         return treeLeafElements;
     }
 
+    /**
+     * <p> 在当前树下添加一个树 </p>
+     *
+     * @param fleaTree Flea树
+     * @since 1.0.0
+     */
+    public void addFleaTree(FleaTree<T> fleaTree) {
+
+    }
+
+    /**
+     * <p> 判断是否Flea树中是否有节点（包括根节点） </p>
+     *
+     * @return true: 没有 false: 有
+     * @since 1.0.0
+     */
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
     @Override
     public String toString() {
 
