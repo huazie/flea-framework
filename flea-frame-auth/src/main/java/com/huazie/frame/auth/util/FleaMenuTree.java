@@ -77,6 +77,7 @@ public class FleaMenuTree extends FleaTree<FleaMenu> {
         this.systemName = systemName;
         FleaMenu systemFleaMenu = new FleaMenu();
         systemFleaMenu.setMenuId(CommonConstants.NumeralConstants.MINUS_ONE);
+        systemFleaMenu.setMenuCode(FleaMenuTree.class.getSimpleName());
         systemFleaMenu.setMenuName(systemName);
         systemFleaMenu.setParentId(CommonConstants.NumeralConstants.MINUS_TWO);
         systemFleaMenu.setMenuSort(CommonConstants.NumeralConstants.INT_ONE);

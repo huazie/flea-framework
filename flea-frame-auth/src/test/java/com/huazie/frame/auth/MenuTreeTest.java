@@ -87,7 +87,7 @@ public class MenuTreeTest {
         LOGGER.debug("Size = {}", fleaTree.size());
         LOGGER.debug("TreeLeaf List= {}", fleaTree.getAllTreeLeafElement());
         LOGGER.debug("TreeLeaf = {}", fleaTree.getTreeLeafElement(22L));
-        LOGGER.debug("Tree = \n{}", fleaTree.toMapList());
+        LOGGER.debug("Tree = \n{}", fleaTree.toMapList(false));
     }
 
     @Test
@@ -115,7 +115,9 @@ public class MenuTreeTest {
 
             LOGGER.debug("MENU_TREE = \n{}", fleaMenuTree);
 
-            LOGGER.debug("MENU = \n{}", fleaMenuTree.toMapList());
+            LOGGER.debug("MENU = \n{}", fleaMenuTree.toMapList(false));
+
+            LOGGER.debug("MENU1 = \n{}", fleaMenuTree.toMapList(true));
 
         } catch (CommonException e) {
             LOGGER.error("Exception: ", e);
@@ -136,7 +138,7 @@ public class MenuTreeTest {
 
             LOGGER.debug("MENU_TREE = \n{}", fueluxMenuTree);
 
-            LOGGER.debug("MENU = \n{}", fueluxMenuTree.toMapList());
+            LOGGER.debug("MENU = \n{}", fueluxMenuTree.toMapList(true));
 
         } catch (CommonException e) {
             LOGGER.error("Exception: ", e);
@@ -155,7 +157,7 @@ public class MenuTreeTest {
 
             LOGGER.debug("MENU_TREE = \n{}", fueluxMenuTree);
 
-            LOGGER.debug("MENU = \n{}", fueluxMenuTree.toMapList());
+            LOGGER.debug("MENU = \n{}", fueluxMenuTree.toMapList(true));
 
         } catch (CommonException e) {
             LOGGER.error("Exception: ", e);
