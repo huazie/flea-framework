@@ -361,16 +361,6 @@ public class FleaTree<T> implements Serializable {
     }
 
     /**
-     * <p> 在当前树下添加一个树 </p>
-     *
-     * @param fleaTree Flea树
-     * @since 1.0.0
-     */
-    public void addFleaTree(FleaTree<T> fleaTree) {
-
-    }
-
-    /**
      * <p> 判断是否Flea树中是否有节点（包括根节点） </p>
      *
      * @return true: 没有 false: 有
@@ -429,13 +419,21 @@ public class FleaTree<T> implements Serializable {
     }
 
     /**
-     * <p> 以{@code List<Map<String, Object>>}形式返回 所有【不包含根节点】的树节点信息 </p>
+     * <p> 以{@code List<Map<String, Object>>}形式返回 所有的树节点信息 </p>
      *
+     * @param isContains 是否包含根节点 【true: 包含 false: 不包含】
      * @return 树的节点信息
      * @since 1.0.0
      */
-    public List<Map<String, Object>> toMapList() {
-        return toMapList(rootNode.subNotes);
+    public List<Map<String, Object>> toMapList(boolean isContains) {
+        LinkedList<TreeNode<T>> treeNodes;
+        if (isContains) {
+            treeNodes = new LinkedList<>();
+            treeNodes.add(rootNode);
+        } else {
+            treeNodes = rootNode.subNotes;
+        }
+        return toMapList(treeNodes);
     }
 
     /**
@@ -453,7 +451,12 @@ public class FleaTree<T> implements Serializable {
             for (TreeNode<T> subNote : subNotes) {
                 if (ObjectUtils.isNotEmpty(subNote)) {
                     TreeNode<T> parentNode = subNote.parentNote;
-                    Map<String, Object> treeNodeMap = toMap(subNote.element, subNote.id, subNote.height, parentNode.element, parentNode.id, parentNode.height, CollectionUtils.isNotEmpty(subNote.subNotes));
+                    Map<String, Object> treeNodeMap;
+                    if (ObjectUtils.isEmpty(parentNode)) {
+                        treeNodeMap = toMap(subNote.element, subNote.id, subNote.height, null, CommonConstants.NumeralConstants.MINUS_TWO, CommonConstants.NumeralConstants.INT_ZERO, CollectionUtils.isNotEmpty(subNote.subNotes));
+                    } else {
+                        treeNodeMap = toMap(subNote.element, subNote.id, subNote.height, parentNode.element, parentNode.id, parentNode.height, CollectionUtils.isNotEmpty(subNote.subNotes));
+                    }
                     treeNodeMap.put(getMapKeyForSubNotes(), toMapList(subNote.subNotes));
                     // 重处理树节点信息，子类可实现更细粒度的功能
                     reHandleTreeNodeMap(treeNodeMap);
