@@ -88,6 +88,8 @@ public class MenuTreeTest {
         LOGGER.debug("TreeLeaf List= {}", fleaTree.getAllTreeLeafElement());
         LOGGER.debug("TreeLeaf = {}", fleaTree.getTreeLeafElement(22L));
         LOGGER.debug("Tree = \n{}", fleaTree.toMapList(false));
+        LOGGER.debug("Tree【root】 = \n{}", fleaTree.toMapList(true));
+
     }
 
     @Test

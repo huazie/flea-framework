@@ -548,7 +548,9 @@ public class FleaTree<T> implements Serializable {
                 subNotes = new LinkedList<>();
             }
 
+            // 无子节点
             if (subNotes.isEmpty()) {
+                // 将待添加节点插入到子节点链表的头部
                 subNotes.addFirst(subNote);
             } else {
                 ListIterator<TreeNode<T>> subNoteListIt = subNotes.listIterator();
@@ -559,10 +561,12 @@ public class FleaTree<T> implements Serializable {
                     int comp = compare(currentNode.element, subNote.element, comparator);
                     // 当前节点元素的顺序大于待添加节点的元素的顺序
                     if (comp > CommonConstants.NumeralConstants.INT_ZERO) {
-                        // 将待添加节点插入到当前节点处
+                        // 将待添加节点插入到当前节点处，当前节点链接到待添加节点的后面
                         subNotes.add(currentIndex - 1, subNote);
                         break;
                     } else if (comp < CommonConstants.NumeralConstants.INT_ZERO && !subNoteListIt.hasNext()) {
+                        // 当前节点元素的顺序小于待添加节点的元素的顺序，并且没有后续子节点了
+                        // 将待添加节点插入到子节点链表的尾部
                         subNotes.addLast(subNote);
                         break;
                     }
