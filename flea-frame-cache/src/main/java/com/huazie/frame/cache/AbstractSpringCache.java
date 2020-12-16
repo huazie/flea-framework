@@ -43,12 +43,12 @@ public abstract class AbstractSpringCache implements Cache, IFleaCache {
     public ValueWrapper get(Object key) {
         ValueWrapper wrapper = null;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("AbstractSpringCache##get(Object) KEY = {}", key);
+            LOGGER.debug("KEY = {}", key);
         }
         Object cacheValue = fleaCache.get(key.toString());
         if (ObjectUtils.isNotEmpty(cacheValue)) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("AbstractSpringCache##get(Object) VALUE = {}", cacheValue);
+                LOGGER.debug("VALUE = {}", cacheValue);
             }
             wrapper = new SimpleValueWrapper(cacheValue);
         }
@@ -74,7 +74,7 @@ public abstract class AbstractSpringCache implements Cache, IFleaCache {
     @SuppressWarnings(value = "unchecked")
     public <T> T get(Object key, Class<T> type) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("AbstractSpringCache##get(Object) KEY = {}", key);
+            LOGGER.debug("KEY = {}", key);
         }
         Object cacheValue = fleaCache.get(key.toString());
         if (ObjectUtils.isNotEmpty(type) && !type.isInstance(cacheValue)) {
@@ -97,7 +97,7 @@ public abstract class AbstractSpringCache implements Cache, IFleaCache {
             fleaCache.put(key.toString(), value);
         } else {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("AbstractSpringCache##putIfAbsent(Object, Object) VALUE = {}", cacheValue);
+                LOGGER.debug("VALUE = {}", cacheValue);
             }
             wrapper = new SimpleValueWrapper(cacheValue);
         }

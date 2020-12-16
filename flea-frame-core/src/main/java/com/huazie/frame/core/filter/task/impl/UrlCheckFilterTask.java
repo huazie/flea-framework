@@ -32,7 +32,7 @@ public class UrlCheckFilterTask implements IFilterTask {
     @Override
     public void doFilterTask(FleaRequestContext fleaRequestContext, IFilterTaskChain filterTaskChain) throws CommonException {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("UrlCheckFilterTask##doFilterTask(FleaRequestContext, IFilterTaskChain) Start");
+            LOGGER.debug("Start");
         }
 
         String urlIllegalChar = FleaRequestUtil.getUrlIllegalChar();
@@ -41,7 +41,7 @@ public class UrlCheckFilterTask implements IFilterTask {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("UrlCheckFilterTask##doFilterTask(FleaRequestContext, IFilterTaskChain) URL_ILLEGAL_CHAR = {}", urlIllegalChar);
+            LOGGER.debug("URL_ILLEGAL_CHAR = {}", urlIllegalChar);
         }
 
         HttpServletRequest request = (HttpServletRequest) fleaRequestContext.getServletRequest();
@@ -54,13 +54,13 @@ public class UrlCheckFilterTask implements IFilterTask {
 
             String uri = request.getRequestURI();
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("UrlCheckFilterTask##doFilterTask(FleaRequestContext, IFilterTaskChain) URI = {}", uri);
+                LOGGER.debug("URI = {}", uri);
             }
 
             // 不需校验的URL，直接跳过
             if (FleaRequestUtil.isUnCheckUrl(uri)) {
                 if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("UrlCheckFilterTask##doFilterTask(FleaRequestContext, IFilterTaskChain) UnCheck URL");
+                    LOGGER.debug("UnCheck URL");
                 }
                 return;
             }
@@ -68,7 +68,7 @@ public class UrlCheckFilterTask implements IFilterTask {
             // 需要校验的URL【默认重定向到登录页面】
             if (FleaRequestUtil.isCheckUrl(uri)) {
                 if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("UrlCheckFilterTask##doFilterTask(FleaRequestContext, IFilterTaskChain) Check URL, Redirect to Login Page");
+                    LOGGER.debug("Check URL, Redirect to Login Page");
                 }
                 // 重定向到登录页面
                 FleaRequestUtil.sendRedirectToLoginPage(fleaRequestContext);
@@ -80,7 +80,7 @@ public class UrlCheckFilterTask implements IFilterTask {
         filterTaskChain.doFilterTask(fleaRequestContext);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("UrlCheckFilterTask##doFilterTask(FleaRequestContext, IFilterTaskChain) End");
+            LOGGER.debug("End");
         }
     }
 }

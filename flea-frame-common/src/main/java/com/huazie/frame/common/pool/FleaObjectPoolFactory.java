@@ -52,7 +52,7 @@ public class FleaObjectPoolFactory {
         }
         String poolNameKey = poolName + CommonConstants.SymbolConstants.UNDERLINE + objClazz.getName();
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaObjectPoolFactory##getFleaObjectPool(String, Class) Pool Name Key = {}", poolNameKey);
+            LOGGER.debug("Pool Name Key = {}", poolNameKey);
         }
         if (!fleaObjectPools.containsKey(poolNameKey)) {
             synchronized (fleaObjectPools) {
@@ -80,12 +80,12 @@ public class FleaObjectPoolFactory {
     private static FleaObjectPool build(String poolName, Class<?> objClazz) {
         String className = objClazz.getSimpleName();
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaObjectPoolFactory##build(String, Class) Object Simple Name = {}", className);
+            LOGGER.debug("Object Simple Name = {}", className);
         }
         ConfigItem configItem = FleaConfigManager.getConfigItem(CommonConstants.FleaPoolConstants.FLEA_OBJECT_POOL, className);
         if (ObjectUtils.isEmpty(configItem)) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("FleaObjectPoolFactory##build(String, Class) Can not find the builder by the <config-item key=\"{}\"> from <config-items key=\"{}\"> in [flea-config.xml]",
+                LOGGER.debug("Can not find the builder by the <config-item key=\"{}\"> from <config-items key=\"{}\"> in [flea-config.xml]",
                         className, CommonConstants.FleaPoolConstants.FLEA_OBJECT_POOL);
             }
             return null;
@@ -94,7 +94,7 @@ public class FleaObjectPoolFactory {
         String builderImpl = configItem.getValue();
         if (StringUtils.isBlank(builderImpl)) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("FleaObjectPoolFactory##build(String, Class) The builder is empty, found by the <config-item key=\"{}\"> from <config-items key=\"{}\"> in [flea-config.xml]",
+                LOGGER.debug("The builder is empty, found by the <config-item key=\"{}\"> from <config-items key=\"{}\"> in [flea-config.xml]",
                         className, CommonConstants.FleaPoolConstants.FLEA_OBJECT_POOL);
             }
             return null;

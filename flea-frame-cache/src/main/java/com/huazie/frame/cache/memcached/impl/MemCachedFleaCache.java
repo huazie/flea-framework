@@ -39,7 +39,7 @@ public class MemCachedFleaCache extends AbstractFleaCache {
     @Override
     public Object getNativeValue(String key) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("MemCachedFleaCache##getNativeValue(String) KEY = {}", key);
+            LOGGER.debug("KEY = {}", key);
         }
         return memCachedClient.get(key);
     }
@@ -47,9 +47,9 @@ public class MemCachedFleaCache extends AbstractFleaCache {
     @Override
     public void putNativeValue(String key, Object value, long expiry) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("MemCachedFleaCache##putNativeValue(String, Object, long) KEY = {}", key);
-            LOGGER.debug("MemCachedFleaCache##putNativeValue(String, Object, long) VALUE = {}", value);
-            LOGGER.debug("MemCachedFleaCache##putNativeValue(String, Object, long) EXPIRY = {}s", expiry);
+            LOGGER.debug("KEY = {}", key);
+            LOGGER.debug("VALUE = {}", value);
+            LOGGER.debug("EXPIRY = {}s", expiry);
         }
         memCachedClient.set(key, value, new Date(expiry * 1000));
     }
@@ -57,7 +57,7 @@ public class MemCachedFleaCache extends AbstractFleaCache {
     @Override
     public void deleteNativeValue(String key) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("MemCachedFleaCache##deleteNativeValue(String) KEY = {}", key);
+            LOGGER.debug("KEY = {}", key);
         }
         memCachedClient.delete(key);
     }

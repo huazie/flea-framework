@@ -39,7 +39,7 @@ public class CoreFleaCache extends AbstractFleaCache {
     @Override
     public Object getNativeValue(String key) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("CoreFleaCache##getNativeValue(String) KEY = {}", key);
+            LOGGER.debug("KEY = {}", key);
         }
         return fleaCache.getNativeValue(key);
     }
@@ -47,9 +47,9 @@ public class CoreFleaCache extends AbstractFleaCache {
     @Override
     public void putNativeValue(String key, Object value, long expiry) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("CoreFleaCache##putNativeValue(String, Object, long) KEY = {}", key);
-            LOGGER.debug("CoreFleaCache##putNativeValue(String, Object, long) VALUE = {}", value);
-            LOGGER.debug("CoreFleaCache##putNativeValue(String, Object, long) EXPIRY = {}s", expiry);
+            LOGGER.debug("KEY = {}", key);
+            LOGGER.debug("VALUE = {}", value);
+            LOGGER.debug("EXPIRY = {}s", expiry);
         }
         fleaCache.putNativeValue(key, value, expiry);
     }
@@ -57,7 +57,7 @@ public class CoreFleaCache extends AbstractFleaCache {
     @Override
     public void deleteNativeValue(String key) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("CoreFleaCache##deleteNativeValue(String) KEY = {}", key);
+            LOGGER.debug("KEY = {}", key);
         }
         fleaCache.deleteNativeValue(key);
     }

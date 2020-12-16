@@ -44,7 +44,7 @@ public class RandomCode {
             sNumberCode.append(random.nextInt(NUMBER_TEN));
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("RandomCode##toNumberCode(int) NumberCode = {}", sNumberCode);
+            LOGGER.debug("NumberCode = {}", sNumberCode);
         }
         return sNumberCode.toString();
     }
@@ -108,7 +108,7 @@ public class RandomCode {
             sLetterCode.append(letter);
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("RandomCode##toLowerLetterCode(int, PinyinEnum) LetterCode = {}", sLetterCode);
+            LOGGER.debug("LetterCode = {}", sLetterCode);
         }
         return sLetterCode.toString();
     }
@@ -157,12 +157,12 @@ public class RandomCode {
     public static String toUUID() {
         String sUUID = UUID.randomUUID().toString();
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("RandomCode##toUUID() Before UUID = {}", sUUID);
+            LOGGER.debug("Before UUID = {}", sUUID);
         }
         // 去掉"-"符号
         String sResult = sUUID.replaceAll(CommonConstants.SymbolConstants.HYPHEN, "");
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("RandomCode##toUUID() After UUID = {}", sResult);
+            LOGGER.debug("After UUID = {}", sResult);
         }
         return sResult;
     }

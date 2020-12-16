@@ -51,8 +51,8 @@ public class DeleteFleaRequest extends FleaRequest {
         String requestData = toRequestData(request);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("DeleteFleaRequest##request(WebTarget, FleaJerseyRequest) Start");
-            LOGGER.debug("DeleteFleaRequest##request(WebTarget, FleaJerseyRequest) RequestData = {}", requestData);
+            LOGGER.debug("Start");
+            LOGGER.debug("RequestData = {}", requestData);
         }
 
         // DELETE请求发送
@@ -62,8 +62,8 @@ public class DeleteFleaRequest extends FleaRequest {
                 .delete(FleaJerseyResponse.class);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("DeleteFleaRequest##request(WebTarget, FleaJerseyRequest) FleaJerseyResponse = {}", response);
-            LOGGER.debug("DeleteFleaRequest##request(WebTarget, FleaJerseyRequest) End");
+            LOGGER.debug("FleaJerseyResponse = {}", response);
+            LOGGER.debug("End");
         }
 
         return response;

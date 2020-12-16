@@ -58,8 +58,8 @@ public class RequestFactory {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("RequestFactory##buildFleaRequest(RequestConfig) Start");
-            LOGGER.debug("RequestFactory##buildFleaRequest(RequestConfig) RequestConfig = {}", config.getConfig());
+            LOGGER.debug("Start");
+            LOGGER.debug("RequestConfig = {}", config.getConfig());
         }
 
         // 获取请求方式
@@ -74,7 +74,7 @@ public class RequestFactory {
             requestModeEnum = RequestModeEnum.valueOf(requestMode.toUpperCase());
         } catch (IllegalArgumentException e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("RequestFactory##buildFleaRequest(RequestConfig) Exception = ", e);
+                LOGGER.error("Exception = ", e);
             }
         }
 
@@ -89,10 +89,10 @@ public class RequestFactory {
 
         if (LOGGER.isDebugEnabled()) {
             if (ObjectUtils.isNotEmpty(request)) {
-                LOGGER.debug("RequestFactory##buildFleaRequest(RequestConfig) Request = {}", request.getClass().getName());
-                LOGGER.debug("RequestFactory##buildFleaRequest(RequestConfig) RequestMode = {}", request.getRequestMode().getMode());
+                LOGGER.debug("Request = {}", request.getClass().getName());
+                LOGGER.debug("RequestMode = {}", request.getRequestMode().getMode());
             }
-            LOGGER.debug("RequestFactory##buildFleaRequest(RequestConfig) End");
+            LOGGER.debug("End");
         }
 
         return request;

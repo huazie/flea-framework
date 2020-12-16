@@ -38,7 +38,7 @@ public class GsonUtils {
             t = gson.fromJson(json, clazz);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("GsonUtils##toEntity() Exception = ", e);
+                LOGGER.error("Exception = ", e);
             }
         }
         if (LOGGER.isDebugEnabled()) {
@@ -85,7 +85,7 @@ public class GsonUtils {
      */
     public static Map<String, Object> toMap(String json) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("GsonUtils##toMap(String) Json = {}", json);
+            LOGGER.debug("Json = {}", json);
         }
         Map<String, Object> map = null;
         try {
@@ -94,11 +94,11 @@ public class GsonUtils {
             }.getType());
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("GsonUtils##toMap(String) Exception = ", e);
+                LOGGER.error("Exception = ", e);
             }
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("GsonUtils##toMap(String) Map = {}", map);
+            LOGGER.debug("Map = {}", map);
         }
         return map;
     }
@@ -112,7 +112,7 @@ public class GsonUtils {
      */
     public static List<Map<String, Object>> toMapList(String json) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("GsonUtils##toMapList(String) Json = {}", json);
+            LOGGER.debug("Json = {}", json);
         }
         List<Map<String, Object>> mapList = null;
         try {
@@ -122,11 +122,11 @@ public class GsonUtils {
 
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("GsonUtils##toMapList(String) Exception = ", e);
+                LOGGER.error("Exception = ", e);
             }
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("GsonUtils##toMapList(String) MapList={}", mapList);
+            LOGGER.debug("MapList={}", mapList);
         }
         return mapList;
     }
@@ -140,12 +140,12 @@ public class GsonUtils {
      */
     public static String toJsonString(Object obj) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("GsonUtils##toJsonString(String) Object = {}", obj);
+            LOGGER.debug("Object = {}", obj);
         }
         Gson gson = new Gson();
         String json = gson.toJson(obj);
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("GsonUtils##toJsonString(String) Json = {}", json);
+            LOGGER.debug("Json = {}", json);
         }
         return json;
     }

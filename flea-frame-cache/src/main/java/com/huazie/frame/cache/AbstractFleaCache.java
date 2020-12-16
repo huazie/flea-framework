@@ -38,11 +38,11 @@ public abstract class AbstractFleaCache implements IFleaCache {
         Object value = null;
         try {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("AbstractFleaCache##get(String) KEY = {}", key);
+                LOGGER.debug("KEY = {}", key);
             }
             value = getNativeValue(getNativeKey(key));
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("AbstractFleaCache##get(String) VALUE = {}", value);
+                LOGGER.debug("VALUE = {}", value);
             }
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
@@ -71,7 +71,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
     public void clear() {
         Set<String> keySet = getCacheKey();
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("AbstractFleaCache##clear() KEYS = {}", keySet);
+            LOGGER.debug("KEYS = {}", keySet);
         }
         if (CollectionUtils.isNotEmpty(keySet)) {
             for (String key : keySet) {
@@ -125,7 +125,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
             // 存在待删除的数据键关键字
             if (keySet.contains(key)) {
                 if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("AbstractFleaCache##deleteCacheKey() Delete cache of recording all key, KEY = {}", key);
+                    LOGGER.debug("Delete cache of recording all key, KEY = {}", key);
                 }
                 if (CommonConstants.NumeralConstants.INT_ONE == keySet.size()) {
                     deleteCacheAllKey(); // 直接将记录当前Cache所有数据键关键字的缓存从缓存中清空
@@ -137,7 +137,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
                 }
             } else {
                 if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("AbstractFleaCache##deleteCacheKey() The CacheKey of [{}] is not exist", key);
+                    LOGGER.debug("The CacheKey of [{}] is not exist", key);
                 }
             }
         }
@@ -151,7 +151,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
     private void deleteCacheAllKey() {
         try {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("AbstractFleaCache##deleteCacheAllKey() Delete cache of recording all key");
+                LOGGER.debug("Delete cache of recording all key");
             }
             deleteNativeValue(getNativeCacheKey(name));
         } catch (Exception e) {
@@ -170,7 +170,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
             keySet = (Set<String>) keySetObj;
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("AbstractFleaCache##getCacheKey() CacheKey = {}", keySet);
+            LOGGER.debug("CacheKey = {}", keySet);
         }
         return keySet;
     }

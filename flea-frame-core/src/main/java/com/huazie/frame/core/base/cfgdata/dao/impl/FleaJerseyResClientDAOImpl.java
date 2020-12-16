@@ -40,7 +40,7 @@ public class FleaJerseyResClientDAOImpl extends FleaConfigDAOImpl<FleaJerseyResC
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJerseyResClientDAOImpl##getResClient(String) ResClient = {}", resClient);
+            LOGGER.debug("ResClient = {}", resClient);
         }
 
         return resClient;

@@ -41,7 +41,7 @@ public class FleaJerseyResServiceDAOImpl extends FleaConfigDAOImpl<FleaJerseyRes
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJerseyResServiceDAOImpl##getResService(String, String) ResService = {}", resService);
+            LOGGER.debug("ResService = {}", resService);
         }
 
         return resService;

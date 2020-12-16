@@ -511,26 +511,26 @@ public class FleaJDBCHelper {
 
         if (LOGGER.isDebugEnabled()) {
             if (TemplateTypeEnum.INSERT.getKey().equals(templateType)) {
-                LOGGER.debug("FleaJDBCHelper##insert(String, T) SQL = {}", sql);
+                LOGGER.debug("SQL = {}", sql);
             } else if (TemplateTypeEnum.UPDATE.getKey().equals(templateType)) {
-                LOGGER.debug("FleaJDBCHelper##update(String, T) SQL = {}", sql);
+                LOGGER.debug("SQL = {}", sql);
             } else if (TemplateTypeEnum.DELETE.getKey().equals(templateType)) {
-                LOGGER.debug("FleaJDBCHelper##delete(String, T) SQL = {}", sql);
+                LOGGER.debug("SQL = {}", sql);
             } else if (TemplateTypeEnum.SELECT.getKey().equals(templateType)) {
-                LOGGER.debug("FleaJDBCHelper##query(String, T) SQL = {}", sql);
+                LOGGER.debug("SQL = {}", sql);
             }
         }
 
         if (CollectionUtils.isNotEmpty(sqlParams)) {
             for (SqlParam sqlParam : sqlParams) {
                 if (TemplateTypeEnum.INSERT.getKey().equals(templateType)) {
-                    LOGGER.debug("FleaJDBCHelper##insert(String, T) COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
+                    LOGGER.debug("COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
                 } else if (TemplateTypeEnum.UPDATE.getKey().equals(templateType)) {
-                    LOGGER.debug("FleaJDBCHelper##update(String, T) COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
+                    LOGGER.debug("COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
                 } else if (TemplateTypeEnum.DELETE.getKey().equals(templateType)) {
-                    LOGGER.debug("FleaJDBCHelper##delete(String, T) COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
+                    LOGGER.debug("COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
                 } else if (TemplateTypeEnum.SELECT.getKey().equals(templateType)) {
-                    LOGGER.debug("FleaJDBCHelper##query(String, T) COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
+                    LOGGER.debug("COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
                 }
                 preparedStatement.setObject(sqlParam.getIndex(), sqlParam.getAttrValue());
             }
@@ -671,7 +671,7 @@ public class FleaJDBCHelper {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJDBCHelper##queryTableStructure(String) Table Info : {}", columnList);
+            LOGGER.debug("Table Info : {}", columnList);
         }
 
         return columnList;

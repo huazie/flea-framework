@@ -19,7 +19,7 @@ public class FleaJPAQueryPoolBuilder implements IFleaObjectPoolBuilder {
     @Override
     public FleaObjectPool build(String poolName) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJPAQueryPoolBuilder##build(String) Start");
+            LOGGER.debug("Start");
         }
 
         // 获取Flea JPA查询对象池配置
@@ -28,9 +28,9 @@ public class FleaJPAQueryPoolBuilder implements IFleaObjectPoolBuilder {
         FleaObjectPool fleaObjectPool = new FleaJPAQueryPool(poolName, fleaJPAQueryPoolConfig);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJPAQueryPoolBuilder##build(String) FleaJPAQueryPoolConfig = {}", fleaJPAQueryPoolConfig);
-            LOGGER.debug("FleaJPAQueryPoolBuilder##build(String) FleaObjectPool = {}", fleaObjectPool);
-            LOGGER.debug("FleaJPAQueryPoolBuilder##build(String) End");
+            LOGGER.debug("FleaJPAQueryPoolConfig = {}", fleaJPAQueryPoolConfig);
+            LOGGER.debug("FleaObjectPool = {}", fleaObjectPool);
+            LOGGER.debug("End");
         }
         return fleaObjectPool;
     }

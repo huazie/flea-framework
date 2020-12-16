@@ -47,7 +47,7 @@ public class FleaUserDAOImpl extends FleaAuthDAOImpl<FleaUser> implements IFleaU
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaUserDAOImpl##queryValidUser(Long) FleaUser = {}", fleaUser);
+            LOGGER.debug("FleaUser = {}", fleaUser);
         }
 
         return fleaUser;

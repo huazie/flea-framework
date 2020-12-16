@@ -305,7 +305,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         List<SqlParam> nativeParam = selectSqlTemplate.toNativeParams();
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("AbstractFleaJPADAOImpl##createNativeQuery(String, T, Class) SQL = {}", nativeSql);
+            LOGGER.debug("SQL = {}", nativeSql);
         }
 
         Query query;
@@ -352,11 +352,11 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 
         if (LOGGER.isDebugEnabled()) {
             if (TemplateTypeEnum.INSERT.getKey().equals(sqlTemplate.getTemplateType().getKey())) {
-                LOGGER.debug("AbstractFleaJPADAOImpl##insert(String, T) SQL = {}", nativeSql);
+                LOGGER.debug("SQL = {}", nativeSql);
             } else if (TemplateTypeEnum.UPDATE.getKey().equals(sqlTemplate.getTemplateType().getKey())) {
-                LOGGER.debug("AbstractFleaJPADAOImpl##update(String, T) SQL = {}", nativeSql);
+                LOGGER.debug("SQL = {}", nativeSql);
             } else if (TemplateTypeEnum.DELETE.getKey().equals(sqlTemplate.getTemplateType().getKey())) {
-                LOGGER.debug("AbstractFleaJPADAOImpl##delete(String, T) SQL = {}", nativeSql);
+                LOGGER.debug("SQL = {}", nativeSql);
             }
         }
 
@@ -399,13 +399,13 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         if (CollectionUtils.isNotEmpty(sqlParams)) {
             for (SqlParam sqlParam : sqlParams) {
                 if (TemplateTypeEnum.INSERT.getKey().equals(templateType)) {
-                    LOGGER.debug("AbstractFleaJPADAOImpl##insert(String, T) COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
+                    LOGGER.debug("COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
                 } else if (TemplateTypeEnum.UPDATE.getKey().equals(templateType)) {
-                    LOGGER.debug("AbstractFleaJPADAOImpl##update(String, T) COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
+                    LOGGER.debug("COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
                 } else if (TemplateTypeEnum.DELETE.getKey().equals(templateType)) {
-                    LOGGER.debug("AbstractFleaJPADAOImpl##delete(String, T) COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
+                    LOGGER.debug("COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
                 } else if (TemplateTypeEnum.SELECT.getKey().equals(templateType)) {
-                    LOGGER.debug("AbstractFleaJPADAOImpl##query(String, T) COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
+                    LOGGER.debug("COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
                 }
                 query.setParameter(sqlParam.getIndex(), sqlParam.getAttrValue());
             }
@@ -427,8 +427,8 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         // 获取Flea JPA查询对象实例
         FleaJPAQuery query = pool.getFleaObject();
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("AbstractFleaJPADAOImpl##getQuery(Class) FleaJPAQueryPool = {}", pool);
-            LOGGER.debug("AbstractFleaJPADAOImpl##getQuery(Class) FleaJPAQuery = {}", query);
+            LOGGER.debug("FleaJPAQueryPool = {}", pool);
+            LOGGER.debug("FleaJPAQuery = {}", query);
         }
         // 获取实例后必须调用该方法,对Flea JPA查询对象进行初始化
         query.init(getEntityManager(), clazz, result);

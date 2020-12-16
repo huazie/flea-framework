@@ -39,7 +39,7 @@ public class RedisFleaCache extends AbstractFleaCache {
     @Override
     public Object getNativeValue(String key) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("RedisFleaCache##getNativeValue(String) KEY = {}", key);
+            LOGGER.debug("KEY = {}", key);
         }
         // 反序列化
         return ObjectUtils.deserialize(redisClient.get(key.getBytes()));
@@ -48,9 +48,9 @@ public class RedisFleaCache extends AbstractFleaCache {
     @Override
     public void putNativeValue(String key, Object value, long expiry) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("RedisFleaCache##putNativeValue(String, Object, long) KEY = {}", key);
-            LOGGER.debug("RedisFleaCache##putNativeValue(String, Object, long) VALUE = {}", value);
-            LOGGER.debug("RedisFleaCache##putNativeValue(String, Object, long) EXPIRY = {}s", expiry);
+            LOGGER.debug("KEY = {}", key);
+            LOGGER.debug("VALUE = {}", value);
+            LOGGER.debug("EXPIRY = {}s", expiry);
         }
         // 序列化
         if (ObjectUtils.isNotEmpty(value)) {
@@ -67,7 +67,7 @@ public class RedisFleaCache extends AbstractFleaCache {
     @Override
     public void deleteNativeValue(String key) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("RedisFleaCache##deleteNativeValue(String) KEY = {}", key);
+            LOGGER.debug("KEY = {}", key);
         }
         redisClient.del(key);
     }

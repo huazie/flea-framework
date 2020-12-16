@@ -34,8 +34,8 @@ public class FleaParaDetailDAOImpl extends FleaConfigDAOImpl<FleaParaDetail> imp
                 .getResultList();
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaParaDetailDAOImpl##getParaDetail(String, String) List={}", fleaParaDetailList);
-            LOGGER.debug("FleaParaDetailDAOImpl##getParaDetail(String, String) Count={}", fleaParaDetailList.size());
+            LOGGER.debug("List={}", fleaParaDetailList);
+            LOGGER.debug("Count={}", fleaParaDetailList.size());
         }
 
         return fleaParaDetailList;

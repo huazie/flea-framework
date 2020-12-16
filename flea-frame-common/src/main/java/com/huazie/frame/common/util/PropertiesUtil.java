@@ -35,7 +35,7 @@ public class PropertiesUtil {
         } catch (Exception e) {
             prop = null;
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("PropertiesUtil##getProperties(String) 读取路径为【" + path + "】的配置出错", e);
+                LOGGER.error("读取路径为【" + path + "】的配置出错", e);
             }
         }
         return prop;

@@ -250,9 +250,9 @@ public final class FleaJPAQuery implements Closeable {
         }
         if (LOGGER.isDebugEnabled()) {
             if (isEqual) {
-                LOGGER.debug("FMJPAQuery##equal(attrName, value) -->> AttrName = {}, Value = {}", attrName, value);
+                LOGGER.debug("-->> AttrName = {}, Value = {}", attrName, value);
             } else {
-                LOGGER.debug("FMJPAQuery##notEqual(attrName, value) -->> AttrName = {}, Value = {}", attrName, value);
+                LOGGER.debug("-->> AttrName = {}, Value = {}", attrName, value);
             }
         }
         if (isEqual) {
@@ -375,9 +375,9 @@ public final class FleaJPAQuery implements Closeable {
 
         if (LOGGER.isDebugEnabled()) {
             if (isNull) {
-                LOGGER.debug("FMJPAQuery##isNull(attrName) -->> AttrName = {}, Value = {}", attrName);
+                LOGGER.debug("-->> AttrName = {}, Value = {}", attrName);
             } else {
-                LOGGER.debug("FMJPAQuery##isNotNull(attrName) -->> AttrName = {}, Value = {}", attrName);
+                LOGGER.debug("-->> AttrName = {}, Value = {}", attrName);
             }
         }
         if (isNull) {
@@ -434,9 +434,9 @@ public final class FleaJPAQuery implements Closeable {
 
         if (LOGGER.isDebugEnabled()) {
             if (isIn) {
-                LOGGER.debug("FMJPAQuery##in(attrName, value) -->> AttrName = {}, Value = {}", attrName, value);
+                LOGGER.debug("-->> AttrName = {}, Value = {}", attrName, value);
             } else {
-                LOGGER.debug("FMJPAQuery##notIn(attrName, value) -->> AttrName = {}, Value = {}", attrName, value);
+                LOGGER.debug("-->> AttrName = {}, Value = {}", attrName, value);
             }
         }
         Iterator iterator = value.iterator();
@@ -483,7 +483,7 @@ public final class FleaJPAQuery implements Closeable {
             return this;
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FMJPAQuery##like(attrName, value) -->> AttrName = {}, Value = {}", attrName, value);
+            LOGGER.debug("-->> AttrName = {}, Value = {}", attrName, value);
         }
         if (!value.contains(DBConstants.SQLConstants.SQL_PERCENT)) {
             value = DBConstants.SQLConstants.SQL_PERCENT + value + DBConstants.SQLConstants.SQL_PERCENT;
@@ -523,7 +523,7 @@ public final class FleaJPAQuery implements Closeable {
             return this;
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FMJPAQuery##le(attrName, value) -->> AttrName = {}, Value = {}", attrName, value);
+            LOGGER.debug("-->> AttrName = {}, Value = {}", attrName, value);
         }
         predicates.add(criteriaBuilder.le(root.get(attrName), value));
         return this;
@@ -560,7 +560,7 @@ public final class FleaJPAQuery implements Closeable {
             return this;
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FMJPAQuery##lt(attrName, value) -->> AttrName = {}, Value = {}", attrName, value);
+            LOGGER.debug("-->> AttrName = {}, Value = {}", attrName, value);
         }
         predicates.add(criteriaBuilder.lt(root.get(attrName), value));
         return this;
@@ -597,7 +597,7 @@ public final class FleaJPAQuery implements Closeable {
             return this;
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FMJPAQuery##ge(attrName, value) -->> AttrName = {}, Value = {}", attrName, value);
+            LOGGER.debug("-->> AttrName = {}, Value = {}", attrName, value);
         }
         predicates.add(criteriaBuilder.ge(root.get(attrName), value));
         return this;
@@ -634,7 +634,7 @@ public final class FleaJPAQuery implements Closeable {
             return this;
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FMJPAQuery##gt(attrName, value) -->> AttrName = {}, Value = {}", attrName, value);
+            LOGGER.debug("-->> AttrName = {}, Value = {}", attrName, value);
         }
         predicates.add(criteriaBuilder.gt(root.get(attrName), value));
         return this;
@@ -663,7 +663,7 @@ public final class FleaJPAQuery implements Closeable {
             ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000004");
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FMJPAQuery##between(attrName, startTime, endTime) -->> AttrName = {}, StartTime = {}, EndTime = {}", attrName, startTime, endTime);
+            LOGGER.debug("-->> AttrName = {}, StartTime = {}, EndTime = {}", attrName, startTime, endTime);
         }
         predicates.add(criteriaBuilder.between(root.get(attrName), startTime, endTime));
         return this;
@@ -700,7 +700,7 @@ public final class FleaJPAQuery implements Closeable {
             return this;
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FMJPAQuery##greaterThan() -->> AttrName = {}, Date = {}", attrName, value);
+            LOGGER.debug("-->> AttrName = {}, Date = {}", attrName, value);
         }
         predicates.add(criteriaBuilder.greaterThan(root.get(attrName), value));
         return this;
@@ -737,7 +737,7 @@ public final class FleaJPAQuery implements Closeable {
             return this;
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FMJPAQuery##greaterThanOrEqualTo() -->> AttrName = {}, Date = {}", attrName, value);
+            LOGGER.debug("-->> AttrName = {}, Date = {}", attrName, value);
         }
         predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get(attrName), value));
         return this;
@@ -774,7 +774,7 @@ public final class FleaJPAQuery implements Closeable {
             return this;
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FMJPAQuery##lessThan() -->> AttrName = {}, Date = {}", attrName, value);
+            LOGGER.debug("-->> AttrName = {}, Date = {}", attrName, value);
         }
         predicates.add(criteriaBuilder.lessThan(root.get(attrName), value));
         return this;
@@ -811,7 +811,7 @@ public final class FleaJPAQuery implements Closeable {
             return this;
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FMJPAQuery##lessThanOrEqualTo() -->> AttrName = {}, Date = {}", attrName, value);
+            LOGGER.debug("-->> AttrName = {}, Date = {}", attrName, value);
         }
         predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get(attrName), value));
         return this;
@@ -839,7 +839,7 @@ public final class FleaJPAQuery implements Closeable {
         checkAttrName(attrName);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FMJPAQuery##countDistinct(attrName) -->> AttrName = {}", attrName);
+            LOGGER.debug("-->> AttrName = {}", attrName);
         }
 
         criteriaQuery.select(criteriaBuilder.countDistinct(root.get(attrName)));
@@ -859,7 +859,7 @@ public final class FleaJPAQuery implements Closeable {
         checkAttrName(attrName);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FMJPAQuery##max(attrName) -->> AttrName = {}", attrName);
+            LOGGER.debug("-->> AttrName = {}", attrName);
         }
         criteriaQuery.select(criteriaBuilder.max(root.get(attrName)));
         return this;
@@ -878,7 +878,7 @@ public final class FleaJPAQuery implements Closeable {
         checkAttrName(attrName);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FMJPAQuery##min(attrName) -->> AttrName = {}", attrName);
+            LOGGER.debug("-->> AttrName = {}", attrName);
         }
         criteriaQuery.select(criteriaBuilder.min(root.get(attrName)));
         return this;
@@ -897,7 +897,7 @@ public final class FleaJPAQuery implements Closeable {
         checkAttrName(attrName);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FMJPAQuery##avg(attrName) -->> AttrName = {}", attrName);
+            LOGGER.debug("-->> AttrName = {}", attrName);
         }
         criteriaQuery.select(criteriaBuilder.avg(root.get(attrName)));
         return this;
@@ -916,7 +916,7 @@ public final class FleaJPAQuery implements Closeable {
         checkAttrName(attrName);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FMJPAQuery##sum(attrName) -->> AttrName = {}", attrName);
+            LOGGER.debug("-->> AttrName = {}", attrName);
         }
         criteriaQuery.select(criteriaBuilder.sum(root.get(attrName)));
         return this;
@@ -935,7 +935,7 @@ public final class FleaJPAQuery implements Closeable {
         checkAttrName(attrName);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FMJPAQuery##sumAsLong(attrName) -->> AttrName = {}", attrName);
+            LOGGER.debug("-->> AttrName = {}", attrName);
         }
         criteriaQuery.select(criteriaBuilder.sumAsLong(root.get(attrName)));
         return this;
@@ -954,7 +954,7 @@ public final class FleaJPAQuery implements Closeable {
         checkAttrName(attrName);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FMJPAQuery##sumAsDouble(attrName) -->> AttrName = {}", attrName);
+            LOGGER.debug("-->> AttrName = {}", attrName);
         }
         criteriaQuery.select(criteriaBuilder.sumAsDouble(root.get(attrName)));
         return this;
@@ -973,7 +973,7 @@ public final class FleaJPAQuery implements Closeable {
         checkAttrName(attrName);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FMJPAQuery##distinct(attrName) -->> AttrName = {}", attrName);
+            LOGGER.debug("-->> AttrName = {}", attrName);
         }
         criteriaQuery.select(root.get(attrName)).distinct(true);
         return this;
@@ -1004,7 +1004,7 @@ public final class FleaJPAQuery implements Closeable {
             ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000005", orderBy);
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FMJPAQuery##addOrderby(attrName, orderBy) -->> AttrName = {}, OrderBy = {}", attrName, orderBy);
+            LOGGER.debug("-->> AttrName = {}, OrderBy = {}", attrName, orderBy);
         }
         return this;
     }
@@ -1028,7 +1028,7 @@ public final class FleaJPAQuery implements Closeable {
         groups.add(root.get(attrName));
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FMJPAQuery##addGroupBy(attrName) -->> AttrName = {}, GroupBy = {}", attrName);
+            LOGGER.debug("-->> AttrName = {}, GroupBy = {}", attrName);
         }
         return this;
     }
@@ -1236,8 +1236,8 @@ public final class FleaJPAQuery implements Closeable {
      */
     public void reset() {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJPAQuery##reset() Start");
-            LOGGER.debug("FleaJPAQuery##reset() Before FleaJPAQuery = {}", toString());
+            LOGGER.debug("Start");
+            LOGGER.debug("Before FleaJPAQuery = {}", toString());
         }
         entityManager = null;
         sourceClazz = null;
@@ -1252,8 +1252,8 @@ public final class FleaJPAQuery implements Closeable {
         groups = null;
         entity = null;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJPAQuery##reset() After FleaJPAQuery = {}", toString());
-            LOGGER.debug("FleaJPAQuery##reset() End");
+            LOGGER.debug("After FleaJPAQuery = {}", toString());
+            LOGGER.debug("End");
         }
     }
 

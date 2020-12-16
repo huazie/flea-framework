@@ -112,12 +112,12 @@ public class HttpUtils {
 
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("HttpUtils##getAddressByTaoBao(String) Exception = ", e);
+                LOGGER.error("Exception = ", e);
             }
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("HttpUtils##getAddressByTaoBao(String) Address = {}", sb);
+            LOGGER.debug("Address = {}", sb);
         }
 
         return sb.toString();
@@ -144,7 +144,7 @@ public class HttpUtils {
             }
 
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("HttpUtils##getAddressBySina() Map={}", map);
+                LOGGER.debug("Map={}", map);
             }
 
             sb.append(map.get(CommonConstants.IPAddressConstants.COUNTRY))
@@ -152,12 +152,12 @@ public class HttpUtils {
                     .append(map.get(CommonConstants.IPAddressConstants.CITY));
 
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("HttpUtils##getAddressBySina() Address={}", sb);
+                LOGGER.debug("Address={}", sb);
             }
             
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("HttpUtils##getAddressBySina() Exception=", e);
+                LOGGER.error("Exception=", e);
             }
         }
 
@@ -184,11 +184,11 @@ public class HttpUtils {
                 sb.append(line);
             }
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("HttpUtils##getAddress() Address={}", sb);
+                LOGGER.debug("Address={}", sb);
             }
         } catch (IOException e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("HttpUtils##getAddress() IOException={}", e);
+                LOGGER.error("IOException={}", e);
             }
         } finally {
             if (reader != null) {
@@ -196,7 +196,7 @@ public class HttpUtils {
                     reader.close();
                 } catch (IOException e) {
                     if (LOGGER.isErrorEnabled()) {
-                        LOGGER.error("HttpUtils##getAddress() IOException={}", e);
+                        LOGGER.error("IOException={}", e);
                     }
                 }
             }

@@ -210,7 +210,7 @@ public class TableSplitHelper {
         IFleaJPATableSplitHandler tableSplitHandler = (IFleaJPATableSplitHandler) ReflectUtils.newInstance(handlerClassStr);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("TableSplitHelper##newTableSplitHandle() Table Split Handler = {}", tableSplitHandler);
+            LOGGER.debug("Table Split Handler = {}", tableSplitHandler);
         }
 
         return tableSplitHandler;

@@ -32,8 +32,8 @@ public class ErrorFilter implements IFleaJerseyErrorFilter {
     @Override
     public void doFilter(FleaJerseyRequest request, FleaJerseyResponse response, Throwable throwable) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("ErrorFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) Start");
-            LOGGER.debug("ErrorFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) Exception : ", throwable);
+            LOGGER.debug("Start");
+            LOGGER.debug("Exception : ", throwable);
         }
 
         FleaJerseyResponseData responseData = response.getResponseData();
@@ -62,7 +62,7 @@ public class ErrorFilter implements IFleaJerseyErrorFilter {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("ErrorFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) End");
+            LOGGER.debug("End");
         }
     }
 
@@ -83,7 +83,7 @@ public class ErrorFilter implements IFleaJerseyErrorFilter {
             FleaConfigDataSpringBean fleaConfigDataSpringBean = webApplicationContext.getBean(FleaConfigDataSpringBean.class);
 
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("ErrorFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) FleaConfigDataSpringBean = {}", fleaConfigDataSpringBean);
+                LOGGER.debug("FleaConfigDataSpringBean = {}", fleaConfigDataSpringBean);
             }
 
             // 首先获取过滤器国际码和错误码映射配置
@@ -115,7 +115,7 @@ public class ErrorFilter implements IFleaJerseyErrorFilter {
             }
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("ErrorFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) Exception : ", ObjectUtils.isEmpty(e.getCause()) ? e.getMessage() : e.getCause().getMessage());
+                LOGGER.error("Exception : ", ObjectUtils.isEmpty(e.getCause()) ? e.getMessage() : e.getCause().getMessage());
             }
             responsePublicData.setResultCode(FleaJerseyConstants.ResponseResultConstants.RESULT_CODE_OTHER);
         }
