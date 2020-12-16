@@ -56,7 +56,7 @@ public class IOUtils {
             }
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("IOUtils##toString(InputStrearm, boolean) INPUT = \n{}", input);
+            LOGGER.debug("INPUT = \n{}", input);
         }
         return input;
     }

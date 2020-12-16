@@ -42,7 +42,7 @@ public class FleaFunctionAttrDAOImpl extends FleaAuthDAOImpl<FleaFunctionAttr> i
                 .getResultList();
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaFunctionAttrDAOImpl##getFunctionAttrList(Long, String, String) FunctionAttrList = {}", fleaFunctionAttrList);
+            LOGGER.debug("FunctionAttrList = {}", fleaFunctionAttrList);
         }
 
         return fleaFunctionAttrList;

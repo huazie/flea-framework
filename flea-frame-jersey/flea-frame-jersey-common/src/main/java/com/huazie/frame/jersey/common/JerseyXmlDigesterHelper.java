@@ -96,8 +96,8 @@ public class JerseyXmlDigesterHelper {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("JerseyXmlDigesterHelper##newJerseyFilter() Use the current flea-jersey-filter.xml : " + fileName);
-            LOGGER.debug("JerseyXmlDigesterHelper##newJerseyFilter() Start to parse the flea-jersey-filter.xml");
+            LOGGER.debug("Use the current flea-jersey-filter.xml : " + fileName);
+            LOGGER.debug("Start to parse the flea-jersey-filter.xml");
         }
 
         try (InputStream input = IOUtils.getInputStreamFromClassPath(fileName)) {
@@ -113,7 +113,7 @@ public class JerseyXmlDigesterHelper {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("JerseyXmlDigesterHelper##newJerseyFilter() End to parse the flea-jersey-filter.xml");
+            LOGGER.debug("End to parse the flea-jersey-filter.xml");
         }
 
         return obj;

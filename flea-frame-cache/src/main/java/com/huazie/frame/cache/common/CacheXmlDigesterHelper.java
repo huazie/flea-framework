@@ -100,13 +100,13 @@ public class CacheXmlDigesterHelper {
         if (StringUtils.isNotBlank(System.getProperty(CacheConstants.FleaCacheConfigConstants.FLEA_CACHE_FILE_SYSTEM_KEY))) {
             fileName = StringUtils.trim(System.getProperty(CacheConstants.FleaCacheConfigConstants.FLEA_CACHE_FILE_SYSTEM_KEY));
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("CacheXmlDigesterHelper##newFleaCache() Use the specified flea-cache.xml : " + fileName);
+                LOGGER.debug("Use the specified flea-cache.xml : " + fileName);
             }
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("CacheXmlDigesterHelper##newFleaCache() Use the current flea-cache.xml : " + fileName);
-            LOGGER.debug("CacheXmlDigesterHelper##newFleaCache() Start to parse the flea-cache.xml");
+            LOGGER.debug("Use the current flea-cache.xml : " + fileName);
+            LOGGER.debug("Start to parse the flea-cache.xml");
         }
 
         Digester digester = newFleaCacheFileDigester();
@@ -135,8 +135,8 @@ public class CacheXmlDigesterHelper {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("CacheXmlDigesterHelper##newFleaCache() Config = {}", obj);
-            LOGGER.debug("CacheXmlDigesterHelper##newFleaCache() End to parse the flea-cache.xml");
+            LOGGER.debug("Config = {}", obj);
+            LOGGER.debug("End to parse the flea-cache.xml");
         }
 
         return obj;
@@ -207,21 +207,21 @@ public class CacheXmlDigesterHelper {
         if (StringUtils.isNotBlank(System.getProperty(CacheConstants.FleaCacheConfigConstants.FLEA_CACHE_CONFIG_FILE_SYSTEM_KEY))) {
             fileName = StringUtils.trim(System.getProperty(CacheConstants.FleaCacheConfigConstants.FLEA_CACHE_CONFIG_FILE_SYSTEM_KEY));
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("CacheXmlDigesterHelper##newFleaCacheConfig() Use the specified flea-cache-config.xml : " + fileName);
+                LOGGER.debug("Use the specified flea-cache-config.xml : " + fileName);
             }
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("CacheXmlDigesterHelper##newFleaCacheConfig() Use the current flea-cache-config.xml : " + fileName);
-            LOGGER.debug("CacheXmlDigesterHelper##newFleaCacheConfig() Start to parse the flea-cache-config.xml");
+            LOGGER.debug("Use the current flea-cache-config.xml : " + fileName);
+            LOGGER.debug("Start to parse the flea-cache-config.xml");
         }
 
         Digester digester = newFleaCacheConfigFileDigester();
         FleaCacheConfig obj = XmlDigesterHelper.parse(fileName, digester, FleaCacheConfig.class);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("CacheXmlDigesterHelper##newFleaCacheConfig() Config = {}", obj);
-            LOGGER.debug("CacheXmlDigesterHelper##newFleaCacheConfig() End to parse the flea-cache.xml");
+            LOGGER.debug("Config = {}", obj);
+            LOGGER.debug("End to parse the flea-cache.xml");
         }
 
         return obj;

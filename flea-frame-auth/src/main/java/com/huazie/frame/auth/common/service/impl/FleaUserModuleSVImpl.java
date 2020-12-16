@@ -158,7 +158,7 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
             fleaMenuTree.addAll(fleaMenuList);
         } catch (CommonException e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("FleaAuthSVImpl##toFleaMenuTree(Long, Long) Getting All Accessible Menus Occurs Exception : \n", e);
+                LOGGER.error("Getting All Accessible Menus Occurs Exception : \n", e);
             }
         }
         return fleaMenuTree;
@@ -210,7 +210,7 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
 
         } catch (CommonException e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("FleaAuthSVImpl##handleOperationUserData(IFleaUser, Long) Getting Operation User Occurs Exception : \n", e);
+                LOGGER.error("Getting Operation User Occurs Exception : \n", e);
             }
         }
     }
@@ -230,7 +230,7 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
             fleaUser.set(FleaAuthConstants.UserConstants.SYSTEM_USER_NAME, user.getUserName());
         } catch (CommonException e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("FleaAuthSVImpl##handleSystemUserData(IFleaUser, Long) Getting System User Occurs Exception : \n", e);
+                LOGGER.error("Getting System User Occurs Exception : \n", e);
             }
         }
     }

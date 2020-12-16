@@ -35,7 +35,7 @@ public class FleaPrivilegeGroupRelDAOImpl extends FleaAuthDAOImpl<FleaPrivilegeG
                 .getResultList();
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaPrivilegeGroupRelDAOImpl##getPrivilegeGroupRelList(Long, String) PrivilegeGroupRelList = {}", privilegeGroupRelList);
+            LOGGER.debug("PrivilegeGroupRelList = {}", privilegeGroupRelList);
         }
 
         return privilegeGroupRelList;

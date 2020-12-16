@@ -39,7 +39,7 @@ public class PinyinUtils {
     public static String getJianPin(String chinese, int caseType) {
         String name = getPinyin(chinese, caseType, PinyinEnum.JIAN_PIN.getType());
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("PinyinUtils##getJianPin(String, int) JianPin : {}", name);
+            LOGGER.debug("JianPin : {}", name);
         }
         return name;
     }
@@ -54,7 +54,7 @@ public class PinyinUtils {
     public static String getQuanPin(String chinese, int caseType) {
         String name = getPinyin(chinese, caseType, PinyinEnum.QUAN_PIN.getType());
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("PinyinUtils##getQuanPin(String, int) QuanPin : {}", name);
+            LOGGER.debug("QuanPin : {}", name);
         }
         return name;
     }

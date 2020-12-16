@@ -48,7 +48,7 @@ public class FleaJerseyFilterChain {
      */
     private void initFilterChain() {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJerseyFilterChain##initFilterChain() Start");
+            LOGGER.debug("Start");
         }
 
         beforeFilters = convert(FleaJerseyFilterConfig.getBeforeFilters());
@@ -57,7 +57,7 @@ public class FleaJerseyFilterChain {
         errorFilters = convertError(FleaJerseyFilterConfig.getErrorFilters());
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJerseyFilterChain##initFilterChain() End");
+            LOGGER.debug("End");
         }
     }
 
@@ -80,7 +80,7 @@ public class FleaJerseyFilterChain {
     public FleaJerseyResponse doFilter(String requestData) {
         FleaJerseyResponse response = new FleaJerseyResponse();
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJerseyFilterChain##doFilter(String) RequestData = {}", requestData);
+            LOGGER.debug("RequestData = {}", requestData);
         }
         try {
             // 请求报文不能为空
@@ -120,7 +120,7 @@ public class FleaJerseyFilterChain {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJerseyFilterChain##doFilter(FleaJerseyRequest, FleaJerseyResponse) Filter = {}", sDoFilterStep.get());
+            LOGGER.debug("Filter = {}", sDoFilterStep.get());
         }
 
         return response;

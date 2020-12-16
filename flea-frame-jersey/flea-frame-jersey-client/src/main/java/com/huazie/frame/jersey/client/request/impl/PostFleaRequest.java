@@ -48,7 +48,7 @@ public class PostFleaRequest extends FleaRequest {
     protected FleaJerseyResponse request(WebTarget target, FleaJerseyRequest request) throws Exception {
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("PostFleaRequest##request(WebTarget, FleaJerseyRequest) Start");
+            LOGGER.debug("Start");
         }
 
         Entity<FleaJerseyRequest> entity = Entity.entity(request, toMediaType());
@@ -56,8 +56,8 @@ public class PostFleaRequest extends FleaRequest {
         FleaJerseyResponse response = target.request(toMediaType()).post(entity, FleaJerseyResponse.class);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("PostFleaRequest##request(WebTarget, FleaJerseyRequest) FleaJerseyResponse = {}", response);
-            LOGGER.debug("PostFleaRequest##request(WebTarget, FleaJerseyRequest) End");
+            LOGGER.debug("FleaJerseyResponse = {}", response);
+            LOGGER.debug("End");
         }
         return response;
     }

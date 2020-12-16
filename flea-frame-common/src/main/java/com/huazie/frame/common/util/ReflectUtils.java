@@ -31,7 +31,7 @@ public class ReflectUtils {
             clazz = Class.forName(className);
         } catch (ClassNotFoundException e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("ReflectUtils##forName(String) Class={}, Exception={}", className, e.getMessage());
+                LOGGER.error("Class={}, Exception={}", className, e.getMessage());
             }
         }
         return clazz;
@@ -51,7 +51,7 @@ public class ReflectUtils {
             obj = clazz.newInstance();
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("ReflectUtils##forName(String) Class={}, Exception={}", className, e.getMessage());
+                LOGGER.error("Class={}, Exception={}", className, e.getMessage());
             }
         }
         return obj;

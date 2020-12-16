@@ -37,7 +37,7 @@ public class FleaPrivilegeRelDAOImpl extends FleaAuthDAOImpl<FleaPrivilegeRel> i
                 .getResultList();
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaPrivilegeRelDAOImpl##getPrivilegeRelList(Long, String) PrivilegeRelList = {}", privilegeRelList);
+            LOGGER.debug("PrivilegeRelList = {}", privilegeRelList);
         }
 
         return privilegeRelList;
@@ -59,7 +59,7 @@ public class FleaPrivilegeRelDAOImpl extends FleaAuthDAOImpl<FleaPrivilegeRel> i
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaPrivilegeRelDAOImpl##getPrivilegeRelMenu(Long) PrivilegeRelMenu = {}", fleaPrivilegeRel);
+            LOGGER.debug("PrivilegeRelMenu = {}", fleaPrivilegeRel);
         }
 
         return fleaPrivilegeRel;

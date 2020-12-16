@@ -31,14 +31,14 @@ public class SessionCheckFilterTask implements IFilterTask {
     @Override
     public void doFilterTask(FleaRequestContext fleaRequestContext, IFilterTaskChain filterTaskChain) throws CommonException {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("SessionCheckFilterTask##doFilterTask(ServletRequest, ServletResponse, IFilterTaskChain) Start");
+            LOGGER.debug("Start");
         }
 
         // 获取用户SESSION信息键
         String userSessionKey = FleaRequestUtil.getUserSessionKey();
         if (ObjectUtils.isEmpty(userSessionKey)) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("SessionCheckFilterTask##doFilterTask(FleaRequestContext, IFilterTaskChain) <user-session-key> is not configured or is Empty");
+                LOGGER.error("<user-session-key> is not configured or is Empty");
             }
             filterTaskChain.doFilterTask(fleaRequestContext);
             return;
@@ -54,9 +54,9 @@ public class SessionCheckFilterTask implements IFilterTask {
                 if (!isLogin(httpSession, userSessionKey)) {
                     if (LOGGER.isDebugEnabled()) {
                         if (FleaRequestUtil.isBusinessUrl(uri)) {
-                            LOGGER.debug("UrlCheckFilterTask##doFilterTask(FleaRequestContext, IFilterTaskChain) Business Request And User Not Login, Redirect to Login Page");
+                            LOGGER.debug("Business Request And User Not Login, Redirect to Login Page");
                         } else if (FleaRequestUtil.isPageUrl(uri)) {
-                            LOGGER.debug("UrlCheckFilterTask##doFilterTask(FleaRequestContext, IFilterTaskChain) Page Request And User Not Login, Redirect to Login Page");
+                            LOGGER.debug("Page Request And User Not Login, Redirect to Login Page");
                         }
                     }
                     // 重定向到登录页面
@@ -67,9 +67,9 @@ public class SessionCheckFilterTask implements IFilterTask {
                 if (isLoginExpired(httpSession, userSessionKey)) {
                     if (LOGGER.isDebugEnabled()) {
                         if (FleaRequestUtil.isBusinessUrl(uri)) {
-                            LOGGER.debug("UrlCheckFilterTask##doFilterTask(FleaRequestContext, IFilterTaskChain) Business Request And User Session Has Expired, Redirect to Login Page");
+                            LOGGER.debug("Business Request And User Session Has Expired, Redirect to Login Page");
                         } else if (FleaRequestUtil.isPageUrl(uri)) {
-                            LOGGER.debug("UrlCheckFilterTask##doFilterTask(FleaRequestContext, IFilterTaskChain) Page Request And User Session Has Expired, Redirect to Login Page");
+                            LOGGER.debug("Page Request And User Session Has Expired, Redirect to Login Page");
                         }
                     }
                     // 重定向到登录页面
@@ -82,7 +82,7 @@ public class SessionCheckFilterTask implements IFilterTask {
         filterTaskChain.doFilterTask(fleaRequestContext);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("SessionCheckFilterTask##doFilterTask(FleaRequestContext, IFilterTaskChain) End");
+            LOGGER.debug("End");
         }
     }
 
@@ -102,9 +102,9 @@ public class SessionCheckFilterTask implements IFilterTask {
         }
         if (LOGGER.isDebugEnabled()) {
             if (isLogin) {
-                LOGGER.debug("SessionCheckFilterTask##isLogin(HttpSession, String) Login");
+                LOGGER.debug("Login");
             } else {
-                LOGGER.debug("SessionCheckFilterTask##isLogin(HttpSession, String) Not Login");
+                LOGGER.debug("Not Login");
             }
         }
         return isLogin;
@@ -131,8 +131,8 @@ public class SessionCheckFilterTask implements IFilterTask {
             long realIdleTime = currentTime - oldActiveTime;
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("*********************************************************************************");
-                LOGGER.debug("SessionCheckFilterTask##isLoginExpired(HttpSession, String) IdleTime     = {}s", idleTime);
-                LOGGER.debug("SessionCheckFilterTask##isLoginExpired(HttpSession, String) RealIdleTime = {}s", realIdleTime / 1000);
+                LOGGER.debug("IdleTime     = {}s", idleTime);
+                LOGGER.debug("RealIdleTime = {}s", realIdleTime / 1000);
                 LOGGER.debug("*********************************************************************************");
             }
 

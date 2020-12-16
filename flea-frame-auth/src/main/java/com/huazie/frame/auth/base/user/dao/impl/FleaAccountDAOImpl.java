@@ -49,7 +49,7 @@ public class FleaAccountDAOImpl extends FleaAuthDAOImpl<FleaAccount> implements 
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaAccountDAOImpl##queryAccount(String, String) FleaAccount = {}", fleaAccount);
+            LOGGER.debug("FleaAccount = {}", fleaAccount);
         }
 
         return fleaAccount;
@@ -78,7 +78,7 @@ public class FleaAccountDAOImpl extends FleaAuthDAOImpl<FleaAccount> implements 
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaAccountDAOImpl##queryValidAccount(String) FleaAccount = {}", fleaAccount);
+            LOGGER.debug("FleaAccount = {}", fleaAccount);
         }
 
         return fleaAccount;
@@ -103,7 +103,7 @@ public class FleaAccountDAOImpl extends FleaAuthDAOImpl<FleaAccount> implements 
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaAccountDAOImpl##queryValidAccount(Long) FleaAccount = {}", fleaAccount);
+            LOGGER.debug("FleaAccount = {}", fleaAccount);
         }
 
         return fleaAccount;

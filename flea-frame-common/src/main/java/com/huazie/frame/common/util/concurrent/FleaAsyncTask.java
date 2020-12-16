@@ -49,7 +49,7 @@ public class FleaAsyncTask extends FleaRunnable {
     @Override
     protected void subRun() {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaAsyncTask##subRun() start");
+            LOGGER.debug("Start");
         }
 
         try {
@@ -59,12 +59,12 @@ public class FleaAsyncTask extends FleaRunnable {
             }
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("FleaAsyncTask##subRun() AsyncTask Execute Exception : ", e);
+                LOGGER.error("AsyncTask Execute Exception : ", e);
             }
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaAsyncTask##subRun() end");
+            LOGGER.debug("End");
         }
     }
 
@@ -79,27 +79,27 @@ public class FleaAsyncTask extends FleaRunnable {
 
         if (ObjectUtils.isEmpty(asyncTaskExecObj)) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("FleaAsyncTask##subRun() asyncTaskExecObj is null, is not allowed");
+                LOGGER.debug("asyncTaskExecObj is null, is not allowed");
             }
             isCheck = false;
         }
 
         if (StringUtils.isBlank(methodName)) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("FleaAsyncTask##subRun() methodName is empty, is not allowed");
+                LOGGER.debug("methodName is empty, is not allowed");
             }
             isCheck = false;
         }
 
         if (ArrayUtils.isEmpty(paramTypes)) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("FleaAsyncTask##subRun() paramTypes is empty");
+                LOGGER.debug("paramTypes is empty");
             }
         }
 
         if (ArrayUtils.isEmpty(params)) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("FleaAsyncTask##subRun() params is empty");
+                LOGGER.debug("params is empty");
             }
         }
 

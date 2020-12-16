@@ -35,7 +35,7 @@ public class FleaRoleRelDAOImpl extends FleaAuthDAOImpl<FleaRoleRel> implements 
                 .getResultList();
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaRoleRelDAOImpl##getRoleRelList(Long, String) RoleRelList = {}", fleaRoleRelList);
+            LOGGER.debug("RoleRelList = {}", fleaRoleRelList);
         }
 
         return fleaRoleRelList;

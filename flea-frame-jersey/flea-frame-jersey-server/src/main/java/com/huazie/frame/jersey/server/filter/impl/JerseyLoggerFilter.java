@@ -21,7 +21,7 @@ public class JerseyLoggerFilter implements IFleaJerseyFilter {
     @Override
     public void doFilter(FleaJerseyRequest request, FleaJerseyResponse response) throws CommonException {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("JerseyLoggerFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) Start");
+            LOGGER.debug("Start");
         }
 
         if (LOGGER.isDebugEnabled()) {

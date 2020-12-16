@@ -40,7 +40,7 @@ public class FleaAccountAttrDAOImpl extends FleaAuthDAOImpl<FleaAccountAttr> imp
                 .getResultList();
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaAccountAttrDAOImpl##queryValidAccountAttrs(Long) FleaAccountList = {}", fleaAccountList);
+            LOGGER.debug("FleaAccountList = {}", fleaAccountList);
         }
 
         return fleaAccountList;

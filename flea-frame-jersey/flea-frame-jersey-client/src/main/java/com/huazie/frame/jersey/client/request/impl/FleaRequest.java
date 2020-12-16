@@ -198,7 +198,7 @@ public abstract class FleaRequest implements Request {
             mediaType = MediaType.valueOf(mediaTypeStr);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("FleaJerseyRequestFactory##buildFleaRequest(RequestConfig) Exception = {}", e.getMessage());
+                LOGGER.error("Exception = {}", e.getMessage());
             }
             // 请检查客户端配置【client_code = {0}】: 【{1} = {2}】非法
             ExceptionUtils.throwCommonException(FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000010", config.getClientCode(),

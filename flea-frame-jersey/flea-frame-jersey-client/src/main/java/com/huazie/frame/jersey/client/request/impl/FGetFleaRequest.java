@@ -56,8 +56,8 @@ public class FGetFleaRequest extends FleaRequest {
         String requestData = toRequestData(request);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FGetFleaRequest##request(WebTarget, FleaJerseyRequest) Start");
-            LOGGER.debug("FGetFleaRequest##request(WebTarget, FleaJerseyRequest) RequestData = {}", requestData);
+            LOGGER.debug("Start");
+            LOGGER.debug("RequestData = {}", requestData);
         }
 
         FleaJerseyResponse response = null;
@@ -81,8 +81,8 @@ public class FGetFleaRequest extends FleaRequest {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FGetFleaRequest##request(WebTarget, FleaJerseyRequest) FleaJerseyResponse = {}", response);
-            LOGGER.debug("FGetFleaRequest##request(WebTarget, FleaJerseyRequest) End");
+            LOGGER.debug("FleaJerseyResponse = {}", response);
+            LOGGER.debug("End");
         }
 
         return response;

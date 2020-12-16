@@ -42,13 +42,13 @@ public class FleaFilterTaskChain implements IFilterTaskChain {
      */
     private void initFleaFilterTaskChain() {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaFilterTaskChain##initFleaFilterTaskChain() Start");
+            LOGGER.debug("Start");
         }
 
         filterTaskList = convert(FleaRequestConfig.getFilterTasks());
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaFilterTaskChain##initFleaFilterTaskChain() End");
+            LOGGER.debug("End");
         }
     }
 

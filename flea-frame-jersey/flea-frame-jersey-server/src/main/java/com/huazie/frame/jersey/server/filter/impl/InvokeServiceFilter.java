@@ -34,7 +34,7 @@ public class InvokeServiceFilter implements IFleaJerseyFilter {
     @Override
     public void doFilter(FleaJerseyRequest request, FleaJerseyResponse response) throws CommonException {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("InvokeServiceFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) Start");
+            LOGGER.debug("Start");
         }
 
         // 获取请求公共报文
@@ -74,7 +74,7 @@ public class InvokeServiceFilter implements IFleaJerseyFilter {
         Object obj = webApplicationContext.getBean(serviceInterfacesClazz);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("InvokeServiceFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) Impl = {}", obj);
+            LOGGER.debug("Impl = {}", obj);
         }
 
         Class inputClazz = ReflectUtils.forName(inputParam);
@@ -86,9 +86,9 @@ public class InvokeServiceFilter implements IFleaJerseyFilter {
         Object inputObj = GsonUtils.toEntity(inputJson, inputClazz);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("InvokeServiceFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) INPUT JSON  = {}", inputJson);
-            LOGGER.debug("InvokeServiceFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) INPUT CLASS = {}", inputClazz);
-            LOGGER.debug("InvokeServiceFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) INPUT OBJ   = {}", inputObj);
+            LOGGER.debug("INPUT JSON  = {}", inputJson);
+            LOGGER.debug("INPUT CLASS = {}", inputClazz);
+            LOGGER.debug("INPUT OBJ   = {}", inputObj);
         }
 
         Object outputObj = ReflectUtils.invoke(obj, serviceMethod, inputObj, inputClazz);
@@ -118,10 +118,10 @@ public class InvokeServiceFilter implements IFleaJerseyFilter {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("InvokeServiceFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) OUTPUT OBJ   = {}", outputObj);
-            LOGGER.debug("InvokeServiceFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) OUTPUT CLASS = {}", outputClazz);
-            LOGGER.debug("InvokeServiceFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) OUTPUT JSON  = {}", outputJson);
-            LOGGER.debug("InvokeServiceFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) End");
+            LOGGER.debug("OUTPUT OBJ   = {}", outputObj);
+            LOGGER.debug("OUTPUT CLASS = {}", outputClazz);
+            LOGGER.debug("OUTPUT JSON  = {}", outputJson);
+            LOGGER.debug("End");
         }
     }
 

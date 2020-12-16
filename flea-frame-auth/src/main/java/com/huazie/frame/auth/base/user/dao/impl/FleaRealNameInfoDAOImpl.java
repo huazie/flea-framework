@@ -47,7 +47,7 @@ public class FleaRealNameInfoDAOImpl extends FleaAuthDAOImpl<FleaRealNameInfo> i
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaRealNameInfoDAOImpl##queryValidRealNameInfo(Long) FleaRealNameInfo = {}", fleaRealNameInfo);
+            LOGGER.debug("FleaRealNameInfo = {}", fleaRealNameInfo);
         }
 
         return fleaRealNameInfo;

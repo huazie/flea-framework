@@ -32,7 +32,7 @@ public class DataPreCheckFilter implements IFleaJerseyFilter {
     public void doFilter(FleaJerseyRequest request, FleaJerseyResponse response) throws CommonException {
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("DataPreCheckFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) Start");
+            LOGGER.debug("Start");
         }
 
         if (ObjectUtils.isEmpty(response)) {
@@ -85,7 +85,7 @@ public class DataPreCheckFilter implements IFleaJerseyFilter {
         StringUtils.checkBlank(serviceCode, FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000006", RequestPublicDataConstants.SERVICE_CODE);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("DataPreCheckFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) RequestPublicData = {}", requestPublicData);
+            LOGGER.debug("RequestPublicData = {}", requestPublicData);
         }
 
         RequestBusinessData requestBusinessData = requestData.getBusinessData();
@@ -97,11 +97,11 @@ public class DataPreCheckFilter implements IFleaJerseyFilter {
         StringUtils.checkBlank(input, FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000005");
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("DataPreCheckFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) RequestBusinessData = {}", requestBusinessData);
+            LOGGER.debug("RequestBusinessData = {}", requestBusinessData);
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("DataPreCheckFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) end");
+            LOGGER.debug("End");
         }
     }
 
