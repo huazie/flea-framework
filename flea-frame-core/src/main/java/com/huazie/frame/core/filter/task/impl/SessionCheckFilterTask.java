@@ -130,10 +130,10 @@ public class SessionCheckFilterTask implements IFilterTask {
             // Session实际空闲时长
             long realIdleTime = currentTime - oldActiveTime;
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("*********************************************************************************");
+                LOGGER.debug("*************************");
                 LOGGER.debug("IdleTime     = {}s", idleTime);
                 LOGGER.debug("RealIdleTime = {}s", realIdleTime / 1000);
-                LOGGER.debug("*********************************************************************************");
+                LOGGER.debug("*************************");
             }
 
             if (currentTime - oldActiveTime > idleTime * 1000) {
