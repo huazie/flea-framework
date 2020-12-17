@@ -71,7 +71,7 @@ public abstract class FleaRequest implements Request {
     public <T> Response<T> doRequest(Class<T> clazz) throws Exception {
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaRequest##doRequest(Class<T>) Start");
+            LOGGER.debug("Start");
         }
 
         if (ObjectUtils.isEmpty(config) || config.isEmpty()) {
@@ -134,7 +134,7 @@ public abstract class FleaRequest implements Request {
 
         FleaJerseyRequest request = createFleaJerseyRequest(resourceCode, serviceCode, input);
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaRequest##doRequest(Class<T>) FleaJerseyRequest = \n{}", JABXUtils.toXml(request, true));
+            LOGGER.debug("FleaJerseyRequest = \n{}", JABXUtils.toXml(request, true));
         }
 
         FleaJerseyResponse response = request(target, request);
@@ -150,7 +150,7 @@ public abstract class FleaRequest implements Request {
         ObjectUtils.checkEmpty(responsePublicData, FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000006");
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaRequest##doRequest(Class<T>) FleaJerseyResponse = \n{}", JABXUtils.toXml(response, true));
+            LOGGER.debug("FleaJerseyResponse = \n{}", JABXUtils.toXml(response, true));
         }
 
         Response<T> responseResult = new Response<T>();
@@ -173,7 +173,7 @@ public abstract class FleaRequest implements Request {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaRequest##doRequest(Class<T>) End");
+            LOGGER.debug("End");
         }
 
         return responseResult;

@@ -30,7 +30,6 @@ import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
 import com.huazie.frame.jersey.common.data.RequestBusinessData;
 import com.huazie.frame.jersey.common.data.RequestPublicData;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.media.multipart.file.FileDataBodyPart;
@@ -38,10 +37,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
@@ -65,16 +64,17 @@ public class JerseyTest {
 
     @Before
     public void init() {
-        applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
-        LOGGER.debug("ApplicationContext={}", applicationContext);
         IFleaUser fleaUser = new FleaUserImpl();
         fleaUser.setAcctId(10000001L);
         FleaFrameManager.getManager().setUserInfo(fleaUser);
+        applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+        LOGGER.debug("ApplicationContext={}", applicationContext);
     }
 
     @Test
     public void testMediaType() {
-        String mediaTypeStr = "xml";
+        MDC.put("MP", "params"); // 添加打印方法参数
+        String mediaTypeStr = "application/xml";
         MediaType mediaType = MediaType.valueOf(mediaTypeStr);
         LOGGER.debug("MediaType = {}", mediaType);
     }

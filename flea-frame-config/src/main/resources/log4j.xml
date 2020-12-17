@@ -24,7 +24,7 @@
 			%p - 日志级别(FATAL， ERROR，WARN， INFO，DEBUG or custom)
 			%r - 程序启动到现在的毫秒数
 			%t - 当前线程名
-			%d - 日期和时间, 一般使用格式 %d{yyyy-MM-dd HH:mm:ss， SSS}
+			%d - 日期和时间, 一般使用格式 %d{yyyy-MM-dd HH:mm:ss,SSS}
 			%l - 输出日志事件的发生位置， 同 %F%L%C%M
 			%F - java 源文件名
 			%L - java 源码行数
@@ -32,8 +32,8 @@
 			%M - java 方法名
 	-->
 	<appender name="myConsole" class="org.apache.log4j.ConsoleAppender">
-		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern" value="%d %-5p [%c##%M:%L] %t - %m%n" />
+		<layout class="com.huazie.frame.common.log4j.FleaPatternLayout">
+			<param name="ConversionPattern" value="%d (%a) %-5p [%c##%M(%X{MP}):%L] %t - %m%n" />
 		</layout>
 		<!--过滤器设置输出的级别-->
 		<filter class="org.apache.log4j.varia.LevelRangeFilter">
@@ -49,8 +49,8 @@
         <!-- 设置是否在重新启动服务时，在原有日志的基础添加新日志 -->
         <param name="Append" value="true" />
         <param name="MaxBackupIndex" value="10" />
-        <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%d %-5p [%c##%M:%L] - %m%n" />
+        <layout class="com.huazie.frame.common.log4j.FleaPatternLayout">
+            <param name="ConversionPattern" value="%d (%a) %-5p [%c##%M(%X{MP}):%L] %t - %m%n" />
         </layout>
     </appender>
 	

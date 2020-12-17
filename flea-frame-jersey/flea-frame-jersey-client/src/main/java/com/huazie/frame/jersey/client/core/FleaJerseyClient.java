@@ -47,7 +47,7 @@ public class FleaJerseyClient {
     public <T> Response<T> invoke(String clientCode, Object input, Class<T> outputClazz) throws Exception {
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJerseyClient##invoke(String, Object, Class<T>) Start");
+            LOGGER.debug("Start");
         }
 
         RequestConfig config = new RequestConfig();
@@ -98,8 +98,8 @@ public class FleaJerseyClient {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJerseyClient##invoke(String, Object, Class<T>) Response = {}", response);
-            LOGGER.debug("FleaJerseyClient##invoke(String, Object, Class<T>) End");
+            LOGGER.debug("Response = {}", response);
+            LOGGER.debug("End");
         }
 
         return response;

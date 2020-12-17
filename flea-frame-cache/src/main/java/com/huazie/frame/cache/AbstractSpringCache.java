@@ -79,12 +79,12 @@ public abstract class AbstractSpringCache implements Cache, IFleaCache {
         Object cacheValue = fleaCache.get(key.toString());
         if (ObjectUtils.isNotEmpty(type) && !type.isInstance(cacheValue)) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("AbstractSpringCache##get(Object, Class<T>) Cached value is not of required type [{}]: {}", type.getName(), cacheValue);
+                LOGGER.debug("Cached value is not of required type [{}]: {}", type.getName(), cacheValue);
             }
             return null;
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("AbstractSpringCache##get(Object, Class<T>) VALUE = {}", cacheValue);
+            LOGGER.debug("VALUE = {}", cacheValue);
         }
         return (T) cacheValue;
     }
