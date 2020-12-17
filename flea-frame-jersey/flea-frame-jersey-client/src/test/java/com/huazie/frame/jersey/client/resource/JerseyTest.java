@@ -66,6 +66,7 @@ public class JerseyTest {
     public void init() {
         IFleaUser fleaUser = new FleaUserImpl();
         fleaUser.setAcctId(10000001L);
+        fleaUser.set("ACCOUNT_CODE", "huazie");
         FleaFrameManager.getManager().setUserInfo(fleaUser);
         applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
         LOGGER.debug("ApplicationContext={}", applicationContext);
