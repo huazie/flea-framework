@@ -1,6 +1,5 @@
 package com.huazie.frame.common.log4j.helpers;
 
-import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.FleaSessionManager;
 import com.huazie.frame.common.IFleaUser;
 import com.huazie.frame.common.util.ObjectUtils;
@@ -31,6 +30,10 @@ public class FleaPatternParser extends PatternParser {
             // 账户编号
             case 'a':
                 pc = new UserSessionPatternConverter(formattingInfo, "ACCT_ID");
+                break;
+            // 账号
+            case 'A':
+                pc = new UserSessionPatternConverter(formattingInfo, "ACCOUNT_CODE");
                 break;
             default:
                 super.finalizeConverter(c);
