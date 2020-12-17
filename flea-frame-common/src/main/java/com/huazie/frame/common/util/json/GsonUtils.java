@@ -29,8 +29,8 @@ public class GsonUtils {
      */
     public static <T> T toEntity(String json, Class<T> clazz) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("GsonUtils##toEntity(String, Class<T>) Json = {}", json);
-            LOGGER.debug("GsonUtils##toEntity(String, Class<T>) Class = {}", clazz);
+            LOGGER.debug("Json = {}", json);
+            LOGGER.debug("Class = {}", clazz);
         }
         T t = null;
         try {
@@ -42,7 +42,7 @@ public class GsonUtils {
             }
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("GsonUtils##toEntity(String, Class<T>) Entity = {}", t);
+            LOGGER.debug("Entity = {}", t);
         }
         return t;
     }
@@ -57,8 +57,8 @@ public class GsonUtils {
      */
     public static <T> List<T> toEntityList(String json, Class<T> clazz) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("GsonUtils##toEntityList(String, Class<T>) Json = {}", json);
-            LOGGER.debug("GsonUtils##toEntityList(String, Class<T>) Class = {}", clazz);
+            LOGGER.debug("Json = {}", json);
+            LOGGER.debug("Class = {}", clazz);
         }
         List<T> entityList = null;
         try {
@@ -67,11 +67,11 @@ public class GsonUtils {
             }.getType());
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("GsonUtils##toEntityList(String, Class<T>) Exception = ", e);
+                LOGGER.error("Exception = ", e);
             }
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("GsonUtils##toEntityList(String, Class<T>) EntityList={}", entityList);
+            LOGGER.debug("EntityList={}", entityList);
         }
         return entityList;
     }

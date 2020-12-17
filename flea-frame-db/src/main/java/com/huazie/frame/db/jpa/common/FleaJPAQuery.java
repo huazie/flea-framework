@@ -279,9 +279,9 @@ public final class FleaJPAQuery implements Closeable {
 
         if (LOGGER.isDebugEnabled()) {
             if (isEqual) {
-                LOGGER.debug("FMJPAQuery##equal(Set<String> attrNames) -->> attrNames = {}", attrNames);
+                LOGGER.debug("attrNames = {}", attrNames);
             } else {
-                LOGGER.debug("FMJPAQuery##notEqual(Set<String> attrNames) -->> attrNames = {}", attrNames);
+                LOGGER.debug("attrNames = {}", attrNames);
             }
         }
         Iterator<String> attrNameIt = attrNames.iterator();
@@ -317,9 +317,9 @@ public final class FleaJPAQuery implements Closeable {
 
         if (LOGGER.isDebugEnabled()) {
             if (isEqual) {
-                LOGGER.debug("FMJPAQuery##equal(Map<String, Object>) -->> paramMap = {}", paramMap);
+                LOGGER.debug("paramMap = {}", paramMap);
             } else {
-                LOGGER.debug("FMJPAQuery##notEqual(Map<String, Object>) -->> paramMap = {}", paramMap);
+                LOGGER.debug("paramMap = {}", paramMap);
             }
         }
         Set<String> keySet = paramMap.keySet();
