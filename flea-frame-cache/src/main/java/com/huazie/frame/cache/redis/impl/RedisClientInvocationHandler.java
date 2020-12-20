@@ -47,7 +47,7 @@ public class RedisClientInvocationHandler extends FleaInvocationHandler {
         if (ObjectUtils.isNotEmpty(jedisPool)) {
             redisClient.setShardedJedis(jedisPool.getResource());
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("RedisClientInvocationHandler##invoke(Object, Method, Object[]) Get ShardedJedis = {}", redisClient.getShardedJedis());
+                LOGGER.debug("Get ShardedJedis = {}", redisClient.getShardedJedis());
             }
         }
         try {
@@ -57,7 +57,7 @@ public class RedisClientInvocationHandler extends FleaInvocationHandler {
             if (ObjectUtils.isNotEmpty(shardedJedis)) {
                 // 使用后，关闭连接
                 if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("RedisClientInvocationHandler##invoke(Object, Method, Object[]) Close ShardedJedis");
+                    LOGGER.debug("Close ShardedJedis");
                 }
                 shardedJedis.close();
             }
