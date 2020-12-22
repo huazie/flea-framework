@@ -266,6 +266,29 @@ public class StringUtils {
     }
 
     /**
+     * <p> 使用占位符连接字符串数组中的元素 </p>
+     *
+     * @param values      字符串数组
+     * @param placeholder 占位符
+     * @return 拼接后的字符串
+     * @since 1.0.0
+     */
+    public static String strCombined(String[] values, String placeholder) {
+        if (ArrayUtils.isEmpty(values)) {
+            return "";
+        }
+        StringBuilder strBuilder = new StringBuilder();
+        for (int n = 0; n < values.length; n++) {
+            if (n < values.length - 1) {
+                strBuilder.append(values[n]).append(placeholder);
+            } else {
+                strBuilder.append(values[n]);
+            }
+        }
+        return strBuilder.toString();
+    }
+
+    /**
      * <p> 拼接对象数组objs中每个对象的属性attrName对应的值 </p>
      * <p>（拼接方式： before + value1 + after + before + value2）</p>
      *
@@ -277,10 +300,10 @@ public class StringUtils {
      * @since 1.0.0
      */
     public static String strCombined(Object[] objs, String attrName, String before, String after) {
-        StringBuilder strBuilder = new StringBuilder();
         if (objs == null || objs.length == 0 || isBlank(attrName)) {
-            return null;
+            return "";
         }
+        StringBuilder strBuilder = new StringBuilder();
         for (int i = 0; i < objs.length; i++) {
             Object value = ReflectUtils.getObjectAttrValue(objs[i], attrName);
             if (i < objs.length - 1) {

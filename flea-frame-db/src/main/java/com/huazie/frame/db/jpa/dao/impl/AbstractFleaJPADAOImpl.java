@@ -2,6 +2,8 @@ package com.huazie.frame.db.jpa.dao.impl;
 
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.pool.FleaObjectPoolFactory;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.NumberUtils;
@@ -15,8 +17,6 @@ import com.huazie.frame.db.common.table.split.TableSplitHelper;
 import com.huazie.frame.db.jpa.common.FleaJPAQuery;
 import com.huazie.frame.db.jpa.common.FleaJPAQueryPool;
 import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -36,7 +36,7 @@ import java.util.Set;
 @SuppressWarnings({"rawtypes", "unchecked"})
 public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractFleaJPADAOImpl.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(AbstractFleaJPADAOImpl.class);
 
     private Class<T> clazz;
 
@@ -51,7 +51,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         // 获取子类对象的泛型父类类型（也就是AbstractDaoImpl<T>）
         ParameterizedType type = (ParameterizedType) clz.getGenericSuperclass();
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Type={}", type);
+            LOGGER.debug1(new Object() {}, "Type={}", type);
         }
         Type[] types = type.getActualTypeArguments();
         clazz = (Class<T>) types[0];

@@ -2,6 +2,7 @@ package com.huazie.frame.common.slf4j;
 
 import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.ObjectUtils;
+import com.huazie.frame.common.util.StringUtils;
 import org.slf4j.MDC;
 
 import java.lang.reflect.Method;
@@ -37,21 +38,31 @@ public class LoggerUtils {
         if (ObjectUtils.isNotEmpty(method)) {
             Class<?>[] types = method.getParameterTypes();
             if (ArrayUtils.isNotEmpty(types)) {
-                StringBuilder typeBuilder = new StringBuilder();
-                for (int i = 0; i < types.length; i++) {
-                    if (i < types.length - 1) {
-                        typeBuilder.append(types[i].getName()).append(", ");
-                    } else {
-                        typeBuilder.append(types[i].getName());
-                    }
-                }
                 // 方法参数名
-                MDC.put(MDC_KEY_MPN, typeBuilder.toString());
+                MDC.put(MDC_KEY_MPN, StringUtils.strCombined(getParameterTypeNames(types), ", "));
             }
             // 方法名
             MDC.put(MDC_KEY_MN, method.getName());
             // 类全名
             MDC.put(MDC_KEY_CFN, method.getDeclaringClass().getName());
         }
+    }
+
+    /**
+     * <p> 获取参数类型全名字符串数组 </p>
+     *
+     * @param types 参数类型Class对象
+     * @return 参数类型全名字符串数组
+     * @since 1.0.0
+     */
+    private static String[] getParameterTypeNames(Class<?>[] types) {
+        if (ArrayUtils.isNotEmpty(types)) {
+            List<String> paramTypeList = new ArrayList<>();
+            for (Class<?> type : types) {
+                paramTypeList.add(type.getName());
+            }
+            return paramTypeList.toArray(new String[0]);
+        }
+        return null;
     }
 }
