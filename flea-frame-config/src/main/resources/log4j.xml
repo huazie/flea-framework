@@ -33,7 +33,7 @@
 	-->
 	<appender name="myConsole" class="org.apache.log4j.ConsoleAppender">
 		<layout class="com.huazie.frame.common.log4j.FleaPatternLayout">
-			<param name="ConversionPattern" value="%d (%A) %-5p [%c##%M(%X{MP}):%L] %t - %m%n" />
+			<param name="ConversionPattern" value="%d (%A) %-5p [%c##%M(%P):%L] %t - %m%n" />
 		</layout>
 		<!--过滤器设置输出的级别-->
 		<filter class="org.apache.log4j.varia.LevelRangeFilter">
@@ -50,7 +50,7 @@
         <param name="Append" value="true" />
         <param name="MaxBackupIndex" value="10" />
         <layout class="com.huazie.frame.common.log4j.FleaPatternLayout">
-            <param name="ConversionPattern" value="%d (%A) %-5p [%c##%M(%X{MP}):%L] %t - %m%n" />
+            <param name="ConversionPattern" value="%d (%A) %-5p [%c##%M(%P):%L] %t - %m%n" />
         </layout>
     </appender>
 	
