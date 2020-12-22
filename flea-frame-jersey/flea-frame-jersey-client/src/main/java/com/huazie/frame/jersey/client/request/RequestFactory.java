@@ -1,13 +1,13 @@
 package com.huazie.frame.jersey.client.request;
 
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.ReflectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.jersey.common.exception.FleaJerseyClientException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <p> Flea Jersey请求工厂 </p>
@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  */
 public class RequestFactory {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RequestFactory.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(RequestFactory.class);
 
     private static volatile RequestFactory factory;
 
@@ -58,7 +58,7 @@ public class RequestFactory {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Start");
+            LOGGER.debug1(new Object() {}, "Start");
             LOGGER.debug("RequestConfig = {}", config.getConfig());
         }
 

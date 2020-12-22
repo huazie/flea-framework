@@ -2,6 +2,8 @@ package com.huazie.frame.jersey.client.request.impl;
 
 import com.huazie.frame.common.FleaSessionManager;
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.ReflectUtils;
@@ -24,8 +26,6 @@ import com.huazie.frame.jersey.common.data.ResponseBusinessData;
 import com.huazie.frame.jersey.common.data.ResponsePublicData;
 import com.huazie.frame.jersey.common.exception.FleaJerseyClientException;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
@@ -41,7 +41,7 @@ import java.net.URLEncoder;
  */
 public abstract class FleaRequest implements Request {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaRequest.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaRequest.class);
 
     private RequestConfig config; // 请求配置
 
@@ -71,7 +71,7 @@ public abstract class FleaRequest implements Request {
     public <T> Response<T> doRequest(Class<T> clazz) throws Exception {
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Start");
+            LOGGER.debug1(new Object() {}, "Start");
         }
 
         if (ObjectUtils.isEmpty(config) || config.isEmpty()) {
@@ -198,7 +198,7 @@ public abstract class FleaRequest implements Request {
             mediaType = MediaType.valueOf(mediaTypeStr);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("Exception = {}", e.getMessage());
+                LOGGER.error1(new Object() {}, "Exception = {}", e.getMessage());
             }
             // 请检查客户端配置【client_code = {0}】: 【{1} = {2}】非法
             ExceptionUtils.throwCommonException(FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000010", config.getClientCode(),

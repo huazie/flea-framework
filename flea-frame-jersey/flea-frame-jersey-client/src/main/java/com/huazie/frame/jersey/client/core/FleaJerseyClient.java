@@ -1,5 +1,7 @@
 package com.huazie.frame.jersey.client.core;
 
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.core.base.cfgdata.bean.FleaConfigDataSpringBean;
@@ -9,8 +11,6 @@ import com.huazie.frame.jersey.client.request.RequestConfig;
 import com.huazie.frame.jersey.client.request.RequestFactory;
 import com.huazie.frame.jersey.client.response.Response;
 import com.huazie.frame.jersey.common.exception.FleaJerseyClientException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class FleaJerseyClient {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaJerseyClient.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaJerseyClient.class);
 
     private FleaConfigDataSpringBean springBean;
 
@@ -47,7 +47,7 @@ public class FleaJerseyClient {
     public <T> Response<T> invoke(String clientCode, Object input, Class<T> outputClazz) throws Exception {
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Start");
+            LOGGER.debug1(new Object() {}, "Start");
         }
 
         RequestConfig config = new RequestConfig();

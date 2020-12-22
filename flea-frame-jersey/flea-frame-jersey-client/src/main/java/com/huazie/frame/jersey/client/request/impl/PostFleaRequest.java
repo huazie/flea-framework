@@ -1,11 +1,11 @@
 package com.huazie.frame.jersey.client.request.impl;
 
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.jersey.client.request.RequestConfig;
 import com.huazie.frame.jersey.client.request.RequestModeEnum;
 import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
@@ -19,7 +19,7 @@ import javax.ws.rs.client.WebTarget;
  */
 public class PostFleaRequest extends FleaRequest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PostFleaRequest.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(PostFleaRequest.class);
 
     /**
      * <p> 不带参数的构造方法 </p>
@@ -48,7 +48,7 @@ public class PostFleaRequest extends FleaRequest {
     protected FleaJerseyResponse request(WebTarget target, FleaJerseyRequest request) throws Exception {
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Start");
+            LOGGER.debug1(new Object() {}, "Start");
         }
 
         Entity<FleaJerseyRequest> entity = Entity.entity(request, toMediaType());

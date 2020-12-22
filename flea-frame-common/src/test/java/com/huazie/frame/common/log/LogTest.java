@@ -1,9 +1,8 @@
 package com.huazie.frame.common.log;
 
-import com.huazie.frame.common.slf4j.LoggerUtils;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 
@@ -16,14 +15,14 @@ import java.lang.reflect.Method;
  */
 public class LogTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(LogTest.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(LogTest.class);
 
     @Test
     public void test() {
         Object obj = new Object() {};
-        LoggerUtils.addMethodMDC(obj);
         // 测试从方法内部获取当前方法的相关信息
         Method method = obj.getClass().getEnclosingMethod();
-        LOGGER.debug("method = {}", method);
+        LOGGER.debug1(obj,"method = {}", method);
+        LOGGER.debug("hello world");
     }
 }
