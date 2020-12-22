@@ -74,7 +74,6 @@ public class JerseyTest {
 
     @Test
     public void testMediaType() {
-        MDC.put("MP", "params"); // 添加打印方法参数
         String mediaTypeStr = "application/xml";
         MediaType mediaType = MediaType.valueOf(mediaTypeStr);
         LOGGER.debug("MediaType = {}", mediaType);
