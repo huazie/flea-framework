@@ -5,9 +5,9 @@ import com.huazie.frame.cache.common.CacheEnum;
 import com.huazie.frame.cache.redis.RedisClient;
 import com.huazie.frame.cache.redis.config.RedisConfig;
 import com.huazie.frame.common.CommonConstants;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ObjectUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <p> Redis Flea缓存类 </p>
@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  */
 public class RedisFleaCache extends AbstractFleaCache {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RedisFleaCache.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(RedisFleaCache.class);
 
     private RedisClient redisClient; // Redis客户端
 
@@ -39,7 +39,7 @@ public class RedisFleaCache extends AbstractFleaCache {
     @Override
     public Object getNativeValue(String key) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("KEY = {}", key);
+            LOGGER.debug1(new Object() {}, "KEY = {}", key);
         }
         // 反序列化
         return ObjectUtils.deserialize(redisClient.get(key.getBytes()));
@@ -48,7 +48,7 @@ public class RedisFleaCache extends AbstractFleaCache {
     @Override
     public void putNativeValue(String key, Object value, long expiry) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("KEY = {}", key);
+            LOGGER.debug1(new Object() {}, "KEY = {}", key);
             LOGGER.debug("VALUE = {}", value);
             LOGGER.debug("EXPIRY = {}s", expiry);
         }
@@ -67,7 +67,7 @@ public class RedisFleaCache extends AbstractFleaCache {
     @Override
     public void deleteNativeValue(String key) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("KEY = {}", key);
+            LOGGER.debug1(new Object() {}, "KEY = {}", key);
         }
         redisClient.del(key);
     }

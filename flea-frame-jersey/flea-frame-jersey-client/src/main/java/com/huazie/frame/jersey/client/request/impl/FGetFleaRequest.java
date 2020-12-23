@@ -1,5 +1,7 @@
 package com.huazie.frame.jersey.client.request.impl;
 
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.common.util.xml.JABXUtils;
 import com.huazie.frame.jersey.client.request.RequestConfig;
@@ -10,8 +12,6 @@ import com.huazie.frame.jersey.common.data.FleaJerseyRequest;
 import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.client.WebTarget;
 
@@ -24,7 +24,7 @@ import javax.ws.rs.client.WebTarget;
  */
 public class FGetFleaRequest extends FleaRequest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FGetFleaRequest.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FGetFleaRequest.class);
 
     /**
      * <p> 不带参数的构造方法 </p>
@@ -56,7 +56,7 @@ public class FGetFleaRequest extends FleaRequest {
         String requestData = toRequestData(request);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Start");
+            LOGGER.debug1(new Object() {}, "Start");
             LOGGER.debug("RequestData = {}", requestData);
         }
 

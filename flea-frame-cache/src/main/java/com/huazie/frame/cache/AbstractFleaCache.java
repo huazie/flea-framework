@@ -2,11 +2,11 @@ package com.huazie.frame.cache;
 
 import com.huazie.frame.cache.common.CacheEnum;
 import com.huazie.frame.common.CommonConstants;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -20,7 +20,7 @@ import java.util.Set;
  */
 public abstract class AbstractFleaCache implements IFleaCache {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractFleaCache.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(AbstractFleaCache.class);
 
     private final String name;  // 缓存数据主关键字
 
@@ -37,12 +37,13 @@ public abstract class AbstractFleaCache implements IFleaCache {
     public Object get(String key) {
         Object value = null;
         try {
+            Object obj = new Object() {};
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("KEY = {}", key);
+                LOGGER.debug1(obj, "KEY = {}", key);
             }
             value = getNativeValue(getNativeKey(key));
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("VALUE = {}", value);
+                LOGGER.debug1(obj, "VALUE = {}", value);
             }
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
@@ -62,7 +63,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
             addCacheKey(key);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("The action of adding [" + cache.getName() + "] cache occurs exception ：", e);
+                LOGGER.error1(new Object() {}, "The action of adding [" + cache.getName() + "] cache occurs exception ：", e);
             }
         }
     }
@@ -71,7 +72,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
     public void clear() {
         Set<String> keySet = getCacheKey();
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("KEYS = {}", keySet);
+            LOGGER.debug1(new Object() {}, "KEYS = {}", keySet);
         }
         if (CollectionUtils.isNotEmpty(keySet)) {
             for (String key : keySet) {
@@ -91,7 +92,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
             deleteCacheKey(key);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("The action of deleting [" + cache.getName() + "] cache occurs exception ：", e);
+                LOGGER.error1(new Object() {}, "The action of deleting [" + cache.getName() + "] cache occurs exception ：", e);
             }
         }
     }
@@ -125,7 +126,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
             // 存在待删除的数据键关键字
             if (keySet.contains(key)) {
                 if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Delete cache of recording all key, KEY = {}", key);
+                    LOGGER.debug1(new Object() {}, "Delete cache of recording all key, KEY = {}", key);
                 }
                 if (CommonConstants.NumeralConstants.INT_ONE == keySet.size()) {
                     deleteCacheAllKey(); // 直接将记录当前Cache所有数据键关键字的缓存从缓存中清空
@@ -151,7 +152,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
     private void deleteCacheAllKey() {
         try {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Delete cache of recording all key");
+                LOGGER.debug1(new Object() {}, "Delete cache of recording all key");
             }
             deleteNativeValue(getNativeCacheKey(name));
         } catch (Exception e) {
@@ -170,7 +171,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
             keySet = (Set<String>) keySetObj;
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("CacheKey = {}", keySet);
+            LOGGER.debug1(new Object() {}, "CacheKey = {}", keySet);
         }
         return keySet;
     }

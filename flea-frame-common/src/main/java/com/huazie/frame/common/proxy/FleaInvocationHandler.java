@@ -1,9 +1,9 @@
 package com.huazie.frame.common.proxy;
 
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.ObjectUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class FleaInvocationHandler implements InvocationHandler {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaInvocationHandler.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaInvocationHandler.class);
 
     protected Object proxyObject;
 
@@ -37,7 +37,7 @@ public class FleaInvocationHandler implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Method = {}", method.getName());
+            LOGGER.debug1(new Object() {}, "Method = {}", method.getName());
 
             Class<?>[] types = method.getParameterTypes();
             if (ArrayUtils.isNotEmpty(types)) {

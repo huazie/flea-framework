@@ -5,9 +5,9 @@ import com.huazie.frame.cache.common.CacheConfigManager;
 import com.huazie.frame.cache.common.CacheConstants;
 import com.huazie.frame.cache.common.FleaCacheFactory;
 import com.huazie.frame.cache.config.CacheItem;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ObjectUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <p> 核心Flea缓存类 </p>
@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  */
 public class CoreFleaCache extends AbstractFleaCache {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CoreFleaCache.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(CoreFleaCache.class);
 
     private AbstractFleaCache fleaCache; // 指定Flea缓存实现
 
@@ -39,7 +39,7 @@ public class CoreFleaCache extends AbstractFleaCache {
     @Override
     public Object getNativeValue(String key) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("KEY = {}", key);
+            LOGGER.debug1(new Object(), "KEY = {}", key);
         }
         return fleaCache.getNativeValue(key);
     }
@@ -47,7 +47,7 @@ public class CoreFleaCache extends AbstractFleaCache {
     @Override
     public void putNativeValue(String key, Object value, long expiry) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("KEY = {}", key);
+            LOGGER.debug1(new Object() {}, "KEY = {}", key);
             LOGGER.debug("VALUE = {}", value);
             LOGGER.debug("EXPIRY = {}s", expiry);
         }
@@ -57,7 +57,7 @@ public class CoreFleaCache extends AbstractFleaCache {
     @Override
     public void deleteNativeValue(String key) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("KEY = {}", key);
+            LOGGER.debug1(new Object() {}, "KEY = {}", key);
         }
         fleaCache.deleteNativeValue(key);
     }
