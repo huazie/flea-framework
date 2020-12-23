@@ -1,10 +1,10 @@
 package com.huazie.frame.common;
 
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.IOUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import org.apache.commons.digester.Digester;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 
@@ -17,7 +17,7 @@ import java.io.InputStream;
  */
 public class XmlDigesterHelper {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(XmlDigesterHelper.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(XmlDigesterHelper.class);
 
     /**
      * <p> Xml文件解析 </p>
@@ -34,7 +34,7 @@ public class XmlDigesterHelper {
         T config = null;
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("The File Path : {}", filePath);
+            LOGGER.debug1(new Object() {}, "The File Path : {}", filePath);
         }
 
         try (InputStream input = IOUtils.getInputStreamFromClassPath(filePath)) {
@@ -70,7 +70,7 @@ public class XmlDigesterHelper {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Config = {}", config);
+            LOGGER.debug1(new Object() {}, "Config = {}", config);
         }
 
         return config;

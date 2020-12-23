@@ -2,8 +2,8 @@ package com.huazie.frame.common.util.json;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 
 import java.util.List;
 import java.util.Map;
@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class GsonUtils {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(GsonUtils.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(GsonUtils.class);
 
     /**
      * <p> 使用Gson进行解析 ,并获取T对象 </p>
@@ -29,7 +29,7 @@ public class GsonUtils {
      */
     public static <T> T toEntity(String json, Class<T> clazz) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Json = {}", json);
+            LOGGER.debug1(new Object() {}, "Json = {}", json);
             LOGGER.debug("Class = {}", clazz);
         }
         T t = null;
@@ -57,14 +57,12 @@ public class GsonUtils {
      */
     public static <T> List<T> toEntityList(String json, Class<T> clazz) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Json = {}", json);
+            LOGGER.debug1(new Object() {}, "Json = {}", json);
             LOGGER.debug("Class = {}", clazz);
         }
         List<T> entityList = null;
         try {
-            Gson gson = new Gson();
-            entityList = gson.fromJson(json, new TypeToken<List<T>>() {
-            }.getType());
+            entityList = new Gson().fromJson(json, new TypeToken<List<T>>() {}.getType());
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("Exception = ", e);
@@ -85,13 +83,11 @@ public class GsonUtils {
      */
     public static Map<String, Object> toMap(String json) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Json = {}", json);
+            LOGGER.debug1(new Object() {}, "Json = {}", json);
         }
         Map<String, Object> map = null;
         try {
-            Gson gson = new Gson();
-            map = gson.fromJson(json, new TypeToken<Map<String, Object>>() {
-            }.getType());
+            map = new Gson().fromJson(json, new TypeToken<Map<String, Object>>() {}.getType());
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("Exception = ", e);
@@ -112,14 +108,12 @@ public class GsonUtils {
      */
     public static List<Map<String, Object>> toMapList(String json) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Json = {}", json);
+            LOGGER.debug1(new Object() {}, "Json = {}", json);
         }
         List<Map<String, Object>> mapList = null;
         try {
             Gson gson = new Gson();
-            mapList = gson.fromJson(json, new TypeToken<List<Map<String, Object>>>() {
-            }.getType());
-
+            mapList = gson.fromJson(json, new TypeToken<List<Map<String, Object>>>() {}.getType());
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("Exception = ", e);
@@ -140,7 +134,7 @@ public class GsonUtils {
      */
     public static String toJsonString(Object obj) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Object = {}", obj);
+            LOGGER.debug1(new Object() {}, "Object = {}", obj);
         }
         Gson gson = new Gson();
         String json = gson.toJson(obj);

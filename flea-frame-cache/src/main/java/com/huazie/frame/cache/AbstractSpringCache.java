@@ -1,8 +1,8 @@
 package com.huazie.frame.cache;
 
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ObjectUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.cache.Cache;
 import org.springframework.cache.support.SimpleValueWrapper;
 
@@ -18,7 +18,7 @@ import java.util.concurrent.Callable;
  */
 public abstract class AbstractSpringCache implements Cache, IFleaCache {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractSpringCache.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(AbstractSpringCache.class);
 
     private final String name;  // 缓存主要关键字（用于区分）
 
@@ -42,13 +42,14 @@ public abstract class AbstractSpringCache implements Cache, IFleaCache {
     @Override
     public ValueWrapper get(Object key) {
         ValueWrapper wrapper = null;
+        Object obj = new Object() {};
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("KEY = {}", key);
+            LOGGER.debug1(obj, "KEY = {}", key);
         }
         Object cacheValue = fleaCache.get(key.toString());
         if (ObjectUtils.isNotEmpty(cacheValue)) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("VALUE = {}", cacheValue);
+                LOGGER.debug1(obj, "VALUE = {}", cacheValue);
             }
             wrapper = new SimpleValueWrapper(cacheValue);
         }
@@ -74,7 +75,7 @@ public abstract class AbstractSpringCache implements Cache, IFleaCache {
     @SuppressWarnings(value = "unchecked")
     public <T> T get(Object key, Class<T> type) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("KEY = {}", key);
+            LOGGER.debug1(new Object() {}, "KEY = {}", key);
         }
         Object cacheValue = fleaCache.get(key.toString());
         if (ObjectUtils.isNotEmpty(type) && !type.isInstance(cacheValue)) {
@@ -97,7 +98,7 @@ public abstract class AbstractSpringCache implements Cache, IFleaCache {
             fleaCache.put(key.toString(), value);
         } else {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("VALUE = {}", cacheValue);
+                LOGGER.debug1(new Object() {}, "VALUE = {}", cacheValue);
             }
             wrapper = new SimpleValueWrapper(cacheValue);
         }
