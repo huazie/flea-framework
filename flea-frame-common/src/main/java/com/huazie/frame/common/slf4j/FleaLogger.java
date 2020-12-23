@@ -11,6 +11,18 @@ import org.slf4j.Logger;
  */
 public interface FleaLogger extends Logger {
 
+    String MDC_KEY_MN = "METHOD_NAME"; // 方法名
+
+    String MDC_KEY_MPN = "METHOD_PARAM_NAME"; // 方法参数名
+
+    String MDC_KEY_CFN = "CLASS_FULL_NAME"; // 类全名
+
+    String MDC_KEY_LN = "LINE_NUMBER"; // 代码行数
+
+    String MDC_KEY_FN = "FILE_NAME"; // 源文件名
+
+    String MDC_KEY_LOC = "LOCATION"; // 输出日志事件的发生位置
+
     void trace1(Object obj, String msg);
 
     void trace1(Object obj, String format, Object arg);
