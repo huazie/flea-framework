@@ -25,15 +25,20 @@
 			%r - 程序启动到现在的毫秒数
 			%t - 当前线程名
 			%d - 日期和时间, 一般使用格式 %d{yyyy-MM-dd HH:mm:ss,SSS}
-			%l - 输出日志事件的发生位置， 同 %F%L%C%M
-			%F - java 源文件名
-			%L - java 源码行数
-			%C - java 类名，%C{1} 输出最后一个元素
-			%M - java 方法名
+
+			%l - 输出日志事件的发生位置， 同 %F%L%C%M	【修改，FleaLogger兼容Logger】
+			%c - 日志类名， %c{1}输出最后一个元素		【修改，FleaLogger兼容Logger】
+			%C - java 类名，%C{1}输出最后一个元素		【修改，FleaLogger兼容Logger】
+			%F - java 源文件名						【修改，FleaLogger兼容Logger】
+			%L - java 源码行数						【修改，FleaLogger兼容Logger】
+			%M - java 方法名							【修改，FleaLogger兼容Logger】
+			%P - java 方法参数						【新增，必须使用FleaLogger日志接口才能有效】
+			%A - 账号								【新增，必须使用FleaLogger日志接口才能有效】
+			%a - 账户编号							【新增，必须使用FleaLogger日志接口才能有效】
 	-->
 	<appender name="myConsole" class="org.apache.log4j.ConsoleAppender">
 		<layout class="com.huazie.frame.common.log4j.FleaPatternLayout">
-			<param name="ConversionPattern" value="%d (%A) %-5p [%c##%M(%P):%L] %t - %m%n" />
+			<param name="ConversionPattern" value="%d (%A) %-5p [%l] %t- %m%n" />
 		</layout>
 		<!--过滤器设置输出的级别-->
 		<filter class="org.apache.log4j.varia.LevelRangeFilter">
@@ -50,7 +55,7 @@
         <param name="Append" value="true" />
         <param name="MaxBackupIndex" value="10" />
         <layout class="com.huazie.frame.common.log4j.FleaPatternLayout">
-            <param name="ConversionPattern" value="%d (%A) %-5p [%c##%M(%P):%L] %t - %m%n" />
+            <param name="ConversionPattern" value="%d (%A) %-5p [%l] %t - %m%n" />
         </layout>
     </appender>
 	

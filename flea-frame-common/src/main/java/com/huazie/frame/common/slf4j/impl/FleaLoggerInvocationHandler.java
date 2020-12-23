@@ -32,13 +32,23 @@ public class FleaLoggerInvocationHandler implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 
+        StackTraceElement[] elements = Thread.currentThread().getStackTrace();
+        int position = 3; // 这里存在代理，取第四个元素才能找到上层调用类堆栈元素
+
         if (ArrayUtils.isNotEmpty(args)) {
             Object arg1 = args[0]; // 获取第一个参数
             if (ObjectUtils.isNotEmpty(arg1)) {
-                // 处理调用方基础类的立即封闭方法的对象，获取该方法相关信息，并设置到日志上下文MDC中
-                LoggerUtils.addMethodMDC(arg1);
+                LoggerUtils.addMethodMDC(elements, position, arg1);
             }
+        } else {
+            LoggerUtils.addMethodMDC(elements, position);
         }
-        return method.invoke(proxyObject, args);
+
+        try {
+            return method.invoke(proxyObject, args);
+        } finally {
+            // 清理日志上下文数据
+            LoggerUtils.clearMethodMDC();
+        }
     }
 }
