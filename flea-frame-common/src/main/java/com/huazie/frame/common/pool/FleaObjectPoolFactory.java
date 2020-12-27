@@ -3,11 +3,11 @@ package com.huazie.frame.common.pool;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.FleaConfigManager;
 import com.huazie.frame.common.config.ConfigItem;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.ReflectUtils;
 import com.huazie.frame.common.util.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -21,7 +21,7 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class FleaObjectPoolFactory {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaObjectPoolFactory.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaObjectPoolFactory.class);
 
     private static final ConcurrentMap<String, FleaObjectPool> fleaObjectPools = new ConcurrentHashMap<String, FleaObjectPool>();
 
@@ -52,7 +52,7 @@ public class FleaObjectPoolFactory {
         }
         String poolNameKey = poolName + CommonConstants.SymbolConstants.UNDERLINE + objClazz.getName();
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Pool Name Key = {}", poolNameKey);
+            LOGGER.debug1(new Object() {}, "Pool Name Key = {}", poolNameKey);
         }
         if (!fleaObjectPools.containsKey(poolNameKey)) {
             synchronized (fleaObjectPools) {
@@ -79,13 +79,14 @@ public class FleaObjectPoolFactory {
      */
     private static FleaObjectPool build(String poolName, Class<?> objClazz) {
         String className = objClazz.getSimpleName();
+        Object obj = new Object() {};
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Object Simple Name = {}", className);
+            LOGGER.debug1(obj, "Object Simple Name = {}", className);
         }
         ConfigItem configItem = FleaConfigManager.getConfigItem(CommonConstants.FleaPoolConstants.FLEA_OBJECT_POOL, className);
         if (ObjectUtils.isEmpty(configItem)) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Can not find the builder by the <config-item key=\"{}\"> from <config-items key=\"{}\"> in [flea-config.xml]",
+                LOGGER.debug1(obj, "Can not find the builder by the <config-item key=\"{}\"> from <config-items key=\"{}\"> in [flea-config.xml]",
                         className, CommonConstants.FleaPoolConstants.FLEA_OBJECT_POOL);
             }
             return null;
@@ -94,7 +95,7 @@ public class FleaObjectPoolFactory {
         String builderImpl = configItem.getValue();
         if (StringUtils.isBlank(builderImpl)) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("The builder is empty, found by the <config-item key=\"{}\"> from <config-items key=\"{}\"> in [flea-config.xml]",
+                LOGGER.debug1(obj, "The builder is empty, found by the <config-item key=\"{}\"> from <config-items key=\"{}\"> in [flea-config.xml]",
                         className, CommonConstants.FleaPoolConstants.FLEA_OBJECT_POOL);
             }
             return null;

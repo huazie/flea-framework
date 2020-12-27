@@ -26,6 +26,8 @@ public class LoggerUtils {
     public static void clearMethodMDC() {
         // 方法名
         MDC.remove(FleaLogger.MDC_KEY_MN);
+        // 方法参数
+        MDC.remove(FleaLogger.MDC_KEY_MPN);
         // 类全名
         MDC.remove(FleaLogger.MDC_KEY_CFN);
         // 代码行数

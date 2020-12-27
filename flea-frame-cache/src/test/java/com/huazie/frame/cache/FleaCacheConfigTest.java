@@ -10,9 +10,9 @@ import com.huazie.frame.cache.config.CacheItem;
 import com.huazie.frame.cache.config.CacheParams;
 import com.huazie.frame.cache.config.CacheServer;
 import com.huazie.frame.cache.config.FleaCache;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class FleaCacheConfigTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaCacheConfigTest.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaCacheConfigTest.class);
 
     @Test
     public void testGetFleaCache() {

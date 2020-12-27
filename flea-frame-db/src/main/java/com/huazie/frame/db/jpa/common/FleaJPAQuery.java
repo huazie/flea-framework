@@ -1,6 +1,8 @@
 package com.huazie.frame.db.jpa.common;
 
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.MapUtils;
@@ -12,8 +14,6 @@ import com.huazie.frame.db.common.DBConstants;
 import com.huazie.frame.db.common.exception.DaoException;
 import com.huazie.frame.db.common.table.split.TableSplitHelper;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -44,7 +44,7 @@ import java.util.Set;
 @SuppressWarnings({"rawtypes", "unchecked"})
 public final class FleaJPAQuery implements Closeable {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaJPAQuery.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaJPAQuery.class);
 
     private FleaJPAQueryPool fleaObjectPool; // Flea JPA查询对象池
 
@@ -249,10 +249,11 @@ public final class FleaJPAQuery implements Closeable {
             return this;
         }
         if (LOGGER.isDebugEnabled()) {
+            Object obj = new Object() {};
             if (isEqual) {
-                LOGGER.debug("-->> AttrName = {}, Value = {}", attrName, value);
+                LOGGER.debug1(obj, "attrName = {}, value = {}", attrName, value);
             } else {
-                LOGGER.debug("-->> AttrName = {}, Value = {}", attrName, value);
+                LOGGER.debug1(obj, "attrName = {}, value = {}", attrName, value);
             }
         }
         if (isEqual) {
@@ -278,10 +279,11 @@ public final class FleaJPAQuery implements Closeable {
         CollectionUtils.checkEmpty(attrNames, CommonException.class, "ERROR-DB-DAO0000000002", "attrNames");
 
         if (LOGGER.isDebugEnabled()) {
+            Object obj = new Object() {};
             if (isEqual) {
-                LOGGER.debug("attrNames = {}", attrNames);
+                LOGGER.debug1(obj, "attrNames = {}", attrNames);
             } else {
-                LOGGER.debug("attrNames = {}", attrNames);
+                LOGGER.debug1(obj, "attrNames = {}", attrNames);
             }
         }
         Iterator<String> attrNameIt = attrNames.iterator();
@@ -316,10 +318,11 @@ public final class FleaJPAQuery implements Closeable {
         MapUtils.checkEmpty(paramMap, DaoException.class, "ERROR-DB-DAO0000000002", "paramMap");
 
         if (LOGGER.isDebugEnabled()) {
+            Object obj = new Object() {};
             if (isEqual) {
-                LOGGER.debug("paramMap = {}", paramMap);
+                LOGGER.debug1(obj, "paramMap = {}", paramMap);
             } else {
-                LOGGER.debug("paramMap = {}", paramMap);
+                LOGGER.debug1(obj, "paramMap = {}", paramMap);
             }
         }
         Set<String> keySet = paramMap.keySet();
@@ -374,10 +377,11 @@ public final class FleaJPAQuery implements Closeable {
         checkAttrName(attrName);
 
         if (LOGGER.isDebugEnabled()) {
+            Object obj = new Object() {};
             if (isNull) {
-                LOGGER.debug("-->> AttrName = {}, Value = {}", attrName);
+                LOGGER.debug1(obj, "attrName = {}", attrName);
             } else {
-                LOGGER.debug("-->> AttrName = {}, Value = {}", attrName);
+                LOGGER.debug1(obj, "attrName = {}", attrName);
             }
         }
         if (isNull) {
@@ -433,10 +437,11 @@ public final class FleaJPAQuery implements Closeable {
         }
 
         if (LOGGER.isDebugEnabled()) {
+            Object obj = new Object() {};
             if (isIn) {
-                LOGGER.debug("-->> AttrName = {}, Value = {}", attrName, value);
+                LOGGER.debug1(obj, "in, attrName = {}, value = {}", attrName, value);
             } else {
-                LOGGER.debug("-->> AttrName = {}, Value = {}", attrName, value);
+                LOGGER.debug1(obj, "notIn, attrName = {}, value = {}", attrName, value);
             }
         }
         Iterator iterator = value.iterator();
@@ -483,7 +488,7 @@ public final class FleaJPAQuery implements Closeable {
             return this;
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("-->> AttrName = {}, Value = {}", attrName, value);
+            LOGGER.debug1(new Object() {}, "attrName = {}, value = {}", attrName, value);
         }
         if (!value.contains(DBConstants.SQLConstants.SQL_PERCENT)) {
             value = DBConstants.SQLConstants.SQL_PERCENT + value + DBConstants.SQLConstants.SQL_PERCENT;
@@ -523,7 +528,7 @@ public final class FleaJPAQuery implements Closeable {
             return this;
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("-->> AttrName = {}, Value = {}", attrName, value);
+            LOGGER.debug1(new Object() {}, "le, attrName = {}, value = {}", attrName, value);
         }
         predicates.add(criteriaBuilder.le(root.get(attrName), value));
         return this;
@@ -560,7 +565,7 @@ public final class FleaJPAQuery implements Closeable {
             return this;
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("-->> AttrName = {}, Value = {}", attrName, value);
+            LOGGER.debug1(new Object() {}, "lt, attrName = {}, value = {}", attrName, value);
         }
         predicates.add(criteriaBuilder.lt(root.get(attrName), value));
         return this;
@@ -597,7 +602,7 @@ public final class FleaJPAQuery implements Closeable {
             return this;
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("-->> AttrName = {}, Value = {}", attrName, value);
+            LOGGER.debug1(new Object() {}, "ge, attrName = {}, value = {}", attrName, value);
         }
         predicates.add(criteriaBuilder.ge(root.get(attrName), value));
         return this;
@@ -634,7 +639,7 @@ public final class FleaJPAQuery implements Closeable {
             return this;
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("-->> AttrName = {}, Value = {}", attrName, value);
+            LOGGER.debug1(new Object() {}, "gt, attrName = {}, value = {}", attrName, value);
         }
         predicates.add(criteriaBuilder.gt(root.get(attrName), value));
         return this;
@@ -663,7 +668,7 @@ public final class FleaJPAQuery implements Closeable {
             ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000004");
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("-->> AttrName = {}, StartTime = {}, EndTime = {}", attrName, startTime, endTime);
+            LOGGER.debug1(new Object() {}, "attrName = {}, startTime = {}, endTime = {}", attrName, startTime, endTime);
         }
         predicates.add(criteriaBuilder.between(root.get(attrName), startTime, endTime));
         return this;
@@ -700,7 +705,7 @@ public final class FleaJPAQuery implements Closeable {
             return this;
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("-->> AttrName = {}, Date = {}", attrName, value);
+            LOGGER.debug1(new Object() {}, ">, attrName = {}, value = {}", attrName, value);
         }
         predicates.add(criteriaBuilder.greaterThan(root.get(attrName), value));
         return this;
@@ -737,7 +742,7 @@ public final class FleaJPAQuery implements Closeable {
             return this;
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("-->> AttrName = {}, Date = {}", attrName, value);
+            LOGGER.debug1(new Object() {}, ">=, attrName = {}, value = {}", attrName, value);
         }
         predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get(attrName), value));
         return this;
@@ -774,7 +779,7 @@ public final class FleaJPAQuery implements Closeable {
             return this;
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("-->> AttrName = {}, Date = {}", attrName, value);
+            LOGGER.debug1(new Object() {}, "<, attrName = {}, value = {}", attrName, value);
         }
         predicates.add(criteriaBuilder.lessThan(root.get(attrName), value));
         return this;
@@ -811,7 +816,7 @@ public final class FleaJPAQuery implements Closeable {
             return this;
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("-->> AttrName = {}, Date = {}", attrName, value);
+            LOGGER.debug1(new Object() {}, "<=, attrName = {}, value = {}", attrName, value);
         }
         predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get(attrName), value));
         return this;
@@ -839,7 +844,7 @@ public final class FleaJPAQuery implements Closeable {
         checkAttrName(attrName);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("-->> AttrName = {}", attrName);
+            LOGGER.debug1(new Object() {}, "attrName = {}", attrName);
         }
 
         criteriaQuery.select(criteriaBuilder.countDistinct(root.get(attrName)));
@@ -859,7 +864,7 @@ public final class FleaJPAQuery implements Closeable {
         checkAttrName(attrName);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("-->> AttrName = {}", attrName);
+            LOGGER.debug1(new Object() {}, "attrName = {}", attrName);
         }
         criteriaQuery.select(criteriaBuilder.max(root.get(attrName)));
         return this;
@@ -878,7 +883,7 @@ public final class FleaJPAQuery implements Closeable {
         checkAttrName(attrName);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("-->> AttrName = {}", attrName);
+            LOGGER.debug1(new Object() {}, "attrName = {}", attrName);
         }
         criteriaQuery.select(criteriaBuilder.min(root.get(attrName)));
         return this;
@@ -897,7 +902,7 @@ public final class FleaJPAQuery implements Closeable {
         checkAttrName(attrName);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("-->> AttrName = {}", attrName);
+            LOGGER.debug1(new Object() {}, "attrName = {}", attrName);
         }
         criteriaQuery.select(criteriaBuilder.avg(root.get(attrName)));
         return this;
@@ -916,7 +921,7 @@ public final class FleaJPAQuery implements Closeable {
         checkAttrName(attrName);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("-->> AttrName = {}", attrName);
+            LOGGER.debug1(new Object() {}, "attrName = {}", attrName);
         }
         criteriaQuery.select(criteriaBuilder.sum(root.get(attrName)));
         return this;
@@ -935,7 +940,7 @@ public final class FleaJPAQuery implements Closeable {
         checkAttrName(attrName);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("-->> AttrName = {}", attrName);
+            LOGGER.debug1(new Object() {}, "attrName = {}", attrName);
         }
         criteriaQuery.select(criteriaBuilder.sumAsLong(root.get(attrName)));
         return this;
@@ -954,7 +959,7 @@ public final class FleaJPAQuery implements Closeable {
         checkAttrName(attrName);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("-->> AttrName = {}", attrName);
+            LOGGER.debug1(new Object() {}, "attrName = {}", attrName);
         }
         criteriaQuery.select(criteriaBuilder.sumAsDouble(root.get(attrName)));
         return this;
@@ -973,7 +978,7 @@ public final class FleaJPAQuery implements Closeable {
         checkAttrName(attrName);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("-->> AttrName = {}", attrName);
+            LOGGER.debug1(new Object() {}, "attrName = {}", attrName);
         }
         criteriaQuery.select(root.get(attrName)).distinct(true);
         return this;
@@ -988,7 +993,7 @@ public final class FleaJPAQuery implements Closeable {
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public FleaJPAQuery addOrderby(String attrName, String orderBy) throws CommonException {
+    public FleaJPAQuery addOrderBy(String attrName, String orderBy) throws CommonException {
         // 属性列名非空校验
         checkAttrName(attrName);
 
@@ -1004,7 +1009,7 @@ public final class FleaJPAQuery implements Closeable {
             ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000005", orderBy);
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("-->> AttrName = {}, OrderBy = {}", attrName, orderBy);
+            LOGGER.debug1(new Object() {}, "attrName = {}, orderBy = {}", attrName, orderBy);
         }
         return this;
     }
@@ -1028,7 +1033,7 @@ public final class FleaJPAQuery implements Closeable {
         groups.add(root.get(attrName));
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("-->> AttrName = {}, GroupBy = {}", attrName);
+            LOGGER.debug1(new Object() {}, "attrName = {}", attrName);
         }
         return this;
     }

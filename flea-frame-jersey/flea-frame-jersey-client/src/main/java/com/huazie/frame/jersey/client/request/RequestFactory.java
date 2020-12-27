@@ -57,9 +57,11 @@ public class RequestFactory {
             ExceptionUtils.throwCommonException(FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000000");
         }
 
+        Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "Start");
-            LOGGER.debug("RequestConfig = {}", config.getConfig());
+            obj = new Object() {};
+            LOGGER.debug1(obj, "Start");
+            LOGGER.debug1(obj, "RequestConfig = {}", config.getConfig());
         }
 
         // 获取请求方式
@@ -74,7 +76,7 @@ public class RequestFactory {
             requestModeEnum = RequestModeEnum.valueOf(requestMode.toUpperCase());
         } catch (IllegalArgumentException e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("Exception = ", e);
+                LOGGER.error1(new Object() {}, "Exception = ", e);
             }
         }
 
@@ -89,10 +91,10 @@ public class RequestFactory {
 
         if (LOGGER.isDebugEnabled()) {
             if (ObjectUtils.isNotEmpty(request)) {
-                LOGGER.debug("Request = {}", request.getClass().getName());
-                LOGGER.debug("RequestMode = {}", request.getRequestMode().getMode());
+                LOGGER.debug1(obj, "Request = {}", request.getClass().getName());
+                LOGGER.debug1(obj, "RequestMode = {}", request.getRequestMode().getMode());
             }
-            LOGGER.debug("End");
+            LOGGER.debug1(obj, "End");
         }
 
         return request;

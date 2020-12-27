@@ -50,9 +50,11 @@ public class GetFleaRequest extends FleaRequest {
         // 将请求报文转换成请求数据字符串
         String requestData = toRequestData(request);
 
+        Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "Start");
-            LOGGER.debug("RequestData = {}", requestData);
+            obj = new Object() {};
+            LOGGER.debug1(obj, "GET Request, Start");
+            LOGGER.debug1(obj, "GET Request, RequestData = {}", requestData);
         }
 
         // GET请求发送
@@ -62,8 +64,8 @@ public class GetFleaRequest extends FleaRequest {
                 .get(FleaJerseyResponse.class);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJerseyResponse = {}", response);
-            LOGGER.debug("End");
+            LOGGER.debug1(obj, "GET Request, FleaJerseyResponse = {}", response);
+            LOGGER.debug1(obj, "GET Request, End");
         }
 
         return response;

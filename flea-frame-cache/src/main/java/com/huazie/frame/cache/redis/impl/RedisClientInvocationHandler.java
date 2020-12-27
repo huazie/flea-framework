@@ -57,7 +57,7 @@ public class RedisClientInvocationHandler extends FleaInvocationHandler {
             if (ObjectUtils.isNotEmpty(shardedJedis)) {
                 // 使用后，关闭连接
                 if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Close ShardedJedis");
+                    LOGGER.debug1(new Object() {}, "Close ShardedJedis");
                 }
                 shardedJedis.close();
             }

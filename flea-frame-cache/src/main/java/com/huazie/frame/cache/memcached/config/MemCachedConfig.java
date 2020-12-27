@@ -2,13 +2,13 @@ package com.huazie.frame.cache.memcached.config;
 
 import com.huazie.frame.cache.common.CacheConstants;
 import com.huazie.frame.common.CommonConstants;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.PropertiesUtil;
 import com.huazie.frame.common.util.StringUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ import java.util.Properties;
  */
 public class MemCachedConfig {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MemCachedConfig.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(MemCachedConfig.class);
 
     private static volatile MemCachedConfig config;
 

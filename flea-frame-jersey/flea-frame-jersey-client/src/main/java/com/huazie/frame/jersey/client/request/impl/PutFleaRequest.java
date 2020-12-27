@@ -47,8 +47,10 @@ public class PutFleaRequest extends FleaRequest {
     @Override
     protected FleaJerseyResponse request(WebTarget target, FleaJerseyRequest request) throws Exception {
 
+        Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "Start");
+            obj = new Object() {};
+            LOGGER.debug1(obj, "PUT Request, Start");
         }
 
         Entity<FleaJerseyRequest> entity = Entity.entity(request, toMediaType());
@@ -56,8 +58,8 @@ public class PutFleaRequest extends FleaRequest {
         FleaJerseyResponse response = target.request(toMediaType()).put(entity, FleaJerseyResponse.class);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJerseyResponse = {}", response);
-            LOGGER.debug("End");
+            LOGGER.debug1(obj, "PUT Request, FleaJerseyResponse = {}", response);
+            LOGGER.debug1(obj, "PUT Request, End");
         }
         return response;
     }

@@ -51,8 +51,10 @@ public class FPostFleaRequest extends FleaRequest {
     @Override
     protected FleaJerseyResponse request(WebTarget target, FleaJerseyRequest request) throws Exception {
 
+        Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "Start");
+            obj = new Object() {};
+            LOGGER.debug1(obj, "FILE POST Request, Start");
         }
 
         String requestData = JABXUtils.toXml(request, false);
@@ -68,8 +70,8 @@ public class FPostFleaRequest extends FleaRequest {
                 .post(entity, FleaJerseyResponse.class);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJerseyResponse = {}", response);
-            LOGGER.debug("End");
+            LOGGER.debug1(obj, "FILE POST Request, FleaJerseyResponse = {}", response);
+            LOGGER.debug1(obj, "FILE POST Request, End");
         }
 
         return response;

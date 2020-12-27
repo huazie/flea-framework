@@ -37,8 +37,9 @@ public abstract class AbstractFleaCache implements IFleaCache {
     public Object get(String key) {
         Object value = null;
         try {
-            Object obj = new Object() {};
+            Object obj = null;
             if (LOGGER.isDebugEnabled()) {
+                obj = new Object() {};
                 LOGGER.debug1(obj, "KEY = {}", key);
             }
             value = getNativeValue(getNativeKey(key));
@@ -47,7 +48,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
             }
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("The action of getting [" + cache.getName() + "] cache occurs exception ：", e);
+                LOGGER.error1(new Object() {}, "The action of getting [" + cache.getName() + "] cache occurs exception ：", e);
             }
         }
         return value;
@@ -86,7 +87,6 @@ public abstract class AbstractFleaCache implements IFleaCache {
     @Override
     public void delete(String key) {
         try {
-
             deleteNativeValue(getNativeKey(key));
             // 从 记录当前Cache所有数据键关键字 的缓存中 删除指定数据键关键字key
             deleteCacheKey(key);
@@ -138,7 +138,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
                 }
             } else {
                 if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("The CacheKey of [{}] is not exist", key);
+                    LOGGER.debug1(new Object() {}, "The CacheKey of [{}] is not exist", key);
                 }
             }
         }
@@ -157,7 +157,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
             deleteNativeValue(getNativeCacheKey(name));
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("The action of deleting [" + cache.getName() + "] cache occurs exception ：", e);
+                LOGGER.error1(new Object() {}, "The action of deleting [" + cache.getName() + "] cache occurs exception ：", e);
             }
         }
     }

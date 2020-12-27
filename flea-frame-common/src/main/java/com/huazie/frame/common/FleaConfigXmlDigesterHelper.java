@@ -3,14 +3,11 @@ package com.huazie.frame.common;
 import com.huazie.frame.common.config.ConfigItem;
 import com.huazie.frame.common.config.ConfigItems;
 import com.huazie.frame.common.config.FleaConfig;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ObjectUtils;
-import com.huazie.frame.common.util.IOUtils;
 import com.huazie.frame.common.util.StringUtils;
 import org.apache.commons.digester.Digester;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.InputStream;
 
 /**
  * <p> Flea Config XML解析类 </p>
@@ -21,7 +18,7 @@ import java.io.InputStream;
  */
 public class FleaConfigXmlDigesterHelper {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaConfigXmlDigesterHelper.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaConfigXmlDigesterHelper.class);
 
     private static volatile FleaConfigXmlDigesterHelper xmlDigester;
 

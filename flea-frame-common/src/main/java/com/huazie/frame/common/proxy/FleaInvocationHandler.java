@@ -36,8 +36,10 @@ public class FleaInvocationHandler implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        Object object = null;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "Method = {}", method.getName());
+            object = new Object() {};
+            LOGGER.debug1(object, "Method = {}", method.getName());
 
             Class<?>[] types = method.getParameterTypes();
             if (ArrayUtils.isNotEmpty(types)) {
@@ -45,11 +47,11 @@ public class FleaInvocationHandler implements InvocationHandler {
                 for (Class<?> type : types) {
                     paramTypeList.add(type.getSimpleName());
                 }
-                LOGGER.debug("Types = {}", paramTypeList);
+                LOGGER.debug1(object, "Types = {}", paramTypeList);
             }
 
             if (ArrayUtils.isNotEmpty(args)) {
-                LOGGER.debug("OriginArgs = {}", args);
+                LOGGER.debug1(object, "OriginArgs = {}", args);
                 List<Object> mArgs = new ArrayList<Object>();
                 for (Object arg : args) {
                     if (arg instanceof byte[]) {
@@ -64,22 +66,22 @@ public class FleaInvocationHandler implements InvocationHandler {
                         mArgs.add(arg);
                     }
                 }
-                LOGGER.debug("Args = {}", mArgs);
+                LOGGER.debug1(object, "Args = {}", mArgs);
             }
         }
         Object result = method.invoke(proxyObject, args);
         if (LOGGER.isDebugEnabled()) {
             if (result instanceof byte[]) {
-                LOGGER.debug("OriginResult = {}", result);
+                LOGGER.debug1(object, "OriginResult = {}", result);
                 // 字节数组可能是对象序列化的
                 Object mResult = ObjectUtils.deserialize((byte[]) result);
                 if (ObjectUtils.isEmpty(mResult)) {
                     // 字节数组可能是String##getBytes()获取的
                     mResult = new String((byte[]) result);
                 }
-                LOGGER.debug("Result = {}", mResult);
+                LOGGER.debug1(object, "Result = {}", mResult);
             } else {
-                LOGGER.debug("Result = {}", result);
+                LOGGER.debug1(object, "Result = {}", result);
             }
         }
         return result;

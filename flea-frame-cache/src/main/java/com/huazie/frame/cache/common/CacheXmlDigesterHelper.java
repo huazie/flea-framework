@@ -17,15 +17,13 @@ import com.huazie.frame.cache.config.Caches;
 import com.huazie.frame.cache.config.FleaCache;
 import com.huazie.frame.cache.config.FleaCacheConfig;
 import com.huazie.frame.common.XmlDigesterHelper;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.CollectionUtils;
-import com.huazie.frame.common.util.IOUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import org.apache.commons.digester.Digester;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -37,7 +35,7 @@ import java.util.List;
  */
 public class CacheXmlDigesterHelper {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CacheXmlDigesterHelper.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(CacheXmlDigesterHelper.class);
 
     private static volatile CacheXmlDigesterHelper xmlDigester;
 
