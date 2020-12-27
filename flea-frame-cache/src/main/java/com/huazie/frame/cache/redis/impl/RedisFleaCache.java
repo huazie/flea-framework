@@ -48,9 +48,10 @@ public class RedisFleaCache extends AbstractFleaCache {
     @Override
     public void putNativeValue(String key, Object value, long expiry) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "KEY = {}", key);
-            LOGGER.debug("VALUE = {}", value);
-            LOGGER.debug("EXPIRY = {}s", expiry);
+            Object obj = new Object() {};
+            LOGGER.debug1(obj, "REDIS FLEA CACHE, KEY = {}", key);
+            LOGGER.debug1(obj, "REDIS FLEA CACHE, VALUE = {}", value);
+            LOGGER.debug1(obj, "REDIS FLEA CACHE, EXPIRY = {}s", expiry);
         }
         // 序列化
         if (ObjectUtils.isNotEmpty(value)) {

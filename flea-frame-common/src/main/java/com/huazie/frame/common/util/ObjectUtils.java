@@ -1,8 +1,8 @@
 package com.huazie.frame.common.util;
 
 import com.huazie.frame.common.exception.CommonException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -19,7 +19,7 @@ import java.io.ObjectOutputStream;
  */
 public class ObjectUtils {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ObjectUtils.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(ObjectUtils.class);
 
     /**
      * <p> 判断value是否为空 </p>
@@ -63,7 +63,7 @@ public class ObjectUtils {
             return byteArrayOutputStream.toByteArray();
         } catch (IOException e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("Exception occurs in the process of object serialization : {}", e.getMessage());
+                LOGGER.error1(new Object(), "Exception occurs in the process of object serialization : {}", e.getMessage());
             }
         }
         return null;
@@ -85,7 +85,7 @@ public class ObjectUtils {
             return objectInputStream.readObject();
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("Exception occurs in the process of object deserialization : {}", e.getMessage());
+                LOGGER.error1(new Object() {}, "Exception occurs in the process of object deserialization : {}", e.getMessage());
             }
         }
         return null;

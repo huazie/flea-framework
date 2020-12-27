@@ -41,10 +41,9 @@ public class RedisFleaCacheBuilder implements IFleaCacheBuilder {
         AbstractFleaCache fleaCache = new RedisFleaCache(name, expiry, redisClient);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "Start");
-            LOGGER.debug("Pool Name = {}", RedisPool.getInstance(group).getPoolName());
-            LOGGER.debug("Pool = {}", RedisPool.getInstance(group).getJedisPool());
-            LOGGER.debug("End");
+            Object obj = new Object() {};
+            LOGGER.debug1(obj, "Pool Name = {}", RedisPool.getInstance(group).getPoolName());
+            LOGGER.debug1(obj, "Pool = {}", RedisPool.getInstance(group).getJedisPool());
         }
 
         return fleaCache;

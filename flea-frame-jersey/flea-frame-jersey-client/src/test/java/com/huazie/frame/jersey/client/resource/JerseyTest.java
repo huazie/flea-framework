@@ -11,6 +11,8 @@ import com.huazie.ffs.pojo.upload.output.OutputUploadAuthInfo;
 import com.huazie.frame.common.DateFormatEnum;
 import com.huazie.frame.common.FleaFrameManager;
 import com.huazie.frame.common.IFleaUser;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.DateUtils;
 import com.huazie.frame.common.util.IOUtils;
 import com.huazie.frame.common.util.ObjectUtils;
@@ -35,9 +37,6 @@ import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.media.multipart.file.FileDataBodyPart;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.slf4j.MDC;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -58,7 +57,7 @@ import java.net.URLEncoder;
  */
 public class JerseyTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JerseyTest.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(JerseyTest.class);
 
     private ApplicationContext applicationContext;
 

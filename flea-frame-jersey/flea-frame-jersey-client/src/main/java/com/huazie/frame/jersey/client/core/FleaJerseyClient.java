@@ -46,8 +46,10 @@ public class FleaJerseyClient {
      */
     public <T> Response<T> invoke(String clientCode, Object input, Class<T> outputClazz) throws Exception {
 
+        Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "Start");
+            obj = new Object() {};
+            LOGGER.debug1(obj, "Start");
         }
 
         RequestConfig config = new RequestConfig();
@@ -98,8 +100,8 @@ public class FleaJerseyClient {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Response = {}", response);
-            LOGGER.debug("End");
+            LOGGER.debug1(obj, "Response = {}", response);
+            LOGGER.debug1(obj, "End");
         }
 
         return response;

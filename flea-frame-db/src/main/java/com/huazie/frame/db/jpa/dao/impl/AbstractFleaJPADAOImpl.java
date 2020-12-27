@@ -50,13 +50,15 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         Class<?> clz = getClass();
         // 获取子类对象的泛型父类类型（也就是AbstractDaoImpl<T>）
         ParameterizedType type = (ParameterizedType) clz.getGenericSuperclass();
+        Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "Type={}", type);
+            obj = new Object() {};
+            LOGGER.debug1(obj, "Type={}", type);
         }
         Type[] types = type.getActualTypeArguments();
         clazz = (Class<T>) types[0];
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("ClassName={}", clazz.getName());
+            LOGGER.debug1(obj, "ClassName={}", clazz.getName());
         }
     }
 
@@ -106,7 +108,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 
     @Override
     public List<T> query(Map<String, Object> paramMap, String attrName, String orderBy) throws CommonException {
-        return getQuery(null).equal(paramMap).addOrderby(attrName, orderBy).getResultList();
+        return getQuery(null).equal(paramMap).addOrderBy(attrName, orderBy).getResultList();
     }
 
     @Override
@@ -117,7 +119,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     @Override
     public List<T> query(Map<String, Object> paramMap, String attrName, String orderBy, int start, int max)
             throws CommonException {
-        return getQuery(null).equal(paramMap).addOrderby(attrName, orderBy).getResultList(start, max);
+        return getQuery(null).equal(paramMap).addOrderBy(attrName, orderBy).getResultList(start, max);
     }
 
     @Override
@@ -127,7 +129,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 
     @Override
     public List<T> queryAll(String attrName, String orderBy) throws CommonException {
-        return getQuery(null).addOrderby(attrName, orderBy).getResultList();
+        return getQuery(null).addOrderBy(attrName, orderBy).getResultList();
     }
 
     @Override
@@ -137,7 +139,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 
     @Override
     public List<T> queryAll(String attrName, String orderBy, int start, int max) throws CommonException {
-        return getQuery(null).addOrderby(attrName, orderBy).getResultList(start, max);
+        return getQuery(null).addOrderBy(attrName, orderBy).getResultList(start, max);
     }
 
     @Override
@@ -160,7 +162,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 
     @Override
     public List<T> query(Set<String> attrNames, String attrName, String orderBy, T entity) throws CommonException {
-        return getQuery(null).initQueryEntity(entity).equal(attrNames).addOrderby(attrName, orderBy).getResultList();
+        return getQuery(null).initQueryEntity(entity).equal(attrNames).addOrderBy(attrName, orderBy).getResultList();
     }
 
     @Override
@@ -170,7 +172,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 
     @Override
     public List<T> query(Set<String> attrNames, String attrName, String orderBy, int start, int max, T entity) throws CommonException {
-        return getQuery(null).initQueryEntity(entity).equal(attrNames).addOrderby(attrName, orderBy).getResultList(start, max);
+        return getQuery(null).initQueryEntity(entity).equal(attrNames).addOrderBy(attrName, orderBy).getResultList(start, max);
     }
 
     @Override
@@ -180,7 +182,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 
     @Override
     public List<T> queryAll(String attrName, String orderBy, T entity) throws CommonException {
-        return getQuery(null).initQueryEntity(entity).addOrderby(attrName, orderBy).getResultList();
+        return getQuery(null).initQueryEntity(entity).addOrderBy(attrName, orderBy).getResultList();
     }
 
     @Override
@@ -190,7 +192,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 
     @Override
     public List<T> queryAll(String attrName, String orderBy, int start, int max, T entity) throws CommonException {
-        return getQuery(null).initQueryEntity(entity).addOrderby(attrName, orderBy).getResultList(start, max);
+        return getQuery(null).initQueryEntity(entity).addOrderBy(attrName, orderBy).getResultList(start, max);
     }
 
     @Override
@@ -427,8 +429,9 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         // 获取Flea JPA查询对象实例
         FleaJPAQuery query = pool.getFleaObject();
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJPAQueryPool = {}", pool);
-            LOGGER.debug("FleaJPAQuery = {}", query);
+            Object obj = new Object() {};
+            LOGGER.debug1(obj, "FleaJPAQueryPool = {}", pool);
+            LOGGER.debug1(obj, "FleaJPAQuery = {}", query);
         }
         // 获取实例后必须调用该方法,对Flea JPA查询对象进行初始化
         query.init(getEntityManager(), clazz, result);
