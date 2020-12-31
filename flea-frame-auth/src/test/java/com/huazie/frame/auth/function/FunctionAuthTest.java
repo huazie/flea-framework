@@ -18,6 +18,8 @@ import com.huazie.frame.auth.user.UserAuthTest;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.EntityStateEnum;
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.DateUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,7 +40,7 @@ import java.util.List;
  */
 public class FunctionAuthTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserAuthTest.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(UserAuthTest.class);
 
     private ApplicationContext applicationContext;
 

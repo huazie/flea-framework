@@ -3,6 +3,8 @@ package com.huazie.frame.common.util;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.DateFormatEnum;
 import com.huazie.frame.common.FleaConfigManager;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +20,7 @@ import java.util.Date;
  */
 public class DateUtils {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DateUtils.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(DateUtils.class);
 
     private static final String DEFAULT_EXPIRY_TIME_FOREVER = "29991231235959";
 
@@ -79,7 +81,7 @@ public class DateUtils {
         try {
             dateStr = dateFormat.format(date);
         } catch (Exception e) {
-            LOGGER.error("DateUtils##date2String 日期转换异常：", e);
+            LOGGER.error1(new Object() {},"DateUtils##date2String 日期转换异常：", e);
         }
         return dateStr;
     }
@@ -130,7 +132,7 @@ public class DateUtils {
             SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatStr);
             return dateFormat.parse(dateStr);
         } catch (Exception e) {
-            LOGGER.error("DateUtils##string2Date 日期字符串转换异常：", e);
+            LOGGER.error1(new Object() {},"DateUtils##string2Date 日期字符串转换异常：", e);
         }
         return null;
     }

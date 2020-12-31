@@ -25,7 +25,7 @@ public class JerseyLoggerFilter implements IFleaJerseyFilter {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("JerseyLoggerFilter#doFilter(FleaJerseyRequest, FleaJerseyResponse) End");
+            LOGGER.debug("End");
         }
     }
 

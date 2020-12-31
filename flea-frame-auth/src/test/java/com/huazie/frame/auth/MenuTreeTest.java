@@ -7,6 +7,8 @@ import com.huazie.frame.auth.util.FleaMenuTree;
 import com.huazie.frame.auth.util.FueluxMenuTree;
 import com.huazie.frame.common.FleaTree;
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -27,7 +29,7 @@ import java.util.ListIterator;
  */
 public class MenuTreeTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MenuTreeTest.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(MenuTreeTest.class);
 
     private ApplicationContext applicationContext;
 

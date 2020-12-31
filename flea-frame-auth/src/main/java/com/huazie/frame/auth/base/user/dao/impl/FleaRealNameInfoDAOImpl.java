@@ -6,6 +6,8 @@ import com.huazie.frame.auth.base.user.entity.FleaRealNameInfo;
 import com.huazie.frame.auth.common.FleaAuthEntityConstants;
 import com.huazie.frame.auth.common.UserStateEnum;
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.DateUtils;
 import org.slf4j.Logger;
@@ -26,7 +28,7 @@ import java.util.List;
 @SuppressWarnings(value = "unchecked")
 public class FleaRealNameInfoDAOImpl extends FleaAuthDAOImpl<FleaRealNameInfo> implements IFleaRealNameInfoDAO {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaRealNameInfoDAOImpl.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaRealNameInfoDAOImpl.class);
 
     @Override
     public FleaRealNameInfo queryValidRealNameInfo(Long realNameId) throws CommonException {
@@ -47,7 +49,7 @@ public class FleaRealNameInfoDAOImpl extends FleaAuthDAOImpl<FleaRealNameInfo> i
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaRealNameInfo = {}", fleaRealNameInfo);
+            LOGGER.debug1(new Object() {}, "FleaRealNameInfo = {}", fleaRealNameInfo);
         }
 
         return fleaRealNameInfo;

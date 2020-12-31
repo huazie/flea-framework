@@ -22,6 +22,8 @@ import com.huazie.frame.common.FleaSessionManager;
 import com.huazie.frame.common.IFleaUser;
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.object.FleaObjectFactory;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.DateUtils;
 import com.huazie.frame.common.util.HttpUtils;
 import com.huazie.frame.common.util.MapUtils;
@@ -51,7 +53,7 @@ import java.util.Set;
 @Service("fleaUserModuleSV")
 public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaUserModuleSVImpl.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaUserModuleSVImpl.class);
 
     private IFleaAuthSV fleaAuthSV; // Flea授权模块
 
@@ -158,7 +160,7 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
             fleaMenuTree.addAll(fleaMenuList);
         } catch (CommonException e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("Getting All Accessible Menus Occurs Exception : \n", e);
+                LOGGER.error1(new Object() {}, "Getting All Accessible Menus Occurs Exception : \n", e);
             }
         }
         return fleaMenuTree;
@@ -210,7 +212,7 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
 
         } catch (CommonException e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("Getting Operation User Occurs Exception : \n", e);
+                LOGGER.error1(new Object() {}, "Getting Operation User Occurs Exception : \n", e);
             }
         }
     }
@@ -230,7 +232,7 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
             fleaUser.set(FleaAuthConstants.UserConstants.SYSTEM_USER_NAME, user.getUserName());
         } catch (CommonException e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("Getting System User Occurs Exception : \n", e);
+                LOGGER.error1(new Object() {}, "Getting System User Occurs Exception : \n", e);
             }
         }
     }
@@ -326,7 +328,7 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
                 fleaLoginLogSV.save(fleaLoginLog);
             } catch (Exception e) {
                 if (LOGGER.isErrorEnabled()) {
-                    LOGGER.error("Exception occurs when saving login log : ", e);
+                    LOGGER.error1(new Object() {}, "Exception occurs when saving login log : ", e);
                 }
             }
         }
@@ -349,7 +351,7 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
                 }
             } catch (CommonException e) {
                 if (LOGGER.isErrorEnabled()) {
-                    LOGGER.error("Exception occurs when saving quit log : ", e);
+                    LOGGER.error1(new Object() {}, "Exception occurs when saving quit log : ", e);
                 }
             }
         }

@@ -92,6 +92,10 @@ public class FleaJerseyClient {
         // 业务出参类全名字符串
         config.addClientOutput(resClient.getClientOutput());
 
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug1(obj, "Config = {}", config);
+        }
+
         // 传入请求配置，让请求工厂生产一个Flea Jersey请求
         Request request = RequestFactory.getInstance().buildFleaRequest(config);
         Response<T> response = null;

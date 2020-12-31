@@ -1,5 +1,7 @@
 package com.huazie.frame.common.util.json;
 
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.util.JSONTokener;
@@ -21,7 +23,7 @@ import java.util.Map;
  */
 public class JsonUtils {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JsonUtils.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(JsonUtils.class);
 
     /**
      * <p> 使用net.sf.json解析，获取String对象的List集合 </p>
@@ -32,9 +34,11 @@ public class JsonUtils {
      * @since 1.0.0
      */
     public static List<String> toStringList(String json, String key) {
+        Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("JsonUtils#toStringList(String, String) Json = {}", json);
-            LOGGER.debug("JsonUtils#toStringList(String, String) Key = {}", key);
+            obj = new Object() {};
+            LOGGER.debug1(obj, "Json converted to List<String>, Json = {}", json);
+            LOGGER.debug1(obj, "Json converted to List<String>, Key = {}", key);
         }
         List<String> list = null;
         try {
@@ -53,11 +57,11 @@ public class JsonUtils {
             }
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("JsonUtils#toStringList(String, String) Exception = ", e);
+                LOGGER.error1(new Object() {}, "Json converted to List<String>, Exception = \n", e);
             }
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("JsonUtils#toStringList(String, String) List = {}", list);
+            LOGGER.debug1(obj, "Json converted to List<String>, List<String> = {}", list);
         }
         return list;
     }
@@ -72,9 +76,11 @@ public class JsonUtils {
      */
     @SuppressWarnings("unchecked")
     public static List<Map<String, Object>> toMapList(String json, String key) {
+        Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("JsonUtils#toMapList(String, String) Json = {}", json);
-            LOGGER.debug("JsonUtils#toMapList(String, String) Key = {}", key);
+            obj = new Object() {};
+            LOGGER.debug1(obj, "Json converted to List<Map<String, Object>>, Json = {}", json);
+            LOGGER.debug1(obj, "Json converted to List<Map<String, Object>>, Key = {}", key);
         }
         List<Map<String, Object>> list = null;
         try {
@@ -103,11 +109,11 @@ public class JsonUtils {
             }
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("JsonUtils#toMapList(String, String) Exception = ", e);
+                LOGGER.error1(new Object() {}, "Json converted to List<Map<String, Object>>, Exception = \n", e);
             }
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("JsonUtils#toMapList(String, String) List = {}", list);
+            LOGGER.debug1(obj, "Json converted to List<Map<String, Object>>, List<Map<String, Object>> = {}", list);
         }
         return list;
     }

@@ -1,6 +1,8 @@
 package com.huazie.frame.common.util.concurrent;
 
 import com.huazie.frame.common.IFleaUser;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
@@ -18,7 +20,7 @@ import java.lang.reflect.Method;
  */
 public class FleaAsyncTask extends FleaRunnable {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaAsyncTask.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaAsyncTask.class);
 
     private Object asyncTaskExecObj; // 异步任务执行对象
 

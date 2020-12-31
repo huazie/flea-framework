@@ -1,6 +1,8 @@
 package com.huazie.frame.common.util;
 
 import com.huazie.frame.common.EncryptionAlgorithmEnum;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,7 +22,7 @@ import java.security.NoSuchAlgorithmException;
  */
 public class SecurityUtils {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SecurityUtils.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(SecurityUtils.class);
 
     /**
      * <p> 进行MD5加密, 单向 </p>
@@ -53,9 +55,11 @@ public class SecurityUtils {
      * @since 1.0.0
      */
     private static String encrypt(EncryptionAlgorithmEnum algorithm, String info) {
+        Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("SecurityUtils#encrypt(EncryptionAlgorithmEnum, String) Algorithm = {}", algorithm.getAlgorithm());
-            LOGGER.debug("SecurityUtils#encrypt(EncryptionAlgorithmEnum, String) info = {}", info);
+            obj = new Object() {};
+            LOGGER.debug1(obj, "Algorithm = {}", algorithm.getAlgorithm());
+            LOGGER.debug1(obj, "info = {}", info);
         }
         byte[] digestInfo = null;
         try {
@@ -67,13 +71,13 @@ public class SecurityUtils {
             digestInfo = messageDigest.digest();
         } catch (NoSuchAlgorithmException e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("SecurityUtils#encrypt(EncryptionAlgorithmEnum, String) Exception = ", e);
+                LOGGER.error1(new Object() {},"Exception = ", e);
             }
         }
         // 将摘要转为字符串
         String result = DataHandleUtils.byte2hex(digestInfo);
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("SecurityUtils#encrypt(EncryptionAlgorithmEnum, String) Result = {}", result);
+            LOGGER.debug1(obj, "Result = {}", result);
         }
         return result;
     }
@@ -109,9 +113,11 @@ public class SecurityUtils {
      * @since 1.0.0
      */
     private static String getKey(EncryptionAlgorithmEnum algorithm, String src) {
+        Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("SecurityUtils#getKey(EncryptionAlgorithmEnum, String) Algorithm = {}", algorithm.getAlgorithm());
-            LOGGER.debug("SecurityUtils#getKey(EncryptionAlgorithmEnum, String) Src = {}", src);
+            obj = new Object() {};
+            LOGGER.debug1(obj, "Algorithm = {}", algorithm.getAlgorithm());
+            LOGGER.debug1(obj, "Src = {}", src);
         }
         String key = null;
         if (null != algorithm) {
@@ -123,7 +129,7 @@ public class SecurityUtils {
             }
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("SecurityUtils#getKey(EncryptionAlgorithmEnum, String) Key = {}", key);
+            LOGGER.debug1(obj, "Key = {}", key);
         }
         return key;
     }
@@ -156,8 +162,10 @@ public class SecurityUtils {
      * @since 1.0.0
      */
     private static SecretKey createSecretKey(EncryptionAlgorithmEnum algorithm) {
+        Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("SecurityUtils#createSecretKey(EncryptionAlgorithmEnum) Algorithm = {}", algorithm.getAlgorithm());
+            obj = new Object() {};
+            LOGGER.debug1(obj, "Algorithm = {}", algorithm.getAlgorithm());
         }
         // KeyGenerator对象
         KeyGenerator keygen;
@@ -170,11 +178,11 @@ public class SecurityUtils {
             key = keygen.generateKey();
         } catch (NoSuchAlgorithmException e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("SecurityUtils#createSecretKey(EncryptionAlgorithmEnum) Exception = ", e);
+                LOGGER.error1(new Object() {},"Exception = ", e);
             }
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("SecurityUtils#createSecretKey(EncryptionAlgorithmEnum) SecretKey = {}", DataHandleUtils.byte2hex(key.getEncoded()));
+            LOGGER.debug1(obj, "SecretKey = {}", DataHandleUtils.byte2hex(key.getEncoded()));
         }
         return key;
     }
@@ -189,10 +197,12 @@ public class SecurityUtils {
      * @since 1.0.0
      */
     private static String encrypt(String algorithm, SecretKey key, String info) {
+        Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("SecurityUtils#encrypt(String, SecretKey, String) Algorithm = {}", algorithm);
-            LOGGER.debug("SecurityUtils#encrypt(String, SecretKey, String) SecretKey = {}", DataHandleUtils.byte2hex(key.getEncoded()));
-            LOGGER.debug("SecurityUtils#encrypt(String, SecretKey, String) Info = {}", info);
+            obj = new Object() {};
+            LOGGER.debug1(obj, "Encrypt, Algorithm = {}", algorithm);
+            LOGGER.debug1(obj, "Encrypt, SecretKey = {}", DataHandleUtils.byte2hex(key.getEncoded()));
+            LOGGER.debug1(obj, "Encrypt, Info = {}", info);
         }
         String result = null;
         try {
@@ -207,11 +217,11 @@ public class SecurityUtils {
             result = DataHandleUtils.byte2hex(cipherByte);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("SecurityUtils#encrypt(String, SecretKey, String) Exception = ", e);
+                LOGGER.error1(new Object() {},"Exception = ", e);
             }
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("SecurityUtils#encrypt(String, SecretKey, String) Encrypt Result = {}", result);
+            LOGGER.debug1(obj, "Encrypt Result = {}", result);
         }
         return result;
     }
@@ -232,11 +242,11 @@ public class SecurityUtils {
             result = encrypt(algorithm, secretKey, info);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("SecurityUtils#encrypt(String, String, String) Exception = ", e);
+                LOGGER.error1(new Object() {},"Exception = ", e);
             }
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("SecurityUtils#encrypt(String, String, String) Encrypt Result = {}", result);
+            LOGGER.debug1(new Object() {}, "Encrypt Result = {}", result);
         }
         return result;
     }
@@ -251,10 +261,12 @@ public class SecurityUtils {
      * @since 1.0.0
      */
     private static String decrypt(String algorithm, SecretKey key, String info) {
+        Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("SecurityUtils#decrypt(String, SecretKey, String) Algorithm = {}", algorithm);
-            LOGGER.debug("SecurityUtils#decrypt(String, SecretKey, String) SecretKey = {}", DataHandleUtils.byte2hex(key.getEncoded()));
-            LOGGER.debug("SecurityUtils#decrypt(String, SecretKey, String) Info = {}", info);
+            obj = new Object() {};
+            LOGGER.debug1(obj, "Decrypt, Algorithm = {}", algorithm);
+            LOGGER.debug1(obj, "Decrypt, SecretKey = {}", DataHandleUtils.byte2hex(key.getEncoded()));
+            LOGGER.debug1(obj, "Decrypt, Info = {}", info);
         }
         String result = null;
         try {
@@ -267,11 +279,11 @@ public class SecurityUtils {
             result = new String(cipherByte);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("SecurityUtils#decrypt(String, SecretKey, String) Exception = ", e);
+                LOGGER.error1(new Object() {},"Exception = ", e);
             }
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("SecurityUtils#decrypt(String, SecretKey, String) Decrypt Result = {}", result);
+            LOGGER.debug1(obj, "Decrypt Result = {}", result);
         }
         return result;
     }
@@ -292,11 +304,11 @@ public class SecurityUtils {
             result = decrypt(algorithm, secretKey, info);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("SecurityUtils#decrypt(String, String, String) Exception = ", e);
+                LOGGER.error1(new Object() {},"Exception = ", e);
             }
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("SecurityUtils#decrypt(String, String, String) Decrypt Result = {}", result);
+            LOGGER.debug1(new Object() {}, "Decrypt Result = {}", result);
         }
         return result;
     }

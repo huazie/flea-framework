@@ -1,5 +1,7 @@
 package com.huazie.frame.auth;
 
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.db.common.DBSystemEnum;
 import com.huazie.frame.db.jdbc.FleaJDBCHelper;
 import com.huazie.frame.db.jdbc.config.FleaJDBCConfig;
@@ -21,7 +23,7 @@ import java.util.List;
  */
 public class IDGeneratorTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(IDGeneratorTest.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(IDGeneratorTest.class);
 
     @Test
     public void testGenerationType() {

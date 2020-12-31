@@ -35,6 +35,8 @@ import com.huazie.frame.auth.common.pojo.user.FleaUserModuleData;
 import com.huazie.frame.auth.common.service.interfaces.IFleaAuthSV;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.NumberUtils;
@@ -59,8 +61,6 @@ import java.util.List;
  */
 @Service("fleaAuthSV")
 public class FleaAuthSVImpl implements IFleaAuthSV {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaAuthSVImpl.class);
 
     private IFleaAccountSV fleaAccountSV; // Flea账户信息服务
 

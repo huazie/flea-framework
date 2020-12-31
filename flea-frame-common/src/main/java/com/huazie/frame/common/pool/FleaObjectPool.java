@@ -1,5 +1,7 @@
 package com.huazie.frame.common.pool;
 
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ObjectUtils;
 import org.apache.commons.pool2.PooledObjectFactory;
 import org.apache.commons.pool2.impl.GenericObjectPool;
@@ -18,7 +20,7 @@ import java.io.Closeable;
  */
 public abstract class FleaObjectPool<T> implements Closeable {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaObjectPool.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaObjectPool.class);
 
     protected GenericObjectPool<T> fleaObjectPool; // 内部Flea对象池对象
 
@@ -92,7 +94,7 @@ public abstract class FleaObjectPool<T> implements Closeable {
             fleaObjectPool.returnObject(object);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("Could not return the object instance to the pool, Exception :\n", e);
+                LOGGER.error1(new Object() {}, "Could not return the object instance to the pool, Exception :\n", e);
             }
         }
     }
@@ -198,7 +200,7 @@ public abstract class FleaObjectPool<T> implements Closeable {
             }
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("Error trying to add idle objects, Exception :\n", e);
+                LOGGER.error1(new Object() {}, "Error trying to add idle objects, Exception :\n", e);
             }
         }
     }
