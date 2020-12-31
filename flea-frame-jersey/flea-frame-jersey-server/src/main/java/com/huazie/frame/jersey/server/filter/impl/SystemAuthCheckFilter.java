@@ -21,12 +21,12 @@ public class SystemAuthCheckFilter implements IFleaJerseyFilter {
     @Override
     public void doFilter(FleaJerseyRequest request, FleaJerseyResponse response) throws CommonException {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("SystemAuthCheckFilter#doFilter(FleaJerseyRequest, FleaJerseyResponse) Start");
+            LOGGER.debug("Start");
         }
         // 系统授权校验
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("SystemAuthCheckFilter#doFilter(FleaJerseyRequest, FleaJerseyResponse) End");
+            LOGGER.debug("End");
         }
     }
 

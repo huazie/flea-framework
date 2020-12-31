@@ -6,6 +6,8 @@ import com.huazie.frame.auth.base.user.entity.FleaUser;
 import com.huazie.frame.auth.common.FleaAuthEntityConstants;
 import com.huazie.frame.auth.common.UserStateEnum;
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.DateUtils;
 import org.slf4j.Logger;
@@ -26,7 +28,7 @@ import java.util.List;
 @SuppressWarnings(value = "unchecked")
 public class FleaUserDAOImpl extends FleaAuthDAOImpl<FleaUser> implements IFleaUserDAO {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaUserDAOImpl.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaUserDAOImpl.class);
 
     @Override
     public FleaUser queryValidUser(Long userId) throws CommonException {
@@ -47,7 +49,7 @@ public class FleaUserDAOImpl extends FleaAuthDAOImpl<FleaUser> implements IFleaU
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaUser = {}", fleaUser);
+            LOGGER.debug1(new Object() {}, "FleaUser = {}", fleaUser);
         }
 
         return fleaUser;

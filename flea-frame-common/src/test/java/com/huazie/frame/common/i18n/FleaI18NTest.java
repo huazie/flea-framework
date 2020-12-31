@@ -1,6 +1,8 @@
 package com.huazie.frame.common.i18n;
 
 import com.huazie.frame.common.i18n.config.FleaI18nConfig;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.common.util.UnicodeUtils;
 import org.junit.Test;
@@ -15,7 +17,7 @@ import java.util.Locale;
  */
 public class FleaI18NTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaI18NTest.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaI18NTest.class);
 
     @Test
     public void fleaI18NConfigTest() {

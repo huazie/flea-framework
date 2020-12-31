@@ -2,6 +2,8 @@ package com.huazie.frame.common.util;
 
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.PinyinEnum;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +19,7 @@ import java.util.UUID;
  */
 public class RandomCode {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RandomCode.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(RandomCode.class);
 
     // 创建随机数对象
     private static Random random = new Random();
@@ -44,7 +46,7 @@ public class RandomCode {
             sNumberCode.append(random.nextInt(NUMBER_TEN));
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("NumberCode = {}", sNumberCode);
+            LOGGER.debug1(new Object() {}, "NumberCode = {}", sNumberCode);
         }
         return sNumberCode.toString();
     }
@@ -108,7 +110,7 @@ public class RandomCode {
             sLetterCode.append(letter);
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("LetterCode = {}", sLetterCode);
+            LOGGER.debug1(new Object() {}, "LetterCode = {}", sLetterCode);
         }
         return sLetterCode.toString();
     }
@@ -156,13 +158,15 @@ public class RandomCode {
      */
     public static String toUUID() {
         String sUUID = UUID.randomUUID().toString();
+        Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Before UUID = {}", sUUID);
+            obj = new Object() {};
+            LOGGER.debug1(obj, "Before UUID = {}", sUUID);
         }
         // 去掉"-"符号
         String sResult = sUUID.replaceAll(CommonConstants.SymbolConstants.HYPHEN, "");
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("After UUID = {}", sResult);
+            LOGGER.debug1(obj, "After UUID = {}", sResult);
         }
         return sResult;
     }

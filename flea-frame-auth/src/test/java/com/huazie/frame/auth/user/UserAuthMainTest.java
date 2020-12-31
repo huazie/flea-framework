@@ -2,6 +2,8 @@ package com.huazie.frame.auth.user;
 
 import com.huazie.frame.auth.common.service.interfaces.IFleaAuthSV;
 import com.huazie.frame.auth.util.FleaAuthLogger;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -16,7 +18,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class UserAuthMainTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserAuthMainTest.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(UserAuthMainTest.class);
 
     public static void main(String[] args) {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");

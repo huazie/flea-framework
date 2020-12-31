@@ -9,6 +9,8 @@ import com.huazie.frame.auth.common.AuthRelTypeEnum;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.EntityStateEnum;
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.DateUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,7 +28,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class RoleAuthTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RoleAuthTest.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(RoleAuthTest.class);
 
     private ApplicationContext applicationContext;
 

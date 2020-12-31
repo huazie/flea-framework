@@ -7,6 +7,8 @@ import com.huazie.frame.auth.common.AuthRelTypeEnum;
 import com.huazie.frame.auth.common.FleaAuthEntityConstants;
 import com.huazie.frame.common.EntityStateEnum;
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +26,7 @@ import java.util.List;
 @Repository("fleaPrivilegeRelDAO")
 public class FleaPrivilegeRelDAOImpl extends FleaAuthDAOImpl<FleaPrivilegeRel> implements IFleaPrivilegeRelDAO {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaPrivilegeRelDAOImpl.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaPrivilegeRelDAOImpl.class);
 
     @Override
     @SuppressWarnings(value = "unchecked")
@@ -37,7 +39,7 @@ public class FleaPrivilegeRelDAOImpl extends FleaAuthDAOImpl<FleaPrivilegeRel> i
                 .getResultList();
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("PrivilegeRelList = {}", privilegeRelList);
+            LOGGER.debug1(new Object() {}, "PrivilegeRelList = {}", privilegeRelList);
         }
 
         return privilegeRelList;

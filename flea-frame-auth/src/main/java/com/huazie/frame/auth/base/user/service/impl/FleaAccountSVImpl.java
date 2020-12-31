@@ -8,6 +8,8 @@ import com.huazie.frame.auth.common.exception.FleaAuthCommonException;
 import com.huazie.frame.auth.common.pojo.user.FleaAccountPOJO;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.SecurityUtils;
 import com.huazie.frame.common.util.StringUtils;
@@ -29,7 +31,7 @@ import org.springframework.stereotype.Service;
 @Service("fleaAccountSV")
 public class FleaAccountSVImpl extends AbstractFleaJPASVImpl<FleaAccount> implements IFleaAccountSV {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaAccountSVImpl.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaAccountSVImpl.class);
 
     private IFleaAccountDAO fleaAccountDao;
 
@@ -76,14 +78,14 @@ public class FleaAccountSVImpl extends AbstractFleaJPASVImpl<FleaAccount> implem
     public String encrypt(String originalAccountPwd) {
         String encryptedAccountPwd = originalAccountPwd;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaAccountSVImpl#encrypt(String) originalAccountPwd = {}", originalAccountPwd);
+            LOGGER.debug1(new Object() {}, "originalAccountPwd = {}", originalAccountPwd);
         }
         // TODO 暂时使用 SHA
         if (StringUtils.isNotBlank(originalAccountPwd)) {
             encryptedAccountPwd = SecurityUtils.encryptToSHA(originalAccountPwd);
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaAccountSVImpl#encrypt(String) encryptedAccountPwd = {}", encryptedAccountPwd);
+            LOGGER.debug1(new Object() {}, "encryptedAccountPwd = {}", encryptedAccountPwd);
         }
         return encryptedAccountPwd;
     }

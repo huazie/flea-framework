@@ -1,6 +1,8 @@
 package com.huazie.frame.common.util;
 
 import com.huazie.frame.common.CommonConstants;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.json.FastJsonUtils;
 import com.huazie.frame.common.util.json.GsonUtils;
 import org.slf4j.Logger;
@@ -23,7 +25,7 @@ import java.util.Map;
  */
 public class HttpUtils {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(HttpUtils.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(HttpUtils.class);
 
     private static final String TAOBAO_IP_URL = "http://ip.taobao.com/service/getIpInfo.php?ip=";
 
@@ -65,7 +67,7 @@ public class HttpUtils {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("HttpUtils#getIp(HttpServletRequest) IP ={}", ip);
+            LOGGER.debug1(new Object() {}, "IP ={}", ip);
         }
 
         return ip;
@@ -97,9 +99,11 @@ public class HttpUtils {
                 return "";
             }
 
+            Object obj = null;
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("HttpUtils#getAddressByTaoBao(String) Map = {}", map);
-                LOGGER.debug("HttpUtils#getAddressByTaoBao(String) Data = {}", dataMap);
+                obj = new Object() {};
+                LOGGER.debug1(obj, "Map = {}", map);
+                LOGGER.debug1(obj, "Data = {}", dataMap);
             }
 
             sb.append(dataMap.get(CommonConstants.IPAddressConstants.COUNTRY));
@@ -110,14 +114,14 @@ public class HttpUtils {
                 sb.append("(").append(dataMap.get(CommonConstants.IPAddressConstants.ISP)).append(")");
             }
 
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug1(obj, "Address = {}", sb);
+            }
+
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("Exception = ", e);
+                LOGGER.error1(new Object() {},"Exception = ", e);
             }
-        }
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Address = {}", sb);
         }
 
         return sb.toString();
@@ -143,8 +147,10 @@ public class HttpUtils {
                 return "";
             }
 
+            Object obj = null;
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Map={}", map);
+                obj = new Object() {};
+                LOGGER.debug1(obj, "Map={}", map);
             }
 
             sb.append(map.get(CommonConstants.IPAddressConstants.COUNTRY))
@@ -152,12 +158,12 @@ public class HttpUtils {
                     .append(map.get(CommonConstants.IPAddressConstants.CITY));
 
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Address={}", sb);
+                LOGGER.debug1(obj, "Address={}", sb);
             }
             
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("Exception=", e);
+                LOGGER.error1(new Object() {},"Exception=", e);
             }
         }
 
@@ -184,11 +190,11 @@ public class HttpUtils {
                 sb.append(line);
             }
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Address={}", sb);
+                LOGGER.debug1(new Object() {}, "Address={}", sb);
             }
         } catch (IOException e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("IOException={}", e);
+                LOGGER.error1(new Object() {},"IOException={}", e);
             }
         } finally {
             if (reader != null) {
@@ -196,7 +202,7 @@ public class HttpUtils {
                     reader.close();
                 } catch (IOException e) {
                     if (LOGGER.isErrorEnabled()) {
-                        LOGGER.error("IOException={}", e);
+                        LOGGER.error1(new Object() {},"IOException={}", e);
                     }
                 }
             }

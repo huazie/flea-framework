@@ -4,6 +4,8 @@ import com.huazie.frame.auth.base.function.entity.FleaMenu;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.EntityStateEnum;
 import com.huazie.frame.common.FleaTree;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
@@ -34,7 +36,7 @@ import java.util.Map;
  */
 public class FleaMenuTree extends FleaTree<FleaMenu> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaMenuTree.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaMenuTree.class);
 
     private static final long serialVersionUID = 782100083467014824L;
 
@@ -139,14 +141,15 @@ public class FleaMenuTree extends FleaTree<FleaMenu> {
         int pHeight = pMenuLevel + 1;
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaMenuTree#add(FleaMenu, FleaMenu) Start Adding Menu to MenuTree");
-            LOGGER.debug("FleaMenuTree#add(FleaMenu, FleaMenu) Current Menu = {}", fleaMenu);
-            LOGGER.debug("FleaMenuTree#add(FleaMenu, FleaMenu) Current Menu Id = {}", id);
-            LOGGER.debug("FleaMenuTree#add(FleaMenu, FleaMenu) Current Menu Level = {}", menuLevel);
-            LOGGER.debug("FleaMenuTree#add(FleaMenu, FleaMenu) Parent Menu = {}", parentMenu);
-            LOGGER.debug("FleaMenuTree#add(FleaMenu, FleaMenu) Parent Menu Id = {}", pId);
-            LOGGER.debug("FleaMenuTree#add(FleaMenu, FleaMenu) Parent Menu Level = {}", pMenuLevel);
-            LOGGER.debug("FleaMenuTree#add(FleaMenu, FleaMenu) Finish Adding Menu to MenuTree");
+            Object obj = new Object() {};
+            LOGGER.debug1(obj, "Start Adding Menu to MenuTree");
+            LOGGER.debug1(obj, "Current Menu = {}", fleaMenu);
+            LOGGER.debug1(obj, "Current Menu Id = {}", id);
+            LOGGER.debug1(obj, "Current Menu Level = {}", menuLevel);
+            LOGGER.debug1(obj, "Parent Menu = {}", parentMenu);
+            LOGGER.debug1(obj, "Parent Menu Id = {}", pId);
+            LOGGER.debug1(obj, "Parent Menu Level = {}", pMenuLevel);
+            LOGGER.debug1(obj, "Finish Adding Menu to MenuTree");
         }
 
         addTreeNote(fleaMenu, id, height, parentMenu, pId, pHeight);

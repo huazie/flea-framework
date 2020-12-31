@@ -1,5 +1,7 @@
 package com.huazie.frame.common.util;
 
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +29,7 @@ import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombi
  */
 public class PinyinUtils {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PinyinUtils.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(PinyinUtils.class);
 
     /**
      * <p> 获取中文的简拼 </p>
@@ -39,7 +41,7 @@ public class PinyinUtils {
     public static String getJianPin(String chinese, int caseType) {
         String name = getPinyin(chinese, caseType, PinyinEnum.JIAN_PIN.getType());
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("JianPin : {}", name);
+            LOGGER.debug1(new Object() {}, "JianPin : {}", name);
         }
         return name;
     }
@@ -54,7 +56,7 @@ public class PinyinUtils {
     public static String getQuanPin(String chinese, int caseType) {
         String name = getPinyin(chinese, caseType, PinyinEnum.QUAN_PIN.getType());
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("QuanPin : {}", name);
+            LOGGER.debug1(new Object() {}, "QuanPin : {}", name);
         }
         return name;
     }
@@ -87,7 +89,7 @@ public class PinyinUtils {
                         }
                     }
                 } catch (BadHanyuPinyinOutputFormatCombination e) {
-                    LOGGER.error("拼英转换出现异常， Exception = ", e);
+                    LOGGER.error1(new Object() {},"拼英转换出现异常， Exception = ", e);
                 }
             } else {
                 pinyinName = pinyinName + nameChar[i];

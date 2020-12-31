@@ -38,7 +38,7 @@ public abstract class FleaResourceConfig extends ResourceConfig {
      */
     private void init() {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaResourceConfig#init() Start");
+            LOGGER.debug("Start");
         }
         // 获取所有的资源包名
         List<String> resourcePackages = null;
@@ -55,14 +55,14 @@ public abstract class FleaResourceConfig extends ResourceConfig {
 
         if (CollectionUtils.isNotEmpty(resourcePackages)) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("FleaResourceConfig#init() scan packages : {}", resourcePackages);
+                LOGGER.debug("scan packages : {}", resourcePackages);
             }
             packages(resourcePackages.toArray(new String[0]));
         }
         // 服务端注册MultiPartFeature组件，用于支持 multipart/form-data 媒体类型
         register(MultiPartFeature.class);
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaResourceConfig#init() End");
+            LOGGER.debug("End");
         }
     }
 }
