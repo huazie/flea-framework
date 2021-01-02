@@ -1,11 +1,11 @@
 package com.huazie.frame.jersey.server.filter;
 
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.jersey.common.JerseyXmlDigesterHelper;
 import com.huazie.frame.jersey.common.filter.config.FleaJerseyFilterConfig;
 import com.huazie.frame.jersey.common.filter.config.Jersey;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <p> Flea Jersey Filter 配置单元测试类 </p>
@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  */
 public class FleaJerseyFilterConfigTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaJerseyFilterConfigTest.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaJerseyFilterConfigTest.class);
 
     @Test
     public void testJerseyFilter() {

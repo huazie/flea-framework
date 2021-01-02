@@ -1,5 +1,7 @@
 package com.huazie.frame.tools.code.impl;
 
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.IOUtils;
 import com.huazie.frame.common.util.ObjectUtils;
@@ -9,8 +11,6 @@ import com.huazie.frame.db.jdbc.FleaJDBCHelper;
 import com.huazie.frame.db.jdbc.config.FleaJDBCConfig;
 import com.huazie.frame.tools.code.FleaCodeHelper;
 import com.huazie.frame.tools.common.ToolsConstants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.persistence.GenerationType;
 import java.sql.SQLException;
@@ -29,7 +29,7 @@ import java.util.Map;
  */
 public class FleaEntityBuilder extends FleaCodeBuilder {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaEntityBuilder.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaEntityBuilder.class);
 
     @Override
     protected void combinedFilePath(StringBuilder fleaFilePathStrBuilder, String entityClassName, String separator, Map<String, Object> param) {
