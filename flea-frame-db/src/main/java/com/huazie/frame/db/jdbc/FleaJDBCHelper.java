@@ -347,13 +347,13 @@ public class FleaJDBCHelper {
         Object obj = null;
         if (LOGGER.isDebugEnabled()) {
             obj = new Object() {};
-            LOGGER.debug1(obj, "FleaJDBCHelper##getDBOperationHandler(String, Object...) SQL = {}", sql);
+            LOGGER.debug1(obj, "SQL = {}", sql);
         }
 
         if (ObjectUtils.isNotEmpty(preparedStatement) && ArrayUtils.isNotEmpty(params)) {
             for (int i = 0; i < params.length; i++) {
                 if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug1(obj, "FleaJDBCHelper##getDBOperationHandler(String, Object...) PARAM{} = {}", i + 1, params[i]);
+                    LOGGER.debug1(obj, "PARAM{} = {}", i + 1, params[i]);
                 }
                 preparedStatement.setObject(i + 1, params[i]);
             }

@@ -1,6 +1,8 @@
 package com.huazie.frame.jersey.server.filter.impl;
 
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.jersey.common.FleaJerseyConstants.RequestPublicDataConstants;
@@ -14,8 +16,6 @@ import com.huazie.frame.jersey.common.data.ResponseBusinessData;
 import com.huazie.frame.jersey.common.data.ResponsePublicData;
 import com.huazie.frame.jersey.common.exception.FleaJerseyFilterException;
 import com.huazie.frame.jersey.server.filter.IFleaJerseyFilter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <p> 数据预校验过滤器 </p>
@@ -26,13 +26,15 @@ import org.slf4j.LoggerFactory;
  */
 public class DataPreCheckFilter implements IFleaJerseyFilter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DataPreCheckFilter.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(DataPreCheckFilter.class);
 
     @Override
     public void doFilter(FleaJerseyRequest request, FleaJerseyResponse response) throws CommonException {
 
+        Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Start");
+            obj = new Object() {};
+            LOGGER.debug1(obj, "Data PreCheck, Start");
         }
 
         if (ObjectUtils.isEmpty(response)) {
@@ -85,7 +87,7 @@ public class DataPreCheckFilter implements IFleaJerseyFilter {
         StringUtils.checkBlank(serviceCode, FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000006", RequestPublicDataConstants.SERVICE_CODE);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("RequestPublicData = {}", requestPublicData);
+            LOGGER.debug1(obj, "RequestPublicData = {}", requestPublicData);
         }
 
         RequestBusinessData requestBusinessData = requestData.getBusinessData();
@@ -97,11 +99,11 @@ public class DataPreCheckFilter implements IFleaJerseyFilter {
         StringUtils.checkBlank(input, FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000005");
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("RequestBusinessData = {}", requestBusinessData);
+            LOGGER.debug1(obj, "RequestBusinessData = {}", requestBusinessData);
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("End");
+            LOGGER.debug1(obj, "Data PreCheck, End");
         }
     }
 

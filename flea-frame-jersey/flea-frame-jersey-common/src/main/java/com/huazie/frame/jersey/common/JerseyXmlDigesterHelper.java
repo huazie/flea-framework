@@ -2,9 +2,11 @@ package com.huazie.frame.jersey.common;
 
 import com.huazie.frame.common.XmlDigesterHelper;
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ExceptionUtils;
-import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.IOUtils;
+import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.jersey.common.exception.FleaJerseyFilterException;
 import com.huazie.frame.jersey.common.filter.config.After;
@@ -15,8 +17,6 @@ import com.huazie.frame.jersey.common.filter.config.FilterChain;
 import com.huazie.frame.jersey.common.filter.config.Jersey;
 import com.huazie.frame.jersey.common.filter.config.Service;
 import org.apache.commons.digester.Digester;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 
@@ -29,7 +29,7 @@ import java.io.InputStream;
  */
 public class JerseyXmlDigesterHelper {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JerseyXmlDigesterHelper.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(JerseyXmlDigesterHelper.class);
 
     private static volatile JerseyXmlDigesterHelper xmlDigester;
 

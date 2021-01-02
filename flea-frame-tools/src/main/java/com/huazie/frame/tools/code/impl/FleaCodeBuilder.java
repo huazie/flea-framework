@@ -1,13 +1,13 @@
 package com.huazie.frame.tools.code.impl;
 
 import com.huazie.frame.common.CommonConstants;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.MapUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.tools.code.interfaces.IFleaCodeBuilder;
 import com.huazie.frame.tools.common.ToolsConstants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.Map;
@@ -21,7 +21,7 @@ import java.util.Map;
  */
 public abstract class FleaCodeBuilder implements IFleaCodeBuilder {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaCodeBuilder.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaCodeBuilder.class);
 
     @Override
     public void build(Map<String, Object> param) {
@@ -55,7 +55,7 @@ public abstract class FleaCodeBuilder implements IFleaCodeBuilder {
         if (fleaCodeFile.exists()) {
             fleaCodeFile.delete();
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("删除代码文件：{}", filePath);
+                LOGGER.debug1(new Object() {}, "删除代码文件：{}", filePath);
             }
         }
     }

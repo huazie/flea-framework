@@ -1,14 +1,14 @@
 package com.huazie.frame.tools.code;
 
 import com.huazie.frame.common.i18n.FleaI18nHelper;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.DBSystemEnum;
 import com.huazie.frame.tools.common.ToolsConstants;
 import com.huazie.frame.tools.common.ToolsException;
 import com.huazie.frame.tools.common.ToolsHelper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.persistence.GenerationType;
 import javax.swing.*;
@@ -30,7 +30,7 @@ import java.util.Map;
  */
 public class FleaCodePanel extends JPanel implements ActionListener, ItemListener {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaCodePanel.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaCodePanel.class);
 
     private JComboBox<String> dbSystemComboBox; // 数据库系统下拉框
 
