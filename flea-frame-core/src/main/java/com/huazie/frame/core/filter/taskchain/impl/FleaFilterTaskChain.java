@@ -10,8 +10,6 @@ import com.huazie.frame.core.filter.taskchain.IFilterTaskChain;
 import com.huazie.frame.core.request.FleaRequestContext;
 import com.huazie.frame.core.request.config.FilterTask;
 import com.huazie.frame.core.request.config.FleaRequestConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,14 +23,12 @@ import java.util.List;
  */
 public class FleaFilterTaskChain implements IFilterTaskChain {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaFilterTaskChain.class);
-
     private List<IFilterTask> filterTaskList; // 过滤器任务
 
     private static ThreadLocal<Integer> sCurrentPosition = new ThreadLocal<>(); // 过滤器任务执行位置
 
     public FleaFilterTaskChain() {
-        initFleaFilterTaskChain();
+        init();
     }
 
     /**
@@ -40,16 +36,8 @@ public class FleaFilterTaskChain implements IFilterTaskChain {
      *
      * @since 1.0.0
      */
-    private void initFleaFilterTaskChain() {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Start");
-        }
-
+    private void init() {
         filterTaskList = convert(FleaRequestConfig.getFilterTasks());
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("End");
-        }
     }
 
     /**

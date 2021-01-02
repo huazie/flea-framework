@@ -5,18 +5,11 @@ import com.huazie.frame.core.request.FleaRequestContext;
 import com.huazie.frame.core.request.FleaRequestUtil;
 
 /**
- * Copyright: Copyright (c) 2020 Asiainfo-Linkage
+ * <p>  </p>
  *
  * @author huazie
- * @version v1.0.0
- * @ClassName FleaRequestMainTest
- * @Description
- * @date 2020-4-26
- * <p>
- * Modification History:
- * Date         Author          Version         Description
- * ---------------------------------------------------------*
- * 2020-4-26     huazie          1.0.0           新增
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public class FleaRequestMainTest {
 

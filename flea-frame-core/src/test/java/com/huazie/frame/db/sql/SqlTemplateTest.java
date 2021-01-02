@@ -1,6 +1,8 @@
 package com.huazie.frame.db.sql;
 
 import com.huazie.frame.common.FleaFrameManager;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaParaDetailSV;
 import com.huazie.frame.db.common.sql.template.ITemplate;
@@ -11,8 +13,6 @@ import com.huazie.frame.db.common.sql.template.impl.SelectSqlTemplate;
 import com.huazie.frame.db.common.sql.template.impl.UpdateSqlTemplate;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -20,7 +20,7 @@ import java.util.Locale;
 
 public class SqlTemplateTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SqlTemplateTest.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(SqlTemplateTest.class);
 
     private ApplicationContext applicationContext;
     private FleaParaDetail fleaParaDetail;

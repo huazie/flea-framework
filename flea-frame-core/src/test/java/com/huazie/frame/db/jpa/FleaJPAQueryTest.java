@@ -2,6 +2,8 @@ package com.huazie.frame.db.jpa;
 
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.pool.FleaObjectPoolFactory;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResource;
 import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
 import com.huazie.frame.db.jpa.common.FleaJPAQuery;
@@ -10,8 +12,6 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -23,7 +23,7 @@ import java.util.Map;
 
 public class FleaJPAQueryTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaJPAQueryTest.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaJPAQueryTest.class);
 
     private static EntityManagerFactory emf;
     private static EntityManager em;
