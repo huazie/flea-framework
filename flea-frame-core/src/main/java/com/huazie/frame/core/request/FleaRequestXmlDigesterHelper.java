@@ -1,6 +1,8 @@
 package com.huazie.frame.core.request;
 
 import com.huazie.frame.common.XmlDigesterHelper;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.core.common.FleaCoreConstants;
 import com.huazie.frame.core.request.config.FilterTask;
@@ -14,8 +16,6 @@ import com.huazie.frame.core.request.config.Property;
 import com.huazie.frame.core.request.config.RedirectUrl;
 import com.huazie.frame.core.request.config.UrlPrefix;
 import org.apache.commons.digester.Digester;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <p> Flea 请求配置文件XML解析类 【flea-request.xml 和 flea-request-filter.xml】 </p>
@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  */
 public class FleaRequestXmlDigesterHelper {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaRequestXmlDigesterHelper.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaRequestXmlDigesterHelper.class);
 
     private static volatile FleaRequestXmlDigesterHelper xmlDigester;
 

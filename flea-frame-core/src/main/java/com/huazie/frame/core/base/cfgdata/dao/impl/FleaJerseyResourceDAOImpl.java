@@ -1,17 +1,17 @@
 package com.huazie.frame.core.base.cfgdata.dao.impl;
 
 import com.huazie.frame.common.CommonConstants;
+import com.huazie.frame.common.EntityStateEnum;
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.core.base.cfgdata.dao.interfaces.IFleaJerseyResourceDAO;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResource;
-import com.huazie.frame.common.EntityStateEnum;
 import com.huazie.frame.core.common.FleaConfigEntityConstants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ import java.util.List;
 @Repository("resourceDAO")
 public class FleaJerseyResourceDAOImpl extends FleaConfigDAOImpl<FleaJerseyResource> implements IFleaJerseyResourceDAO {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaJerseyResourceDAOImpl.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaJerseyResourceDAOImpl.class);
 
     @Override
     @SuppressWarnings(value = "unchecked")
@@ -39,8 +39,9 @@ public class FleaJerseyResourceDAOImpl extends FleaConfigDAOImpl<FleaJerseyResou
                 .getResultList();
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Resource List={}", resourceList);
-            LOGGER.debug("Resource Count={}", resourceList.size());
+            Object obj = new Object() {};
+            LOGGER.debug1(obj, "Resource List={}", resourceList);
+            LOGGER.debug1(obj, "Resource Count={}", resourceList.size());
         }
 
         return resourceList;
@@ -74,8 +75,9 @@ public class FleaJerseyResourceDAOImpl extends FleaConfigDAOImpl<FleaJerseyResou
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Resource Package List={}", resPackageList);
-            LOGGER.debug("Resource Package Count={}", resPackageList == null ? 0 : resourceList.size());
+            Object obj = new Object() {};
+            LOGGER.debug1(obj, "Resource Package List={}", resPackageList);
+            LOGGER.debug1(obj, "Resource Package Count={}", resPackageList == null ? 0 : resourceList.size());
         }
 
         return resPackageList;
