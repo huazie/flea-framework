@@ -3,14 +3,14 @@ package com.huazie.frame.db.jdbc.config;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.FleaConfigManager;
 import com.huazie.frame.common.FleaFrameManager;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.DBConstants;
 import com.huazie.frame.db.common.exception.DaoException;
 import com.huazie.frame.db.jdbc.pojo.FleaDBUnit;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -29,7 +29,7 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class FleaJDBCConfig {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaJDBCConfig.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaJDBCConfig.class);
 
     private static volatile FleaJDBCConfig config;
 
@@ -66,6 +66,7 @@ public class FleaJDBCConfig {
     public static void init(String mDatabase, String mName) {
         FleaFrameManager.getManager().setDBConfigKey(mDatabase, mName);
         if (LOGGER.isDebugEnabled()) {
+            Object obj = new Object() {};
             LOGGER.debug("关系数据库管理系统名：{}", mDatabase);
             LOGGER.debug("数据库名或数据库用户：{}", mName);
         }
@@ -149,12 +150,12 @@ public class FleaJDBCConfig {
             if (ObjectUtils.isNotEmpty(conn)) {
                 conn.close();
                 if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Connection已关闭。");
+                    LOGGER.debug1(new Object() {}, "Connection已关闭。");
                 }
             }
         } catch (SQLException e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("关闭数据库连接异常：", e);
+                LOGGER.error1(new Object() {}, "关闭数据库连接异常：", e);
             }
         }
     }
@@ -169,12 +170,12 @@ public class FleaJDBCConfig {
             if (ObjectUtils.isNotEmpty(statement)) {
                 statement.close();
                 if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Statement已关闭。");
+                    LOGGER.debug1(new Object() {}, "Statement已关闭。");
                 }
             }
         } catch (SQLException e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("关闭数据库statement异常：", e);
+                LOGGER.error1(new Object() {}, "关闭数据库statement异常：", e);
             }
         }
     }
@@ -189,12 +190,12 @@ public class FleaJDBCConfig {
             if (ObjectUtils.isNotEmpty(rs)) {
                 rs.close();
                 if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("ResultSet已关闭。");
+                    LOGGER.debug1(new Object() {}, "ResultSet已关闭。");
                 }
             }
         } catch (SQLException e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("关闭结果集异常：", e);
+                LOGGER.error1(new Object() {}, "关闭结果集异常：", e);
             }
         }
     }

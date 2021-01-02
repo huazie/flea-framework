@@ -1,13 +1,13 @@
 package com.huazie.frame.db.common.sql;
 
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.PatternMatcherUtils;
 import com.huazie.frame.db.common.sql.template.SqlTemplateEnum;
 import com.huazie.frame.db.common.sql.template.config.Property;
 import com.huazie.frame.db.common.sql.template.config.Rule;
 import com.huazie.frame.db.common.sql.template.config.SqlTemplateConfig;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
  */
 public class SqlTemplateConfigTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SqlTemplateConfigTest.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(SqlTemplateConfigTest.class);
 
     @Test
     public void testSqlTemplate() {

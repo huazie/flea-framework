@@ -1,12 +1,12 @@
 package com.huazie.frame.db.jdbc;
 
 import com.huazie.frame.common.FleaFrameManager;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.db.common.DBSystemEnum;
 import com.huazie.frame.db.jdbc.config.FleaJDBCConfig;
 import org.junit.Assert;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.Map;
  */
 public class JDBCConfigTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JDBCConfigTest.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(JDBCConfigTest.class);
 
     @Test
     public void testDBPrefix() {
