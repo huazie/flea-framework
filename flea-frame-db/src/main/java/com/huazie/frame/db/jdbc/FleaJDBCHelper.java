@@ -1,6 +1,8 @@
 package com.huazie.frame.db.jdbc;
 
 import com.huazie.frame.common.CommonConstants;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
@@ -13,8 +15,6 @@ import com.huazie.frame.db.common.sql.template.TemplateTypeEnum;
 import com.huazie.frame.db.common.table.pojo.Column;
 import com.huazie.frame.db.jdbc.config.FleaJDBCConfig;
 import com.huazie.frame.db.jdbc.pojo.FleaDBOperationHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -36,7 +36,7 @@ import java.util.Map;
  */
 public class FleaJDBCHelper {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaJDBCHelper.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaJDBCHelper.class);
 
     /**
      * <p> 以返回List<Map>，其中Map的键为属性名，值为相应的数据 </p>
@@ -344,14 +344,16 @@ public class FleaJDBCHelper {
         Connection connection = FleaJDBCConfig.getConfig().getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
+        Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJDBCHelper##getDBOperationHandler(String, Object...) SQL = {}", sql);
+            obj = new Object() {};
+            LOGGER.debug1(obj, "FleaJDBCHelper##getDBOperationHandler(String, Object...) SQL = {}", sql);
         }
 
         if (ObjectUtils.isNotEmpty(preparedStatement) && ArrayUtils.isNotEmpty(params)) {
             for (int i = 0; i < params.length; i++) {
                 if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("FleaJDBCHelper##getDBOperationHandler(String, Object...) PARAM{} = {}", i + 1, params[i]);
+                    LOGGER.debug1(obj, "FleaJDBCHelper##getDBOperationHandler(String, Object...) PARAM{} = {}", i + 1, params[i]);
                 }
                 preparedStatement.setObject(i + 1, params[i]);
             }
@@ -509,28 +511,30 @@ public class FleaJDBCHelper {
 
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
+        Object obj = null;
         if (LOGGER.isDebugEnabled()) {
+            obj = new Object() {};
             if (TemplateTypeEnum.INSERT.getKey().equals(templateType)) {
-                LOGGER.debug("SQL = {}", sql);
+                LOGGER.debug1(obj, "SQL = {}", sql);
             } else if (TemplateTypeEnum.UPDATE.getKey().equals(templateType)) {
-                LOGGER.debug("SQL = {}", sql);
+                LOGGER.debug1(obj, "SQL = {}", sql);
             } else if (TemplateTypeEnum.DELETE.getKey().equals(templateType)) {
-                LOGGER.debug("SQL = {}", sql);
+                LOGGER.debug1(obj, "SQL = {}", sql);
             } else if (TemplateTypeEnum.SELECT.getKey().equals(templateType)) {
-                LOGGER.debug("SQL = {}", sql);
+                LOGGER.debug1(obj, "SQL = {}", sql);
             }
         }
 
         if (CollectionUtils.isNotEmpty(sqlParams)) {
             for (SqlParam sqlParam : sqlParams) {
                 if (TemplateTypeEnum.INSERT.getKey().equals(templateType)) {
-                    LOGGER.debug("COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
+                    LOGGER.debug1(obj, "COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
                 } else if (TemplateTypeEnum.UPDATE.getKey().equals(templateType)) {
-                    LOGGER.debug("COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
+                    LOGGER.debug1(obj, "COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
                 } else if (TemplateTypeEnum.DELETE.getKey().equals(templateType)) {
-                    LOGGER.debug("COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
+                    LOGGER.debug1(obj, "COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
                 } else if (TemplateTypeEnum.SELECT.getKey().equals(templateType)) {
-                    LOGGER.debug("COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
+                    LOGGER.debug1(obj, "COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
                 }
                 preparedStatement.setObject(sqlParam.getIndex(), sqlParam.getAttrValue());
             }
@@ -671,7 +675,7 @@ public class FleaJDBCHelper {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Table Info : {}", columnList);
+            LOGGER.debug1(new Object() {}, "Table Info : {}", columnList);
         }
 
         return columnList;

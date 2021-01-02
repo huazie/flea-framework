@@ -1,10 +1,10 @@
 package com.huazie.frame.db.common.sql.template.config;
 
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.MapUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.db.common.DBXmlDigesterHelper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class SqlTemplateConfig {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SqlTemplateConfig.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(SqlTemplateConfig.class);
 
     private static volatile SqlTemplateConfig config;
 
@@ -44,7 +44,7 @@ public class SqlTemplateConfig {
                     try {
                         config = new SqlTemplateConfig(DBXmlDigesterHelper.getInstance().getSqlTemplate());
                     } catch (Exception e) {
-                        LOGGER.error("Fail to init flea-sql-template.xml ：", e);
+                        LOGGER.error1(new Object() {}, "Fail to init flea-sql-template.xml ：", e);
                     }
                 }
             }

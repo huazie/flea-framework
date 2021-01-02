@@ -3,6 +3,8 @@ package com.huazie.frame.db.common.table.split;
 import com.huazie.frame.common.FleaConfigManager;
 import com.huazie.frame.common.config.ConfigItem;
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.ExceptionUtils;
@@ -19,8 +21,6 @@ import com.huazie.frame.db.common.table.split.config.Table;
 import com.huazie.frame.db.common.table.split.config.TableSplitConfig;
 import com.huazie.frame.db.common.util.EntityUtils;
 import com.huazie.frame.db.jpa.persistence.IFleaJPATableSplitHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Iterator;
 import java.util.List;
@@ -34,7 +34,7 @@ import java.util.List;
  */
 public class TableSplitHelper {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TableSplitHelper.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(TableSplitHelper.class);
 
     private static volatile IFleaJPATableSplitHandler fleaJPATableSplitHandler;
 
@@ -67,8 +67,11 @@ public class TableSplitHelper {
         splitTable.setPkColumnValue(pkColumnValue); // 生成器表中的主键值，为主键中@TableGenerator中的pkColumnValue
         splitTable.setSplitTablePkColumnValue(pkColumnValue); // 生成器表中分表的主键值，默认为主键中@TableGenerator中的pkColumnValue
         splitTable.setExistSplitTable(false);
+        
+        Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("The name of main table = {}", tableName);
+            obj = new Object() {};
+            LOGGER.debug1(obj, "The name of main table = {}", tableName);
         }
 
         TableSplitConfig config = TableSplitConfig.getConfig();
@@ -128,7 +131,7 @@ public class TableSplitHelper {
                             // 获取分表字段值【即分表规则转换后的值】
                             String splitTableFieldValue = tableSplit.convert(entityCol.getAttrValue());
                             if (LOGGER.isDebugEnabled()) {
-                                LOGGER.debug("The field value of split table = {}", splitTableFieldValue);
+                                LOGGER.debug1(obj, "The field value of split table = {}", splitTableFieldValue);
                             }
                             String columnPlaceholder = DBConstants.SQLConstants.SQL_LEFT_ROUND_BRACKETS + column.toUpperCase() + DBConstants.SQLConstants.SQL_RIGHT_ROUND_BRACKETS;
                             StringUtils.replace(tableNameBuilder, columnPlaceholder, splitTableFieldValue);
@@ -146,9 +149,9 @@ public class TableSplitHelper {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("The real name of table = {}", splitTable.getSplitTableName());
-            LOGGER.debug("The origin of pkColumnValue of table = {}", splitTable.getPkColumnValue());
-            LOGGER.debug("The pkColumnValue of split table = {}", splitTable.getSplitTablePkColumnValue());
+            LOGGER.debug1(obj, "The real name of table = {}", splitTable.getSplitTableName());
+            LOGGER.debug1(obj, "The origin of pkColumnValue of table = {}", splitTable.getPkColumnValue());
+            LOGGER.debug1(obj, "The pkColumnValue of split table = {}", splitTable.getSplitTablePkColumnValue());
         }
 
         return splitTable;
@@ -210,7 +213,7 @@ public class TableSplitHelper {
         IFleaJPATableSplitHandler tableSplitHandler = (IFleaJPATableSplitHandler) ReflectUtils.newInstance(handlerClassStr);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Table Split Handler = {}", tableSplitHandler);
+            LOGGER.debug1(new Object() {}, "Table Split Handler = {}", tableSplitHandler);
         }
 
         return tableSplitHandler;

@@ -1,5 +1,7 @@
 package com.huazie.frame.db.common.table;
 
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.db.common.table.split.ITableSplit;
 import com.huazie.frame.db.common.table.split.TableSplitEnum;
 import com.huazie.frame.db.common.table.split.config.TableSplitConfig;
@@ -10,8 +12,6 @@ import com.huazie.frame.db.common.table.split.impl.YYYYMMTableSplitImpl;
 import com.huazie.frame.db.common.table.split.impl.YYYYTableSplitImpl;
 import com.huazie.frame.db.common.util.EntityUtils;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author huazie
@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  */
 public class TableSplitTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TableSplitTest.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(TableSplitTest.class);
 
     @Test
     public void testTwoHexTableSplit() {
