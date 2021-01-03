@@ -528,13 +528,13 @@ public class FleaJDBCHelper {
         if (CollectionUtils.isNotEmpty(sqlParams)) {
             for (SqlParam sqlParam : sqlParams) {
                 if (TemplateTypeEnum.INSERT.getKey().equals(templateType)) {
-                    LOGGER.debug1(obj, "COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
+                    LOGGER.debug1(obj, "JDBC, COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
                 } else if (TemplateTypeEnum.UPDATE.getKey().equals(templateType)) {
-                    LOGGER.debug1(obj, "COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
+                    LOGGER.debug1(obj, "JDBC, COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
                 } else if (TemplateTypeEnum.DELETE.getKey().equals(templateType)) {
-                    LOGGER.debug1(obj, "COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
+                    LOGGER.debug1(obj, "JDBC, COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
                 } else if (TemplateTypeEnum.SELECT.getKey().equals(templateType)) {
-                    LOGGER.debug1(obj, "COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
+                    LOGGER.debug1(obj, "JDBC, COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
                 }
                 preparedStatement.setObject(sqlParam.getIndex(), sqlParam.getAttrValue());
             }

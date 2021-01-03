@@ -4,10 +4,12 @@ import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.pool.FleaObjectPoolFactory;
 import com.huazie.frame.common.slf4j.FleaLogger;
 import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
+import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.NumberUtils;
 import com.huazie.frame.common.util.ObjectUtils;
+import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.exception.DaoException;
 import com.huazie.frame.db.common.sql.pojo.SqlParam;
 import com.huazie.frame.db.common.sql.template.ITemplate;
@@ -19,7 +21,10 @@ import com.huazie.frame.db.jpa.common.FleaJPAQueryPool;
 import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
@@ -307,7 +312,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         List<SqlParam> nativeParam = selectSqlTemplate.toNativeParams();
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("SQL = {}", nativeSql);
+            LOGGER.debug1(new Object() {}, "SQL = {}", nativeSql);
         }
 
         Query query;
@@ -353,12 +358,13 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         List<SqlParam> nativeParam = sqlTemplate.toNativeParams();
 
         if (LOGGER.isDebugEnabled()) {
+            Object obj = new Object() {};
             if (TemplateTypeEnum.INSERT.getKey().equals(sqlTemplate.getTemplateType().getKey())) {
-                LOGGER.debug("SQL = {}", nativeSql);
+                LOGGER.debug1(obj,"SQL = {}", nativeSql);
             } else if (TemplateTypeEnum.UPDATE.getKey().equals(sqlTemplate.getTemplateType().getKey())) {
-                LOGGER.debug("SQL = {}", nativeSql);
+                LOGGER.debug1(obj,"SQL = {}", nativeSql);
             } else if (TemplateTypeEnum.DELETE.getKey().equals(sqlTemplate.getTemplateType().getKey())) {
-                LOGGER.debug("SQL = {}", nativeSql);
+                LOGGER.debug1(obj,"SQL = {}", nativeSql);
             }
         }
 
@@ -400,14 +406,15 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     private void setParameter(Query query, List<SqlParam> sqlParams, String templateType) {
         if (CollectionUtils.isNotEmpty(sqlParams)) {
             for (SqlParam sqlParam : sqlParams) {
+                Object obj = new Object() {};
                 if (TemplateTypeEnum.INSERT.getKey().equals(templateType)) {
-                    LOGGER.debug("COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
+                    LOGGER.debug1(obj,"JPA, COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
                 } else if (TemplateTypeEnum.UPDATE.getKey().equals(templateType)) {
-                    LOGGER.debug("COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
+                    LOGGER.debug1(obj,"JPA, COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
                 } else if (TemplateTypeEnum.DELETE.getKey().equals(templateType)) {
-                    LOGGER.debug("COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
+                    LOGGER.debug1(obj,"JPA, COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
                 } else if (TemplateTypeEnum.SELECT.getKey().equals(templateType)) {
-                    LOGGER.debug("COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
+                    LOGGER.debug1(obj,"JPA, COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
                 }
                 query.setParameter(sqlParam.getIndex(), sqlParam.getAttrValue());
             }
@@ -421,8 +428,17 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
      * @since 1.0.0
      */
     protected FleaJPAQuery getQuery(Class result) {
-        // 获取Flea JPA查询对象池 （使用默认连接池名"default"即可）
-        FleaJPAQueryPool pool = FleaObjectPoolFactory.getFleaObjectPool(FleaJPAQuery.class, FleaJPAQueryPool.class);
+        // 获取当前的持久化单元名
+        String unitName = getPersistenceUnitName();
+        FleaJPAQueryPool pool;
+        if (StringUtils.isBlank(unitName)) {
+            // 获取Flea JPA查询对象池 （使用默认对象池名"default"即可）
+            pool = FleaObjectPoolFactory.getFleaObjectPool(FleaJPAQuery.class, FleaJPAQueryPool.class);
+        } else {
+            // 获取Flea JPA查询对象池 （使用持久化单元名unitName作为对象池名）
+            pool = FleaObjectPoolFactory.getFleaObjectPool(unitName, FleaJPAQuery.class, FleaJPAQueryPool.class);
+        }
+
         if (ObjectUtils.isEmpty(pool)) {
             throw new RuntimeException("Can not get a object pool instance");
         }
@@ -436,6 +452,27 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         // 获取实例后必须调用该方法,对Flea JPA查询对象进行初始化
         query.init(getEntityManager(), clazz, result);
         return query;
+    }
+
+    /**
+     * <p> 获取当前的持久化单元名 </p>
+     *
+     * @return 当前的持久化单元名
+     */
+    protected String getPersistenceUnitName() {
+        String unitName = "";
+        // 获取持久化单元DAO层实现类的所有成员变量
+        Field[] fields = this.getClass().getSuperclass().getDeclaredFields();
+        // 遍历成员变量
+        if (ArrayUtils.isNotEmpty(fields)) {
+            for (Field field : fields) {
+                Annotation annotation = field.getAnnotation(PersistenceContext.class);
+                if (ObjectUtils.isNotEmpty(annotation)) {
+                    unitName = ((PersistenceContext) annotation).unitName();
+                }
+            }
+        }
+        return unitName;
     }
 
     @Override
