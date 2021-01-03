@@ -55,16 +55,16 @@ public class FleaSessionManager {
      * @return 当前操作账户编号
      * @since 1.0.0
      */
-    public static Long getAcctId() {
-        Long acctId = CommonConstants.NumeralConstants.MINUS_ONE;
+    public static Long getAccountId() {
+        Long accountId = CommonConstants.NumeralConstants.MINUS_ONE;
         IFleaUser fleaUser = getUserInfo();
         if (ObjectUtils.isNotEmpty(fleaUser)) {
-            acctId = fleaUser.getAcctId();
-            if (ObjectUtils.isEmpty(acctId)) {
-                acctId = CommonConstants.NumeralConstants.MINUS_ONE;
+            accountId = fleaUser.getAccountId();
+            if (ObjectUtils.isEmpty(accountId)) {
+                accountId = CommonConstants.NumeralConstants.MINUS_ONE;
             }
         }
-        return acctId;
+        return accountId;
     }
 
     /**
@@ -73,16 +73,16 @@ public class FleaSessionManager {
      * @return 当前系统账户编号
      * @since 1.0.0
      */
-    public static Long getSystemAcctId() {
-        Long systemAcctId = CommonConstants.NumeralConstants.MINUS_ONE;
+    public static Long getSystemAccountId() {
+        Long systemAccountId = CommonConstants.NumeralConstants.MINUS_ONE;
         IFleaUser fleaUser = getUserInfo();
         if (ObjectUtils.isNotEmpty(fleaUser)) {
-            systemAcctId = fleaUser.getSystemAcctId();
-            if (ObjectUtils.isEmpty(systemAcctId)) {
-                systemAcctId = CommonConstants.NumeralConstants.MINUS_ONE;
+            systemAccountId = fleaUser.getSystemAccountId();
+            if (ObjectUtils.isEmpty(systemAccountId)) {
+                systemAccountId = CommonConstants.NumeralConstants.MINUS_ONE;
             }
         }
-        return systemAcctId;
+        return systemAccountId;
     }
 
     /**

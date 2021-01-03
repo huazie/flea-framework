@@ -31,7 +31,7 @@ public class FleaPatternParser extends PatternParser {
         switch (c) {
             // 账户编号
             case 'a':
-                pc = new UserSessionPatternConverter(formattingInfo, "ACCT_ID");
+                pc = new UserSessionPatternConverter(formattingInfo, "ACCOUNT_ID");
                 break;
             // 账号
             case 'A':

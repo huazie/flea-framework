@@ -167,8 +167,8 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
     }
 
     @Override
-    @Cacheable(value = "fleaauthmenu", key = "#accountId + '_' + #systemAcctId")
-    public List<FleaMenu> queryAllAccessibleMenus(Long accountId, Long systemAcctId) throws CommonException {
+    @Cacheable(value = "fleaauthmenu", key = "#accountId + '_' + #systemAccountId")
+    public List<FleaMenu> queryAllAccessibleMenus(Long accountId, Long systemAccountId) throws CommonException {
 
         // 校验操作账户编号
         // ERROR-AUTH-COMMON0000000001 【{0}】不能为空
@@ -176,7 +176,7 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
 
         // 校验系统账户编号
         // ERROR-AUTH-COMMON0000000001 【{0}】不能为空
-        ObjectUtils.checkEmpty(systemAcctId, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", "systemAcctId");
+        ObjectUtils.checkEmpty(systemAccountId, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", "systemAccountId");
 
         // 根据操作帐户编号accountId查询帐户信息
         FleaAccount fleaAccount = fleaAccountSV.query(accountId);
@@ -189,9 +189,9 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
         // 用户【user_id = {0}】不存在！
         ObjectUtils.checkEmpty(fleaUser, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000007", userId);
 
-        FleaAccount systemFleaAccount = fleaAccountSV.query(systemAcctId);
+        FleaAccount systemFleaAccount = fleaAccountSV.query(systemAccountId);
         // 账户【account_id = {0}】不存在！
-        ObjectUtils.checkEmpty(systemFleaAccount, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000006", systemAcctId);
+        ObjectUtils.checkEmpty(systemFleaAccount, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000006", systemAccountId);
 
         List<Long> roleIdList = new ArrayList<>(); // 角色编号列表
 
@@ -251,7 +251,7 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
         // 取 功能类型 function_type = MENU, ATTR_CODE = SYSTEM_IN_USE
         List<FleaFunctionAttr> fleaFunctionAttrList = fleaFunctionAttrSV.getFunctionAttrList(null, FunctionTypeEnum.MENU.getType(), FleaAuthConstants.AttrCodeConstants.ATTR_CODE_SYSTEM_IN_USE);
         // 处理系统账户下关联的菜单信息
-        handleFunctionAttr(systemRelMenuIdList, fleaFunctionAttrList, systemAcctId);
+        handleFunctionAttr(systemRelMenuIdList, fleaFunctionAttrList, systemAccountId);
 
         return fleaMenuSV.queryAllAccessibleMenus(systemRelMenuIdList, menuIdList);
     }
@@ -400,14 +400,14 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
      *
      * @param functionIdList   功能编号列表
      * @param functionAttrList 功能参数列表
-     * @param systemAcctId     系统账号编号
+     * @param systemAccountId     系统账号编号
      * @since 1.0.0
      */
-    private void handleFunctionAttr(List<Long> functionIdList, List<FleaFunctionAttr> functionAttrList, Long systemAcctId) {
+    private void handleFunctionAttr(List<Long> functionIdList, List<FleaFunctionAttr> functionAttrList, Long systemAccountId) {
         if (CollectionUtils.isNotEmpty(functionAttrList)) {
             for (FleaFunctionAttr functionAttr : functionAttrList) {
                 if (ObjectUtils.isNotEmpty(functionAttr)) {
-                    if (!functionIdList.contains(functionAttr.getFunctionId()) && StringUtils.valueOf(systemAcctId).equals(functionAttr.getAttrValue())) {
+                    if (!functionIdList.contains(functionAttr.getFunctionId()) && StringUtils.valueOf(systemAccountId).equals(functionAttr.getAttrValue())) {
                         functionIdList.add(functionAttr.getFunctionId());
                     }
                 }

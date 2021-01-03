@@ -18,17 +18,17 @@ public class FleaJerseyClientConfig {
      * @return 系统账户编号
      * @since 1.0.0
      */
-    public static <T> T getSystemAcctId(Class<T> clazz) {
+    public static <T> T getSystemAccountId(Class<T> clazz) {
         T t = null;
-        String systemAcctId = FleaConfigManager.getConfigItemValue(
+        String systemAccountId = FleaConfigManager.getConfigItemValue(
                 FleaJerseyConstants.JerseyClientConstants.CONFIG_ITEMS_KEY,
-                FleaJerseyConstants.JerseyClientConstants.CONFIG_ITEM_SYSTEM_ACCT_ID);
+                FleaJerseyConstants.JerseyClientConstants.CONFIG_ITEM_SYSTEM_ACCOUNT_ID);
         if (clazz == String.class) {
-            t = clazz.cast(systemAcctId);
+            t = clazz.cast(systemAccountId);
         } else if (clazz == Long.class) {
             long sysAcctId = -1L;
             try {
-                sysAcctId = Long.parseLong(systemAcctId);
+                sysAcctId = Long.parseLong(systemAccountId);
             } finally {
                 t = clazz.cast(sysAcctId);
             }
@@ -42,10 +42,10 @@ public class FleaJerseyClientConfig {
      * @return 系统账户密码
      * @since 1.0.0
      */
-    public static String getSystemAcctPwd() {
+    public static String getSystemAccountPwd() {
         return FleaConfigManager.getConfigItemValue(
                 FleaJerseyConstants.JerseyClientConstants.CONFIG_ITEMS_KEY,
-                FleaJerseyConstants.JerseyClientConstants.CONFIG_ITEM_SYSTEM_ACCT_PWD);
+                FleaJerseyConstants.JerseyClientConstants.CONFIG_ITEM_SYSTEM_ACCOUNT_PWD);
     }
 
 }

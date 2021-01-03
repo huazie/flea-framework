@@ -30,7 +30,7 @@ public class FleaLoginLogDAOImpl extends FleaAuthDAOImpl<FleaLoginLog> implement
 
         FleaLoginLog fleaLoginLogEntity = new FleaLoginLog();
         fleaLoginLogEntity.setAccountId(accountId); // 账户编号
-        fleaLoginLogEntity.setSystemAccountId(FleaSessionManager.getSystemAcctId()); // 系统账户编号
+        fleaLoginLogEntity.setSystemAccountId(FleaSessionManager.getSystemAccountId()); // 系统账户编号
         fleaLoginLogEntity.setLoginState(FleaAuthConstants.UserConstants.LOGIN_STATE_1); // 登录中
         fleaLoginLogEntity.setCreateDate(DateUtils.getCurrentTime());
 

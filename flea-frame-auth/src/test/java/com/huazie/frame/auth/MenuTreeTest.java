@@ -110,9 +110,9 @@ public class MenuTreeTest {
 
         IFleaAuthSV fleaAuthSV = (IFleaAuthSV) applicationContext.getBean("fleaAuthSV");
         Long accountId = 10000L;
-        Long systemAcctId = 1000L;
+        Long systemAccountId = 1000L;
         try {
-            List<FleaMenu> fleaMenuList = fleaAuthSV.queryAllAccessibleMenus(accountId, systemAcctId);
+            List<FleaMenu> fleaMenuList = fleaAuthSV.queryAllAccessibleMenus(accountId, systemAccountId);
 
             FleaMenuTree fleaMenuTree = new FleaMenuTree("跳蚤管家");
             fleaMenuTree.addAll(fleaMenuList);
@@ -133,9 +133,9 @@ public class MenuTreeTest {
 
         IFleaAuthSV fleaAuthSV = (IFleaAuthSV) applicationContext.getBean("fleaAuthSV");
         Long accountId = 10000L;
-        Long systemAcctId = 1000L;
+        Long systemAccountId = 1000L;
         try {
-            List<FleaMenu> fleaMenuList = fleaAuthSV.queryAllAccessibleMenus(accountId, systemAcctId);
+            List<FleaMenu> fleaMenuList = fleaAuthSV.queryAllAccessibleMenus(accountId, systemAccountId);
 
             FueluxMenuTree fueluxMenuTree = new FueluxMenuTree("跳蚤管家", null);
             fueluxMenuTree.addAll(fleaMenuList);

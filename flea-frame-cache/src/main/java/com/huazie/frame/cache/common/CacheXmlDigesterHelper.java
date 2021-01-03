@@ -219,7 +219,7 @@ public class CacheXmlDigesterHelper {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Config = {}", obj);
-            LOGGER.debug("End to parse the flea-cache.xml");
+            LOGGER.debug("End to parse the flea-cache-config.xml");
         }
 
         return obj;

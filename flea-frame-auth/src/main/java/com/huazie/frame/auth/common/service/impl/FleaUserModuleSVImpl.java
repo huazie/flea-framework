@@ -30,8 +30,6 @@ import com.huazie.frame.common.util.MapUtils;
 import com.huazie.frame.common.util.NumberUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -104,7 +102,7 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
     }
 
     @Override
-    public void initUserInfo(Long userId, Long acctId, Long systemAcctId, Map<String, Object> otherAttrs, FleaObjectFactory<IFleaUser> fleaObjectFactory) {
+    public void initUserInfo(Long userId, Long accountId, Long systemAccountId, Map<String, Object> otherAttrs, FleaObjectFactory<IFleaUser> fleaObjectFactory) {
 
         IFleaUser fleaUser = fleaObjectFactory.newObject().getObject();
 
@@ -112,12 +110,12 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
             fleaUser.setUserId(userId);
         }
 
-        if (ObjectUtils.isNotEmpty(acctId)) {
-            fleaUser.setAcctId(acctId);
+        if (ObjectUtils.isNotEmpty(accountId)) {
+            fleaUser.setAccountId(accountId);
         }
 
-        if (ObjectUtils.isNotEmpty(systemAcctId)) {
-            fleaUser.setSystemAcctId(systemAcctId);
+        if (ObjectUtils.isNotEmpty(systemAccountId)) {
+            fleaUser.setSystemAccountId(systemAccountId);
         }
 
         if (MapUtils.isNotEmpty(otherAttrs)) {
@@ -128,14 +126,14 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
             }
         }
 
-        // 操作账号acctId在系统账户systemAcctId下可以访问的所有菜单
-        fleaUser.set(FleaMenuTree.MENU_TREE, toFleaMenuTree(acctId, systemAcctId));
+        // 操作账号accountId在系统账户systemAccountId下可以访问的所有菜单
+        fleaUser.set(FleaMenuTree.MENU_TREE, toFleaMenuTree(accountId, systemAccountId));
 
         // 处理操作账户信息
-        handleOperationUserData(fleaUser, acctId);
+        handleOperationUserData(fleaUser, accountId);
 
         // 处理系统账户信息
-        handleSystemUserData(fleaUser, systemAcctId);
+        handleSystemUserData(fleaUser, systemAccountId);
 
         FleaSessionManager.setUserInfo(fleaUser);
 
@@ -147,16 +145,16 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
     /**
      * <p> 获取所有可以访问的菜单，并返回菜单树</p>
      *
-     * @param acctId       操作账户编号
-     * @param systemAcctId 系统账户编号
+     * @param accountId       操作账户编号
+     * @param systemAccountId 系统账户编号
      * @return 所有可以访问的菜单树
      * @since 1.0.0
      */
-    private FleaMenuTree toFleaMenuTree(Long acctId, Long systemAcctId) {
+    private FleaMenuTree toFleaMenuTree(Long accountId, Long systemAccountId) {
         FleaMenuTree fleaMenuTree = new FleaMenuTree("FleaFrameAuth");
         try {
             // 获取所有可以访问的菜单
-            List<FleaMenu> fleaMenuList = fleaAuthSV.queryAllAccessibleMenus(acctId, systemAcctId);
+            List<FleaMenu> fleaMenuList = fleaAuthSV.queryAllAccessibleMenus(accountId, systemAccountId);
             fleaMenuTree.addAll(fleaMenuList);
         } catch (CommonException e) {
             if (LOGGER.isErrorEnabled()) {
@@ -170,13 +168,13 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
      * <p> 处理操作账户信息 </p>
      *
      * @param fleaUser 用户信息接口
-     * @param acctId   操作账户编号
+     * @param accountId   操作账户编号
      * @since 1.0.0
      */
-    private void handleOperationUserData(IFleaUser fleaUser, Long acctId) {
+    private void handleOperationUserData(IFleaUser fleaUser, Long accountId) {
         try {
             // 获取操作账户信息
-            FleaUserModuleData operationUser = fleaAuthSV.getFleaUserModuleData(acctId);
+            FleaUserModuleData operationUser = fleaAuthSV.getFleaUserModuleData(accountId);
             FleaUser user = operationUser.getFleaUser();
             // 昵称
             fleaUser.set(FleaAuthConstants.UserConstants.USER_NAME, user.getUserName());
@@ -221,13 +219,13 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
      * <p> 处理系统账户信息 </p>
      *
      * @param fleaUser     用户信息接口
-     * @param systemAcctId 系统账户编号
+     * @param systemAccountId 系统账户编号
      * @since 1.0.0
      */
-    private void handleSystemUserData(IFleaUser fleaUser, Long systemAcctId) {
+    private void handleSystemUserData(IFleaUser fleaUser, Long systemAccountId) {
         try {
             // 获取操作账户信息
-            FleaUserModuleData systemUser = fleaAuthSV.getFleaUserModuleData(systemAcctId);
+            FleaUserModuleData systemUser = fleaAuthSV.getFleaUserModuleData(systemAccountId);
             FleaUser user = systemUser.getFleaUser();
             fleaUser.set(FleaAuthConstants.UserConstants.SYSTEM_USER_NAME, user.getUserName());
         } catch (CommonException e) {

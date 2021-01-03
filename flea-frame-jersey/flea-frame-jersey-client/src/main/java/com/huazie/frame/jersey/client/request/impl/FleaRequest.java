@@ -291,11 +291,11 @@ public abstract class FleaRequest implements Request {
     private static RequestPublicData createRequestPublicData(String resourceCode, String serviceCode) {
         RequestPublicData publicData = new RequestPublicData();
         // 当前客户端的系统账户编号
-        publicData.setSystemAccountId(FleaJerseyClientConfig.getSystemAcctId(String.class));
+        publicData.setSystemAccountId(FleaJerseyClientConfig.getSystemAccountId(String.class));
         // 当前客户端的系统账户密码
-        publicData.setSystemAccountPassword(FleaJerseyClientConfig.getSystemAcctPwd());
+        publicData.setSystemAccountPassword(FleaJerseyClientConfig.getSystemAccountPwd());
         // 当前操作的账户编号
-        publicData.setAccountId(StringUtils.valueOf(FleaSessionManager.getAcctId()));
+        publicData.setAccountId(StringUtils.valueOf(FleaSessionManager.getAccountId()));
         publicData.setResourceCode(resourceCode);
         publicData.setServiceCode(serviceCode);
         return publicData;
