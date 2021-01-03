@@ -107,7 +107,7 @@ public class FleaLoginLog extends FleaEntity {
      */
     public FleaLoginLog(Long accountId, String loginIp4, String loginIp6, String loginArea, String remarks) {
         this.accountId = accountId;
-        this.systemAccountId = FleaSessionManager.getSystemAcctId();
+        this.systemAccountId = FleaSessionManager.getSystemAccountId();
         this.loginIp4 = loginIp4;
         this.loginIp6 = loginIp6;
         this.loginArea = loginArea;

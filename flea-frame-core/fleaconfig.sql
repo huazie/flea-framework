@@ -125,7 +125,7 @@ CREATE TABLE `flea_jersey_res_service_log` (
   `result_code` varchar(50) DEFAULT NULL COMMENT '操作结果码',
   `result_mess` varchar(2048) DEFAULT NULL COMMENT '操作结果信息',
   `account_id` int(11) NOT NULL COMMENT '操作账户编号',
-  `system_acct_id` int(11) NOT NULL COMMENT '系统账户编号',
+  `system_account_id` int(11) NOT NULL COMMENT '系统账户编号',
   `create_date` datetime DEFAULT NULL COMMENT '创建日期',
   `done_date` datetime DEFAULT NULL COMMENT '修改日期',
   `remarks` varchar(1024) DEFAULT NULL COMMENT '备注',

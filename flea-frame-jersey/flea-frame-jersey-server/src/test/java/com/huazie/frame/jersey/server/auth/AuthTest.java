@@ -34,9 +34,9 @@ public class AuthTest {
         IFleaUserModuleSV fleaUserModuleSV = (IFleaUserModuleSV) applicationContext.getBean("fleaUserModuleSV");
         Long userId = 10000L;
         Long accountId = 10000L;
-        Long systemAcctId = 1000L;
+        Long systemAccountId = 1000L;
 
-        fleaUserModuleSV.initUserInfo(userId, accountId, systemAcctId, null, new FleaUserImplObjectFactory() {
+        fleaUserModuleSV.initUserInfo(userId, accountId, systemAccountId, null, new FleaUserImplObjectFactory() {
             @Override
             public void initObject() {
                 LOGGER.debug("Ending to init userInfo");

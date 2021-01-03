@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,11 +24,10 @@ import java.util.Date;
 @Table(name = "flea_jersey_res_service_log")
 public class FleaJerseyResServiceLog extends FleaEntity {
 
-    private static final long serialVersionUID = -1036443958452636871L;
+    private static final long serialVersionUID = -1080386247422282572L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "FLEA_JERSEY_RES_SERVICE_LOG_SEQ")
-    @SequenceGenerator(name = "FLEA_JERSEY_RES_SERVICE_LOG_SEQ")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "log_id", unique = true, nullable = false)
     private Long logId; // 资源服务日志编号
 
@@ -51,11 +49,11 @@ public class FleaJerseyResServiceLog extends FleaEntity {
     @Column(name = "result_mess")
     private String resultMess; // 操作结果信息
 
-    @Column(name = "acct_id", nullable = false)
-    private Long acctId; // 操作用户账号编号
+    @Column(name = "account_id", nullable = false)
+    private Long accountId; // 操作账户编号
 
-    @Column(name = "sys_acct_id", nullable = false)
-    private Long sysAcctId; // 接入系统账号编号
+    @Column(name = "system_account_id", nullable = false)
+    private Long systemAccountId; // 系统账户编号
 
     @Column(name = "create_date")
     @Temporal(TemporalType.TIMESTAMP)
@@ -124,20 +122,20 @@ public class FleaJerseyResServiceLog extends FleaEntity {
         this.resultMess = resultMess;
     }
 
-    public Long getAcctId() {
-        return acctId;
+    public Long getAccountId() {
+        return accountId;
     }
 
-    public void setAcctId(Long acctId) {
-        this.acctId = acctId;
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
     }
 
-    public Long getSysAcctId() {
-        return sysAcctId;
+    public Long getSystemAccountId() {
+        return systemAccountId;
     }
 
-    public void setSysAcctId(Long sysAcctId) {
-        this.sysAcctId = sysAcctId;
+    public void setSystemAccountId(Long systemAccountId) {
+        this.systemAccountId = systemAccountId;
     }
 
     public Date getCreateDate() {

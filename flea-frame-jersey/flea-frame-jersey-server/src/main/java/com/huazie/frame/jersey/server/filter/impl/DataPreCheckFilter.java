@@ -66,17 +66,17 @@ public class DataPreCheckFilter implements IFleaJerseyFilter {
         // 请求公共报文不能为空
         ObjectUtils.checkEmpty(requestPublicData, FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000004");
 
-        String systemAcctId = requestPublicData.getSystemAccountId();
+        String systemAccountId = requestPublicData.getSystemAccountId();
         // 请求公共报文入参【{0}】不能为空
-        StringUtils.checkBlank(systemAcctId, FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000006", RequestPublicDataConstants.SYSTEM_ACCT_ID);
+        StringUtils.checkBlank(systemAccountId, FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000006", RequestPublicDataConstants.SYSTEM_ACCOUNT_ID);
 
-        String systemAcctPwd = requestPublicData.getSystemAccountPassword();
+        String systemAccountPwd = requestPublicData.getSystemAccountPassword();
         // 请求公共报文入参【{0}】不能为空
-        StringUtils.checkBlank(systemAcctPwd, FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000006", RequestPublicDataConstants.SYSTEM_ACCT_PWD);
+        StringUtils.checkBlank(systemAccountPwd, FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000006", RequestPublicDataConstants.SYSTEM_ACCOUNT_PWD);
 
-        String acctId = requestPublicData.getAccountId();
+        String accountId = requestPublicData.getAccountId();
         // 请求公共报文入参【{0}】不能为空
-        StringUtils.checkBlank(acctId, FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000006", RequestPublicDataConstants.ACCT_ID);
+        StringUtils.checkBlank(accountId, FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000006", RequestPublicDataConstants.ACCOUNT_ID);
 
         String resourceCode = requestPublicData.getResourceCode();
         // 请求公共报文入参【{0}】不能为空

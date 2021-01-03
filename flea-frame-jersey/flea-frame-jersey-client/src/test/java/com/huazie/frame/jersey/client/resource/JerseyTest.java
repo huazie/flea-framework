@@ -64,7 +64,7 @@ public class JerseyTest {
     @Before
     public void init() {
         IFleaUser fleaUser = new FleaUserImpl();
-        fleaUser.setAcctId(10000001L);
+        fleaUser.setAccountId(10000001L);
         fleaUser.set("ACCOUNT_CODE", "huazie");
         FleaFrameManager.getManager().setUserInfo(fleaUser);
         applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
@@ -305,12 +305,12 @@ public class JerseyTest {
             String fileName = fileObject.getFileName();
             File downloadFile = fileObject.getFile();
 
-            String uploadSystemAcctId = output.getUploadSystemAcctId();
-            String uploadAcctId = output.getUploadAcctId();
+            String uploadSystemAccountId = output.getUploadSystemAcctId();
+            String uploadAccountId = output.getUploadAcctId();
             String uploadDate = output.getUploadDate();
 
             if (downloadFile.exists()) {
-                IOUtils.toFile(new FileInputStream(downloadFile), "E:\\" + uploadDate + "_" + uploadSystemAcctId + "_" + uploadAcctId + "_" + fileName);
+                IOUtils.toFile(new FileInputStream(downloadFile), "E:\\" + uploadDate + "_" + uploadSystemAccountId + "_" + uploadAccountId + "_" + fileName);
             }
 
         } catch (Exception e) {

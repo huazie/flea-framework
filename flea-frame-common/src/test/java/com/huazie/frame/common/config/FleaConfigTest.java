@@ -33,8 +33,8 @@ public class FleaConfigTest {
         ConfigItem configItem1 = null;
         ConfigItem configItem2 = null;
         if (ObjectUtils.isNotEmpty(configItems)) {
-            configItem1 = configItems.getConfigItem("system_acct_id");
-            configItem2 = configItems.getConfigItem("system_acct_pwd");
+            configItem1 = configItems.getConfigItem("system_account_id");
+            configItem2 = configItems.getConfigItem("system_account_pwd");
         }
         LOGGER.debug("ConfigItem1 = {}", configItem1);
         LOGGER.debug("ConfigItem2 = {}", configItem2);

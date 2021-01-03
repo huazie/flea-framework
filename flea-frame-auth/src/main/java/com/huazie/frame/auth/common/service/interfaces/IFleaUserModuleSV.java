@@ -23,12 +23,12 @@ public interface IFleaUserModuleSV {
      * <p> 初始化用户信息 </p>
      *
      * @param userId       用户编号
-     * @param acctId       账户编号
-     * @param systemAcctId 系统账户编号
+     * @param accountId       账户编号
+     * @param systemAccountId 系统账户编号
      * @param otherAttrs   其他属性
      * @since 1.0.0
      */
-    void initUserInfo(Long userId, Long acctId, Long systemAcctId, Map<String, Object> otherAttrs, FleaObjectFactory<IFleaUser> fleaObjectFactory);
+    void initUserInfo(Long userId, Long accountId, Long systemAccountId, Map<String, Object> otherAttrs, FleaObjectFactory<IFleaUser> fleaObjectFactory);
 
     /**
      * <p> 用户登录验证 </p>

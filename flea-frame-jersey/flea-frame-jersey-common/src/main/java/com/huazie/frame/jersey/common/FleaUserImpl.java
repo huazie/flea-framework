@@ -26,23 +26,23 @@ public class FleaUserImpl extends FleaCommonConfig implements IFleaUser {
     }
 
     @Override
-    public Long getAcctId() {
-        return get(FleaJerseyConstants.RequestPublicDataConstants.ACCT_ID, Long.class);
+    public Long getAccountId() {
+        return get(FleaJerseyConstants.RequestPublicDataConstants.ACCOUNT_ID, Long.class);
     }
 
     @Override
-    public void setAcctId(Long acctId) {
-        put(FleaJerseyConstants.RequestPublicDataConstants.ACCT_ID, acctId);
+    public void setAccountId(Long accountId) {
+        put(FleaJerseyConstants.RequestPublicDataConstants.ACCOUNT_ID, accountId);
     }
 
     @Override
-    public Long getSystemAcctId() {
-        return get(FleaJerseyConstants.RequestPublicDataConstants.SYSTEM_ACCT_ID, Long.class);
+    public Long getSystemAccountId() {
+        return get(FleaJerseyConstants.RequestPublicDataConstants.SYSTEM_ACCOUNT_ID, Long.class);
     }
 
     @Override
-    public void setSystemAcctId(Long systemAcctId) {
-        put(FleaJerseyConstants.RequestPublicDataConstants.SYSTEM_ACCT_ID, systemAcctId);
+    public void setSystemAccountId(Long systemAccountId) {
+        put(FleaJerseyConstants.RequestPublicDataConstants.SYSTEM_ACCOUNT_ID, systemAccountId);
     }
 
     @Override
