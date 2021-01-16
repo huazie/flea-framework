@@ -1,6 +1,6 @@
 package com.huazie.frame.cache.redis;
 
-import com.huazie.frame.cache.common.CacheConstants;
+import com.huazie.frame.cache.common.CacheConstants.RedisConfigConstants;
 import com.huazie.frame.cache.config.CacheParam;
 import com.huazie.frame.cache.config.CacheParams;
 import com.huazie.frame.cache.config.CacheServer;
@@ -106,41 +106,41 @@ public class RedisPool {
         // 1. 获取客户端连接池配置信息
         JedisPoolConfig poolConfig = new JedisPoolConfig();
         // Redis客户端Jedis连接池最大连接数
-        CacheParam poolMaxTotal = cacheParams.getCacheParam(CacheConstants.RedisConfigConstants.REDIS_CACHE_PARAM_POOL_MAXTOTAL);
+        CacheParam poolMaxTotal = cacheParams.getCacheParam(RedisConfigConstants.REDIS_CACHE_PARAM_POOL_MAXTOTAL);
         if (ObjectUtils.isEmpty(poolMaxTotal) || StringUtils.isBlank(poolMaxTotal.getValue())) {
-            throw new RuntimeException("请检查flea-cache-config.xml配置，【<cache-param key=" + CacheConstants.RedisConfigConstants.REDIS_CACHE_PARAM_POOL_MAXTOTAL + " ></cache-param>】未配置或配置值为空");
+            throw new RuntimeException("请检查flea-cache-config.xml配置，【<cache-param key=" + RedisConfigConstants.REDIS_CACHE_PARAM_POOL_MAXTOTAL + " ></cache-param>】未配置或配置值为空");
         }
         poolConfig.setMaxTotal(Integer.parseInt(poolMaxTotal.getValue()));
         // Redis客户端Jedis连接池最大空闲连接数
-        CacheParam poolMaxIdle = cacheParams.getCacheParam(CacheConstants.RedisConfigConstants.REDIS_CACHE_PARAM_POOL_MAXIDLE);
+        CacheParam poolMaxIdle = cacheParams.getCacheParam(RedisConfigConstants.REDIS_CACHE_PARAM_POOL_MAXIDLE);
         if (ObjectUtils.isEmpty(poolMaxIdle) || StringUtils.isBlank(poolMaxIdle.getValue())) {
-            throw new RuntimeException("请检查flea-cache-config.xml配置，【<cache-param key=" + CacheConstants.RedisConfigConstants.REDIS_CACHE_PARAM_POOL_MAXIDLE + " ></cache-param>】未配置或配置值为空");
+            throw new RuntimeException("请检查flea-cache-config.xml配置，【<cache-param key=" + RedisConfigConstants.REDIS_CACHE_PARAM_POOL_MAXIDLE + " ></cache-param>】未配置或配置值为空");
         }
         poolConfig.setMaxIdle(Integer.parseInt(poolMaxIdle.getValue()));
         // Redis客户端Jedis连接池最小空闲连接数
-        CacheParam poolMinIdle = cacheParams.getCacheParam(CacheConstants.RedisConfigConstants.REDIS_CACHE_PARAM_POOL_MINIDLE);
+        CacheParam poolMinIdle = cacheParams.getCacheParam(RedisConfigConstants.REDIS_CACHE_PARAM_POOL_MINIDLE);
         if (ObjectUtils.isEmpty(poolMinIdle) || StringUtils.isBlank(poolMinIdle.getValue())) {
-            throw new RuntimeException("请检查flea-cache-config.xml配置，【<cache-param key=" + CacheConstants.RedisConfigConstants.REDIS_CACHE_PARAM_POOL_MINIDLE + " ></cache-param>】未配置或配置值为空");
+            throw new RuntimeException("请检查flea-cache-config.xml配置，【<cache-param key=" + RedisConfigConstants.REDIS_CACHE_PARAM_POOL_MINIDLE + " ></cache-param>】未配置或配置值为空");
         }
         poolConfig.setMinIdle(Integer.parseInt(poolMinIdle.getValue()));
         // Redis客户端Jedis连接池获取连接时的最大等待毫秒数
-        CacheParam poolMaxWaitMillis = cacheParams.getCacheParam(CacheConstants.RedisConfigConstants.REDIS_CACHE_PARAM_POOL_MAXWAITMILLIS);
+        CacheParam poolMaxWaitMillis = cacheParams.getCacheParam(RedisConfigConstants.REDIS_CACHE_PARAM_POOL_MAXWAITMILLIS);
         if (ObjectUtils.isEmpty(poolMaxWaitMillis) || StringUtils.isBlank(poolMaxWaitMillis.getValue())) {
-            throw new RuntimeException("请检查flea-cache-config.xml配置，【<cache-param key=" + CacheConstants.RedisConfigConstants.REDIS_CACHE_PARAM_POOL_MAXWAITMILLIS + " ></cache-param>】未配置或配置值为空");
+            throw new RuntimeException("请检查flea-cache-config.xml配置，【<cache-param key=" + RedisConfigConstants.REDIS_CACHE_PARAM_POOL_MAXWAITMILLIS + " ></cache-param>】未配置或配置值为空");
         }
         poolConfig.setMaxWaitMillis(Integer.parseInt(poolMaxWaitMillis.getValue()));
 
         // 2. 获取服务器配置信息
         // Redis客户端socket连接超时时间
-        CacheParam connectionTimeoutParam = cacheParams.getCacheParam(CacheConstants.RedisConfigConstants.REDIS_CACHE_PARAM_CONNECTIONTIMEOUT);
+        CacheParam connectionTimeoutParam = cacheParams.getCacheParam(RedisConfigConstants.REDIS_CACHE_PARAM_CONNECTIONTIMEOUT);
         if (ObjectUtils.isEmpty(connectionTimeoutParam) || StringUtils.isBlank(connectionTimeoutParam.getValue())) {
-            throw new RuntimeException("请检查flea-cache-config.xml配置，【<cache-param key=" + CacheConstants.RedisConfigConstants.REDIS_CACHE_PARAM_CONNECTIONTIMEOUT + " ></cache-param>】未配置或配置值为空");
+            throw new RuntimeException("请检查flea-cache-config.xml配置，【<cache-param key=" + RedisConfigConstants.REDIS_CACHE_PARAM_CONNECTIONTIMEOUT + " ></cache-param>】未配置或配置值为空");
         }
         int connectionTimeout = Integer.parseInt(connectionTimeoutParam.getValue());
         // Redis客户端socket读写超时时间
-        CacheParam soTimeoutParam = cacheParams.getCacheParam(CacheConstants.RedisConfigConstants.REDIS_CACHE_PARAM_SOTIMEOUT);
+        CacheParam soTimeoutParam = cacheParams.getCacheParam(RedisConfigConstants.REDIS_CACHE_PARAM_SOTIMEOUT);
         if (ObjectUtils.isEmpty(soTimeoutParam) || StringUtils.isBlank(soTimeoutParam.getValue())) {
-            throw new RuntimeException("请检查flea-cache-config.xml配置，【<cache-param key=" + CacheConstants.RedisConfigConstants.REDIS_CACHE_PARAM_SOTIMEOUT + " ></cache-param>】未配置或配置值为空");
+            throw new RuntimeException("请检查flea-cache-config.xml配置，【<cache-param key=" + RedisConfigConstants.REDIS_CACHE_PARAM_SOTIMEOUT + " ></cache-param>】未配置或配置值为空");
         }
         int soTimeout = Integer.parseInt(soTimeoutParam.getValue());
         // 遍历缓存服务器集
@@ -174,18 +174,18 @@ public class RedisPool {
         }
 
         // 3. 获取Redis分布式hash算法
-        CacheParam hashingAlgParam = cacheParams.getCacheParam(CacheConstants.RedisConfigConstants.REDIS_CACHE_PARAM_HASHINGALG);
+        CacheParam hashingAlgParam = cacheParams.getCacheParam(RedisConfigConstants.REDIS_CACHE_PARAM_HASHINGALG);
         if (ObjectUtils.isEmpty(hashingAlgParam) || StringUtils.isBlank(hashingAlgParam.getValue())) {
-            throw new RuntimeException("请检查flea-cache-config.xml配置，【<cache-param key=" + CacheConstants.RedisConfigConstants.REDIS_CACHE_PARAM_HASHINGALG + " ></cache-param>】未配置或配置值为空");
+            throw new RuntimeException("请检查flea-cache-config.xml配置，【<cache-param key=" + RedisConfigConstants.REDIS_CACHE_PARAM_HASHINGALG + " ></cache-param>】未配置或配置值为空");
         }
         int alg = Integer.parseInt(hashingAlgParam.getValue());
         Hashing hashingAlg;
-        if (CacheConstants.RedisConfigConstants.REDIS_CONFIG_HASHINGALG_MURMUR_HASH == alg) {
+        if (RedisConfigConstants.REDIS_CONFIG_HASHINGALG_MURMUR_HASH == alg) {
             hashingAlg = Hashing.MURMUR_HASH;
-        } else if (CacheConstants.RedisConfigConstants.REDIS_CONFIG_HASHINGALG_MD5 == alg) {
+        } else if (RedisConfigConstants.REDIS_CONFIG_HASHINGALG_MD5 == alg) {
             hashingAlg = Hashing.MD5;
         } else {
-            throw new RuntimeException("请检查flea-cache-config.xml配置，【<cache-param key=" + CacheConstants.MemCachedConfigConstants.MEMCACHED_CACHE_PARAM_INITCONN + " ></cache-param>】Redis分布式hash算法配置值非法");
+            throw new RuntimeException("请检查flea-cache-config.xml配置，【<cache-param key=" + RedisConfigConstants.REDIS_CACHE_PARAM_HASHINGALG + " ></cache-param>】Redis分布式hash算法配置值非法");
         }
 
         if (ObjectUtils.isEmpty(shardedJedisPool)) {
