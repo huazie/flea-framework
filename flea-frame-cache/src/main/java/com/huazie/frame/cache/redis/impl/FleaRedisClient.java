@@ -252,7 +252,7 @@ public class FleaRedisClient implements RedisClient {
      * @author huazie
      * @since 1.0.0
      */
-    public static class Builder {
+    static class Builder {
 
         private String poolName; // 连接池名
 
@@ -261,7 +261,7 @@ public class FleaRedisClient implements RedisClient {
          *
          * @since 1.0.0
          */
-        public Builder() {
+        Builder() {
         }
 
         /**
@@ -270,7 +270,7 @@ public class FleaRedisClient implements RedisClient {
          * @param poolName 连接池名
          * @since 1.0.0
          */
-        public Builder(String poolName) {
+        Builder(String poolName) {
             this.poolName = poolName;
         }
 
@@ -280,7 +280,7 @@ public class FleaRedisClient implements RedisClient {
          * @return Redis客户端
          * @since 1.0.0
          */
-        public RedisClient build() {
+        RedisClient build() {
             if (StringUtils.isBlank(poolName)) {
                 return new FleaRedisClient();
             } else {

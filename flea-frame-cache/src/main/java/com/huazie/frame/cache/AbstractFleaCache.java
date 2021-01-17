@@ -26,7 +26,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
 
     private final long expiry;  // 有效期(单位：秒)
 
-    protected CacheEnum cache;  // 缓存类型
+    protected CacheEnum cache;  // 缓存实现
 
     public AbstractFleaCache(String name, long expiry) {
         this.name = name;

@@ -1,7 +1,7 @@
 package com.huazie.frame.cache.common;
 
 /**
- * <p> 缓存系统 </p>
+ * <p> 缓存实现枚举 </p>
  *
  * @author huazie
  * @version 1.0.0
@@ -15,10 +15,14 @@ public enum CacheEnum {
     /**
      * 一个开源的使用ANSI C语言编写、支持网络、可基于内存亦可持久化的高性能的日志型、Key-Value存储系统
      */
-    Redis("Redis", "一个开源的使用ANSI C语言编写、支持网络、可基于内存亦可持久化的高性能的日志型、Key-Value存储系统");
+    Redis("Redis", "一个开源的使用ANSI C语言编写、支持网络、可基于内存亦可持久化的高性能的日志型、Key-Value存储系统"),
+    /**
+     * 一个用于组合并使用其他缓存（如MemCached和Redis）的Flea核心缓存
+     */
+    FleaCore("FleaCore", "一个用于组合并使用其他缓存（如MemCached和Redis）的Flea核心缓存");
 
-    private String name;    //缓存系统名称
-    private String desc;    //缓存系统描述
+    private String name;    // 缓存名称
+    private String desc;    // 缓存描述
 
     CacheEnum(String name, String desc) {
         this.name = name;

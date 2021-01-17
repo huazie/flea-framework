@@ -1,6 +1,5 @@
 package com.huazie.frame.cache;
 
-import com.huazie.frame.cache.common.CacheConstants;
 import com.huazie.frame.cache.common.CacheEnum;
 import com.huazie.frame.cache.common.FleaCacheManagerFactory;
 import com.huazie.frame.cache.memcached.config.MemCachedConfig;
@@ -64,17 +63,17 @@ public class FleaCacheTest {
     @Test
     public void testCoreFleaCache() {
         try {
-            AbstractFleaCacheManager manager = FleaCacheManagerFactory.getFleaCacheManager(CacheConstants.FleaCacheConstants.FLEA_CACHE_NAME);
+            AbstractFleaCacheManager manager = FleaCacheManagerFactory.getFleaCacheManager(CacheEnum.FleaCore.getName());
             AbstractFleaCache cache = manager.getCache("fleaparadetail");
             LOGGER.debug("Cache={}", cache);
             //#### 1.  简单字符串
 //            cache.put("menu1", "huazie");
 //            cache.put("menu2", "helloworld");
-//            cache.get("menu1");
-//            cache.get("menu2");
+            cache.get("menu1");
+            cache.get("menu2");
 //            cache.delete("menu1");
 //            cache.clear();
-//            cache.getCacheKey();
+            cache.getCacheKey();
             LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
         } catch (Exception e) {
             LOGGER.error("Exception:", e);

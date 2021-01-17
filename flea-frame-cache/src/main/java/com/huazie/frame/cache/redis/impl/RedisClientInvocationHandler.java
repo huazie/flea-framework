@@ -27,7 +27,7 @@ public class RedisClientInvocationHandler extends FleaInvocationHandler {
      * @param proxyObject 代理对象
      * @since 1.0.0
      */
-    public RedisClientInvocationHandler(Object proxyObject) {
+    RedisClientInvocationHandler(Object proxyObject) {
         super(proxyObject);
     }
 
