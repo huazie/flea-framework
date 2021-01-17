@@ -29,7 +29,7 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class RedisPool {
 
-    private static final ConcurrentMap<String, RedisPool> redisPools = new ConcurrentHashMap<String, RedisPool>();
+    private static final ConcurrentMap<String, RedisPool> redisPools = new ConcurrentHashMap<>();
 
     private String poolName; // 连接池名
 
@@ -73,7 +73,7 @@ public class RedisPool {
      *
      * @since 1.0.0
      */
-    public void initialize() {
+    void initialize() {
         if (!CommonConstants.FleaPoolConstants.DEFAULT_POOL_NAME.equals(poolName)) {
             throw new RuntimeException("采用默认初始化，请使用RedisPool##getInstance()");
         }
@@ -90,7 +90,7 @@ public class RedisPool {
      * @param cacheParams     缓存参数
      * @since 1.0.0
      */
-    public void initialize(List<CacheServer> cacheServerList, CacheParams cacheParams) {
+    void initialize(List<CacheServer> cacheServerList, CacheParams cacheParams) {
         if (CommonConstants.FleaPoolConstants.DEFAULT_POOL_NAME.equals(poolName)) {
             throw new RuntimeException("采用指定连接池名初始化，请使用RedisPool##getInstance(String poolName)");
         }
@@ -144,7 +144,7 @@ public class RedisPool {
         }
         int soTimeout = Integer.parseInt(soTimeoutParam.getValue());
         // 遍历缓存服务器集
-        List<JedisShardInfo> servers = new ArrayList<JedisShardInfo>();
+        List<JedisShardInfo> servers = new ArrayList<>();
         for (CacheServer cacheServer : cacheServerList) {
             if (ObjectUtils.isNotEmpty(cacheServer)) {
 

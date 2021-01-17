@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Properties;
 
 /**
- * <p> Memcached缓存配置类 </p>
+ * <p> MemCached缓存配置类 </p>
  *
  * @author huazie
  * @version 1.0.0
@@ -133,7 +133,7 @@ public class MemCachedConfig {
         return systemName;
     }
 
-    public void setSystemName(String systemName) {
+    void setSystemName(String systemName) {
         this.systemName = systemName;
     }
 
@@ -141,7 +141,7 @@ public class MemCachedConfig {
         return servers;
     }
 
-    public void setServers(String[] servers) {
+    void setServers(String[] servers) {
         this.servers = servers;
     }
 
@@ -149,7 +149,7 @@ public class MemCachedConfig {
         return weights;
     }
 
-    public void setWeights(Integer[] weights) {
+    void setWeights(Integer[] weights) {
         this.weights = weights;
     }
 
@@ -157,7 +157,7 @@ public class MemCachedConfig {
         return initConn;
     }
 
-    public void setInitConn(int initConn) {
+    void setInitConn(int initConn) {
         this.initConn = initConn;
     }
 
@@ -165,7 +165,7 @@ public class MemCachedConfig {
         return minConn;
     }
 
-    public void setMinConn(int minConn) {
+    void setMinConn(int minConn) {
         this.minConn = minConn;
     }
 
@@ -173,7 +173,7 @@ public class MemCachedConfig {
         return maxConn;
     }
 
-    public void setMaxConn(int maxConn) {
+    void setMaxConn(int maxConn) {
         this.maxConn = maxConn;
     }
 
@@ -181,7 +181,7 @@ public class MemCachedConfig {
         return maintSleep;
     }
 
-    public void setMaintSleep(int maintSleep) {
+    void setMaintSleep(int maintSleep) {
         this.maintSleep = maintSleep;
     }
 
@@ -189,7 +189,7 @@ public class MemCachedConfig {
         return nagle;
     }
 
-    public void setNagle(boolean nagle) {
+    void setNagle(boolean nagle) {
         this.nagle = nagle;
     }
 
@@ -197,7 +197,7 @@ public class MemCachedConfig {
         return socketTO;
     }
 
-    public void setSocketTO(int socketTO) {
+    void setSocketTO(int socketTO) {
         this.socketTO = socketTO;
     }
 
@@ -205,7 +205,7 @@ public class MemCachedConfig {
         return socketConnectTO;
     }
 
-    public void setSocketConnectTO(int socketConnectTO) {
+    void setSocketConnectTO(int socketConnectTO) {
         this.socketConnectTO = socketConnectTO;
     }
 
@@ -213,7 +213,7 @@ public class MemCachedConfig {
         return hashingAlg;
     }
 
-    public void setHashingAlg(int hashingAlg) {
+    void setHashingAlg(int hashingAlg) {
         this.hashingAlg = hashingAlg;
     }
 

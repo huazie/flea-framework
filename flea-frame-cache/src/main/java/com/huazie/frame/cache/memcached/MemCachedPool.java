@@ -64,7 +64,7 @@ public class MemCachedPool {
      *
      * @since 1.0.0
      */
-    public void initialize() {
+    void initialize() {
         if (ObjectUtils.isEmpty(memCachedConfig)) {
             throw new RuntimeException("采用默认初始化，请使用MemCachedPool##getInstance()");
         }
@@ -88,7 +88,7 @@ public class MemCachedPool {
      * @param cacheParams     缓存参数集
      * @since 1.0.0
      */
-    public void initialize(List<CacheServer> cacheServerList, CacheParams cacheParams) {
+    void initialize(List<CacheServer> cacheServerList, CacheParams cacheParams) {
         if (StringUtils.isBlank(poolName)) {
             throw new RuntimeException("采用指定连接池名初始化，请使用MemCachedPool##getInstance(String poolName)");
         }

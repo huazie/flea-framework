@@ -6,7 +6,6 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +18,7 @@ import java.util.Map;
  */
 public class CacheItems extends ConfigKey {
 
-    private List<CacheItem> cacheItemList = new ArrayList<CacheItem>(); // 缓存配置项集中的各个缓存配置项
+    private List<CacheItem> cacheItemList = new ArrayList<>(); // 缓存配置项集中的各个缓存配置项
 
     public List<CacheItem> getCacheItemList() {
         return cacheItemList;
@@ -36,22 +35,6 @@ public class CacheItems extends ConfigKey {
     }
 
     /**
-     * <p> 获取指定配置项集中的配置项的Map，便于根据各配置项key查找 </p>
-     *
-     * @return 配置项的Map
-     * @since 1.0.0
-     */
-    public Map<String, CacheItem> toCacheItemMap() {
-        Map<String, CacheItem> cacheItemMap = new HashMap<String, CacheItem>();
-        Iterator<CacheItem> cacheItemIt = cacheItemList.iterator();
-        while (cacheItemIt.hasNext()) {
-            CacheItem cacheItem = cacheItemIt.next();
-            cacheItemMap.put(cacheItem.getKey(), cacheItem);
-        }
-        return cacheItemMap;
-    }
-
-    /**
      * <p> 根据Key获取指定的缓存配置项 </p>
      *
      * @param key 配置项键
@@ -65,6 +48,20 @@ public class CacheItems extends ConfigKey {
             cacheItem = cacheItemMap.get(key);
         }
         return cacheItem;
+    }
+
+    /**
+     * <p> 获取指定配置项集中的配置项的Map，便于根据各配置项key查找 </p>
+     *
+     * @return 配置项的Map
+     * @since 1.0.0
+     */
+    private Map<String, CacheItem> toCacheItemMap() {
+        Map<String, CacheItem> cacheItemMap = new HashMap<>();
+        for (CacheItem cacheItem : cacheItemList) {
+            cacheItemMap.put(cacheItem.getKey(), cacheItem);
+        }
+        return cacheItemMap;
     }
 
     @Override

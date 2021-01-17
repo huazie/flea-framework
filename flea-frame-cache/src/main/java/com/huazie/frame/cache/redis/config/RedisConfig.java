@@ -171,24 +171,24 @@ public class RedisConfig {
 
                         // Redis客户端Jedis连接池最大连接数
                         Integer maxTotal = PropertiesUtil.getIntegerValue(prop, RedisConfigConstants.REDIS_CONFIG_POOL_MAXTOTAL);
-                        if(ObjectUtils.isNotEmpty(maxTotal)) {
+                        if (ObjectUtils.isNotEmpty(maxTotal)) {
                             poolConfig.setMaxTotal(maxTotal);
                         }
 
                         // Redis客户端Jedis连接池最大空闲连接数
                         Integer maxIdle = PropertiesUtil.getIntegerValue(prop, RedisConfigConstants.REDIS_CONFIG_POOL_MAXIDLE);
-                        if(ObjectUtils.isNotEmpty(maxIdle)) {
+                        if (ObjectUtils.isNotEmpty(maxIdle)) {
                             poolConfig.setMaxIdle(maxIdle);
                         }
 
                         // Redis客户端Jedis连接池最小空闲连接数
                         Integer minIdle = PropertiesUtil.getIntegerValue(prop, RedisConfigConstants.REDIS_CONFIG_POOL_MINIDLE);
-                        if(ObjectUtils.isNotEmpty(minIdle)) {
+                        if (ObjectUtils.isNotEmpty(minIdle)) {
                             poolConfig.setMinIdle(minIdle);
                         }
                         // Redis客户端Jedis连接池获取连接时的最大等待毫秒数
                         Integer maxWaitMillis = PropertiesUtil.getIntegerValue(prop, RedisConfigConstants.REDIS_CONFIG_POOL_MAXWAITMILLIS);
-                        if(ObjectUtils.isNotEmpty(maxWaitMillis)) {
+                        if (ObjectUtils.isNotEmpty(maxWaitMillis)) {
                             poolConfig.setMaxWaitMillis(maxWaitMillis);
                         }
 
@@ -209,7 +209,7 @@ public class RedisConfig {
         return systemName;
     }
 
-    public void setSystemName(String systemName) {
+    void setSystemName(String systemName) {
         this.systemName = systemName;
     }
 
@@ -217,7 +217,7 @@ public class RedisConfig {
         return servers;
     }
 
-    public void setServers(List<JedisShardInfo> servers) {
+    void setServers(List<JedisShardInfo> servers) {
         this.servers = servers;
     }
 
@@ -225,7 +225,7 @@ public class RedisConfig {
         return hashingAlg;
     }
 
-    public void setHashingAlg(Hashing hashingAlg) {
+    void setHashingAlg(Hashing hashingAlg) {
         this.hashingAlg = hashingAlg;
     }
 
@@ -233,7 +233,7 @@ public class RedisConfig {
         return jedisPoolConfig;
     }
 
-    public void setJedisPoolConfig(JedisPoolConfig jedisPoolConfig) {
+    void setJedisPoolConfig(JedisPoolConfig jedisPoolConfig) {
         this.jedisPoolConfig = jedisPoolConfig;
     }
 

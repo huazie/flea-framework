@@ -6,7 +6,6 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +18,7 @@ import java.util.Map;
  */
 public class CacheServers {
 
-    private List<CacheServer> cacheServerList = new ArrayList<CacheServer>(); // 缓存服务器列表中的各个缓存服务器
+    private List<CacheServer> cacheServerList = new ArrayList<>(); // 缓存服务器列表中的各个缓存服务器
 
     public List<CacheServer> getCacheServerList() {
         return cacheServerList;
@@ -36,33 +35,6 @@ public class CacheServers {
     }
 
     /**
-     * <p> 获取指定缓存服务器列表中的缓存服务器的Map，便于根据各缓存服务器的服务器归属组group查找 </p>
-     *
-     * @return 缓存服务器的Map
-     * @since 1.0.0
-     */
-    public Map<String, List<CacheServer>> toCacheServerMap() {
-        Map<String, List<CacheServer>> cacheServerMap = new HashMap<String, List<CacheServer>>();
-        Iterator<CacheServer> cacheServerIt = cacheServerList.iterator();
-        while (cacheServerIt.hasNext()) {
-            CacheServer cacheServer = cacheServerIt.next();
-            if (ObjectUtils.isNotEmpty(cacheServer)) {
-                String group = cacheServer.getGroup();
-                List<CacheServer> cServerList;
-                if (cacheServerMap.containsKey(group)) {
-                    cServerList = cacheServerMap.get(group);
-                    cServerList.add(cacheServer);
-                } else {
-                    cServerList = new ArrayList<CacheServer>();
-                    cServerList.add(cacheServer);
-                    cacheServerMap.put(group, cServerList);
-                }
-            }
-        }
-        return cacheServerMap;
-    }
-
-    /**
      * <p> 根据缓存服务器名group获取指定的缓存服务器集 </p>
      *
      * @param group 缓存服务器归属组
@@ -76,6 +48,31 @@ public class CacheServers {
             cacheServers = cacheServerMap.get(group);
         }
         return cacheServers;
+    }
+
+    /**
+     * <p> 获取指定缓存服务器列表中的缓存服务器的Map，便于根据各缓存服务器的服务器归属组group查找 </p>
+     *
+     * @return 缓存服务器的Map
+     * @since 1.0.0
+     */
+    private Map<String, List<CacheServer>> toCacheServerMap() {
+        Map<String, List<CacheServer>> cacheServerMap = new HashMap<>();
+        for (CacheServer cacheServer : cacheServerList) {
+            if (ObjectUtils.isNotEmpty(cacheServer)) {
+                String group = cacheServer.getGroup();
+                List<CacheServer> cServerList;
+                if (cacheServerMap.containsKey(group)) {
+                    cServerList = cacheServerMap.get(group);
+                    cServerList.add(cacheServer);
+                } else {
+                    cServerList = new ArrayList<>();
+                    cServerList.add(cacheServer);
+                    cacheServerMap.put(group, cServerList);
+                }
+            }
+        }
+        return cacheServerMap;
     }
 
     @Override
