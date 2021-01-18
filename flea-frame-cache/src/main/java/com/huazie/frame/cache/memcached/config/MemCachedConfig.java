@@ -100,7 +100,7 @@ public class MemCachedConfig {
                         List<Integer> weightList = new ArrayList<>();
                         if (StringUtils.isNotBlank(allWeight)) {
                             String[] weightStrArr = StringUtils.split(allWeight, CommonConstants.SymbolConstants.COMMA);
-                            if (ArrayUtils.isSameLength(serverArr, weightStrArr)) {
+                            if (ArrayUtils.isNotEmpty(weightStrArr) && ArrayUtils.isSameLength(serverArr, weightStrArr)) {
                                 for (String weightStr : weightStrArr) {
                                     Integer weight = Integer.valueOf(weightStr);
                                     weightList.add(weight);
@@ -133,7 +133,7 @@ public class MemCachedConfig {
         return systemName;
     }
 
-    void setSystemName(String systemName) {
+    private void setSystemName(String systemName) {
         this.systemName = systemName;
     }
 
@@ -141,7 +141,7 @@ public class MemCachedConfig {
         return servers;
     }
 
-    void setServers(String[] servers) {
+    private void setServers(String[] servers) {
         this.servers = servers;
     }
 
@@ -149,7 +149,7 @@ public class MemCachedConfig {
         return weights;
     }
 
-    void setWeights(Integer[] weights) {
+    private void setWeights(Integer[] weights) {
         this.weights = weights;
     }
 
@@ -157,7 +157,7 @@ public class MemCachedConfig {
         return initConn;
     }
 
-    void setInitConn(int initConn) {
+    private void setInitConn(int initConn) {
         this.initConn = initConn;
     }
 
@@ -165,7 +165,7 @@ public class MemCachedConfig {
         return minConn;
     }
 
-    void setMinConn(int minConn) {
+    private void setMinConn(int minConn) {
         this.minConn = minConn;
     }
 
@@ -173,7 +173,7 @@ public class MemCachedConfig {
         return maxConn;
     }
 
-    void setMaxConn(int maxConn) {
+    private void setMaxConn(int maxConn) {
         this.maxConn = maxConn;
     }
 
@@ -181,7 +181,7 @@ public class MemCachedConfig {
         return maintSleep;
     }
 
-    void setMaintSleep(int maintSleep) {
+    private void setMaintSleep(int maintSleep) {
         this.maintSleep = maintSleep;
     }
 
@@ -189,7 +189,7 @@ public class MemCachedConfig {
         return nagle;
     }
 
-    void setNagle(boolean nagle) {
+    private void setNagle(boolean nagle) {
         this.nagle = nagle;
     }
 
@@ -197,7 +197,7 @@ public class MemCachedConfig {
         return socketTO;
     }
 
-    void setSocketTO(int socketTO) {
+    private void setSocketTO(int socketTO) {
         this.socketTO = socketTO;
     }
 
@@ -205,7 +205,7 @@ public class MemCachedConfig {
         return socketConnectTO;
     }
 
-    void setSocketConnectTO(int socketConnectTO) {
+    private void setSocketConnectTO(int socketConnectTO) {
         this.socketConnectTO = socketConnectTO;
     }
 
@@ -213,7 +213,7 @@ public class MemCachedConfig {
         return hashingAlg;
     }
 
-    void setHashingAlg(int hashingAlg) {
+    private void setHashingAlg(int hashingAlg) {
         this.hashingAlg = hashingAlg;
     }
 
