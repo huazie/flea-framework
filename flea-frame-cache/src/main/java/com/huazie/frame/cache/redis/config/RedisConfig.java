@@ -209,7 +209,7 @@ public class RedisConfig {
         return systemName;
     }
 
-    void setSystemName(String systemName) {
+    private void setSystemName(String systemName) {
         this.systemName = systemName;
     }
 
@@ -217,7 +217,7 @@ public class RedisConfig {
         return servers;
     }
 
-    void setServers(List<JedisShardInfo> servers) {
+    private void setServers(List<JedisShardInfo> servers) {
         this.servers = servers;
     }
 
@@ -225,7 +225,7 @@ public class RedisConfig {
         return hashingAlg;
     }
 
-    void setHashingAlg(Hashing hashingAlg) {
+    private void setHashingAlg(Hashing hashingAlg) {
         this.hashingAlg = hashingAlg;
     }
 
@@ -233,7 +233,7 @@ public class RedisConfig {
         return jedisPoolConfig;
     }
 
-    void setJedisPoolConfig(JedisPoolConfig jedisPoolConfig) {
+    private void setJedisPoolConfig(JedisPoolConfig jedisPoolConfig) {
         this.jedisPoolConfig = jedisPoolConfig;
     }
 

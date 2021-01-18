@@ -25,7 +25,7 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class FleaCacheFactory {
 
-    private static final ConcurrentMap<String, AbstractFleaCache> fleaCacheMap = new ConcurrentHashMap<String, AbstractFleaCache>();
+    private static final ConcurrentMap<String, AbstractFleaCache> fleaCacheMap = new ConcurrentHashMap<>();
 
     /**
      * <p> 根据缓存主关键字name获取指定Flea缓存对象 </p>

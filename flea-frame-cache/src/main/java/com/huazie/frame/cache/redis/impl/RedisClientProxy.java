@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class RedisClientProxy extends FleaProxy<RedisClient> {
 
-    private static final ConcurrentMap<String, RedisClient> redisClients = new ConcurrentHashMap<String, RedisClient>();
+    private static final ConcurrentMap<String, RedisClient> redisClients = new ConcurrentHashMap<>();
 
     /**
      * <p> 获取RedisClient代理类 (默认)</p>
