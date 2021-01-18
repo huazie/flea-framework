@@ -571,11 +571,11 @@ public class FleaJDBCHelper {
      * @since 1.0.0
      */
     private static List<Map<String, Object>> ResultToListMap(ResultSet rs) throws SQLException {
-        List<Map<String, Object>> listMaps = new ArrayList<Map<String, Object>>();
+        List<Map<String, Object>> listMaps = new ArrayList<>();
         if (ObjectUtils.isNotEmpty(rs)) {
             while (rs.next()) {
                 ResultSetMetaData rsmd = rs.getMetaData();
-                Map<String, Object> map = new HashMap<String, Object>();
+                Map<String, Object> map = new HashMap<>();
                 if (ObjectUtils.isNotEmpty(rsmd)) {
                     for (int i = 0; i < rsmd.getColumnCount(); i++) {
                         map.put(rsmd.getColumnLabel(i + 1), rs.getObject(i + 1));
@@ -606,7 +606,7 @@ public class FleaJDBCHelper {
                 pkName = primaryKeyResultSet.getString("COLUMN_NAME");
             }
 
-            columnList = new ArrayList<Column>();
+            columnList = new ArrayList<>();
             while (columnsResultSet.next()) {
                 String columnName = columnsResultSet.getString("COLUMN_NAME");
                 int columnSize = columnsResultSet.getInt("COLUMN_SIZE");
@@ -626,9 +626,9 @@ public class FleaJDBCHelper {
                             columnNameArr[n] = StringUtils.toUpperCaseFirstAndLowerCaseLeft(columnNameArr[n]);
                         }
                     }
+                    String attrName = StringUtils.strCat("", columnNameArr);
+                    column.setAttrName(attrName); // 属性名
                 }
-                String attrName = StringUtils.strCat("", columnNameArr);
-                column.setAttrName(attrName); // 属性名
 
                 // 设置属性类型
                 if ("INT".equals(typeName) || ("NUMBER".equals(typeName) && columnSize >= 10)) {

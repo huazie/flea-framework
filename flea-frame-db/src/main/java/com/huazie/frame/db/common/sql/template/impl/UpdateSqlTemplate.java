@@ -4,7 +4,7 @@ import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.MapUtils;
 import com.huazie.frame.common.util.StringUtils;
-import com.huazie.frame.db.common.DBConstants;
+import com.huazie.frame.db.common.DBConstants.SQLConstants;
 import com.huazie.frame.db.common.sql.template.SqlTemplate;
 import com.huazie.frame.db.common.sql.template.SqlTemplateEnum;
 import com.huazie.frame.db.common.sql.template.TemplateTypeEnum;
@@ -119,7 +119,7 @@ public class UpdateSqlTemplate<T> extends SqlTemplate<T> {
         // 获取【key=conditions】的属性，存储WHERE子句的内容 （para_id = :paraId and para_type = :paraType）
         String condStr = checkProperty(propMap, SqlTemplateEnum.CONDITIONS);
 
-        Map<String, String> setMap = StringUtils.split(StringUtils.split(setStr, DBConstants.SQLConstants.SQL_COMMA), DBConstants.SQLConstants.SQL_EQUAL);
+        Map<String, String> setMap = StringUtils.split(StringUtils.split(setStr, SQLConstants.SQL_COMMA), SQLConstants.SQL_EQUAL);
         Map<String, String> whereMap = createConditionMap(condStr);
 
         // 校验【key=columns】 和 【key=conditions】的数据是否正确

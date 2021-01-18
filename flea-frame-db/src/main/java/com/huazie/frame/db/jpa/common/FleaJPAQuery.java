@@ -10,7 +10,7 @@ import com.huazie.frame.common.util.NumberUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.ReflectUtils;
 import com.huazie.frame.common.util.StringUtils;
-import com.huazie.frame.db.common.DBConstants;
+import com.huazie.frame.db.common.DBConstants.SQLConstants;
 import com.huazie.frame.db.common.exception.DaoException;
 import com.huazie.frame.db.common.table.split.TableSplitHelper;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -60,7 +60,7 @@ public final class FleaJPAQuery implements Closeable {
 
     private CriteriaQuery criteriaQuery; // 标准化查询对象
 
-    private List<Predicate> predicates = new ArrayList<Predicate>(); // Where条件集合
+    private List<Predicate> predicates = new ArrayList<>(); // Where条件集合
 
     private List<Order> orders; // 排序集合
 
@@ -490,8 +490,8 @@ public final class FleaJPAQuery implements Closeable {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug1(new Object() {}, "attrName = {}, value = {}", attrName, value);
         }
-        if (!value.contains(DBConstants.SQLConstants.SQL_PERCENT)) {
-            value = DBConstants.SQLConstants.SQL_PERCENT + value + DBConstants.SQLConstants.SQL_PERCENT;
+        if (!value.contains(SQLConstants.SQL_PERCENT)) {
+            value = SQLConstants.SQL_PERCENT + value + SQLConstants.SQL_PERCENT;
         }
         predicates.add(criteriaBuilder.like(root.get(attrName), value));
         return this;
@@ -1000,9 +1000,9 @@ public final class FleaJPAQuery implements Closeable {
         if (CollectionUtils.isEmpty(orders)) {
             orders = new ArrayList<>();
         }
-        if (orderBy.equalsIgnoreCase(DBConstants.SQLConstants.SQL_ORDER_ASC)) {
+        if (orderBy.equalsIgnoreCase(SQLConstants.SQL_ORDER_ASC)) {
             orders.add(criteriaBuilder.asc(root.get(attrName)));
-        } else if (orderBy.equalsIgnoreCase(DBConstants.SQLConstants.SQL_ORDER_DESC)) {
+        } else if (orderBy.equalsIgnoreCase(SQLConstants.SQL_ORDER_DESC)) {
             orders.add(criteriaBuilder.desc(root.get(attrName)));
         } else {
             // 排序关键字【{0}】非法, 必须是【asc, ASC】 或【desc, DESC】

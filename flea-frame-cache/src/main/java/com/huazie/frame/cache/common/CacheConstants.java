@@ -235,7 +235,6 @@ public interface CacheConstants {
          * <p> Redis客户端Jedis连接池获取连接时的最大等待毫秒数 </p>
          */
         String REDIS_CACHE_PARAM_POOL_MAXWAITMILLIS = "pool.maxWaitMillis";
-
     }
 
 }
