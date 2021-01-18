@@ -86,7 +86,8 @@ public class TableSplitHelper {
                 StringUtils.checkBlank(exp, TableSplitException.class, "ERROR-DB-TSP0000000009");
 
                 StringBuilder tableNameBuilder = new StringBuilder(exp);
-                String tableNamePlaceholder = DBConstants.SQLConstants.SQL_LEFT_ROUND_BRACKETS + DBConstants.TableSplitConstants.FLEA_TABLE_NAME + DBConstants.SQLConstants.SQL_RIGHT_ROUND_BRACKETS;
+                String tableNamePlaceholder = DBConstants.SQLConstants.SQL_LEFT_ROUND_BRACKETS +
+                        DBConstants.TableSplitConstants.FLEA_TABLE_NAME + DBConstants.SQLConstants.SQL_RIGHT_ROUND_BRACKETS;
                 // 替换 分表名表达式中 (FLEA_TABLE_NAME) 内容
                 StringUtils.replace(tableNameBuilder, tableNamePlaceholder, tableName);
 
@@ -115,7 +116,8 @@ public class TableSplitHelper {
                             // 请检查分表配置信息（分表后缀转换实现类【implClass】不能为空）
                             StringUtils.checkBlank(implClass, TableSplitException.class, "ERROR-DB-TSP0000000006");
 
-                            TableSplitEnum tableSplitEnum = (TableSplitEnum) EntityUtils.getEntity(TableSplitEnum.values(), DBConstants.TableSplitConstants.KEY, key);
+                            TableSplitEnum tableSplitEnum = (TableSplitEnum) EntityUtils.getEntity(TableSplitEnum.values(),
+                                    DBConstants.TableSplitConstants.KEY, key);
 
                             if (ObjectUtils.isNotEmpty(tableSplitEnum) && !implClass.equals(tableSplitEnum.getImplClass())) {
                                 // 请检查分表配置信息（分表后缀转换实现类【implClass】非法）
@@ -133,7 +135,8 @@ public class TableSplitHelper {
                             if (LOGGER.isDebugEnabled()) {
                                 LOGGER.debug1(obj, "The field value of split table = {}", splitTableFieldValue);
                             }
-                            String columnPlaceholder = DBConstants.SQLConstants.SQL_LEFT_ROUND_BRACKETS + column.toUpperCase() + DBConstants.SQLConstants.SQL_RIGHT_ROUND_BRACKETS;
+                            String columnPlaceholder = DBConstants.SQLConstants.SQL_LEFT_ROUND_BRACKETS +
+                                    column.toUpperCase() + DBConstants.SQLConstants.SQL_RIGHT_ROUND_BRACKETS;
                             StringUtils.replace(tableNameBuilder, columnPlaceholder, splitTableFieldValue);
                             // 分表场景下，替换生成器表中的主键值模板，为指定分表
                             StringUtils.replace(pkColumnValueBuilder, columnPlaceholder, splitTableFieldValue);

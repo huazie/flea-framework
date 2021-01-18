@@ -8,7 +8,7 @@ import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
-import com.huazie.frame.db.common.DBConstants;
+import com.huazie.frame.db.common.DBConstants.DBConfigConstants;
 import com.huazie.frame.db.common.exception.DaoException;
 import com.huazie.frame.db.jdbc.pojo.FleaDBUnit;
 
@@ -33,7 +33,7 @@ public class FleaJDBCConfig {
 
     private static volatile FleaJDBCConfig config;
 
-    private static ConcurrentMap<String, FleaDBUnit> fleaDBUnits = new ConcurrentHashMap<>();
+    private static final ConcurrentMap<String, FleaDBUnit> fleaDBUnits = new ConcurrentHashMap<>();
 
     private FleaJDBCConfig() {
     }
@@ -67,8 +67,8 @@ public class FleaJDBCConfig {
         FleaFrameManager.getManager().setDBConfigKey(mDatabase, mName);
         if (LOGGER.isDebugEnabled()) {
             Object obj = new Object() {};
-            LOGGER.debug("关系数据库管理系统名：{}", mDatabase);
-            LOGGER.debug("数据库名或数据库用户：{}", mName);
+            LOGGER.debug1(obj, "关系数据库管理系统名：{}", mDatabase);
+            LOGGER.debug1(obj, "数据库名或数据库用户：{}", mName);
         }
     }
 
@@ -131,10 +131,10 @@ public class FleaJDBCConfig {
                 fDBUnit.setDatabase(dbConfigKeyArr[0]);
                 fDBUnit.setName(dbConfigKeyArr[1]);
             }
-            fDBUnit.setDriver(FleaConfigManager.getConfigItemValue(dbConfigKey, DBConstants.DBConfigConstants.DB_CONFIG_DRIVER));
-            fDBUnit.setUrl(FleaConfigManager.getConfigItemValue(dbConfigKey, DBConstants.DBConfigConstants.DB_CONFIG_URL));
-            fDBUnit.setUser(FleaConfigManager.getConfigItemValue(dbConfigKey, DBConstants.DBConfigConstants.DB_CONFIG_USER));
-            fDBUnit.setPassword(FleaConfigManager.getConfigItemValue(dbConfigKey, DBConstants.DBConfigConstants.DB_CONFIG_PASSWORD));
+            fDBUnit.setDriver(FleaConfigManager.getConfigItemValue(dbConfigKey, DBConfigConstants.DB_CONFIG_DRIVER));
+            fDBUnit.setUrl(FleaConfigManager.getConfigItemValue(dbConfigKey, DBConfigConstants.DB_CONFIG_URL));
+            fDBUnit.setUser(FleaConfigManager.getConfigItemValue(dbConfigKey, DBConfigConstants.DB_CONFIG_USER));
+            fDBUnit.setPassword(FleaConfigManager.getConfigItemValue(dbConfigKey, DBConfigConstants.DB_CONFIG_PASSWORD));
         }
 
         return fDBUnit;

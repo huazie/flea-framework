@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public class Templates {
 
-    private List<Template> templates = new ArrayList<Template>();
+    private List<Template> templates = new ArrayList<>();
 
     /**
      * <p> 获取SQL模板的List对象 </p>
@@ -44,7 +44,7 @@ public class Templates {
      * @return SQL模板的Map对象
      * @since 1.0.0
      */
-    public Map<String, Template> toTemplatesMap() {
+    Map<String, Template> toTemplatesMap() {
         return EntityUtils.toTemplatesMap(templates);
     }
 

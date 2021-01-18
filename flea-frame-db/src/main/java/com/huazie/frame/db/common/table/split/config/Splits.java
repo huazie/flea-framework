@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class Splits {
 
-    private List<Split> splitList = new ArrayList<Split>();
+    private List<Split> splitList = new ArrayList<>();
 
     public List<Split> getSplitList() {
         return splitList;

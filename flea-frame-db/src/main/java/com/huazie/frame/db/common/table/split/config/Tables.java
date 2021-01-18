@@ -18,7 +18,7 @@ import java.util.Map;
  */
 public class Tables {
 
-    private List<Table> tableList = new ArrayList<Table>();
+    private List<Table> tableList = new ArrayList<>();
 
     public List<Table> getTableList() {
         return tableList;
@@ -34,11 +34,9 @@ public class Tables {
      * @return 各分表配置集合
      * @since 1.0.0
      */
-    public Map<String, Table> toTableMap() {
-        Map<String, Table> tableMap = new HashMap<String, Table>();
-        Iterator<Table> tableIt = tableList.iterator();
-        while (tableIt.hasNext()) {
-            Table table = tableIt.next();
+    Map<String, Table> toTableMap() {
+        Map<String, Table> tableMap = new HashMap<>();
+        for (Table table : tableList) {
             tableMap.put(table.getName(), table);
         }
         return tableMap;

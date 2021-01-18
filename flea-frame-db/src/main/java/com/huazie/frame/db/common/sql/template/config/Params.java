@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public class Params {
 
-    private List<Param> params = new ArrayList<Param>();
+    private List<Param> params = new ArrayList<>();
 
     /**
      * <p> 获取SQL模板参数的List对象 </p>
@@ -44,7 +44,7 @@ public class Params {
      * @return SQL模板参数的Map对象
      * @since 1.0.0
      */
-    public Map<String, Param> toParamsMap() {
+    Map<String, Param> toParamsMap() {
         return EntityUtils.toParamsMap(params);
     }
 

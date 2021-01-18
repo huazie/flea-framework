@@ -97,7 +97,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
      *
      * @param entityId 主键编号
      * @return 数据行对应的实体类信息
-     * @throws CommonException
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     protected T queryById(Object entityId, T entity) throws CommonException {
@@ -238,7 +238,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
      *
      * @param entityId 主键数据
      * @return true : 删除成功; false : 删除失败
-     * @throws CommonException
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     protected boolean removeById(Object entityId, T entity) throws CommonException {
@@ -301,7 +301,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
      * @param relationId 关系编号
      * @param entity     实体类
      * @return 实体类数据集合
-     * @throws CommonException
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     private Query createNativeQuery(String relationId, T entity, boolean isSingle) throws CommonException {
@@ -349,7 +349,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
      * <p> 处理INSERT,UPDATE,DELETE SQL模板 </p>
      *
      * @param sqlTemplate SQL模板（包含 INSERT,UPDATE,DELETE）
-     * @throws CommonException
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     private int save(ITemplate<T> sqlTemplate) throws CommonException {
@@ -378,7 +378,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
      * <p> 校验主键合法性 </p>
      *
      * @param entityId 实体类对应的主键编号
-     * @throws DaoException 数据操作层异常
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     private void checkPrimaryKey(Object entityId) throws CommonException {

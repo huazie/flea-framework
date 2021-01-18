@@ -26,6 +26,7 @@ import java.util.Set;
 public class EclipseLinkTableSplitHandler implements IFleaJPATableSplitHandler {
 
     @Override
+    @SuppressWarnings({"unchecked"})
     public void handle(CriteriaQuery criteriaQuery, Object entity) throws CommonException {
 
         if (ObjectUtils.isEmpty(criteriaQuery) || ObjectUtils.isEmpty(entity)) {
