@@ -22,7 +22,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -196,8 +195,7 @@ public class EntityUtils {
     public static Object getEntity(Object[] objs, String attrName, Object attrValue) {
         Object object = null;
         if (ArrayUtils.isNotEmpty(objs)) {
-            for (int i = 0; i < objs.length; i++) {
-                Object obj = objs[i];
+            for (Object obj : objs) {
                 Object value = ReflectUtils.getObjectAttrValue(obj, attrName); // 该属性对应的值
                 if (value != null && value.equals(attrValue)) {
                     object = obj;
@@ -218,15 +216,13 @@ public class EntityUtils {
      */
     public static String getTableName(Object entity) {
         String tableName = "";
-        Annotation tableAnnotation = entity.getClass().getAnnotation(javax.persistence.Table.class);
+        javax.persistence.Table tableAnnotation = entity.getClass().getAnnotation(javax.persistence.Table.class);
         if (ObjectUtils.isNotEmpty(tableAnnotation)) {
-            javax.persistence.Table table = (javax.persistence.Table) tableAnnotation;
-            tableName = table.name();
+            tableName = tableAnnotation.name();
         } else {
-            Annotation fleaTableAnnotation = entity.getClass().getAnnotation(com.huazie.frame.db.common.FleaTable.class);
+            com.huazie.frame.db.common.FleaTable fleaTableAnnotation = entity.getClass().getAnnotation(com.huazie.frame.db.common.FleaTable.class);
             if (ObjectUtils.isNotEmpty(fleaTableAnnotation)) {
-                com.huazie.frame.db.common.FleaTable fleaTable = (com.huazie.frame.db.common.FleaTable) fleaTableAnnotation;
-                tableName = fleaTable.name();
+                tableName = fleaTableAnnotation.name();
             }
         }
         return tableName;
