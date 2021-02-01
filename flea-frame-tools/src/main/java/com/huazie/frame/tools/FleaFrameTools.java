@@ -35,7 +35,7 @@ public class FleaFrameTools extends JFrame implements ActionListener, ChangeList
     // 工具栏
     private JToolBar mToolbar = new JToolBar();
 
-    private JComboBox<String> mComboBox = new JComboBox<String>();
+    private JComboBox<String> mComboBox = new JComboBox<>();
 
     private JButton mTabbedPanePreBtn = new JButton(new ImageIcon(FleaFrameTools.class.getClassLoader().getResource("flea/image/tabbedPane_pre.png")));
     private JButton mTabbedPaneNextBtn = new JButton(new ImageIcon(FleaFrameTools.class.getClassLoader().getResource("flea/image/tabbedPane_next.png")));

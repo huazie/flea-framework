@@ -34,9 +34,9 @@ public class FleaUrl {
 
     private RedirectUrl redirectUrl; // 重定向URL
 
-    private List<String> unCheckUrls = new ArrayList<String>(); // 不需要校验的URL列表
+    private List<String> unCheckUrls = new ArrayList<>(); // 不需要校验的URL列表
 
-    private List<String> checkUrls = new ArrayList<String>(); // 需要校验的URL列表
+    private List<String> checkUrls = new ArrayList<>(); // 需要校验的URL列表
 
     private UrlPrefix urlPrefix; // URL前缀
 

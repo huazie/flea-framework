@@ -174,7 +174,7 @@ public class InsertSqlTemplate<T> extends SqlTemplate<T> {
             ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000025", paramId);
         }
 
-        List<Column> entityColsList = new ArrayList<Column>();
+        List<Column> entityColsList = new ArrayList<>();
         for (int n = 0; n < cols.length; n++) {
             String tabColumnName = StringUtils.trim(cols[n]);//表字段名
             String attrName = StringUtils.trim(values[n]);//该表字段对应的属性变量值 (如 :paraId )

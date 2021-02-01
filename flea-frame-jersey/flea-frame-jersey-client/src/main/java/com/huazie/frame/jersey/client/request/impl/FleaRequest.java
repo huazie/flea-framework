@@ -155,7 +155,7 @@ public abstract class FleaRequest implements Request {
             LOGGER.debug1(obj, "FleaJerseyResponse = \n{}", JABXUtils.toXml(response, true));
         }
 
-        Response<T> responseResult = new Response<T>();
+        Response<T> responseResult = new Response<>();
         T output = null;
 
         // 判断资源服务是否请求成功

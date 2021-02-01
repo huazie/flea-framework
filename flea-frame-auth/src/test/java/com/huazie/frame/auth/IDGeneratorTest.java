@@ -36,7 +36,7 @@ public class IDGeneratorTest {
             FleaJDBCConfig.init(DBSystemEnum.MySQL.getName(), "fleaauth");
             String sql = "insert into flea_id_generator (id_generator_key, id_generator_value) values(?, ?)";
             String pkColumnValue = "pk_flea_login_log_202008";
-            List<Object> params = new ArrayList<Object>();
+            List<Object> params = new ArrayList<>();
             params.add(pkColumnValue);
             params.add(0L);
             FleaJDBCHelper.insert(sql, params);

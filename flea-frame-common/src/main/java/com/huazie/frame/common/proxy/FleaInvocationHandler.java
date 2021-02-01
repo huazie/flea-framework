@@ -43,7 +43,7 @@ public class FleaInvocationHandler implements InvocationHandler {
 
             Class<?>[] types = method.getParameterTypes();
             if (ArrayUtils.isNotEmpty(types)) {
-                List<String> paramTypeList = new ArrayList<String>();
+                List<String> paramTypeList = new ArrayList<>();
                 for (Class<?> type : types) {
                     paramTypeList.add(type.getSimpleName());
                 }
@@ -52,7 +52,7 @@ public class FleaInvocationHandler implements InvocationHandler {
 
             if (ArrayUtils.isNotEmpty(args)) {
                 LOGGER.debug1(object, "OriginArgs = {}", args);
-                List<Object> mArgs = new ArrayList<Object>();
+                List<Object> mArgs = new ArrayList<>();
                 for (Object arg : args) {
                     if (arg instanceof byte[]) {
                         // 字节数组可能是对象序列化的

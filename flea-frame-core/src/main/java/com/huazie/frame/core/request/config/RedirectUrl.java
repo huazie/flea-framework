@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class RedirectUrl {
 
-    private List<Property> redirectUrlList = new ArrayList<Property>(); // 重定向URL列表
+    private List<Property> redirectUrlList = new ArrayList<>(); // 重定向URL列表
 
     public List<Property> getRedirectUrlList() {
         return redirectUrlList;

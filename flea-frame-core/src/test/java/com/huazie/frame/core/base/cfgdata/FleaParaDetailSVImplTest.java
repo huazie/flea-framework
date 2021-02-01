@@ -139,7 +139,7 @@ public class FleaParaDetailSVImplTest {
 //			LOGGER.debug(cache.get("user", String.class));
 
             //#### 3.  List塞对象
-//			List<String> userList = new ArrayList<String>();
+//			List<String> userList = new ArrayList<>();
 //			userList.add("huazie");
 //			userList.add("lgh");
 //			cache.put("user_list", userList);
@@ -176,7 +176,7 @@ public class FleaParaDetailSVImplTest {
 //            cache.clear();
 
             //#### 3.  List塞对象
-//			List<String> userList = new ArrayList<String>();
+//			List<String> userList = new ArrayList<>();
 //			userList.add("huazie");
 //			userList.add("lgh");
 //			cache.put("user_list", userList);
