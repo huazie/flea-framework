@@ -56,7 +56,7 @@ public class JDBCConfigTest {
     public void testJDBCQuery3() {
         FleaJDBCConfig.init(DBSystemEnum.MySQL.getName(), "fleamarket");
         try {
-            List<Object> paramList = new ArrayList<Object>();
+            List<Object> paramList = new ArrayList<>();
             paramList.add(new Long(1000000012L));
             List<Map<String, Object>> results = FleaJDBCHelper.query("SELECT * FROM flea_user where user_id = ?", paramList);
             Assert.assertNotNull(results);
@@ -95,7 +95,7 @@ public class JDBCConfigTest {
     public void testJDBCSingleQuery3() {
         FleaJDBCConfig.init(DBSystemEnum.MySQL.getName(), "fleamarket");
         try {
-            List<Object> paramList = new ArrayList<Object>();
+            List<Object> paramList = new ArrayList<>();
             paramList.add(new Long(1000000012L));
             paramList.add(new Long(1L));
             List<Map<String, Object>> results = FleaJDBCHelper.query("SELECT user_name FROM flea_user where user_id in (?, ?)", paramList);

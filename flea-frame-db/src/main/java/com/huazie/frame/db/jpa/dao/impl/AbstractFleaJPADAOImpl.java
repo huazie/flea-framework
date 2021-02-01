@@ -21,9 +21,7 @@ import com.huazie.frame.db.jpa.common.FleaJPAQueryPool;
 import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -466,9 +464,9 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         // 遍历成员变量
         if (ArrayUtils.isNotEmpty(fields)) {
             for (Field field : fields) {
-                Annotation annotation = field.getAnnotation(PersistenceContext.class);
+                javax.persistence.PersistenceContext annotation = field.getAnnotation(javax.persistence.PersistenceContext.class);
                 if (ObjectUtils.isNotEmpty(annotation)) {
-                    unitName = ((PersistenceContext) annotation).unitName();
+                    unitName = annotation.unitName();
                 }
             }
         }
