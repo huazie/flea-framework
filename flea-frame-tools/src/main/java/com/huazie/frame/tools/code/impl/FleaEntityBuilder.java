@@ -88,7 +88,7 @@ public class FleaEntityBuilder extends FleaCodeBuilder {
                 FleaJDBCConfig.init(dbSystemName, dbName);
                 String sql = "INSERT INTO %ID_GENERATOR_TABLE% (%PK_COLUMN_NAME%, %VALUE_COLUMN_NAME%) VALUES (?, ?)";
                 sql = FleaCodeHelper.convert(sql, param);
-                List<Object> params = new ArrayList<Object>();
+                List<Object> params = new ArrayList<>();
                 params.add("pk_" + tableName);
                 params.add(0L);
                 FleaJDBCHelper.insert(sql, params);
@@ -203,7 +203,7 @@ public class FleaEntityBuilder extends FleaCodeBuilder {
                 FleaJDBCConfig.init(dbSystemName, dbName);
                 String sql = "DELETE FROM %ID_GENERATOR_TABLE% WHERE %PK_COLUMN_NAME% = ?";
                 sql = FleaCodeHelper.convert(sql, param);
-                List<Object> params = new ArrayList<Object>();
+                List<Object> params = new ArrayList<>();
                 params.add("pk_" + tableName);
                 FleaJDBCHelper.delete(sql, params);
             } catch (SQLException e) {
