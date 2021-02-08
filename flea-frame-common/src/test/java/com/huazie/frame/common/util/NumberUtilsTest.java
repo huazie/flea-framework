@@ -3,8 +3,6 @@ package com.huazie.frame.common.util;
 import com.huazie.frame.common.slf4j.FleaLogger;
 import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <p> 数字相关工具测试类 </p>

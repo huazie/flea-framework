@@ -4,8 +4,6 @@ import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.PinyinEnum;
 import com.huazie.frame.common.slf4j.FleaLogger;
 import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Random;
 import java.util.UUID;
