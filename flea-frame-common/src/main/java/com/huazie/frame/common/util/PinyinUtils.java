@@ -1,12 +1,8 @@
 package com.huazie.frame.common.util;
 
+import com.huazie.frame.common.PinyinEnum;
 import com.huazie.frame.common.slf4j.FleaLogger;
 import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.huazie.frame.common.PinyinEnum;
-
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
