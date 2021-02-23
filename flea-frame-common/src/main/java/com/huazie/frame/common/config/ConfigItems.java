@@ -18,7 +18,7 @@ import java.util.Map;
  */
 public class ConfigItems extends ConfigKey {
 
-    private List<ConfigItem> configItemList = new ArrayList<ConfigItem>(); // 配置项列表中的各个配置项
+    private List<ConfigItem> configItemList = new ArrayList<>(); // 配置项列表中的各个配置项
 
     public List<ConfigItem> getConfigItemList() {
         return configItemList;

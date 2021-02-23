@@ -2,6 +2,7 @@ package com.huazie.frame.db.jdbc.pojo;
 
 import com.huazie.frame.db.jdbc.config.FleaJDBCConfig;
 
+import java.io.Closeable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +14,7 @@ import java.sql.ResultSet;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class FleaDBOperationHandler implements AutoCloseable{
+public class FleaDBOperationHandler implements Closeable {
 
     private Connection connection;
 
@@ -22,7 +23,7 @@ public class FleaDBOperationHandler implements AutoCloseable{
     private ResultSet resultSet;
 
     @Override
-    public void close() throws Exception {
+    public void close() {
         FleaJDBCConfig.close(connection, preparedStatement, resultSet);
     }
 

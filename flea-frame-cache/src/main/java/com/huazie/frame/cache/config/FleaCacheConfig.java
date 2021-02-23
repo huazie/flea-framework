@@ -5,7 +5,6 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -18,9 +17,9 @@ import java.util.Map;
  */
 public class FleaCacheConfig {
 
-    private List<CacheItems> cacheItemsList = new ArrayList<CacheItems>(); // 缓存项集列表
+    private List<CacheItems> cacheItemsList = new ArrayList<>(); // 缓存项集列表
 
-    private List<CacheParams> cacheParamsList = new ArrayList<CacheParams>(); // 缓存参数集列表
+    private List<CacheParams> cacheParamsList = new ArrayList<>(); // 缓存参数集列表
 
     private CacheDatas cacheDatas; // 缓存数据集
 
@@ -59,22 +58,6 @@ public class FleaCacheConfig {
     }
 
     /**
-     * <p> 获取缓存配置项集列表的Map，便于根据各缓存配置项集key查找 </p>
-     *
-     * @return 配缓存配置项集列表的Map
-     * @since 1.0.0
-     */
-    public Map<String, CacheItems> toCacheItemsMap() {
-        Map<String, CacheItems> cacheItemsMap = new HashMap<String, CacheItems>();
-        Iterator<CacheItems> cacheItemsIt = cacheItemsList.iterator();
-        while (cacheItemsIt.hasNext()) {
-            CacheItems cacheItems = cacheItemsIt.next();
-            cacheItemsMap.put(cacheItems.getKey(), cacheItems);
-        }
-        return cacheItemsMap;
-    }
-
-    /**
      * <p> 根据指定key，获取某个指定的缓存配置项集 </p>
      *
      * @param key 指定缓存配置项集的key
@@ -88,6 +71,20 @@ public class FleaCacheConfig {
             cacheItems = cacheItemsMap.get(key);
         }
         return cacheItems;
+    }
+
+    /**
+     * <p> 获取缓存配置项集列表的Map，便于根据各缓存配置项集key查找 </p>
+     *
+     * @return 配缓存配置项集列表的Map
+     * @since 1.0.0
+     */
+    private Map<String, CacheItems> toCacheItemsMap() {
+        Map<String, CacheItems> cacheItemsMap = new HashMap<>();
+        for (CacheItems cacheItems : cacheItemsList) {
+            cacheItemsMap.put(cacheItems.getKey(), cacheItems);
+        }
+        return cacheItemsMap;
     }
 
     /**
@@ -121,22 +118,6 @@ public class FleaCacheConfig {
     }
 
     /**
-     * <p> 获取缓存参数集列表的Map，便于根据各缓存参数集key查找 </p>
-     *
-     * @return 缓存参数集列表的Map
-     * @since 1.0.0
-     */
-    public Map<String, CacheParams> toCacheParamsMap() {
-        Map<String, CacheParams> cacheParamsMap = new HashMap<String, CacheParams>();
-        Iterator<CacheParams> cacheParamsIt = cacheParamsList.iterator();
-        while (cacheParamsIt.hasNext()) {
-            CacheParams cacheParams = cacheParamsIt.next();
-            cacheParamsMap.put(cacheParams.getKey(), cacheParams);
-        }
-        return cacheParamsMap;
-    }
-
-    /**
      * <p> 根据指定key，获取某个指定的缓存参数集 </p>
      *
      * @param key 指定缓存参数集的key
@@ -150,6 +131,20 @@ public class FleaCacheConfig {
             cacheParams = cacheParamsMap.get(key);
         }
         return cacheParams;
+    }
+
+    /**
+     * <p> 获取缓存参数集列表的Map，便于根据各缓存参数集key查找 </p>
+     *
+     * @return 缓存参数集列表的Map
+     * @since 1.0.0
+     */
+    private Map<String, CacheParams> toCacheParamsMap() {
+        Map<String, CacheParams> cacheParamsMap = new HashMap<>();
+        for (CacheParams cacheParams : cacheParamsList) {
+            cacheParamsMap.put(cacheParams.getKey(), cacheParams);
+        }
+        return cacheParamsMap;
     }
 
     /**

@@ -1,7 +1,7 @@
 package com.huazie.frame.common.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -17,7 +17,7 @@ import java.util.Properties;
  */
 public class PropertiesUtil {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PropertiesUtil.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(PropertiesUtil.class);
 
     /**
      * <p> 获取指定配置文件对象 </p>
@@ -35,7 +35,7 @@ public class PropertiesUtil {
         } catch (Exception e) {
             prop = null;
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("PropertiesUtil##getProperties(String) 读取路径为【" + path + "】的配置出错", e);
+                LOGGER.error1(new Object() {},"读取路径为【" + path + "】的配置出错", e);
             }
         }
         return prop;

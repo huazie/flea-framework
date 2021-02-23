@@ -1,10 +1,10 @@
 package com.huazie.frame.tools.code;
 
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.PropertiesUtil;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.tools.common.ToolsConstants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
 
@@ -17,7 +17,7 @@ import java.util.Properties;
  */
 public class FleaCodeConfig {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaCodeConfig.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaCodeConfig.class);
 
     private static volatile FleaCodeConfig config;
 

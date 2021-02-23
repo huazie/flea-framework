@@ -2,9 +2,11 @@ package com.huazie.frame.db.common;
 
 import com.huazie.frame.common.XmlDigesterHelper;
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ExceptionUtils;
-import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.IOUtils;
+import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.exception.SqlTemplateException;
 import com.huazie.frame.db.common.exception.TableSplitException;
@@ -23,8 +25,6 @@ import com.huazie.frame.db.common.table.split.config.Splits;
 import com.huazie.frame.db.common.table.split.config.Table;
 import com.huazie.frame.db.common.table.split.config.Tables;
 import org.apache.commons.digester.Digester;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 
@@ -37,7 +37,7 @@ import java.io.InputStream;
  */
 public class DBXmlDigesterHelper {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DBXmlDigesterHelper.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(DBXmlDigesterHelper.class);
 
     private static volatile DBXmlDigesterHelper xmlDigester;
 
@@ -106,8 +106,8 @@ public class DBXmlDigesterHelper {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("DBXmlDigesterHelper##newTables() Use the current flea-table-split.xml :" + fileName);
-            LOGGER.debug("DBXmlDigesterHelper##newTables() Start to parse the flea-table-split.xml");
+            LOGGER.debug("Use the current flea-table-split.xml :" + fileName);
+            LOGGER.debug("Start to parse the flea-table-split.xml");
         }
 
         try (InputStream input = IOUtils.getInputStreamFromClassPath(fileName)) {
@@ -123,7 +123,7 @@ public class DBXmlDigesterHelper {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("DBXmlDigesterHelper##newTables() End to parse the flea-table-split.xml");
+            LOGGER.debug("End to parse the flea-table-split.xml");
         }
 
         return tabs;
@@ -191,8 +191,8 @@ public class DBXmlDigesterHelper {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("DBXmlDigesterHelper##newSqlTemplate() Use the current flea-sql-template.xml :" + fileName);
-            LOGGER.debug("DBXmlDigesterHelper##newSqlTemplate() Start to parse the flea-sql-template.xml");
+            LOGGER.debug("Use the current flea-sql-template.xml :" + fileName);
+            LOGGER.debug("Start to parse the flea-sql-template.xml");
         }
 
         try (InputStream input = IOUtils.getInputStreamFromClassPath(fileName)) {
@@ -208,7 +208,7 @@ public class DBXmlDigesterHelper {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("DBXmlDigesterHelper##newSqlTemplate() End to parse the flea-sql-template.xml");
+            LOGGER.debug("End to parse the flea-sql-template.xml");
         }
 
         return sqlTemplate;

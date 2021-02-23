@@ -3,7 +3,6 @@ package com.huazie.frame.db.jpa.persistence.impl;
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
-import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.table.pojo.SplitTable;
 import com.huazie.frame.db.common.util.EntityUtils;
 import com.huazie.frame.db.jpa.persistence.IFleaJPATableSplitHandler;
@@ -27,6 +26,7 @@ import java.util.Set;
 public class EclipseLinkTableSplitHandler implements IFleaJPATableSplitHandler {
 
     @Override
+    @SuppressWarnings({"unchecked"})
     public void handle(CriteriaQuery criteriaQuery, Object entity) throws CommonException {
 
         if (ObjectUtils.isEmpty(criteriaQuery) || ObjectUtils.isEmpty(entity)) {
@@ -37,7 +37,7 @@ public class EclipseLinkTableSplitHandler implements IFleaJPATableSplitHandler {
         SplitTable splitTable = EntityUtils.getSplitTable(entity);
 
         // 存在分表，需要查询指定分表
-        if (StringUtils.isNotBlank(splitTable.getSplitTableName())) {
+        if (splitTable.isExistSplitTable()) {
             Set<Root<?>> roots = criteriaQuery.getRoots();
             if (CollectionUtils.isNotEmpty(roots)) {
                 // 重新设置 查询的分表表名
@@ -57,7 +57,7 @@ public class EclipseLinkTableSplitHandler implements IFleaJPATableSplitHandler {
         SplitTable splitTable = EntityUtils.getSplitTable(entity);
 
         // 存在分表，则需要操作具体分表
-        if (StringUtils.isNotBlank(splitTable.getSplitTableName())) {
+        if (splitTable.isExistSplitTable()) {
             // 获取可用的数据库会话对象
             AbstractSession session = getDatabaseSession(entityManager);
             // 重新设置 查询的分表表名

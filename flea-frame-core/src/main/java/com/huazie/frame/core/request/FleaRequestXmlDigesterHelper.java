@@ -1,6 +1,8 @@
 package com.huazie.frame.core.request;
 
 import com.huazie.frame.common.XmlDigesterHelper;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.core.common.FleaCoreConstants;
 import com.huazie.frame.core.request.config.FilterTask;
@@ -14,8 +16,6 @@ import com.huazie.frame.core.request.config.Property;
 import com.huazie.frame.core.request.config.RedirectUrl;
 import com.huazie.frame.core.request.config.UrlPrefix;
 import org.apache.commons.digester.Digester;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <p> Flea 请求配置文件XML解析类 【flea-request.xml 和 flea-request-filter.xml】 </p>
@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  */
 public class FleaRequestXmlDigesterHelper {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaRequestXmlDigesterHelper.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaRequestXmlDigesterHelper.class);
 
     private static volatile FleaRequestXmlDigesterHelper xmlDigester;
 
@@ -89,20 +89,20 @@ public class FleaRequestXmlDigesterHelper {
         if (StringUtils.isNotBlank(System.getProperty(FleaCoreConstants.FleaRequestConfigConstants.FLEA_REQUEST_FILE_SYSTEM_KEY))) {
             fileName = StringUtils.trim(System.getProperty(FleaCoreConstants.FleaRequestConfigConstants.FLEA_REQUEST_FILE_SYSTEM_KEY));
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("FleaRequestXmlDigesterHelper##newFleaRequest() Use the specified flea-request.xml : " + fileName);
+                LOGGER.debug("Use the specified flea-request.xml : " + fileName);
             }
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaRequestXmlDigesterHelper##newFleaRequest() Use the current flea-request.xml : " + fileName);
-            LOGGER.debug("FleaRequestXmlDigesterHelper##newFleaRequest() Start to parse the flea-request.xml");
+            LOGGER.debug("Use the current flea-request.xml : " + fileName);
+            LOGGER.debug("Start to parse the flea-request.xml");
         }
 
         Digester digester = newFleaRequestFileDigester();
         FleaRequest obj = XmlDigesterHelper.parse(fileName, digester, FleaRequest.class);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaRequestXmlDigesterHelper##newFleaRequest() End to parse the flea-request.xml");
+            LOGGER.debug("End to parse the flea-request.xml");
         }
 
         return obj;
@@ -192,20 +192,20 @@ public class FleaRequestXmlDigesterHelper {
         if (StringUtils.isNotBlank(System.getProperty(FleaCoreConstants.FleaRequestConfigConstants.FLEA_REQUEST_FILTER_FILE_SYSTEM_KEY))) {
             fileName = StringUtils.trim(System.getProperty(FleaCoreConstants.FleaRequestConfigConstants.FLEA_REQUEST_FILTER_FILE_SYSTEM_KEY));
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("FleaRequestXmlDigesterHelper##newFleaRequestFilter() Use the specified flea-request-filter.xml : " + fileName);
+                LOGGER.debug("Use the specified flea-request-filter.xml : " + fileName);
             }
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaRequestXmlDigesterHelper##newFleaRequestFilter() Use the current flea-request-filter.xml : " + fileName);
-            LOGGER.debug("FleaRequestXmlDigesterHelper##newFleaRequestFilter() Start to parse the flea-request-filter.xml");
+            LOGGER.debug("Use the current flea-request-filter.xml : " + fileName);
+            LOGGER.debug("Start to parse the flea-request-filter.xml");
         }
 
         Digester digester = newFleaRequestFilterFileDigester();
         FleaRequestFilter obj = XmlDigesterHelper.parse(fileName, digester, FleaRequestFilter.class);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaRequestXmlDigesterHelper##newFleaRequestFilter() End to parse the flea-request-filter.xml");
+            LOGGER.debug("End to parse the flea-request-filter.xml");
         }
 
         return obj;

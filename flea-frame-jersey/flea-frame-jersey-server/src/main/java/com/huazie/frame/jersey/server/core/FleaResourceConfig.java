@@ -1,11 +1,11 @@
 package com.huazie.frame.jersey.server.core;
 
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.core.base.cfgdata.bean.FleaConfigDataSpringBean;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -20,7 +20,7 @@ import java.util.List;
  */
 public abstract class FleaResourceConfig extends ResourceConfig {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaResourceConfig.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaResourceConfig.class);
 
     /**
      * <p> 无参构造方法 </p>
@@ -37,9 +37,6 @@ public abstract class FleaResourceConfig extends ResourceConfig {
      * @since 1.0.0
      */
     private void init() {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaResourceConfig#init() Start");
-        }
         // 获取所有的资源包名
         List<String> resourcePackages = null;
         try {
@@ -49,20 +46,17 @@ public abstract class FleaResourceConfig extends ResourceConfig {
             resourcePackages = springBean.getResourcePackages();
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("Exception occurs when getting resource packages : \n", e);
+                LOGGER.error1(new Object() {}, "Exception occurs when getting resource packages : \n", e);
             }
         }
 
         if (CollectionUtils.isNotEmpty(resourcePackages)) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("FleaResourceConfig#init() scan packages : {}", resourcePackages);
+                LOGGER.debug1(new Object() {}, "scan packages : {}", resourcePackages);
             }
             packages(resourcePackages.toArray(new String[0]));
         }
         // 服务端注册MultiPartFeature组件，用于支持 multipart/form-data 媒体类型
         register(MultiPartFeature.class);
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaResourceConfig#init() End");
-        }
     }
 }

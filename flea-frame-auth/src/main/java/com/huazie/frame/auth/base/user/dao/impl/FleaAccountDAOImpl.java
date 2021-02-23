@@ -6,10 +6,10 @@ import com.huazie.frame.auth.base.user.entity.FleaAccount;
 import com.huazie.frame.auth.common.FleaAuthEntityConstants;
 import com.huazie.frame.auth.common.UserStateEnum;
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.DateUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ import java.util.List;
 @SuppressWarnings(value = "unchecked")
 public class FleaAccountDAOImpl extends FleaAuthDAOImpl<FleaAccount> implements IFleaAccountDAO {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaAccountDAOImpl.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaAccountDAOImpl.class);
 
     @Override
     public FleaAccount queryAccount(String accountCode, String accountPwd) throws CommonException {
@@ -49,7 +49,7 @@ public class FleaAccountDAOImpl extends FleaAuthDAOImpl<FleaAccount> implements 
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaAccountDAOImpl##queryAccount(String, String) FleaAccount = {}", fleaAccount);
+            LOGGER.debug1(new Object() {}, "FleaAccount = {}", fleaAccount);
         }
 
         return fleaAccount;
@@ -78,7 +78,7 @@ public class FleaAccountDAOImpl extends FleaAuthDAOImpl<FleaAccount> implements 
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaAccountDAOImpl##queryValidAccount(String) FleaAccount = {}", fleaAccount);
+            LOGGER.debug1(new Object() {}, "FleaAccount = {}", fleaAccount);
         }
 
         return fleaAccount;
@@ -103,7 +103,7 @@ public class FleaAccountDAOImpl extends FleaAuthDAOImpl<FleaAccount> implements 
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaAccountDAOImpl##queryValidAccount(Long) FleaAccount = {}", fleaAccount);
+            LOGGER.debug1(new Object() {}, "FleaAccount = {}", fleaAccount);
         }
 
         return fleaAccount;

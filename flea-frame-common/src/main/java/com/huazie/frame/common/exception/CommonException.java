@@ -17,6 +17,8 @@ import java.util.Locale;
  */
 public abstract class CommonException extends Exception {
 
+    private static final long serialVersionUID = 1746312829236028651L;
+
     private String key;                     // 国际化资源数据关键字
 
     private Locale locale;                  // 国际化区域标识
@@ -24,38 +26,46 @@ public abstract class CommonException extends Exception {
     private FleaI18nResEnum i18nResEnum;    // 国际化资源类型
 
     public CommonException(String mKey, FleaI18nResEnum mI18nResEnum) {
-        this(mKey, mI18nResEnum, FleaFrameManager.getManager().getLocale());// 使用服务器当前默认的国际化区域设置
+        // 使用服务器当前默认的国际化区域设置
+        this(mKey, mI18nResEnum, FleaFrameManager.getManager().getLocale());
     }
 
     public CommonException(String mKey, FleaI18nResEnum mI18nResEnum, String... mValues) {
-        this(mKey, mI18nResEnum, FleaFrameManager.getManager().getLocale(), mValues);// 使用服务器当前默认的国际化区域设置
+        // 使用服务器当前默认的国际化区域设置
+        this(mKey, mI18nResEnum, FleaFrameManager.getManager().getLocale(), mValues);
     }
 
     public CommonException(String mKey, FleaI18nResEnum mI18nResEnum, Locale mLocale) {
-        this(mKey, mI18nResEnum, mLocale, new String[]{});// 使用指定的国际化区域设置
+        // 使用指定的国际化区域设置
+        this(mKey, mI18nResEnum, mLocale, new String[]{});
     }
 
     public CommonException(String mKey, FleaI18nResEnum mI18nResEnum, Locale mLocale, String... mValues) {
-        super(convert(mKey, mValues, mI18nResEnum, mLocale)); // 使用指定的国际化区域设置
+        // 使用指定的国际化区域设置
+        super(convert(mKey, mValues, mI18nResEnum, mLocale));
         key = mKey;
         locale = mLocale;
         i18nResEnum = mI18nResEnum;
     }
 
     public CommonException(String mKey, FleaI18nResEnum mI18nResEnum, Throwable cause) {
-        this(mKey, mI18nResEnum, FleaFrameManager.getManager().getLocale(), cause);// 使用服务器当前默认的国际化区域设置
+        // 使用服务器当前默认的国际化区域设置
+        this(mKey, mI18nResEnum, FleaFrameManager.getManager().getLocale(), cause);
     }
 
     public CommonException(String mKey, FleaI18nResEnum mI18nResEnum, Throwable cause, String... mValues) {
-        this(mKey, mI18nResEnum, FleaFrameManager.getManager().getLocale(), cause, mValues);// 使用服务器当前默认的国际化区域设置
+        // 使用服务器当前默认的国际化区域设置
+        this(mKey, mI18nResEnum, FleaFrameManager.getManager().getLocale(), cause, mValues);
     }
 
     public CommonException(String mKey, FleaI18nResEnum mI18nResEnum, Locale mLocale, Throwable cause) {
-        this(mKey, mI18nResEnum, mLocale, cause, new String[]{});// 使用指定的国际化区域设置
+        // 使用指定的国际化区域设置
+        this(mKey, mI18nResEnum, mLocale, cause, new String[]{});
     }
 
     public CommonException(String mKey, FleaI18nResEnum mI18nResEnum, Locale mLocale, Throwable cause, String... mValues) {
-        super(convert(mKey, mValues, mI18nResEnum, mLocale), cause); // 使用指定的国际化区域设置
+        // 使用指定的国际化区域设置
+        super(convert(mKey, mValues, mI18nResEnum, mLocale), cause);
         key = mKey;
         locale = mLocale;
         i18nResEnum = mI18nResEnum;

@@ -5,7 +5,6 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +17,7 @@ import java.util.Map;
  */
 public class CacheGroups {
 
-    private List<CacheGroup> cacheGroupList = new ArrayList<CacheGroup>(); // 缓存组列表中的各个缓存组
+    private List<CacheGroup> cacheGroupList = new ArrayList<>(); // 缓存组列表中的各个缓存组
 
     public List<CacheGroup> getCacheGroupList() {
         return cacheGroupList;
@@ -35,22 +34,6 @@ public class CacheGroups {
     }
 
     /**
-     * <p> 获取指定缓存组列表中的缓存组的Map，便于根据各缓存组的组名group查找 </p>
-     *
-     * @return 缓存组的Map
-     * @since 1.0.0
-     */
-    public Map<String, CacheGroup> toCacheGroupMap() {
-        Map<String, CacheGroup> cacheGroupMap = new HashMap<String, CacheGroup>();
-        Iterator<CacheGroup> cacheGroupIt = cacheGroupList.iterator();
-        while (cacheGroupIt.hasNext()) {
-            CacheGroup cacheGroup = cacheGroupIt.next();
-            cacheGroupMap.put(cacheGroup.getGroup(), cacheGroup);
-        }
-        return cacheGroupMap;
-    }
-
-    /**
      * <p> 根据缓存组名group获取指定的缓存组 </p>
      *
      * @param group 缓存组名
@@ -64,6 +47,20 @@ public class CacheGroups {
             cacheGroup = cacheGroupMap.get(group);
         }
         return cacheGroup;
+    }
+
+    /**
+     * <p> 获取指定缓存组列表中的缓存组的Map，便于根据各缓存组的组名group查找 </p>
+     *
+     * @return 缓存组的Map
+     * @since 1.0.0
+     */
+    private Map<String, CacheGroup> toCacheGroupMap() {
+        Map<String, CacheGroup> cacheGroupMap = new HashMap<>();
+        for (CacheGroup cacheGroup : cacheGroupList) {
+            cacheGroupMap.put(cacheGroup.getGroup(), cacheGroup);
+        }
+        return cacheGroupMap;
     }
 
     @Override

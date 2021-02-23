@@ -280,7 +280,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.7</version>
+            <version>4.13.1</version>
             <scope>test</scope>
         </dependency>
 
@@ -296,6 +296,7 @@
         <module>flea-frame-auth</module>
         <module>flea-frame-jersey</module>
         <module>flea-frame-bom</module>
+        <module>flea-frame-algorithm</module>
     </modules>
 
 </project>

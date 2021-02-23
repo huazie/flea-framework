@@ -147,7 +147,7 @@ INSERT INTO `flea_id_generator` VALUES ('pk_flea_account', '10000');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_account_attr', '2');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_element', '999');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_function_attr', '15');
-INSERT INTO `flea_id_generator` VALUES ('pk_flea_login_log_202010', '0');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_login_log_202012', '0');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_menu', '1014');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_operation', '999');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_privilege', '1014');
@@ -194,10 +194,10 @@ CREATE TABLE `flea_login_log` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `flea_login_log_202010`
+-- Table structure for `flea_login_log_202012`
 -- ----------------------------
-DROP TABLE IF EXISTS `flea_login_log_202010`;
-CREATE TABLE `flea_login_log_202010` (
+DROP TABLE IF EXISTS `flea_login_log_202012`;
+CREATE TABLE `flea_login_log_202012` (
   `login_log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '登录日志编号',
   `account_id` int(11) NOT NULL COMMENT '账户编号',
   `system_account_id` int(11) NOT NULL COMMENT '系统账户编号',
@@ -218,7 +218,7 @@ CREATE TABLE `flea_login_log_202010` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of flea_login_log_202010
+-- Records of flea_login_log_202012
 -- ----------------------------
 
 -- ----------------------------

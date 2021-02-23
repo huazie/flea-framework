@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class RedisClientProxy extends FleaProxy<RedisClient> {
 
-    private static final ConcurrentMap<String, RedisClient> redisClients = new ConcurrentHashMap<String, RedisClient>();
+    private static final ConcurrentMap<String, RedisClient> redisClients = new ConcurrentHashMap<>();
 
     /**
      * <p> 获取RedisClient代理类 (默认)</p>
@@ -39,14 +39,17 @@ public class RedisClientProxy extends FleaProxy<RedisClient> {
         if (!redisClients.containsKey(poolName)) {
             synchronized (redisClients) {
                 if (!redisClients.containsKey(poolName)) {
-                    // 新建一个Flea Redis客户端类， 用于被代理
+                    // 新建一个Flea Redis客户端类实例
                     RedisClient originRedisClient;
-                    if(CommonConstants.FleaPoolConstants.DEFAULT_POOL_NAME.equals(poolName)) {
+                    if (CommonConstants.FleaPoolConstants.DEFAULT_POOL_NAME.equals(poolName)) {
                         originRedisClient = new FleaRedisClient.Builder().build();
                     } else {
                         originRedisClient = new FleaRedisClient.Builder(poolName).build();
                     }
-                    RedisClient proxyRedisClient = newProxyInstance(originRedisClient.getClass().getClassLoader(), originRedisClient.getClass().getInterfaces(), new RedisClientInvocationHandler(originRedisClient), RedisClient.class);
+                    Class<?> clazz = originRedisClient.getClass();
+                    // 构建 Flea Redis客户端类实例的代理类
+                    RedisClient proxyRedisClient = newProxyInstance(clazz.getClassLoader(), clazz.getInterfaces(),
+                            new RedisClientInvocationHandler(originRedisClient), RedisClient.class);
                     redisClients.put(poolName, proxyRedisClient);
                 }
             }

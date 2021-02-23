@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class FleaCacheManagerFactory {
 
-    private static final ConcurrentMap<String, AbstractFleaCacheManager> managerMap = new ConcurrentHashMap<String, AbstractFleaCacheManager>();
+    private static final ConcurrentMap<String, AbstractFleaCacheManager> managerMap = new ConcurrentHashMap<>();
 
     /**
      * <p> 获取Flea Cache管理类对象实例 </p>
@@ -34,10 +34,10 @@ public class FleaCacheManagerFactory {
                         manager = new MemCachedFleaCacheManager();
                     } else if (CacheEnum.Redis.getName().equals(name)) {
                         manager = new RedisFleaCacheManager();
-                    } else if (CacheConstants.FleaCacheConstants.FLEA_CACHE_NAME.equals(name)) {
+                    } else if (CacheEnum.FleaCore.getName().equals(name)) {
                         manager = new CoreFleaCacheManager();
                     } else {
-                        throw new Exception("'" + name + "' is invalid, it must be 'MemCached' or 'Redis' or 'FleaCache' ");
+                        throw new Exception("'" + name + "' is invalid, it must be 'MemCached' or 'Redis' or 'FleaCore' ");
                     }
                     managerMap.put(name, manager);
                 }

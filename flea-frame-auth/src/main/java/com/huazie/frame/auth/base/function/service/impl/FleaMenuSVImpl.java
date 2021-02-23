@@ -39,7 +39,7 @@ public class FleaMenuSVImpl extends AbstractFleaJPASVImpl<FleaMenu> implements I
     }
 
     @Override
-    public List<FleaMenu> getAllAccessibleMenus(List<Long> systemRelMenuIdList, List<Long> menuIdList) throws CommonException {
+    public List<FleaMenu> queryAllAccessibleMenus(List<Long> systemRelMenuIdList, List<Long> menuIdList) throws CommonException {
 
         // 取交集
         systemRelMenuIdList.retainAll(menuIdList);
@@ -50,15 +50,26 @@ public class FleaMenuSVImpl extends AbstractFleaJPASVImpl<FleaMenu> implements I
             allAccessibleMenus = new ArrayList<>();
             for (Long menuId : systemRelMenuIdList) {
                 if (NumberUtils.isPositiveNumber(menuId)) {
-                    FleaMenu fleaMenu = this.query(menuId);
-                    if (null != fleaMenu) {
-                        allAccessibleMenus.add(fleaMenu);
+                    // 获取系统关联菜单和用户授权菜单交集中有效的菜单信息
+                    List<FleaMenu> fleaMenuList = this.queryValidMenus(menuId, null, null, null, null);
+                    if (CollectionUtils.isNotEmpty(fleaMenuList)) {
+                        allAccessibleMenus.add(fleaMenuList.get(0));
                     }
                 }
             }
         }
 
         return allAccessibleMenus;
+    }
+
+    @Override
+    public List<FleaMenu> queryValidMenus(Long menuId, String menuCode, String menuName, Integer menuLevel, Long parentId) throws CommonException {
+        return fleaMenuDao.getValidMenu(menuId, menuCode, menuName, menuLevel, parentId);
+    }
+
+    @Override
+    public List<FleaMenu> queryAllValidMenus() throws CommonException {
+        return fleaMenuDao.getValidMenu(null, null, null, null, null);
     }
 
     @Override
@@ -89,7 +100,7 @@ public class FleaMenuSVImpl extends AbstractFleaJPASVImpl<FleaMenu> implements I
 
         // 校验菜单名称不能为空
         String menuName = fleaMenuPOJO.getMenuName();
-        StringUtils.checkBlank(menuCode, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", FleaAuthEntityConstants.FunctionEntityConstants.E_MENU_NAME);
+        StringUtils.checkBlank(menuName, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", FleaAuthEntityConstants.FunctionEntityConstants.E_MENU_NAME);
 
         // 校验菜单FontAwesome小图标不能为空
         String menuIcon = fleaMenuPOJO.getMenuIcon();

@@ -4,22 +4,22 @@ import com.huazie.frame.cache.AbstractFleaCache;
 import com.huazie.frame.cache.AbstractFleaCacheManager;
 import com.huazie.frame.cache.AbstractSpringCache;
 import com.huazie.frame.cache.AbstractSpringCacheManager;
-import com.huazie.frame.cache.common.FleaCacheManagerFactory;
 import com.huazie.frame.cache.common.CacheEnum;
+import com.huazie.frame.cache.common.FleaCacheManagerFactory;
 import com.huazie.frame.cache.memcached.MemCachedSpringCacheManager;
 import com.huazie.frame.cache.redis.RedisSpringCacheManager;
+import com.huazie.frame.common.EntityStateEnum;
 import com.huazie.frame.common.FleaFrameManager;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaParaDetailSV;
-import com.huazie.frame.common.EntityStateEnum;
 import com.huazie.frame.db.common.DBSystemEnum;
 import com.huazie.frame.db.jdbc.FleaJDBCHelper;
 import com.huazie.frame.db.jdbc.config.FleaJDBCConfig;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -30,7 +30,7 @@ import java.util.Set;
 
 public class FleaParaDetailSVImplTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaParaDetailSVImplTest.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaParaDetailSVImplTest.class);
 
     private ApplicationContext applicationContext;
 
@@ -139,7 +139,7 @@ public class FleaParaDetailSVImplTest {
 //			LOGGER.debug(cache.get("user", String.class));
 
             //#### 3.  List塞对象
-//			List<String> userList = new ArrayList<String>();
+//			List<String> userList = new ArrayList<>();
 //			userList.add("huazie");
 //			userList.add("lgh");
 //			cache.put("user_list", userList);
@@ -176,7 +176,7 @@ public class FleaParaDetailSVImplTest {
 //            cache.clear();
 
             //#### 3.  List塞对象
-//			List<String> userList = new ArrayList<String>();
+//			List<String> userList = new ArrayList<>();
 //			userList.add("huazie");
 //			userList.add("lgh");
 //			cache.put("user_list", userList);

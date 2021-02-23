@@ -18,11 +18,11 @@ import com.huazie.frame.auth.common.service.interfaces.IFleaAuthSV;
 import com.huazie.frame.auth.common.service.interfaces.IFleaUserModuleSV;
 import com.huazie.frame.common.EntityStateEnum;
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.DateUtils;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -38,7 +38,7 @@ import java.util.List;
  */
 public class UserAuthTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserAuthTest.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(UserAuthTest.class);
 
     private ApplicationContext applicationContext;
 
@@ -76,7 +76,7 @@ public class UserAuthTest {
         fleaUserRegisterPOJO.setState(UserStateEnum.IN_USE.getState());
 
         // 添加用户属性
-        List<FleaUserAttrPOJO> fleaUserAttrInfoList = new ArrayList<FleaUserAttrPOJO>();
+        List<FleaUserAttrPOJO> fleaUserAttrInfoList = new ArrayList<>();
 
         FleaUserAttrPOJO fleaUserAttrInfo1 = new FleaUserAttrPOJO();
         fleaUserAttrInfo1.setAttrCode(FleaAuthConstants.AttrCodeConstants.ATTR_CODE_USER_TYPE);
@@ -84,7 +84,7 @@ public class UserAuthTest {
         fleaUserAttrInfoList.add(fleaUserAttrInfo1);
 
         // 添加账户属性
-        List<FleaAccountAttrPOJO> fleaAccountAttrInfoList = new ArrayList<FleaAccountAttrPOJO>();
+        List<FleaAccountAttrPOJO> fleaAccountAttrInfoList = new ArrayList<>();
 
         FleaAccountAttrPOJO fleaAccountAttrInfo1 = new FleaAccountAttrPOJO();
         fleaAccountAttrInfo1.setAttrCode(FleaAuthConstants.AttrCodeConstants.ATTR_CODE_ACCOUNT_TYPE);
@@ -117,7 +117,7 @@ public class UserAuthTest {
         fleaUserRegisterPOJO.setState(UserStateEnum.IN_USE.getState());
 
         // 添加用户属性
-        List<FleaUserAttrPOJO> fleaUserAttrInfoList = new ArrayList<FleaUserAttrPOJO>();
+        List<FleaUserAttrPOJO> fleaUserAttrInfoList = new ArrayList<>();
 
         FleaUserAttrPOJO fleaUserAttrInfo1 = new FleaUserAttrPOJO();
         fleaUserAttrInfo1.setAttrCode(FleaAuthConstants.AttrCodeConstants.ATTR_CODE_USER_TYPE);
@@ -125,7 +125,7 @@ public class UserAuthTest {
         fleaUserAttrInfoList.add(fleaUserAttrInfo1);
 
         // 添加账户属性
-        List<FleaAccountAttrPOJO> fleaAccountAttrInfoList = new ArrayList<FleaAccountAttrPOJO>();
+        List<FleaAccountAttrPOJO> fleaAccountAttrInfoList = new ArrayList<>();
 
         FleaAccountAttrPOJO fleaAccountAttrInfo1 = new FleaAccountAttrPOJO();
         fleaAccountAttrInfo1.setAttrCode(FleaAuthConstants.AttrCodeConstants.ATTR_CODE_ACCOUNT_TYPE);

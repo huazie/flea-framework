@@ -1,4 +1,4 @@
-package com.huazie.frame.auth.common.pojo;
+package com.huazie.frame.common.pojo;
 
 import java.util.Date;
 

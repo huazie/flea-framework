@@ -3,14 +3,11 @@ package com.huazie.frame.common;
 import com.huazie.frame.common.config.ConfigItem;
 import com.huazie.frame.common.config.ConfigItems;
 import com.huazie.frame.common.config.FleaConfig;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ObjectUtils;
-import com.huazie.frame.common.util.IOUtils;
 import com.huazie.frame.common.util.StringUtils;
 import org.apache.commons.digester.Digester;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.InputStream;
 
 /**
  * <p> Flea Config XML解析类 </p>
@@ -21,7 +18,7 @@ import java.io.InputStream;
  */
 public class FleaConfigXmlDigesterHelper {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaConfigXmlDigesterHelper.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaConfigXmlDigesterHelper.class);
 
     private static volatile FleaConfigXmlDigesterHelper xmlDigester;
 
@@ -82,20 +79,20 @@ public class FleaConfigXmlDigesterHelper {
         if (StringUtils.isNotBlank(System.getProperty(CommonConstants.FleaConfigConstants.FLEA_CONFIG_FILE_SYSTEM_KEY))) {
             fileName = StringUtils.trim(System.getProperty(CommonConstants.FleaConfigConstants.FLEA_CONFIG_FILE_SYSTEM_KEY));
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("FleaConfigXmlDigesterHelper##newFleaConfig() Use the specified flea-config.xml : " + fileName);
+                LOGGER.debug("Use the specified flea-config.xml : " + fileName);
             }
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaConfigXmlDigesterHelper##newFleaConfig() Use the current flea-config.xml : " + fileName);
-            LOGGER.debug("FleaConfigXmlDigesterHelper##newFleaConfig() Start to parse the flea-config.xml");
+            LOGGER.debug("Use the current flea-config.xml : " + fileName);
+            LOGGER.debug("Start to parse the flea-config.xml");
         }
 
         FleaConfig obj = XmlDigesterHelper.parse(fileName, newFleaConfigFileDigester(), FleaConfig.class);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("JerseyXmlDigesterHelper##newFleaConfig() Config = {}", obj);
-            LOGGER.debug("JerseyXmlDigesterHelper##newFleaConfig() End to parse the flea-config.xml");
+            LOGGER.debug("Config = {}", obj);
+            LOGGER.debug("End to parse the flea-config.xml");
         }
 
         return obj;

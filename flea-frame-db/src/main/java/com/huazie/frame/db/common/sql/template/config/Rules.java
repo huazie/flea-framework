@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class Rules {
 
-    private List<Rule> rules = new ArrayList<Rule>();
+    private List<Rule> rules = new ArrayList<>();
 
     /**
      * <p> 获取校验规则的List对象 </p>
@@ -45,11 +45,9 @@ public class Rules {
      * @return 校验规则的Map对象
      * @since 1.0.0
      */
-    public Map<String, Rule> toRulesMap() {
-        Map<String, Rule> rulesMap = new HashMap<String, Rule>();
-        Iterator<Rule> rulesIt = rules.iterator();
-        while (rulesIt.hasNext()) {
-            Rule rule = rulesIt.next();
+    Map<String, Rule> toRulesMap() {
+        Map<String, Rule> rulesMap = new HashMap<>();
+        for (Rule rule : rules) {
             rulesMap.put(rule.getId(), rule);
         }
         return rulesMap;

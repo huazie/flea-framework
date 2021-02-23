@@ -11,6 +11,8 @@
         <cache key="fleajerseyresclient" type="fleaJersey" expiry="86400" desc="Flea Jersey 资源客户端缓存" />
         <cache key="fleajerseyresource" type="fleaJersey" expiry="86400" desc="Flea Jersey 资源缓存" />
 
+        <cache key="fleamenufavorites" type="fleaFrame" expiry="0" desc="Flea菜单收藏夹数据缓存" />
+
     </caches>
 
     <!-- 其他缓存定义配置文件引入 -->

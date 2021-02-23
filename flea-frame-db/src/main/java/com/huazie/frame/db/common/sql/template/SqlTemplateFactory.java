@@ -22,19 +22,18 @@ public class SqlTemplateFactory {
      * @param templateTypeEnum 模板类型枚举
      * @param <T>              实体对象类型
      * @return 指定模板类型的SQL模板
-     * @throws Exception
      * @since 1.0.0
      */
     public static <T> SqlTemplate<T> newSqlTemplate(String relationId, T entity, TemplateTypeEnum templateTypeEnum) {
         SqlTemplate<T> sqlTemplate;
         if (TemplateTypeEnum.INSERT.getKey().equals(templateTypeEnum.getKey())) {
-            sqlTemplate = new InsertSqlTemplate<T>(relationId, entity);
+            sqlTemplate = new InsertSqlTemplate<>(relationId, entity);
         } else if (TemplateTypeEnum.SELECT.getKey().equals(templateTypeEnum.getKey())) {
-            sqlTemplate = new SelectSqlTemplate<T>(relationId, entity);
+            sqlTemplate = new SelectSqlTemplate<>(relationId, entity);
         } else if (TemplateTypeEnum.UPDATE.getKey().equals(templateTypeEnum.getKey())) {
-            sqlTemplate = new UpdateSqlTemplate<T>(relationId, entity);
+            sqlTemplate = new UpdateSqlTemplate<>(relationId, entity);
         } else if (TemplateTypeEnum.DELETE.getKey().equals(templateTypeEnum.getKey())) {
-            sqlTemplate = new DeleteSqlTemplate<T>(relationId, entity);
+            sqlTemplate = new DeleteSqlTemplate<>(relationId, entity);
         } else {
             throw new RuntimeException("未知异常");
         }

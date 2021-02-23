@@ -6,8 +6,8 @@ import com.huazie.frame.auth.base.user.entity.FleaUserGroupRel;
 import com.huazie.frame.auth.common.FleaAuthEntityConstants;
 import com.huazie.frame.common.EntityStateEnum;
 import com.huazie.frame.common.exception.CommonException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.List;
 @Repository("fleaUserGroupRelDAO")
 public class FleaUserGroupRelDAOImpl extends FleaAuthDAOImpl<FleaUserGroupRel> implements IFleaUserGroupRelDAO {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaUserGroupRelDAOImpl.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaUserGroupRelDAOImpl.class);
 
     @Override
     @SuppressWarnings(value = "unchecked")
@@ -35,7 +35,7 @@ public class FleaUserGroupRelDAOImpl extends FleaAuthDAOImpl<FleaUserGroupRel> i
                 .getResultList();
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaUserGroupRelDAOImpl##getUserGroupRelList(Long, String) UserGroupRelList = {}", fleaUserGroupRelList);
+            LOGGER.debug1(new Object() {}, "UserGroupRelList = {}", fleaUserGroupRelList);
         }
 
         return fleaUserGroupRelList;

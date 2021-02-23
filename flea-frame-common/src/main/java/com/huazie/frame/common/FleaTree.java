@@ -360,6 +360,16 @@ public class FleaTree<T> implements Serializable {
         return treeLeafElements;
     }
 
+    /**
+     * <p> 判断是否Flea树中是否有节点（包括根节点） </p>
+     *
+     * @return true: 没有 false: 有
+     * @since 1.0.0
+     */
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
     @Override
     public String toString() {
 
@@ -409,13 +419,21 @@ public class FleaTree<T> implements Serializable {
     }
 
     /**
-     * <p> 以{@code List<Map<String, Object>>}形式返回 所有【不包含根节点】的树节点信息 </p>
+     * <p> 以{@code List<Map<String, Object>>}形式返回 所有的树节点信息 </p>
      *
+     * @param isContains 是否包含根节点 【true: 包含 false: 不包含】
      * @return 树的节点信息
      * @since 1.0.0
      */
-    public List<Map<String, Object>> toMapList() {
-        return toMapList(rootNode.subNotes);
+    public List<Map<String, Object>> toMapList(boolean isContains) {
+        LinkedList<TreeNode<T>> treeNodes;
+        if (isContains) {
+            treeNodes = new LinkedList<>();
+            treeNodes.add(rootNode);
+        } else {
+            treeNodes = rootNode.subNotes;
+        }
+        return toMapList(treeNodes);
     }
 
     /**
@@ -433,7 +451,12 @@ public class FleaTree<T> implements Serializable {
             for (TreeNode<T> subNote : subNotes) {
                 if (ObjectUtils.isNotEmpty(subNote)) {
                     TreeNode<T> parentNode = subNote.parentNote;
-                    Map<String, Object> treeNodeMap = toMap(subNote.element, subNote.id, subNote.height, parentNode.element, parentNode.id, parentNode.height, CollectionUtils.isNotEmpty(subNote.subNotes));
+                    Map<String, Object> treeNodeMap;
+                    if (ObjectUtils.isEmpty(parentNode)) {
+                        treeNodeMap = toMap(subNote.element, subNote.id, subNote.height, null, CommonConstants.NumeralConstants.MINUS_TWO, CommonConstants.NumeralConstants.INT_ZERO, CollectionUtils.isNotEmpty(subNote.subNotes));
+                    } else {
+                        treeNodeMap = toMap(subNote.element, subNote.id, subNote.height, parentNode.element, parentNode.id, parentNode.height, CollectionUtils.isNotEmpty(subNote.subNotes));
+                    }
                     treeNodeMap.put(getMapKeyForSubNotes(), toMapList(subNote.subNotes));
                     // 重处理树节点信息，子类可实现更细粒度的功能
                     reHandleTreeNodeMap(treeNodeMap);
@@ -525,7 +548,9 @@ public class FleaTree<T> implements Serializable {
                 subNotes = new LinkedList<>();
             }
 
+            // 无子节点
             if (subNotes.isEmpty()) {
+                // 将待添加节点插入到子节点链表的头部
                 subNotes.addFirst(subNote);
             } else {
                 ListIterator<TreeNode<T>> subNoteListIt = subNotes.listIterator();
@@ -536,10 +561,12 @@ public class FleaTree<T> implements Serializable {
                     int comp = compare(currentNode.element, subNote.element, comparator);
                     // 当前节点元素的顺序大于待添加节点的元素的顺序
                     if (comp > CommonConstants.NumeralConstants.INT_ZERO) {
-                        // 将待添加节点插入到当前节点处
+                        // 将待添加节点插入到当前节点处，当前节点链接到待添加节点的后面
                         subNotes.add(currentIndex - 1, subNote);
                         break;
                     } else if (comp < CommonConstants.NumeralConstants.INT_ZERO && !subNoteListIt.hasNext()) {
+                        // 当前节点元素的顺序小于待添加节点的元素的顺序，并且没有后续子节点了
+                        // 将待添加节点插入到子节点链表的尾部
                         subNotes.addLast(subNote);
                         break;
                     }

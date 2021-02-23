@@ -21,9 +21,9 @@ public class CacheFile {
 
     private String location; // 文件位置
 
-    private List<String> executions = new ArrayList<String>(); // 需要过滤的缓存key
+    private List<String> executions = new ArrayList<>(); // 需要过滤的缓存key
 
-    private List<Cache> cacheList = new ArrayList<Cache>(); // 其他缓存文件中定义的Flea缓存集合
+    private List<Cache> cacheList = new ArrayList<>(); // 其他缓存文件中定义的Flea缓存集合
 
     public String getLocation() {
         return location;
@@ -71,7 +71,7 @@ public class CacheFile {
      * @since 1.0.0
      */
     public Map<String, Cache> toCacheFileFleaCacheMap() {
-        Map<String, Cache> fleaCacheMap = new HashMap<String, Cache>();
+        Map<String, Cache> fleaCacheMap = new HashMap<>();
         Iterator<Cache> fleaCacheIt = cacheList.iterator();
         while (fleaCacheIt.hasNext()) {
             Cache cache = fleaCacheIt.next();

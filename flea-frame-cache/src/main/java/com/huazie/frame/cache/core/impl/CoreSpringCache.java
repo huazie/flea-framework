@@ -30,6 +30,6 @@ public class CoreSpringCache extends AbstractSpringCache {
      * @since 1.0.0
      */
     public CoreSpringCache(String name) {
-        super(name, new CoreFleaCache(name));
+        this(name, new CoreFleaCache(name));
     }
 }

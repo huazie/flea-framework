@@ -1,6 +1,8 @@
 package com.huazie.frame.core.filter.task.impl;
 
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.PatternMatcherUtils;
@@ -10,8 +12,6 @@ import com.huazie.frame.core.filter.task.IFilterTask;
 import com.huazie.frame.core.filter.taskchain.IFilterTaskChain;
 import com.huazie.frame.core.request.FleaRequestContext;
 import com.huazie.frame.core.request.FleaRequestUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.regex.Pattern;
@@ -25,23 +25,25 @@ import java.util.regex.Pattern;
  */
 public class UrlCheckFilterTask implements IFilterTask {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UrlCheckFilterTask.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(UrlCheckFilterTask.class);
 
-    private static final String URL_ILLEGAL_CHAR = "<|>|alert|document.cookie|href|script|select|insert|update|delete|truncate|exec|drop";
+    private static final String DEFAULT_URL_ILLEGAL_CHAR = "<|>|alert|document.cookie|href|script|select|insert|update|delete|truncate|exec|drop";
 
     @Override
     public void doFilterTask(FleaRequestContext fleaRequestContext, IFilterTaskChain filterTaskChain) throws CommonException {
+        Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("UrlCheckFilterTask##doFilterTask(FleaRequestContext, IFilterTaskChain) Start");
+            obj = new Object() {};
+            LOGGER.debug1(obj, "Start");
         }
 
         String urlIllegalChar = FleaRequestUtil.getUrlIllegalChar();
         if (StringUtils.isBlank(urlIllegalChar)) {
-            urlIllegalChar = URL_ILLEGAL_CHAR;
+            urlIllegalChar = DEFAULT_URL_ILLEGAL_CHAR;
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("UrlCheckFilterTask##doFilterTask(FleaRequestContext, IFilterTaskChain) URL_ILLEGAL_CHAR = {}", urlIllegalChar);
+            LOGGER.debug1(obj, "URL_ILLEGAL_CHAR = {}", urlIllegalChar);
         }
 
         HttpServletRequest request = (HttpServletRequest) fleaRequestContext.getServletRequest();
@@ -54,13 +56,13 @@ public class UrlCheckFilterTask implements IFilterTask {
 
             String uri = request.getRequestURI();
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("UrlCheckFilterTask##doFilterTask(FleaRequestContext, IFilterTaskChain) URI = {}", uri);
+                LOGGER.debug1(obj, "URI = {}", uri);
             }
 
             // 不需校验的URL，直接跳过
             if (FleaRequestUtil.isUnCheckUrl(uri)) {
                 if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("UrlCheckFilterTask##doFilterTask(FleaRequestContext, IFilterTaskChain) UnCheck URL");
+                    LOGGER.debug1(obj, "UnCheck URL");
                 }
                 return;
             }
@@ -68,7 +70,7 @@ public class UrlCheckFilterTask implements IFilterTask {
             // 需要校验的URL【默认重定向到登录页面】
             if (FleaRequestUtil.isCheckUrl(uri)) {
                 if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("UrlCheckFilterTask##doFilterTask(FleaRequestContext, IFilterTaskChain) Check URL, Redirect to Login Page");
+                    LOGGER.debug1(obj, "Check URL, Redirect to Login Page");
                 }
                 // 重定向到登录页面
                 FleaRequestUtil.sendRedirectToLoginPage(fleaRequestContext);
@@ -76,11 +78,11 @@ public class UrlCheckFilterTask implements IFilterTask {
             }
         }
 
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug1(obj, "End");
+        }
+
         // 执行下一条过滤器任务
         filterTaskChain.doFilterTask(fleaRequestContext);
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("UrlCheckFilterTask##doFilterTask(FleaRequestContext, IFilterTaskChain) End");
-        }
     }
 }

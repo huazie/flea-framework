@@ -2,6 +2,8 @@ package com.huazie.frame.auth;
 
 import com.huazie.frame.auth.base.user.entity.FleaLoginLog;
 import com.huazie.frame.common.pool.FleaObjectPoolFactory;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.DateUtils;
 import com.huazie.frame.db.jpa.common.FleaJPAQuery;
 import com.huazie.frame.db.jpa.common.FleaJPAQueryPool;
@@ -9,8 +11,6 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -29,7 +29,7 @@ import java.util.Map;
  */
 public class AuthTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AuthTest.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(AuthTest.class);
 
     private static EntityManagerFactory emf;
     private static EntityManager em;

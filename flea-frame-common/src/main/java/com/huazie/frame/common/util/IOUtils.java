@@ -1,7 +1,7 @@
 package com.huazie.frame.common.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -25,7 +25,7 @@ import java.net.URL;
  */
 public class IOUtils {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(IOUtils.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(IOUtils.class);
 
     /**
      * <p> 根据文件路径获取文件输入流对象 </p>
@@ -56,7 +56,7 @@ public class IOUtils {
             }
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("IOUtils##toString(InputStrearm, boolean) INPUT = \n{}", input);
+            LOGGER.debug1(new Object() {}, "INPUT = \n{}", input);
         }
         return input;
     }
@@ -74,7 +74,7 @@ public class IOUtils {
             input = toString(inputStream, base64Flag);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("文件转字符串出现异常：", e);
+                LOGGER.error1(new Object() {},"文件转字符串出现异常：", e);
             }
         }
         return input;
@@ -93,7 +93,7 @@ public class IOUtils {
             file = toFile(inputStream, filePath);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("字符串转文件出现异常：", e);
+                LOGGER.error1(new Object() {},"字符串转文件出现异常：", e);
             }
         }
         return file;
@@ -114,7 +114,7 @@ public class IOUtils {
             outputStream.write(bytes, 0, bytes.length);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("文件输入流转文件出现异常：", e);
+                LOGGER.error1(new Object() {},"文件输入流转文件出现异常：", e);
             }
         }
         return file;
@@ -158,7 +158,7 @@ public class IOUtils {
             result = outputStream.toByteArray();
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("输入流转字节数组出现异常：", e);
+                LOGGER.error1(new Object() {},"输入流转字节数组出现异常：", e);
             }
         }
 
@@ -190,7 +190,7 @@ public class IOUtils {
                 result = content.toString();
             } catch (Exception e) {
                 if (LOGGER.isErrorEnabled()) {
-                    LOGGER.error("获取资源文件内容出现异常：", e);
+                    LOGGER.error1(new Object() {},"获取资源文件内容出现异常：", e);
                 }
             }
         }
@@ -220,7 +220,7 @@ public class IOUtils {
                 file.createNewFile();
             } catch (IOException e) {
                 if (LOGGER.isErrorEnabled()) {
-                    LOGGER.error("文件创建出现异常：", e);
+                    LOGGER.error1(new Object() {},"文件创建出现异常：", e);
                 }
             }
         }
@@ -231,7 +231,7 @@ public class IOUtils {
             bufferedWriter.flush();
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("指定文件写内容出现异常：", e);
+                LOGGER.error1(new Object() {},"指定文件写内容出现异常：", e);
             }
         }
         return file;

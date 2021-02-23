@@ -1,12 +1,12 @@
 package com.huazie.frame.core.base.cfgdata.dao.impl;
 
+import com.huazie.frame.common.EntityStateEnum;
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.core.base.cfgdata.dao.interfaces.IFleaParaDetailDAO;
 import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
-import com.huazie.frame.common.EntityStateEnum;
 import com.huazie.frame.core.common.FleaConfigEntityConstants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,7 +21,7 @@ import java.util.List;
 @Repository("fleaParaDetailDAO")
 public class FleaParaDetailDAOImpl extends FleaConfigDAOImpl<FleaParaDetail> implements IFleaParaDetailDAO {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaParaDetailDAOImpl.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaParaDetailDAOImpl.class);
 
     @Override
     @SuppressWarnings(value = "unchecked")
@@ -34,8 +34,9 @@ public class FleaParaDetailDAOImpl extends FleaConfigDAOImpl<FleaParaDetail> imp
                 .getResultList();
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaParaDetailDAOImpl##getParaDetail(String, String) List={}", fleaParaDetailList);
-            LOGGER.debug("FleaParaDetailDAOImpl##getParaDetail(String, String) Count={}", fleaParaDetailList.size());
+            Object obj = new Object() {};
+            LOGGER.debug1(obj, "List={}", fleaParaDetailList);
+            LOGGER.debug1(obj, "Count={}", fleaParaDetailList.size());
         }
 
         return fleaParaDetailList;

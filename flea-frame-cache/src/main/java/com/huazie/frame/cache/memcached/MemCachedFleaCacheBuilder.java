@@ -6,10 +6,10 @@ import com.huazie.frame.cache.common.CacheConfigManager;
 import com.huazie.frame.cache.config.CacheParams;
 import com.huazie.frame.cache.config.CacheServer;
 import com.huazie.frame.cache.memcached.impl.MemCachedFleaCache;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.whalin.MemCached.MemCachedClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class MemCachedFleaCacheBuilder implements IFleaCacheBuilder {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MemCachedFleaCacheBuilder.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(MemCachedFleaCacheBuilder.class);
 
     @Override
     public AbstractFleaCache build(String name, List<CacheServer> cacheServerList, CacheParams cacheParams) {
@@ -43,8 +43,9 @@ public class MemCachedFleaCacheBuilder implements IFleaCacheBuilder {
         AbstractFleaCache fleaCache = new MemCachedFleaCache(name, expiry, memCachedClient);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("MemCachedFleaCacheBuilder#build(String, List<CacheServer>, CacheParams) Pool Name = {}", memCachedPool.getPoolName());
-            LOGGER.debug("MemCachedFleaCacheBuilder#build(String, List<CacheServer>, CacheParams) Pool = {}", memCachedPool.getSockIOPool());
+            Object obj = new Object() {};
+            LOGGER.debug1(obj, "Pool Name = {}", memCachedPool.getPoolName());
+            LOGGER.debug1(obj, "Pool = {}", memCachedPool.getSockIOPool());
         }
 
         return fleaCache;

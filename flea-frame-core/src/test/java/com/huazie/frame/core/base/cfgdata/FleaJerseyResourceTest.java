@@ -1,20 +1,20 @@
 package com.huazie.frame.core.base.cfgdata;
 
+import com.huazie.frame.common.EntityStateEnum;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.DateUtils;
 import com.huazie.frame.core.base.cfgdata.bean.FleaConfigDataSpringBean;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResource;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaJerseyResourceSV;
-import com.huazie.frame.common.EntityStateEnum;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class FleaJerseyResourceTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaJerseyResServiceTest.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaJerseyResServiceTest.class);
 
     private ApplicationContext applicationContext;
 

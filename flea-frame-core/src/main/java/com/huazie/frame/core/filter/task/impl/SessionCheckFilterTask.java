@@ -3,6 +3,8 @@ package com.huazie.frame.core.filter.task.impl;
 import com.huazie.frame.common.FleaSessionManager;
 import com.huazie.frame.common.IFleaUser;
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.common.util.TimeUtil;
@@ -11,8 +13,6 @@ import com.huazie.frame.core.filter.taskchain.IFilterTaskChain;
 import com.huazie.frame.core.request.FleaRequestContext;
 import com.huazie.frame.core.request.FleaRequestUtil;
 import com.huazie.frame.core.request.config.FleaSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -26,19 +26,21 @@ import javax.servlet.http.HttpSession;
  */
 public class SessionCheckFilterTask implements IFilterTask {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SessionCheckFilterTask.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(SessionCheckFilterTask.class);
 
     @Override
     public void doFilterTask(FleaRequestContext fleaRequestContext, IFilterTaskChain filterTaskChain) throws CommonException {
+        Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("SessionCheckFilterTask##doFilterTask(ServletRequest, ServletResponse, IFilterTaskChain) Start");
+            obj = new Object() {};
+            LOGGER.debug1(obj, "Start");
         }
 
         // 获取用户SESSION信息键
         String userSessionKey = FleaRequestUtil.getUserSessionKey();
         if (ObjectUtils.isEmpty(userSessionKey)) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("SessionCheckFilterTask##doFilterTask(FleaRequestContext, IFilterTaskChain) <user-session-key> is not configured or is Empty");
+                LOGGER.error("<user-session-key> is not configured or is Empty");
             }
             filterTaskChain.doFilterTask(fleaRequestContext);
             return;
@@ -54,9 +56,9 @@ public class SessionCheckFilterTask implements IFilterTask {
                 if (!isLogin(httpSession, userSessionKey)) {
                     if (LOGGER.isDebugEnabled()) {
                         if (FleaRequestUtil.isBusinessUrl(uri)) {
-                            LOGGER.debug("UrlCheckFilterTask##doFilterTask(FleaRequestContext, IFilterTaskChain) Business Request And User Not Login, Redirect to Login Page");
+                            LOGGER.debug1(obj, "Business Request And User Not Login, Redirect to Login Page");
                         } else if (FleaRequestUtil.isPageUrl(uri)) {
-                            LOGGER.debug("UrlCheckFilterTask##doFilterTask(FleaRequestContext, IFilterTaskChain) Page Request And User Not Login, Redirect to Login Page");
+                            LOGGER.debug1(obj, "Page Request And User Not Login, Redirect to Login Page");
                         }
                     }
                     // 重定向到登录页面
@@ -67,9 +69,9 @@ public class SessionCheckFilterTask implements IFilterTask {
                 if (isLoginExpired(httpSession, userSessionKey)) {
                     if (LOGGER.isDebugEnabled()) {
                         if (FleaRequestUtil.isBusinessUrl(uri)) {
-                            LOGGER.debug("UrlCheckFilterTask##doFilterTask(FleaRequestContext, IFilterTaskChain) Business Request And User Session Has Expired, Redirect to Login Page");
+                            LOGGER.debug1(obj, "Business Request And User Session Has Expired, Redirect to Login Page");
                         } else if (FleaRequestUtil.isPageUrl(uri)) {
-                            LOGGER.debug("UrlCheckFilterTask##doFilterTask(FleaRequestContext, IFilterTaskChain) Page Request And User Session Has Expired, Redirect to Login Page");
+                            LOGGER.debug1(obj, "Page Request And User Session Has Expired, Redirect to Login Page");
                         }
                     }
                     // 重定向到登录页面
@@ -79,11 +81,11 @@ public class SessionCheckFilterTask implements IFilterTask {
             }
         }
 
-        filterTaskChain.doFilterTask(fleaRequestContext);
-
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("SessionCheckFilterTask##doFilterTask(FleaRequestContext, IFilterTaskChain) End");
+            LOGGER.debug1(obj, "End");
         }
+
+        filterTaskChain.doFilterTask(fleaRequestContext);
     }
 
     /**
@@ -101,10 +103,11 @@ public class SessionCheckFilterTask implements IFilterTask {
             isLogin = true;
         }
         if (LOGGER.isDebugEnabled()) {
+            Object obj = new Object() {};
             if (isLogin) {
-                LOGGER.debug("SessionCheckFilterTask##isLogin(HttpSession, String) Login");
+                LOGGER.debug1(obj, "Login");
             } else {
-                LOGGER.debug("SessionCheckFilterTask##isLogin(HttpSession, String) Not Login");
+                LOGGER.debug1(obj, "Not Login");
             }
         }
         return isLogin;
@@ -130,10 +133,11 @@ public class SessionCheckFilterTask implements IFilterTask {
             // Session实际空闲时长
             long realIdleTime = currentTime - oldActiveTime;
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("*********************************************************************************");
-                LOGGER.debug("SessionCheckFilterTask##isLoginExpired(HttpSession, String) IdleTime     = {}s", idleTime);
-                LOGGER.debug("SessionCheckFilterTask##isLoginExpired(HttpSession, String) RealIdleTime = {}s", realIdleTime / 1000);
-                LOGGER.debug("*********************************************************************************");
+                Object obj = new Object() {};
+                LOGGER.debug1(obj, "*************************");
+                LOGGER.debug1(obj, "IdleTime     = {}s", idleTime);
+                LOGGER.debug1(obj, "RealIdleTime = {}s", realIdleTime / 1000);
+                LOGGER.debug1(obj, "*************************");
             }
 
             if (currentTime - oldActiveTime > idleTime * 1000) {

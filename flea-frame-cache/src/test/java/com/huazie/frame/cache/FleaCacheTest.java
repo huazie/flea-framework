@@ -1,15 +1,14 @@
 package com.huazie.frame.cache;
 
-import com.huazie.frame.cache.common.CacheConstants;
 import com.huazie.frame.cache.common.CacheEnum;
 import com.huazie.frame.cache.common.FleaCacheManagerFactory;
 import com.huazie.frame.cache.memcached.config.MemCachedConfig;
 import com.huazie.frame.cache.redis.RedisClient;
 import com.huazie.frame.cache.redis.config.RedisConfig;
 import com.huazie.frame.cache.redis.impl.RedisClientProxy;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
 
 import java.util.Date;
@@ -24,7 +23,7 @@ import java.util.Set;
  */
 public class FleaCacheTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaCacheTest.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaCacheTest.class);
 
     @Test
     public void testMemeCachedFleaCache() {
@@ -64,17 +63,17 @@ public class FleaCacheTest {
     @Test
     public void testCoreFleaCache() {
         try {
-            AbstractFleaCacheManager manager = FleaCacheManagerFactory.getFleaCacheManager(CacheConstants.FleaCacheConstants.FLEA_CACHE_NAME);
+            AbstractFleaCacheManager manager = FleaCacheManagerFactory.getFleaCacheManager(CacheEnum.FleaCore.getName());
             AbstractFleaCache cache = manager.getCache("fleaparadetail");
             LOGGER.debug("Cache={}", cache);
             //#### 1.  简单字符串
 //            cache.put("menu1", "huazie");
 //            cache.put("menu2", "helloworld");
-//            cache.get("menu1");
-//            cache.get("menu2");
+            cache.get("menu1");
+            cache.get("menu2");
 //            cache.delete("menu1");
 //            cache.clear();
-//            cache.getCacheKey();
+            cache.getCacheKey();
             LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
         } catch (Exception e) {
             LOGGER.error("Exception:", e);

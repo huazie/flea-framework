@@ -1,10 +1,10 @@
 package com.huazie.frame.common.config;
 
 import com.huazie.frame.common.FleaConfigXmlDigesterHelper;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ObjectUtils;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <p>  </p>
@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  */
 public class FleaConfigTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaConfigTest.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaConfigTest.class);
 
     @Test
     public void testFleaConfig() {
@@ -31,8 +31,8 @@ public class FleaConfigTest {
         ConfigItem configItem1 = null;
         ConfigItem configItem2 = null;
         if (ObjectUtils.isNotEmpty(configItems)) {
-            configItem1 = configItems.getConfigItem("system_acct_id");
-            configItem2 = configItems.getConfigItem("system_acct_pwd");
+            configItem1 = configItems.getConfigItem("system_account_id");
+            configItem2 = configItems.getConfigItem("system_account_pwd");
         }
         LOGGER.debug("ConfigItem1 = {}", configItem1);
         LOGGER.debug("ConfigItem2 = {}", configItem2);

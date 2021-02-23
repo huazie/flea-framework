@@ -11,11 +11,11 @@ import com.huazie.frame.auth.base.privilege.service.interfaces.IFleaPrivilegeSV;
 import com.huazie.frame.auth.common.AuthRelTypeEnum;
 import com.huazie.frame.common.EntityStateEnum;
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.DateUtils;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -28,7 +28,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class PrivilegeAuthTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PrivilegeAuthTest.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(PrivilegeAuthTest.class);
 
     private ApplicationContext applicationContext;
 

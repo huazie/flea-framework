@@ -1,10 +1,11 @@
 # flea-frame
 
 ### 介绍
-Flea框架包，包含权限操作，缓存处理，通用处理，数据库操作，Flea Jersey客户端和服务端
+Flea框架包，包含授权操作，缓存处理，通用处理，数据库操作，Flea Jersey客户端和服务端
 
 |  模块                     |  描述                  |
-|---------------------------|-----------------------|  
+|---------------------------|-----------------------| 
+|  flea-frame-algorithm     |  flea通用算法包        |
 |  flea-frame-auth          |  flea授权操作包        |
 |  flea-frame-cache         |  flea缓存处理包        |
 |  flea-frame-common        |  flea通用处理包        |

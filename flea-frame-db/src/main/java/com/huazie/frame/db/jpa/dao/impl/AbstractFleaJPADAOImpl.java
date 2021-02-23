@@ -2,10 +2,14 @@ package com.huazie.frame.db.jpa.dao.impl;
 
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.pool.FleaObjectPoolFactory;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
+import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.NumberUtils;
 import com.huazie.frame.common.util.ObjectUtils;
+import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.exception.DaoException;
 import com.huazie.frame.db.common.sql.pojo.SqlParam;
 import com.huazie.frame.db.common.sql.template.ITemplate;
@@ -15,11 +19,10 @@ import com.huazie.frame.db.common.table.split.TableSplitHelper;
 import com.huazie.frame.db.jpa.common.FleaJPAQuery;
 import com.huazie.frame.db.jpa.common.FleaJPAQueryPool;
 import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
@@ -36,7 +39,7 @@ import java.util.Set;
 @SuppressWarnings({"rawtypes", "unchecked"})
 public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractFleaJPADAOImpl.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(AbstractFleaJPADAOImpl.class);
 
     private Class<T> clazz;
 
@@ -50,13 +53,15 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         Class<?> clz = getClass();
         // 获取子类对象的泛型父类类型（也就是AbstractDaoImpl<T>）
         ParameterizedType type = (ParameterizedType) clz.getGenericSuperclass();
+        Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Type={}", type);
+            obj = new Object() {};
+            LOGGER.debug1(obj, "Type={}", type);
         }
         Type[] types = type.getActualTypeArguments();
         clazz = (Class<T>) types[0];
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("ClassName={}", clazz.getName());
+            LOGGER.debug1(obj, "ClassName={}", clazz.getName());
         }
     }
 
@@ -90,7 +95,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
      *
      * @param entityId 主键编号
      * @return 数据行对应的实体类信息
-     * @throws CommonException
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     protected T queryById(Object entityId, T entity) throws CommonException {
@@ -106,7 +111,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 
     @Override
     public List<T> query(Map<String, Object> paramMap, String attrName, String orderBy) throws CommonException {
-        return getQuery(null).equal(paramMap).addOrderby(attrName, orderBy).getResultList();
+        return getQuery(null).equal(paramMap).addOrderBy(attrName, orderBy).getResultList();
     }
 
     @Override
@@ -117,7 +122,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     @Override
     public List<T> query(Map<String, Object> paramMap, String attrName, String orderBy, int start, int max)
             throws CommonException {
-        return getQuery(null).equal(paramMap).addOrderby(attrName, orderBy).getResultList(start, max);
+        return getQuery(null).equal(paramMap).addOrderBy(attrName, orderBy).getResultList(start, max);
     }
 
     @Override
@@ -127,7 +132,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 
     @Override
     public List<T> queryAll(String attrName, String orderBy) throws CommonException {
-        return getQuery(null).addOrderby(attrName, orderBy).getResultList();
+        return getQuery(null).addOrderBy(attrName, orderBy).getResultList();
     }
 
     @Override
@@ -137,7 +142,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 
     @Override
     public List<T> queryAll(String attrName, String orderBy, int start, int max) throws CommonException {
-        return getQuery(null).addOrderby(attrName, orderBy).getResultList(start, max);
+        return getQuery(null).addOrderBy(attrName, orderBy).getResultList(start, max);
     }
 
     @Override
@@ -160,7 +165,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 
     @Override
     public List<T> query(Set<String> attrNames, String attrName, String orderBy, T entity) throws CommonException {
-        return getQuery(null).initQueryEntity(entity).equal(attrNames).addOrderby(attrName, orderBy).getResultList();
+        return getQuery(null).initQueryEntity(entity).equal(attrNames).addOrderBy(attrName, orderBy).getResultList();
     }
 
     @Override
@@ -170,7 +175,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 
     @Override
     public List<T> query(Set<String> attrNames, String attrName, String orderBy, int start, int max, T entity) throws CommonException {
-        return getQuery(null).initQueryEntity(entity).equal(attrNames).addOrderby(attrName, orderBy).getResultList(start, max);
+        return getQuery(null).initQueryEntity(entity).equal(attrNames).addOrderBy(attrName, orderBy).getResultList(start, max);
     }
 
     @Override
@@ -180,7 +185,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 
     @Override
     public List<T> queryAll(String attrName, String orderBy, T entity) throws CommonException {
-        return getQuery(null).initQueryEntity(entity).addOrderby(attrName, orderBy).getResultList();
+        return getQuery(null).initQueryEntity(entity).addOrderBy(attrName, orderBy).getResultList();
     }
 
     @Override
@@ -190,7 +195,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 
     @Override
     public List<T> queryAll(String attrName, String orderBy, int start, int max, T entity) throws CommonException {
-        return getQuery(null).initQueryEntity(entity).addOrderby(attrName, orderBy).getResultList(start, max);
+        return getQuery(null).initQueryEntity(entity).addOrderBy(attrName, orderBy).getResultList(start, max);
     }
 
     @Override
@@ -231,7 +236,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
      *
      * @param entityId 主键数据
      * @return true : 删除成功; false : 删除失败
-     * @throws CommonException
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     protected boolean removeById(Object entityId, T entity) throws CommonException {
@@ -294,7 +299,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
      * @param relationId 关系编号
      * @param entity     实体类
      * @return 实体类数据集合
-     * @throws CommonException
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     private Query createNativeQuery(String relationId, T entity, boolean isSingle) throws CommonException {
@@ -305,7 +310,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         List<SqlParam> nativeParam = selectSqlTemplate.toNativeParams();
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("AbstractFleaJPADAOImpl##createNativeQuery(String, T, Class) SQL = {}", nativeSql);
+            LOGGER.debug1(new Object() {}, "SQL = {}", nativeSql);
         }
 
         Query query;
@@ -342,7 +347,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
      * <p> 处理INSERT,UPDATE,DELETE SQL模板 </p>
      *
      * @param sqlTemplate SQL模板（包含 INSERT,UPDATE,DELETE）
-     * @throws CommonException
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     private int save(ITemplate<T> sqlTemplate) throws CommonException {
@@ -351,12 +356,13 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         List<SqlParam> nativeParam = sqlTemplate.toNativeParams();
 
         if (LOGGER.isDebugEnabled()) {
+            Object obj = new Object() {};
             if (TemplateTypeEnum.INSERT.getKey().equals(sqlTemplate.getTemplateType().getKey())) {
-                LOGGER.debug("AbstractFleaJPADAOImpl##insert(String, T) SQL = {}", nativeSql);
+                LOGGER.debug1(obj,"SQL = {}", nativeSql);
             } else if (TemplateTypeEnum.UPDATE.getKey().equals(sqlTemplate.getTemplateType().getKey())) {
-                LOGGER.debug("AbstractFleaJPADAOImpl##update(String, T) SQL = {}", nativeSql);
+                LOGGER.debug1(obj,"SQL = {}", nativeSql);
             } else if (TemplateTypeEnum.DELETE.getKey().equals(sqlTemplate.getTemplateType().getKey())) {
-                LOGGER.debug("AbstractFleaJPADAOImpl##delete(String, T) SQL = {}", nativeSql);
+                LOGGER.debug1(obj,"SQL = {}", nativeSql);
             }
         }
 
@@ -370,7 +376,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
      * <p> 校验主键合法性 </p>
      *
      * @param entityId 实体类对应的主键编号
-     * @throws DaoException 数据操作层异常
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     private void checkPrimaryKey(Object entityId) throws CommonException {
@@ -398,14 +404,15 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     private void setParameter(Query query, List<SqlParam> sqlParams, String templateType) {
         if (CollectionUtils.isNotEmpty(sqlParams)) {
             for (SqlParam sqlParam : sqlParams) {
+                Object obj = new Object() {};
                 if (TemplateTypeEnum.INSERT.getKey().equals(templateType)) {
-                    LOGGER.debug("AbstractFleaJPADAOImpl##insert(String, T) COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
+                    LOGGER.debug1(obj,"JPA, COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
                 } else if (TemplateTypeEnum.UPDATE.getKey().equals(templateType)) {
-                    LOGGER.debug("AbstractFleaJPADAOImpl##update(String, T) COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
+                    LOGGER.debug1(obj,"JPA, COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
                 } else if (TemplateTypeEnum.DELETE.getKey().equals(templateType)) {
-                    LOGGER.debug("AbstractFleaJPADAOImpl##delete(String, T) COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
+                    LOGGER.debug1(obj,"JPA, COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
                 } else if (TemplateTypeEnum.SELECT.getKey().equals(templateType)) {
-                    LOGGER.debug("AbstractFleaJPADAOImpl##query(String, T) COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
+                    LOGGER.debug1(obj,"JPA, COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
                 }
                 query.setParameter(sqlParam.getIndex(), sqlParam.getAttrValue());
             }
@@ -419,20 +426,51 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
      * @since 1.0.0
      */
     protected FleaJPAQuery getQuery(Class result) {
-        // 获取Flea JPA查询对象池 （使用默认连接池名"default"即可）
-        FleaJPAQueryPool pool = FleaObjectPoolFactory.getFleaObjectPool(FleaJPAQuery.class, FleaJPAQueryPool.class);
+        // 获取当前的持久化单元名
+        String unitName = getPersistenceUnitName();
+        FleaJPAQueryPool pool;
+        if (StringUtils.isBlank(unitName)) {
+            // 获取Flea JPA查询对象池 （使用默认对象池名"default"即可）
+            pool = FleaObjectPoolFactory.getFleaObjectPool(FleaJPAQuery.class, FleaJPAQueryPool.class);
+        } else {
+            // 获取Flea JPA查询对象池 （使用持久化单元名unitName作为对象池名）
+            pool = FleaObjectPoolFactory.getFleaObjectPool(unitName, FleaJPAQuery.class, FleaJPAQueryPool.class);
+        }
+
         if (ObjectUtils.isEmpty(pool)) {
             throw new RuntimeException("Can not get a object pool instance");
         }
         // 获取Flea JPA查询对象实例
         FleaJPAQuery query = pool.getFleaObject();
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("AbstractFleaJPADAOImpl##getQuery(Class) FleaJPAQueryPool = {}", pool);
-            LOGGER.debug("AbstractFleaJPADAOImpl##getQuery(Class) FleaJPAQuery = {}", query);
+            Object obj = new Object() {};
+            LOGGER.debug1(obj, "FleaJPAQueryPool = {}", pool);
+            LOGGER.debug1(obj, "FleaJPAQuery = {}", query);
         }
         // 获取实例后必须调用该方法,对Flea JPA查询对象进行初始化
         query.init(getEntityManager(), clazz, result);
         return query;
+    }
+
+    /**
+     * <p> 获取当前的持久化单元名 </p>
+     *
+     * @return 当前的持久化单元名
+     */
+    protected String getPersistenceUnitName() {
+        String unitName = "";
+        // 获取持久化单元DAO层实现类的所有成员变量
+        Field[] fields = this.getClass().getSuperclass().getDeclaredFields();
+        // 遍历成员变量
+        if (ArrayUtils.isNotEmpty(fields)) {
+            for (Field field : fields) {
+                javax.persistence.PersistenceContext annotation = field.getAnnotation(javax.persistence.PersistenceContext.class);
+                if (ObjectUtils.isNotEmpty(annotation)) {
+                    unitName = annotation.unitName();
+                }
+            }
+        }
+        return unitName;
     }
 
     @Override

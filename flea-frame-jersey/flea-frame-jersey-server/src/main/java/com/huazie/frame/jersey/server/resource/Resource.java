@@ -1,6 +1,8 @@
 package com.huazie.frame.jersey.server.resource;
 
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.xml.JABXUtils;
 import com.huazie.frame.jersey.common.FleaJerseyConstants;
@@ -12,8 +14,6 @@ import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
 import com.huazie.frame.jersey.server.filter.FleaJerseyFilterChainManager;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +33,7 @@ import javax.ws.rs.core.UriInfo;
  */
 public abstract class Resource {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Resource.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(Resource.class);
 
     @Context
     protected Request request; // 请求信息的上下文
@@ -131,7 +131,7 @@ public abstract class Resource {
             formDataMultiPart = FleaJerseyManager.getManager().getFileContext().getFormDataMultiPart();
         } catch (CommonException e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("Exception occurs : \n", e);
+                LOGGER.error1(new Object() {}, "Exception occurs : \n", e);
             }
         }
         return formDataMultiPart;

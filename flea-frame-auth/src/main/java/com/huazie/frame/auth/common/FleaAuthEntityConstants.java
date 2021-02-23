@@ -23,6 +23,11 @@ public interface FleaAuthEntityConstants extends FleaEntityConstants {
         String E_ACCOUNT_ID = "accountId";
 
         /**
+         *
+         */
+        String E_SYSTEM_ACCOUNT_ID = "system_account_id";
+
+        /**
          * <p> 账号 </p>
          */
         String E_ACCOUNT_CODE = "accountCode";
@@ -128,6 +133,16 @@ public interface FleaAuthEntityConstants extends FleaEntityConstants {
          * <p> 菜单层级 </p>
          */
         String E_MENU_LEVEL = "menuLevel";
+
+        /**
+         * <p> 菜单状态 </p>
+         */
+        String E_MENU_STATE = "menuState";
+
+        /**
+         * <P> 父菜单编号 </P>
+         */
+        String E_PARENT_ID = "parentId";
     }
 
     /**

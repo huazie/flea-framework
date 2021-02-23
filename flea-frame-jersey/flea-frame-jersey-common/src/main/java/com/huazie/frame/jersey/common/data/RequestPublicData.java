@@ -18,13 +18,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public final class RequestPublicData {
 
-    @XmlElement(name = "SYSTEM_ACCT_ID")
+    @XmlElement(name = "SYSTEM_ACCOUNT_ID")
     private String systemAccountId; // 系统账户编号
 
-    @XmlElement(name = "SYSTEM_ACCT_PWD")
+    @XmlElement(name = "SYSTEM_ACCOUNT_PWD")
     private String systemAccountPassword; // 系统账户密码
 
-    @XmlElement(name = "ACCT_ID")
+    @XmlElement(name = "ACCOUNT_ID")
     private String accountId; // 账户编号
 
     @XmlElement(name = "RESOURCE_CODE")

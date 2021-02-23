@@ -1,11 +1,11 @@
 package com.huazie.frame.common.util.concurrent;
 
 import com.huazie.frame.common.IFleaUser;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 
@@ -18,7 +18,7 @@ import java.lang.reflect.Method;
  */
 public class FleaAsyncTask extends FleaRunnable {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaAsyncTask.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaAsyncTask.class);
 
     private Object asyncTaskExecObj; // 异步任务执行对象
 
@@ -49,7 +49,7 @@ public class FleaAsyncTask extends FleaRunnable {
     @Override
     protected void subRun() {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaAsyncTask##subRun() start");
+            LOGGER.debug("Start");
         }
 
         try {
@@ -59,12 +59,12 @@ public class FleaAsyncTask extends FleaRunnable {
             }
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("FleaAsyncTask##subRun() AsyncTask Execute Exception : ", e);
+                LOGGER.error("AsyncTask Execute Exception : ", e);
             }
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaAsyncTask##subRun() end");
+            LOGGER.debug("End");
         }
     }
 
@@ -79,27 +79,27 @@ public class FleaAsyncTask extends FleaRunnable {
 
         if (ObjectUtils.isEmpty(asyncTaskExecObj)) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("FleaAsyncTask##subRun() asyncTaskExecObj is null, is not allowed");
+                LOGGER.debug("asyncTaskExecObj is null, is not allowed");
             }
             isCheck = false;
         }
 
         if (StringUtils.isBlank(methodName)) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("FleaAsyncTask##subRun() methodName is empty, is not allowed");
+                LOGGER.debug("methodName is empty, is not allowed");
             }
             isCheck = false;
         }
 
         if (ArrayUtils.isEmpty(paramTypes)) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("FleaAsyncTask##subRun() paramTypes is empty");
+                LOGGER.debug("paramTypes is empty");
             }
         }
 
         if (ArrayUtils.isEmpty(params)) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("FleaAsyncTask##subRun() params is empty");
+                LOGGER.debug("params is empty");
             }
         }
 

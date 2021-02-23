@@ -1,10 +1,10 @@
 package com.huazie.frame.db.common.table.split.config;
 
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.db.common.DBXmlDigesterHelper;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <p> 分表配置信息 </p>
@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  */
 public class TableSplitConfig {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TableSplitConfig.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(TableSplitConfig.class);
 
     private static volatile TableSplitConfig config;
 
@@ -39,7 +39,7 @@ public class TableSplitConfig {
                         config = new TableSplitConfig(DBXmlDigesterHelper.getInstance().getTables());
                     } catch (Exception e) {
                         if (LOGGER.isErrorEnabled()) {
-                            LOGGER.error("Fail to init flea-table-split.xml");
+                            LOGGER.error1(new Object() {}, "Fail to init flea-table-split.xml");
                         }
                     }
                 }

@@ -1,8 +1,8 @@
 package com.huazie.frame.common.util;
 
 import com.huazie.frame.common.CommonConstants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -16,7 +16,7 @@ import java.lang.reflect.Method;
  */
 public class ReflectUtils {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger(ReflectUtils.class);
+    public static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(ReflectUtils.class);
 
     /**
      * <p> 获取类Class </p>
@@ -31,7 +31,7 @@ public class ReflectUtils {
             clazz = Class.forName(className);
         } catch (ClassNotFoundException e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("ReflectUtils##forName(String) Class={}, Exception={}", className, e.getMessage());
+                LOGGER.error1(new Object() {}, "Class={}, Exception={}", className, e.getMessage());
             }
         }
         return clazz;
@@ -51,7 +51,7 @@ public class ReflectUtils {
             obj = clazz.newInstance();
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("ReflectUtils##forName(String) Class={}, Exception={}", className, e.getMessage());
+                LOGGER.error1(new Object() {}, "Class={}, Exception={}", className, e.getMessage());
             }
         }
         return obj;
@@ -94,7 +94,7 @@ public class ReflectUtils {
             }
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("当前类反射出错，Class={}, Exception={}", className, e);
+                LOGGER.error1(new Object() {}, "当前类反射出错，Class={}, Exception={}", className, e);
             }
         }
         return obj;
@@ -135,7 +135,7 @@ public class ReflectUtils {
             }
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("当前类反射出错，Class={}, Exception={}", className, e);
+                LOGGER.error1(new Object() {}, "当前类反射出错，Class={}, Exception={}", className, e);
             }
         }
         return obj;
@@ -173,7 +173,7 @@ public class ReflectUtils {
             value = method.invoke(obj);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("获取对象指定属性值出错，Exception=", e);
+                LOGGER.error1(new Object() {}, "获取对象指定属性值出错，Exception=", e);
             }
         }
         return value;
@@ -194,7 +194,7 @@ public class ReflectUtils {
             method = obj.getClass().getMethod(getter);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("获取对象指定属性对应get方法出错，Exception=", e);
+                LOGGER.error1(new Object() {}, "获取对象指定属性对应get方法出错，Exception=", e);
             }
         }
         return method;
@@ -219,7 +219,7 @@ public class ReflectUtils {
             outputObj = method.invoke(obj, inputObj);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("反射调用对象指定方法出错，Exception = ", e);
+                LOGGER.error1(new Object() {}, "反射调用对象指定方法出错，Exception = ", e);
             }
         }
 

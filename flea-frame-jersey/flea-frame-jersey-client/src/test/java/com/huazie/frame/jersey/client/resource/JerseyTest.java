@@ -11,6 +11,8 @@ import com.huazie.ffs.pojo.upload.output.OutputUploadAuthInfo;
 import com.huazie.frame.common.DateFormatEnum;
 import com.huazie.frame.common.FleaFrameManager;
 import com.huazie.frame.common.IFleaUser;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.DateUtils;
 import com.huazie.frame.common.util.IOUtils;
 import com.huazie.frame.common.util.ObjectUtils;
@@ -30,18 +32,14 @@ import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
 import com.huazie.frame.jersey.common.data.RequestBusinessData;
 import com.huazie.frame.jersey.common.data.RequestPublicData;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.media.multipart.file.FileDataBodyPart;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
@@ -59,22 +57,23 @@ import java.net.URLEncoder;
  */
 public class JerseyTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JerseyTest.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(JerseyTest.class);
 
     private ApplicationContext applicationContext;
 
     @Before
     public void init() {
+        IFleaUser fleaUser = new FleaUserImpl();
+        fleaUser.setAccountId(10000001L);
+        fleaUser.set("ACCOUNT_CODE", "huazie");
+        FleaFrameManager.getManager().setUserInfo(fleaUser);
         applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
         LOGGER.debug("ApplicationContext={}", applicationContext);
-        IFleaUser fleaUser = new FleaUserImpl();
-        fleaUser.setAcctId(10000001L);
-        FleaFrameManager.getManager().setUserInfo(fleaUser);
     }
 
     @Test
     public void testMediaType() {
-        String mediaTypeStr = "xml";
+        String mediaTypeStr = "application/xml";
         MediaType mediaType = MediaType.valueOf(mediaTypeStr);
         LOGGER.debug("MediaType = {}", mediaType);
     }
@@ -306,12 +305,12 @@ public class JerseyTest {
             String fileName = fileObject.getFileName();
             File downloadFile = fileObject.getFile();
 
-            String uploadSystemAcctId = output.getUploadSystemAcctId();
-            String uploadAcctId = output.getUploadAcctId();
+            String uploadSystemAccountId = output.getUploadSystemAcctId();
+            String uploadAccountId = output.getUploadAcctId();
             String uploadDate = output.getUploadDate();
 
             if (downloadFile.exists()) {
-                IOUtils.toFile(new FileInputStream(downloadFile), "E:\\" + uploadDate + "_" + uploadSystemAcctId + "_" + uploadAcctId + "_" + fileName);
+                IOUtils.toFile(new FileInputStream(downloadFile), "E:\\" + uploadDate + "_" + uploadSystemAccountId + "_" + uploadAccountId + "_" + fileName);
             }
 
         } catch (Exception e) {
