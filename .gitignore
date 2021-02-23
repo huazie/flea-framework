@@ -22,15 +22,16 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 .idea/
-flea-frame-common/target/
+*.iml
+flea-frame-algorithm/target/
+flea-frame-auth/target/
 flea-frame-cache/target/
-flea-frame-db/target/
+flea-frame-common/target/
 flea-frame-config/target/
 flea-frame-core/target/
-flea-frame-tools/target/
+flea-frame-db/target/
 flea-frame-jersey/target/
-flea-frame-jersey/flea-frame-jersey-server/target/
 flea-frame-jersey/flea-frame-jersey-client/target/
 flea-frame-jersey/flea-frame-jersey-common/target/
-*.iml
-flea-frame-auth/target/
+flea-frame-jersey/flea-frame-jersey-server/target/
+flea-frame-tools/target/

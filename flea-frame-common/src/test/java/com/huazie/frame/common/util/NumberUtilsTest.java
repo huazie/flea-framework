@@ -4,6 +4,10 @@ import com.huazie.frame.common.slf4j.FleaLogger;
 import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import org.junit.Test;
 
+import java.math.BigInteger;
+
+import static org.junit.Assert.assertTrue;
+
 /**
  * <p> 数字相关工具测试类 </p>
  *
@@ -46,5 +50,11 @@ public class NumberUtilsTest {
         LOGGER.debug("BYTE NUM1 IS POSITIVE NUMBER : {}", NumberUtils.isPositiveNumber(byteNum1));
         Byte byteNum2 = -10;
         LOGGER.debug("BYTE NUM2 IS POSITIVE NUMBER : {}", NumberUtils.isPositiveNumber(byteNum2));
+    }
+
+    @Test
+    public void testSqrtForBigInteger() {
+        BigInteger sqrtNum = NumberUtils.sqrt(BigInteger.valueOf(1000002));
+        assertTrue(sqrtNum.compareTo(BigInteger.valueOf(1000)) == 0);
     }
 }
