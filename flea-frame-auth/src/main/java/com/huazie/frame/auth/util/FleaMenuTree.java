@@ -4,11 +4,11 @@ import com.huazie.frame.auth.base.function.entity.FleaMenu;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.EntityStateEnum;
 import com.huazie.frame.common.FleaTree;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Comparator;
 import java.util.HashMap;
@@ -34,11 +34,27 @@ import java.util.Map;
  */
 public class FleaMenuTree extends FleaTree<FleaMenu> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaMenuTree.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaMenuTree.class);
 
     private static final long serialVersionUID = 782100083467014824L;
 
     public static final String MENU_TREE = "MENU_TREE";
+
+    public static final String HAS_SUB_MENU = "HAS_SUB_MENU";
+
+    public static final String IS_SELECT = "IS_SELECT";
+
+    public static final String MENU_ID = "MENU_ID";
+
+    public static final String MENU_CODE = "MENU_CODE";
+
+    public static final String MENU_NAME = "MENU_NAME";
+
+    public static final String MENU_ICON = "MENU_ICON";
+
+    public static final String MENU_LEVEL = "MENU_LEVEL";
+
+    public static final String PARENT_MENU_ID = "PARENT_MENU_ID";
 
     private String systemName; // 归属系统名称
 
@@ -61,6 +77,7 @@ public class FleaMenuTree extends FleaTree<FleaMenu> {
         this.systemName = systemName;
         FleaMenu systemFleaMenu = new FleaMenu();
         systemFleaMenu.setMenuId(CommonConstants.NumeralConstants.MINUS_ONE);
+        systemFleaMenu.setMenuCode(FleaMenuTree.class.getSimpleName());
         systemFleaMenu.setMenuName(systemName);
         systemFleaMenu.setParentId(CommonConstants.NumeralConstants.MINUS_TWO);
         systemFleaMenu.setMenuSort(CommonConstants.NumeralConstants.INT_ONE);
@@ -122,14 +139,15 @@ public class FleaMenuTree extends FleaTree<FleaMenu> {
         int pHeight = pMenuLevel + 1;
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaMenuTree#add(FleaMenu, FleaMenu) Start Adding Menu to MenuTree");
-            LOGGER.debug("FleaMenuTree#add(FleaMenu, FleaMenu) Current Menu = {}", fleaMenu);
-            LOGGER.debug("FleaMenuTree#add(FleaMenu, FleaMenu) Current Menu Id = {}", id);
-            LOGGER.debug("FleaMenuTree#add(FleaMenu, FleaMenu) Current Menu Level = {}", menuLevel);
-            LOGGER.debug("FleaMenuTree#add(FleaMenu, FleaMenu) Parent Menu = {}", parentMenu);
-            LOGGER.debug("FleaMenuTree#add(FleaMenu, FleaMenu) Parent Menu Id = {}", pId);
-            LOGGER.debug("FleaMenuTree#add(FleaMenu, FleaMenu) Parent Menu Level = {}", pMenuLevel);
-            LOGGER.debug("FleaMenuTree#add(FleaMenu, FleaMenu) Finish Adding Menu to MenuTree");
+            Object obj = new Object() {};
+            LOGGER.debug1(obj, "Start Adding Menu to MenuTree");
+            LOGGER.debug1(obj, "Current Menu = {}", fleaMenu);
+            LOGGER.debug1(obj, "Current Menu Id = {}", id);
+            LOGGER.debug1(obj, "Current Menu Level = {}", menuLevel);
+            LOGGER.debug1(obj, "Parent Menu = {}", parentMenu);
+            LOGGER.debug1(obj, "Parent Menu Id = {}", pId);
+            LOGGER.debug1(obj, "Parent Menu Level = {}", pMenuLevel);
+            LOGGER.debug1(obj, "Finish Adding Menu to MenuTree");
         }
 
         addTreeNote(fleaMenu, id, height, parentMenu, pId, pHeight);
@@ -160,12 +178,14 @@ public class FleaMenuTree extends FleaTree<FleaMenu> {
     @Override
     protected Map<String, Object> toMap(FleaMenu element, long id, int height, FleaMenu pElement, long pId, int pHeight, boolean isHasSubNotes) {
         Map<String, Object> menuMap = new HashMap<>();
-        menuMap.put("HAS_SUB_MENU", isHasSubNotes);
-        menuMap.put("IS_SELECT", false);
-        menuMap.put("MENU_CODE", element.getMenuCode());
-        menuMap.put("MENU_NAME", element.getMenuName());
-        menuMap.put("MENU_ICON", element.getMenuIcon());
-        menuMap.put("MENU_LEVEL", element.getMenuLevel());
+        menuMap.put(HAS_SUB_MENU, isHasSubNotes);
+        menuMap.put(IS_SELECT, false);
+        menuMap.put(MENU_ID, id);
+        menuMap.put(MENU_CODE, element.getMenuCode());
+        menuMap.put(MENU_NAME, element.getMenuName());
+        menuMap.put(MENU_ICON, element.getMenuIcon());
+        menuMap.put(MENU_LEVEL, element.getMenuLevel());
+        menuMap.put(PARENT_MENU_ID, pId);
         return menuMap;
     }
 

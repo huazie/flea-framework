@@ -18,7 +18,7 @@ import java.util.Map;
  */
 public class Caches {
 
-    private List<Cache> cacheList = new ArrayList<Cache>(); // Flea缓存集中的各个Flea缓存
+    private List<Cache> cacheList = new ArrayList<>(); // Flea缓存集中的各个Flea缓存
 
     public List<Cache> getCacheList() {
         return cacheList;
@@ -41,7 +41,7 @@ public class Caches {
      * @since 1.0.0
      */
     public Map<String, Cache> toFleaCacheMap() {
-        Map<String, Cache> fleaCacheMap = new HashMap<String, Cache>();
+        Map<String, Cache> fleaCacheMap = new HashMap<>();
         Iterator<Cache> fleaCacheIt = cacheList.iterator();
         while (fleaCacheIt.hasNext()) {
             Cache cache = fleaCacheIt.next();

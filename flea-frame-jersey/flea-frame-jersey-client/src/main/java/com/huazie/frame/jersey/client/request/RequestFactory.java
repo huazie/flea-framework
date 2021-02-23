@@ -1,13 +1,13 @@
 package com.huazie.frame.jersey.client.request;
 
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.ReflectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.jersey.common.exception.FleaJerseyClientException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <p> Flea Jersey请求工厂 </p>
@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  */
 public class RequestFactory {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RequestFactory.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(RequestFactory.class);
 
     private static volatile RequestFactory factory;
 
@@ -57,9 +57,11 @@ public class RequestFactory {
             ExceptionUtils.throwCommonException(FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000000");
         }
 
+        Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("RequestFactory##buildFleaRequest(RequestConfig) Start");
-            LOGGER.debug("RequestFactory##buildFleaRequest(RequestConfig) RequestConfig = {}", config.getConfig());
+            obj = new Object() {};
+            LOGGER.debug1(obj, "Start");
+            LOGGER.debug1(obj, "RequestConfig = {}", config.getConfig());
         }
 
         // 获取请求方式
@@ -74,7 +76,7 @@ public class RequestFactory {
             requestModeEnum = RequestModeEnum.valueOf(requestMode.toUpperCase());
         } catch (IllegalArgumentException e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("RequestFactory##buildFleaRequest(RequestConfig) Exception = ", e);
+                LOGGER.error1(new Object() {}, "Exception = ", e);
             }
         }
 
@@ -89,10 +91,10 @@ public class RequestFactory {
 
         if (LOGGER.isDebugEnabled()) {
             if (ObjectUtils.isNotEmpty(request)) {
-                LOGGER.debug("RequestFactory##buildFleaRequest(RequestConfig) Request = {}", request.getClass().getName());
-                LOGGER.debug("RequestFactory##buildFleaRequest(RequestConfig) RequestMode = {}", request.getRequestMode().getMode());
+                LOGGER.debug1(obj, "Request = {}", request.getClass().getName());
+                LOGGER.debug1(obj, "RequestMode = {}", request.getRequestMode().getMode());
             }
-            LOGGER.debug("RequestFactory##buildFleaRequest(RequestConfig) End");
+            LOGGER.debug1(obj, "End");
         }
 
         return request;

@@ -3,14 +3,14 @@ package com.huazie.frame.db.jdbc.config;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.FleaConfigManager;
 import com.huazie.frame.common.FleaFrameManager;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
-import com.huazie.frame.db.common.DBConstants;
+import com.huazie.frame.db.common.DBConstants.DBConfigConstants;
 import com.huazie.frame.db.common.exception.DaoException;
 import com.huazie.frame.db.jdbc.pojo.FleaDBUnit;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -29,11 +29,11 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class FleaJDBCConfig {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaJDBCConfig.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaJDBCConfig.class);
 
     private static volatile FleaJDBCConfig config;
 
-    private static ConcurrentMap<String, FleaDBUnit> fleaDBUnits = new ConcurrentHashMap<>();
+    private static final ConcurrentMap<String, FleaDBUnit> fleaDBUnits = new ConcurrentHashMap<>();
 
     private FleaJDBCConfig() {
     }
@@ -66,8 +66,9 @@ public class FleaJDBCConfig {
     public static void init(String mDatabase, String mName) {
         FleaFrameManager.getManager().setDBConfigKey(mDatabase, mName);
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("JDBCConfig##init(String, String) 关系数据库管理系统名：{}", mDatabase);
-            LOGGER.debug("JDBCConfig##init(String, String) 数据库名或数据库用户：{}", mName);
+            Object obj = new Object() {};
+            LOGGER.debug1(obj, "关系数据库管理系统名：{}", mDatabase);
+            LOGGER.debug1(obj, "数据库名或数据库用户：{}", mName);
         }
     }
 
@@ -99,17 +100,17 @@ public class FleaJDBCConfig {
             ObjectUtils.checkEmpty(fleaDBUnit, DaoException.class, "ERROR-DB-DAO0000000013");
 
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("JDBCConfig##getConnection() 数据库配置键名：{}", dbConfigKey);
-                LOGGER.debug("JDBCConfig##getConnection() 数据库驱动名称：{}", fleaDBUnit.getDriver());
-                LOGGER.debug("JDBCConfig##getConnection() 数据库连接地址：{}", fleaDBUnit.getUrl());
-                LOGGER.debug("JDBCConfig##getConnection() 数据库登录用户：{}", fleaDBUnit.getUser());
-                LOGGER.debug("JDBCConfig##getConnection() 数据库登录密码：{}", fleaDBUnit.getPassword());
+                LOGGER.debug("数据库配置键名：{}", dbConfigKey);
+                LOGGER.debug("数据库驱动名称：{}", fleaDBUnit.getDriver());
+                LOGGER.debug("数据库连接地址：{}", fleaDBUnit.getUrl());
+                LOGGER.debug("数据库登录用户：{}", fleaDBUnit.getUser());
+                LOGGER.debug("数据库登录密码：{}", fleaDBUnit.getPassword());
             }
 
             Class.forName(fleaDBUnit.getDriver());
             conn = DriverManager.getConnection(fleaDBUnit.getUrl(), fleaDBUnit.getUser(), fleaDBUnit.getPassword());
         } catch (Exception e) {
-            LOGGER.error("JDBCConfig##getConnection() 获取数据库连接异常 ：{}", e.getMessage());
+            LOGGER.error("获取数据库连接异常 ：{}", e.getMessage());
         }
         return conn;
     }
@@ -130,10 +131,10 @@ public class FleaJDBCConfig {
                 fDBUnit.setDatabase(dbConfigKeyArr[0]);
                 fDBUnit.setName(dbConfigKeyArr[1]);
             }
-            fDBUnit.setDriver(FleaConfigManager.getConfigItemValue(dbConfigKey, DBConstants.DBConfigConstants.DB_CONFIG_DRIVER));
-            fDBUnit.setUrl(FleaConfigManager.getConfigItemValue(dbConfigKey, DBConstants.DBConfigConstants.DB_CONFIG_URL));
-            fDBUnit.setUser(FleaConfigManager.getConfigItemValue(dbConfigKey, DBConstants.DBConfigConstants.DB_CONFIG_USER));
-            fDBUnit.setPassword(FleaConfigManager.getConfigItemValue(dbConfigKey, DBConstants.DBConfigConstants.DB_CONFIG_PASSWORD));
+            fDBUnit.setDriver(FleaConfigManager.getConfigItemValue(dbConfigKey, DBConfigConstants.DB_CONFIG_DRIVER));
+            fDBUnit.setUrl(FleaConfigManager.getConfigItemValue(dbConfigKey, DBConfigConstants.DB_CONFIG_URL));
+            fDBUnit.setUser(FleaConfigManager.getConfigItemValue(dbConfigKey, DBConfigConstants.DB_CONFIG_USER));
+            fDBUnit.setPassword(FleaConfigManager.getConfigItemValue(dbConfigKey, DBConfigConstants.DB_CONFIG_PASSWORD));
         }
 
         return fDBUnit;
@@ -149,12 +150,12 @@ public class FleaJDBCConfig {
             if (ObjectUtils.isNotEmpty(conn)) {
                 conn.close();
                 if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("JDBCConfig##closeConnection(Connection) Connection已关闭。");
+                    LOGGER.debug1(new Object() {}, "Connection已关闭。");
                 }
             }
         } catch (SQLException e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("JDBCConfig##closeConnection(Connection) 关闭数据库连接异常：", e);
+                LOGGER.error1(new Object() {}, "关闭数据库连接异常：", e);
             }
         }
     }
@@ -169,12 +170,12 @@ public class FleaJDBCConfig {
             if (ObjectUtils.isNotEmpty(statement)) {
                 statement.close();
                 if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("JDBCConfig##closeStatement(Statement) Statement已关闭。");
+                    LOGGER.debug1(new Object() {}, "Statement已关闭。");
                 }
             }
         } catch (SQLException e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("JDBCConfig##closeStatement(Statement) 关闭数据库statement异常：", e);
+                LOGGER.error1(new Object() {}, "关闭数据库statement异常：", e);
             }
         }
     }
@@ -189,12 +190,12 @@ public class FleaJDBCConfig {
             if (ObjectUtils.isNotEmpty(rs)) {
                 rs.close();
                 if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("JDBCConfig##closeStatement(ResultSet) ResultSet已关闭。");
+                    LOGGER.debug1(new Object() {}, "ResultSet已关闭。");
                 }
             }
         } catch (SQLException e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("JDBCConfig##closeResultSet(ResultSet) 关闭结果集异常：", e);
+                LOGGER.error1(new Object() {}, "关闭结果集异常：", e);
             }
         }
     }

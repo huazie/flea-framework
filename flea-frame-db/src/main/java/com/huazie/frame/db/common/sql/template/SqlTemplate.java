@@ -9,7 +9,7 @@ import com.huazie.frame.common.util.MapUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.PatternMatcherUtils;
 import com.huazie.frame.common.util.StringUtils;
-import com.huazie.frame.db.common.DBConstants;
+import com.huazie.frame.db.common.DBConstants.SQLConstants;
 import com.huazie.frame.db.common.exception.SqlTemplateException;
 import com.huazie.frame.db.common.sql.pojo.SqlParam;
 import com.huazie.frame.db.common.sql.template.config.Param;
@@ -43,7 +43,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
 
     private StringBuilder sql = new StringBuilder();
 
-    private List<SqlParam> sqlParams = new ArrayList<SqlParam>(); // 原生SQL参数
+    private List<SqlParam> sqlParams = new ArrayList<>(); // 原生SQL参数
 
     private String tableName;       // 主表名
 
@@ -68,7 +68,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
     protected TemplateTypeEnum templateType; // 模板类型
 
     // 实体属性变量和表字段对应关系（主要是应对where子句中表字段对应多个实体属性变量的场景）， K ：实体属性变量名 V ：表字段名
-    private Map<String, String> paramTabCols = new HashMap<String, String>();
+    private Map<String, String> paramTabCols = new HashMap<>();
 
     protected static final Class<? extends CommonException> SQT_CLASS = SqlTemplateException.class;
 
@@ -271,33 +271,33 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
         Map<String, String> map = null;
         // 首先需要将条件语句中的 圆括号 全部替换成空格
         String newConn = condition
-                .replace(DBConstants.SQLConstants.SQL_LEFT_ROUND_BRACKETS, DBConstants.SQLConstants.SQL_BLANK)
-                .replace(DBConstants.SQLConstants.SQL_RIGHT_ROUND_BRACKETS, DBConstants.SQLConstants.SQL_BLANK);
+                .replace(SQLConstants.SQL_LEFT_ROUND_BRACKETS, SQLConstants.SQL_BLANK)
+                .replace(SQLConstants.SQL_RIGHT_ROUND_BRACKETS, SQLConstants.SQL_BLANK);
 
         // 根据 and , or , order by , group by , limit 进行分组
         String[] singleConnAttr = StringUtils.split(newConn,
-                DBConstants.SQLConstants.SQL_AND, DBConstants.SQLConstants.SQL_LOWER_AND,
-                DBConstants.SQLConstants.SQL_OR, DBConstants.SQLConstants.SQL_LOWER_OR,
-                DBConstants.SQLConstants.SQL_ORDER_BY, DBConstants.SQLConstants.SQL_LOWER_ORDER_BY,
-                DBConstants.SQLConstants.SQL_GROUP_BY, DBConstants.SQLConstants.SQL_LOWER_GROUP_BY,
-                DBConstants.SQLConstants.SQL_LIMIT, DBConstants.SQLConstants.SQL_LOWER_LIMIT);
+                SQLConstants.SQL_AND, SQLConstants.SQL_LOWER_AND,
+                SQLConstants.SQL_OR, SQLConstants.SQL_LOWER_OR,
+                SQLConstants.SQL_ORDER_BY, SQLConstants.SQL_LOWER_ORDER_BY,
+                SQLConstants.SQL_GROUP_BY, SQLConstants.SQL_LOWER_GROUP_BY,
+                SQLConstants.SQL_LIMIT, SQLConstants.SQL_LOWER_LIMIT);
 
         if (!ArrayUtils.isEmpty(singleConnAttr)) {
 
             map = new HashMap<>();
 
             for (String singleConn : singleConnAttr) {
-                String[] connAttr = StringUtils.split(singleConn, DBConstants.SQLConstants.SQL_EQUAL,
-                        DBConstants.SQLConstants.SQL_GE, DBConstants.SQLConstants.SQL_GT,
-                        DBConstants.SQLConstants.SQL_LE, DBConstants.SQLConstants.SQL_LT,
-                        DBConstants.SQLConstants.SQL_LIKE, DBConstants.SQLConstants.SQL_LOWER_LIKE,
-                        DBConstants.SQLConstants.SQL_IN, DBConstants.SQLConstants.SQL_LOWER_IN);
+                String[] connAttr = StringUtils.split(singleConn, SQLConstants.SQL_EQUAL,
+                        SQLConstants.SQL_GE, SQLConstants.SQL_GT,
+                        SQLConstants.SQL_LE, SQLConstants.SQL_LT,
+                        SQLConstants.SQL_LIKE, SQLConstants.SQL_LOWER_LIKE,
+                        SQLConstants.SQL_IN, SQLConstants.SQL_LOWER_IN);
                 if (ArrayUtils.isEmpty(connAttr)) {
                     continue;
                 }
                 if (connAttr.length == CommonConstants.NumeralConstants.INT_ONE) {
-                    if (connAttr[0].contains(DBConstants.SQLConstants.SQL_COLON)) { // 目前这里就只有 limit
-                        map.put(StringUtils.trim(DBConstants.SQLConstants.SQL_LIMIT), connAttr[0]);
+                    if (connAttr[0].contains(SQLConstants.SQL_COLON)) { // 目前这里就只有 limit
+                        map.put(StringUtils.trim(SQLConstants.SQL_LIMIT), connAttr[0]);
                     }
                 } else if (connAttr.length == CommonConstants.NumeralConstants.INT_TWO) {
                     String key = connAttr[0];
@@ -307,11 +307,11 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
                         continue;
                     }
 
-                    if (value.contains(DBConstants.SQLConstants.SQL_COLON)) {
+                    if (value.contains(SQLConstants.SQL_COLON)) {
                         // 存在重复的key，value中的值以逗号分隔
                         String val = map.get(StringUtils.trim(key));
                         if (StringUtils.isNotBlank(val)) {
-                            value = StringUtils.trim(val) + DBConstants.SQLConstants.SQL_COMMA + StringUtils.trim(value);
+                            value = StringUtils.trim(val) + SQLConstants.SQL_COMMA + StringUtils.trim(value);
                         }
                         map.put(StringUtils.trim(key), StringUtils.trim(value));
                     }
@@ -373,7 +373,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
             return null;
         }
 
-        List<Column> cols = new ArrayList<Column>();
+        List<Column> cols = new ArrayList<>();
 
         Set<String> tabColNameSet = map.keySet();
         Iterator<String> tabColNameIt = tabColNameSet.iterator();
@@ -385,14 +385,14 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
             StringUtils.checkBlank(attrName, SQT_CLASS, "ERROR-DB-SQT0000000021", paramId, sqlTemplateEnum.getKey(), tabColName);
 
             Column column = (Column) EntityUtils.getEntity(entityCols, Column.COLUMN_TAB_COL_NAME, tabColName);
-            if (ObjectUtils.isEmpty(column) && !StringUtils.trim(DBConstants.SQLConstants.SQL_LIMIT).equals(tabColName)) {
+            if (ObjectUtils.isEmpty(column) && !StringUtils.trim(SQLConstants.SQL_LIMIT).equals(tabColName)) {
                 // 请检查SQL模板参数【id="{0}"】配置（属性【key="{1}"】中的字段【{2}】在实体类【{3}】中不存在）
                 ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000022", paramId, sqlTemplateEnum.getKey(), tabColName, entity.getClass().getName());
             }
 
             if (ObjectUtils.isNotEmpty(column)) {
                 String attrN = column.getAttrName();
-                if (attrName.equals(StringUtils.strCat(DBConstants.SQLConstants.SQL_COLON, attrN))) {
+                if (attrName.equals(StringUtils.strCat(SQLConstants.SQL_COLON, attrN))) {
                     cols.add(column);
                 } else {
                     if (!checkAttrName(attrName, cols, tabColName)) {
@@ -401,7 +401,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
                     }
                 }
             } else {
-                if (StringUtils.trim(DBConstants.SQLConstants.SQL_LIMIT).equals(tabColName)) {
+                if (StringUtils.trim(SQLConstants.SQL_LIMIT).equals(tabColName)) {
                     if (!checkAttrName(attrName, cols, tabColName)) {
                         // 请检查SQL模板参数【id="{0}"】配置（属性【key="{1}"】中的LIMIT子句里的变量{2}）
                         ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000032", paramId, sqlTemplateEnum.getKey(), attrName);
@@ -425,7 +425,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
         if (ObjectUtils.isNotEmpty(entity) && entity instanceof FleaEntity) {
             fleaEntity = (FleaEntity) entity;
         }
-        String[] aNameArr = StringUtils.split(attrName, DBConstants.SQLConstants.SQL_COMMA);
+        String[] aNameArr = StringUtils.split(attrName, SQLConstants.SQL_COMMA);
         if (ArrayUtils.isNotEmpty(aNameArr)) {
             for (String aName : aNameArr) {
                 aName = StringUtils.trim(aName);
@@ -465,7 +465,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
                 String key = keyIt.next();
 
                 // 从sql中获取指定实体属性变量名 所在的起始位置
-                int index = sqlStr.indexOf(DBConstants.SQLConstants.SQL_COLON + key);
+                int index = sqlStr.indexOf(SQLConstants.SQL_COLON + key);
 
                 Column column = (Column) EntityUtils.getEntity(entityCols, Column.COLUMN_ATTR_NAME, key);
                 SqlParam sqlParam = new SqlParam();
@@ -483,7 +483,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
                 // 添加SQL参数
                 sqlParams.add(sqlParam);
                 // 将sql中的 :实体属性变量名 替换为 ?
-                StringUtils.replace(sql, DBConstants.SQLConstants.SQL_COLON + key, DBConstants.SQLConstants.SQL_PLACEHOLDER);
+                StringUtils.replace(sql, SQLConstants.SQL_COLON + key, SQLConstants.SQL_PLACEHOLDER);
             }
         }
 

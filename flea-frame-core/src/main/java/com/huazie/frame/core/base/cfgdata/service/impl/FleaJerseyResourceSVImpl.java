@@ -10,7 +10,6 @@ import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import com.huazie.frame.db.jpa.service.impl.AbstractFleaJPASVImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,7 +32,6 @@ public class FleaJerseyResourceSVImpl extends AbstractFleaJPASVImpl<FleaJerseyRe
     }
 
     @Override
-    @Cacheable(value = "fleajerseyresource", key = "#resourceCode")
     public FleaJerseyResource getResource(String resourceCode) throws CommonException {
         FleaJerseyResource resource = null;
         if (StringUtils.isNotBlank(resourceCode)) {
@@ -46,7 +44,6 @@ public class FleaJerseyResourceSVImpl extends AbstractFleaJPASVImpl<FleaJerseyRe
     }
 
     @Override
-    @Cacheable(value = "fleajerseyresource", key = "'packages'")
     public List<String> getResourcePackages() throws CommonException {
         return fleaJerseyResourceDAO.getResourcePackages();
     }

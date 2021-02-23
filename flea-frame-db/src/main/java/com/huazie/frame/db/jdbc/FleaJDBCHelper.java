@@ -1,6 +1,8 @@
 package com.huazie.frame.db.jdbc;
 
 import com.huazie.frame.common.CommonConstants;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
@@ -13,8 +15,6 @@ import com.huazie.frame.db.common.sql.template.TemplateTypeEnum;
 import com.huazie.frame.db.common.table.pojo.Column;
 import com.huazie.frame.db.jdbc.config.FleaJDBCConfig;
 import com.huazie.frame.db.jdbc.pojo.FleaDBOperationHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -36,7 +36,7 @@ import java.util.Map;
  */
 public class FleaJDBCHelper {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaJDBCHelper.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaJDBCHelper.class);
 
     /**
      * <p> 以返回List<Map>，其中Map的键为属性名，值为相应的数据 </p>
@@ -344,14 +344,16 @@ public class FleaJDBCHelper {
         Connection connection = FleaJDBCConfig.getConfig().getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
+        Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJDBCHelper##getDBOperationHandler(String, Object...) SQL = {}", sql);
+            obj = new Object() {};
+            LOGGER.debug1(obj, "SQL = {}", sql);
         }
 
         if (ObjectUtils.isNotEmpty(preparedStatement) && ArrayUtils.isNotEmpty(params)) {
             for (int i = 0; i < params.length; i++) {
                 if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("FleaJDBCHelper##getDBOperationHandler(String, Object...) PARAM{} = {}", i + 1, params[i]);
+                    LOGGER.debug1(obj, "PARAM{} = {}", i + 1, params[i]);
                 }
                 preparedStatement.setObject(i + 1, params[i]);
             }
@@ -509,28 +511,30 @@ public class FleaJDBCHelper {
 
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
+        Object obj = null;
         if (LOGGER.isDebugEnabled()) {
+            obj = new Object() {};
             if (TemplateTypeEnum.INSERT.getKey().equals(templateType)) {
-                LOGGER.debug("FleaJDBCHelper##insert(String, T) SQL = {}", sql);
+                LOGGER.debug1(obj, "SQL = {}", sql);
             } else if (TemplateTypeEnum.UPDATE.getKey().equals(templateType)) {
-                LOGGER.debug("FleaJDBCHelper##update(String, T) SQL = {}", sql);
+                LOGGER.debug1(obj, "SQL = {}", sql);
             } else if (TemplateTypeEnum.DELETE.getKey().equals(templateType)) {
-                LOGGER.debug("FleaJDBCHelper##delete(String, T) SQL = {}", sql);
+                LOGGER.debug1(obj, "SQL = {}", sql);
             } else if (TemplateTypeEnum.SELECT.getKey().equals(templateType)) {
-                LOGGER.debug("FleaJDBCHelper##query(String, T) SQL = {}", sql);
+                LOGGER.debug1(obj, "SQL = {}", sql);
             }
         }
 
         if (CollectionUtils.isNotEmpty(sqlParams)) {
             for (SqlParam sqlParam : sqlParams) {
                 if (TemplateTypeEnum.INSERT.getKey().equals(templateType)) {
-                    LOGGER.debug("FleaJDBCHelper##insert(String, T) COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
+                    LOGGER.debug1(obj, "JDBC, COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
                 } else if (TemplateTypeEnum.UPDATE.getKey().equals(templateType)) {
-                    LOGGER.debug("FleaJDBCHelper##update(String, T) COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
+                    LOGGER.debug1(obj, "JDBC, COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
                 } else if (TemplateTypeEnum.DELETE.getKey().equals(templateType)) {
-                    LOGGER.debug("FleaJDBCHelper##delete(String, T) COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
+                    LOGGER.debug1(obj, "JDBC, COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
                 } else if (TemplateTypeEnum.SELECT.getKey().equals(templateType)) {
-                    LOGGER.debug("FleaJDBCHelper##query(String, T) COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
+                    LOGGER.debug1(obj, "JDBC, COL{} = {}, PARAM{} = {}", sqlParam.getIndex(), sqlParam.getTabColName(), sqlParam.getIndex(), sqlParam.getAttrValue());
                 }
                 preparedStatement.setObject(sqlParam.getIndex(), sqlParam.getAttrValue());
             }
@@ -567,11 +571,11 @@ public class FleaJDBCHelper {
      * @since 1.0.0
      */
     private static List<Map<String, Object>> ResultToListMap(ResultSet rs) throws SQLException {
-        List<Map<String, Object>> listMaps = new ArrayList<Map<String, Object>>();
+        List<Map<String, Object>> listMaps = new ArrayList<>();
         if (ObjectUtils.isNotEmpty(rs)) {
             while (rs.next()) {
                 ResultSetMetaData rsmd = rs.getMetaData();
-                Map<String, Object> map = new HashMap<String, Object>();
+                Map<String, Object> map = new HashMap<>();
                 if (ObjectUtils.isNotEmpty(rsmd)) {
                     for (int i = 0; i < rsmd.getColumnCount(); i++) {
                         map.put(rsmd.getColumnLabel(i + 1), rs.getObject(i + 1));
@@ -602,7 +606,7 @@ public class FleaJDBCHelper {
                 pkName = primaryKeyResultSet.getString("COLUMN_NAME");
             }
 
-            columnList = new ArrayList<Column>();
+            columnList = new ArrayList<>();
             while (columnsResultSet.next()) {
                 String columnName = columnsResultSet.getString("COLUMN_NAME");
                 int columnSize = columnsResultSet.getInt("COLUMN_SIZE");
@@ -622,9 +626,9 @@ public class FleaJDBCHelper {
                             columnNameArr[n] = StringUtils.toUpperCaseFirstAndLowerCaseLeft(columnNameArr[n]);
                         }
                     }
+                    String attrName = StringUtils.strCat("", columnNameArr);
+                    column.setAttrName(attrName); // 属性名
                 }
-                String attrName = StringUtils.strCat("", columnNameArr);
-                column.setAttrName(attrName); // 属性名
 
                 // 设置属性类型
                 if ("INT".equals(typeName) || ("NUMBER".equals(typeName) && columnSize >= 10)) {
@@ -671,7 +675,7 @@ public class FleaJDBCHelper {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJDBCHelper##queryTableStructure(String) Table Info : {}", columnList);
+            LOGGER.debug1(new Object() {}, "Table Info : {}", columnList);
         }
 
         return columnList;

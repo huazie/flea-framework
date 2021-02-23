@@ -2,8 +2,8 @@ package com.huazie.frame.common.util.json;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 
 import java.util.List;
 import java.util.Map;
@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class GsonUtils {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(GsonUtils.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(GsonUtils.class);
 
     /**
      * <p> 使用Gson进行解析 ,并获取T对象 </p>
@@ -28,9 +28,11 @@ public class GsonUtils {
      * @since 1.0.0
      */
     public static <T> T toEntity(String json, Class<T> clazz) {
+        Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("GsonUtils##toEntity(String, Class<T>) Json = {}", json);
-            LOGGER.debug("GsonUtils##toEntity(String, Class<T>) Class = {}", clazz);
+            obj = new Object() {};
+            LOGGER.debug1(obj, "Json converted to Entity, Json = {}", json);
+            LOGGER.debug1(obj, "Json converted to Entity, Class = {}", clazz);
         }
         T t = null;
         try {
@@ -38,11 +40,11 @@ public class GsonUtils {
             t = gson.fromJson(json, clazz);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("GsonUtils##toEntity() Exception = ", e);
+                LOGGER.error1(new Object() {}, "Json converted to Entity, Exception = ", e);
             }
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("GsonUtils##toEntity(String, Class<T>) Entity = {}", t);
+            LOGGER.debug1(obj, "Json converted to Entity, Entity = {}", t);
         }
         return t;
     }
@@ -56,22 +58,22 @@ public class GsonUtils {
      * @since 1.0.0
      */
     public static <T> List<T> toEntityList(String json, Class<T> clazz) {
+        Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("GsonUtils##toEntityList(String, Class<T>) Json = {}", json);
-            LOGGER.debug("GsonUtils##toEntityList(String, Class<T>) Class = {}", clazz);
+            obj = new Object() {};
+            LOGGER.debug1(obj, "Json converted to EntityList, Json = {}", json);
+            LOGGER.debug1(obj, "Json converted to EntityList, Class = {}", clazz);
         }
         List<T> entityList = null;
         try {
-            Gson gson = new Gson();
-            entityList = gson.fromJson(json, new TypeToken<List<T>>() {
-            }.getType());
+            entityList = new Gson().fromJson(json, new TypeToken<List<T>>() {}.getType());
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("GsonUtils##toEntityList(String, Class<T>) Exception = ", e);
+                LOGGER.error1(new Object() {}, "Json converted to EntityList, Exception = \n", e);
             }
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("GsonUtils##toEntityList(String, Class<T>) EntityList={}", entityList);
+            LOGGER.debug1(obj, "Json converted to EntityList, EntityList={}", entityList);
         }
         return entityList;
     }
@@ -84,21 +86,21 @@ public class GsonUtils {
      * @since 1.0.0
      */
     public static Map<String, Object> toMap(String json) {
+        Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("GsonUtils##toMap(String) Json = {}", json);
+            obj = new Object() {};
+            LOGGER.debug1(obj, "Json converted to Map, Json = {}", json);
         }
         Map<String, Object> map = null;
         try {
-            Gson gson = new Gson();
-            map = gson.fromJson(json, new TypeToken<Map<String, Object>>() {
-            }.getType());
+            map = new Gson().fromJson(json, new TypeToken<Map<String, Object>>() {}.getType());
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("GsonUtils##toMap(String) Exception = ", e);
+                LOGGER.error1(new Object() {}, "Json converted to Map, Exception = \n", e);
             }
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("GsonUtils##toMap(String) Map = {}", map);
+            LOGGER.debug1(obj, "Json converted to Map, Map = {}", map);
         }
         return map;
     }
@@ -111,22 +113,22 @@ public class GsonUtils {
      * @since 1.0.0
      */
     public static List<Map<String, Object>> toMapList(String json) {
+        Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("GsonUtils##toMapList(String) Json = {}", json);
+            obj = new Object() {};
+            LOGGER.debug1(obj, "Json converted to MapList, Json = {}", json);
         }
         List<Map<String, Object>> mapList = null;
         try {
             Gson gson = new Gson();
-            mapList = gson.fromJson(json, new TypeToken<List<Map<String, Object>>>() {
-            }.getType());
-
+            mapList = gson.fromJson(json, new TypeToken<List<Map<String, Object>>>() {}.getType());
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("GsonUtils##toMapList(String) Exception = ", e);
+                LOGGER.error1(new Object() {}, "Json converted to MapList, Exception = ", e);
             }
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("GsonUtils##toMapList(String) MapList={}", mapList);
+            LOGGER.debug1(obj, "Json converted to MapList, MapList={}", mapList);
         }
         return mapList;
     }
@@ -134,18 +136,20 @@ public class GsonUtils {
     /**
      * <p> 将对象转换成json字符串 </p>
      *
-     * @param obj 待转换对象
+     * @param object 待转换对象
      * @return json字符串
      * @since 1.0.0
      */
-    public static String toJsonString(Object obj) {
+    public static String toJsonString(Object object) {
+        Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("GsonUtils##toJsonString(String) Object = {}", obj);
+            obj = new Object() {};
+            LOGGER.debug1(obj, "Object converted to Json String, Object = {}", object);
         }
         Gson gson = new Gson();
-        String json = gson.toJson(obj);
+        String json = gson.toJson(object);
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("GsonUtils##toJsonString(String) Json = {}", json);
+            LOGGER.debug1(obj, "Object converted to Json String, Json = {}", json);
         }
         return json;
     }

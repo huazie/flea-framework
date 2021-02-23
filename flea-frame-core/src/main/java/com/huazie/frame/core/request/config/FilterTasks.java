@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class FilterTasks {
 
-    private List<FilterTask> filterTaskList = new ArrayList<FilterTask>(); // 过滤器任务列表
+    private List<FilterTask> filterTaskList = new ArrayList<>(); // 过滤器任务列表
 
     public List<FilterTask> getFilterTaskList() {
         return filterTaskList;

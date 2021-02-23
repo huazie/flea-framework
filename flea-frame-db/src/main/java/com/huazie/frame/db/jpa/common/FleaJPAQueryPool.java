@@ -95,13 +95,13 @@ public class FleaJPAQueryPool extends FleaObjectPool<FleaJPAQuery> {
     private static class FleaJPAQueryFactory implements PooledObjectFactory<FleaJPAQuery> {
 
         @Override
-        public PooledObject<FleaJPAQuery> makeObject() throws Exception {
+        public PooledObject<FleaJPAQuery> makeObject() {
             FleaJPAQuery query = new FleaJPAQuery();
-            return new DefaultPooledObject<FleaJPAQuery>(query);
+            return new DefaultPooledObject<>(query);
         }
 
         @Override
-        public void destroyObject(PooledObject<FleaJPAQuery> p) throws Exception {
+        public void destroyObject(PooledObject<FleaJPAQuery> p) {
             final FleaJPAQuery query = p.getObject();
             if (ObjectUtils.isNotEmpty(query)) {
                 query.reset();
@@ -114,12 +114,12 @@ public class FleaJPAQueryPool extends FleaObjectPool<FleaJPAQuery> {
         }
 
         @Override
-        public void activateObject(PooledObject<FleaJPAQuery> p) throws Exception {
+        public void activateObject(PooledObject<FleaJPAQuery> p) {
 
         }
 
         @Override
-        public void passivateObject(PooledObject<FleaJPAQuery> p) throws Exception {
+        public void passivateObject(PooledObject<FleaJPAQuery> p) {
 
         }
     }

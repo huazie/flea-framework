@@ -35,7 +35,7 @@
 
     <dependencies>
 
-        <!-- flea frame 配置文件 -->
+        <!-- FLEA FRAME CONFIG -->
         <dependency>
             <groupId>com.huazie.frame</groupId>
             <artifactId>flea-frame-config</artifactId>

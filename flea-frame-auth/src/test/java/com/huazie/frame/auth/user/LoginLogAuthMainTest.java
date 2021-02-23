@@ -3,9 +3,9 @@ package com.huazie.frame.auth.user;
 import com.huazie.frame.auth.base.user.entity.FleaLoginLog;
 import com.huazie.frame.auth.base.user.service.interfaces.IFleaLoginLogSV;
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.DateUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -21,7 +21,7 @@ import java.util.concurrent.Executors;
  */
 public class LoginLogAuthMainTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(LoginLogAuthMainTest.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(LoginLogAuthMainTest.class);
 
     public static void main(String[] args) {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");

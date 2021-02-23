@@ -1,10 +1,10 @@
 package com.huazie.frame.common.util;
 
 import com.huazie.frame.common.CommonConstants;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import org.apache.commons.lang.ArrayUtils;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *  
@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  */
 public class StringsUtilsTest {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(StringsUtilsTest.class);
+	private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(StringsUtilsTest.class);
 	
 	@Test
 	public void testStringBefore(){

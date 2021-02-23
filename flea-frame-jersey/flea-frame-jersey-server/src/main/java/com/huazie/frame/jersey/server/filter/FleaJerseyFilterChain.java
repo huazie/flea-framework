@@ -1,5 +1,7 @@
 package com.huazie.frame.jersey.server.filter;
 
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.ReflectUtils;
@@ -10,8 +12,6 @@ import com.huazie.frame.jersey.common.data.FleaJerseyResponse;
 import com.huazie.frame.jersey.common.exception.FleaJerseyFilterException;
 import com.huazie.frame.jersey.common.filter.config.Filter;
 import com.huazie.frame.jersey.common.filter.config.FleaJerseyFilterConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class FleaJerseyFilterChain {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaJerseyFilterChain.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaJerseyFilterChain.class);
 
     private List<IFleaJerseyFilter> beforeFilters; // 前置过滤器链
 
@@ -38,7 +38,7 @@ public class FleaJerseyFilterChain {
     private static ThreadLocal<StringBuilder> sDoFilterStep = new ThreadLocal<>(); // 过滤器执行顺序
 
     public FleaJerseyFilterChain() {
-        initFilterChain();
+        init();
     }
 
     /**
@@ -46,19 +46,11 @@ public class FleaJerseyFilterChain {
      *
      * @since 1.0.0
      */
-    private void initFilterChain() {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJerseyFilterChain##initFilterChain() Start");
-        }
-
+    private void init() {
         beforeFilters = convert(FleaJerseyFilterConfig.getBeforeFilters());
         serviceFilters = convert(FleaJerseyFilterConfig.getServiceFilters());
         afterFilters = convert(FleaJerseyFilterConfig.getAfterFilters());
         errorFilters = convertError(FleaJerseyFilterConfig.getErrorFilters());
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJerseyFilterChain##initFilterChain() End");
-        }
     }
 
     /**
@@ -80,7 +72,7 @@ public class FleaJerseyFilterChain {
     public FleaJerseyResponse doFilter(String requestData) {
         FleaJerseyResponse response = new FleaJerseyResponse();
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJerseyFilterChain##doFilter(String) RequestData = {}", requestData);
+            LOGGER.debug1(new Object() {}, "RequestData = {}", requestData);
         }
         try {
             // 请求报文不能为空
@@ -120,7 +112,7 @@ public class FleaJerseyFilterChain {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJerseyFilterChain##doFilter(FleaJerseyRequest, FleaJerseyResponse) Filter = {}", sDoFilterStep.get());
+            LOGGER.debug1(new Object() {}, "Filter = {}", sDoFilterStep.get());
         }
 
         return response;

@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public class Relations {
 
-    private List<Relation> relations = new ArrayList<Relation>();
+    private List<Relation> relations = new ArrayList<>();
 
     /**
      * <p> 获取SQL模板和模板参数关联关系的List对象 </p>
@@ -44,7 +44,7 @@ public class Relations {
      * @return SQL模板和模板参数关联关系的Map对象
      * @since 1.0.0
      */
-    public Map<String, Relation> toRelationsMap() {
+    Map<String, Relation> toRelationsMap() {
         return EntityUtils.toRelationsMap(relations);
     }
 

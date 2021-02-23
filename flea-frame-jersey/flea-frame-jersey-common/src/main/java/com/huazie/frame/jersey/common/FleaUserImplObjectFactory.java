@@ -17,7 +17,7 @@ public class FleaUserImplObjectFactory implements FleaObjectFactory<IFleaUser> {
     @Override
     public FleaObject<IFleaUser> newObject() {
         IFleaUser fleaUser = new FleaUserImpl();
-        return new DefaultFleaObject<IFleaUser>(fleaUser);
+        return new DefaultFleaObject<>(fleaUser);
     }
 
     @Override

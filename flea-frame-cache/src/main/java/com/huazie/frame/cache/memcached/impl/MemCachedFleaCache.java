@@ -3,9 +3,9 @@ package com.huazie.frame.cache.memcached.impl;
 import com.huazie.frame.cache.AbstractFleaCache;
 import com.huazie.frame.cache.common.CacheEnum;
 import com.huazie.frame.cache.memcached.config.MemCachedConfig;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.whalin.MemCached.MemCachedClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 
@@ -18,7 +18,7 @@ import java.util.Date;
  */
 public class MemCachedFleaCache extends AbstractFleaCache {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MemCachedFleaCache.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(MemCachedFleaCache.class);
 
     private final MemCachedClient memCachedClient;  // MemCached客户端
 
@@ -39,7 +39,7 @@ public class MemCachedFleaCache extends AbstractFleaCache {
     @Override
     public Object getNativeValue(String key) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("MemCachedFleaCache##getNativeValue(String) KEY = {}", key);
+            LOGGER.debug1(new Object() {}, "KEY = {}", key);
         }
         return memCachedClient.get(key);
     }
@@ -47,9 +47,10 @@ public class MemCachedFleaCache extends AbstractFleaCache {
     @Override
     public void putNativeValue(String key, Object value, long expiry) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("MemCachedFleaCache##putNativeValue(String, Object, long) KEY = {}", key);
-            LOGGER.debug("MemCachedFleaCache##putNativeValue(String, Object, long) VALUE = {}", value);
-            LOGGER.debug("MemCachedFleaCache##putNativeValue(String, Object, long) EXPIRY = {}s", expiry);
+            Object obj = new Object() {};
+            LOGGER.debug1(obj, "MEMCACHED FLEA CACHE, KEY = {}", key);
+            LOGGER.debug1(obj, "MEMCACHED FLEA CACHE, VALUE = {}", value);
+            LOGGER.debug1(obj, "MEMCACHED FLEA CACHE, EXPIRY = {}s", expiry);
         }
         memCachedClient.set(key, value, new Date(expiry * 1000));
     }
@@ -57,7 +58,7 @@ public class MemCachedFleaCache extends AbstractFleaCache {
     @Override
     public void deleteNativeValue(String key) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("MemCachedFleaCache##deleteNativeValue(String) KEY = {}", key);
+            LOGGER.debug1(new Object() {}, "KEY = {}", key);
         }
         memCachedClient.delete(key);
     }

@@ -1,5 +1,7 @@
 package com.huazie.frame.jersey.client.core;
 
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.core.base.cfgdata.bean.FleaConfigDataSpringBean;
@@ -9,8 +11,6 @@ import com.huazie.frame.jersey.client.request.RequestConfig;
 import com.huazie.frame.jersey.client.request.RequestFactory;
 import com.huazie.frame.jersey.client.response.Response;
 import com.huazie.frame.jersey.common.exception.FleaJerseyClientException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class FleaJerseyClient {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaJerseyClient.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaJerseyClient.class);
 
     private FleaConfigDataSpringBean springBean;
 
@@ -46,8 +46,10 @@ public class FleaJerseyClient {
      */
     public <T> Response<T> invoke(String clientCode, Object input, Class<T> outputClazz) throws Exception {
 
+        Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJerseyClient##invoke(String, Object, Class<T>) Start");
+            obj = new Object() {};
+            LOGGER.debug1(obj, "Start");
         }
 
         RequestConfig config = new RequestConfig();
@@ -90,6 +92,10 @@ public class FleaJerseyClient {
         // 业务出参类全名字符串
         config.addClientOutput(resClient.getClientOutput());
 
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug1(obj, "Config = {}", config);
+        }
+
         // 传入请求配置，让请求工厂生产一个Flea Jersey请求
         Request request = RequestFactory.getInstance().buildFleaRequest(config);
         Response<T> response = null;
@@ -98,8 +104,8 @@ public class FleaJerseyClient {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJerseyClient##invoke(String, Object, Class<T>) Response = {}", response);
-            LOGGER.debug("FleaJerseyClient##invoke(String, Object, Class<T>) End");
+            LOGGER.debug1(obj, "Response = {}", response);
+            LOGGER.debug1(obj, "End");
         }
 
         return response;

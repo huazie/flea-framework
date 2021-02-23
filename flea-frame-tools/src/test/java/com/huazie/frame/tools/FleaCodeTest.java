@@ -1,9 +1,9 @@
 package com.huazie.frame.tools;
 
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.IOUtils;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <p></p>
@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  */
 public class FleaCodeTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaCodeTest.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaCodeTest.class);
 
     @Test
     public void testFleaCode() {

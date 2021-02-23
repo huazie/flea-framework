@@ -2,6 +2,8 @@ package com.huazie.frame.jersey.client.request.impl;
 
 import com.huazie.frame.common.FleaSessionManager;
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.ReflectUtils;
@@ -24,8 +26,6 @@ import com.huazie.frame.jersey.common.data.ResponseBusinessData;
 import com.huazie.frame.jersey.common.data.ResponsePublicData;
 import com.huazie.frame.jersey.common.exception.FleaJerseyClientException;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
@@ -41,7 +41,7 @@ import java.net.URLEncoder;
  */
 public abstract class FleaRequest implements Request {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaRequest.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaRequest.class);
 
     private RequestConfig config; // 请求配置
 
@@ -70,8 +70,10 @@ public abstract class FleaRequest implements Request {
     @Override
     public <T> Response<T> doRequest(Class<T> clazz) throws Exception {
 
+        Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaRequest##doRequest(Class<T>) Start");
+            obj = new Object() {};
+            LOGGER.debug1(obj, "Start");
         }
 
         if (ObjectUtils.isEmpty(config) || config.isEmpty()) {
@@ -134,7 +136,7 @@ public abstract class FleaRequest implements Request {
 
         FleaJerseyRequest request = createFleaJerseyRequest(resourceCode, serviceCode, input);
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaRequest##doRequest(Class<T>) FleaJerseyRequest = \n{}", JABXUtils.toXml(request, true));
+            LOGGER.debug1(obj, "FleaJerseyRequest = \n{}", JABXUtils.toXml(request, true));
         }
 
         FleaJerseyResponse response = request(target, request);
@@ -150,10 +152,10 @@ public abstract class FleaRequest implements Request {
         ObjectUtils.checkEmpty(responsePublicData, FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000006");
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaRequest##doRequest(Class<T>) FleaJerseyResponse = \n{}", JABXUtils.toXml(response, true));
+            LOGGER.debug1(obj, "FleaJerseyResponse = \n{}", JABXUtils.toXml(response, true));
         }
 
-        Response<T> responseResult = new Response<T>();
+        Response<T> responseResult = new Response<>();
         T output = null;
 
         // 判断资源服务是否请求成功
@@ -173,7 +175,7 @@ public abstract class FleaRequest implements Request {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaRequest##doRequest(Class<T>) End");
+            LOGGER.debug1(obj, "End");
         }
 
         return responseResult;
@@ -198,7 +200,7 @@ public abstract class FleaRequest implements Request {
             mediaType = MediaType.valueOf(mediaTypeStr);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("FleaJerseyRequestFactory##buildFleaRequest(RequestConfig) Exception = {}", e.getMessage());
+                LOGGER.error1(new Object() {}, "Exception = {}", e.getMessage());
             }
             // 请检查客户端配置【client_code = {0}】: 【{1} = {2}】非法
             ExceptionUtils.throwCommonException(FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000010", config.getClientCode(),
@@ -289,11 +291,11 @@ public abstract class FleaRequest implements Request {
     private static RequestPublicData createRequestPublicData(String resourceCode, String serviceCode) {
         RequestPublicData publicData = new RequestPublicData();
         // 当前客户端的系统账户编号
-        publicData.setSystemAccountId(FleaJerseyClientConfig.getSystemAcctId(String.class));
+        publicData.setSystemAccountId(FleaJerseyClientConfig.getSystemAccountId(String.class));
         // 当前客户端的系统账户密码
-        publicData.setSystemAccountPassword(FleaJerseyClientConfig.getSystemAcctPwd());
+        publicData.setSystemAccountPassword(FleaJerseyClientConfig.getSystemAccountPwd());
         // 当前操作的账户编号
-        publicData.setAccountId(StringUtils.valueOf(FleaSessionManager.getAcctId()));
+        publicData.setAccountId(StringUtils.valueOf(FleaSessionManager.getAccountId()));
         publicData.setResourceCode(resourceCode);
         publicData.setServiceCode(serviceCode);
         return publicData;

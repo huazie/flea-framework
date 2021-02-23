@@ -10,18 +10,6 @@ package com.huazie.frame.cache.common;
 public interface CacheConstants {
 
     /**
-     * <p> Flea Cache 常量 </p>
-     *
-     * @since 1.0.0
-     */
-    interface FleaCacheConstants {
-        /**
-         * <p> Flea缓存名 </p>
-         */
-        String FLEA_CACHE_NAME = "FleaCache";
-    }
-
-    /**
      * <p> Flea Cache配置数据常量 </p>
      *
      * @since 1.0.0
@@ -247,7 +235,6 @@ public interface CacheConstants {
          * <p> Redis客户端Jedis连接池获取连接时的最大等待毫秒数 </p>
          */
         String REDIS_CACHE_PARAM_POOL_MAXWAITMILLIS = "pool.maxWaitMillis";
-
     }
 
 }

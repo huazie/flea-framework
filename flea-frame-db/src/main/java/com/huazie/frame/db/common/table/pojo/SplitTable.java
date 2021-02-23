@@ -17,6 +17,8 @@ public class SplitTable {
 
     private String splitTablePkColumnValue; // ID生成器表中分表的主键值
 
+    private boolean isExistSplitTable; // 是否存在分表 【true：存在 false：不存在】
+
     public String getTableName() {
         return tableName;
     }
@@ -47,5 +49,13 @@ public class SplitTable {
 
     public void setSplitTablePkColumnValue(String splitTablePkColumnValue) {
         this.splitTablePkColumnValue = splitTablePkColumnValue;
+    }
+
+    public boolean isExistSplitTable() {
+        return isExistSplitTable;
+    }
+
+    public void setExistSplitTable(boolean existSplitTable) {
+        isExistSplitTable = existSplitTable;
     }
 }

@@ -1,13 +1,13 @@
 package com.huazie.frame.core.base.cfgdata.dao.impl;
 
+import com.huazie.frame.common.EntityStateEnum;
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.core.base.cfgdata.dao.interfaces.IFleaJerseyResServiceDAO;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResService;
-import com.huazie.frame.common.EntityStateEnum;
 import com.huazie.frame.core.common.FleaConfigEntityConstants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.List;
 @Repository("resServiceDAO")
 public class FleaJerseyResServiceDAOImpl extends FleaConfigDAOImpl<FleaJerseyResService> implements IFleaJerseyResServiceDAO {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaJerseyResServiceDAOImpl.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaJerseyResServiceDAOImpl.class);
 
     @Override
     @SuppressWarnings(value = "unchecked")
@@ -41,7 +41,7 @@ public class FleaJerseyResServiceDAOImpl extends FleaConfigDAOImpl<FleaJerseyRes
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJerseyResServiceDAOImpl##getResService(String, String) ResService = {}", resService);
+            LOGGER.debug1(new Object() {}, "ResService = {}", resService);
         }
 
         return resService;

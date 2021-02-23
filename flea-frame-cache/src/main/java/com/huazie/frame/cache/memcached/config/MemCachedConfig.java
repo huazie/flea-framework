@@ -1,21 +1,21 @@
 package com.huazie.frame.cache.memcached.config;
 
-import com.huazie.frame.cache.common.CacheConstants;
+import com.huazie.frame.cache.common.CacheConstants.MemCachedConfigConstants;
 import com.huazie.frame.common.CommonConstants;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.PropertiesUtil;
 import com.huazie.frame.common.util.StringUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
 /**
- * <p> Memcached缓存配置类 </p>
+ * <p> MemCached缓存配置类 </p>
  *
  * @author huazie
  * @version 1.0.0
@@ -23,7 +23,7 @@ import java.util.Properties;
  */
 public class MemCachedConfig {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MemCachedConfig.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(MemCachedConfig.class);
 
     private static volatile MemCachedConfig config;
 
@@ -52,9 +52,9 @@ public class MemCachedConfig {
     private int hashingAlg;     // 一致性hash算法
 
     static {
-        String fileName = CacheConstants.MemCachedConfigConstants.MEMCACHED_FILE_NAME;
-        if (StringUtils.isNotBlank(System.getProperty(CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_FILE_SYSTEM_KEY))) {
-            fileName = StringUtils.trim(System.getProperty(CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_FILE_SYSTEM_KEY));
+        String fileName = MemCachedConfigConstants.MEMCACHED_FILE_NAME;
+        if (StringUtils.isNotBlank(System.getProperty(MemCachedConfigConstants.MEMCACHED_CONFIG_FILE_SYSTEM_KEY))) {
+            fileName = StringUtils.trim(System.getProperty(MemCachedConfigConstants.MEMCACHED_CONFIG_FILE_SYSTEM_KEY));
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("MemCachedConfig Use the specified memcached.properties：{}", fileName);
             }
@@ -80,27 +80,27 @@ public class MemCachedConfig {
                     config = new MemCachedConfig();
                     try {
                         // 获取缓存所属系统名
-                        String systemName = PropertiesUtil.getStringValue(prop, CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_SYSTEM_NAME);
+                        String systemName = PropertiesUtil.getStringValue(prop, MemCachedConfigConstants.MEMCACHED_CONFIG_SYSTEM_NAME);
                         if (StringUtils.isBlank(systemName)) {
                             throw new Exception("缓存归属系统名未配置，请检查");
                         }
                         config.setSystemName(systemName);
 
                         // 获取MemCached服务器地址
-                        String allServer = PropertiesUtil.getStringValue(prop, CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_SERVER);
+                        String allServer = PropertiesUtil.getStringValue(prop, MemCachedConfigConstants.MEMCACHED_CONFIG_SERVER);
                         if (StringUtils.isBlank(allServer)) {
-                            throw new Exception("The configuration attribute [" + CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_SERVER + "] is not exist");
+                            throw new Exception("The configuration attribute [" + MemCachedConfigConstants.MEMCACHED_CONFIG_SERVER + "] is not exist");
                         }
                         String[] serverArr = StringUtils.split(allServer, CommonConstants.SymbolConstants.COMMA);
                         if (ArrayUtils.isEmpty(serverArr)) {
-                            throw new Exception("The value of configuration attribute [" + CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_SERVER + "] is empty");
+                            throw new Exception("The value of configuration attribute [" + MemCachedConfigConstants.MEMCACHED_CONFIG_SERVER + "] is empty");
                         }
 
-                        String allWeight = PropertiesUtil.getStringValue(prop, CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_WEIGHT);
+                        String allWeight = PropertiesUtil.getStringValue(prop, MemCachedConfigConstants.MEMCACHED_CONFIG_WEIGHT);
                         List<Integer> weightList = new ArrayList<>();
                         if (StringUtils.isNotBlank(allWeight)) {
                             String[] weightStrArr = StringUtils.split(allWeight, CommonConstants.SymbolConstants.COMMA);
-                            if (ArrayUtils.isSameLength(serverArr, weightStrArr)) {
+                            if (ArrayUtils.isNotEmpty(weightStrArr) && ArrayUtils.isSameLength(serverArr, weightStrArr)) {
                                 for (String weightStr : weightStrArr) {
                                     Integer weight = Integer.valueOf(weightStr);
                                     weightList.add(weight);
@@ -110,14 +110,14 @@ public class MemCachedConfig {
 
                         config.setServers(serverArr);
                         config.setWeights(weightList.toArray(new Integer[0]));
-                        config.setInitConn(PropertiesUtil.getIntegerValue(prop, CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_INITCONN));
-                        config.setMinConn(PropertiesUtil.getIntegerValue(prop, CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_MINCONN));
-                        config.setMaxConn(PropertiesUtil.getIntegerValue(prop, CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_MAXCONN));
-                        config.setMaintSleep(PropertiesUtil.getIntegerValue(prop, CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_MAINTSLEEP));
-                        config.setNagle(PropertiesUtil.getBooleanValue(prop, CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_NAGLE));
-                        config.setSocketTO(PropertiesUtil.getIntegerValue(prop, CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_SOCKETTO));
-                        config.setSocketConnectTO(PropertiesUtil.getIntegerValue(prop, CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_SOCKETCONNECTTO));
-                        config.setHashingAlg(PropertiesUtil.getIntegerValue(prop, CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_HASHINGALG));
+                        config.setInitConn(PropertiesUtil.getIntegerValue(prop, MemCachedConfigConstants.MEMCACHED_CONFIG_INITCONN));
+                        config.setMinConn(PropertiesUtil.getIntegerValue(prop, MemCachedConfigConstants.MEMCACHED_CONFIG_MINCONN));
+                        config.setMaxConn(PropertiesUtil.getIntegerValue(prop, MemCachedConfigConstants.MEMCACHED_CONFIG_MAXCONN));
+                        config.setMaintSleep(PropertiesUtil.getIntegerValue(prop, MemCachedConfigConstants.MEMCACHED_CONFIG_MAINTSLEEP));
+                        config.setNagle(PropertiesUtil.getBooleanValue(prop, MemCachedConfigConstants.MEMCACHED_CONFIG_NAGLE));
+                        config.setSocketTO(PropertiesUtil.getIntegerValue(prop, MemCachedConfigConstants.MEMCACHED_CONFIG_SOCKETTO));
+                        config.setSocketConnectTO(PropertiesUtil.getIntegerValue(prop, MemCachedConfigConstants.MEMCACHED_CONFIG_SOCKETCONNECTTO));
+                        config.setHashingAlg(PropertiesUtil.getIntegerValue(prop, MemCachedConfigConstants.MEMCACHED_CONFIG_HASHINGALG));
                     } catch (Exception e) {
                         if (LOGGER.isErrorEnabled()) {
                             LOGGER.error("Please check the MemCached config :", e);
@@ -133,7 +133,7 @@ public class MemCachedConfig {
         return systemName;
     }
 
-    public void setSystemName(String systemName) {
+    private void setSystemName(String systemName) {
         this.systemName = systemName;
     }
 
@@ -141,7 +141,7 @@ public class MemCachedConfig {
         return servers;
     }
 
-    public void setServers(String[] servers) {
+    private void setServers(String[] servers) {
         this.servers = servers;
     }
 
@@ -149,7 +149,7 @@ public class MemCachedConfig {
         return weights;
     }
 
-    public void setWeights(Integer[] weights) {
+    private void setWeights(Integer[] weights) {
         this.weights = weights;
     }
 
@@ -157,7 +157,7 @@ public class MemCachedConfig {
         return initConn;
     }
 
-    public void setInitConn(int initConn) {
+    private void setInitConn(int initConn) {
         this.initConn = initConn;
     }
 
@@ -165,7 +165,7 @@ public class MemCachedConfig {
         return minConn;
     }
 
-    public void setMinConn(int minConn) {
+    private void setMinConn(int minConn) {
         this.minConn = minConn;
     }
 
@@ -173,7 +173,7 @@ public class MemCachedConfig {
         return maxConn;
     }
 
-    public void setMaxConn(int maxConn) {
+    private void setMaxConn(int maxConn) {
         this.maxConn = maxConn;
     }
 
@@ -181,7 +181,7 @@ public class MemCachedConfig {
         return maintSleep;
     }
 
-    public void setMaintSleep(int maintSleep) {
+    private void setMaintSleep(int maintSleep) {
         this.maintSleep = maintSleep;
     }
 
@@ -189,7 +189,7 @@ public class MemCachedConfig {
         return nagle;
     }
 
-    public void setNagle(boolean nagle) {
+    private void setNagle(boolean nagle) {
         this.nagle = nagle;
     }
 
@@ -197,7 +197,7 @@ public class MemCachedConfig {
         return socketTO;
     }
 
-    public void setSocketTO(int socketTO) {
+    private void setSocketTO(int socketTO) {
         this.socketTO = socketTO;
     }
 
@@ -205,7 +205,7 @@ public class MemCachedConfig {
         return socketConnectTO;
     }
 
-    public void setSocketConnectTO(int socketConnectTO) {
+    private void setSocketConnectTO(int socketConnectTO) {
         this.socketConnectTO = socketConnectTO;
     }
 
@@ -213,7 +213,7 @@ public class MemCachedConfig {
         return hashingAlg;
     }
 
-    public void setHashingAlg(int hashingAlg) {
+    private void setHashingAlg(int hashingAlg) {
         this.hashingAlg = hashingAlg;
     }
 

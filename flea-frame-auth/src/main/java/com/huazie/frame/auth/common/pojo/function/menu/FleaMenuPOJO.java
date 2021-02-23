@@ -1,6 +1,6 @@
 package com.huazie.frame.auth.common.pojo.function.menu;
 
-import com.huazie.frame.auth.common.pojo.FleaEffExpDatePOJO;
+import com.huazie.frame.common.pojo.FleaEffExpDatePOJO;
 import com.huazie.frame.auth.common.pojo.function.attr.FleaFunctionAttrPOJO;
 import org.apache.commons.lang.builder.ToStringBuilder;
 

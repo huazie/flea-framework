@@ -139,4 +139,19 @@ public class FleaFunctionModuleSVImpl implements IFleaFunctionModuleSV {
         return fleaPrivilegeRelPOJO;
     }
 
+    @Override
+    public List<FleaMenu> queryValidMenus(FleaMenuPOJO fleaMenuPOJO) throws CommonException {
+
+        List<FleaMenu> menuList;
+
+        if (ObjectUtils.isNotEmpty(fleaMenuPOJO)) {
+            menuList = fleaMenuSV.queryValidMenus(null,
+                    fleaMenuPOJO.getMenuCode(), fleaMenuPOJO.getMenuName(),
+                    fleaMenuPOJO.getMenuLevel(), fleaMenuPOJO.getParentId());
+        } else {
+            menuList = fleaMenuSV.queryAllValidMenus();
+        }
+
+        return menuList;
+    }
 }

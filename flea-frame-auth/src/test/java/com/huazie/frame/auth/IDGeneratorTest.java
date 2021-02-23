@@ -1,11 +1,11 @@
 package com.huazie.frame.auth;
 
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.db.common.DBSystemEnum;
 import com.huazie.frame.db.jdbc.FleaJDBCHelper;
 import com.huazie.frame.db.jdbc.config.FleaJDBCConfig;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.persistence.GenerationType;
 import java.sql.SQLException;
@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class IDGeneratorTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(IDGeneratorTest.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(IDGeneratorTest.class);
 
     @Test
     public void testGenerationType() {
@@ -34,7 +34,7 @@ public class IDGeneratorTest {
             FleaJDBCConfig.init(DBSystemEnum.MySQL.getName(), "fleaauth");
             String sql = "insert into flea_id_generator (id_generator_key, id_generator_value) values(?, ?)";
             String pkColumnValue = "pk_flea_login_log_202008";
-            List<Object> params = new ArrayList<Object>();
+            List<Object> params = new ArrayList<>();
             params.add(pkColumnValue);
             params.add(0L);
             FleaJDBCHelper.insert(sql, params);

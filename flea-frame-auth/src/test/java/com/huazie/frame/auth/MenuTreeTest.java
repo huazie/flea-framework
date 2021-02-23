@@ -2,13 +2,15 @@ package com.huazie.frame.auth;
 
 import com.huazie.frame.auth.base.function.entity.FleaMenu;
 import com.huazie.frame.auth.common.service.interfaces.IFleaAuthSV;
+import com.huazie.frame.auth.common.service.interfaces.IFleaFunctionModuleSV;
 import com.huazie.frame.auth.util.FleaMenuTree;
+import com.huazie.frame.auth.util.FueluxMenuTree;
 import com.huazie.frame.common.FleaTree;
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -25,7 +27,7 @@ import java.util.ListIterator;
  */
 public class MenuTreeTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MenuTreeTest.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(MenuTreeTest.class);
 
     private ApplicationContext applicationContext;
 
@@ -85,7 +87,9 @@ public class MenuTreeTest {
         LOGGER.debug("Size = {}", fleaTree.size());
         LOGGER.debug("TreeLeaf List= {}", fleaTree.getAllTreeLeafElement());
         LOGGER.debug("TreeLeaf = {}", fleaTree.getTreeLeafElement(22L));
-        LOGGER.debug("Tree = \n{}", fleaTree.toMapList());
+        LOGGER.debug("Tree = \n{}", fleaTree.toMapList(false));
+        LOGGER.debug("Tree【root】 = \n{}", fleaTree.toMapList(true));
+
     }
 
     @Test
@@ -104,16 +108,58 @@ public class MenuTreeTest {
 
         IFleaAuthSV fleaAuthSV = (IFleaAuthSV) applicationContext.getBean("fleaAuthSV");
         Long accountId = 10000L;
-        Long systemAcctId = 1000L;
+        Long systemAccountId = 1000L;
         try {
-            List<FleaMenu> fleaMenuList = fleaAuthSV.getAllAccessibleMenus(accountId, systemAcctId);
+            List<FleaMenu> fleaMenuList = fleaAuthSV.queryAllAccessibleMenus(accountId, systemAccountId);
 
             FleaMenuTree fleaMenuTree = new FleaMenuTree("跳蚤管家");
             fleaMenuTree.addAll(fleaMenuList);
 
             LOGGER.debug("MENU_TREE = \n{}", fleaMenuTree);
 
-            LOGGER.debug("MENU = \n{}", fleaMenuTree.toMapList());
+            LOGGER.debug("MENU = \n{}", fleaMenuTree.toMapList(false));
+
+            LOGGER.debug("MENU1 = \n{}", fleaMenuTree.toMapList(true));
+
+        } catch (CommonException e) {
+            LOGGER.error("Exception: ", e);
+        }
+    }
+
+    @Test
+    public void testFueluxMenuTree() {
+
+        IFleaAuthSV fleaAuthSV = (IFleaAuthSV) applicationContext.getBean("fleaAuthSV");
+        Long accountId = 10000L;
+        Long systemAccountId = 1000L;
+        try {
+            List<FleaMenu> fleaMenuList = fleaAuthSV.queryAllAccessibleMenus(accountId, systemAccountId);
+
+            FueluxMenuTree fueluxMenuTree = new FueluxMenuTree("跳蚤管家", null);
+            fueluxMenuTree.addAll(fleaMenuList);
+
+            LOGGER.debug("MENU_TREE = \n{}", fueluxMenuTree);
+
+            LOGGER.debug("MENU = \n{}", fueluxMenuTree.toMapList(true));
+
+        } catch (CommonException e) {
+            LOGGER.error("Exception: ", e);
+        }
+    }
+
+    @Test
+    public void testFueluxMenuTree1() {
+
+        IFleaFunctionModuleSV fleaFunctionModuleSV = (IFleaFunctionModuleSV) applicationContext.getBean("fleaFunctionModuleSV");
+        try {
+            List<FleaMenu> fleaMenuList = fleaFunctionModuleSV.queryValidMenus(null);
+
+            FueluxMenuTree fueluxMenuTree = new FueluxMenuTree("FleaFrameAuth", null);
+            fueluxMenuTree.addAll(fleaMenuList);
+
+            LOGGER.debug("MENU_TREE = \n{}", fueluxMenuTree);
+
+            LOGGER.debug("MENU = \n{}", fueluxMenuTree.toMapList(true));
 
         } catch (CommonException e) {
             LOGGER.error("Exception: ", e);

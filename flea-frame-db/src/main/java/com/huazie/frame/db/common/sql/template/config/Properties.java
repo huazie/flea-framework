@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class Properties {
 
-    private List<Property> properties = new ArrayList<Property>();
+    private List<Property> properties = new ArrayList<>();
 
     /**
      * <p> 获取属性的List对象 </p>
@@ -47,9 +47,7 @@ public class Properties {
      */
     public Map<String, Property> toPropMap() {
         Map<String, Property> propMap = new HashMap<String, Property>();
-        Iterator<Property> propIt = properties.iterator();
-        while (propIt.hasNext()) {
-            Property prop = propIt.next();
+        for (Property prop : properties) {
             propMap.put(prop.getKey(), prop);
         }
         return propMap;

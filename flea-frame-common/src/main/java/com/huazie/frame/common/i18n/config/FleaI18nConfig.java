@@ -5,13 +5,13 @@ import com.huazie.frame.common.FleaConfigManager;
 import com.huazie.frame.common.config.ConfigItem;
 import com.huazie.frame.common.config.ConfigItems;
 import com.huazie.frame.common.i18n.pojo.FleaI18nData;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.MapUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -28,7 +28,7 @@ import java.util.Set;
  */
 public class FleaI18nConfig {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaI18nConfig.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaI18nConfig.class);
 
     private static volatile FleaI18nConfig config;
 
@@ -153,10 +153,12 @@ public class FleaI18nConfig {
      * @since 1.0.0
      */
     public String getI18NDataValue(String key, String resName, Locale locale) {
+        Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Find the key     : {}", key);
-            LOGGER.debug("Find the resName : {}", resName);
-            LOGGER.debug("Find the locale  : {} , {}", locale == null ? Locale.getDefault() : locale, locale == null ? Locale.getDefault().getDisplayLanguage() : locale.getDisplayLanguage());
+            obj = new Object() {};
+            LOGGER.debug1(obj, "Find the key     : {}", key);
+            LOGGER.debug1(obj, "Find the resName : {}", resName);
+            LOGGER.debug1(obj, "Find the locale  : {} , {}", locale == null ? Locale.getDefault() : locale, locale == null ? Locale.getDefault().getDisplayLanguage() : locale.getDisplayLanguage());
         }
         ResourceBundle resource = getResourceBundle(resName, locale);
 
@@ -169,7 +171,7 @@ public class FleaI18nConfig {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Find the value   : {} ", value);
+            LOGGER.debug1(obj, "Find the value   : {} ", value);
         }
         return value;
     }
@@ -186,8 +188,10 @@ public class FleaI18nConfig {
 
         String key = generateKey(resName, locale);
 
+        Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Find the resKey  : {}", key);
+            obj = new Object() {};
+            LOGGER.debug1(obj, "Find the resKey  : {}", key);
         }
 
         ResourceBundle resource = resources.get(key);
@@ -200,9 +204,9 @@ public class FleaI18nConfig {
 
         if (LOGGER.isDebugEnabled()) {
             if (ObjectUtils.isEmpty(locale)) {
-                LOGGER.debug("Find the fileName: {}.properties", fileName);
+                LOGGER.debug1(obj, "Find the fileName: {}.properties", fileName);
             } else {
-                LOGGER.debug("Find the fileName: {}_{}.properties", fileName, locale);
+                LOGGER.debug1(obj, "Find the fileName: {}_{}.properties", fileName, locale);
             }
         }
 

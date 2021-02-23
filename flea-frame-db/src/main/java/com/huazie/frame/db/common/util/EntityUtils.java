@@ -2,6 +2,7 @@ package com.huazie.frame.db.common.util;
 
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.ArrayUtils;
+import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.NumberUtils;
 import com.huazie.frame.common.util.ObjectUtils;
@@ -21,7 +22,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -42,10 +42,8 @@ public class EntityUtils {
      * @since 1.0.0
      */
     public static Map<String, Template> toTemplatesMap(List<Template> templates) {
-        Map<String, Template> templatesMap = new HashMap<String, Template>();
-        Iterator<Template> templatesIt = templates.iterator();
-        while (templatesIt.hasNext()) {
-            Template template = templatesIt.next();
+        Map<String, Template> templatesMap = new HashMap<>();
+        for (Template template : templates) {
             templatesMap.put(template.getId(), template);
         }
         return templatesMap;
@@ -59,10 +57,8 @@ public class EntityUtils {
      * @since 1.0.0
      */
     public static Map<String, Param> toParamsMap(List<Param> params) {
-        Map<String, Param> paramsMap = new HashMap<String, Param>();
-        Iterator<Param> paramsIt = params.iterator();
-        while (paramsIt.hasNext()) {
-            Param param = paramsIt.next();
+        Map<String, Param> paramsMap = new HashMap<>();
+        for (Param param : params) {
             paramsMap.put(param.getId(), param);
         }
         return paramsMap;
@@ -76,10 +72,8 @@ public class EntityUtils {
      * @since 1.0.0
      */
     public static Map<String, Relation> toRelationsMap(List<Relation> relations) {
-        Map<String, Relation> relationsMap = new HashMap<String, Relation>();
-        Iterator<Relation> relationsIt = relations.iterator();
-        while (relationsIt.hasNext()) {
-            Relation relation = relationsIt.next();
+        Map<String, Relation> relationsMap = new HashMap<>();
+        for (Relation relation : relations) {
             relationsMap.put(relation.getId(), relation);
         }
         return relationsMap;
@@ -90,11 +84,16 @@ public class EntityUtils {
      *
      * @param entity 实体类对象
      * @return 实体对象的列数组
-     * @throws Exception
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public static Column[] toColumnsArray(Object entity) throws CommonException {
-        return toColumnsList(entity).toArray(new Column[0]);
+        List<Column> columnList = toColumnsList(entity);
+        if (CollectionUtils.isNotEmpty(columnList)) {
+            return columnList.toArray(new Column[0]);
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -102,7 +101,7 @@ public class EntityUtils {
      *
      * @param entity 实体类对象
      * @return 实体对象的列集合
-     * @throws Exception
+     * @throws CommonException 通用异常
      * @since 1.0.0
      */
     public static List<Column> toColumnsList(Object entity) throws CommonException {
@@ -111,17 +110,15 @@ public class EntityUtils {
         if (ArrayUtils.isEmpty(fields)) {
             return null;
         }
-        List<Column> columns = new ArrayList<Column>();
-        for (int i = 0; i < fields.length; i++) {
+        List<Column> columns = new ArrayList<>();
+        for (Field field : fields) {
             // 2 表示private修饰的属性，可以过滤掉定义的静态变量等
-            if (fields[i].getModifiers() != Modifier.PRIVATE) {
-                continue;
-            } else {
+            if (field.getModifiers() == Modifier.PRIVATE) {
                 Column column = new Column();
-                column.setAttrType(fields[i].getType());// 属性的类型
+                column.setAttrType(field.getType());// 属性的类型
 
-                String attrName = fields[i].getName();
-                column.setAttrName(fields[i].getName());// 属性的字段名称
+                String attrName = field.getName();
+                column.setAttrName(field.getName());// 属性的字段名称
 
                 Object value = ReflectUtils.getObjectAttrValue(entity, attrName);
                 column.setAttrValue(value);
@@ -132,7 +129,7 @@ public class EntityUtils {
                 boolean isUnique = false;// 判断当前的属性是否唯一
                 String pkColumnValue = ""; // ID生成器表中的主键值模板
 
-                Annotation[] annotations = fields[i].getAnnotations();// 获取属性上的注解
+                Annotation[] annotations = field.getAnnotations();// 获取属性上的注解
                 if (ArrayUtils.isEmpty(annotations)) {// 表示属性上没有注解
                     Method method = ReflectUtils.getObjectAttrMethod(entity, attrName);
                     if (ObjectUtils.isNotEmpty(method)) {
@@ -146,12 +143,12 @@ public class EntityUtils {
                     // 兼容JPA
                     if (javax.persistence.Id.class.getName().equals(an.annotationType().getName())) {// 表示该属性是主键
                         if (ObjectUtils.isNotEmpty(value)) {
-                            if (long.class == fields[i].getType() || Long.class == fields[i].getType()) {// 该实体的主键是long类型
+                            if (long.class == field.getType() || Long.class == field.getType()) {// 该实体的主键是long类型
                                 if (!NumberUtils.isPositiveNumber(Long.valueOf(value.toString()))) {
                                     // 主键字段必须是正整数
                                     ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000007");
                                 }
-                            } else if (String.class == fields[i].getType()) {// 该实体的主键是String类型
+                            } else if (String.class == field.getType()) {// 该实体的主键是String类型
                                 // 主键字段不能为空
                                 ObjectUtils.checkEmpty(value, DaoException.class, "ERROR-DB-DAO0000000008");
                             } else {
@@ -198,8 +195,7 @@ public class EntityUtils {
     public static Object getEntity(Object[] objs, String attrName, Object attrValue) {
         Object object = null;
         if (ArrayUtils.isNotEmpty(objs)) {
-            for (int i = 0; i < objs.length; i++) {
-                Object obj = objs[i];
+            for (Object obj : objs) {
                 Object value = ReflectUtils.getObjectAttrValue(obj, attrName); // 该属性对应的值
                 if (value != null && value.equals(attrValue)) {
                     object = obj;
@@ -220,15 +216,13 @@ public class EntityUtils {
      */
     public static String getTableName(Object entity) {
         String tableName = "";
-        Annotation tableAnnotation = entity.getClass().getAnnotation(javax.persistence.Table.class);
+        javax.persistence.Table tableAnnotation = entity.getClass().getAnnotation(javax.persistence.Table.class);
         if (ObjectUtils.isNotEmpty(tableAnnotation)) {
-            javax.persistence.Table table = (javax.persistence.Table) tableAnnotation;
-            tableName = table.name();
+            tableName = tableAnnotation.name();
         } else {
-            Annotation fleaTableAnnotation = entity.getClass().getAnnotation(com.huazie.frame.db.common.FleaTable.class);
+            com.huazie.frame.db.common.FleaTable fleaTableAnnotation = entity.getClass().getAnnotation(com.huazie.frame.db.common.FleaTable.class);
             if (ObjectUtils.isNotEmpty(fleaTableAnnotation)) {
-                com.huazie.frame.db.common.FleaTable fleaTable = (com.huazie.frame.db.common.FleaTable) fleaTableAnnotation;
-                tableName = fleaTable.name();
+                tableName = fleaTableAnnotation.name();
             }
         }
         return tableName;

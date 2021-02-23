@@ -6,9 +6,9 @@ import com.huazie.frame.auth.base.function.entity.FleaFunctionAttr;
 import com.huazie.frame.auth.common.FleaAuthEntityConstants;
 import com.huazie.frame.common.EntityStateEnum;
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.DateUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -24,7 +24,7 @@ import java.util.List;
 @Repository("fleaFunctionAttrDAO")
 public class FleaFunctionAttrDAOImpl extends FleaAuthDAOImpl<FleaFunctionAttr> implements IFleaFunctionAttrDAO {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaFunctionAttrDAOImpl.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaFunctionAttrDAOImpl.class);
 
     @Override
     @SuppressWarnings(value = "unchecked")
@@ -42,7 +42,7 @@ public class FleaFunctionAttrDAOImpl extends FleaAuthDAOImpl<FleaFunctionAttr> i
                 .getResultList();
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaFunctionAttrDAOImpl##getFunctionAttrList(Long, String, String) FunctionAttrList = {}", fleaFunctionAttrList);
+            LOGGER.debug1(new Object() {}, "FunctionAttrList = {}", fleaFunctionAttrList);
         }
 
         return fleaFunctionAttrList;

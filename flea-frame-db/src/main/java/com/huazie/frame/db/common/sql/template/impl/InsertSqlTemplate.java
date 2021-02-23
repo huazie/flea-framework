@@ -5,7 +5,7 @@ import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
-import com.huazie.frame.db.common.DBConstants;
+import com.huazie.frame.db.common.DBConstants.SQLConstants;
 import com.huazie.frame.db.common.sql.template.SqlTemplate;
 import com.huazie.frame.db.common.sql.template.SqlTemplateEnum;
 import com.huazie.frame.db.common.sql.template.TemplateTypeEnum;
@@ -126,15 +126,15 @@ public class InsertSqlTemplate<T> extends SqlTemplate<T> {
         String colStr = "";
         String valStr = "";
         if (ObjectUtils.isEmpty(columns) && ObjectUtils.isEmpty(values)) { // 表示将实体类的全部变量替换
-            colStr = StringUtils.strCombined(entityCols, Column.COLUMN_TAB_COL_NAME, DBConstants.SQLConstants.SQL_BLANK, DBConstants.SQLConstants.SQL_COMMA);
-            valStr = StringUtils.strCombined(entityCols, Column.COLUMN_ATTR_NAME, DBConstants.SQLConstants.SQL_BLANK + DBConstants.SQLConstants.SQL_COLON, DBConstants.SQLConstants.SQL_COMMA);
+            colStr = StringUtils.strCombined(entityCols, Column.COLUMN_TAB_COL_NAME, SQLConstants.SQL_BLANK, SQLConstants.SQL_COMMA);
+            valStr = StringUtils.strCombined(entityCols, Column.COLUMN_ATTR_NAME, SQLConstants.SQL_BLANK + SQLConstants.SQL_COLON, SQLConstants.SQL_COMMA);
             createParamMap(params, entityCols);// 设置SQL参数
         } else if (ObjectUtils.isNotEmpty(columns) && ObjectUtils.isNotEmpty(values)) {
             colStr = columns.getValue();
             valStr = values.getValue();
 
-            String[] colArr = StringUtils.split(StringUtils.trim(colStr), DBConstants.SQLConstants.SQL_COMMA);
-            String[] valArr = StringUtils.split(StringUtils.trim(valStr), DBConstants.SQLConstants.SQL_COMMA);
+            String[] colArr = StringUtils.split(StringUtils.trim(colStr), SQLConstants.SQL_COMMA);
+            String[] valArr = StringUtils.split(StringUtils.trim(valStr), SQLConstants.SQL_COMMA);
 
             // 校验表字段列和 属性值变量(是否合法, 是否一一对应)
             Column[] realEntityCols = check(entityCols, colArr, valArr);
@@ -174,7 +174,7 @@ public class InsertSqlTemplate<T> extends SqlTemplate<T> {
             ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000025", paramId);
         }
 
-        List<Column> entityColsList = new ArrayList<Column>();
+        List<Column> entityColsList = new ArrayList<>();
         for (int n = 0; n < cols.length; n++) {
             String tabColumnName = StringUtils.trim(cols[n]);//表字段名
             String attrName = StringUtils.trim(values[n]);//该表字段对应的属性变量值 (如 :paraId )
@@ -186,7 +186,7 @@ public class InsertSqlTemplate<T> extends SqlTemplate<T> {
             Column column = checkColumn(entityCols, tabColumnName);
             // 取属性列对应的实体类中的变量名
             String attrN = column.getAttrName();
-            if (!attrName.equals(StringUtils.strCat(DBConstants.SQLConstants.SQL_COLON, attrN))) {
+            if (!attrName.equals(StringUtils.strCat(SQLConstants.SQL_COLON, attrN))) {
                 // 请检查SQL模板参数【id="{0}"】配置（属性【key="columns"】中的字段【{1}】与属性【key="values"】中的字段【{2}】不一一对应）
                 ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000028", paramId, tabColumnName, attrName);
             }

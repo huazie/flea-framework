@@ -18,9 +18,9 @@ import java.util.concurrent.ConcurrentMap;
  */
 public abstract class AbstractSpringCacheManager extends AbstractTransactionSupportingCacheManager {
 
-    private static final ConcurrentMap<String, AbstractSpringCache> cacheMap = new ConcurrentHashMap<String, AbstractSpringCache>();
+    private static final ConcurrentMap<String, AbstractSpringCache> cacheMap = new ConcurrentHashMap<>();
 
-    private Map<String, Long> configMap = new HashMap<String, Long>();   // 各缓存的时间Map
+    private Map<String, Long> configMap = new HashMap<>();   // 各缓存的时间Map
 
     @Override
     protected Collection<? extends AbstractSpringCache> loadCaches() {

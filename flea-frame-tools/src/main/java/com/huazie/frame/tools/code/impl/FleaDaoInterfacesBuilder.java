@@ -1,11 +1,11 @@
 package com.huazie.frame.tools.code.impl;
 
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.IOUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.tools.code.FleaCodeHelper;
 import com.huazie.frame.tools.common.ToolsConstants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
@@ -18,7 +18,7 @@ import java.util.Map;
  */
 public class FleaDaoInterfacesBuilder extends FleaCodeBuilder {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaDaoInterfacesBuilder.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaDaoInterfacesBuilder.class);
 
     @Override
     protected void combinedFilePath(StringBuilder fleaFilePathStrBuilder, String entityClassName, String separator, Map<String, Object> param) {

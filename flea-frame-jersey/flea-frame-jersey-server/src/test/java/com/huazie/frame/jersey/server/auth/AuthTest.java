@@ -1,15 +1,11 @@
 package com.huazie.frame.jersey.server.auth;
 
-import com.huazie.frame.auth.common.service.interfaces.IFleaAuthSV;
 import com.huazie.frame.auth.common.service.interfaces.IFleaUserModuleSV;
-import com.huazie.frame.common.IFleaUser;
-import com.huazie.frame.common.object.FleaObject;
-import com.huazie.frame.common.object.FleaObjectFactory;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.jersey.common.FleaUserImplObjectFactory;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -22,7 +18,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class AuthTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AuthTest.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(AuthTest.class);
 
     private ApplicationContext applicationContext;
 
@@ -38,9 +34,9 @@ public class AuthTest {
         IFleaUserModuleSV fleaUserModuleSV = (IFleaUserModuleSV) applicationContext.getBean("fleaUserModuleSV");
         Long userId = 10000L;
         Long accountId = 10000L;
-        Long systemAcctId = 1000L;
+        Long systemAccountId = 1000L;
 
-        fleaUserModuleSV.initUserInfo(userId, accountId, systemAcctId, null, new FleaUserImplObjectFactory() {
+        fleaUserModuleSV.initUserInfo(userId, accountId, systemAccountId, null, new FleaUserImplObjectFactory() {
             @Override
             public void initObject() {
                 LOGGER.debug("Ending to init userInfo");

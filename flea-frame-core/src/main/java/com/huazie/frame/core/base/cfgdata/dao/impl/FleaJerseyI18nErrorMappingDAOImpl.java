@@ -1,13 +1,13 @@
 package com.huazie.frame.core.base.cfgdata.dao.impl;
 
+import com.huazie.frame.common.EntityStateEnum;
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.core.base.cfgdata.dao.interfaces.IFleaJerseyI18nErrorMappingDAO;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyI18nErrorMapping;
-import com.huazie.frame.common.EntityStateEnum;
 import com.huazie.frame.core.common.FleaConfigEntityConstants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.List;
 @Repository("i18nErrorMappingDAO")
 public class FleaJerseyI18nErrorMappingDAOImpl extends FleaConfigDAOImpl<FleaJerseyI18nErrorMapping> implements IFleaJerseyI18nErrorMappingDAO {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FleaJerseyI18nErrorMappingDAOImpl.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaJerseyI18nErrorMappingDAOImpl.class);
 
     @Override
     @SuppressWarnings(value = "unchecked")
@@ -35,8 +35,9 @@ public class FleaJerseyI18nErrorMappingDAOImpl extends FleaConfigDAOImpl<FleaJer
                 .getResultList();
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJerseyI18NErrorMappingDAOImpl##getMappings(String, String) List={}", mappingList);
-            LOGGER.debug("FleaJerseyI18NErrorMappingDAOImpl##getMappings(String, String) Count={}", mappingList.size());
+            Object obj = new Object() {};
+            LOGGER.debug1(obj, "FleaJerseyI18NErrorMappingDAOImpl##getMappings(String, String) List={}", mappingList);
+            LOGGER.debug1(obj, "FleaJerseyI18NErrorMappingDAOImpl##getMappings(String, String) Count={}", mappingList.size());
         }
 
         return mappingList;
@@ -60,7 +61,7 @@ public class FleaJerseyI18nErrorMappingDAOImpl extends FleaConfigDAOImpl<FleaJer
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FleaJerseyI18NErrorMappingDAOImpl##getMapping(String, String, String) Mapping={}", mapping);
+            LOGGER.debug1(new Object() {}, "FleaJerseyI18NErrorMappingDAOImpl##getMapping(String, String, String) Mapping={}", mapping);
         }
 
         return mapping;

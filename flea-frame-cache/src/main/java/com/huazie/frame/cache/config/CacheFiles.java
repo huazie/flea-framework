@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class CacheFiles {
 
-    private List<CacheFile> cacheFiles = new ArrayList<CacheFile>();
+    private List<CacheFile> cacheFiles = new ArrayList<>();
 
     public List<CacheFile> getCacheFiles() {
         return cacheFiles;

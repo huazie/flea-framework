@@ -7,9 +7,9 @@ import com.huazie.frame.cache.config.CacheParams;
 import com.huazie.frame.cache.config.CacheServer;
 import com.huazie.frame.cache.redis.impl.RedisClientProxy;
 import com.huazie.frame.cache.redis.impl.RedisFleaCache;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.CollectionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class RedisFleaCacheBuilder implements IFleaCacheBuilder {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RedisFleaCacheBuilder.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(RedisFleaCacheBuilder.class);
 
     @Override
     public AbstractFleaCache build(String name, List<CacheServer> cacheServerList, CacheParams cacheParams) {
@@ -41,8 +41,9 @@ public class RedisFleaCacheBuilder implements IFleaCacheBuilder {
         AbstractFleaCache fleaCache = new RedisFleaCache(name, expiry, redisClient);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("RedisFleaCacheBuilder#build(String, List<CacheServer>, CacheParams) Pool Name = {}", RedisPool.getInstance(group).getPoolName());
-            LOGGER.debug("RedisFleaCacheBuilder#build(String, List<CacheServer>, CacheParams) Pool = {}", RedisPool.getInstance(group).getJedisPool());
+            Object obj = new Object() {};
+            LOGGER.debug1(obj, "Pool Name = {}", RedisPool.getInstance(group).getPoolName());
+            LOGGER.debug1(obj, "Pool = {}", RedisPool.getInstance(group).getJedisPool());
         }
 
         return fleaCache;

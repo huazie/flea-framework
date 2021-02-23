@@ -22,11 +22,11 @@ public interface FleaJerseyConstants {
         /**
          * <p> 系统账户编号 </p>
          */
-        String CONFIG_ITEM_SYSTEM_ACCT_ID = "system_acct_id";
+        String CONFIG_ITEM_SYSTEM_ACCOUNT_ID = "system_account_id";
         /**
          * <p> 系统账户密码 </p>
          */
-        String CONFIG_ITEM_SYSTEM_ACCT_PWD = "system_acct_pwd";
+        String CONFIG_ITEM_SYSTEM_ACCOUNT_PWD = "system_account_pwd";
     }
 
     /**
@@ -90,17 +90,17 @@ public interface FleaJerseyConstants {
         /**
          * <p> 系统账户编号 </p>
          */
-        String SYSTEM_ACCT_ID = "SYSTEM_ACCT_ID";
+        String SYSTEM_ACCOUNT_ID = "SYSTEM_ACCOUNT_ID";
 
         /**
          * <p> 系统账户密码（加密） </p>
          */
-        String SYSTEM_ACCT_PWD = "SYSTEM_ACCT_PWD";
+        String SYSTEM_ACCOUNT_PWD = "SYSTEM_ACCOUNT_PWD";
 
         /**
          * <p> 账户编号 </p>
          */
-        String ACCT_ID = "ACCT_ID";
+        String ACCOUNT_ID = "ACCOUNT_ID";
 
         /**
          * <p> 资源编码 </p>

@@ -3,6 +3,8 @@ package com.huazie.frame.jersey.server.filter.impl;
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.i18n.FleaI18nHelper;
 import com.huazie.frame.common.i18n.FleaI18nResEnum;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.core.base.cfgdata.bean.FleaConfigDataSpringBean;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyI18nErrorMapping;
@@ -13,8 +15,6 @@ import com.huazie.frame.jersey.common.data.FleaJerseyResponseData;
 import com.huazie.frame.jersey.common.data.RequestPublicData;
 import com.huazie.frame.jersey.common.data.ResponsePublicData;
 import com.huazie.frame.jersey.server.filter.IFleaJerseyErrorFilter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -27,13 +27,15 @@ import org.springframework.web.context.WebApplicationContext;
  */
 public class ErrorFilter implements IFleaJerseyErrorFilter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ErrorFilter.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(ErrorFilter.class);
 
     @Override
     public void doFilter(FleaJerseyRequest request, FleaJerseyResponse response, Throwable throwable) {
+        Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("ErrorFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) Start");
-            LOGGER.debug("ErrorFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) Exception : ", throwable);
+            obj = new Object() {};
+            LOGGER.debug1(obj, "Catch Exception, Start");
+            LOGGER.debug1(obj, "Exception : ", throwable);
         }
 
         FleaJerseyResponseData responseData = response.getResponseData();
@@ -62,7 +64,7 @@ public class ErrorFilter implements IFleaJerseyErrorFilter {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("ErrorFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) End");
+            LOGGER.debug1(obj, "Catch Exception, End");
         }
     }
 
@@ -83,7 +85,7 @@ public class ErrorFilter implements IFleaJerseyErrorFilter {
             FleaConfigDataSpringBean fleaConfigDataSpringBean = webApplicationContext.getBean(FleaConfigDataSpringBean.class);
 
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("ErrorFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) FleaConfigDataSpringBean = {}", fleaConfigDataSpringBean);
+                LOGGER.debug1(new Object() {}, "FleaConfigDataSpringBean = {}", fleaConfigDataSpringBean);
             }
 
             // 首先获取过滤器国际码和错误码映射配置
@@ -115,7 +117,7 @@ public class ErrorFilter implements IFleaJerseyErrorFilter {
             }
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("ErrorFilter##doFilter(FleaJerseyRequest, FleaJerseyResponse) Exception : ", ObjectUtils.isEmpty(e.getCause()) ? e.getMessage() : e.getCause().getMessage());
+                LOGGER.error1(new Object() {}, "Exception : ", ObjectUtils.isEmpty(e.getCause()) ? e.getMessage() : e.getCause().getMessage());
             }
             responsePublicData.setResultCode(FleaJerseyConstants.ResponseResultConstants.RESULT_CODE_OTHER);
         }

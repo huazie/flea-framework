@@ -1,7 +1,7 @@
 package com.huazie.frame.common.util.xml;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.huazie.frame.common.slf4j.FleaLogger;
+import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -19,7 +19,7 @@ import java.io.StringWriter;
  */
 public class JABXUtils {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JABXUtils.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(JABXUtils.class);
 
     /**
      * <p> 将带有JAXB注解的pojo类转换为XML字符串 </p>
@@ -40,7 +40,7 @@ public class JABXUtils {
             marshaller.marshal(t, writer);
         } catch (JAXBException e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("实体转XML，出现异常：\n", e);
+                LOGGER.error1(new Object() {}, "实体转XML，出现异常：\n", e);
             }
         }
         return writer.toString();

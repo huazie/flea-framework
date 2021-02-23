@@ -139,7 +139,7 @@ public class FleaRequestUtil {
      */
     private static FleaSession getFleaSession() throws CommonException {
         FleaSession fleaSession = FleaRequestConfig.getFleaSession();
-        // {0}不能为空，请检查
+        // 【{0}】不能为空，请检查
         ObjectUtils.checkEmpty(fleaSession, FleaCoreCommonException.class, "ERROR-CORE-COMMON0000000001", "【FleaSession】");
         return fleaSession;
     }
@@ -228,7 +228,7 @@ public class FleaRequestUtil {
      */
     private static FleaUrl getFleaUrl() throws CommonException {
         FleaUrl fleaUrl = FleaRequestConfig.getFleaUrl();
-        // {0}不能为空，请检查
+        // 【{0}】不能为空，请检查
         ObjectUtils.checkEmpty(fleaUrl, FleaCoreCommonException.class, "ERROR-CORE-COMMON0000000001", "【FleaUrl】");
         return fleaUrl;
     }

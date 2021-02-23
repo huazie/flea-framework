@@ -1,16 +1,21 @@
 package com.huazie.frame.core.base.cfgdata.bean;
 
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyI18nErrorMapping;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResClient;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResService;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResource;
+import com.huazie.frame.core.base.cfgdata.entity.FleaMenuFavorites;
 import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaJerseyI18nErrorMappingSV;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaJerseyResClientSV;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaJerseyResServiceSV;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaJerseyResourceSV;
+import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaMenuFavoritesSV;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaParaDetailSV;
+import com.huazie.frame.core.common.pojo.FleaMenuFavoritesPOJO;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -35,6 +40,8 @@ public class FleaConfigDataSpringBean {
     private IFleaJerseyResClientSV resClientSV;
 
     private IFleaJerseyResourceSV resourceSV;
+
+    private IFleaMenuFavoritesSV fleaMenuFavoritesSV;
 
     @Resource(name = "i18nErrorMappingSV")
     public void setMappingSV(IFleaJerseyI18nErrorMappingSV mappingSV) {
@@ -61,6 +68,25 @@ public class FleaConfigDataSpringBean {
         this.resourceSV = resourceSV;
     }
 
+    @Resource(name = "fleaMenuFavoritesSV")
+    public void setFleaMenuFavoritesSV(IFleaMenuFavoritesSV fleaMenuFavoritesSV) {
+        this.fleaMenuFavoritesSV = fleaMenuFavoritesSV;
+    }
+
+    /**
+     * <p> 获取国际码和错误码映射数据集合 </p>
+     *
+     * @param resourceCode 资源编码
+     * @param serviceCode  服务编码
+     * @return 国际码和错误码映射数据集合
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    @Cacheable(value = "fleajerseyi18nerrormapping", key = "#resourceCode + '_' + #serviceCode")
+    public List<FleaJerseyI18nErrorMapping> getMappings(String resourceCode, String serviceCode) throws CommonException {
+        return mappingSV.getMappings(resourceCode, serviceCode);
+    }
+
     /**
      * <p> 获取国际码和错误码映射数据 </p>
      *
@@ -71,6 +97,7 @@ public class FleaConfigDataSpringBean {
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
+    @Cacheable(value = "fleajerseyi18nerrormapping", key = "#resourceCode + '_' + #serviceCode + '_' + #i18nCode")
     public FleaJerseyI18nErrorMapping getMapping(String resourceCode, String serviceCode, String i18nCode) throws CommonException {
         return mappingSV.getMapping(resourceCode, serviceCode, i18nCode);
     }
@@ -84,6 +111,7 @@ public class FleaConfigDataSpringBean {
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
+    @Cacheable(value = "fleaparadetail", key = "#paraType")
     public List<FleaParaDetail> getParaDetails(String paraType, String paraCode) throws CommonException {
         return paraDetailSV.getParaDetails(paraType, paraCode);
     }
@@ -97,6 +125,7 @@ public class FleaConfigDataSpringBean {
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
+    @Cacheable(value = "fleaparadetail", key = "#paraType + '_' + #paraCode")
     public FleaParaDetail getParaDetail(String paraType, String paraCode) throws CommonException {
         return paraDetailSV.getParaDetail(paraType, paraCode);
     }
@@ -110,6 +139,7 @@ public class FleaConfigDataSpringBean {
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
+    @Cacheable(value = "fleajerseyresservice", key = "#serviceCode + '_' + #resourceCode")
     public FleaJerseyResService getResService(String serviceCode, String resourceCode) throws CommonException {
         return resServiceSV.getResService(serviceCode, resourceCode);
     }
@@ -122,6 +152,7 @@ public class FleaConfigDataSpringBean {
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
+    @Cacheable(value = "fleajerseyresclient", key = "#clientCode")
     public FleaJerseyResClient getResClient(String clientCode) throws CommonException {
         return resClientSV.getResClient(clientCode);
     }
@@ -134,6 +165,7 @@ public class FleaConfigDataSpringBean {
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
+    @Cacheable(value = "fleajerseyresource", key = "#resourceCode")
     public FleaJerseyResource getResource(String resourceCode) throws CommonException {
         return resourceSV.getResource(resourceCode);
     }
@@ -145,8 +177,52 @@ public class FleaConfigDataSpringBean {
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
+    @Cacheable(value = "fleajerseyresource", key = "'packages'")
     public List<String> getResourcePackages() throws CommonException {
         return resourceSV.getResourcePackages();
     }
 
+    /**
+     * <p> 保存菜单收藏夹 </p>
+     *
+     * @param fleaMenuFavoritesPOJO 菜单收藏夹POJO类对象
+     * @return Flea菜单收藏夹
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    public FleaMenuFavorites saveFleaMenuFavorites(FleaMenuFavoritesPOJO fleaMenuFavoritesPOJO) throws CommonException {
+        return fleaMenuFavoritesSV.saveFleaMenuFavorites(fleaMenuFavoritesPOJO);
+    }
+
+    /**
+     * <p> 查询有效的菜单收藏夹 </p>
+     *
+     * @param accountId 操作账户编号
+     * @return 菜单收藏夹列表
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    @Cacheable(value = "fleamenufavorites", key = "#accountId")
+    public List<FleaMenuFavorites> queryValidFleaMenuFavorites(Long accountId) throws CommonException {
+        return fleaMenuFavoritesSV.queryValidFleaMenuFavorites(accountId, null);
+    }
+
+    /**
+     * <p> 查询有效的菜单收藏夹 </p>
+     *
+     * @param accountId 操作账户编号
+     * @param menuCode  菜单编码
+     * @return 菜单收藏夹列表
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    @Cacheable(value = "fleamenufavorites", key = "#accountId + '_' + #menuCode")
+    public FleaMenuFavorites queryValidFleaMenuFavorites(Long accountId, String menuCode) throws CommonException {
+        List<FleaMenuFavorites> fleaMenuFavoritesList = fleaMenuFavoritesSV.queryValidFleaMenuFavorites(accountId, menuCode);
+        FleaMenuFavorites fleaMenuFavorites = null;
+        if (CollectionUtils.isNotEmpty(fleaMenuFavoritesList)) {
+            fleaMenuFavorites = fleaMenuFavoritesList.get(0);
+        }
+        return fleaMenuFavorites;
+    }
 }

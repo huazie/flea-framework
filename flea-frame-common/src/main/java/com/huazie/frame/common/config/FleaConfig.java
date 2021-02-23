@@ -19,7 +19,7 @@ import java.util.Map;
  */
 public class FleaConfig {
 
-    private List<ConfigItems> configItemsList = new ArrayList<ConfigItems>();
+    private List<ConfigItems> configItemsList = new ArrayList<>();
 
     /**
      * <p> 获取Flea配置数据 </p>

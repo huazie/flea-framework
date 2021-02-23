@@ -7,7 +7,7 @@ import com.huazie.frame.common.util.MapUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.PatternMatcherUtils;
 import com.huazie.frame.common.util.StringUtils;
-import com.huazie.frame.db.common.DBConstants;
+import com.huazie.frame.db.common.DBConstants.SQLConstants;
 import com.huazie.frame.db.common.sql.template.SqlTemplate;
 import com.huazie.frame.db.common.sql.template.SqlTemplateEnum;
 import com.huazie.frame.db.common.sql.template.TemplateTypeEnum;
@@ -127,12 +127,12 @@ public class SelectSqlTemplate<T> extends SqlTemplate<T> {
         String colStr = checkProperty(propMap, SqlTemplateEnum.COLUMNS);
 
         // 如果【key="columns"】配置为 *，则默认查询全部
-        if (DBConstants.SQLConstants.SQL_ASTERISK.equals(StringUtils.trim(colStr))) {
-            colStr = StringUtils.strCombined(entityCols, Column.COLUMN_TAB_COL_NAME, DBConstants.SQLConstants.SQL_BLANK, DBConstants.SQLConstants.SQL_COMMA);
+        if (SQLConstants.SQL_ASTERISK.equals(StringUtils.trim(colStr))) {
+            colStr = StringUtils.strCombined(entityCols, Column.COLUMN_TAB_COL_NAME, SQLConstants.SQL_BLANK, SQLConstants.SQL_COMMA);
             colStr = colStr.substring(1); // 将第一个空格去除
         }
         // 获取查询列信息
-        String[] cols = StringUtils.split(StringUtils.trim(colStr), DBConstants.SQLConstants.SQL_COMMA);
+        String[] cols = StringUtils.split(StringUtils.trim(colStr), SQLConstants.SQL_COMMA);
 
         // 获取【key="conditions"】的属性，存储WHERE子句的内容 （para_id = :paraId and para_type = :paraType）
         String condStr = checkProperty(propMap, SqlTemplateEnum.CONDITIONS);
@@ -184,9 +184,7 @@ public class SelectSqlTemplate<T> extends SqlTemplate<T> {
         }
 
         // 校验WHERE子句中的属性列和属性变量是否一一对应，并获取WHERE子句相关的属性列集合
-        Column[] whereCols = checkOneByOne(entityCols, whereMap, SqlTemplateEnum.CONDITIONS);
-
-        return whereCols;
+        return checkOneByOne(entityCols, whereMap, SqlTemplateEnum.CONDITIONS);
     }
 
 }

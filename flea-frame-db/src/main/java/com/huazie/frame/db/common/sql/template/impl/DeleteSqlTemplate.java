@@ -138,9 +138,7 @@ public class DeleteSqlTemplate<T> extends SqlTemplate<T> {
         MapUtils.checkEmpty(whereMap, SQT_CLASS, "ERROR-DB-SQT0000000013", paramId, SqlTemplateEnum.CONDITIONS.getKey());
 
         // 校验WHERE子句中的属性列和属性变量是否一一对应，并获取WHERE子句相关的属性列集合
-        Column[] whereCols = checkOneByOne(entityCols, whereMap, SqlTemplateEnum.CONDITIONS);
-
-        return whereCols;
+        return checkOneByOne(entityCols, whereMap, SqlTemplateEnum.CONDITIONS);
     }
 
 }
