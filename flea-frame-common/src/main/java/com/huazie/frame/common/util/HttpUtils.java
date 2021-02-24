@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 /**
@@ -83,7 +84,7 @@ public class HttpUtils {
         StringBuilder sb = new StringBuilder();
         try {
             String urlStr = TAOBAO_IP_URL + ip;
-            String retJson = getAddress(urlStr);
+            String retJson = get(urlStr);
 
             Map<String, Object> map = GsonUtils.toMap(retJson);
 
@@ -137,7 +138,7 @@ public class HttpUtils {
         StringBuilder sb = new StringBuilder();
         try {
             String urlStr = SINA_IP_URL + ip;
-            String retJson = getAddress(urlStr);
+            String retJson = get(urlStr);
 
             Map<String, Object> map = FastJsonUtils.toMap(retJson);
 
@@ -152,13 +153,13 @@ public class HttpUtils {
             }
 
             sb.append(map.get(CommonConstants.IPAddressConstants.COUNTRY))
-                    .append(map.get(CommonConstants.IPAddressConstants.PROVINCE) + "\u7701")
+                    .append(map.get(CommonConstants.IPAddressConstants.PROVINCE)).append("\u7701")
                     .append(map.get(CommonConstants.IPAddressConstants.CITY));
 
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug1(obj, "Address={}", sb);
             }
-            
+
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error1(new Object() {},"Exception=", e);
@@ -169,26 +170,26 @@ public class HttpUtils {
     }
 
     /**
-     * <p> 获取ip所在地理地址相关信息 </p>
+     * <p> get请求 </p>
      *
      * @param urlStr url地址
-     * @return ip所在地理地址相关信息
+     * @return get请求返回报文
      * @since 1.0.0
      */
-    private static String getAddress(String urlStr) {
-        StringBuilder sb = new StringBuilder();
+    public static String get(String urlStr) {
+        StringBuilder sBuilder = new StringBuilder();
         BufferedReader reader = null;
         try {
             URL url = new URL(urlStr);
             URLConnection conn = url.openConnection();
-            reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+            reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8.displayName()));
             String line;
 
             while ((line = reader.readLine()) != null) {
-                sb.append(line);
+                sBuilder.append(line);
             }
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug1(new Object() {}, "Address={}", sb);
+                LOGGER.debug1(new Object() {}, "Output={}", sBuilder);
             }
         } catch (IOException e) {
             if (LOGGER.isErrorEnabled()) {
@@ -205,7 +206,7 @@ public class HttpUtils {
                 }
             }
         }
-        return sb.toString();
+        return sBuilder.toString();
     }
 
 }

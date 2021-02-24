@@ -9,6 +9,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 
 /**
  * <p> Java Architecture for XML Binding（JAXB） 工具类 </p>
@@ -27,7 +28,6 @@ public class JABXUtils {
      * @param t   pojo类对象
      * @param <T> pojo类的类型
      * @return XML字符串
-     * @throws Exception
      * @since 1.0.0
      */
     public static <T> String toXml(T t, boolean isFormat) {
@@ -35,7 +35,7 @@ public class JABXUtils {
         try {
             JAXBContext context = JAXBContext.newInstance(t.getClass());
             Marshaller marshaller = context.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
+            marshaller.setProperty(Marshaller.JAXB_ENCODING, StandardCharsets.UTF_8.displayName());
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, isFormat);
             marshaller.marshal(t, writer);
         } catch (JAXBException e) {
@@ -53,15 +53,22 @@ public class JABXUtils {
      * @param clazz pojo类的Clazz类型
      * @param <T>   pojo类的类型
      * @return pojo类
-     * @throws Exception
+     * @since 1.0.0
      */
-    public static <T> T fromXml(String xml, Class<T> clazz) throws Exception {
-        JAXBContext context = JAXBContext.newInstance(clazz);
-        Unmarshaller unmarshaller = context.createUnmarshaller();
-        Object obj = unmarshaller.unmarshal(new StringReader(xml));
+    public static <T> T fromXml(String xml, Class<T> clazz) {
         T t = null;
-        if (clazz.isInstance(obj)) {
-            t = clazz.cast(obj);
+        try {
+            JAXBContext context = JAXBContext.newInstance(clazz);
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+            Object obj = unmarshaller.unmarshal(new StringReader(xml));
+
+            if (clazz.isInstance(obj)) {
+                t = clazz.cast(obj);
+            }
+        } catch (JAXBException e) {
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error1(new Object() {}, "XML转实体，出现异常：\n", e);
+            }
         }
         return t;
     }
