@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p> 因式分解算法 </p>
+ * <p> 因数分解算法 </p>
  *
  * @author huazie
  * @version 1.0.0
@@ -16,10 +16,10 @@ import java.util.List;
 public class Factor {
 
     /**
-     * 因式分解
+     * 因数分解
      *
-     * @param factor 待因式分解的数
-     * @return 因式分解结果数组
+     * @param factor 待因数分解的数
+     * @return 因数分解结果数组
      */
     public static Integer[] factor(int factor) {
         List<Integer> resultList = new ArrayList<>();
@@ -35,10 +35,10 @@ public class Factor {
     }
 
     /**
-     * 因式分解
+     * 因数分解
      *
-     * @param factor 待因式分解的数
-     * @return 因式分解结果数组
+     * @param factor 待因数分解的数
+     * @return 因数分解结果数组
      */
     public static Long[] factor(long factor) {
         List<Long> resultList = new ArrayList<>();
@@ -54,10 +54,10 @@ public class Factor {
     }
 
     /**
-     * 大数因式分解
+     * 大数因数分解
      *
-     * @param factor 待因式分解的大数
-     * @return 大数因式分解结果数组
+     * @param factor 待因数分解的大数
+     * @return 大数因数分解结果数组
      */
     public static BigInteger[] factor(BigInteger factor) {
         List<BigInteger> resultList = new ArrayList<>();

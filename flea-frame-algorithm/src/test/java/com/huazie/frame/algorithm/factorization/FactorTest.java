@@ -14,18 +14,18 @@ public class FactorTest {
     @Test
     public void testFactorForInteger() {
         Integer[] resultArr = Factor.factor(100000002);
-        LOGGER.debug("因式分解的结果为：{}", Arrays.toString(resultArr));
+        LOGGER.debug("因数分解的结果为：{}", Arrays.toString(resultArr));
     }
 
     @Test
     public void testFactorForLong() {
         Long[] resultArr = Factor.factor(100000002L);
-        LOGGER.debug("因式分解的结果为：{}", Arrays.toString(resultArr));
+        LOGGER.debug("因数分解的结果为：{}", Arrays.toString(resultArr));
     }
 
     @Test
     public void testFactorForBigInteger() {
         BigInteger[] resultArr = Factor.factor(new BigInteger("2441696060695515"));
-        LOGGER.debug("因式分解的结果为：{}", Arrays.toString(resultArr));
+        LOGGER.debug("因数分解的结果为：{}", Arrays.toString(resultArr));
     }
 }
