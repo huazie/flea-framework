@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
@@ -25,8 +24,7 @@ public class FleaParaDetail extends FleaEntity {
     private static final long serialVersionUID = -1711370793670889694L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "PARA_DETAIL_SEQ")
-    @SequenceGenerator(name = "PARA_DETAIL_SEQ")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "para_id", unique = true, nullable = false)
     private Long paraId;        // 参数编号
 
