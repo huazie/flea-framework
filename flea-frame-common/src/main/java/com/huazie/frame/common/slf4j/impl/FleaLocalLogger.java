@@ -466,7 +466,7 @@ public class FleaLocalLogger implements FleaLogger {
          * @param loggerClass 日志打印类
          * @since 1.0.0
          */
-        public Builder(Class<?> loggerClass) {
+        Builder(Class<?> loggerClass) {
             this.loggerClass = loggerClass;
         }
 
