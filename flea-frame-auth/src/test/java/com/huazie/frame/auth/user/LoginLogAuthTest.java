@@ -47,7 +47,7 @@ public class LoginLogAuthTest {
             // 保存至分表
             fleaLoginLogSV.save(fleaLoginLog);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("Exception:", e);
         }
     }
 
@@ -65,7 +65,7 @@ public class LoginLogAuthTest {
             LOGGER.debug("FleaLoginLog = {}", fleaLoginLog);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("Exception:", e);
         }
 
     }
@@ -79,7 +79,7 @@ public class LoginLogAuthTest {
             LOGGER.debug("FleaLoginLog = {}", fleaLoginLog);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("Exception:", e);
         }
     }
 
@@ -105,7 +105,7 @@ public class LoginLogAuthTest {
             fleaLoginLogSV.update(fleaLoginLog);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("Exception:", e);
         }
 
     }
@@ -122,7 +122,7 @@ public class LoginLogAuthTest {
             fleaLoginLogSV.removeNew(1L, fleaLoginLog);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("Exception:", e);
         }
 
     }
