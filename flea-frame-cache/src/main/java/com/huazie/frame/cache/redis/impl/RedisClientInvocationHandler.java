@@ -45,6 +45,7 @@ public class RedisClientInvocationHandler extends FleaInvocationHandler {
         RedisClient redisClient = (RedisClient) proxyObject;
         ShardedJedisPool jedisPool = redisClient.getJedisPool();
         if (ObjectUtils.isNotEmpty(jedisPool)) {
+            // 从分布式Jedis连接池中获取分布式Jedis对象，并将其初始化给Redis客户端类中的分布式Jedis对象
             redisClient.setShardedJedis(jedisPool.getResource());
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug1(new Object() {}, "Get ShardedJedis = {}", redisClient.getShardedJedis());
