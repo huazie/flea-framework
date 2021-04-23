@@ -12,7 +12,7 @@ import java.lang.reflect.Proxy;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class FleaProxy<T> {
+public class FleaProxy {
 
     /**
      * <p> 生成代理对象实例 </p>
