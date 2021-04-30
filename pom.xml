@@ -19,7 +19,7 @@
     <properties>
         <jdk.version>1.7</jdk.version>
         <jersey.version>2.9</jersey.version>
-        <spring.version>4.3.19.RELEASE</spring.version>
+        <spring.version>4.3.29.RELEASE</spring.version>
         <struts2.version>2.3.20</struts2.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
