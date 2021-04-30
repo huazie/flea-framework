@@ -10,7 +10,7 @@ import com.huazie.frame.common.slf4j.FleaLogger;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class FleaLoggerProxy extends FleaProxy<FleaLogger> {
+public class FleaLoggerProxy extends FleaProxy {
 
     /**
      * <p> 获取RedisClient代理类 (默认)</p>

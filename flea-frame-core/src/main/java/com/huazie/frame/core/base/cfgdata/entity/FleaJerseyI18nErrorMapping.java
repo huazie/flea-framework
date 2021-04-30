@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -28,8 +27,7 @@ public class FleaJerseyI18nErrorMapping extends FleaEntity {
     private static final long serialVersionUID = -3499450136118740002L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "JERSEY_I18N_ERROR_MAPPING_SEQ")
-    @SequenceGenerator(name = "JERSEY_I18N_ERROR_MAPPING_SEQ")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "mapping_id", unique = true, nullable = false)
     private Long mappingId;         // 国际码和错误码映射编号
 

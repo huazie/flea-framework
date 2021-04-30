@@ -35,7 +35,7 @@ public class FleaRedisClient implements RedisClient {
     }
 
     /**
-     * <p> Redis客户端构造方法 </p>
+     * <p> Redis客户端构造方法（指定连接池名） </p>
      *
      * @param poolName 连接池名
      * @since 1.0.0
@@ -46,7 +46,7 @@ public class FleaRedisClient implements RedisClient {
     }
 
     /**
-     * <p> 初始化 </p>
+     * <p> 初始化分布式Jedis连接池 </p>
      *
      * @since 1.0.0
      */

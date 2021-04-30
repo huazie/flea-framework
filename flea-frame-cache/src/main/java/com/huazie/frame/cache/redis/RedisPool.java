@@ -33,7 +33,7 @@ public class RedisPool {
 
     private String poolName; // 连接池名
 
-    private ShardedJedisPool shardedJedisPool;
+    private ShardedJedisPool shardedJedisPool; // 分布式Jedis连接池
 
     private RedisPool(String poolName) {
         this.poolName = poolName;

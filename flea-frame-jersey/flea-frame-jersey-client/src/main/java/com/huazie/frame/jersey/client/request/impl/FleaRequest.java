@@ -31,6 +31,7 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 /**
  * <p> Flea 抽象请求 </p>
@@ -45,14 +46,14 @@ public abstract class FleaRequest implements Request {
 
     private RequestConfig config; // 请求配置
 
-    protected RequestModeEnum modeEnum; // 请求方式
+    RequestModeEnum modeEnum; // 请求方式
 
     /**
      * <p> 不带参数的构造方法 </p>
      *
      * @since 1.0.0
      */
-    public FleaRequest() {
+    FleaRequest() {
         init();
     }
 
@@ -62,7 +63,7 @@ public abstract class FleaRequest implements Request {
      * @param config 请求配置
      * @since 1.0.0
      */
-    public FleaRequest(RequestConfig config) {
+    FleaRequest(RequestConfig config) {
         this.config = config;
         init();
     }
@@ -188,7 +189,7 @@ public abstract class FleaRequest implements Request {
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    protected MediaType toMediaType() throws CommonException {
+    MediaType toMediaType() throws CommonException {
         // 媒体类型
         String mediaTypeStr = config.getMediaType();
         // 【{0}】未配置，请检查！！！
@@ -214,13 +215,12 @@ public abstract class FleaRequest implements Request {
      *
      * @param request 请求报文对象
      * @return 请求XML字符串
-     * @throws Exception
      * @since 1.0.0
      */
-    protected String toRequestData(FleaJerseyRequest request) throws Exception {
+    String toRequestData(FleaJerseyRequest request) throws Exception {
         String input = request.getRequestData().getBusinessData().getInput();
         if (ObjectUtils.isNotEmpty(input)) {
-            input = URLEncoder.encode(input, "UTF-8");
+            input = URLEncoder.encode(input, StandardCharsets.UTF_8.displayName());
         }
         request.getRequestData().getBusinessData().setInput(input); // 重新设置入参
         // 将请求报文转换成xml
@@ -240,7 +240,6 @@ public abstract class FleaRequest implements Request {
      * @param target  WebTarget对象
      * @param request Flea Jersey请求对象
      * @return Flea Jersey响应对象
-     * @throws Exception
      * @since 1.0.0
      */
     protected abstract FleaJerseyResponse request(WebTarget target, FleaJerseyRequest request) throws Exception;

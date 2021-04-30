@@ -13,7 +13,7 @@ import java.util.ListIterator;
 import java.util.Map;
 
 /**
- * 树 {@code FleaTree}，包含一个根节点，树下每个节点都可以有多个子节点；
+ * Flea树 {@code FleaTree}，包含一个根节点，树下每个节点都可以有多个子节点；
  *
  * <p> 树节点 {@code TreeNode}，包含节点元素，节点编号，节点高度，
  * 父节点，子节点集合；
