@@ -8,13 +8,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * <p> Fuelux菜单树 </p>
+ * Fuelux菜单树 {@code FueluxMenuTree}
+ *
+ * <p> 其中父节点，子节点的图标采用 Font Awesome。
+ *
+ * <p> 父节点图标颜色配置参数{@code params} 【key = folder_icon_class, value = red or blue】
+
+ * <p> 子节点图标颜色配置参数{@code params} 【key = item_icon_class, value = red or blue】
  *
  * @author huazie
  * @version 1.0.0
+ * @see FleaMenuTree
  * @since 1.0.0
  */
 public class FueluxMenuTree extends FleaMenuTree {
+
+    private static final long serialVersionUID = 8344142120807611410L;
 
     public static final String FOLDER_ICON_CLASS = "folder_icon_class";
 
@@ -22,6 +31,12 @@ public class FueluxMenuTree extends FleaMenuTree {
 
     private Map<String, String> params;
 
+    /**
+     * <p> 带参数的构造方法 </p>
+     *
+     * @param systemName 系统名
+     * @param params 配置参数
+     */
     public FueluxMenuTree(String systemName, Map<String, String> params) {
         super(systemName);
         this.params = params;

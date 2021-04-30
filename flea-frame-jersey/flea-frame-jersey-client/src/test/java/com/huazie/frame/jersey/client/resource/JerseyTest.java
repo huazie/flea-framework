@@ -47,6 +47,7 @@ import javax.ws.rs.core.MediaType;
 import java.io.File;
 import java.io.FileInputStream;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 /**
  * <p>  </p>
@@ -121,7 +122,7 @@ public class JerseyTest {
     }
 
     @Test
-    public void testGetFleaRequest() throws Exception {
+    public void testGetFleaRequest() {
         FleaJerseyRequest request = new FleaJerseyRequest();
         FleaJerseyRequestData requestData = new FleaJerseyRequestData();
 
@@ -241,7 +242,7 @@ public class JerseyTest {
 
         String inputJson = GsonUtils.toJsonString(input);
         if (ObjectUtils.isNotEmpty(inputJson)) {
-            inputJson = URLEncoder.encode(inputJson, "UTF-8");
+            inputJson = URLEncoder.encode(inputJson, StandardCharsets.UTF_8.displayName());
         }
         businessData.setInput(inputJson);
 

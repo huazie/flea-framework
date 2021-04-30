@@ -16,27 +16,30 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 菜单树 {@code FleaMenuTree}, 根节点为菜单归属系统，子节点为
- * 其下的一级菜单、二级菜单、三级菜单、四级菜单
+ * Flea菜单树 {@code FleaMenuTree}, 根节点为菜单归属系统，子节点为
+ * 其下的一级菜单、二级菜单、三级菜单、四级菜单；节点内容为 Flea菜单 {@code FleaMenu}
  *
  * <p> 归属系统 {@code menuLevel}=0，菜单树的根节点，高度 {@code height}=1,
- * 编号 {@code id}=-1
+ * 编号 {@code id}=-1。
  *
  * <p> 一级菜单 {@code menuLevel}=1，菜单树高度 {@code height}=2，
- * 菜单顺序 {@code menuSort}, 值越少，菜单展示越靠前；
+ * 菜单顺序 {@code menuSort}, 值越小，菜单展示越靠前。
  *
- * <p> 二级菜单、三级菜单、四级菜单，依此类推。
+ * <p> 二级菜单 {@code menuLevel}=2，菜单树高度 {@code height}=3。
+ *
+ * <p> 三级菜单、四级菜单，依此类推。
  *
  * @author huazie
  * @version 1.0.0
  * @see FleaTree
+ * @see FleaMenu
  * @since 1.0.0
  */
 public class FleaMenuTree extends FleaTree<FleaMenu> {
 
     private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaMenuTree.class);
 
-    private static final long serialVersionUID = 782100083467014824L;
+    private static final long serialVersionUID = -677020097110608732L;
 
     public static final String MENU_TREE = "MENU_TREE";
 

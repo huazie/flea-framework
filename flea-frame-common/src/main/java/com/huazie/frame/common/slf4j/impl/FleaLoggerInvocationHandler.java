@@ -16,7 +16,7 @@ import java.lang.reflect.Method;
  */
 public class FleaLoggerInvocationHandler implements InvocationHandler {
 
-    protected Object proxyObject;
+    private Object proxyObject;
 
     /**
      * <p> 带参数的构造方法 </p>
@@ -24,7 +24,7 @@ public class FleaLoggerInvocationHandler implements InvocationHandler {
      * @param proxyObject 代理对象
      * @since 1.0.0
      */
-    public FleaLoggerInvocationHandler(Object proxyObject) {
+    FleaLoggerInvocationHandler(Object proxyObject) {
         this.proxyObject = proxyObject;
     }
 
