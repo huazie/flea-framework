@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <p> 数据库工具类，主要进行数据库中数据的增删改查操作 </p>
+ * <p> JDBC数据库工具类，包含数据的增删改查操作 </p>
  *
  * @author huazie
  * @version 1.0.0
@@ -332,7 +332,7 @@ public class FleaJDBCHelper {
     }
 
     /**
-     * <p> 获取一次数据库操作处理 </p>
+     * <p> 获取数据库操作 </p>
      *
      * @return Flea数据库操作
      * @throws SQLException 数据库操作异常
@@ -495,7 +495,7 @@ public class FleaJDBCHelper {
     }
 
     /**
-     * <p> 获取一次数据库操作处理 </p>
+     * <p> 获取数据库操作 </p>
      *
      * @return Flea数据库操作
      * @since 1.0.0
