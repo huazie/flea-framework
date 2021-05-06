@@ -1,44 +1,37 @@
-package com.huazie.frame.common.proxy;
+package com.huazie.frame.common.interceptor.impl;
 
+import com.huazie.frame.common.interceptor.IFleaProxyInterceptor;
 import com.huazie.frame.common.slf4j.FleaLogger;
 import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p> Flea调用处理父类 </p>
+ * Flea Debug信息 代理拦截器实现类
+ *
+ * <p> {@code beforeHandle} 方法用于以Debug模式打印代理的方法，参数信息
+ *
+ * <p> {@code afterHandle} 方法用于以Debug模式打印代理的方法返回值的信息
+ *
+ * <p> {@code exceptionHandle} 方法用于代理的方法被调用出现异常时，处理异常逻辑。
  *
  * @author huazie
  * @version 1.0.0
- * @see InvocationHandler
+ * @see IFleaProxyInterceptor
  * @since 1.0.0
  */
-public class FleaInvocationHandler implements InvocationHandler {
+public class FleaDebugProxyInterceptor implements IFleaProxyInterceptor {
 
-    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaInvocationHandler.class);
-
-    protected Object proxyObject;
-
-    /**
-     * <p> 带参数的构造方法 </p>
-     *
-     * @param proxyObject 代理对象
-     * @since 1.0.0
-     */
-    public FleaInvocationHandler(Object proxyObject) {
-        this.proxyObject = proxyObject;
-    }
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaDebugProxyInterceptor.class);
 
     @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        Object object = null;
+    public void beforeHandle(Object proxyObject, Method method, Object[] args) throws Exception {
         if (LOGGER.isDebugEnabled()) {
-            object = new Object() {};
+            Object object = new Object() {};
             LOGGER.debug1(object, "Method = {}", method.getName());
 
             Class<?>[] types = method.getParameterTypes();
@@ -69,8 +62,12 @@ public class FleaInvocationHandler implements InvocationHandler {
                 LOGGER.debug1(object, "Args = {}", mArgs);
             }
         }
-        Object result = method.invoke(proxyObject, args);
+    }
+
+    @Override
+    public void afterHandle(Object proxyObject, Method method, Object[] args, Object result, boolean hasException) throws Exception {
         if (LOGGER.isDebugEnabled()) {
+            Object object = new Object() {};
             if (result instanceof byte[]) {
                 LOGGER.debug1(object, "OriginResult = {}", result);
                 // 字节数组可能是对象序列化的
@@ -84,6 +81,5 @@ public class FleaInvocationHandler implements InvocationHandler {
                 LOGGER.debug1(object, "Result = {}", result);
             }
         }
-        return result;
     }
 }
