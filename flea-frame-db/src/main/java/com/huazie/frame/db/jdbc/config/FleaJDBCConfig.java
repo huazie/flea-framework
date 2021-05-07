@@ -21,7 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
- * <p> 读取数据库的配置信息,该信息存在于db-config.properties中 , 并获取连接对象和释放连接对象 </p>
+ * <p> 读取数据库的配置信息,该信息存在于flea-config.xml中 </p>
  *
  * @author huazie
  * @version 1.0.0
