@@ -13,13 +13,11 @@ import java.lang.reflect.Method;
 /**
  * Redis客户端代理拦截器实现类
  *
- * <p> {@code beforeHandle} 方法用于在Redis客户端调用指定方法前，从分布式Jedis连接池中
+ * <p> 方法 {@code beforeHandle} 用于在Redis客户端调用指定方法前，从分布式Jedis连接池中
  * 获取分布式Jedis对象，并将其初始化给Redis客户端类中的分布式Jedis对象。
  *
- * <p> {@code afterHandle} 方法用于在Redis客户端调用指定方法后，关闭分布式Jedis对象，
+ * <p> 方法 {@code afterHandle} 用于在Redis客户端调用指定方法后，关闭分布式Jedis对象，
  * 并将它归还给分布式Jedis连接池。
- *
- * <p> {@code exceptionHandle} 方法用于在Redis客户端调用出现异常时，处理异常逻辑。
  *
  * @author huazie
  * @version 1.0.0

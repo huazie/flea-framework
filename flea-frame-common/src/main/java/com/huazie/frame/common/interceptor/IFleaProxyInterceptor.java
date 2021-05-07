@@ -5,11 +5,11 @@ import java.lang.reflect.Method;
 /**
  * Flea代理拦截器接口
  *
- * <p> {@code IFleaProxyInterceptor} 定义了代理类的方法被调用前后自定义的处理方法。
+ * <p> 类 {@code IFleaProxyInterceptor} 定义了代理类的方法被调用前后自定义的处理方法。
  *
- * <p> {@code beforeHandle} 前置处理，由子类来实现代理类的方法被调用前的自定义处理逻辑。
+ * <p> 方法 {@code beforeHandle}，即前置处理，由子类来实现代理类的方法被调用前的自定义处理逻辑。
  *
- * <p> {@code afterHandle} 后置处理，由子类来实现代理类的方法被调用后的自定义处理逻辑；
+ * <p> 方法 {@code afterHandle}，即后置处理，由子类来实现代理类的方法被调用后的自定义处理逻辑；
  * 如果在出现异常时，想要不执行这段逻辑，可以在子类中添加判断hasException。
  *
  * @author huazie

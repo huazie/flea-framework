@@ -13,11 +13,9 @@ import java.util.List;
 /**
  * Flea Debug信息 代理拦截器实现类
  *
- * <p> {@code beforeHandle} 方法用于以Debug模式打印代理的方法，参数信息
+ * <p> 方法 {@code beforeHandle} 用于以Debug模式打印代理的方法，参数信息
  *
- * <p> {@code afterHandle} 方法用于以Debug模式打印代理的方法返回值的信息
- *
- * <p> {@code exceptionHandle} 方法用于代理的方法被调用出现异常时，处理异常逻辑。
+ * <p> 方法 {@code afterHandle} 用于以Debug模式打印代理的方法返回值的信息
  *
  * @author huazie
  * @version 1.0.0

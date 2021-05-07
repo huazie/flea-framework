@@ -13,7 +13,15 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 /**
- * <p> Flea调用处理父类 </p>
+ * Flea调用处理父类
+ *
+ * <p> {@code FleaProxyHandler} 定义了代理类方法调用前后和调用出现异常时的处理逻辑。
+ *
+ * <p> 成员变量 {@code proxyObject}，即实际被代理的对象实例，在代理拦截器和异常代理拦截器中均使用到。
+ *
+ * <p> 成员变量 {@code proxyInterceptors}，即代理拦截器列表，其中定义了代理类方法调用前后的自定义处理方法。
+ *
+ * <p> 成员变量 {@code exceptionProxyInterceptor}，即异常代理拦截器，其中定义了代理类方法调用出现异常的自定义处理方法。
  *
  * @author huazie
  * @version 1.0.0
@@ -24,16 +32,16 @@ public class FleaProxyHandler implements InvocationHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FleaProxyHandler.class);
 
-    private Object proxyObject; // 实际代理的对象
+    private Object proxyObject; // 实际被代理的对象实例
 
-    private List<IFleaProxyInterceptor> fleaProxyInterceptors; // 代理拦截器列表
+    private List<IFleaProxyInterceptor> proxyInterceptors; // 代理拦截器列表
 
-    private IFleaExceptionProxyInterceptor fleaExceptionProxyInterceptor; // 异常代理拦截器
+    private IFleaExceptionProxyInterceptor exceptionProxyInterceptor; // 异常代理拦截器
 
     public FleaProxyHandler(Object proxyObject, List<IFleaProxyInterceptor> fleaProxyInterceptors, IFleaExceptionProxyInterceptor fleaExceptionProxyInterceptor) {
         this.proxyObject = proxyObject;
-        this.fleaProxyInterceptors = fleaProxyInterceptors;
-        this.fleaExceptionProxyInterceptor = fleaExceptionProxyInterceptor;
+        this.proxyInterceptors = fleaProxyInterceptors;
+        this.exceptionProxyInterceptor = fleaExceptionProxyInterceptor;
     }
 
     @Override
@@ -43,12 +51,12 @@ public class FleaProxyHandler implements InvocationHandler {
             throw new Exception("The proxyObject must be initialized");
         }
 
-        if (CollectionUtils.isEmpty(fleaProxyInterceptors)) {
+        if (CollectionUtils.isEmpty(proxyInterceptors)) {
             return method.invoke(proxyObject, args);
         }
 
         // 前置处理
-        for (IFleaProxyInterceptor fleaProxyInterceptor : fleaProxyInterceptors) {
+        for (IFleaProxyInterceptor fleaProxyInterceptor : proxyInterceptors) {
             try {
                 fleaProxyInterceptor.beforeHandle(proxyObject, method, args);
             } catch (CommonException e) {
@@ -65,19 +73,19 @@ public class FleaProxyHandler implements InvocationHandler {
         } catch (Exception e) {
             hasException = true;
             // 异常处理
-            if (ObjectUtils.isNotEmpty(fleaExceptionProxyInterceptor)) {
+            if (ObjectUtils.isNotEmpty(exceptionProxyInterceptor)) {
                 try {
-                    fleaExceptionProxyInterceptor.exceptionHandle(proxyObject, method, args, e);
+                    exceptionProxyInterceptor.exceptionHandle(proxyObject, method, args, e);
                 } catch (CommonException ex) {
                     if (LOGGER.isErrorEnabled()) {
-                        LOGGER.error("异常处理【exceptionHandle】出现异常，异常代理拦截器【 fleaExceptionProxyInterceptor = " + fleaExceptionProxyInterceptor + "】，代理对象【proxyObject = " + proxyObject + "】", e);
+                        LOGGER.error("异常处理【exceptionHandle】出现异常，异常代理拦截器【 exceptionProxyInterceptor = " + exceptionProxyInterceptor + "】，代理对象【proxyObject = " + proxyObject + "】", e);
                     }
                 }
             }
             throw e;
         } finally {
             // 后置处理
-            for (IFleaProxyInterceptor fleaProxyInterceptor : fleaProxyInterceptors) {
+            for (IFleaProxyInterceptor fleaProxyInterceptor : proxyInterceptors) {
                 try {
                     fleaProxyInterceptor.afterHandle(proxyObject, method, args, result, hasException);
                 } catch (CommonException e) {
