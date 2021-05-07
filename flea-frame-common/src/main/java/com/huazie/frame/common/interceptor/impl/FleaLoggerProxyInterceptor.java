@@ -10,11 +10,9 @@ import java.lang.reflect.Method;
 /**
  * Flea日志 代理拦截器实现类
  *
- * <p> {@code beforeHandle} 方法用于添加当前日志打印的所在类的方法相关信息至日志上下文MDC中。
+ * <p> 方法 {@code beforeHandle} 用于添加当前日志打印的所在类的方法相关信息至日志上下文MDC中。
  *
- * <p> {@code afterHandle} 方法用于清理日志上下文数据，以便于下次重新使用。
- *
- * <p> {@code exceptionHandle} 方法用于代理的日志方法被调用出现异常时，处理异常逻辑。
+ * <p> 方法 {@code afterHandle} 用于清理日志上下文数据，以便于下次重新使用。
  *
  * @author huazie
  * @version 1.0.0

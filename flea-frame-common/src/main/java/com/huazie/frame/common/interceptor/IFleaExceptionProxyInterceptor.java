@@ -5,9 +5,9 @@ import java.lang.reflect.Method;
 /**
  * Flea 异常代理拦截器接口
  *
- * <p> {@code IFleaExceptionProxyInterceptor} 定义了代理类的方法被调用出现异常时的处理方法。
+ * <p> 类 {@code IFleaExceptionProxyInterceptor} 定义了代理类的方法被调用出现异常时的处理方法。
  *
- * <p> {@code beforeHandle} 异常处理，由子类来实现代理类的方法被调用时出现异常的自定义处理逻辑。
+ * <p> 方法 {@code beforeHandle} ，即异常处理，由子类来实现代理类的方法被调用时出现异常的自定义处理逻辑。
  *
  * @author huazie
  * @version 1.0.0
