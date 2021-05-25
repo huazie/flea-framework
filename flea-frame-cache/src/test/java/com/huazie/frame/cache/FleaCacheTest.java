@@ -9,9 +9,13 @@ import com.huazie.frame.cache.redis.impl.RedisClientProxy;
 import com.huazie.frame.common.slf4j.FleaLogger;
 import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import org.junit.Test;
+import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisCluster;
+import redis.clients.jedis.JedisPoolConfig;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -160,4 +164,39 @@ public class FleaCacheTest {
 //        client.getPort("huazie1");
     }
 
+    @Test
+    public void testJedisCluster() {
+        // 集群的服务节点Set集合
+        Set<HostAndPort> nodes = new HashSet<>();
+        nodes.add(new HostAndPort("127.0.0.1", 20011));
+        nodes.add(new HostAndPort("127.0.0.1", 20012));
+        nodes.add(new HostAndPort("127.0.0.1", 20021));
+        nodes.add(new HostAndPort("127.0.0.1", 20022));
+        nodes.add(new HostAndPort("127.0.0.1", 20031));
+        nodes.add(new HostAndPort("127.0.0.1", 20032));
+
+        // Jedis连接池配置
+        JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
+        // 最大空闲连接数, 默认8个
+        jedisPoolConfig.setMaxIdle(100);
+        // 最大连接数, 默认8个
+        jedisPoolConfig.setMaxTotal(500);
+        //最小空闲连接数, 默认0
+        jedisPoolConfig.setMinIdle(0);
+        // 获取连接时的最大等待毫秒数(如果设置为阻塞时BlockWhenExhausted),如果超时就抛异常, 小于零:阻塞不确定的时间,  默认-1
+        jedisPoolConfig.setMaxWaitMillis(2000); // 设置2秒
+        //对拿到的connection进行validateObject校验
+        jedisPoolConfig.setTestOnBorrow(true);
+
+        int connectionTimeout = 2000;
+        int soTimeout = 2000;
+        int maxAttempts = 5;
+        String password = "huazie123";
+        String clientName = "flea-redis-cluster";
+        JedisCluster jedis = new JedisCluster(nodes, connectionTimeout, soTimeout, maxAttempts, password, clientName, jedisPoolConfig);
+
+        // jedis.set("huazie", "hello world");
+
+        LOGGER.debug("get huazie = {}", jedis.get("huazie"));
+    }
 }
