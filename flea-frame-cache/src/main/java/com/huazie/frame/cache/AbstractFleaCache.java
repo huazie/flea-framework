@@ -24,11 +24,11 @@ public abstract class AbstractFleaCache implements IFleaCache {
 
     private final String name;  // 缓存数据主关键字
 
-    private final long expiry;  // 有效期(单位：秒)
+    private final int expiry;  // 有效期(单位：秒)
 
     protected CacheEnum cache;  // 缓存实现
 
-    public AbstractFleaCache(String name, long expiry) {
+    public AbstractFleaCache(String name, int expiry) {
         this.name = name;
         this.expiry = expiry;
     }
@@ -110,7 +110,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
         }
         if (!keySet.contains(key)) { // 只有其中不存在，才重新设置
             keySet.add(key);
-            putNativeValue(getNativeCacheKey(name), keySet, CommonConstants.NumeralConstants.ZERO);
+            putNativeValue(getNativeCacheKey(name), keySet, CommonConstants.NumeralConstants.INT_ZERO);
         }
     }
 
@@ -134,7 +134,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
                     // 将数据键关键字从Set集合中删除
                     keySet.remove(key);
                     // 重新覆盖当前Cache所有数据键关键字的缓存信息
-                    putNativeValue(getNativeCacheKey(name), keySet, CommonConstants.NumeralConstants.ZERO);
+                    putNativeValue(getNativeCacheKey(name), keySet, CommonConstants.NumeralConstants.INT_ZERO);
                 }
             } else {
                 if (LOGGER.isDebugEnabled()) {
@@ -193,7 +193,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
      * @param expiry 失效时间（单位：秒）
      * @since 1.0.0
      */
-    public abstract void putNativeValue(String key, Object value, long expiry);
+    public abstract void putNativeValue(String key, Object value, int expiry);
 
     /**
      * <p> 删除指定缓存数据 </p>

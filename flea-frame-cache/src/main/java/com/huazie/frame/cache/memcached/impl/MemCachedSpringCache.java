@@ -32,7 +32,7 @@ public class MemCachedSpringCache extends AbstractSpringCache {
      * @param memCachedClient MemCached客户端
      * @since 1.0.0
      */
-    public MemCachedSpringCache(String name, long expiry, MemCachedClient memCachedClient) {
+    public MemCachedSpringCache(String name, int expiry, MemCachedClient memCachedClient) {
         this(name, new MemCachedFleaCache(name, expiry, memCachedClient));
     }
 

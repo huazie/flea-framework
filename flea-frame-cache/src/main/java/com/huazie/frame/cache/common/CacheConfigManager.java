@@ -14,6 +14,7 @@ import com.huazie.frame.cache.config.CacheServer;
 import com.huazie.frame.cache.config.CacheServers;
 import com.huazie.frame.cache.config.Caches;
 import com.huazie.frame.cache.config.FleaCache;
+import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 
@@ -63,11 +64,11 @@ public class CacheConfigManager {
      * @return 失效时长
      * @since 1.0.0
      */
-    public static long getExpiry(String key) {
-        long expiry = 0L;
+    public static int getExpiry(String key) {
+        int expiry = CommonConstants.NumeralConstants.INT_ZERO;
         Cache cache = getCache(key);
         if (ObjectUtils.isNotEmpty(cache) && StringUtils.isNotBlank(cache.getExpiry())) {
-            expiry = Long.parseLong(cache.getExpiry());
+            expiry = Integer.parseInt(cache.getExpiry());
         }
         return expiry;
     }

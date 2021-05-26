@@ -45,7 +45,7 @@ public class CoreFleaCache extends AbstractFleaCache {
     }
 
     @Override
-    public void putNativeValue(String key, Object value, long expiry) {
+    public void putNativeValue(String key, Object value, int expiry) {
         if (LOGGER.isDebugEnabled()) {
             Object obj = new Object() {};
             LOGGER.debug1(obj, "CORE FLEA CACHE, KEY = {}", key);

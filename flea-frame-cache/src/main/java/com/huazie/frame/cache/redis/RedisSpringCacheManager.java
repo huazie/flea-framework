@@ -28,7 +28,7 @@ public class RedisSpringCacheManager extends AbstractSpringCacheManager {
     }
 
     @Override
-    protected AbstractSpringCache newCache(String name, long expiry) {
+    protected AbstractSpringCache newCache(String name, int expiry) {
         return new RedisSpringCache(name, expiry, redisClient);
     }
 

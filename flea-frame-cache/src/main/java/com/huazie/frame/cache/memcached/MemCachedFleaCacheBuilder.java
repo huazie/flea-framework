@@ -31,7 +31,7 @@ public class MemCachedFleaCacheBuilder implements IFleaCacheBuilder {
             return null;
         }
         // 获取失效时长
-        long expiry = CacheConfigManager.getExpiry(name);
+        int expiry = CacheConfigManager.getExpiry(name);
         // 获取MemCached服务器所在组名
         String group = cacheServerList.get(0).getGroup();
         // 通过组名来获取 MemCached客户端类
