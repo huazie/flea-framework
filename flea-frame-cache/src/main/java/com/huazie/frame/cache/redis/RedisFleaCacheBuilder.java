@@ -30,7 +30,7 @@ public class RedisFleaCacheBuilder implements IFleaCacheBuilder {
             return null;
         }
         // 获取失效时长
-        long expiry = CacheConfigManager.getExpiry(name);
+        int expiry = CacheConfigManager.getExpiry(name);
         // 获取缓存组名
         String group = cacheServerList.get(0).getGroup();
         // 初始化连接池

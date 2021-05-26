@@ -32,7 +32,7 @@ public class RedisSpringCache extends AbstractSpringCache {
      * @param redisClient Redis客户端
      * @since 1.0.0
      */
-    public RedisSpringCache(String name, long expiry, RedisClient redisClient) {
+    public RedisSpringCache(String name, int expiry, RedisClient redisClient) {
         this(name, new RedisFleaCache(name, expiry, redisClient));
     }
 

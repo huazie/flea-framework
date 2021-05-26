@@ -28,7 +28,7 @@ public class RedisFleaCacheManager extends AbstractFleaCacheManager {
     }
 
     @Override
-    protected AbstractFleaCache newCache(String name, long expiry) {
+    protected AbstractFleaCache newCache(String name, int expiry) {
         return new RedisFleaCache(name, expiry, redisClient);
     }
 

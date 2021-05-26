@@ -30,7 +30,7 @@ public class RedisFleaCache extends AbstractFleaCache {
      * @param redisClient Redis客户端
      * @since 1.0.0
      */
-    public RedisFleaCache(String name, long expiry, RedisClient redisClient) {
+    public RedisFleaCache(String name, int expiry, RedisClient redisClient) {
         super(name, expiry);
         this.redisClient = redisClient;
         cache = CacheEnum.Redis;
@@ -46,7 +46,7 @@ public class RedisFleaCache extends AbstractFleaCache {
     }
 
     @Override
-    public void putNativeValue(String key, Object value, long expiry) {
+    public void putNativeValue(String key, Object value, int expiry) {
         if (LOGGER.isDebugEnabled()) {
             Object obj = new Object() {};
             LOGGER.debug1(obj, "REDIS FLEA CACHE, KEY = {}", key);
@@ -56,10 +56,10 @@ public class RedisFleaCache extends AbstractFleaCache {
         // 序列化
         if (ObjectUtils.isNotEmpty(value)) {
             byte[] valueBytes = ObjectUtils.serialize(value);
-            if (expiry == CommonConstants.NumeralConstants.ZERO) {
+            if (expiry == CommonConstants.NumeralConstants.INT_ZERO) {
                 redisClient.set(key.getBytes(), valueBytes);
             } else {
-                redisClient.set(key.getBytes(), valueBytes, (int) expiry);
+                redisClient.set(key.getBytes(), valueBytes, expiry);
             }
         }
 

@@ -46,7 +46,7 @@ public class MemCachedSpringCacheManager extends AbstractSpringCacheManager {
     }
 
     @Override
-    protected AbstractSpringCache newCache(String name, long expiry) {
+    protected AbstractSpringCache newCache(String name, int expiry) {
         return new MemCachedSpringCache(name, expiry, memCachedClient);
     }
 
