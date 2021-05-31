@@ -19,7 +19,7 @@ public class FleaCacheConfig {
 
     private List<CacheItems> cacheItemsList = new ArrayList<>(); // 缓存项集列表
 
-    private List<CacheParams> cacheParamsList = new ArrayList<>(); // 缓存参数集列表
+    private CacheParams cacheParams; // 缓存参数集
 
     private CacheDatas cacheDatas; // 缓存数据集
 
@@ -88,63 +88,23 @@ public class FleaCacheConfig {
     }
 
     /**
-     * <p> 获取缓存参数集列表 </p>
+     * <p> 获取缓存参数集 </p>
      *
-     * @return 缓存参数集列表
+     * @return 缓存参数集
      * @since 1.0.0
      */
-    public List<CacheParams> getCacheParamsList() {
-        return cacheParamsList;
-    }
-
-    /**
-     * <p> 获取缓存参数集列表 </p>
-     *
-     * @return 缓存参数集列表
-     * @since 1.0.0
-     */
-    public CacheParams[] toCacheParamsArray() {
-        return cacheParamsList.toArray(new CacheParams[0]);
-    }
-
-    /**
-     * <p> 添加一个缓存参数集 </p>
-     *
-     * @param cacheParams 缓存参数集
-     * @since 1.0.0
-     */
-    public void addCacheParams(CacheParams cacheParams) {
-        cacheParamsList.add(cacheParams);
-    }
-
-    /**
-     * <p> 根据指定key，获取某个指定的缓存参数集 </p>
-     *
-     * @param key 指定缓存参数集的key
-     * @return 某个指定的缓存参数集
-     * @since 1.0.0
-     */
-    public CacheParams getCacheParams(String key) {
-        CacheParams cacheParams = null;
-        Map<String, CacheParams> cacheParamsMap = toCacheParamsMap();
-        if (MapUtils.isNotEmpty(cacheParamsMap)) {
-            cacheParams = cacheParamsMap.get(key);
-        }
+    public CacheParams getCacheParams() {
         return cacheParams;
     }
 
     /**
-     * <p> 获取缓存参数集列表的Map，便于根据各缓存参数集key查找 </p>
+     * <p> 设置缓存参数集 </p>
      *
-     * @return 缓存参数集列表的Map
+     * @param cacheParams 缓存参数集
      * @since 1.0.0
      */
-    private Map<String, CacheParams> toCacheParamsMap() {
-        Map<String, CacheParams> cacheParamsMap = new HashMap<>();
-        for (CacheParams cacheParams : cacheParamsList) {
-            cacheParamsMap.put(cacheParams.getKey(), cacheParams);
-        }
-        return cacheParamsMap;
+    public void setCacheParams(CacheParams cacheParams) {
+        this.cacheParams = cacheParams;
     }
 
     /**

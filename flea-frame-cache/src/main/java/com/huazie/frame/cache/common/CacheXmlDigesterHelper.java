@@ -39,7 +39,6 @@ public class CacheXmlDigesterHelper {
 
     private static volatile CacheXmlDigesterHelper xmlDigester;
 
-    private static Boolean isInit = Boolean.FALSE;
     private static Boolean isFleaCacheInit = Boolean.FALSE;
     private static Boolean isFleaCacheConfigInit = Boolean.FALSE;
 
@@ -59,11 +58,10 @@ public class CacheXmlDigesterHelper {
      * @since 1.0.0
      */
     public static CacheXmlDigesterHelper getInstance() {
-        if (isInit.equals(Boolean.FALSE)) {
-            synchronized (isInit) {
-                if (isInit.equals(Boolean.FALSE)) {
+        if (null == xmlDigester) {
+            synchronized (CacheXmlDigesterHelper.class) {
+                if (null == xmlDigester) {
                     xmlDigester = new CacheXmlDigesterHelper();
-                    isInit = Boolean.TRUE;
                 }
             }
         }
@@ -281,7 +279,7 @@ public class CacheXmlDigesterHelper {
         digester.addSetNext("flea-cache-config/cache-items", "addCacheItems", CacheItems.class.getName());
         digester.addSetNext("flea-cache-config/cache-items/cache-item", "addCacheItem", CacheItem.class.getName());
 
-        digester.addSetNext("flea-cache-config/cache-params", "addCacheParams", CacheParams.class.getName());
+        digester.addSetNext("flea-cache-config/cache-params", "setCacheParams", CacheParams.class.getName());
         digester.addSetNext("flea-cache-config/cache-params/cache-param", "addCacheParam", CacheParam.class.getName());
 
         digester.addSetNext("flea-cache-config/cache-datas", "setCacheDatas", CacheDatas.class.getName());

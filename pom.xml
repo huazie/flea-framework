@@ -33,7 +33,7 @@
                 <configuration>
                     <source>${jdk.version}</source>
                     <target>${jdk.version}</target>
-                    <encoding>UTF-8</encoding>
+                    <encoding>${project.build.sourceEncoding}</encoding>
                     <compilerArgs>
                         <arg>-g</arg>
                     </compilerArgs>
@@ -45,7 +45,6 @@
                 <version>3.2.0</version>
                 <configuration>
                     <show>private</show>
-                    <nohelp>true</nohelp>
                 </configuration>
             </plugin>
         </plugins>
@@ -99,6 +98,14 @@
                     <stylesheetfile>${basedir}/src/main/javadoc/stylesheet.css</stylesheetfile>
                     <show>public</show>
                 </configuration>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>javadoc-no-fork</report>
+                            <report>test-javadoc-no-fork</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
             </plugin>
         </plugins>
     </reporting>

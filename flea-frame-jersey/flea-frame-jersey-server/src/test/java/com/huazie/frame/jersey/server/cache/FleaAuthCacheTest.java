@@ -31,7 +31,7 @@ public class FleaAuthCacheTest {
         LOGGER.debug("*****************************************CacheData = {}", cacheData);
         CacheGroup cacheGroup = CacheConfigManager.getCacheGroup(cacheData.getGroup());
         LOGGER.debug("*****************************************CacheGroup = {}", cacheGroup);
-        CacheParams cacheParams = CacheConfigManager.getCacheParams(cacheGroup.getCache());
+        CacheParams cacheParams = CacheConfigManager.getCacheParams();
         LOGGER.debug("*****************************************CacheParams = {}", cacheParams);
         List<CacheServer> cacheServers = CacheConfigManager.getCacheServer(cacheGroup.getGroup());
         LOGGER.debug("*****************************************CacheServers = {}", cacheServers);
