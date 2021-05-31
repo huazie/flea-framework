@@ -58,10 +58,10 @@ public class CacheConfigManager {
     }
 
     /**
-     * <p> 根据指定的缓存主关键字获取缓存失效时长 </p>
+     * <p> 根据指定的缓存主关键字，获取缓存数据有效期 </p>
      *
-     * @param key 缓存主关键字
-     * @return 失效时长
+     * @param key 缓存数据主关键字
+     * @return 缓存数据有效期
      * @since 1.0.0
      */
     public static int getExpiry(String key) {
@@ -69,6 +69,25 @@ public class CacheConfigManager {
         Cache cache = getCache(key);
         if (ObjectUtils.isNotEmpty(cache) && StringUtils.isNotBlank(cache.getExpiry())) {
             expiry = Integer.parseInt(cache.getExpiry());
+        }
+        return expiry;
+    }
+
+    /**
+     * <p> 获取空缓存数据有效期 </p>
+     *
+     * @return 空缓存数据有效期
+     * @since 1.0.0
+     */
+    public static int getNullCacheExpiry() {
+        // 默认300s
+        int expiry = 300;
+        CacheParams cacheParams = getCacheParams(CacheEnum.FleaCore.getName());
+        if (ObjectUtils.isNotEmpty(cacheParams)) {
+            CacheParam cacheParam = cacheParams.getCacheParam(CacheConstants.FleaCacheConfigConstants.NULL_CACHE_EXPIRY);
+            if (ObjectUtils.isNotEmpty(cacheParam)) {
+                expiry = Integer.parseInt(cacheParam.getValue());
+            }
         }
         return expiry;
     }

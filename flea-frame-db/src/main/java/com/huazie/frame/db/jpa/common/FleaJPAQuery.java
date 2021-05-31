@@ -34,7 +34,9 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * <p> 自定义Flea JPA查询对象, 用于实现 JPA方式的数据库查询操作，可以自行组装查询条件 </p>
+ * 自定义 Flea JPA 查询对象
+ *
+ * <p> 封装了 JPA 标准化查询 API，可以自行组装各种常见的查询条件；
  *
  * @author huazie
  * @version 1.0.0

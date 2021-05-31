@@ -43,6 +43,10 @@ public interface CacheConstants {
          * <p> Flea缓存所属系统名 </p>
          */
         String SYSTEM_NAME = "systemName";
+        /**
+         * <p> 空缓存数据有效期 </p>
+         */
+        String NULL_CACHE_EXPIRY = "nullCacheExpiry";
     }
 
     /**
@@ -135,6 +139,10 @@ public interface CacheConstants {
          * <p> MemCached 一致性hash算法 </p>
          */
         String MEMCACHED_CACHE_PARAM_HASHINGALG = "hashingAlg";
+        /**
+         * <p> Memcached 空缓存数据有效期（单位：s） </p>
+         */
+        String MEMCACHED_CONFIG_NULLCACHEEXPIRY = "memcached.nullCacheExpiry";
     }
 
     /**
@@ -235,6 +243,10 @@ public interface CacheConstants {
          * <p> Redis客户端Jedis连接池获取连接时的最大等待毫秒数 </p>
          */
         String REDIS_CACHE_PARAM_POOL_MAXWAITMILLIS = "pool.maxWaitMillis";
+        /**
+         * <p> Redis 空缓存数据有效期（单位：s） </p>
+         */
+        String REDIS_CONFIG_NULLCACHEEXPIRY = "redis.nullCacheExpiry";
     }
 
 }

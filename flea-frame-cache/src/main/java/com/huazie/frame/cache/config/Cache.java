@@ -15,7 +15,7 @@ public class Cache {
 
     private String type; // Flea缓存类型
 
-    private String expiry; // 失效时长（单位：秒）
+    private String expiry; // 有效期（单位：s）
 
     private String desc; // Flea缓存描述
 

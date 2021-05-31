@@ -104,8 +104,8 @@ public class MemCachedPool {
         if (ObjectUtils.isEmpty(cacheParams) || CollectionUtils.isEmpty(cacheParams.getCacheParamList())) {
             return;
         }
-        List<String> servers = new ArrayList<String>();
-        List<Integer> weights = new ArrayList<Integer>();
+        List<String> servers = new ArrayList<>();
+        List<Integer> weights = new ArrayList<>();
         // 遍历缓存服务器集
         for (CacheServer cacheServer : cacheServerList) {
             if (ObjectUtils.isNotEmpty(cacheServer)) {
@@ -188,10 +188,22 @@ public class MemCachedPool {
         sockIOPool.shutDown();
     }
 
+    /**
+     * <p> 获取 Memcached 缓存连接池名 </p>
+     *
+     * @return Memcached 缓存连接池名
+     * @since 1.0.0
+     */
     public String getPoolName() {
         return poolName;
     }
 
+    /**
+     * <p> 获取 Memcached 套接字连接池 </p>
+     *
+     * @return Memcached 套接字连接池
+     * @since 1.0.0
+     */
     public SockIOPool getSockIOPool() {
         return sockIOPool;
     }

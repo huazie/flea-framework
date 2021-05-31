@@ -15,7 +15,7 @@ public class FleaSession {
 
     private String userSessionKey; // 用户SESSION信息键
 
-    private String idleTime; // 用户SESSION空闲保持时间（单位：秒）
+    private String idleTime; // 用户SESSION空闲保持时间（单位：s）
 
     public String getUserSessionKey() {
         return userSessionKey;

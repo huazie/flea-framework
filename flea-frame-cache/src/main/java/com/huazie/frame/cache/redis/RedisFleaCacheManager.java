@@ -2,6 +2,7 @@ package com.huazie.frame.cache.redis;
 
 import com.huazie.frame.cache.AbstractFleaCache;
 import com.huazie.frame.cache.AbstractFleaCacheManager;
+import com.huazie.frame.cache.redis.config.RedisConfig;
 import com.huazie.frame.cache.redis.impl.RedisClientProxy;
 import com.huazie.frame.cache.redis.impl.RedisFleaCache;
 
@@ -29,7 +30,8 @@ public class RedisFleaCacheManager extends AbstractFleaCacheManager {
 
     @Override
     protected AbstractFleaCache newCache(String name, int expiry) {
-        return new RedisFleaCache(name, expiry, redisClient);
+        int nullCacheExpiry = RedisConfig.getConfig().getNullCacheExpiry();
+        return new RedisFleaCache(name, expiry, nullCacheExpiry, redisClient);
     }
 
 }

@@ -29,7 +29,7 @@ public class CoreFleaCache extends AbstractFleaCache {
      * @since 1.0.0
      */
     public CoreFleaCache(String name) {
-        super(name, CacheConfigManager.getExpiry(name));
+        super(name, CacheConfigManager.getExpiry(name), CacheConfigManager.getNullCacheExpiry());
         // 根据缓存主关键字name获取指定Flea缓存对象
         fleaCache = FleaCacheFactory.getFleaCache(name);
         // 取指定Flea缓存的缓存类型

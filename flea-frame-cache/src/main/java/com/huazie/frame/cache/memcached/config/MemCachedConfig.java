@@ -31,25 +31,27 @@ public class MemCachedConfig {
 
     private String systemName; // 缓存所属系统名
 
-    private String[] servers;   //服务器地址
+    private String[] servers; // 服务器地址
 
-    private Integer[] weights;  //Memcached权重分配
+    private Integer[] weights; // Memcached 权重分配
 
-    private int initConn;       //初始化时对每个服务器建立的连接数目
+    private int initConn; // 初始化时对每个服务器建立的连接数目
 
-    private int minConn;        //每个服务器建立最小的连接数
+    private int minConn; // 每个服务器建立最小的连接数
 
-    private int maxConn;        //每个服务器建立最大的连接数
+    private int maxConn; // 每个服务器建立最大的连接数
 
-    private int maintSleep;     //自查线程周期进行工作，其每次休眠时间
+    private int maintSleep; // 自查线程周期进行工作，其每次休眠时间（单位：ms）
 
-    private boolean nagle;      //Socket的参数，如果是true在写数据时不缓冲，立即发送出去
+    private boolean nagle; // Socket的参数，如果是true在写数据时不缓冲，立即发送出去
 
-    private int socketTO;       //Socket阻塞读取数据的超时时间
+    private int socketTO; // Socket阻塞读取数据的超时时间（单位：ms）
 
-    private int socketConnectTO;//Socket连接的超时时间
+    private int socketConnectTO; // Socket连接的超时时间（单位：ms）
 
-    private int hashingAlg;     // 一致性hash算法
+    private int nullCacheExpiry; // 空缓存数据有效期（单位：s）
+
+    private int hashingAlg; // 一致性hash算法
 
     static {
         String fileName = MemCachedConfigConstants.MEMCACHED_FILE_NAME;
@@ -117,6 +119,7 @@ public class MemCachedConfig {
                         config.setNagle(PropertiesUtil.getBooleanValue(prop, MemCachedConfigConstants.MEMCACHED_CONFIG_NAGLE));
                         config.setSocketTO(PropertiesUtil.getIntegerValue(prop, MemCachedConfigConstants.MEMCACHED_CONFIG_SOCKETTO));
                         config.setSocketConnectTO(PropertiesUtil.getIntegerValue(prop, MemCachedConfigConstants.MEMCACHED_CONFIG_SOCKETCONNECTTO));
+                        config.setNullCacheExpiry(PropertiesUtil.getIntegerValue(prop, MemCachedConfigConstants.MEMCACHED_CONFIG_NULLCACHEEXPIRY));
                         config.setHashingAlg(PropertiesUtil.getIntegerValue(prop, MemCachedConfigConstants.MEMCACHED_CONFIG_HASHINGALG));
                     } catch (Exception e) {
                         if (LOGGER.isErrorEnabled()) {
@@ -207,6 +210,14 @@ public class MemCachedConfig {
 
     private void setSocketConnectTO(int socketConnectTO) {
         this.socketConnectTO = socketConnectTO;
+    }
+
+    public int getNullCacheExpiry() {
+        return nullCacheExpiry;
+    }
+
+    public void setNullCacheExpiry(int nullCacheExpiry) {
+        this.nullCacheExpiry = nullCacheExpiry;
     }
 
     public int getHashingAlg() {

@@ -48,7 +48,7 @@ public abstract class AbstractSpringCacheManager extends AbstractTransactionSupp
      * <p> 新创建一个缓存对象 </p>
      *
      * @param name   缓存名
-     * @param expiry 失效时间（单位：秒  其中0：表示永久）
+     * @param expiry 失效时间（单位：s  其中0：表示永久）
      * @return 新建的缓存对象
      * @since 1.0.0
      */
