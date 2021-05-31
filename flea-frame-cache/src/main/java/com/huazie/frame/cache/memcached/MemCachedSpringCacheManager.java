@@ -2,6 +2,7 @@ package com.huazie.frame.cache.memcached;
 
 import com.huazie.frame.cache.AbstractSpringCache;
 import com.huazie.frame.cache.AbstractSpringCacheManager;
+import com.huazie.frame.cache.memcached.config.MemCachedConfig;
 import com.huazie.frame.cache.memcached.impl.MemCachedSpringCache;
 import com.whalin.MemCached.MemCachedClient;
 
@@ -47,7 +48,8 @@ public class MemCachedSpringCacheManager extends AbstractSpringCacheManager {
 
     @Override
     protected AbstractSpringCache newCache(String name, int expiry) {
-        return new MemCachedSpringCache(name, expiry, memCachedClient);
+        int nullCacheExpiry = MemCachedConfig.getConfig().getNullCacheExpiry();
+        return new MemCachedSpringCache(name, expiry, nullCacheExpiry, memCachedClient);
     }
 
 }

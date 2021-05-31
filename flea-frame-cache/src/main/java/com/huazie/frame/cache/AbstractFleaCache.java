@@ -12,7 +12,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * <p> 抽象Flea Cache类 </p>
+ * 抽象Flea Cache类，实现了Flea缓存接口 {@code IFleaCache} 的
+ *
+ * <p>
  *
  * @author huazie
  * @version 1.0.0
@@ -24,13 +26,16 @@ public abstract class AbstractFleaCache implements IFleaCache {
 
     private final String name;  // 缓存数据主关键字
 
-    private final int expiry;  // 有效期(单位：秒)
+    private final int expiry;  // 缓存数据有效期（单位：s）
+
+    private final int nullCacheExpiry; // 空缓存数据有效期（单位：s）
 
     protected CacheEnum cache;  // 缓存实现
 
-    public AbstractFleaCache(String name, int expiry) {
+    public AbstractFleaCache(String name, int expiry, int nullCacheExpiry) {
         this.name = name;
         this.expiry = expiry;
+        this.nullCacheExpiry = nullCacheExpiry;
     }
 
     @Override
@@ -46,6 +51,9 @@ public abstract class AbstractFleaCache implements IFleaCache {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug1(obj, "VALUE = {}", value);
             }
+            if (value instanceof NullCache) {
+                value = null;
+            }
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error1(new Object() {}, "The action of getting [" + cache.getName() + "] cache occurs exception ：", e);
@@ -56,8 +64,6 @@ public abstract class AbstractFleaCache implements IFleaCache {
 
     @Override
     public void put(String key, Object value) {
-        if (ObjectUtils.isEmpty(value))
-            return;
         try {
             putNativeValue(getNativeKey(key), value, expiry);
             // 将指定Cache的key添加到Set集合，并存于缓存中
@@ -190,7 +196,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
      *
      * @param key    缓存数据键关键字
      * @param value  缓存值
-     * @param expiry 失效时间（单位：秒）
+     * @param expiry 失效时间（单位：s）
      * @since 1.0.0
      */
     public abstract void putNativeValue(String key, Object value, int expiry);
@@ -233,12 +239,34 @@ public abstract class AbstractFleaCache implements IFleaCache {
         return StringUtils.strCat(getSystemName(), CommonConstants.SymbolConstants.UNDERLINE, name);
     }
 
+    /**
+     * <p> 获取缓存数据主关键字 </p>
+     *
+     * @return 缓存数据主关键字
+     * @since 1.0.0
+     */
     public String getName() {
         return name;
     }
 
-    public long getExpiry() {
+    /**
+     * <p> 获取缓存数据有效期（单位：s） </p>
+     *
+     * @return 缓存数据有效期（单位：s）
+     * @since 1.0.0
+     */
+    public int getExpiry() {
         return expiry;
+    }
+
+    /**
+     * <p> 获取空缓存数据有效期（单位：s） </p>
+     *
+     * @return 空缓存数据有效期（单位：s）
+     * @since 1.0.0
+     */
+    public int getNullCacheExpiry() {
+        return nullCacheExpiry;
     }
 
     public String getCacheName() {

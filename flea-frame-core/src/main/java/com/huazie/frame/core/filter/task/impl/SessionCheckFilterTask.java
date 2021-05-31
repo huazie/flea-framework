@@ -128,7 +128,7 @@ public class SessionCheckFilterTask implements IFilterTask {
         if (StringUtils.isNotBlank(oldActiveTimeStr)) {
             // Session上一次激活时间
             Long oldActiveTime = Long.valueOf(oldActiveTimeStr);
-            // 获取Session空闲时间配置（单位：秒）
+            // 获取Session空闲时间配置（单位：s）
             Long idleTime = Long.valueOf(FleaRequestUtil.getIdleTime());
             // Session实际空闲时长
             long realIdleTime = currentTime - oldActiveTime;

@@ -38,9 +38,12 @@ public class FleaCacheTest {
             LOGGER.debug("Cache={}", cache);
             //#### 1.  简单字符串
 //            cache.put("menu1", "huazie");
+//            cache.put("menu2", null);
 //            cache.get("menu1");
-            cache.delete("menu1");
-//            cache.getCacheKey();
+//            cache.get("menu2");
+//            cache.delete("menu1");
+            cache.delete("menu2");
+            cache.getCacheKey();
             LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
         } catch (Exception e) {
             LOGGER.error("Exception:", e);
@@ -55,8 +58,11 @@ public class FleaCacheTest {
             LOGGER.debug("Cache={}", cache);
             //#### 1.  简单字符串
 //            cache.put("menu1", "huazie");
-            cache.get("menu1");
+//            cache.put("menu2", null);
+//            cache.get("menu1");
+//            cache.get("menu2");
 //            cache.delete("menu1");
+//            cache.delete("menu2");
             cache.getCacheKey();
             LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
         } catch (Exception e) {

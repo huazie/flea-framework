@@ -42,6 +42,8 @@ public class RedisConfig {
 
     private JedisPoolConfig jedisPoolConfig; // Jedis连接配置信息
 
+    private int nullCacheExpiry; // 空缓存数据有效期（单位：s）
+
     static {
         String fileName = RedisConfigConstants.REDIS_FILE_NAME;
         if (StringUtils.isNotBlank(System.getProperty(RedisConfigConstants.REDIS_CONFIG_FILE_SYSTEM_KEY))) {
@@ -194,6 +196,8 @@ public class RedisConfig {
 
                         config.setJedisPoolConfig(poolConfig);
 
+                        // 获取空缓存数据有效期
+                        config.setNullCacheExpiry(PropertiesUtil.getIntegerValue(prop, RedisConfigConstants.REDIS_CONFIG_NULLCACHEEXPIRY));
                     } catch (Exception e) {
                         if (LOGGER.isErrorEnabled()) {
                             LOGGER.error("Please check the redis config :", e);
@@ -235,6 +239,14 @@ public class RedisConfig {
 
     private void setJedisPoolConfig(JedisPoolConfig jedisPoolConfig) {
         this.jedisPoolConfig = jedisPoolConfig;
+    }
+
+    public int getNullCacheExpiry() {
+        return nullCacheExpiry;
+    }
+
+    public void setNullCacheExpiry(int nullCacheExpiry) {
+        this.nullCacheExpiry = nullCacheExpiry;
     }
 
     @Override

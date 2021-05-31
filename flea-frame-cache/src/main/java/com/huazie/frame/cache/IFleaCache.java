@@ -3,7 +3,13 @@ package com.huazie.frame.cache;
 import java.util.Set;
 
 /**
- * <p> 自定义Flea Cache接口类（主要定义了一些增删改查的方法） </p>
+ * Flea缓存接口类，定义了对缓存数据进行读、写和删除的基本操作。
+ *
+ * <p> 方法 {@code get}，实现读缓存的基本操作；
+ *
+ * <p> 方法 {@code put}，实现写缓存的基本操作；
+ *
+ * <p> 方法 {@code delete}, 实现删除缓存的基本操作。
  *
  * @author huazie
  * @version 1.0.0
