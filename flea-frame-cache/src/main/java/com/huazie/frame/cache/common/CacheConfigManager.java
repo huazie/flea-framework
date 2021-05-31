@@ -82,12 +82,9 @@ public class CacheConfigManager {
     public static int getNullCacheExpiry() {
         // 默认300s
         int expiry = 300;
-        CacheParams cacheParams = getCacheParams(CacheEnum.FleaCore.getName());
-        if (ObjectUtils.isNotEmpty(cacheParams)) {
-            CacheParam cacheParam = cacheParams.getCacheParam(CacheConstants.FleaCacheConfigConstants.NULL_CACHE_EXPIRY);
-            if (ObjectUtils.isNotEmpty(cacheParam)) {
-                expiry = Integer.parseInt(cacheParam.getValue());
-            }
+        CacheParam cacheParam = getCacheParam(CacheConstants.FleaCacheConfigConstants.NULL_CACHE_EXPIRY);
+        if (ObjectUtils.isNotEmpty(cacheParam)) {
+            expiry = Integer.parseInt(cacheParam.getValue());
         }
         return expiry;
     }
@@ -110,27 +107,25 @@ public class CacheConfigManager {
     }
 
     /**
-     * <p> 根据指定的缓存系统名cache, 获取缓存参数集 </p>
+     * <p> 获取缓存参数集 </p>
      *
-     * @param cache 缓存系统名
      * @return 缓存参数集
      * @since 1.0.0
      */
-    public static CacheParams getCacheParams(String cache) {
-        return CacheXmlDigesterHelper.getInstance().getFleaCacheConfig().getCacheParams(cache);
+    public static CacheParams getCacheParams() {
+        return CacheXmlDigesterHelper.getInstance().getFleaCacheConfig().getCacheParams();
     }
 
     /**
-     * <p> 根据指定的缓存系统名cache 和 缓存参数key，获取缓存参数 </p>
+     * <p> 根据指定的缓存参数key，获取缓存参数 </p>
      *
-     * @param cache 缓存系统名
-     * @param key   缓存参数key
+     * @param key 缓存参数键
      * @return 缓存参数
      * @since 1.0.0
      */
-    public static CacheParam getCacheParam(String cache, String key) {
+    public static CacheParam getCacheParam(String key) {
         CacheParam cacheParam = null;
-        CacheParams cacheParams = CacheXmlDigesterHelper.getInstance().getFleaCacheConfig().getCacheParams(cache);
+        CacheParams cacheParams = getCacheParams();
         if (ObjectUtils.isNotEmpty(cacheParams)) {
             cacheParam = cacheParams.getCacheParam(key);
         }

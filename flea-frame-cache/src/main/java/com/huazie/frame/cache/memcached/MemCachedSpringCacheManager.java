@@ -7,7 +7,7 @@ import com.huazie.frame.cache.memcached.impl.MemCachedSpringCache;
 import com.whalin.MemCached.MemCachedClient;
 
 /**
- * <p> Memcached的Spring缓存管理类 </p>
+ * <p> MemCached的Spring缓存管理类 </p>
  *
  * @author huazie
  * @version 1.0.0
@@ -15,7 +15,7 @@ import com.whalin.MemCached.MemCachedClient;
  */
 public class MemCachedSpringCacheManager extends AbstractSpringCacheManager {
 
-    private MemCachedClient memCachedClient;   // Memcached客户端类
+    private MemCachedClient memCachedClient;   // MemCached客户端类
 
     /**
      * <p> 新建一个MemCached Spring缓存管理类 </p>

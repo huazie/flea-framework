@@ -51,6 +51,7 @@ public class CoreFleaCache extends AbstractFleaCache {
             LOGGER.debug1(obj, "CORE FLEA CACHE, KEY = {}", key);
             LOGGER.debug1(obj, "CORE FLEA CACHE, VALUE = {}", value);
             LOGGER.debug1(obj, "CORE FLEA CACHE, EXPIRY = {}s", expiry);
+            LOGGER.debug1(obj, "CORE FLEA CACHE, NULL CACHE EXPIRY = {}s", getNullCacheExpiry());
         }
         fleaCache.putNativeValue(key, value, expiry);
     }
