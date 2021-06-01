@@ -10,7 +10,14 @@ import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ObjectUtils;
 
 /**
- * <p> 核心Flea缓存类 </p>
+ * 核心Flea缓存类，用于整合各类缓存的使用。
+ *
+ * <p> 该类继承 {@code AbstractFleaCache}，实现读 {@code get}、写 {@code put}<br/>
+ * 和删除 {@code delete} 缓存的基本操作方法；
+ *
+ * <p> 成员变量 {@code fleaCache}, 在构造方法中根据缓存主关键字指定<br/>
+ * 具体的Flea缓存实现，在读 {@code get}、写 {@code put}和删除 {@code delete} <br/>
+ * 缓存的基本操作方法中调用 {@code fleaCache} 的具体实现。
  *
  * @author huazie
  * @version 1.0.0

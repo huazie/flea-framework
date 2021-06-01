@@ -12,7 +12,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * 抽象Flea Cache类，实现了Flea缓存接口 {@code IFleaCache} 的
+ * 抽象Flea Cache类，实现了Flea缓存接口 {@code IFleaCache} <br/>
+ * 的读 {@code get}、写 {@code put}和删除 {@code delete} 缓存的基本操作
  *
  * <p>
  *
