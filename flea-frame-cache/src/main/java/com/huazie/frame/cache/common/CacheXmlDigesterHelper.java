@@ -47,6 +47,8 @@ public class CacheXmlDigesterHelper {
 
     /**
      * <p> 只允许通过getInstance()获取 XML解析类 </p>
+     *
+     * @since 1.0.0
      */
     private CacheXmlDigesterHelper() {
     }
