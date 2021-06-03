@@ -11,7 +11,12 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 
 /**
- * <p> 抽象Spring缓存类，实现Spring的Cache 和 自定义的 IFleaCache接口 </p>
+ * 抽象 Spring 缓存类，实现Spring的Cache 和 自定义的 IFleaCache接口，
+ * 由具体的Spring缓存管理类初始化。
+ *
+ * <p> 它实现的读 {@code get}写 {@code put}、删除 {@code delete}
+ * 和 清空 {@code clear}缓存的基本操作方法，由具体Flea缓存实现类{@code fleaCache}
+ * 调用对应的方法实现。
  *
  * @author huazie
  * @version 1.0.0
