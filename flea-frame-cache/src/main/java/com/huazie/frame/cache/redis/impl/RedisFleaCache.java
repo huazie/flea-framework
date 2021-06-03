@@ -1,6 +1,7 @@
 package com.huazie.frame.cache.redis.impl;
 
 import com.huazie.frame.cache.AbstractFleaCache;
+import com.huazie.frame.cache.NullCache;
 import com.huazie.frame.cache.common.CacheEnum;
 import com.huazie.frame.cache.redis.RedisClient;
 import com.huazie.frame.cache.redis.config.RedisConfig;
@@ -25,13 +26,14 @@ public class RedisFleaCache extends AbstractFleaCache {
     /**
      * <p> 带参数的构造方法，初始化Redis Flea缓存类 </p>
      *
-     * @param name        缓存主关键字
-     * @param expiry      失效时长
-     * @param redisClient Redis客户端
+     * @param name            缓存数据主关键字
+     * @param expiry          缓存数据有效期（单位：s）
+     * @param nullCacheExpiry 空缓存数据有效期（单位：s）
+     * @param redisClient     Redis客户端
      * @since 1.0.0
      */
-    public RedisFleaCache(String name, long expiry, RedisClient redisClient) {
-        super(name, expiry);
+    public RedisFleaCache(String name, int expiry, int nullCacheExpiry, RedisClient redisClient) {
+        super(name, expiry, nullCacheExpiry);
         this.redisClient = redisClient;
         cache = CacheEnum.Redis;
     }
@@ -41,28 +43,27 @@ public class RedisFleaCache extends AbstractFleaCache {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug1(new Object() {}, "KEY = {}", key);
         }
-        // 反序列化
-        return ObjectUtils.deserialize(redisClient.get(key.getBytes()));
+        return redisClient.get(key);
     }
 
     @Override
-    public void putNativeValue(String key, Object value, long expiry) {
+    public void putNativeValue(String key, Object value, int expiry) {
         if (LOGGER.isDebugEnabled()) {
             Object obj = new Object() {};
             LOGGER.debug1(obj, "REDIS FLEA CACHE, KEY = {}", key);
             LOGGER.debug1(obj, "REDIS FLEA CACHE, VALUE = {}", value);
             LOGGER.debug1(obj, "REDIS FLEA CACHE, EXPIRY = {}s", expiry);
+            LOGGER.debug1(obj, "REDIS FLEA CACHE, NULL CACHE EXPIRY = {}s", getNullCacheExpiry());
         }
-        // 序列化
-        if (ObjectUtils.isNotEmpty(value)) {
-            byte[] valueBytes = ObjectUtils.serialize(value);
-            if (expiry == CommonConstants.NumeralConstants.ZERO) {
-                redisClient.set(key.getBytes(), valueBytes);
+        if (ObjectUtils.isEmpty(value)) {
+            redisClient.set(key, new NullCache(key), getNullCacheExpiry());
+        } else {
+            if (expiry == CommonConstants.NumeralConstants.INT_ZERO) {
+                redisClient.set(key, value);
             } else {
-                redisClient.set(key.getBytes(), valueBytes, (int) expiry);
+                redisClient.set(key, value, expiry);
             }
         }
-
     }
 
     @Override

@@ -120,7 +120,7 @@ public class FleaRequestUtil {
     }
 
     /**
-     * <p> 获取用户SESSION空闲保持时间（单位：秒） </p>
+     * <p> 获取用户SESSION空闲保持时间（单位：s） </p>
      *
      * @return 用户SESSION空闲保持时间
      * @throws CommonException 通用异常

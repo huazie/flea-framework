@@ -12,7 +12,18 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * <p> 抽象Flea Cache类 </p>
+ * 抽象Flea Cache类，实现了Flea缓存接口 {@code IFleaCache} 的读 {@code get}、
+ * 写 {@code put}、删除 {@code delete} 和 清空 {@code clear}缓存的基本操作。
+ *
+ * <p> 定义 读 {@code getNativeValue}、写 {@code putNativeValue}和 删除
+ * {@code deleteNativeValue} 的抽象方法，由子类实现具体的读、写
+ * 和删除缓存的操作。
+ *
+ * <p> 在实际调用写缓存操作时，会同时记录当前缓存数据的数据键关键字 {@key} 到
+ * 专门的同一类的数据键关键字的缓存中，以Set集合存储。比如缓存数据主关键字为name，
+ * 需要存储的 数据键关键字为key，则在实际调用写缓存操作时，会操作两条缓存数据，
+ * 一条是具体的数据缓存，缓存键为“系统名_name_key”，可查看方法 {@code getNativeKey}；
+ * 一条是数据键关键字的缓存，缓存键为“系统名_name”，可查看方法 {@code getNativeCacheKey}
  *
  * @author huazie
  * @version 1.0.0
@@ -24,13 +35,16 @@ public abstract class AbstractFleaCache implements IFleaCache {
 
     private final String name;  // 缓存数据主关键字
 
-    private final long expiry;  // 有效期(单位：秒)
+    private final int expiry;  // 缓存数据有效期（单位：s）
+
+    private final int nullCacheExpiry; // 空缓存数据有效期（单位：s）
 
     protected CacheEnum cache;  // 缓存实现
 
-    public AbstractFleaCache(String name, long expiry) {
+    public AbstractFleaCache(String name, int expiry, int nullCacheExpiry) {
         this.name = name;
         this.expiry = expiry;
+        this.nullCacheExpiry = nullCacheExpiry;
     }
 
     @Override
@@ -46,6 +60,9 @@ public abstract class AbstractFleaCache implements IFleaCache {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug1(obj, "VALUE = {}", value);
             }
+            if (value instanceof NullCache) {
+                value = null;
+            }
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error1(new Object() {}, "The action of getting [" + cache.getName() + "] cache occurs exception ：", e);
@@ -56,8 +73,6 @@ public abstract class AbstractFleaCache implements IFleaCache {
 
     @Override
     public void put(String key, Object value) {
-        if (ObjectUtils.isEmpty(value))
-            return;
         try {
             putNativeValue(getNativeKey(key), value, expiry);
             // 将指定Cache的key添加到Set集合，并存于缓存中
@@ -110,7 +125,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
         }
         if (!keySet.contains(key)) { // 只有其中不存在，才重新设置
             keySet.add(key);
-            putNativeValue(getNativeCacheKey(name), keySet, CommonConstants.NumeralConstants.ZERO);
+            putNativeValue(getNativeCacheKey(name), keySet, CommonConstants.NumeralConstants.INT_ZERO);
         }
     }
 
@@ -134,7 +149,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
                     // 将数据键关键字从Set集合中删除
                     keySet.remove(key);
                     // 重新覆盖当前Cache所有数据键关键字的缓存信息
-                    putNativeValue(getNativeCacheKey(name), keySet, CommonConstants.NumeralConstants.ZERO);
+                    putNativeValue(getNativeCacheKey(name), keySet, CommonConstants.NumeralConstants.INT_ZERO);
                 }
             } else {
                 if (LOGGER.isDebugEnabled()) {
@@ -190,10 +205,10 @@ public abstract class AbstractFleaCache implements IFleaCache {
      *
      * @param key    缓存数据键关键字
      * @param value  缓存值
-     * @param expiry 失效时间（单位：秒）
+     * @param expiry 失效时间（单位：s）
      * @since 1.0.0
      */
-    public abstract void putNativeValue(String key, Object value, long expiry);
+    public abstract void putNativeValue(String key, Object value, int expiry);
 
     /**
      * <p> 删除指定缓存数据 </p>
@@ -233,12 +248,34 @@ public abstract class AbstractFleaCache implements IFleaCache {
         return StringUtils.strCat(getSystemName(), CommonConstants.SymbolConstants.UNDERLINE, name);
     }
 
+    /**
+     * <p> 获取缓存数据主关键字 </p>
+     *
+     * @return 缓存数据主关键字
+     * @since 1.0.0
+     */
     public String getName() {
         return name;
     }
 
-    public long getExpiry() {
+    /**
+     * <p> 获取缓存数据有效期（单位：s） </p>
+     *
+     * @return 缓存数据有效期（单位：s）
+     * @since 1.0.0
+     */
+    public int getExpiry() {
         return expiry;
+    }
+
+    /**
+     * <p> 获取空缓存数据有效期（单位：s） </p>
+     *
+     * @return 空缓存数据有效期（单位：s）
+     * @since 1.0.0
+     */
+    public int getNullCacheExpiry() {
+        return nullCacheExpiry;
     }
 
     public String getCacheName() {

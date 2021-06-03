@@ -2,11 +2,12 @@ package com.huazie.frame.cache.memcached;
 
 import com.huazie.frame.cache.AbstractSpringCache;
 import com.huazie.frame.cache.AbstractSpringCacheManager;
+import com.huazie.frame.cache.memcached.config.MemCachedConfig;
 import com.huazie.frame.cache.memcached.impl.MemCachedSpringCache;
 import com.whalin.MemCached.MemCachedClient;
 
 /**
- * <p> Memcached的Spring缓存管理类 </p>
+ * <p> MemCached的Spring缓存管理类 </p>
  *
  * @author huazie
  * @version 1.0.0
@@ -14,7 +15,7 @@ import com.whalin.MemCached.MemCachedClient;
  */
 public class MemCachedSpringCacheManager extends AbstractSpringCacheManager {
 
-    private MemCachedClient memCachedClient;   // Memcached客户端类
+    private MemCachedClient memCachedClient;   // MemCached客户端类
 
     /**
      * <p> 新建一个MemCached Spring缓存管理类 </p>
@@ -46,8 +47,9 @@ public class MemCachedSpringCacheManager extends AbstractSpringCacheManager {
     }
 
     @Override
-    protected AbstractSpringCache newCache(String name, long expiry) {
-        return new MemCachedSpringCache(name, expiry, memCachedClient);
+    protected AbstractSpringCache newCache(String name, int expiry) {
+        int nullCacheExpiry = MemCachedConfig.getConfig().getNullCacheExpiry();
+        return new MemCachedSpringCache(name, expiry, nullCacheExpiry, memCachedClient);
     }
 
 }

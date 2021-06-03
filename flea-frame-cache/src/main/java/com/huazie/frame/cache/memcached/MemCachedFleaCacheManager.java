@@ -2,6 +2,7 @@ package com.huazie.frame.cache.memcached;
 
 import com.huazie.frame.cache.AbstractFleaCache;
 import com.huazie.frame.cache.AbstractFleaCacheManager;
+import com.huazie.frame.cache.memcached.config.MemCachedConfig;
 import com.huazie.frame.cache.memcached.impl.MemCachedFleaCache;
 import com.whalin.MemCached.MemCachedClient;
 
@@ -47,8 +48,9 @@ public class MemCachedFleaCacheManager extends AbstractFleaCacheManager {
     }
 
     @Override
-    protected AbstractFleaCache newCache(String name, long expiry) {
-        return new MemCachedFleaCache(name, expiry, memCachedClient);
+    protected AbstractFleaCache newCache(String name, int expiry) {
+        int nullCacheExpiry = MemCachedConfig.getConfig().getNullCacheExpiry();
+        return new MemCachedFleaCache(name, expiry, nullCacheExpiry, memCachedClient);
     }
 
 }

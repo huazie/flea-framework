@@ -14,6 +14,7 @@ import com.huazie.frame.cache.config.CacheServer;
 import com.huazie.frame.cache.config.CacheServers;
 import com.huazie.frame.cache.config.Caches;
 import com.huazie.frame.cache.config.FleaCache;
+import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 
@@ -57,17 +58,33 @@ public class CacheConfigManager {
     }
 
     /**
-     * <p> 根据指定的缓存主关键字获取缓存失效时长 </p>
+     * <p> 根据指定的缓存主关键字，获取缓存数据有效期 </p>
      *
-     * @param key 缓存主关键字
-     * @return 失效时长
+     * @param key 缓存数据主关键字
+     * @return 缓存数据有效期
      * @since 1.0.0
      */
-    public static long getExpiry(String key) {
-        long expiry = 0L;
+    public static int getExpiry(String key) {
+        int expiry = CommonConstants.NumeralConstants.INT_ZERO;
         Cache cache = getCache(key);
         if (ObjectUtils.isNotEmpty(cache) && StringUtils.isNotBlank(cache.getExpiry())) {
-            expiry = Long.parseLong(cache.getExpiry());
+            expiry = Integer.parseInt(cache.getExpiry());
+        }
+        return expiry;
+    }
+
+    /**
+     * <p> 获取空缓存数据有效期 </p>
+     *
+     * @return 空缓存数据有效期
+     * @since 1.0.0
+     */
+    public static int getNullCacheExpiry() {
+        // 默认300s
+        int expiry = 300;
+        CacheParam cacheParam = getCacheParam(CacheConstants.FleaCacheConfigConstants.NULL_CACHE_EXPIRY);
+        if (ObjectUtils.isNotEmpty(cacheParam)) {
+            expiry = Integer.parseInt(cacheParam.getValue());
         }
         return expiry;
     }
@@ -90,27 +107,25 @@ public class CacheConfigManager {
     }
 
     /**
-     * <p> 根据指定的缓存系统名cache, 获取缓存参数集 </p>
+     * <p> 获取缓存参数集 </p>
      *
-     * @param cache 缓存系统名
      * @return 缓存参数集
      * @since 1.0.0
      */
-    public static CacheParams getCacheParams(String cache) {
-        return CacheXmlDigesterHelper.getInstance().getFleaCacheConfig().getCacheParams(cache);
+    public static CacheParams getCacheParams() {
+        return CacheXmlDigesterHelper.getInstance().getFleaCacheConfig().getCacheParams();
     }
 
     /**
-     * <p> 根据指定的缓存系统名cache 和 缓存参数key，获取缓存参数 </p>
+     * <p> 根据指定的缓存参数key，获取缓存参数 </p>
      *
-     * @param cache 缓存系统名
-     * @param key   缓存参数key
+     * @param key 缓存参数键
      * @return 缓存参数
      * @since 1.0.0
      */
-    public static CacheParam getCacheParam(String cache, String key) {
+    public static CacheParam getCacheParam(String key) {
         CacheParam cacheParam = null;
-        CacheParams cacheParams = CacheXmlDigesterHelper.getInstance().getFleaCacheConfig().getCacheParams(cache);
+        CacheParams cacheParams = getCacheParams();
         if (ObjectUtils.isNotEmpty(cacheParams)) {
             cacheParam = cacheParams.getCacheParam(key);
         }

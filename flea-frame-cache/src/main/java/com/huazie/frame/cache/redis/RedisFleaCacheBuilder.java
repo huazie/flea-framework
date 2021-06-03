@@ -29,8 +29,10 @@ public class RedisFleaCacheBuilder implements IFleaCacheBuilder {
         if (CollectionUtils.isEmpty(cacheServerList)) {
             return null;
         }
-        // 获取失效时长
-        long expiry = CacheConfigManager.getExpiry(name);
+        // 获取缓存数据有效期（单位：s）
+        int expiry = CacheConfigManager.getExpiry(name);
+        // 获取空缓存数据有效期（单位：s）
+        int nullCacheExpiry = CacheConfigManager.getNullCacheExpiry();
         // 获取缓存组名
         String group = cacheServerList.get(0).getGroup();
         // 初始化连接池
@@ -38,7 +40,7 @@ public class RedisFleaCacheBuilder implements IFleaCacheBuilder {
         // 获取Redis客户端代理类
         RedisClient redisClient = RedisClientProxy.getProxyInstance(group);
         // 创建一个Redis Flea缓存
-        AbstractFleaCache fleaCache = new RedisFleaCache(name, expiry, redisClient);
+        AbstractFleaCache fleaCache = new RedisFleaCache(name, expiry, nullCacheExpiry, redisClient);
 
         if (LOGGER.isDebugEnabled()) {
             Object obj = new Object() {};

@@ -2,6 +2,7 @@ package com.huazie.frame.cache.redis;
 
 import com.huazie.frame.cache.AbstractSpringCache;
 import com.huazie.frame.cache.AbstractSpringCacheManager;
+import com.huazie.frame.cache.redis.config.RedisConfig;
 import com.huazie.frame.cache.redis.impl.RedisClientProxy;
 import com.huazie.frame.cache.redis.impl.RedisSpringCache;
 
@@ -28,8 +29,9 @@ public class RedisSpringCacheManager extends AbstractSpringCacheManager {
     }
 
     @Override
-    protected AbstractSpringCache newCache(String name, long expiry) {
-        return new RedisSpringCache(name, expiry, redisClient);
+    protected AbstractSpringCache newCache(String name, int expiry) {
+        int nullCacheExpiry = RedisConfig.getConfig().getNullCacheExpiry();
+        return new RedisSpringCache(name, expiry, nullCacheExpiry, redisClient);
     }
 
 }

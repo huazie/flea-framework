@@ -14,7 +14,7 @@ import com.huazie.frame.cache.core.impl.CoreSpringCache;
 public class CoreSpringCacheManager extends AbstractSpringCacheManager {
 
     @Override
-    protected AbstractSpringCache newCache(String name, long expiry) {
+    protected AbstractSpringCache newCache(String name, int expiry) {
         return new CoreSpringCache(name);
     }
 }

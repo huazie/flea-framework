@@ -3,12 +3,14 @@ package com.huazie.frame.cache.redis.impl;
 import com.huazie.frame.cache.redis.RedisClient;
 import com.huazie.frame.cache.redis.RedisPool;
 import com.huazie.frame.common.CommonConstants;
+import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import redis.clients.jedis.Client;
 import redis.clients.jedis.ShardedJedis;
 import redis.clients.jedis.ShardedJedisPool;
 import redis.clients.jedis.params.SetParams;
+import redis.clients.jedis.util.SafeEncoder;
 
 /**
  * <p> Flea Redis客户端类 </p>
@@ -61,8 +63,11 @@ public class FleaRedisClient implements RedisClient {
     }
 
     @Override
-    public String set(final String key, final String value) {
-        return shardedJedis.set(key, value);
+    public String set(final String key, final Object value) {
+        if (value instanceof String)
+            return shardedJedis.set(key, (String) value);
+        else
+            return shardedJedis.set(SafeEncoder.encode(key), ObjectUtils.serialize(value));
     }
 
     @Override
@@ -71,8 +76,11 @@ public class FleaRedisClient implements RedisClient {
     }
 
     @Override
-    public String set(final String key, final String value, final int expiry) {
-        return shardedJedis.setex(key, expiry, value);
+    public String set(final String key, final Object value, final int expiry) {
+        if (value instanceof String)
+            return shardedJedis.setex(key, expiry, (String) value);
+        else
+            return shardedJedis.setex(SafeEncoder.encode(key), expiry, ObjectUtils.serialize(value));
     }
 
     @Override
@@ -81,8 +89,11 @@ public class FleaRedisClient implements RedisClient {
     }
 
     @Override
-    public String set(String key, String value, long expiry) {
-        return shardedJedis.psetex(key, expiry, value);
+    public String set(String key, Object value, long expiry) {
+        if (value instanceof String)
+            return shardedJedis.psetex(key, expiry, (String) value);
+        else
+            return shardedJedis.psetex(SafeEncoder.encode(key), expiry, ObjectUtils.serialize(value));
     }
 
     @Override
@@ -91,8 +102,11 @@ public class FleaRedisClient implements RedisClient {
     }
 
     @Override
-    public String set(final String key, final String value, final SetParams params) {
-        return shardedJedis.set(key, value, params);
+    public String set(final String key, final Object value, final SetParams params) {
+        if (value instanceof String)
+            return shardedJedis.set(key, (String) value, params);
+        else
+            return shardedJedis.set(SafeEncoder.encode(key), ObjectUtils.serialize(value), params);
     }
 
     @Override
@@ -101,8 +115,13 @@ public class FleaRedisClient implements RedisClient {
     }
 
     @Override
-    public String get(final String key) {
-        return shardedJedis.get(key);
+    public Object get(final String key) {
+        byte[] value = get(SafeEncoder.encode(key));
+        Object object = ObjectUtils.deserialize(value);
+        if (ObjectUtils.isEmpty(object) && ArrayUtils.isNotEmpty(value))
+            return SafeEncoder.encode(value);
+        else
+            return object;
     }
 
     @Override
