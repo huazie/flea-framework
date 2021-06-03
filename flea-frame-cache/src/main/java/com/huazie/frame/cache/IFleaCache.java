@@ -13,6 +13,7 @@ import java.util.Set;
  *
  * @author huazie
  * @version 1.0.0
+ * @see AbstractFleaCache
  * @since 1.0.0
  */
 public interface IFleaCache {
