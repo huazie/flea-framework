@@ -14,7 +14,7 @@ import com.huazie.frame.cache.core.impl.CoreFleaCache;
 public class CoreFleaCacheManager extends AbstractFleaCacheManager {
 
     @Override
-    protected AbstractFleaCache newCache(String name, long expiry) {
+    protected AbstractFleaCache newCache(String name, int expiry) {
         return new CoreFleaCache(name);
     }
 }

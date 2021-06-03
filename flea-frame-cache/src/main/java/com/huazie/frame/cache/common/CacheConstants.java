@@ -43,6 +43,10 @@ public interface CacheConstants {
          * <p> Flea缓存所属系统名 </p>
          */
         String SYSTEM_NAME = "systemName";
+        /**
+         * <p> 空缓存数据有效期 </p>
+         */
+        String NULL_CACHE_EXPIRY = "fleacore.nullCacheExpiry";
     }
 
     /**
@@ -60,7 +64,7 @@ public interface CacheConstants {
          */
         String MEMCACHED_CONFIG_FILE_SYSTEM_KEY = "fleaframe.cache.memcached.config.filename";
         /**
-         * <p> Memcached缓存所属系统名 </p>
+         * <p> MemCached 缓存所属系统名 </p>
          */
         String MEMCACHED_CONFIG_SYSTEM_NAME = "memcached.systemName";
         /**
@@ -76,65 +80,37 @@ public interface CacheConstants {
          */
         String MEMCACHED_CONFIG_INITCONN = "memcached.initConn";
         /**
-         * <p> 初始化时对每个服务器建立的连接数目 </p>
-         */
-        String MEMCACHED_CACHE_PARAM_INITCONN = "initConn";
-        /**
          * <p> 每个服务器建立最小的连接数 </p>
          */
         String MEMCACHED_CONFIG_MINCONN = "memcached.minConn";
-        /**
-         * <p> 每个服务器建立最小的连接数 </p>
-         */
-        String MEMCACHED_CACHE_PARAM_MINCONN = "minConn";
         /**
          * <p> 每个服务器建立最大的连接数 </p>
          */
         String MEMCACHED_CONFIG_MAXCONN = "memcached.maxConn";
         /**
-         * <p> 每个服务器建立最大的连接数 </p>
-         */
-        String MEMCACHED_CACHE_PARAM_MAXCONN = "maxConn";
-        /**
-         * <p> 自查线程周期进行工作，其每次休眠时间 </p>
+         * <p> 自查线程周期进行工作，其每次休眠时间（单位：ms）</p>
          */
         String MEMCACHED_CONFIG_MAINTSLEEP = "memcached.maintSleep";
-        /**
-         * <p> 自查线程周期进行工作，其每次休眠时间 </p>
-         */
-        String MEMCACHED_CACHE_PARAM_MAINTSLEEP = "maintSleep";
         /**
          * <p> Socket的参数，如果是true在写数据时不缓冲，立即发送出去 </p>
          */
         String MEMCACHED_CONFIG_NAGLE = "memcached.nagle";
         /**
-         * <p> Socket的参数，如果是true在写数据时不缓冲，立即发送出去 </p>
-         */
-        String MEMCACHED_CACHE_PARAM_NAGLE = "nagle";
-        /**
-         * <p> Socket阻塞读取数据的超时时间 </p>
+         * <p> Socket阻塞读取数据的超时时间（单位：ms） </p>
          */
         String MEMCACHED_CONFIG_SOCKETTO = "memcached.socketTO";
         /**
-         * <p> Socket阻塞读取数据的超时时间 </p>
-         */
-        String MEMCACHED_CACHE_PARAM_SOCKETTO = "socketTO";
-        /**
-         * <p> Socket连接超时时间 </p>
+         * <p> Socket连接超时时间（单位：ms） </p>
          */
         String MEMCACHED_CONFIG_SOCKETCONNECTTO = "memcached.socketConnectTO";
-        /**
-         * <p> Socket连接超时时间 </p>
-         */
-        String MEMCACHED_CACHE_PARAM_SOCKETCONNECTTO = "socketConnectTO";
         /**
          * <p> MemCached 一致性hash算法 </p>
          */
         String MEMCACHED_CONFIG_HASHINGALG = "memcached.hashingAlg";
         /**
-         * <p> MemCached 一致性hash算法 </p>
+         * <p> MemCached 空缓存数据有效期（单位：s） </p>
          */
-        String MEMCACHED_CACHE_PARAM_HASHINGALG = "hashingAlg";
+        String MEMCACHED_CONFIG_NULLCACHEEXPIRY = "memcached.nullCacheExpiry";
     }
 
     /**
@@ -174,27 +150,13 @@ public interface CacheConstants {
         /**
          * <p> Redis 客户端socket连接超时时间 </p>
          */
-        String REDIS_CACHE_PARAM_CONNECTIONTIMEOUT = "connectionTimeout";
-        /**
-         * <p> Redis 客户端socket连接超时时间 </p>
-         */
         String REDIS_CONFIG_SOTIMEOUT = "redis.soTimeout";
-        /**
-         * <p> Redis 客户端socket连接超时时间 </p>
-         */
-        String REDIS_CACHE_PARAM_SOTIMEOUT = "soTimeout";
         /**
          * <p> Redis 分布式hash算法 </p>
          * <p> 1 : MURMUR_HASH </p>
          * <p> 2 : MD5 </p>
          */
         String REDIS_CONFIG_HASHINGALG = "redis.hashingAlg";
-        /**
-         * <p> Redis 分布式hash算法 </p>
-         * <p> 1 : MURMUR_HASH </p>
-         * <p> 2 : MD5 </p>
-         */
-        String REDIS_CACHE_PARAM_HASHINGALG = "hashingAlg";
         /**
          * <p> MURMUR_HASH 分布式hash算法 </p>
          */
@@ -208,33 +170,21 @@ public interface CacheConstants {
          */
         String REDIS_CONFIG_POOL_MAXTOTAL = "redis.pool.maxTotal";
         /**
-         * <p> Redis客户端Jedis连接池最大连接数 </p>
-         */
-        String REDIS_CACHE_PARAM_POOL_MAXTOTAL = "pool.maxTotal";
-        /**
          * <p> Redis客户端Jedis连接池最大空闲连接数 </p>
          */
         String REDIS_CONFIG_POOL_MAXIDLE = "redis.pool.maxIdle";
-        /**
-         * <p> Redis客户端Jedis连接池最大空闲连接数 </p>
-         */
-        String REDIS_CACHE_PARAM_POOL_MAXIDLE = "pool.maxIdle";
         /**
          * <p> Redis客户端Jedis连接池最小空闲连接数 </p>
          */
         String REDIS_CONFIG_POOL_MINIDLE = "redis.pool.minIdle";
         /**
-         * <p> Redis客户端Jedis连接池最小空闲连接数 </p>
-         */
-        String REDIS_CACHE_PARAM_POOL_MINIDLE = "pool.minIdle";
-        /**
          * <p> Redis客户端Jedis连接池获取连接时的最大等待毫秒数 </p>
          */
         String REDIS_CONFIG_POOL_MAXWAITMILLIS = "redis.pool.maxWaitMillis";
         /**
-         * <p> Redis客户端Jedis连接池获取连接时的最大等待毫秒数 </p>
+         * <p> Redis 空缓存数据有效期（单位：s） </p>
          */
-        String REDIS_CACHE_PARAM_POOL_MAXWAITMILLIS = "pool.maxWaitMillis";
+        String REDIS_CONFIG_NULLCACHEEXPIRY = "redis.nullCacheExpiry";
     }
 
 }

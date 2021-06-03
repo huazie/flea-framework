@@ -22,7 +22,7 @@ public interface RedisClient {
      * @return 状态码 （OK ：成功）
      * @since 1.0.0
      */
-    String set(final String key, final String value);
+    String set(final String key, final Object value);
 
     /**
      * <p> 往Redis赛数据（用于序列化对象） </p>
@@ -44,7 +44,7 @@ public interface RedisClient {
      * @return 状态码 （OK ：成功）
      * @since 1.0.0
      */
-    String set(final String key, final String value, final int expiry);
+    String set(final String key, final Object value, final int expiry);
 
     /**
      * <p> 往Redis塞数据 (可以带失效时间，用于序列化对象) </p>
@@ -68,7 +68,7 @@ public interface RedisClient {
      * @return 状态码 （OK ：成功）
      * @since 1.0.0
      */
-    String set(final String key, final String value, final long expiry);
+    String set(final String key, final Object value, final long expiry);
 
     /**
      * <p> 往Redis塞数据 (可以带失效时间，用于序列化对象) </p>
@@ -91,7 +91,7 @@ public interface RedisClient {
      * @return 状态码 （OK ：成功）
      * @since 1.0.0
      */
-    String set(final String key, final String value, SetParams params);
+    String set(final String key, final Object value, SetParams params);
 
     /**
      * <p> 往Redis塞数据 (带参数，用于序列化对象) </p>
@@ -111,7 +111,7 @@ public interface RedisClient {
      * @return 数据值
      * @since 1.0.0
      */
-    String get(final String key);
+    Object get(final String key);
 
     /**
      * <p> 从Redis取数据（用于获取序列化对象） </p>

@@ -16,7 +16,7 @@ public class RedisSpringCache extends AbstractSpringCache {
     /**
      * <p> 带参数的构造方法，初始化Redis Spring缓存类 </p>
      *
-     * @param name      缓存主关键字
+     * @param name      缓存数据主关键字
      * @param fleaCache 具体缓存实现
      * @since 1.0.0
      */
@@ -27,13 +27,14 @@ public class RedisSpringCache extends AbstractSpringCache {
     /**
      * <p> 带参数的构造方法，初始化Redis Spring缓存类 </p>
      *
-     * @param name        缓存主关键字
-     * @param expiry      失效时长
-     * @param redisClient Redis客户端
+     * @param name            缓存数据主关键字
+     * @param expiry          缓存数据有效期（单位：s）
+     * @param nullCacheExpiry 空缓存数据有效期（单位：s）
+     * @param redisClient     Redis客户端
      * @since 1.0.0
      */
-    public RedisSpringCache(String name, long expiry, RedisClient redisClient) {
-        this(name, new RedisFleaCache(name, expiry, redisClient));
+    public RedisSpringCache(String name, int expiry, int nullCacheExpiry, RedisClient redisClient) {
+        this(name, new RedisFleaCache(name, expiry, nullCacheExpiry, redisClient));
     }
 
 }

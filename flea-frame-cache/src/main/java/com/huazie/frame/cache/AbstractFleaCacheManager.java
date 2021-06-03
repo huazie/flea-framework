@@ -20,7 +20,7 @@ public abstract class AbstractFleaCacheManager {
 
     private static final ConcurrentMap<String, AbstractFleaCache> cacheMap = new ConcurrentHashMap<>();
 
-    private Map<String, Long> configMap = new HashMap<>();   // 各缓存的时间Map
+    private Map<String, Integer> configMap = new HashMap<>();   // 各缓存的时间Map
 
     /**
      * <p> 获取所有的Flea缓存 </p>
@@ -43,9 +43,9 @@ public abstract class AbstractFleaCacheManager {
         if (!cacheMap.containsKey(name)) {
             synchronized (cacheMap) {
                 if (!cacheMap.containsKey(name)) {
-                    Long expiry = configMap.get(name);
+                    Integer expiry = configMap.get(name);
                     if (ObjectUtils.isEmpty(expiry)) {
-                        expiry = CommonConstants.NumeralConstants.ZERO; // 表示永久
+                        expiry = CommonConstants.NumeralConstants.INT_ZERO; // 表示永久
                         configMap.put(name, expiry);
                     }
                     cacheMap.put(name, newCache(name, expiry));
@@ -59,11 +59,11 @@ public abstract class AbstractFleaCacheManager {
      * <p> 新创建一个缓存对象 </p>
      *
      * @param name   缓存名
-     * @param expiry 失效时间（单位：秒  其中0：表示永久）
+     * @param expiry 失效时间（单位：s  其中0：表示永久）
      * @return 新建的缓存对象
      * @since 1.0.0
      */
-    protected abstract AbstractFleaCache newCache(String name, long expiry);
+    protected abstract AbstractFleaCache newCache(String name, int expiry);
 
     /**
      * <p> 设置各缓存失效时间配置Map </p>
@@ -71,7 +71,7 @@ public abstract class AbstractFleaCacheManager {
      * @param configMap 失效时间配置Map
      * @since 1.0.0
      */
-    public void setConfigMap(Map<String, Long> configMap) {
+    public void setConfigMap(Map<String, Integer> configMap) {
         this.configMap = configMap;
     }
 

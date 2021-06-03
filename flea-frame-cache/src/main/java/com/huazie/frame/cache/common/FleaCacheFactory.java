@@ -71,9 +71,9 @@ public class FleaCacheFactory {
         // 获取缓存系统名
         String cacheSystem = cacheGroup.getCache();
         // 获取Flea缓存参数
-        CacheParams cacheParams = CacheConfigManager.getCacheParams(cacheSystem);
+        CacheParams cacheParams = CacheConfigManager.getCacheParams();
         if (ObjectUtils.isEmpty(cacheParams)) {
-            throw new RuntimeException("无法初始化Flea缓存，请检查flea-cache-config.xml配置【<cache-params key=" + cacheGroup.getCache() + " >】");
+            throw new RuntimeException("无法初始化Flea缓存，请检查flea-cache-config.xml配置【<cache-params >】");
         }
         // 获取Flea缓存服务器
         List<CacheServer> cacheServerList = CacheConfigManager.getCacheServer(cacheGroup.getGroup());

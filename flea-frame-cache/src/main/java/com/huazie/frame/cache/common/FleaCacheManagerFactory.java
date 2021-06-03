@@ -24,6 +24,7 @@ public class FleaCacheManagerFactory {
      *
      * @param name 缓存系统名称
      * @return Flea Cache管理类对象实例
+     * @since 1.0.0
      */
     public static AbstractFleaCacheManager getFleaCacheManager(String name) throws Exception {
         if (!managerMap.containsKey(name)) {

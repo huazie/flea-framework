@@ -30,8 +30,10 @@ public class MemCachedFleaCacheBuilder implements IFleaCacheBuilder {
         if (CollectionUtils.isEmpty(cacheServerList)) {
             return null;
         }
-        // 获取失效时长
-        long expiry = CacheConfigManager.getExpiry(name);
+        // 获取缓存数据有效期（单位：s）
+        int expiry = CacheConfigManager.getExpiry(name);
+        // 获取空缓存数据有效期（单位：s）
+        int nullCacheExpiry = CacheConfigManager.getNullCacheExpiry();
         // 获取MemCached服务器所在组名
         String group = cacheServerList.get(0).getGroup();
         // 通过组名来获取 MemCached客户端类
@@ -40,7 +42,7 @@ public class MemCachedFleaCacheBuilder implements IFleaCacheBuilder {
         MemCachedPool memCachedPool = MemCachedPool.getInstance(group);
         memCachedPool.initialize(cacheServerList, cacheParams);
         // 创建一个MemCached Flea缓存类
-        AbstractFleaCache fleaCache = new MemCachedFleaCache(name, expiry, memCachedClient);
+        AbstractFleaCache fleaCache = new MemCachedFleaCache(name, expiry, nullCacheExpiry, memCachedClient);
 
         if (LOGGER.isDebugEnabled()) {
             Object obj = new Object() {};

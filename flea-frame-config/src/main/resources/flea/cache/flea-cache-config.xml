@@ -13,33 +13,34 @@
         <cache-item key="Redis" desc="Redis的Flea缓存建造者实现">com.huazie.frame.cache.redis.RedisFleaCacheBuilder</cache-item>
     </cache-items>
 
-    <!-- Redis缓存参数集 -->
-    <cache-params key="Redis" desc="Redis缓存配置数据">
-        <cache-param key="connectionTimeout" desc="Redis客户端socket连接超时时间">2000</cache-param>
-        <cache-param key="soTimeout" desc="Redis客户端socket读写超时时间">2000</cache-param>
-        <cache-param key="hashingAlg" desc="Redis分布式hash算法(1:MURMUR_HASH,2:MD5)">1</cache-param>
-        <cache-param key="pool.maxTotal" desc="Redis客户端Jedis连接池最大连接数">100</cache-param>
-        <cache-param key="pool.maxIdle" desc="Redis客户端Jedis连接池最大空闲连接数">10</cache-param>
-        <cache-param key="pool.minIdle" desc="Redis客户端Jedis连接池最小空闲连接数">0</cache-param>
-        <cache-param key="pool.maxWaitMillis" desc="Redis客户端Jedis连接池获取连接时的最大等待毫秒数">2000</cache-param>
-    </cache-params>
+    <!-- 缓存参数集 -->
+    <cache-params>
+        <!-- 通用缓存参数 -->
+        <cache-param key="fleacore.nullCacheExpiry" desc="空缓存数据有效期（单位：s）">10</cache-param>
+        <!-- Redis 缓存参数 -->
+        <cache-param key="redis.connectionTimeout" desc="Redis客户端socket连接超时时间（单位：ms）">2000</cache-param>
+        <cache-param key="redis.soTimeout" desc="Redis客户端socket读写超时时间（单位：ms）">2000</cache-param>
+        <cache-param key="redis.hashingAlg" desc="Redis分布式hash算法(1:MURMUR_HASH,2:MD5)">1</cache-param>
+        <cache-param key="redis.pool.maxTotal" desc="Redis客户端Jedis连接池最大连接数">100</cache-param>
+        <cache-param key="redis.pool.maxIdle" desc="Redis客户端Jedis连接池最大空闲连接数">10</cache-param>
+        <cache-param key="redis.pool.minIdle" desc="Redis客户端Jedis连接池最小空闲连接数">0</cache-param>
+        <cache-param key="redis.pool.maxWaitMillis" desc="Redis客户端Jedis连接池获取连接时的最大等待时间（单位：ms）">2000</cache-param>
 
-    <!-- MemCached缓存参数集 -->
-    <cache-params key="MemCached" desc="MemCached缓存配置数据">
-        <cache-param key="initConn" desc="初始化时对每个服务器建立的连接数目">20</cache-param>
-        <cache-param key="minConn" desc="每个服务器建立最小的连接数">20</cache-param>
-        <cache-param key="maxConn" desc="每个服务器建立最大的连接数">500</cache-param>
-        <cache-param key="maintSleep" desc="自查线程周期进行工作，其每次休眠时间">60000</cache-param>
-        <cache-param key="nagle" desc="Socket的参数，如果是true在写数据时不缓冲，立即发送出去">true</cache-param>
-        <cache-param key="socketTO" desc="Socket阻塞读取数据的超时时间">3000</cache-param>
-        <cache-param key="socketConnectTO" desc="Socket连接超时时间">3000</cache-param>
+        <!-- MemCached缓存参数 -->
+        <cache-param key="memcached.initConn" desc="初始化时对每个服务器建立的连接数目">20</cache-param>
+        <cache-param key="memcached.minConn" desc="每个服务器建立最小的连接数">20</cache-param>
+        <cache-param key="memcached.maxConn" desc="每个服务器建立最大的连接数">500</cache-param>
+        <cache-param key="memcached.maintSleep" desc="自查线程周期进行工作，其每次休眠时间（单位：ms）">60000</cache-param>
+        <cache-param key="memcached.nagle" desc="Socket的参数，如果是true在写数据时不缓冲，立即发送出去">true</cache-param>
+        <cache-param key="memcached.socketTO" desc="Socket阻塞读取数据的超时时间（单位：ms）">3000</cache-param>
+        <cache-param key="memcached.socketConnectTO" desc="Socket连接超时时间（单位：ms）">3000</cache-param>
         <!--
             0 - native String.hashCode();
             1 - original compatibility
             2 - new CRC32 based
             3 - MD5 Based
         -->
-        <cache-param key="hashingAlg" desc="MemCached分布式hash算法">3</cache-param>
+        <cache-param key="memcached.hashingAlg" desc="MemCached分布式hash算法">3</cache-param>
     </cache-params>
 
     <!-- Flea缓存数据集 -->

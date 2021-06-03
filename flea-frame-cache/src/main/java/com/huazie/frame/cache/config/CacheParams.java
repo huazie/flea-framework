@@ -16,7 +16,7 @@ import java.util.Map;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class CacheParams extends ConfigKey {
+public class CacheParams {
 
     private List<CacheParam> cacheParamList = new ArrayList<>(); // 缓存参数集中的各个缓存参数
 
