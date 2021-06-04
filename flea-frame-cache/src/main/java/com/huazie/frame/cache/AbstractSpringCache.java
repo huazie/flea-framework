@@ -15,8 +15,8 @@ import java.util.concurrent.Callable;
  * 由具体的Spring缓存管理类初始化。
  *
  * <p> 它实现的读 {@code get}写 {@code put}、删除 {@code delete}
- * 和 清空 {@code clear}缓存的基本操作方法，由具体Flea缓存实现类{@code fleaCache}
- * 调用对应的方法实现。
+ * 和 清空 {@code clear}缓存的基本操作方法，由具体Flea缓存实现类
+ * {@code fleaCache} 调用对应的方法实现。
  *
  * @author huazie
  * @version 1.0.0

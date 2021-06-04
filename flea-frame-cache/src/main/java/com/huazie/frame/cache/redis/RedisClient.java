@@ -6,7 +6,23 @@ import redis.clients.jedis.ShardedJedisPool;
 import redis.clients.jedis.params.SetParams;
 
 /**
- * <p> Redis客户端对外接口 </p>
+ * Redis客户端接口，定义了读、写、删除Redis缓存的基本操作方法。
+ *
+ * <p> 针对单独缓存接入场景，我们可以通过如下方式对外使用Redis
+ * 客户端，使用之前需要先初始化Redis连接池【默认default】：
+ * <pre>
+ *   // 初始化默认连接池
+ *   RedisPool.getInstance().initialize();
+ *   // 获取Redis客户端代理类
+ *   RedisClient redisClient = RedisClientProxy.getProxyInstance(); </pre>
+ *
+ * <p> 针对整合缓存接入场景，我们可以通过如下方式对外使用Redis
+ * 客户端，使用之前需要先初始化Redis连接池【指定缓存组名】：
+ * <pre>
+ *   // 初始化指定缓存组名的连接池
+ *   RedisPool.getInstance(group).initialize(cacheServerList, cacheParams);
+ *   // 获取Redis客户端代理类
+ *   RedisClient redisClient = RedisClientProxy.getProxyInstance(group); </pre>
  *
  * @author huazie
  * @version 1.0.0
