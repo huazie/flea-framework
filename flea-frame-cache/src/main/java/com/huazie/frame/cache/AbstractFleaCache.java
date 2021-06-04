@@ -221,14 +221,6 @@ public abstract class AbstractFleaCache implements IFleaCache {
     public abstract void deleteNativeValue(String key);
 
     /**
-     * <p> 获取缓存所属系统名 </p>
-     *
-     * @return 缓存所属系统名
-     * @since 1.0.0
-     */
-    public abstract String getSystemName();
-
-    /**
      * <p> 获取实际存储的缓存键（缓存所属系统名 + 缓存名（缓存主关键字） + 缓存数据键（缓存数据关键字）） </p>
      *
      * @param key 缓存数据键关键字

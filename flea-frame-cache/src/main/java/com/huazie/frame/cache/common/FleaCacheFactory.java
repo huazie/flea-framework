@@ -31,6 +31,8 @@ public class FleaCacheFactory {
 
     private static final ConcurrentMap<String, AbstractFleaCache> fleaCacheMap = new ConcurrentHashMap<>();
 
+    private FleaCacheFactory() {}
+
     /**
      * <p> 根据缓存主关键字name获取指定Flea缓存对象 </p>
      *

@@ -28,7 +28,7 @@ public abstract class AbstractFleaCacheManager {
      * @return 所有的Flea缓存
      * @since 1.0.0
      */
-    protected Collection<? extends AbstractFleaCache> loadCaches() {
+    protected Collection<AbstractFleaCache> loadCaches() {
         return cacheMap.values();
     }
 

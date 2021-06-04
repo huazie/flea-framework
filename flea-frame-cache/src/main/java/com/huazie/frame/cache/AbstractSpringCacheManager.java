@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
- * 抽象Spring缓存管理类，接入Spring管理缓存
+ * 抽象Spring缓存管理类，用于接入Spring管理缓存。
  *
  * <p> 同步集合类 {@code cacheMap}, 存储的键为缓存主关键字，
  * 如果是整合各类缓存接入，它的键对应缓存定义配置文件【flea-cache.xml】
