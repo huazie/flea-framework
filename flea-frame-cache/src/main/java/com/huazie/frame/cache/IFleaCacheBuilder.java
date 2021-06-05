@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Flea缓存建造者接口类，定义了构建Flea缓存对象的通用接口。
  *
- * <p> 该接口由Flea缓存工厂类 {@code FleaCacheFactory} 使用，
+ * <p> 该接口由Flea缓存工厂类【{@code FleaCacheFactory}】使用，
  * 根据不同缓存数据归属缓存组所在的缓存类型，读取缓存配置中的
  * Flea缓存建造者配置项集，通过反射实例化具体的Flea缓存。
  *

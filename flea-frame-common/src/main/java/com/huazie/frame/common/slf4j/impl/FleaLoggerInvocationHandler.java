@@ -1,23 +1,24 @@
 package com.huazie.frame.common.slf4j.impl;
 
 import com.huazie.frame.common.interceptor.IFleaProxyInterceptor;
-import com.huazie.frame.common.interceptor.impl.FleaDebugProxyInterceptor;
 import com.huazie.frame.common.interceptor.impl.FleaLoggerProxyInterceptor;
 import com.huazie.frame.common.proxy.FleaProxyHandler;
-import com.huazie.frame.common.slf4j.LoggerUtils;
-import com.huazie.frame.common.util.ArrayUtils;
-import com.huazie.frame.common.util.ObjectUtils;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p> Flea Logger 调用处理类 </p>
+ * Flea日志调用处理类，用于实现代理的Flea日志对象
+ * 方法调用前后和调用出现异常时的处理逻辑
+ *
+ * <p> 构造方法传入指定的代理对象实例，静态初始化块
+ * 初始化代理拦截器列表。
+ *
+ * <p> 代理拦截器列表包含Flea日志代理拦截器实现类。
  *
  * @author huazie
  * @version 1.0.0
+ * @see FleaLoggerProxyInterceptor
  * @since 1.0.0
  */
 public class FleaLoggerInvocationHandler extends FleaProxyHandler {

@@ -17,7 +17,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
- * <p> Flea Cache 工厂类 </p>
+ * Flea Cache 工厂类，用于整合各类缓存接入时，创建具体的缓存实现类。
+ *
+ * <p> 同步集合类 {@code fleaCacheMap}，存储的键为缓存主关键字，
+ * 对应缓存定义配置文件【flea-cache.xml】中的 {@code <cache
+ * key="缓存主关键字"></cache>}；它的值为具体的缓存实现类。
  *
  * @author huazie
  * @version 1.0.0
@@ -26,6 +30,8 @@ import java.util.concurrent.ConcurrentMap;
 public class FleaCacheFactory {
 
     private static final ConcurrentMap<String, AbstractFleaCache> fleaCacheMap = new ConcurrentHashMap<>();
+
+    private FleaCacheFactory() {}
 
     /**
      * <p> 根据缓存主关键字name获取指定Flea缓存对象 </p>

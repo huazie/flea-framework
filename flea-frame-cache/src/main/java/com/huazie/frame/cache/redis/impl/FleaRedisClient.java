@@ -13,7 +13,43 @@ import redis.clients.jedis.params.SetParams;
 import redis.clients.jedis.util.SafeEncoder;
 
 /**
- * <p> Flea Redis客户端类 </p>
+ * Flea Redis客户端实现类，封装了Flea框架操作Redis的基本操作。
+ *
+ * <p> 它内部具体操作Redis缓存的功能，由分布式Jedis对象完成，
+ * 包含读、写、删除Redis缓存的基本操作方法。
+ *
+ * <p> 单个缓存接入场景，可通过如下方式使用：
+ * <pre>
+ *  RedisClient redisClient = new FleaRedisClient.Builder().build();
+ *  ShardedJedisPool jedisPool = redisClient.getJedisPool();
+ *  redisClient.setShardedJedis(jedisPool.getResource());
+ *  // 执行读，写，删除等基本操作
+ *  redisClient.set("key", "value");
+ *  ShardedJedis shardedJedis = redisClient.getShardedJedis();
+ *  shardedJedis.close(); </pre>
+ *
+ * <p> 整合缓存接入场景，可通过如下方式使用：
+ * <pre>
+ *  RedisClient redisClient = new FleaRedisClient.Builder(poolName).build();
+ *  ShardedJedisPool jedisPool = redisClient.getJedisPool();
+ *  redisClient.setShardedJedis(jedisPool.getResource());
+ *  // 执行读，写，删除等基本操作
+ *  redisClient.set("key", "value");
+ *  ShardedJedis shardedJedis = redisClient.getShardedJedis();
+ *  shardedJedis.close(); </pre>
+ *
+ * <p> 这里直接去新建Flea Redis客户端实现类并不推荐。因为在实际
+ * 使用操作Redis缓存的分布式Jedis对象时，需要先从分布式Jedis连接
+ * 池中获取，然后操作Redis缓存结束后又需要归还给连接池。我们可通过
+ * Redis客户端代理来获取代理的Redis客户端
+ *
+ * <p> 单个缓存接入场景，可通过如下方式使用：
+ * <pre>
+ *  RedisClient redisClient = RedisClientProxy.getProxyInstance(); </pre>
+ *
+ * <p> 整合缓存接入场景，可通过如下方式使用：
+ * <pre>
+ *  RedisClient redisClient = RedisClientProxy.getProxyInstance(poolName); </pre>
  *
  * @author huazie
  * @version 1.0.0
