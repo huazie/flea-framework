@@ -13,19 +13,19 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 /**
- * Flea调用处理父类
+ * Flea调用处理父类，定义了代理类方法调用前后和调用出现异常时的处理逻辑。
  *
- * <p> {@code FleaProxyHandler} 定义了代理类方法调用前后和调用出现异常时的处理逻辑。
+ * <p> 成员变量 {@code proxyObject}，即实际被代理的对象实例，在代理拦
+ * 截器和异常代理拦截器中均使用到。
  *
- * <p> 成员变量 {@code proxyObject}，即实际被代理的对象实例，在代理拦截器和异常代理拦截器中均使用到。
+ * <p> 成员变量 {@code proxyInterceptors}，即代理拦截器列表，其中定义
+ * 了代理类方法调用前后的自定义处理方法。
  *
- * <p> 成员变量 {@code proxyInterceptors}，即代理拦截器列表，其中定义了代理类方法调用前后的自定义处理方法。
- *
- * <p> 成员变量 {@code exceptionProxyInterceptor}，即异常代理拦截器，其中定义了代理类方法调用出现异常的自定义处理方法。
+ * <p> 成员变量 {@code exceptionProxyInterceptor}，即异常代理拦截器，
+ * 其中定义了代理类方法调用出现异常的自定义处理方法。
  *
  * @author huazie
  * @version 1.0.0
- * @see InvocationHandler
  * @since 1.0.0
  */
 public class FleaProxyHandler implements InvocationHandler {

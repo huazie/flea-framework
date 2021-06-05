@@ -8,13 +8,12 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 
 /**
- * Flea异常 代理拦截器实现类
+ * Flea异常代理拦截器实现类
  *
  * <p> 方法 {@code exceptionHandle} 用于实现代理类方法被调用出现异常的自定义处理逻辑。
  *
  * @author huazie
  * @version 1.0.0
- * @see IFleaExceptionProxyInterceptor
  * @since 1.0.0
  */
 public class FleaErrorProxyInterceptor implements IFleaExceptionProxyInterceptor {

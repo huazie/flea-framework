@@ -6,7 +6,11 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 
 /**
- * <p> Flea 代理父类 </p>
+ * Flea代理，封装了通用的代理类获取逻辑。
+ *
+ * <p>由于【{@code Proxy.newProxyInstance}】返回的是【{@code Object}】
+ * 类型的代理类的实例，所以【{@code FleaProxy.newProxyInstance}】提供
+ * 指定代理对象类型【{@code proxyClass}】进行转化。
  *
  * @author huazie
  * @version 1.0.0
@@ -15,16 +19,16 @@ import java.lang.reflect.Proxy;
 public class FleaProxy {
 
     /**
-     * <p> 生成代理对象实例 </p>
+     * 返回指定接口的代理类的实例，该接口将方法调用分派到指定的调用处理程序
      *
-     * @param loader     代理对象的ClassLoader
-     * @param interfaces 代理对象的接口数组
-     * @param handler    代理处理接口
+     * @param loader     代理类的类加载器接口
+     * @param interfaces 代理类要实现的接口列表
+     * @param handler    将方法调用分派到的调用处理程序
      * @param <T>        代理对象的类型
-     * @return 代理对象实例
+     * @return 指定接口的代理类的实例
      * @since 1.0.0
      */
-    protected static <T> T newProxyInstance(ClassLoader loader, Class<?>[] interfaces, InvocationHandler handler, Class<T> proxyClass) {
+    public static <T> T newProxyInstance(ClassLoader loader, Class<?>[] interfaces, InvocationHandler handler, Class<T> proxyClass) {
 
         T t = null;
 

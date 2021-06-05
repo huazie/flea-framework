@@ -4,23 +4,24 @@ import com.huazie.frame.common.proxy.FleaProxy;
 import com.huazie.frame.common.slf4j.FleaLogger;
 
 /**
- * <p> Flea Logger 代理 </p>
+ * Flea日志代理，用于获取代理的Flea日志类
  *
  * @author huazie
  * @version 1.0.0
+ * @see FleaLoggerInvocationHandler
  * @since 1.0.0
  */
-public class FleaLoggerProxy extends FleaProxy {
+public class FleaLoggerProxy {
 
     /**
-     * <p> 获取RedisClient代理类 (默认)</p>
+     * <p> 获取代理的Flea日志类 </p>
      *
-     * @return RedisClient代理类
+     * @return 代理的Flea日志类
      * @since 1.0.0
      */
     public static FleaLogger getProxyInstance(Class<?> loggerClass) {
         FleaLogger fleaLogger = new FleaLocalLogger.Builder(loggerClass).build();
-        return newProxyInstance(fleaLogger.getClass().getClassLoader(), fleaLogger.getClass().getInterfaces(),
+        return FleaProxy.newProxyInstance(fleaLogger.getClass().getClassLoader(), fleaLogger.getClass().getInterfaces(),
                 new FleaLoggerInvocationHandler(fleaLogger), FleaLogger.class);
     }
 }

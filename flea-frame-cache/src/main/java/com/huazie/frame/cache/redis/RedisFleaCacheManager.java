@@ -14,8 +14,8 @@ import com.huazie.frame.cache.redis.impl.RedisFleaCache;
  * 客户端代理类获取被代理的Redis客户端。
  *
  * <p> 方法 {@code newCache} 用于创建一个Redis Flea缓存，
- * 包含了 读 {@code get}、写 {@code put}、删除 {@code delete}
- * 和 清空 {@code clear} 缓存的基本操作。
+ * 它里面包含了读【{@code get}】、写【{@code put}】、删除
+ * 【{@code delete}】和清空【{@code clear}】缓存的基本操作。
  *
  * @author huazie
  * @version 1.0.0

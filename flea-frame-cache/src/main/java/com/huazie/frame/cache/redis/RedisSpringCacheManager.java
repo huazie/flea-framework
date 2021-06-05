@@ -13,9 +13,9 @@ import com.huazie.frame.cache.redis.impl.RedisSpringCache;
  * 初始化Redis连接池，默认连接池名为default；然后通过Redis
  * 客户端代理类获取被代理的Redis客户端。
  *
- * <p> 方法 {@code newCache} 用于创建一个Redis Spring缓存，
- * 而它内部是由Redis Flea缓存实现具体的 读 {@code get}、
- * 写 {@code put}、删除 {@code delete} 和 清空 {@code clear}
+ * <p> 方法【{@code newCache}】用于创建一个Redis Spring缓存，
+ * 而它内部是由Redis Flea缓存实现具体的读【{@code get}】、写
+ * 【{@code put}】、删除【{@code delete}】和清空【{@code clear}】
  * 缓存的基本操作。
  *
  * @author huazie
