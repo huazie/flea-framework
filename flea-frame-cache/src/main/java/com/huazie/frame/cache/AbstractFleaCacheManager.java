@@ -10,10 +10,21 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
- * <p> 自定义抽象缓存管理类 </p>
+ * 抽象Flea缓存管理类，用于接入Flea框架管理缓存。
+ *
+ * <p> 同步集合类【{@code cacheMap}】, 存储的键为缓存主关键字，
+ * 如果是整合各类缓存接入，它的键对应缓存定义配置文件【flea-cache.xml】
+ * 中的【{@code <cache key="缓存主关键字"></cache>}】；如果是单个缓存接入，
+ * 它的键对应【applicationContext.xml】中【{@code <entry key="缓存主关键字"
+ * value="有效期（单位：s）"/>}】；它的值为具体的缓存实现类。
+ *
+ * <p> 抽象方法【{@code newCache}】，由子类实现具体的Flea缓存类创建。
  *
  * @author huazie
  * @version 1.0.0
+ * @see com.huazie.frame.cache.memcached.MemCachedFleaCacheManager
+ * @see com.huazie.frame.cache.redis.RedisFleaCacheManager
+ * @see com.huazie.frame.cache.core.CoreFleaCacheManager
  * @since 1.0.0
  */
 public abstract class AbstractFleaCacheManager {
@@ -28,7 +39,7 @@ public abstract class AbstractFleaCacheManager {
      * @return 所有的Flea缓存
      * @since 1.0.0
      */
-    protected Collection<? extends AbstractFleaCache> loadCaches() {
+    protected Collection<AbstractFleaCache> loadCaches() {
         return cacheMap.values();
     }
 

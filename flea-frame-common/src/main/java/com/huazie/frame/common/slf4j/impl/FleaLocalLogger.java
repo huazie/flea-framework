@@ -6,7 +6,12 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 
 /**
- * <p> Flea Logger 本地实现类 </p>
+ * Flea 日志本地实现类，实现Flea日志接口，用于自定义日志打印输出格式。
+ *
+ * <p> 成员变量slf4j日志对象【{@code logger}】，由构造器初始化，仍然
+ * 从slf4j的日志工厂类获取；拓展了slf4j日志对象的方法，可查看这些方法
+ * 【{@code trace1}】、【{@code debug1}】、【{@code info1}】、
+ * 【{@code warn1}】和【{@code error1}】。
  *
  * @author huazie
  * @version 1.0.0

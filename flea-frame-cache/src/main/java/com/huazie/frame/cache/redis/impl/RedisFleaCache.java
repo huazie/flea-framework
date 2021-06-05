@@ -11,7 +11,21 @@ import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ObjectUtils;
 
 /**
- * <p> Redis Flea缓存类 </p>
+ * Redis Flea缓存类，实现了以Flea框架操作Redis缓存的基本操作方法，
+ * 包含读【{@code getNativeValue}】、写【{@code putNativeValue}】
+ * 和删除【{@code deleteNativeValue}】。
+ *
+ * <p> 在上述基本操作方法中，实际使用Redis客户端【{@code} redisClient】
+ * 读、写和删除Redis缓存。其中写缓存方法【{@code putNativeValue}】在
+ * 添加的数据值为【{@code null}】时，默认添加空缓存数据【{@code NullCache}】
+ * 到Redis中，有效期取初始化参数【{@code nullCacheExpiry}】。
+ *
+ * <p> 单个缓存接入场景，有效期配置可查看【redis.properties】中的配置
+ * 参数【redis.nullCacheExpiry】
+ *
+ * <p> 整合缓存接入场景，有效期配置可查看【flea-cache-config.xml】
+ * 中的缓存参数【{@code <cache-param key="fleacore.nullCacheExpiry"
+ * desc="空缓存数据有效期（单位：s）">300</cache-param>}】
  *
  * @author huazie
  * @version 1.0.0

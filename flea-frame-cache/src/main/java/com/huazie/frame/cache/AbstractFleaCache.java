@@ -12,18 +12,20 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * 抽象Flea Cache类，实现了Flea缓存接口 {@code IFleaCache} 的读 {@code get}、
- * 写 {@code put}、删除 {@code delete} 和 清空 {@code clear}缓存的基本操作。
+ * 抽象Flea Cache类，实现了Flea缓存接口 {@code IFleaCache} 的读【{@code get}】、
+ * 写【{@code put}】、删除【{@code delete}】和清空【{@code clear}】缓存的基本操作。
  *
- * <p> 定义 读 {@code getNativeValue}、写 {@code putNativeValue}和 删除
- * {@code deleteNativeValue} 的抽象方法，由子类实现具体的读、写
+ * <p> 定义读【{@code getNativeValue}】、写【{@code putNativeValue}】和删除
+ * 【{@code deleteNativeValue}】的抽象方法，由子类实现具体的读、写
  * 和删除缓存的操作。
  *
- * <p> 在实际调用写缓存操作时，会同时记录当前缓存数据的数据键关键字 {@key} 到
- * 专门的同一类的数据键关键字的缓存中，以Set集合存储。比如缓存数据主关键字为name，
- * 需要存储的 数据键关键字为key，则在实际调用写缓存操作时，会操作两条缓存数据，
- * 一条是具体的数据缓存，缓存键为“系统名_name_key”，可查看方法 {@code getNativeKey}；
- * 一条是数据键关键字的缓存，缓存键为“系统名_name”，可查看方法 {@code getNativeCacheKey}
+ * <p> 在实际调用写缓存操作时，会同时记录当前缓存数据的数据键关键字【{@code key}】
+ * 到专门的数据键关键字的缓存中，以Set集合存储。比如缓存数据主关键字为【{@code name}】，
+ * 需要存储的数据键关键字为【{@code key}】，则在实际调用写缓存操作时，会操作两条缓存数据，
+ * 一条是具体的数据缓存，缓存键为“系统名_name_key”，可查看方法【{@code getNativeKey}】，
+ * 有效期从配置中获取；
+ * 一条是数据键关键字的缓存，缓存键为“系统名_name”，可查看方法【{@code getNativeCacheKey}】，
+ * 默认永久有效。
  *
  * @author huazie
  * @version 1.0.0
@@ -217,14 +219,6 @@ public abstract class AbstractFleaCache implements IFleaCache {
      * @since 1.0.0
      */
     public abstract void deleteNativeValue(String key);
-
-    /**
-     * <p> 获取缓存所属系统名 </p>
-     *
-     * @return 缓存所属系统名
-     * @since 1.0.0
-     */
-    public abstract String getSystemName();
 
     /**
      * <p> 获取实际存储的缓存键（缓存所属系统名 + 缓存名（缓存主关键字） + 缓存数据键（缓存数据关键字）） </p>

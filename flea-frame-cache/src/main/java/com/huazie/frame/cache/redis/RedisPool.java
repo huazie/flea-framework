@@ -21,10 +21,24 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
- * <p>  Flea Redis 连接池 </p>
+ * Flea Redis连接池，用于初始化分布式 Jedis 连接池。
+ *
+ * <p> 针对单独缓存接入场景，采用默认连接池初始化的方式；<br/>
+ * 可参考如下：
+ * <pre>
+ *   // 初始化默认连接池
+ *   RedisPool.getInstance().initialize(); </pre>
+ *
+ * <p> 针对整合缓存接入场景，采用指定连接池初始化的方式；<br/>
+ * 可参考如下：
+ * <pre>
+ *   // 初始化指定连接池
+ *   RedisPool.getInstance(group).initialize(cacheServerList, cacheParams); </pre>
  *
  * @author huazie
  * @version 1.0.0
+ * @see RedisFleaCacheManager
+ * @see RedisFleaCacheBuilder
  * @since 1.0.0
  */
 public class RedisPool {
