@@ -5,11 +5,13 @@ import java.util.Set;
 /**
  * Flea缓存接口类，定义了对缓存数据进行读、写和删除的基本操作。
  *
- * <p> 方法 {@code get}，实现读缓存的基本操作；
+ * <p> 方法【{@code get}】，实现读缓存的基本操作；
  *
- * <p> 方法 {@code put}，实现写缓存的基本操作；
+ * <p> 方法【{@code put}】，实现写缓存的基本操作；
  *
- * <p> 方法 {@code delete}, 实现删除缓存的基本操作。
+ * <p> 方法【{@code delete}】，实现删除缓存的基本操作；
+ *
+ * <p> 方法【{@code clear}】，实现清空当前缓存主关键字相关的所有缓存。
  *
  * @author huazie
  * @version 1.0.0

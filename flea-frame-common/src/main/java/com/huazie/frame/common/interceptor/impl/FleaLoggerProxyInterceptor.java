@@ -8,7 +8,7 @@ import com.huazie.frame.common.util.ObjectUtils;
 import java.lang.reflect.Method;
 
 /**
- * Flea日志 代理拦截器实现类
+ * Flea日志代理拦截器实现类
  *
  * <p> 方法 {@code beforeHandle} 用于添加当前日志打印的所在类的方法相关信息至日志上下文MDC中。
  *
@@ -16,7 +16,6 @@ import java.lang.reflect.Method;
  *
  * @author huazie
  * @version 1.0.0
- * @see IFleaProxyInterceptor
  * @since 1.0.0
  */
 public class FleaLoggerProxyInterceptor implements IFleaProxyInterceptor {

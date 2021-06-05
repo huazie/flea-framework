@@ -3,7 +3,8 @@ package com.huazie.frame.common.slf4j;
 import org.slf4j.Logger;
 
 /**
- * <p> Flea Logger 自定义接口 </p>
+ * Flea 日志接口，继承slf4j日志接口的所有方法，同时
+ * 拓展了其他用于自定义打印输出的其他方法。
  *
  * @author huazie
  * @version 1.0.0

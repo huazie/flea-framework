@@ -12,13 +12,13 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * 抽象Spring缓存管理类，用于接入Spring框架管理缓存。
  *
- * <p> 同步集合类 {@code cacheMap}, 存储的键为缓存主关键字，
+ * <p> 同步集合类【{@code cacheMap}】, 存储的键为缓存主关键字，
  * 如果是整合各类缓存接入，它的键对应缓存定义配置文件【flea-cache.xml】
- * 中的 {@code <cache key="缓存主关键字"></cache>}；如果是单个缓存接入，
- * 它的键对应【applicationContext.xml】中 {@code <entry key="缓存主关键字"
- * value="有效期（单位：s）"/>}；它的值为具体的缓存实现类。
+ * 中的【{@code <cache key="缓存主关键字"></cache>}】；如果是单个缓存接入，
+ * 它的键对应【applicationContext.xml】中【{@code <entry key="缓存主关键字"
+ * value="有效期（单位：s）"/>}】；它的值为具体的缓存实现类。
  *
- * <p> 抽象方法 {@code newCache}，由子类实现具体的Spring缓存类创建。
+ * <p> 抽象方法【{@code newCache}】，由子类实现具体的Spring缓存类创建。
  *
  * @author huazie
  * @version 1.0.0

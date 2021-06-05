@@ -13,7 +13,7 @@ import redis.clients.jedis.params.SetParams;
  * <pre>
  *   // 初始化默认连接池
  *   RedisPool.getInstance().initialize();
- *   // 获取Redis客户端代理类
+ *   // 获取代理的Redis客户端
  *   RedisClient redisClient = RedisClientProxy.getProxyInstance(); </pre>
  *
  * <p> 针对整合缓存接入场景，我们可以通过如下方式对外使用Redis
@@ -21,7 +21,7 @@ import redis.clients.jedis.params.SetParams;
  * <pre>
  *   // 初始化指定缓存组名的连接池
  *   RedisPool.getInstance(group).initialize(cacheServerList, cacheParams);
- *   // 获取Redis客户端代理类
+ *   // 获取代理的Redis客户端
  *   RedisClient redisClient = RedisClientProxy.getProxyInstance(group); </pre>
  *
  * @author huazie

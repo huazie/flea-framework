@@ -3,14 +3,16 @@ package com.huazie.frame.common.interceptor;
 import java.lang.reflect.Method;
 
 /**
- * Flea代理拦截器接口
+ * Flea代理拦截器接口，定义了代理类的方法被调用前后
+ * 自定义的处理方法。
  *
- * <p> 类 {@code IFleaProxyInterceptor} 定义了代理类的方法被调用前后自定义的处理方法。
+ * <p> 方法【{@code beforeHandle}】，即前置处理，由子
+ * 类来实现代理类的方法被调用前的自定义处理逻辑。
  *
- * <p> 方法 {@code beforeHandle}，即前置处理，由子类来实现代理类的方法被调用前的自定义处理逻辑。
- *
- * <p> 方法 {@code afterHandle}，即后置处理，由子类来实现代理类的方法被调用后的自定义处理逻辑；
- * 如果在出现异常时，想要不执行这段逻辑，可以在子类中添加判断hasException。
+ * <p> 方法【{@code afterHandle}】，即后置处理，由子类
+ * 来实现代理类的方法被调用后的自定义处理逻辑；如果在
+ * 出现异常时，想要不执行这段逻辑，可以在子类中添加
+ * 判断【{@code hasException}】。
  *
  * @author huazie
  * @version 1.0.0
