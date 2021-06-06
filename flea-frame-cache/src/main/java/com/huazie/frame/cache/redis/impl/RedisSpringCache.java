@@ -5,7 +5,7 @@ import com.huazie.frame.cache.IFleaCache;
 import com.huazie.frame.cache.redis.RedisClient;
 
 /**
- * Redis Spring缓存类, 继承了抽象Spring缓存父类的读【{@code get}】、
+ * Redis Spring缓存类，继承了抽象Spring缓存父类的读【{@code get}】、
  * 写【{@code put}】、删除【{@code delete}】和清空【{@code clear}】
  * 缓存的基本操作方法，由Redis Spring缓存管理类初始化。
  *

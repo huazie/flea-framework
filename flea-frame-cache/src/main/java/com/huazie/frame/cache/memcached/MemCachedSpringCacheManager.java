@@ -7,10 +7,20 @@ import com.huazie.frame.cache.memcached.impl.MemCachedSpringCache;
 import com.whalin.MemCached.MemCachedClient;
 
 /**
- * <p> MemCached的Spring缓存管理类 </p>
+ * MemCached Spring缓存管理类，用于接入Spring框架管理
+ * MemCached 缓存。
+ *
+ * <p> 它的默认构造方法，用于单个缓存接入场景，首先新建
+ * MemCached 客户端，然后初始化 MemCached 连接池。
+ *
+ * <p> 方法【{@code newCache}】用于创建一个MemCached
+ * Spring缓存，而它内部是由MemCached Flea缓存实现具体
+ * 的读【{@code get}】、写【{@code put}】、删除【{@code
+ * delete}】和清空【{@code clear}】缓存的基本操作。
  *
  * @author huazie
  * @version 1.0.0
+ * @see MemCachedSpringCache
  * @since 1.0.0
  */
 public class MemCachedSpringCacheManager extends AbstractSpringCacheManager {
@@ -18,7 +28,7 @@ public class MemCachedSpringCacheManager extends AbstractSpringCacheManager {
     private MemCachedClient memCachedClient;   // MemCached客户端类
 
     /**
-     * <p> 新建一个MemCached Spring缓存管理类 </p>
+     * 用于新建MemCached客户端，并初始化MemCached连接池。
      *
      * @since 1.0.0
      */
@@ -28,7 +38,7 @@ public class MemCachedSpringCacheManager extends AbstractSpringCacheManager {
     }
 
     /**
-     * <p> 新建一个MemCached Spring缓存管理类 </p>
+     * 以传入参数初始化MemCached客户端，并初始化MemCached连接池。
      *
      * @param memCachedClient MemCached客户端
      */

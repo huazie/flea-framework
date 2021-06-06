@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <p> 缓存数据集 </p>
+ * 缓存数据集，对应【flea-cache-config.xml】中
+ * 【{@code <cache-datas> </cache-datas>}】
  *
  * @author huazie
  * @version 1.0.0

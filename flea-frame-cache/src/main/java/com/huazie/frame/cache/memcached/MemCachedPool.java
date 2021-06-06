@@ -1,8 +1,8 @@
 package com.huazie.frame.cache.memcached;
 
+import com.huazie.frame.cache.common.CacheConfigUtils;
 import com.huazie.frame.cache.common.CacheConstants.MemCachedConfigConstants;
 import com.huazie.frame.cache.config.CacheParam;
-import com.huazie.frame.cache.config.CacheParams;
 import com.huazie.frame.cache.config.CacheServer;
 import com.huazie.frame.cache.memcached.config.MemCachedConfig;
 import com.huazie.frame.common.CommonConstants;
@@ -15,7 +15,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p> MemCached连接池 </p>
+ * Flea MemCached连接池，用于初始化MemCached的套接字连接池。
+ *
+ * <p> 针对单独缓存接入场景，采用默认连接池初始化的方式；<br/>
+ * 可参考如下：
+ * <pre>
+ *   // 初始化默认连接池
+ *   MemCachedPool.getInstance().initialize(); </pre>
+ *
+ * <p> 针对整合缓存接入场景，采用指定连接池初始化的方式；<br/>
+ * 可参考如下：
+ * <pre>
+ *   // 初始化指定连接池
+ *   MemCachedPool.getInstance(group).initialize(cacheServerList, CacheConfigUtils); </pre>
  *
  * @author huazie
  * @version 1.0.0
@@ -85,10 +97,9 @@ public class MemCachedPool {
      * <p> 初始化MemCached连接池 </p>
      *
      * @param cacheServerList 缓存服务器集
-     * @param cacheParams     缓存参数集
      * @since 1.0.0
      */
-    void initialize(List<CacheServer> cacheServerList, CacheParams cacheParams) {
+    void initialize(List<CacheServer> cacheServerList) {
         if (StringUtils.isBlank(poolName)) {
             throw new RuntimeException("采用指定连接池名初始化，请使用MemCachedPool##getInstance(String poolName)");
         }
@@ -98,10 +109,6 @@ public class MemCachedPool {
         }
         // 缓存服务器集为空，则跳过
         if (CollectionUtils.isEmpty(cacheServerList)) {
-            return;
-        }
-        // 缓存参数集为空，则跳过
-        if (ObjectUtils.isEmpty(cacheParams) || CollectionUtils.isEmpty(cacheParams.getCacheParamList())) {
             return;
         }
         List<String> servers = new ArrayList<>();
@@ -128,49 +135,49 @@ public class MemCachedPool {
 
         // 获取MemCached 连接池配置其他参数
         // 初始化时对每个服务器建立的连接数目
-        CacheParam initConnParam = cacheParams.getCacheParam(MemCachedConfigConstants.MEMCACHED_CONFIG_INITCONN);
+        CacheParam initConnParam = CacheConfigUtils.getCacheParam(MemCachedConfigConstants.MEMCACHED_CONFIG_INITCONN);
         if (ObjectUtils.isEmpty(initConnParam) || StringUtils.isBlank(initConnParam.getValue())) {
             throw new RuntimeException("请检查flea-cache-config.xml配置,【<cache-param key=" + MemCachedConfigConstants.MEMCACHED_CONFIG_INITCONN + " ></cache-param>】未配置或配置值为空");
         }
         sockIOPool.setInitConn(Integer.parseInt(initConnParam.getValue()));
         // 每个服务器建立最小的连接数
-        CacheParam minConnParam = cacheParams.getCacheParam(MemCachedConfigConstants.MEMCACHED_CONFIG_MINCONN);
+        CacheParam minConnParam = CacheConfigUtils.getCacheParam(MemCachedConfigConstants.MEMCACHED_CONFIG_MINCONN);
         if (ObjectUtils.isEmpty(minConnParam) || StringUtils.isBlank(minConnParam.getValue())) {
             throw new RuntimeException("请检查flea-cache-config.xml配置,【<cache-param key=" + MemCachedConfigConstants.MEMCACHED_CONFIG_MINCONN + " ></cache-param>】未配置或配置值为空");
         }
         sockIOPool.setMinConn(Integer.parseInt(minConnParam.getValue()));
         // 每个服务器建立最大的连接数
-        CacheParam maxConnParam = cacheParams.getCacheParam(MemCachedConfigConstants.MEMCACHED_CONFIG_MAXCONN);
+        CacheParam maxConnParam = CacheConfigUtils.getCacheParam(MemCachedConfigConstants.MEMCACHED_CONFIG_MAXCONN);
         if (ObjectUtils.isEmpty(maxConnParam) || StringUtils.isBlank(maxConnParam.getValue())) {
             throw new RuntimeException("请检查flea-cache-config.xml配置,【<cache-param key=" + MemCachedConfigConstants.MEMCACHED_CONFIG_MAXCONN + " ></cache-param>】未配置或配置值为空");
         }
         sockIOPool.setMaxConn(Integer.parseInt(maxConnParam.getValue()));
         // 自查线程周期进行工作，其每次休眠时间
-        CacheParam maintSleepParam = cacheParams.getCacheParam(MemCachedConfigConstants.MEMCACHED_CONFIG_MAINTSLEEP);
+        CacheParam maintSleepParam = CacheConfigUtils.getCacheParam(MemCachedConfigConstants.MEMCACHED_CONFIG_MAINTSLEEP);
         if (ObjectUtils.isEmpty(maintSleepParam) || StringUtils.isBlank(maintSleepParam.getValue())) {
             throw new RuntimeException("请检查flea-cache-config.xml配置,【<cache-param key=" + MemCachedConfigConstants.MEMCACHED_CONFIG_MAINTSLEEP + " ></cache-param>】未配置或配置值为空");
         }
         sockIOPool.setMaintSleep(Long.parseLong(maintSleepParam.getValue()));
         // Socket的参数，如果是true在写数据时不缓冲，立即发送出去
-        CacheParam nagleParam = cacheParams.getCacheParam(MemCachedConfigConstants.MEMCACHED_CONFIG_NAGLE);
+        CacheParam nagleParam = CacheConfigUtils.getCacheParam(MemCachedConfigConstants.MEMCACHED_CONFIG_NAGLE);
         if (ObjectUtils.isEmpty(nagleParam) || StringUtils.isBlank(nagleParam.getValue())) {
             throw new RuntimeException("请检查flea-cache-config.xml配置,【<cache-param key=" + MemCachedConfigConstants.MEMCACHED_CONFIG_NAGLE + " ></cache-param>】未配置或配置值为空");
         }
         sockIOPool.setNagle(Boolean.parseBoolean(nagleParam.getValue()));
         // Socket阻塞读取数据的超时时间
-        CacheParam socketTOParam = cacheParams.getCacheParam(MemCachedConfigConstants.MEMCACHED_CONFIG_SOCKETTO);
+        CacheParam socketTOParam = CacheConfigUtils.getCacheParam(MemCachedConfigConstants.MEMCACHED_CONFIG_SOCKETTO);
         if (ObjectUtils.isEmpty(socketTOParam) || StringUtils.isBlank(socketTOParam.getValue())) {
             throw new RuntimeException("请检查flea-cache-config.xml配置,【<cache-param key=" + MemCachedConfigConstants.MEMCACHED_CONFIG_SOCKETTO + " ></cache-param>】未配置或配置值为空");
         }
         sockIOPool.setSocketTO(Integer.parseInt(socketTOParam.getValue()));
         // Socket连接超时时间
-        CacheParam socketConnectTOParam = cacheParams.getCacheParam(MemCachedConfigConstants.MEMCACHED_CONFIG_SOCKETCONNECTTO);
+        CacheParam socketConnectTOParam = CacheConfigUtils.getCacheParam(MemCachedConfigConstants.MEMCACHED_CONFIG_SOCKETCONNECTTO);
         if (ObjectUtils.isEmpty(socketConnectTOParam) || StringUtils.isBlank(socketConnectTOParam.getValue())) {
             throw new RuntimeException("请检查flea-cache-config.xml配置,【<cache-param key=" + MemCachedConfigConstants.MEMCACHED_CONFIG_SOCKETCONNECTTO + " ></cache-param>】未配置或配置值为空");
         }
         sockIOPool.setSocketConnectTO(Integer.parseInt(socketConnectTOParam.getValue()));
         // MemCached分布式hash算法
-        CacheParam hashingAlgParam = cacheParams.getCacheParam(MemCachedConfigConstants.MEMCACHED_CONFIG_HASHINGALG);
+        CacheParam hashingAlgParam = CacheConfigUtils.getCacheParam(MemCachedConfigConstants.MEMCACHED_CONFIG_HASHINGALG);
         if (ObjectUtils.isEmpty(hashingAlgParam) || StringUtils.isBlank(hashingAlgParam.getValue())) {
             throw new RuntimeException("请检查flea-cache-config.xml配置,【<cache-param key=" + MemCachedConfigConstants.MEMCACHED_CONFIG_HASHINGALG + " ></cache-param>】未配置或配置值为空");
         }

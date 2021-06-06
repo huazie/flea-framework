@@ -10,7 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <p> 缓存配置项集 </p>
+ * 缓存配置项集，对应【flea-cache-config.xml】中
+ * 【{@code <cache-items key="" desc=""> </cache-items>}】
  *
  * @author huazie
  * @version 1.0.0

@@ -10,7 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <p> 缓存服务器列表 </p>
+ * 缓存服务器集，对应【flea-cache-config.xml】中
+ * 【{@code <cache-servers> </cache-servers>}】
  *
  * @author huazie
  * @version 1.0.0
@@ -18,14 +19,14 @@ import java.util.Map;
  */
 public class CacheServers {
 
-    private List<CacheServer> cacheServerList = new ArrayList<>(); // 缓存服务器列表中的各个缓存服务器
+    private List<CacheServer> cacheServerList = new ArrayList<>(); // 缓存服务器集中的各个缓存服务器
 
     public List<CacheServer> getCacheServerList() {
         return cacheServerList;
     }
 
     /**
-     * <p> 添加一个缓存服务器 </p>
+     * 添加一个缓存服务器
      *
      * @param cacheServer 缓存服务器
      * @since 1.0.0
@@ -35,7 +36,7 @@ public class CacheServers {
     }
 
     /**
-     * <p> 根据缓存服务器名group获取指定的缓存服务器集 </p>
+     * 根据缓存服务器名group获取指定的缓存服务器集
      *
      * @param group 缓存服务器归属组
      * @return 缓存服务器集
@@ -51,7 +52,8 @@ public class CacheServers {
     }
 
     /**
-     * <p> 获取指定缓存服务器列表中的缓存服务器的Map，便于根据各缓存服务器的服务器归属组group查找 </p>
+     * 获取指定缓存服务器列表中的缓存服务器的Map，
+     * 便于根据各缓存服务器的服务器归属组group查找
      *
      * @return 缓存服务器的Map
      * @since 1.0.0

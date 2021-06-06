@@ -7,10 +7,18 @@ import com.huazie.frame.cache.memcached.impl.MemCachedFleaCache;
 import com.whalin.MemCached.MemCachedClient;
 
 /**
- * <p> MemCached Flea缓存管理类 </p>
+ * MemCached Flea缓存管理类，用于接入Flea框架管理MemCached 缓存。
+ *
+ * <p> 它的默认构造方法，用于单个缓存接入场景，首先新建MemCached
+ * 客户端，然后初始化 MemCached 连接池。
+ *
+ * <p> 方法 {@code newCache}，用于创建一个MemCached Flea缓存，
+ * 它里面包含了读【{@code get}】、写【{@code put}】、删除
+ * 【{@code delete}】和清空【{@code clear}】缓存的基本操作。
  *
  * @author huazie
  * @version 1.0.0
+ * @see MemCachedFleaCache
  * @since 1.0.0
  */
 public class MemCachedFleaCacheManager extends AbstractFleaCacheManager {
@@ -18,7 +26,7 @@ public class MemCachedFleaCacheManager extends AbstractFleaCacheManager {
     private MemCachedClient memCachedClient;   // MemCached客户端类
 
     /**
-     * <p> 新建一个MemCached Flea缓存管理类 </p>
+     * 用于新建MemCached客户端，并初始化MemCached连接池。
      *
      * @since 1.0.0
      */
@@ -28,7 +36,7 @@ public class MemCachedFleaCacheManager extends AbstractFleaCacheManager {
     }
 
     /**
-     * <p> 新建一个MemCached Flea缓存管理类 </p>
+     * 以传入参数初始化MemCached客户端，并初始化MemCached连接池。
      *
      * @param memCachedClient MemCached客户端
      * @since 1.0.0

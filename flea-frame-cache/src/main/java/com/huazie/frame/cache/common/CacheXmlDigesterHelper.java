@@ -27,7 +27,8 @@ import org.apache.commons.digester.Digester;
 import java.util.List;
 
 /**
- * <p> Flea缓存配置文件XML解析类 </p>
+ * Flea缓存配置文件XML解析类，用于读取并加载缓存定义文件
+ * 【flea-cache.xml】和缓存配置文件【flea-cache-config.xml】
  *
  * @author huazie
  * @version 1.0.0

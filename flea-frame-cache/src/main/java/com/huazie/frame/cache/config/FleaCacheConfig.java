@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <p> Flea Cache配置 </p>
+ * Flea缓存配置，对应【flea-cache-config.xml】中
+ * 【{@code <flea-cache-config> </flea-cache-config>}】
  *
  * @author huazie
  * @version 1.0.0

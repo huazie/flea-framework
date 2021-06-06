@@ -45,6 +45,7 @@
 
     <!-- Flea缓存数据集 -->
     <cache-datas>
+        <!-- type="缓存数据类型" 对应 flea-cache.xml 中 <cache type="缓存数据类型" />  -->
         <cache-data type="fleaAuth" desc="Flea Auth缓存数据所在组配置">authGroup</cache-data>
         <cache-data type="fleaJersey" desc="Flea Jersey缓存数据所在组配置">configGroup</cache-data>
         <cache-data type="fleaFrame" desc="Flea Frame配置数据所在组配置">configGroup</cache-data>
@@ -52,6 +53,9 @@
 
     <!-- Flea缓存组集 -->
     <cache-groups>
+        <!-- group 对应 <cache-data>group</cache-date>  -->
+        <!-- MemCached 对应 <cache-item key="MemCached"> -->
+        <!-- Redis 对应 <cache-item key="Redis"> -->
         <cache-group group="authGroup" desc="Flea权限数据缓存组">MemCached</cache-group>
         <cache-group group="configGroup" desc="Flea配置数据缓存组">Redis</cache-group>
     </cache-groups>

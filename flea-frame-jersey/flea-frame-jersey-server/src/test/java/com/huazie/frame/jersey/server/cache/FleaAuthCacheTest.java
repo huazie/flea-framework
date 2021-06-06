@@ -1,6 +1,6 @@
 package com.huazie.frame.jersey.server.cache;
 
-import com.huazie.frame.cache.common.CacheConfigManager;
+import com.huazie.frame.cache.common.CacheConfigUtils;
 import com.huazie.frame.cache.config.Cache;
 import com.huazie.frame.cache.config.CacheData;
 import com.huazie.frame.cache.config.CacheGroup;
@@ -25,15 +25,15 @@ public class FleaAuthCacheTest {
 
     @Test
     public void testGetFleaCache() {
-        Cache cache = CacheConfigManager.getCache("fleaauthmenu");
+        Cache cache = CacheConfigUtils.getCache("fleaauthmenu");
         LOGGER.debug("*****************************************Cache = {}", cache);
-        CacheData cacheData = CacheConfigManager.getCacheData(cache.getType());
+        CacheData cacheData = CacheConfigUtils.getCacheData(cache.getType());
         LOGGER.debug("*****************************************CacheData = {}", cacheData);
-        CacheGroup cacheGroup = CacheConfigManager.getCacheGroup(cacheData.getGroup());
+        CacheGroup cacheGroup = CacheConfigUtils.getCacheGroup(cacheData.getGroup());
         LOGGER.debug("*****************************************CacheGroup = {}", cacheGroup);
-        CacheParams cacheParams = CacheConfigManager.getCacheParams();
+        CacheParams cacheParams = CacheConfigUtils.getCacheParams();
         LOGGER.debug("*****************************************CacheParams = {}", cacheParams);
-        List<CacheServer> cacheServers = CacheConfigManager.getCacheServer(cacheGroup.getGroup());
+        List<CacheServer> cacheServers = CacheConfigUtils.getCacheServer(cacheGroup.getGroup());
         LOGGER.debug("*****************************************CacheServers = {}", cacheServers);
     }
 

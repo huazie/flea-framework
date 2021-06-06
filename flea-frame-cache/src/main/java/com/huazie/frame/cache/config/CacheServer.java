@@ -3,7 +3,9 @@ package com.huazie.frame.cache.config;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
- * <p> 缓存服务器 </p>
+ * 缓存服务器，对应【flea-cache-config.xml】中
+ * 【{@code <cache-server group="" password=""
+ * weight="" desc=""></cache-server>}】
  *
  * @author huazie
  * @version 1.0.0

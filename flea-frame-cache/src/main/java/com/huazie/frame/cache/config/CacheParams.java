@@ -1,6 +1,5 @@
 package com.huazie.frame.cache.config;
 
-import com.huazie.frame.common.config.ConfigKey;
 import com.huazie.frame.common.util.MapUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
@@ -10,7 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <p> 缓存参数集 </p>
+ * 缓存参数集，对应【flea-cache-config.xml】中
+ * 【{@code <cache-params> </cache-params>}】
  *
  * @author huazie
  * @version 1.0.0
@@ -25,7 +25,7 @@ public class CacheParams {
     }
 
     /**
-     * <p> 添加一个缓存配置项 </p>
+     * 添加一个缓存配置项
      *
      * @param cacheParam 缓存配置项
      * @since 1.0.0
@@ -35,7 +35,7 @@ public class CacheParams {
     }
 
     /**
-     * <p> 从指定缓存参数集，根据Key获取指定的缓存参数 </p>
+     * 从指定缓存参数集，根据Key获取指定的缓存参数
      *
      * @param key 配置项键
      * @return 缓存配置项
@@ -51,7 +51,7 @@ public class CacheParams {
     }
 
     /**
-     * <p> 获取指定配置项列表中的配置项的Map，便于根据各配置项key查找 </p>
+     * 获取指定配置项列表中的配置项的Map，便于根据各配置项key查找
      *
      * @return 配置项的Map
      * @since 1.0.0
