@@ -3,7 +3,8 @@ package com.huazie.frame.cache.config;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
- * <p> 缓存组 </p>
+ * 缓存组，对应【flea-cache-config.xml】中
+ * 【{@code <cache-group group="" desc="">缓存实现</cache-group>}】
  *
  * @author huazie
  * @version 1.0.0
@@ -15,7 +16,7 @@ public class CacheGroup {
 
     private String desc; // 缓存组描述
 
-    private String cache; // 缓存系统名
+    private String cache; // 缓存实现
 
     public String getGroup() {
         return group;

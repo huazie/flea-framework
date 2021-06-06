@@ -1,20 +1,20 @@
 package com.huazie.frame.cache.common;
 
 /**
- * <p> 缓存常量接口类 </p>
+ * Flea缓存常量类
  *
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0
  */
-public interface CacheConstants {
+public class CacheConstants {
 
     /**
      * <p> Flea Cache配置数据常量 </p>
      *
      * @since 1.0.0
      */
-    interface FleaCacheConfigConstants {
+    public interface FleaCacheConfigConstants {
         /**
          * <p> Flea Cache 默认文件路径 </p>
          */
@@ -47,6 +47,10 @@ public interface CacheConstants {
          * <p> 空缓存数据有效期 </p>
          */
         String NULL_CACHE_EXPIRY = "fleacore.nullCacheExpiry";
+        /**
+         * <p> 默认失效时间（单位：s）</p>
+         */
+        int DEFAULT_EXPIRY = 300;
     }
 
     /**
@@ -54,7 +58,7 @@ public interface CacheConstants {
      *
      * @since 1.0.0
      */
-    interface MemCachedConfigConstants {
+    public interface MemCachedConfigConstants {
         /**
          * <p> MemCached 配置文件名 </p>
          */
@@ -118,7 +122,7 @@ public interface CacheConstants {
      *
      * @since 1.0.0
      */
-    interface RedisConfigConstants {
+    public interface RedisConfigConstants {
         /**
          * <p> Redis 配置文件名 </p>
          */

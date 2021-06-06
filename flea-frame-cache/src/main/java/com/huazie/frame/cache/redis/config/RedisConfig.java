@@ -19,8 +19,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import static com.huazie.frame.cache.common.CacheConstants.FleaCacheConfigConstants.DEFAULT_EXPIRY;
+
 /**
- * <p> Redis缓存配置类 </p>
+ * Redis缓存配置类，用于单个缓存接入场景，相关配置项可查看
+ * Redis缓存配置文件【redis.properties】
  *
  * @author huazie
  * @version 1.0.0
@@ -36,7 +39,7 @@ public class RedisConfig {
 
     private String systemName; // 缓存所属系统名
 
-    private List<JedisShardInfo> servers; // 服务器信息 （ host + port + password + weight + connectionTimeout + soTimeOut）
+    private List<JedisShardInfo> serverInfos; // 服务器信息 （ host + port + password + weight + connectionTimeout + soTimeOut）
 
     private Hashing hashingAlg; // 分布式hash算法
 
@@ -71,133 +74,16 @@ public class RedisConfig {
                 if (ObjectUtils.isEmpty(config)) {
                     config = new RedisConfig();
                     try {
-                        // 获取缓存所属系统名
-                        String systemName = PropertiesUtil.getStringValue(prop, RedisConfigConstants.REDIS_CONFIG_SYSTEM_NAME);
-                        if (StringUtils.isBlank(systemName)) {
-                            throw new Exception("缓存归属系统名未配置，请检查");
-                        }
-                        config.setSystemName(systemName);
-
-                        List<JedisShardInfo> jedisShardInfos = null;
-                        String servers = PropertiesUtil.getStringValue(prop, RedisConfigConstants.REDIS_CONFIG_SERVER);
-                        String passwords = PropertiesUtil.getStringValue(prop, RedisConfigConstants.REDIS_CONFIG_PASSWORD);
-                        String weights = PropertiesUtil.getStringValue(prop, RedisConfigConstants.REDIS_CONFIG_WEIGHT);
-                        if (StringUtils.isNotBlank(servers)) {
-
-                            // 取逗号分隔的服务器地址信息
-                            String[] serverArr = StringUtils.split(servers, CommonConstants.SymbolConstants.COMMA);
-
-                            // 取逗号分隔的服务器授权密码信息（可以不配置，即没有密码）
-                            String[] passwordArr = null;
-                            if (StringUtils.isNotBlank(passwords)) {
-                                passwordArr = StringUtils.split(passwords, CommonConstants.SymbolConstants.COMMA);
-                            }
-
-                            // 取逗号分隔的服务器权重配置信息（可以不配置，即取默认权重 Sharded.DEFAULT_WEIGHT）
-                            String[] weightArr = null;
-                            if (StringUtils.isNotBlank(weights)) {
-                                weightArr = StringUtils.split(weights, CommonConstants.SymbolConstants.COMMA);
-                            }
-
-                            if (ArrayUtils.isNotEmpty(serverArr)) {
-                                jedisShardInfos = new ArrayList<>();
-                                for (int i = 0; i < serverArr.length; i++) {
-                                    String ip = serverArr[i];
-
-                                    if (StringUtils.isBlank(ip)) {
-                                        throw new Exception("服务器配置的IP地址为空，请检查");
-                                    }
-
-                                    String host = Protocol.DEFAULT_HOST;    // 默认主机
-                                    int port = Protocol.DEFAULT_PORT;       // 默认端口
-                                    int weight = Sharded.DEFAULT_WEIGHT;    // 默认服务器权重
-                                    int connectionTimeout = Protocol.DEFAULT_TIMEOUT; // 默认Redis客户端socket连接超时时间
-                                    int soTimeout = Protocol.DEFAULT_TIMEOUT; // 默认Redis客户端socket连接超时时间
-                                    if (StringUtils.isNotBlank(ip)) {
-                                        String[] ipArr = StringUtils.split(ip, CommonConstants.SymbolConstants.COLON);
-                                        if (ArrayUtils.isNotEmpty(ipArr) && CommonConstants.NumeralConstants.INT_TWO == ipArr.length) {
-                                            host = ipArr[CommonConstants.NumeralConstants.INT_ZERO];
-                                            port = Integer.parseInt(ipArr[CommonConstants.NumeralConstants.INT_ONE]);
-                                        }
-                                    }
-
-                                    // 只有一一对应，才设置，否则取默认权重
-                                    if (ArrayUtils.isSameLength(serverArr, weightArr)) {
-                                        if (ObjectUtils.isNotEmpty(weightArr)) {
-                                            weight = Integer.parseInt(weightArr[i]);
-                                        }
-                                    }
-
-                                    // 获取Redis客户端socket连接超时时间
-                                    String connectionTimeoutStr = PropertiesUtil.getStringValue(prop, RedisConfigConstants.REDIS_CONFIG_CONNECTIONTIMEOUT);
-                                    if (StringUtils.isNotBlank(connectionTimeoutStr)) {
-                                        connectionTimeout = Integer.parseInt(connectionTimeoutStr);
-                                    }
-
-                                    // 设置Redis客户端socket读写超时时间
-                                    String soTimeoutStr = PropertiesUtil.getStringValue(prop, RedisConfigConstants.REDIS_CONFIG_SOTIMEOUT);
-                                    if (StringUtils.isNotBlank(soTimeoutStr)) {
-                                        soTimeout = Integer.parseInt(soTimeoutStr);
-                                    }
-
-                                    JedisShardInfo jedisShardInfo = new JedisShardInfo(host, port, connectionTimeout, soTimeout, weight);
-
-                                    // 只有一一对应，才设置，否则认为没有设置密码
-                                    if (ArrayUtils.isSameLength(serverArr, passwordArr)) {
-                                        if (ObjectUtils.isNotEmpty(passwordArr)) {
-                                            jedisShardInfo.setPassword(passwordArr[i]);
-                                        }
-                                    }
-
-                                    jedisShardInfos.add(jedisShardInfo);
-                                }
-                            }
-                        }
-                        config.setServers(jedisShardInfos);
-
-                        // 获取Redis分布式hash算法
-                        Integer alg = PropertiesUtil.getIntegerValue(prop, RedisConfigConstants.REDIS_CONFIG_HASHINGALG);
-                        if (ObjectUtils.isEmpty(alg)) { // 未配置数据，默认取 MURMUR_HASH
-                            alg = RedisConfigConstants.REDIS_CONFIG_HASHINGALG_MURMUR_HASH;
-                        }
-                        if (RedisConfigConstants.REDIS_CONFIG_HASHINGALG_MURMUR_HASH == alg) {
-                            config.setHashingAlg(Hashing.MURMUR_HASH);
-                        } else if (RedisConfigConstants.REDIS_CONFIG_HASHINGALG_MD5 == alg) {
-                            config.setHashingAlg(Hashing.MD5);
-                        } else {
-                            throw new Exception("配置的分布式hash算法【" + alg + "】非法, 仅允许1和2，请检查");
-                        }
-
-                        // 获取客户端连接池配置信息
-                        JedisPoolConfig poolConfig = new JedisPoolConfig();
-
-                        // Redis客户端Jedis连接池最大连接数
-                        Integer maxTotal = PropertiesUtil.getIntegerValue(prop, RedisConfigConstants.REDIS_CONFIG_POOL_MAXTOTAL);
-                        if (ObjectUtils.isNotEmpty(maxTotal)) {
-                            poolConfig.setMaxTotal(maxTotal);
-                        }
-
-                        // Redis客户端Jedis连接池最大空闲连接数
-                        Integer maxIdle = PropertiesUtil.getIntegerValue(prop, RedisConfigConstants.REDIS_CONFIG_POOL_MAXIDLE);
-                        if (ObjectUtils.isNotEmpty(maxIdle)) {
-                            poolConfig.setMaxIdle(maxIdle);
-                        }
-
-                        // Redis客户端Jedis连接池最小空闲连接数
-                        Integer minIdle = PropertiesUtil.getIntegerValue(prop, RedisConfigConstants.REDIS_CONFIG_POOL_MINIDLE);
-                        if (ObjectUtils.isNotEmpty(minIdle)) {
-                            poolConfig.setMinIdle(minIdle);
-                        }
-                        // Redis客户端Jedis连接池获取连接时的最大等待毫秒数
-                        Integer maxWaitMillis = PropertiesUtil.getIntegerValue(prop, RedisConfigConstants.REDIS_CONFIG_POOL_MAXWAITMILLIS);
-                        if (ObjectUtils.isNotEmpty(maxWaitMillis)) {
-                            poolConfig.setMaxWaitMillis(maxWaitMillis);
-                        }
-
-                        config.setJedisPoolConfig(poolConfig);
-
+                        // 缓存归属系统
+                        config.setSystemName();
+                        // Jedis分布式服务器信息
+                        config.setServerInfos();
+                        // 分布式hash算法
+                        config.setHashingAlg();
+                        // Jedis连接配置信息
+                        config.setJedisPoolConfig();
                         // 获取空缓存数据有效期
-                        config.setNullCacheExpiry(PropertiesUtil.getIntegerValue(prop, RedisConfigConstants.REDIS_CONFIG_NULLCACHEEXPIRY));
+                        config.setNullCacheExpiry();
                     } catch (Exception e) {
                         if (LOGGER.isErrorEnabled()) {
                             LOGGER.error("Please check the redis config :", e);
@@ -213,40 +99,158 @@ public class RedisConfig {
         return systemName;
     }
 
-    private void setSystemName(String systemName) {
+    private void setSystemName() throws RuntimeException {
+        // 获取缓存所属系统名
+        String systemName = PropertiesUtil.getStringValue(prop, RedisConfigConstants.REDIS_CONFIG_SYSTEM_NAME);
+        if (StringUtils.isBlank(systemName)) {
+            throw new RuntimeException("缓存归属系统名未配置，请检查");
+        }
         this.systemName = systemName;
     }
 
-    public List<JedisShardInfo> getServers() {
-        return servers;
+    public List<JedisShardInfo> getServerInfos() {
+        return serverInfos;
     }
 
-    private void setServers(List<JedisShardInfo> servers) {
-        this.servers = servers;
+    private void setServerInfos() throws RuntimeException{
+        List<JedisShardInfo> jedisShardInfos = null;
+        String servers = PropertiesUtil.getStringValue(prop, RedisConfigConstants.REDIS_CONFIG_SERVER);
+        String passwords = PropertiesUtil.getStringValue(prop, RedisConfigConstants.REDIS_CONFIG_PASSWORD);
+        String weights = PropertiesUtil.getStringValue(prop, RedisConfigConstants.REDIS_CONFIG_WEIGHT);
+        if (StringUtils.isNotBlank(servers)) {
+
+            // 取逗号分隔的服务器地址信息
+            String[] serverArr = StringUtils.split(servers, CommonConstants.SymbolConstants.COMMA);
+
+            // 取逗号分隔的服务器授权密码信息（可以不配置，即没有密码）
+            String[] passwordArr = null;
+            if (StringUtils.isNotBlank(passwords)) {
+                passwordArr = StringUtils.split(passwords, CommonConstants.SymbolConstants.COMMA);
+            }
+
+            // 取逗号分隔的服务器权重配置信息（可以不配置，即取默认权重 Sharded.DEFAULT_WEIGHT）
+            String[] weightArr = null;
+            if (StringUtils.isNotBlank(weights)) {
+                weightArr = StringUtils.split(weights, CommonConstants.SymbolConstants.COMMA);
+            }
+
+            if (ArrayUtils.isNotEmpty(serverArr)) {
+                jedisShardInfos = new ArrayList<>();
+                for (int i = 0; i < serverArr.length; i++) {
+                    String ip = serverArr[i];
+
+                    if (StringUtils.isBlank(ip)) {
+                        throw new RuntimeException("服务器配置的IP地址为空，请检查");
+                    }
+
+                    String host = Protocol.DEFAULT_HOST;    // 默认主机
+                    int port = Protocol.DEFAULT_PORT;       // 默认端口
+                    int weight = Sharded.DEFAULT_WEIGHT;    // 默认服务器权重
+                    int connectionTimeout = Protocol.DEFAULT_TIMEOUT; // 默认Redis客户端socket连接超时时间
+                    int soTimeout = Protocol.DEFAULT_TIMEOUT; // 默认Redis客户端socket连接超时时间
+                    if (StringUtils.isNotBlank(ip)) {
+                        String[] ipArr = StringUtils.split(ip, CommonConstants.SymbolConstants.COLON);
+                        if (ArrayUtils.isNotEmpty(ipArr) && CommonConstants.NumeralConstants.INT_TWO == ipArr.length) {
+                            host = ipArr[CommonConstants.NumeralConstants.INT_ZERO];
+                            port = Integer.parseInt(ipArr[CommonConstants.NumeralConstants.INT_ONE]);
+                        }
+                    }
+
+                    // 只有一一对应，才设置，否则取默认权重
+                    if (ArrayUtils.isSameLength(serverArr, weightArr)) {
+                        if (ObjectUtils.isNotEmpty(weightArr)) {
+                            weight = Integer.parseInt(weightArr[i]);
+                        }
+                    }
+
+                    // 获取Redis客户端socket连接超时时间
+                    String connectionTimeoutStr = PropertiesUtil.getStringValue(prop, RedisConfigConstants.REDIS_CONFIG_CONNECTIONTIMEOUT);
+                    if (StringUtils.isNotBlank(connectionTimeoutStr)) {
+                        connectionTimeout = Integer.parseInt(connectionTimeoutStr);
+                    }
+
+                    // 设置Redis客户端socket读写超时时间
+                    String soTimeoutStr = PropertiesUtil.getStringValue(prop, RedisConfigConstants.REDIS_CONFIG_SOTIMEOUT);
+                    if (StringUtils.isNotBlank(soTimeoutStr)) {
+                        soTimeout = Integer.parseInt(soTimeoutStr);
+                    }
+
+                    JedisShardInfo jedisShardInfo = new JedisShardInfo(host, port, connectionTimeout, soTimeout, weight);
+
+                    // 只有一一对应，才设置，否则认为没有设置密码
+                    if (ArrayUtils.isSameLength(serverArr, passwordArr)) {
+                        if (ObjectUtils.isNotEmpty(passwordArr)) {
+                            jedisShardInfo.setPassword(passwordArr[i]);
+                        }
+                    }
+
+                    jedisShardInfos.add(jedisShardInfo);
+                }
+            }
+        }
+        serverInfos = jedisShardInfos;
     }
 
     public Hashing getHashingAlg() {
         return hashingAlg;
     }
 
-    private void setHashingAlg(Hashing hashingAlg) {
-        this.hashingAlg = hashingAlg;
+    private void setHashingAlg() throws RuntimeException {
+        // 获取Redis分布式hash算法
+        Integer alg = PropertiesUtil.getIntegerValue(prop, RedisConfigConstants.REDIS_CONFIG_HASHINGALG);
+        if (ObjectUtils.isEmpty(alg)) { // 未配置数据，默认取 MURMUR_HASH
+            alg = RedisConfigConstants.REDIS_CONFIG_HASHINGALG_MURMUR_HASH;
+        }
+        if (RedisConfigConstants.REDIS_CONFIG_HASHINGALG_MURMUR_HASH == alg) {
+            this.hashingAlg = Hashing.MURMUR_HASH;
+        } else if (RedisConfigConstants.REDIS_CONFIG_HASHINGALG_MD5 == alg) {
+            this.hashingAlg = Hashing.MD5;
+        } else {
+            throw new RuntimeException("配置的分布式hash算法【" + alg + "】非法, 仅允许1和2，请检查");
+        }
     }
 
     public JedisPoolConfig getJedisPoolConfig() {
         return jedisPoolConfig;
     }
 
-    private void setJedisPoolConfig(JedisPoolConfig jedisPoolConfig) {
-        this.jedisPoolConfig = jedisPoolConfig;
+    private void setJedisPoolConfig() {
+        // 获取客户端连接池配置信息
+        JedisPoolConfig poolConfig = new JedisPoolConfig();
+        // Redis客户端Jedis连接池最大连接数
+        Integer maxTotal = PropertiesUtil.getIntegerValue(prop, RedisConfigConstants.REDIS_CONFIG_POOL_MAXTOTAL);
+        if (ObjectUtils.isNotEmpty(maxTotal)) {
+            poolConfig.setMaxTotal(maxTotal);
+        }
+        // Redis客户端Jedis连接池最大空闲连接数
+        Integer maxIdle = PropertiesUtil.getIntegerValue(prop, RedisConfigConstants.REDIS_CONFIG_POOL_MAXIDLE);
+        if (ObjectUtils.isNotEmpty(maxIdle)) {
+            poolConfig.setMaxIdle(maxIdle);
+        }
+        // Redis客户端Jedis连接池最小空闲连接数
+        Integer minIdle = PropertiesUtil.getIntegerValue(prop, RedisConfigConstants.REDIS_CONFIG_POOL_MINIDLE);
+        if (ObjectUtils.isNotEmpty(minIdle)) {
+            poolConfig.setMinIdle(minIdle);
+        }
+        // Redis客户端Jedis连接池获取连接时的最大等待毫秒数
+        Integer maxWaitMillis = PropertiesUtil.getIntegerValue(prop, RedisConfigConstants.REDIS_CONFIG_POOL_MAXWAITMILLIS);
+        if (ObjectUtils.isNotEmpty(maxWaitMillis)) {
+            poolConfig.setMaxWaitMillis(maxWaitMillis);
+        }
+        this.jedisPoolConfig = poolConfig;
     }
 
     public int getNullCacheExpiry() {
         return nullCacheExpiry;
     }
 
-    public void setNullCacheExpiry(int nullCacheExpiry) {
-        this.nullCacheExpiry = nullCacheExpiry;
+    private void setNullCacheExpiry() {
+        Integer nullCacheExpiry = PropertiesUtil.getIntegerValue(prop, RedisConfigConstants.REDIS_CONFIG_NULLCACHEEXPIRY);
+        if (null != nullCacheExpiry) {
+            this.nullCacheExpiry = nullCacheExpiry;
+        } else {
+            this.nullCacheExpiry = DEFAULT_EXPIRY; // 默认5分钟
+        }
     }
 
     @Override

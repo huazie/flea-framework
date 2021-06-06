@@ -20,18 +20,21 @@ import com.huazie.frame.common.util.StringUtils;
 
 import java.util.List;
 
+import static com.huazie.frame.cache.common.CacheConstants.FleaCacheConfigConstants.DEFAULT_EXPIRY;
+
 /**
- * <p> 缓存配置管理类 </p>
+ * 缓存配置工具类，用于获取缓存定义文件【flea-cache.xml】
+ * 和缓存配置文件【flea-cache-config.xml】的相关配置数据。
  *
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0
  */
-public class CacheConfigManager {
+public class CacheConfigUtils {
 
     /**
-     * <p> 根据指定的缓存主关键字，获取Flea缓存定义 </p>
-     * <p> 相同的缓存Key，先取缓存定义文件靠前的配置 </p>
+     * 根据指定的缓存主关键字，获取Flea缓存定义；
+     * 相同的缓存Key，先取缓存定义文件靠前的配置。
      *
      * @param key 缓存主关键字
      * @return Flea缓存
@@ -58,7 +61,7 @@ public class CacheConfigManager {
     }
 
     /**
-     * <p> 根据指定的缓存主关键字，获取缓存数据有效期 </p>
+     * 根据指定的缓存主关键字，获取缓存数据有效期。
      *
      * @param key 缓存数据主关键字
      * @return 缓存数据有效期
@@ -74,14 +77,14 @@ public class CacheConfigManager {
     }
 
     /**
-     * <p> 获取空缓存数据有效期 </p>
+     * 获取空缓存数据有效期
      *
      * @return 空缓存数据有效期
      * @since 1.0.0
      */
     public static int getNullCacheExpiry() {
         // 默认300s
-        int expiry = 300;
+        int expiry = DEFAULT_EXPIRY;
         CacheParam cacheParam = getCacheParam(CacheConstants.FleaCacheConfigConstants.NULL_CACHE_EXPIRY);
         if (ObjectUtils.isNotEmpty(cacheParam)) {
             expiry = Integer.parseInt(cacheParam.getValue());
@@ -90,7 +93,7 @@ public class CacheConfigManager {
     }
 
     /**
-     * <p> 根据指定的缓存配置项key，获取缓存配置项 </p>
+     * 根据指定的缓存配置项key，获取缓存配置项
      *
      * @param itemsKey 缓存配置项集Key
      * @param itemKey  缓存配置项Key
@@ -107,7 +110,7 @@ public class CacheConfigManager {
     }
 
     /**
-     * <p> 获取缓存参数集 </p>
+     * 获取缓存参数集
      *
      * @return 缓存参数集
      * @since 1.0.0
@@ -117,7 +120,7 @@ public class CacheConfigManager {
     }
 
     /**
-     * <p> 根据指定的缓存参数key，获取缓存参数 </p>
+     * 根据指定的缓存参数【{@code key}】，获取缓存参数。
      *
      * @param key 缓存参数键
      * @return 缓存参数
@@ -133,7 +136,7 @@ public class CacheConfigManager {
     }
 
     /**
-     * <p> 根据指定的缓存数据类型type，获取缓存数据 </p>
+     * 根据指定的缓存数据类型【{@code type}】，获取缓存数据。
      *
      * @param type 缓存数据类型
      * @return 缓存数据
@@ -149,7 +152,7 @@ public class CacheConfigManager {
     }
 
     /**
-     * <p> 根据指定的缓存组名group，获取缓存组定义 </p>
+     * 根据指定的缓存组名【{@code group}】，获取缓存组定义。
      *
      * @param group 缓存组名
      * @return 缓存组
@@ -165,7 +168,7 @@ public class CacheConfigManager {
     }
 
     /**
-     * <p> 根据指定的缓存组名group, 获取缓存服务器集 </p>
+     * 根据指定的缓存组名【{@code group}】, 获取缓存服务器集。
      *
      * @param group 缓存组名
      * @return 缓存服务器集

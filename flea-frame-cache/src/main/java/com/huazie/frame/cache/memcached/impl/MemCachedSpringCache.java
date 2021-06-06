@@ -5,10 +5,16 @@ import com.huazie.frame.cache.IFleaCache;
 import com.whalin.MemCached.MemCachedClient;
 
 /**
- * <p> MemCached Spring Cache的实现(实现spring的Cache接口)</p>
+ * MemCached Spring缓存类，继承了抽象Spring缓存父类的读【{@code get}】、
+ * 写【{@code put}】、删除【{@code delete}】和清空【{@code clear}】
+ * 缓存的基本操作方法，由MemCached Spring缓存管理类初始化。
+ *
+ * <p> 它的构造方法中，必须传入一个具体Flea缓存实现类，这里我们使用
+ * MemCached Flea缓存【{@code MemCachedFleaCache}】。
  *
  * @author huazie
  * @version 1.0.0
+ * @see MemCachedFleaCache
  * @since 1.0.0
  */
 public class MemCachedSpringCache extends AbstractSpringCache {

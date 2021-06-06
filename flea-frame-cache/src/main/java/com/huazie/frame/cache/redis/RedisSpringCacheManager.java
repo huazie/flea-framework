@@ -7,7 +7,7 @@ import com.huazie.frame.cache.redis.impl.RedisClientProxy;
 import com.huazie.frame.cache.redis.impl.RedisSpringCache;
 
 /**
- * Redis Spring缓存管理类, 用于接入Spring框架管理Redis缓存。
+ * Redis Spring缓存管理类，用于接入Spring框架管理Redis缓存。
  *
  * <p> 它的默认构造方法，用于初始化Redis客户端, 这里需要先
  * 初始化Redis连接池，默认连接池名为default；然后通过Redis

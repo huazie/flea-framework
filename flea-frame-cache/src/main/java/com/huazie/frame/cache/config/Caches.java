@@ -10,7 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <p> Flea缓存集 </p>
+ * Flea缓存定义集，对应【flea-cache.xml】中
+ * 【{@code <caches> <caches>}】
  *
  * @author huazie
  * @version 1.0.0
