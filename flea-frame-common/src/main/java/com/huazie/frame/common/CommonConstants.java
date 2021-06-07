@@ -9,6 +9,10 @@ package com.huazie.frame.common;
  */
 public interface CommonConstants {
 
+    interface SystemConstants {
+        String APP_CODE = "APP_CODE";
+    }
+
     /**
      * <p> 方法常量 </p>
      *

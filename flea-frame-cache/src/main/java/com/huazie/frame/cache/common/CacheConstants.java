@@ -128,9 +128,17 @@ public class CacheConstants {
          */
         String REDIS_FILE_NAME = "flea/cache/redis.properties";
         /**
+         * <p> Redis 集群配置文件名 </p>
+         */
+        String REDIS_CLUSTER_FILE_NAME = "flea/cache/redis.cluster.properties";
+        /**
          * <p> Redis 配置文件系统环境变量 </p>
          */
-        String REDIS_CONFIG_FILE_SYSTEM_KEY = "fleaframe.cache.redis.config.filename";
+        String REDIS_CONFIG_FILE_SYSTEM_KEY = "fleacache.redis.config.filename";
+        /**
+         * <p> Redis 集群配置文件系统环境变量 </p>
+         */
+        String REDIS_CLUSTER_CONFIG_FILE_SYSTEM_KEY = "fleacache.redis.cluster.config.filename";
         /**
          * <p> Redis 缓存所属系统名 </p>
          */
@@ -140,9 +148,17 @@ public class CacheConstants {
          */
         String REDIS_CONFIG_SERVER = "redis.server";
         /**
+         * <p> Redis 集群服务节点 </p>
+         */
+        String REDIS_CLUSTER_CONFIG_SERVER = "redis.cluster.server";
+        /**
          * <p> Redis 授权密码 </p>
          */
         String REDIS_CONFIG_PASSWORD = "redis.password";
+        /**
+         * <p> Redis 授权密码 </p>
+         */
+        String REDIS_CLUSTER_CONFIG_PASSWORD = "redis.cluster.password";
         /**
          * <p> Redis 服务器权重配置 </p>
          */
@@ -152,9 +168,25 @@ public class CacheConstants {
          */
         String REDIS_CONFIG_CONNECTIONTIMEOUT = "redis.connectionTimeout";
         /**
+         * <p> Redis 集群客户端socket连接超时时间 </p>
+         */
+        String REDIS_CLUSTER_CONFIG_CONNECTIONTIMEOUT = "redis.cluster.connectionTimeout";
+        /**
          * <p> Redis 客户端socket连接超时时间 </p>
          */
         String REDIS_CONFIG_SOTIMEOUT = "redis.soTimeout";
+        /**
+         * <p> Redis 集群客户端socket连接超时时间 </p>
+         */
+        String REDIS_CLUSTER_CONFIG_SOTIMEOUT = "redis.cluster.soTimeout";
+        /**
+         * <p> Redis集群客户端异常重试次数 </p>
+         */
+        String REDIS_CLUSTER_MAXATTEMPTS = "redis.cluster.maxAttempts";
+        /**
+         * <p> Redis集群客户端异常重试次数（默认5次） </p>
+         */
+        int REDIS_CLUSTER_MAXATTEMPTS_DEFAULT = 5;
         /**
          * <p> Redis 分布式hash算法 </p>
          * <p> 1 : MURMUR_HASH </p>
