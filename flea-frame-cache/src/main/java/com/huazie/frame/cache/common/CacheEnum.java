@@ -3,9 +3,8 @@ package com.huazie.frame.cache.common;
 /**
  * 缓存实现枚举，定义了Flea框架支持的缓存实现。
  *
- * <p> 目前包含MemCached、Redis 和 FleaCore，
- * 其中 {@code FleaCore}是Flea框架为了整合各
- * 类缓存而抽象出来的一类缓存实现。
+ * <p> 目前包含MemCached、Redis 和 FleaCore，其中【{@code FleaCore}】
+ * 是Flea框架为了整合各类缓存而抽象出来的一类缓存实现。
  *
  * @author huazie
  * @version 1.0.0

@@ -6,7 +6,7 @@ import redis.clients.jedis.ShardedJedisPool;
 import redis.clients.jedis.params.SetParams;
 
 /**
- * Redis客户端接口，定义了读、写、删除Redis缓存的基本操作方法。
+ * Redis客户端接口，定义了 读、写、删除 Redis缓存的基本操作方法。
  *
  * <p> 针对单独缓存接入场景，我们可以通过如下方式对外使用Redis
  * 客户端，使用之前需要先初始化Redis连接池【默认default】：
@@ -20,7 +20,7 @@ import redis.clients.jedis.params.SetParams;
  * 客户端，使用之前需要先初始化Redis连接池【指定缓存组名】：
  * <pre>
  *   // 初始化指定缓存组名的连接池
- *   RedisPool.getInstance(group).initialize(cacheServerList, cacheParams);
+ *   RedisPool.getInstance(group).initialize(cacheServerList);
  *   // 获取代理的Redis客户端
  *   RedisClient redisClient = RedisClientProxy.getProxyInstance(group); </pre>
  *
@@ -51,48 +51,48 @@ public interface RedisClient {
     String set(final byte[] key, final byte[] value);
 
     /**
-     * <p> 往Redis塞数据 (可以带失效时间) </p>
+     * <p> 往Redis塞数据 (可以带有效期) </p>
      * <p> 注意 ： (单位：s)</p>
      *
      * @param key    数据键
      * @param value  数据值
-     * @param expiry 失效时间（单位：s）
+     * @param expiry 有效期（单位：s）
      * @return 状态码 （OK ：成功）
      * @since 1.0.0
      */
     String set(final String key, final Object value, final int expiry);
 
     /**
-     * <p> 往Redis塞数据 (可以带失效时间，用于序列化对象) </p>
+     * <p> 往Redis塞数据 (可以带有效期，用于序列化对象) </p>
      * <p> 注意 ： (单位：s)</p>
      *
      * @param key    数据键
      * @param value  数据值
-     * @param expiry 失效时间（单位：s）
+     * @param expiry 有效期（单位：s）
      * @return 状态码 （OK ：成功）
      * @since 1.0.0
      */
     String set(final byte[] key, final byte[] value, final int expiry);
 
     /**
-     * <p> 往Redis塞数据 (可以带失效时间) </p>
+     * <p> 往Redis塞数据 (可以带有效期) </p>
      * <p> 注意：（单位：ms） </p>
      *
      * @param key    数据键
      * @param value  数据值
-     * @param expiry 失效时间（单位：ms）
+     * @param expiry 有效期（单位：ms）
      * @return 状态码 （OK ：成功）
      * @since 1.0.0
      */
     String set(final String key, final Object value, final long expiry);
 
     /**
-     * <p> 往Redis塞数据 (可以带失效时间，用于序列化对象) </p>
+     * <p> 往Redis塞数据 (可以带有效期，用于序列化对象) </p>
      * <p> 注意：（单位：ms） </p>
      *
      * @param key    数据键
      * @param value  数据值
-     * @param expiry 失效时间（单位：ms）
+     * @param expiry 有效期（单位：ms）
      * @return 状态码 （OK ：成功）
      * @since 1.0.0
      */

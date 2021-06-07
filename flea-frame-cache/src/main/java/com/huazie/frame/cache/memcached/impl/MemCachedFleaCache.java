@@ -12,17 +12,15 @@ import com.whalin.MemCached.MemCachedClient;
 import java.util.Date;
 
 /**
- * MemCached Flea缓存类，实现了以Flea框架操作MemCached缓存的基本操作
- * 方法，包含读【{@code getNativeValue}】、写【{@code putNativeValue}】
- * 和删除【{@code deleteNativeValue}】。
+ * MemCached Flea缓存类，实现了以Flea框架操作MemCached缓存的基本操作方法。
  *
  * <p> 在上述基本操作方法中，实际使用MemCached客户端【{@code} memCachedClient】
- * 读、写和删除Redis缓存。其中写缓存方法【{@code putNativeValue}】在
+ * 读、写和删除MemCached缓存。其中写缓存方法【{@code putNativeValue}】在
  * 添加的数据值为【{@code null}】时，默认添加空缓存数据【{@code NullCache}】
- * 到Redis中，有效期取初始化参数【{@code nullCacheExpiry}】。
+ * 到MemCached中，有效期取初始化参数【{@code nullCacheExpiry}】。
  *
  * <p> 单个缓存接入场景，有效期配置可查看【memcached.properties】中的配置
- * 参数【redis.nullCacheExpiry】
+ * 参数【memcached.nullCacheExpiry】
  *
  * <p> 整合缓存接入场景，有效期配置可查看【flea-cache-config.xml】
  * 中的缓存参数【{@code <cache-param key="fleacore.nullCacheExpiry"

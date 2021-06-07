@@ -11,16 +11,14 @@ import redis.clients.jedis.ShardedJedisPool;
 import java.lang.reflect.Method;
 
 /**
- * Redis客户端代理拦截器实现类，定义了Redis客户端方法调用
- * 前置和后置处理逻辑。
+ * Redis客户端代理拦截器实现类，定义了Redis客户端方法调用前置和后置处理逻辑。
  *
- * <p> 方法【{@code beforeHandle}】用于在Redis客户端调用
- * 指定方法前，从分布式Jedis连接池中获取分布式Jedis对象，
- * 并将其初始化给Redis客户端类中的分布式Jedis对象。
+ * <p> 方法【{@code beforeHandle}】用于在Redis客户端调用指定方法前，
+ * 从分布式Jedis连接池中获取分布式Jedis对象，并将其初始化给
+ * Redis客户端类中的分布式Jedis对象。
  *
- * <p> 方法【{@code afterHandle}】用于在Redis客户端调用
- * 指定方法后，关闭分布式Jedis对象，并将它归还给分布式
- * Jedis连接池。
+ * <p> 方法【{@code afterHandle}】用于在Redis客户端调用指定方法后，
+ * 关闭分布式Jedis对象，并将它归还给分布式Jedis连接池。
  *
  * @author huazie
  * @version 1.0.0

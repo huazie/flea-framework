@@ -10,13 +10,11 @@ import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ObjectUtils;
 
 /**
- * 核心Flea缓存类，该类继承{@code AbstractFleaCache}，实现读
- * {@code getNativeValue}、写{@code putNativeValue} 和 删除
- * {@code delete} 缓存的基本操作方法，用于整合各类缓存的接入。
+ * 核心Flea缓存类，实现读、写和删除缓存的基本操作方法，用于整合各类缓存的接入。
  *
- * <p> 成员变量 {@code fleaCache}, 在构造方法中根据缓存主关
- * 键字指定具体的Flea缓存实现，在读、写 和删除缓存的基本操作
- * 方法中调用 {@code fleaCache} 的具体实现。
+ * <p> 成员变量【{@code fleaCache}】，在构造方法中根据缓存数据主关键字
+ * 指定具体的Flea缓存实现，在 读、写 和 删除缓存的基本操作方法中调用
+ * 【{@code fleaCache}】的具体实现。
  *
  * @author huazie
  * @version 1.0.0
@@ -36,7 +34,7 @@ public class CoreFleaCache extends AbstractFleaCache {
      */
     public CoreFleaCache(String name) {
         super(name, CacheConfigUtils.getExpiry(name), CacheConfigUtils.getNullCacheExpiry());
-        // 根据缓存主关键字name获取指定Flea缓存对象
+        // 根据缓存数据主关键字name获取指定Flea缓存对象
         fleaCache = FleaCacheFactory.getFleaCache(name);
         // 取指定Flea缓存的缓存类型
         cache = fleaCache.getCache();
@@ -45,7 +43,8 @@ public class CoreFleaCache extends AbstractFleaCache {
     @Override
     public Object getNativeValue(String key) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "KEY = {}", key);
+            LOGGER.debug1(new Object() {
+            }, "KEY = {}", key);
         }
         return fleaCache.getNativeValue(key);
     }
@@ -53,7 +52,8 @@ public class CoreFleaCache extends AbstractFleaCache {
     @Override
     public void putNativeValue(String key, Object value, int expiry) {
         if (LOGGER.isDebugEnabled()) {
-            Object obj = new Object() {};
+            Object obj = new Object() {
+            };
             LOGGER.debug1(obj, "CORE FLEA CACHE, KEY = {}", key);
             LOGGER.debug1(obj, "CORE FLEA CACHE, VALUE = {}", value);
             LOGGER.debug1(obj, "CORE FLEA CACHE, EXPIRY = {}s", expiry);
@@ -65,7 +65,8 @@ public class CoreFleaCache extends AbstractFleaCache {
     @Override
     public void deleteNativeValue(String key) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "KEY = {}", key);
+            LOGGER.debug1(new Object() {
+            }, "KEY = {}", key);
         }
         fleaCache.deleteNativeValue(key);
     }

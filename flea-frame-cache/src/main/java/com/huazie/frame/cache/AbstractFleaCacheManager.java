@@ -12,19 +12,17 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * 抽象Flea缓存管理类，用于接入Flea框架管理缓存。
  *
- * <p> 同步集合类【{@code cacheMap}】, 存储的键为缓存主关键字，
+ * <p> 同步集合类【{@code cacheMap}】, 存储的键为缓存数据主关键字，
+ * 存储的值为具体的缓存实现类。<br/>
  * 如果是整合各类缓存接入，它的键对应缓存定义配置文件【flea-cache.xml】
- * 中的【{@code <cache key="缓存主关键字"></cache>}】；如果是单个缓存接入，
- * 它的键对应【applicationContext.xml】中【{@code <entry key="缓存主关键字"
- * value="有效期（单位：s）"/>}】；它的值为具体的缓存实现类。
+ * 中的【{@code <cache key="缓存数据主关键字"></cache>}】；<br/>
+ * 如果是单个缓存接入，它的键对应【applicationContext.xml】中
+ * 【{@code <entry key="缓存数据主关键字"value="有效期（单位：s）"/>}】；
  *
  * <p> 抽象方法【{@code newCache}】，由子类实现具体的Flea缓存类创建。
  *
  * @author huazie
  * @version 1.0.0
- * @see com.huazie.frame.cache.memcached.MemCachedFleaCacheManager
- * @see com.huazie.frame.cache.redis.RedisFleaCacheManager
- * @see com.huazie.frame.cache.core.CoreFleaCacheManager
  * @since 1.0.0
  */
 public abstract class AbstractFleaCacheManager {
@@ -70,16 +68,16 @@ public abstract class AbstractFleaCacheManager {
      * <p> 新创建一个缓存对象 </p>
      *
      * @param name   缓存名
-     * @param expiry 失效时间（单位：s  其中0：表示永久）
+     * @param expiry 有效期（单位：s  其中0：表示永久）
      * @return 新建的缓存对象
      * @since 1.0.0
      */
     protected abstract AbstractFleaCache newCache(String name, int expiry);
 
     /**
-     * <p> 设置各缓存失效时间配置Map </p>
+     * <p> 设置各缓存有效期配置Map </p>
      *
-     * @param configMap 失效时间配置Map
+     * @param configMap 有效期配置Map
      * @since 1.0.0
      */
     public void setConfigMap(Map<String, Integer> configMap) {

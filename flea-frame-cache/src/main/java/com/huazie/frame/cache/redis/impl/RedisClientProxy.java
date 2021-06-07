@@ -10,15 +10,13 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * Redis客户端代理，用于获取代理的Redis客户端。
  *
- * <p> 它有两种方式获取代理的Redis客户端，一种是获取
- * 默认连接池的代理的Redis客户端，应用在单个缓存接入
- * 场景；一种是获取指定连接池的代理的Redis客户端，
- * 应用在整合缓存接入场景。
+ * <p> 它有两种方式获取代理的Redis客户端：<br/>
+ * 一种是获取默认连接池的代理的Redis客户端，应用在单个缓存接入场景；<br/>
+ * 一种是获取指定连接池的代理的Redis客户端，应用在整合缓存接入场景。
  *
- * <p> 同步集合类【{@code redisClients}】，存储的键
- * 为连接池名，值为代理的Redis客户端。针对单个缓存
- * 接入场景，存储的键为【default】；针对整合缓存接入场景，
- * 存储的键为缓存组名【group】。
+ * <p> 同步集合类【{@code redisClients}】，存储的键为连接池名，
+ * 值为代理的Redis客户端。针对单个缓存接入场景，存储的键为【default】；
+ * 针对整合缓存接入场景，存储的键为缓存组名【group】。
  *
  * @author huazie
  * @version 1.0.0
