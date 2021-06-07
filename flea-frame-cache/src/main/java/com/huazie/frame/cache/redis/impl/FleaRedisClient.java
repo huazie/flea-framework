@@ -38,12 +38,12 @@ import redis.clients.jedis.util.SafeEncoder;
  *  ShardedJedis shardedJedis = redisClient.getShardedJedis();
  *  shardedJedis.close(); </pre>
  *
- * <p> 这里直接去新建Flea Redis客户端实现类并不推荐。因为在实际
- * 使用操作Redis缓存的分布式Jedis对象时，需要先从分布式Jedis连接
- * 池中获取，然后操作Redis缓存结束后又需要归还给连接池。我们可通过
- * Redis客户端代理来获取代理的Redis客户端
+ * <p> 这里直接去新建Flea Redis客户端实现类并不推荐。
+ * 因为在实际使用操作Redis缓存的分布式Jedis对象时，需要先从分布式Jedis连接池中获取，
+ * 然后操作Redis缓存结束后又需要归还给连接池。
  *
- * <p> 单个缓存接入场景，可通过如下方式使用：
+ * <p> 我们可通过Redis客户端代理来获取代理的Redis客户端: <br/>
+ * 单个缓存接入场景，可通过如下方式使用：
  * <pre>
  *  RedisClient redisClient = RedisClientProxy.getProxyInstance(); </pre>
  *

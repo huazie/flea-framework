@@ -18,9 +18,9 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * Flea Cache 工厂类，用于整合各类缓存接入时，创建具体的缓存实现类。
  *
- * <p> 同步集合类 {@code fleaCacheMap}，存储的键为缓存主关键字，
- * 对应缓存定义配置文件【flea-cache.xml】中的 {@code <cache
- * key="缓存主关键字"></cache>}；它的值为具体的缓存实现类。
+ * <p> 同步集合类 {@code fleaCacheMap}，存储的键为缓存数据主关键字，
+ * 对应缓存定义配置文件【flea-cache.xml】中的【{@code <cache
+ * key="缓存数据主关键字"></cache>}】；它的值为具体的缓存实现类。
  *
  * @author huazie
  * @version 1.0.0
@@ -33,9 +33,9 @@ public class FleaCacheFactory {
     private FleaCacheFactory() {}
 
     /**
-     * <p> 根据缓存主关键字name获取指定Flea缓存对象 </p>
+     * <p> 根据缓存数据主关键字获取指定Flea缓存对象 </p>
      *
-     * @param name 缓存主关键字（对应 flea-cache.xml {@code <cache key="缓存主关键字"></cache>}）
+     * @param name 缓存数据主关键字（对应 flea-cache.xml {@code <cache key="缓存数据主关键字"></cache>}）
      * @return Flea缓存对象
      * @since 1.0.0
      */
@@ -51,9 +51,9 @@ public class FleaCacheFactory {
     }
 
     /**
-     * <p> 根据缓存主关键字name创建一个Flea缓存对象 </p>
+     * <p> 根据缓存数据主关键字创建一个Flea缓存对象 </p>
      *
-     * @param name 缓存主关键字（对应 flea-cache.xml {@code <cache key="缓存主关键字"></cache>}）
+     * @param name 缓存数据主关键字（对应 flea-cache.xml {@code <cache key="缓存数据主关键字"></cache>}）
      * @return Flea缓存对象
      * @since 1.0.0
      */

@@ -33,10 +33,10 @@ import static com.huazie.frame.cache.common.CacheConstants.FleaCacheConfigConsta
 public class CacheConfigUtils {
 
     /**
-     * 根据指定的缓存主关键字，获取Flea缓存定义；
+     * 根据指定的缓存数据主关键字，获取Flea缓存定义；
      * 相同的缓存Key，先取缓存定义文件靠前的配置。
      *
-     * @param key 缓存主关键字
+     * @param key 缓存数据主关键字
      * @return Flea缓存
      * @since 1.0.0
      */
@@ -61,7 +61,7 @@ public class CacheConfigUtils {
     }
 
     /**
-     * 根据指定的缓存主关键字，获取缓存数据有效期。
+     * 根据指定的缓存数据主关键字，获取缓存数据有效期。
      *
      * @param key 缓存数据主关键字
      * @return 缓存数据有效期
@@ -93,7 +93,7 @@ public class CacheConfigUtils {
     }
 
     /**
-     * 根据指定的缓存配置项key，获取缓存配置项
+     * 根据指定的缓存配置项键，获取缓存配置项
      *
      * @param itemsKey 缓存配置项集Key
      * @param itemKey  缓存配置项Key
@@ -120,7 +120,7 @@ public class CacheConfigUtils {
     }
 
     /**
-     * 根据指定的缓存参数【{@code key}】，获取缓存参数。
+     * 根据指定的缓存参数键，获取缓存参数。
      *
      * @param key 缓存参数键
      * @return 缓存参数
@@ -136,7 +136,7 @@ public class CacheConfigUtils {
     }
 
     /**
-     * 根据指定的缓存数据类型【{@code type}】，获取缓存数据。
+     * 根据指定的缓存数据类型，获取缓存数据。
      *
      * @param type 缓存数据类型
      * @return 缓存数据
@@ -152,7 +152,7 @@ public class CacheConfigUtils {
     }
 
     /**
-     * 根据指定的缓存组名【{@code group}】，获取缓存组定义。
+     * 根据指定的缓存组名，获取缓存组定义。
      *
      * @param group 缓存组名
      * @return 缓存组
@@ -168,7 +168,7 @@ public class CacheConfigUtils {
     }
 
     /**
-     * 根据指定的缓存组名【{@code group}】, 获取缓存服务器集。
+     * 根据指定的缓存组名, 获取缓存服务器集。
      *
      * @param group 缓存组名
      * @return 缓存服务器集

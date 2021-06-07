@@ -14,14 +14,12 @@ import com.whalin.MemCached.MemCachedClient;
 import java.util.List;
 
 /**
- * MemCached Flea缓存建造者实现类，用于整合各类缓存接入时创建
- * MemCached Flea缓存。
+ * MemCached Flea缓存建造者实现类，用于整合各类缓存接入时创建MemCached Flea缓存。
  *
- * <p> 缓存定义文件【flea-cache.xml】中，每一个缓存定义配置都
- * 对应缓存配置文件【flea-cache-config.xml】中的一类缓存数据，
- * 每类缓存数据都归属一个缓存组，每个缓存组都映射着具体的缓存
- * 实现名，而整合各类缓存接入时，每个具体的缓存实现名都配置了
- * Flea缓存建造着实现类。
+ * <p> 缓存定义文件【flea-cache.xml】中，每一个缓存定义配置都对应缓存配置文件
+ * 【flea-cache-config.xml】中的一类缓存数据，每类缓存数据都归属一个缓存组，
+ * 每个缓存组都映射着具体的缓存实现名，而整合各类缓存接入时，
+ * 每个具体的缓存实现名都配置了Flea缓存建造着实现类。
  *
  * <p> 可查看Flea缓存配置文件【flea-cache-config.xml】，获取
  * MemCached Flea缓存建造者配置项【{@code <cache-item key="MemCached">}】

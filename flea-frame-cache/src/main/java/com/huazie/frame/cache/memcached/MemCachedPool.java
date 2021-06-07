@@ -27,7 +27,7 @@ import java.util.List;
  * 可参考如下：
  * <pre>
  *   // 初始化指定连接池
- *   MemCachedPool.getInstance(group).initialize(cacheServerList, CacheConfigUtils); </pre>
+ *   MemCachedPool.getInstance(group).initialize(cacheServerList); </pre>
  *
  * @author huazie
  * @version 1.0.0

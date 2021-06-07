@@ -48,7 +48,7 @@ public class CacheConstants {
          */
         String NULL_CACHE_EXPIRY = "fleacore.nullCacheExpiry";
         /**
-         * <p> 默认失效时间（单位：s）</p>
+         * <p> 默认有效期（单位：s）</p>
          */
         int DEFAULT_EXPIRY = 300;
     }

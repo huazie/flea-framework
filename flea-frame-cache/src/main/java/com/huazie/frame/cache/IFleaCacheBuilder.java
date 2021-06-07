@@ -18,9 +18,9 @@ import java.util.List;
 public interface IFleaCacheBuilder {
 
     /**
-     * <p> 构建Flea缓存对象 </p>
+     * 构建Flea缓存对象
      *
-     * @param name            缓存主关键字
+     * @param name            缓存数据主关键字
      * @param cacheServerList 缓存服务器集
      * @return Flea缓存对象
      * @since 1.0.0

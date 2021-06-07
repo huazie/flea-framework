@@ -4,12 +4,11 @@ import com.huazie.frame.cache.AbstractSpringCache;
 import com.huazie.frame.cache.IFleaCache;
 
 /**
- * 核心Spring缓存类，继承了抽象Spring缓存父类的读【{@code get}】、
- * 写【{@code put}】、删除【{@code delete}】和清空【{@code clear}】
+ * 核心Spring缓存类，继承了抽象Spring缓存父类的 读、写、删除 和 清空
  * 缓存的基本操作方法，由核心Spring缓存管理类初始化。
  *
  * <p> 它初始化时，需要一个具体Flea缓存实现，这里我们使用
- * Core Flea缓存【{@code CoreFleaCache}】。
+ * 核心Flea缓存【{@code CoreFleaCache}】。
  *
  * @author huazie
  * @version 1.0.0
