@@ -54,7 +54,17 @@ public class RedisPool {
     }
 
     /**
-     * <p> 获取Redis连接池实例 (指定连接池名)</p>
+     * <p> 获取Redis连接池实例 (默认连接池) </p>
+     *
+     * @return Redis连接池实例对象
+     * @since 1.0.0
+     */
+    public static RedisPool getInstance() {
+        return getInstance(CommonConstants.FleaPoolConstants.DEFAULT_POOL_NAME);
+    }
+
+    /**
+     * <p> 获取Redis连接池实例 (指定连接池名) </p>
      *
      * @param poolName 连接池名
      * @return Redis连接池实例对象
@@ -70,16 +80,6 @@ public class RedisPool {
             }
         }
         return redisPools.get(poolName);
-    }
-
-    /**
-     * <p> 获取Redis连接池实例 (默认) </p>
-     *
-     * @return Redis连接池实例对象
-     * @since 1.0.0
-     */
-    public static RedisPool getInstance() {
-        return getInstance(CommonConstants.FleaPoolConstants.DEFAULT_POOL_NAME);
     }
 
     /**
