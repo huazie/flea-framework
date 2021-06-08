@@ -1,6 +1,7 @@
 package com.huazie.frame.cache.memcached.config;
 
 import com.huazie.frame.cache.common.CacheConstants.MemCachedConfigConstants;
+import com.huazie.frame.cache.exceptions.FleaCacheConfigException;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.slf4j.FleaLogger;
 import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
@@ -123,11 +124,11 @@ public class MemCachedConfig {
         return systemName;
     }
 
-    private void setSystemName() throws RuntimeException{
+    private void setSystemName() throws FleaCacheConfigException {
         // 获取缓存所属系统名
         String systemName = PropertiesUtil.getStringValue(prop, MemCachedConfigConstants.MEMCACHED_CONFIG_SYSTEM_NAME);
         if (StringUtils.isBlank(systemName)) {
-            throw new RuntimeException("缓存归属系统名未配置，请检查");
+            throw new FleaCacheConfigException("缓存归属系统名未配置，请检查");
         }
         this.systemName = systemName;
     }
@@ -136,15 +137,15 @@ public class MemCachedConfig {
         return servers;
     }
 
-    private void setServers() throws RuntimeException {
+    private void setServers() throws FleaCacheConfigException {
         // 获取MemCached服务器地址
         String allServer = PropertiesUtil.getStringValue(prop, MemCachedConfigConstants.MEMCACHED_CONFIG_SERVER);
         if (StringUtils.isBlank(allServer)) {
-            throw new RuntimeException("The configuration attribute [" + MemCachedConfigConstants.MEMCACHED_CONFIG_SERVER + "] is not exist");
+            throw new FleaCacheConfigException("The configuration attribute [" + MemCachedConfigConstants.MEMCACHED_CONFIG_SERVER + "] is not exist");
         }
         String[] serverArr = StringUtils.split(allServer, CommonConstants.SymbolConstants.COMMA);
         if (ArrayUtils.isEmpty(serverArr)) {
-            throw new RuntimeException("The value of configuration attribute [" + MemCachedConfigConstants.MEMCACHED_CONFIG_SERVER + "] is empty");
+            throw new FleaCacheConfigException("The value of configuration attribute [" + MemCachedConfigConstants.MEMCACHED_CONFIG_SERVER + "] is empty");
         }
         this.servers = serverArr;
     }
