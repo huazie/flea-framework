@@ -4,7 +4,7 @@ package com.huazie.frame.cache.common;
  * Flea缓存常量类
  *
  * @author huazie
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.0.0
  */
 public class CacheConstants {
@@ -120,7 +120,7 @@ public class CacheConstants {
     /**
      * <p> Redis配置数据常量 </p>
      *
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public interface RedisConfigConstants {
         /**
@@ -180,13 +180,13 @@ public class CacheConstants {
          */
         String REDIS_CLUSTER_CONFIG_SOTIMEOUT = "redis.cluster.soTimeout";
         /**
-         * <p> Redis集群客户端异常重试次数 </p>
+         * <p> Redis客户端操作最大尝试次数【包含第一次操作】 </p>
          */
-        String REDIS_CLUSTER_MAXATTEMPTS = "redis.cluster.maxAttempts";
+        String REDIS_MAXATTEMPTS = "redis.maxAttempts";
         /**
-         * <p> Redis集群客户端异常重试次数（默认5次） </p>
+         * <p> Redis客户端操作最大尝试次数【包含第一次操作】（默认5次） </p>
          */
-        int REDIS_CLUSTER_MAXATTEMPTS_DEFAULT = 5;
+        int REDIS_MAXATTEMPTS_DEFAULT = 5;
         /**
          * <p> Redis 分布式hash算法 </p>
          * <p> 1 : MURMUR_HASH </p>

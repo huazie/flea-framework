@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.huazie.frame</groupId>
     <artifactId>flea-frame</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <packaging>pom</packaging>
     <name>FLEA FRAME</name>
     <url>https://github.com/Huazie/flea-frame</url>
@@ -46,6 +46,11 @@
                 <configuration>
                     <show>private</show>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.8.1</version>
             </plugin>
         </plugins>
         <pluginManagement>

@@ -10,7 +10,8 @@
     <!-- Flea缓存建造者配置项集 -->
     <cache-items key="FleaCacheBuilder" desc="Flea缓存建造者实现">
         <cache-item key="MemCached" desc="MemCached的Flea缓存建造者实现">com.huazie.frame.cache.memcached.MemCachedFleaCacheBuilder</cache-item>
-        <cache-item key="Redis" desc="Redis的Flea缓存建造者实现">com.huazie.frame.cache.redis.RedisFleaCacheBuilder</cache-item>
+        <cache-item key="Redis" desc="Redis单机模式下的Flea缓存建造者实现">com.huazie.frame.cache.redis.RedisSingleFleaCacheBuilder</cache-item>
+        <cache-item key="RedisCluster" desc="Redis集群模式下的Flea缓存建造者实现">com.huazie.frame.cache.redis.RedisClusterFleaCacheBuilder</cache-item>
     </cache-items>
 
     <!-- 缓存参数集 -->
@@ -25,6 +26,12 @@
         <cache-param key="redis.pool.maxIdle" desc="Redis客户端Jedis连接池最大空闲连接数">10</cache-param>
         <cache-param key="redis.pool.minIdle" desc="Redis客户端Jedis连接池最小空闲连接数">0</cache-param>
         <cache-param key="redis.pool.maxWaitMillis" desc="Redis客户端Jedis连接池获取连接时的最大等待时间（单位：ms）">2000</cache-param>
+        <cache-param key="redis.maxAttempts" desc="Redis客户端操作最大尝试次数【包含第一次操作】">5</cache-param>
+
+        <!-- Redis Cluster 缓存参数-->
+        <cache-param key="redis.cluster.connectionTimeout" desc="Redis集群客户端socket连接超时时间（单位：ms）">2000</cache-param>
+        <cache-param key="redis.cluster.soTimeout" desc="Redis客户端socket读写超时时间（单位：ms）">2000</cache-param>
+        <cache-param key="redis.cluster.password" desc="Redis集群服务节点登录密码（集群各节点配置同一个）">huazie123</cache-param>
 
         <!-- MemCached缓存参数 -->
         <cache-param key="memcached.initConn" desc="初始化时对每个服务器建立的连接数目">20</cache-param>
@@ -47,8 +54,9 @@
     <cache-datas>
         <!-- type="缓存数据类型" 对应 flea-cache.xml 中 <cache type="缓存数据类型" />  -->
         <cache-data type="fleaAuth" desc="Flea Auth缓存数据所在组配置">authGroup</cache-data>
-        <cache-data type="fleaJersey" desc="Flea Jersey缓存数据所在组配置">configGroup</cache-data>
         <cache-data type="fleaFrame" desc="Flea Frame配置数据所在组配置">configGroup</cache-data>
+        <cache-data type="fleaJersey" desc="Flea Jersey配置数据所在组配置">configGroup</cache-data>
+        <cache-data type="fleaDynamic" desc="Flea 动态数据缓存所在组配置">dynamicGroup</cache-data>
     </cache-datas>
 
     <!-- Flea缓存组集 -->
@@ -58,16 +66,24 @@
         <!-- Redis 对应 <cache-item key="Redis"> -->
         <cache-group group="authGroup" desc="Flea权限数据缓存组">MemCached</cache-group>
         <cache-group group="configGroup" desc="Flea配置数据缓存组">Redis</cache-group>
+        <cache-group group="dynamicGroup" desc="Flea动态数据缓存组">RedisCluster</cache-group>
     </cache-groups>
 
     <!-- Flea缓存服务器集 -->
     <cache-servers>
-        <cache-server group="authGroup" weight="1" desc="MemCached缓存服务器配置">127.0.0.1:31113</cache-server>
-        <cache-server group="authGroup" weight="1" desc="MemCached缓存服务器配置">127.0.0.1:31114</cache-server>
+        <cache-server group="authGroup" weight="1" desc="MemCached缓存服务器">127.0.0.1:31113</cache-server>
+        <cache-server group="authGroup" weight="1" desc="MemCached缓存服务器">127.0.0.1:31114</cache-server>
 
-        <cache-server group="configGroup" password="huazie123" weight="1" desc="Redis缓存服务器配置">127.0.0.1:10001</cache-server>
-        <cache-server group="configGroup" password="huazie123" weight="1" desc="Redis缓存服务器配置">127.0.0.1:10002</cache-server>
-        <cache-server group="configGroup" password="huazie123" weight="1" desc="Redis缓存服务器配置">127.0.0.1:10003</cache-server>
+        <cache-server group="configGroup" password="huazie123" weight="1" desc="Redis缓存服务器【单机模式】">127.0.0.1:10001</cache-server>
+        <cache-server group="configGroup" password="huazie123" weight="1" desc="Redis缓存服务器【单机模式】">127.0.0.1:10002</cache-server>
+        <cache-server group="configGroup" password="huazie123" weight="1" desc="Redis缓存服务器【单机模式】">127.0.0.1:10003</cache-server>
+
+        <cache-server group="dynamicGroup" desc="Redis集群服务器节点">127.0.0.1:20011</cache-server>
+        <cache-server group="dynamicGroup" desc="Redis集群服务器节点">127.0.0.1:20012</cache-server>
+        <cache-server group="dynamicGroup" desc="Redis集群服务器节点">127.0.0.1:20021</cache-server>
+        <cache-server group="dynamicGroup" desc="Redis集群服务器节点">127.0.0.1:20022</cache-server>
+        <cache-server group="dynamicGroup" desc="Redis集群服务器节点">127.0.0.1:20031</cache-server>
+        <cache-server group="dynamicGroup" desc="Redis集群服务器节点">127.0.0.1:20032</cache-server>
     </cache-servers>
 
 </flea-cache-config>

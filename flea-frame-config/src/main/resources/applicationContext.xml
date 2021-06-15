@@ -121,10 +121,10 @@
     </bean>
 
     <!--
-        配置缓存管理RedisSpringCacheManager
+        配置缓存管理 RedisSingleSpringCacheManager
         配置缓存时间 configMap (key缓存对象名称 value缓存过期时间)
     -->
-    <bean id="redisSpringCacheManager" class="com.huazie.frame.cache.redis.RedisSpringCacheManager">
+    <bean id="redisSingleSpringCacheManager" class="com.huazie.frame.cache.redis.RedisSingleSpringCacheManager">
         <property name="configMap">
             <map>
                 <entry key="fleaparadetail" value="86400"/>

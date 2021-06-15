@@ -11,11 +11,12 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 
 /**
- * 抽象 Spring 缓存类，实现Spring的Cache接口和IFleaCache接口，
- * 由具体的Spring缓存管理类初始化。
+ * 抽象 Spring 缓存类，实现Spring的Cache接口 和 Flea
+ * 的IFleaCache接口，由具体的Spring缓存管理类初始化。
  *
- * <p> 它实现了读、写、删除和清空缓存的基本操作方法，内部由具体Flea缓存实现类
- * 【{@code fleaCache}】调用对应的 读、写、删除 和 清空 缓存的基本操作方法。
+ * <p> 它实现了读、写、删除和清空缓存的基本操作方法，
+ * 内部由具体Flea缓存实现类【{@code fleaCache}】
+ * 调用对应的 读、写、删除 和 清空 缓存的基本操作方法。
  *
  * @author huazie
  * @version 1.0.0
@@ -64,7 +65,7 @@ public abstract class AbstractSpringCache implements Cache, IFleaCache {
         Object cacheValue = get(key.toString());
         if (ObjectUtils.isNotEmpty(type) && !type.isInstance(cacheValue)) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug1(new Object() {}, "Cached value is not of required type [{}]: {}", type.getName(), cacheValue);
+                LOGGER.debug1(new Object() {}, "Cached value is not of required type [{}] : {}", type.getName(), cacheValue);
             }
             return null;
         }

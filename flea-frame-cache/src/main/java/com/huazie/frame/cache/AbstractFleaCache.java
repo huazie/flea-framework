@@ -28,7 +28,7 @@ import java.util.Set;
  * 【{@code getNativeCacheKey}】，默认永久有效。
  *
  * @author huazie
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.0.0
  */
 public abstract class AbstractFleaCache implements IFleaCache {
@@ -67,7 +67,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
             }
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "The action of getting [" + cache.getName() + "] cache occurs exception ：", e);
+                LOGGER.error1(new Object() {}, "The action of getting [" + cache.getName() + "] cache occurs exception : ", e);
             }
         }
         return value;
@@ -81,7 +81,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
             addCacheKey(key);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "The action of adding [" + cache.getName() + "] cache occurs exception ：", e);
+                LOGGER.error1(new Object() {}, "The action of adding [" + cache.getName() + "] cache occurs exception : ", e);
             }
         }
     }
@@ -109,7 +109,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
             deleteCacheKey(key);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "The action of deleting [" + cache.getName() + "] cache occurs exception ：", e);
+                LOGGER.error1(new Object() {}, "The action of deleting [" + cache.getName() + "] cache occurs exception : ", e);
             }
         }
     }
@@ -174,7 +174,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
             deleteNativeValue(getNativeCacheKey(name));
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "The action of deleting [" + cache.getName() + "] cache occurs exception ：", e);
+                LOGGER.error1(new Object() {}, "The action of deleting [" + cache.getName() + "] cache occurs exception : ", e);
             }
         }
     }
@@ -183,12 +183,18 @@ public abstract class AbstractFleaCache implements IFleaCache {
     @SuppressWarnings(value = "unchecked")
     public Set<String> getCacheKey() {
         Set<String> keySet = null;
-        Object keySetObj = getNativeValue(getNativeCacheKey(name));
-        if (ObjectUtils.isNotEmpty(keySetObj) && keySetObj instanceof Set) {
-            keySet = (Set<String>) keySetObj;
-        }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "CacheKey = {}", keySet);
+        try {
+            Object keySetObj = getNativeValue(getNativeCacheKey(name));
+            if (ObjectUtils.isNotEmpty(keySetObj) && keySetObj instanceof Set) {
+                keySet = (Set<String>) keySetObj;
+            }
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug1(new Object() {}, "CacheKey = {}", keySet);
+            }
+        } catch (Exception e) {
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error1(new Object() {}, "The action of getting [" + cache.getName() + "] cache occurs exception : ", e);
+            }
         }
         return keySet;
     }
