@@ -59,12 +59,14 @@ public abstract class RedisClientCommand<T> {
         ShardedJedis connection = null;
         try {
             connection = shardedJedisPool.getResource();
+            Object obj = null;
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug1(new Object() {}, "Get ShardedJedis = {}", connection);
+                obj = new Object() {};
+                LOGGER.debug1(obj, "Get ShardedJedis = {}", connection);
             }
             T result = execute(connection);
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug1(new Object() {}, "Result = {}", result);
+                LOGGER.debug1(obj, "Result = {}", result);
             }
             return result;
         } catch (JedisConnectionException e) {

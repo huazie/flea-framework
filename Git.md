@@ -19,6 +19,9 @@
 |git config --system --list             |  查看系统config                         |
 |git config --global --list             |  查看当前用户（global）配置              |
 |git config --local --list              |  查看当前仓库配置信息                    |
+|git tag                                |  查看tag列表                            |
+|git tag -d tag名                       |  删除tag                                |
+|git push origin :tag名                 |  提交删除tag                            |
 
 
 ## 合并A分支到B分支

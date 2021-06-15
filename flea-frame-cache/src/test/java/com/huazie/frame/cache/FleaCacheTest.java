@@ -194,7 +194,7 @@ public class FleaCacheTest {
 //            cache.get("menu2");
 //            cache.delete("menu1");
 //            cache.delete("menu2");
-//            cache.clear();
+            cache.clear();
             cache.getCacheKey();
             LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
         } catch (Exception e) {

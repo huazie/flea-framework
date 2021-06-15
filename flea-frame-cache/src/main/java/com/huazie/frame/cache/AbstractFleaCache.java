@@ -14,8 +14,8 @@ import java.util.Set;
 /**
  * 抽象Flea Cache类，实现了Flea缓存接口的读、写、删除和清空缓存的基本操作。
  *
- * <p> 它定义本地读、本地写和本地删除的抽象方法，
- * 由子类实现具体的读、写和删除缓存的操作。
+ * <p> 它定义本地读、本地写和本地删除的抽象方法，由子类实现具体的读、
+ * 写和删除缓存的操作。
  *
  * <p> 在实际调用写缓存操作时，会同时记录当前缓存数据的数据键关键字
  * 【{@code key}】到专门的数据键关键字的缓存中，以Set集合存储。
@@ -76,7 +76,10 @@ public abstract class AbstractFleaCache implements IFleaCache {
     @Override
     public void put(String key, Object value) {
         try {
-            putNativeValue(getNativeKey(key), value, expiry);
+            Object result = putNativeValue(getNativeKey(key), value, expiry);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug1(new Object() {}, "Result = {}", result);
+            }
             // 将指定Cache的key添加到Set集合，并存于缓存中
             addCacheKey(key);
         } catch (Exception e) {
@@ -89,12 +92,17 @@ public abstract class AbstractFleaCache implements IFleaCache {
     @Override
     public void clear() {
         Set<String> keySet = getCacheKey();
+        Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "KEYS = {}", keySet);
+            obj = new Object() {};
+            LOGGER.debug1(obj, "KEYS = {}", keySet);
         }
         if (CollectionUtils.isNotEmpty(keySet)) {
             for (String key : keySet) {
-                deleteNativeValue(getNativeKey(key));
+                Object result = deleteNativeValue(getNativeKey(key));
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug1(obj, "Result = {}", result);
+                }
             }
             // 删除 记录当前Cache所有数据键关键字 的缓存
             deleteCacheAllKey();
@@ -104,7 +112,10 @@ public abstract class AbstractFleaCache implements IFleaCache {
     @Override
     public void delete(String key) {
         try {
-            deleteNativeValue(getNativeKey(key));
+            Object result = deleteNativeValue(getNativeKey(key));
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug1(new Object() {}, "Result = {}", result);
+            }
             // 从 记录当前Cache所有数据键关键字 的缓存中 删除指定数据键关键字key
             deleteCacheKey(key);
         } catch (Exception e) {
@@ -127,7 +138,10 @@ public abstract class AbstractFleaCache implements IFleaCache {
         }
         if (!keySet.contains(key)) { // 只有其中不存在，才重新设置
             keySet.add(key);
-            putNativeValue(getNativeCacheKey(name), keySet, CommonConstants.NumeralConstants.INT_ZERO);
+            Object result = putNativeValue(getNativeCacheKey(name), keySet, CommonConstants.NumeralConstants.INT_ZERO);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug1(new Object() {}, "Result = {}", result);
+            }
         }
     }
 
@@ -142,8 +156,10 @@ public abstract class AbstractFleaCache implements IFleaCache {
         if (CollectionUtils.isNotEmpty(keySet)) {
             // 存在待删除的数据键关键字
             if (keySet.contains(key)) {
+                Object obj = null;
                 if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug1(new Object() {}, "Delete cache of recording all key, KEY = {}", key);
+                    obj = new Object() {};
+                    LOGGER.debug1(obj, "Delete cache of recording all key, KEY = {}", key);
                 }
                 if (CommonConstants.NumeralConstants.INT_ONE == keySet.size()) {
                     deleteCacheAllKey(); // 直接将记录当前Cache所有数据键关键字的缓存从缓存中清空
@@ -151,7 +167,10 @@ public abstract class AbstractFleaCache implements IFleaCache {
                     // 将数据键关键字从Set集合中删除
                     keySet.remove(key);
                     // 重新覆盖当前Cache所有数据键关键字的缓存信息
-                    putNativeValue(getNativeCacheKey(name), keySet, CommonConstants.NumeralConstants.INT_ZERO);
+                    Object result = putNativeValue(getNativeCacheKey(name), keySet, CommonConstants.NumeralConstants.INT_ZERO);
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug1(obj, "Result = {}", result);
+                    }
                 }
             } else {
                 if (LOGGER.isDebugEnabled()) {
@@ -168,10 +187,15 @@ public abstract class AbstractFleaCache implements IFleaCache {
      */
     private void deleteCacheAllKey() {
         try {
+            Object obj = null;
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug1(new Object() {}, "Delete cache of recording all key");
+                obj = new Object() {};
+                LOGGER.debug1(obj, "Delete cache of recording all key");
             }
-            deleteNativeValue(getNativeCacheKey(name));
+            Object result = deleteNativeValue(getNativeCacheKey(name));
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug1(obj, "Result = {}", result);
+            }
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error1(new Object() {}, "The action of deleting [" + cache.getName() + "] cache occurs exception : ", e);
@@ -216,7 +240,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
      * @param expiry 有效期（单位：s）
      * @since 1.0.0
      */
-    public abstract void putNativeValue(String key, Object value, int expiry);
+    public abstract Object putNativeValue(String key, Object value, int expiry);
 
     /**
      * <p> 删除指定缓存数据 </p>
@@ -224,10 +248,10 @@ public abstract class AbstractFleaCache implements IFleaCache {
      * @param key 缓存数据键关键字
      * @since 1.0.0
      */
-    public abstract void deleteNativeValue(String key);
+    public abstract Object deleteNativeValue(String key);
 
     /**
-     * <p> 获取实际存储的缓存键（缓存所属系统名 + 缓存名（缓存数据主关键字） + 缓存数据键（缓存数据关键字）） </p>
+     * <p> 获取实际存储的缓存键【缓存所属系统名 + 缓存名（缓存数据主关键字）+ 缓存数据键（缓存数据关键字）】 </p>
      *
      * @param key 缓存数据键关键字
      * @return 实际存储的缓存键
@@ -238,10 +262,10 @@ public abstract class AbstractFleaCache implements IFleaCache {
     }
 
     /**
-     * <p> 获取缓存主键（包含缓存所属系统名 + 缓存名（缓存数据主关键字））  </p>
+     * <p> 获取缓存主键【包含缓存所属系统名 + 缓存名（缓存数据主关键字）】 </p>
      *
-     * @param name 缓存名（缓存数据主关键字）
-     * @return 缓存主键（缓存所属系统名 + 缓存名（缓存数据主关键字））
+     * @param name 缓存名【缓存数据主关键字】
+     * @return 缓存主键【缓存所属系统名 + 缓存名（缓存数据主关键字）】
      * @since 1.0.0
      */
     protected String getNativeCacheKey(String name) {
