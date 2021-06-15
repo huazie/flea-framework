@@ -23,6 +23,7 @@
 hs_err_pid*
 .idea/
 *.iml
+target/
 flea-frame-algorithm/target/
 flea-frame-auth/target/
 flea-frame-cache/target/
