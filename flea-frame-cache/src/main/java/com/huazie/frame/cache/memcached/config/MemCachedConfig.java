@@ -2,6 +2,7 @@ package com.huazie.frame.cache.memcached.config;
 
 import com.huazie.frame.cache.common.CacheConstants.MemCachedConfigConstants;
 import com.huazie.frame.cache.exceptions.FleaCacheConfigException;
+import com.huazie.frame.cache.exceptions.FleaCacheException;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.slf4j.FleaLogger;
 import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
@@ -22,7 +23,7 @@ import static com.huazie.frame.cache.common.CacheConstants.FleaCacheConfigConsta
  * MemCached 缓存配置文件【memcached.properties】
  *
  * @author huazie
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.0.0
  */
 public class MemCachedConfig {
@@ -72,6 +73,39 @@ public class MemCachedConfig {
         prop = PropertiesUtil.getProperties(fileName);
     }
 
+    private MemCachedConfig() {
+        try {
+            // 缓存归属系统
+            setSystemName();
+            // MemCached 服务器地址信息
+            setServers();
+            // MemCached 服务器权重分配
+            setWeights();
+            // 初始化时对每个服务器建立的连接数目
+            setInitConn();
+            // 每个服务器建立最小的连接数
+            setMinConn();
+            // 每个服务器建立最大的连接数
+            setMaxConn();
+            // 自查线程周期进行工作，其每次休眠时间（单位：ms）
+            setMaintSleep();
+            // Socket的参数，如果是true在写数据时不缓冲，立即发送出去
+            setNagle();
+            // Socket阻塞读取数据的超时时间（单位：ms）
+            setSocketTO();
+            // Socket连接的超时时间（单位：ms）
+            setSocketConnectTO();
+            // 空缓存数据有效期（单位：s）
+            setNullCacheExpiry();
+            // 一致性hash算法
+            setHashingAlg();
+        } catch (FleaCacheException e) {
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("Please check the MemCached config :", e);
+            }
+        }
+    }
+
     /**
      * <p> 读取Memcached缓存配置类实例 </p>
      *
@@ -79,41 +113,10 @@ public class MemCachedConfig {
      * @since 1.0.0
      */
     public static MemCachedConfig getConfig() {
-
         if (ObjectUtils.isEmpty(config)) {
             synchronized (MemCachedConfig.class) {
                 if (ObjectUtils.isEmpty(config)) {
                     config = new MemCachedConfig();
-                    try {
-                        // 缓存归属系统
-                        config.setSystemName();
-                        // MemCached 服务器地址信息
-                        config.setServers();
-                        // MemCached 服务器权重分配
-                        config.setWeights();
-                        // 初始化时对每个服务器建立的连接数目
-                        config.setInitConn();
-                        // 每个服务器建立最小的连接数
-                        config.setMinConn();
-                        // 每个服务器建立最大的连接数
-                        config.setMaxConn();
-                        // 自查线程周期进行工作，其每次休眠时间（单位：ms）
-                        config.setMaintSleep();
-                        // Socket的参数，如果是true在写数据时不缓冲，立即发送出去
-                        config.setNagle();
-                        // Socket阻塞读取数据的超时时间（单位：ms）
-                        config.setSocketTO();
-                        // Socket连接的超时时间（单位：ms）
-                        config.setSocketConnectTO();
-                        // 空缓存数据有效期（单位：s）
-                        config.setNullCacheExpiry();
-                        // 一致性hash算法
-                        config.setHashingAlg();
-                    } catch (Exception e) {
-                        if (LOGGER.isErrorEnabled()) {
-                            LOGGER.error("Please check the MemCached config :", e);
-                        }
-                    }
                 }
             }
         }

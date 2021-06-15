@@ -16,6 +16,7 @@ import com.huazie.frame.cache.config.CacheServers;
 import com.huazie.frame.cache.config.Caches;
 import com.huazie.frame.cache.config.FleaCache;
 import com.huazie.frame.cache.config.FleaCacheConfig;
+import com.huazie.frame.cache.exceptions.FleaCacheConfigException;
 import com.huazie.frame.common.XmlDigesterHelper;
 import com.huazie.frame.common.slf4j.FleaLogger;
 import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
@@ -31,7 +32,7 @@ import java.util.List;
  * 【flea-cache.xml】和缓存配置文件【flea-cache-config.xml】
  *
  * @author huazie
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.0.0
  */
 public class CacheXmlDigesterHelper {
@@ -85,7 +86,7 @@ public class CacheXmlDigesterHelper {
                         fleaCache = newFleaCache();
                         isFleaCacheInit = Boolean.TRUE;
                     } catch (Exception e) {
-                        throw new RuntimeException(e);
+                        throw new FleaCacheConfigException(e);
                     }
                 }
             }
@@ -192,7 +193,7 @@ public class CacheXmlDigesterHelper {
                         fleaCacheConfig = newFleaCacheConfig();
                         isFleaCacheConfigInit = Boolean.TRUE;
                     } catch (Exception e) {
-                        throw new RuntimeException(e);
+                        throw new FleaCacheConfigException(e);
                     }
                 }
             }

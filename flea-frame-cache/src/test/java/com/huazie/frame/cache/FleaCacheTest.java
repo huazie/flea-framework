@@ -3,9 +3,7 @@ package com.huazie.frame.cache;
 import com.huazie.frame.cache.common.CacheEnum;
 import com.huazie.frame.cache.common.FleaCacheManagerFactory;
 import com.huazie.frame.cache.memcached.config.MemCachedConfig;
-import com.huazie.frame.cache.redis.RedisClient;
-import com.huazie.frame.cache.redis.config.RedisConfig;
-import com.huazie.frame.cache.redis.impl.RedisClientProxy;
+import com.huazie.frame.cache.redis.config.RedisSingleConfig;
 import com.huazie.frame.common.slf4j.FleaLogger;
 import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import org.junit.Test;
@@ -52,8 +50,9 @@ public class FleaCacheTest {
     }
 
     @Test
-    public void testRedisFleaCache() {
+    public void testRedisSingleFleaCache() {
         try {
+            // 单机模式下Flea缓存管理类
             AbstractFleaCacheManager manager = FleaCacheManagerFactory.getFleaCacheManager(CacheEnum.Redis.getName());
             AbstractFleaCache cache = manager.getCache("fleaparadetail");
             LOGGER.debug("Cache={}", cache);
@@ -97,8 +96,8 @@ public class FleaCacheTest {
     public void testProperties() {
         MemCachedConfig memCachedConfig = MemCachedConfig.getConfig();
         LOGGER.debug("MemCachedConfig={}", memCachedConfig);
-        RedisConfig redisConfig = RedisConfig.getConfig();
-        LOGGER.debug("RedisConfig={}", redisConfig);
+        RedisSingleConfig redisSingleConfig = RedisSingleConfig.getConfig();
+        LOGGER.debug("RedisConfig={}", redisSingleConfig);
     }
 
     @Test
@@ -146,34 +145,6 @@ public class FleaCacheTest {
     }
 
     @Test
-    public void testShardedJedis() {
-
-        RedisClient client = RedisClientProxy.getProxyInstance();
-
-//        LOGGER.debug("client = {}", client);
-
-        // 设置数据
-//        client.set("huazie", "hello world");
-
-//        client.del("huazie");
-
-        client.get("huazie");
-//        client.getLocation("huazie");
-//        client.getHost("huazie");
-//        client.getPort("huazie");
-
-
-        RedisClient client1 = RedisClientProxy.getProxyInstance();
-//        LOGGER.debug("client = {}", client1);
-//        client1.set("huazie1", "我是谁，我在哪");
-//        client.del("huazie1");
-        client1.get("huazie1");
-//        client.getLocation("huazie1");
-//        client.getHost("huazie1");
-//        client.getPort("huazie1");
-    }
-
-    @Test
     public void testJedisCluster() {
         // 集群的服务节点Set集合
         Set<HostAndPort> nodes = new HashSet<>();
@@ -207,5 +178,48 @@ public class FleaCacheTest {
         // jedis.set("huazie", "hello world");
 
         LOGGER.debug("get huazie = {}", jedis.get("huazie"));
+    }
+
+    @Test
+    public void testRedisClusterFleaCache() {
+        try {
+            // 集群模式下Flea缓存管理类
+            AbstractFleaCacheManager manager = FleaCacheManagerFactory.getFleaCacheManager(CacheEnum.RedisCluster.getName());
+            AbstractFleaCache cache = manager.getCache("fleamenufavorites");
+            LOGGER.debug("Cache={}", cache);
+            //#### 1.  简单字符串
+//            cache.put("menu1", "huazie");
+//            cache.put("menu2", null);
+//            cache.get("menu1");
+//            cache.get("menu2");
+//            cache.delete("menu1");
+//            cache.delete("menu2");
+//            cache.clear();
+            cache.getCacheKey();
+            LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
+        } catch (Exception e) {
+            LOGGER.error("Exception:", e);
+        }
+    }
+
+    @Test
+    public void testCoreFleaCacheForRedisCluster() {
+        try {
+            AbstractFleaCacheManager manager = FleaCacheManagerFactory.getFleaCacheManager(CacheEnum.FleaCore.getName());
+            AbstractFleaCache cache = manager.getCache("fleamenufavorites");
+            LOGGER.debug("Cache={}", cache);
+            //#### 1.  简单字符串
+//            cache.put("menu1", "huazie");
+//            cache.put("menu2", null);
+//            cache.get("menu1");
+//            cache.get("menu2");
+//            cache.delete("menu1");
+//            cache.delete("menu2");
+            cache.clear();
+            cache.getCacheKey();
+            LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
+        } catch (Exception e) {
+            LOGGER.error("Exception:", e);
+        }
     }
 }

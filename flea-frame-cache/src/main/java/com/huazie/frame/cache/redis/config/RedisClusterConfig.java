@@ -1,8 +1,10 @@
 package com.huazie.frame.cache.redis.config;
 
+import com.huazie.frame.cache.common.CacheConfigUtils;
 import com.huazie.frame.cache.common.CacheConstants.RedisConfigConstants;
+import com.huazie.frame.cache.common.CacheUtils;
 import com.huazie.frame.cache.exceptions.FleaCacheConfigException;
-import com.huazie.frame.cache.redis.RedisCommonConfig;
+import com.huazie.frame.cache.exceptions.FleaCacheException;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.slf4j.FleaLogger;
 import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
@@ -22,8 +24,8 @@ import java.util.Set;
  * Redis集群缓存配置文件【redis.cluster.properties】
  *
  * @author huazie
- * @version 1.0.0
- * @since 1.0.0
+ * @version 1.1.0
+ * @since 1.1.0
  */
 public class RedisClusterConfig extends RedisCommonConfig {
 
@@ -40,8 +42,6 @@ public class RedisClusterConfig extends RedisCommonConfig {
     private int connectionTimeout; // Redis集群客户端socket连接超时时间（单位：ms）
 
     private int soTimeout; // Redis集群客户端socket读写超时时间（单位：ms）
-
-    private int maxAttempts; // Redis集群客户端异常重试次数
 
     static {
         String fileName = RedisConfigConstants.REDIS_CLUSTER_FILE_NAME;
@@ -74,9 +74,9 @@ public class RedisClusterConfig extends RedisCommonConfig {
             setConnectionTimeout();
             // Redis客户端socket读写超时时间（单位：ms）
             setSoTimeout();
-            // Redis集群客户端异常重试次数
-            setMaxAttempts();
-        } catch (Exception e) {
+            // Redis客户端操作最大尝试次数【包含第一次操作】
+            setMaxAttempts(prop);
+        } catch (FleaCacheException e) {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("Please check the redis cluster config :", e);
             }
@@ -87,11 +87,11 @@ public class RedisClusterConfig extends RedisCommonConfig {
      * 读取Redis缓存配置类实例
      *
      * @return Redis缓存配置类实例
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public static RedisClusterConfig getConfig() {
         if (ObjectUtils.isEmpty(config)) {
-            synchronized (RedisConfig.class) {
+            synchronized (RedisSingleConfig.class) {
                 if (ObjectUtils.isEmpty(config)) {
                     config = new RedisClusterConfig();
                 }
@@ -104,7 +104,7 @@ public class RedisClusterConfig extends RedisCommonConfig {
      * 获取Redis集群服务节点Set集合
      *
      * @return Redis集群服务节点Set集合
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public Set<HostAndPort> getNodes() {
         return nodes;
@@ -114,7 +114,7 @@ public class RedisClusterConfig extends RedisCommonConfig {
      * 设置Redis集群服务节点Set集合
      *
      * @throws FleaCacheConfigException Flea缓存配置异常类
-     * @since 1.0.0
+     * @since 1.1.0
      */
     private void setNodes() throws FleaCacheConfigException {
         // Redis集群服务节点Set集合
@@ -128,7 +128,7 @@ public class RedisClusterConfig extends RedisCommonConfig {
                 if (ArrayUtils.isNotEmpty(serverArr)) {
                     nodes = new HashSet<>();
                     for (String server : serverArr) {
-                        nodes.add(HostAndPort.parseString(server));
+                        nodes.add(CacheUtils.parseString(server));
                     }
                 }
             }
@@ -145,7 +145,7 @@ public class RedisClusterConfig extends RedisCommonConfig {
      * 获取Redis集群的服务节点登录密码（集群配置同一个）
      *
      * @return Redis集群的服务节点登录密码（集群配置同一个）
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public String getPassword() {
         return password;
@@ -154,7 +154,7 @@ public class RedisClusterConfig extends RedisCommonConfig {
     /**
      * 设置Redis集群的服务节点登录密码（集群配置同一个）
      *
-     * @since 1.0.0
+     * @since 1.1.0
      */
     private void setPassword() {
         this.password = PropertiesUtil.getStringValue(prop, RedisConfigConstants.REDIS_CLUSTER_CONFIG_PASSWORD);
@@ -164,7 +164,7 @@ public class RedisClusterConfig extends RedisCommonConfig {
      * 获取Redis集群客户端socket连接超时时间（单位：ms）
      *
      * @return Redis集群客户端socket连接超时时间（单位：ms）
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public int getConnectionTimeout() {
         return connectionTimeout;
@@ -173,7 +173,7 @@ public class RedisClusterConfig extends RedisCommonConfig {
     /**
      * 设置Redis集群客户端socket连接超时时间（单位：ms）
      *
-     * @since 1.0.0
+     * @since 1.1.0
      */
     private void setConnectionTimeout() {
         int connectionTimeout = Protocol.DEFAULT_TIMEOUT; // 默认Redis集群客户端socket连接超时时间（单位：ms）
@@ -188,7 +188,7 @@ public class RedisClusterConfig extends RedisCommonConfig {
      * 获取Redis集群客户端socket读写超时时间（单位：ms）
      *
      * @return Redis集群客户端socket读写超时时间（单位：ms）
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public int getSoTimeout() {
         return soTimeout;
@@ -197,7 +197,7 @@ public class RedisClusterConfig extends RedisCommonConfig {
     /**
      * 设置Redis集群客户端socket读写超时时间（单位：ms）
      *
-     * @since 1.0.0
+     * @since 1.1.0
      */
     private void setSoTimeout() {
         int soTimeout = Protocol.DEFAULT_TIMEOUT; // 默认Redis客户端socket读写超时时间（单位：ms）
@@ -209,41 +209,12 @@ public class RedisClusterConfig extends RedisCommonConfig {
     }
 
     /**
-     * 获取Redis集群客户端异常重试次数
-     *
-     * @return Redis集群客户端异常重试次数
-     * @since 1.0.0
-     */
-    public int getMaxAttempts() {
-        return maxAttempts;
-    }
-
-    /**
-     * 设置Redis集群客户端socket读写超时时间（单位：ms）
-     *
-     * @since 1.0.0
-     */
-    private void setMaxAttempts() {
-        int maxAttempts = RedisConfigConstants.REDIS_CLUSTER_MAXATTEMPTS_DEFAULT;
-        String maxAttemptStr = PropertiesUtil.getStringValue(prop, RedisConfigConstants.REDIS_CLUSTER_MAXATTEMPTS);
-        if (StringUtils.isNotBlank(maxAttemptStr)) {
-            maxAttempts = Integer.parseInt(maxAttemptStr);
-        }
-        this.maxAttempts = maxAttempts;
-    }
-
-    /**
      * 获取Redis集群客户端当前连接的名称
      *
      * @return Redis集群客户端当前连接的名称
-     * @since 1.0.0
+     * @since 1.1.0
      */
     public String getClientName() {
-        String appCode = System.getProperty(CommonConstants.SystemConstants.APP_CODE);
-        StringBuilder clientName = new StringBuilder(getSystemName());
-        if (StringUtils.isNotBlank(appCode)) {
-            clientName.append(CommonConstants.SymbolConstants.HYPHEN).append(appCode);
-        }
-        return clientName.toString();
+        return CacheConfigUtils.getClientName(getSystemName());
     }
 }

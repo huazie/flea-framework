@@ -21,6 +21,9 @@ public class ObjectUtils {
 
     private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(ObjectUtils.class);
 
+    private ObjectUtils() {
+    }
+
     /**
      * <p> 判断value是否为空 </p>
      *

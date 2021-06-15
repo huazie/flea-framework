@@ -2,7 +2,7 @@ package com.huazie.frame.cache.redis.config;
 
 import com.huazie.frame.cache.common.CacheConstants.RedisConfigConstants;
 import com.huazie.frame.cache.exceptions.FleaCacheConfigException;
-import com.huazie.frame.cache.redis.RedisCommonConfig;
+import com.huazie.frame.cache.exceptions.FleaCacheException;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.slf4j.FleaLogger;
 import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
@@ -11,7 +11,6 @@ import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.PropertiesUtil;
 import com.huazie.frame.common.util.StringUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.JedisShardInfo;
 import redis.clients.jedis.Protocol;
 import redis.clients.jedis.util.Hashing;
@@ -21,21 +20,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import static com.huazie.frame.cache.common.CacheConstants.FleaCacheConfigConstants.DEFAULT_EXPIRY;
-
 /**
- * Redis缓存配置类，用于单个缓存接入场景，相关配置项可查看
+ * Redis单机模式缓存配置类，用于单个缓存接入场景，相关配置项可查看
  * Redis缓存配置文件【redis.properties】
  *
  * @author huazie
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.0.0
  */
-public class RedisConfig extends RedisCommonConfig {
+public class RedisSingleConfig extends RedisCommonConfig {
 
-    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(RedisConfig.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(RedisSingleConfig.class);
 
-    private static volatile RedisConfig config;
+    private static volatile RedisSingleConfig config;
 
     private static Properties prop;
 
@@ -58,7 +55,7 @@ public class RedisConfig extends RedisCommonConfig {
         prop = PropertiesUtil.getProperties(fileName);
     }
 
-    private RedisConfig() {
+    private RedisSingleConfig() {
         try {
             // 缓存归属系统
             setSystemName(prop);
@@ -66,11 +63,13 @@ public class RedisConfig extends RedisCommonConfig {
             setServerInfos();
             // 分布式hash算法
             setHashingAlg();
+            // Redis客户端操作最大尝试次数【包含第一次操作】
+            setMaxAttempts(prop);
             // 获取空缓存数据有效期
             setNullCacheExpiry(prop);
             // Jedis连接配置信息
             setJedisPoolConfig(prop);
-        } catch (Exception e) {
+        } catch (FleaCacheException e) {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("Please check the redis config :", e);
             }
@@ -83,11 +82,11 @@ public class RedisConfig extends RedisCommonConfig {
      * @return Redis缓存配置类实例
      * @since 1.0.0
      */
-    public static RedisConfig getConfig() {
+    public static RedisSingleConfig getConfig() {
         if (ObjectUtils.isEmpty(config)) {
-            synchronized (RedisConfig.class) {
+            synchronized (RedisSingleConfig.class) {
                 if (ObjectUtils.isEmpty(config)) {
-                    config = new RedisConfig();
+                    config = new RedisSingleConfig();
                 }
             }
         }

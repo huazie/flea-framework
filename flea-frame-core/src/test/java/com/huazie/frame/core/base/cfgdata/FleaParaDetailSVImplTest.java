@@ -7,7 +7,7 @@ import com.huazie.frame.cache.AbstractSpringCacheManager;
 import com.huazie.frame.cache.common.CacheEnum;
 import com.huazie.frame.cache.common.FleaCacheManagerFactory;
 import com.huazie.frame.cache.memcached.MemCachedSpringCacheManager;
-import com.huazie.frame.cache.redis.RedisSpringCacheManager;
+import com.huazie.frame.cache.redis.RedisSingleSpringCacheManager;
 import com.huazie.frame.common.EntityStateEnum;
 import com.huazie.frame.common.FleaFrameManager;
 import com.huazie.frame.common.slf4j.FleaLogger;
@@ -87,8 +87,9 @@ public class FleaParaDetailSVImplTest {
     }
 
     @Test
-    public void testRedisFleaCache() {
+    public void testRedisSingleFleaCache() {
         try {
+            // 单机模式下Flea缓存管理类
             AbstractFleaCacheManager manager = FleaCacheManagerFactory.getFleaCacheManager(CacheEnum.Redis.getName());
             LOGGER.debug("RedisCacheManager={}", manager);
             AbstractFleaCache cache = manager.getCache("fleajerseyresclient");
@@ -152,9 +153,10 @@ public class FleaParaDetailSVImplTest {
     }
 
     @Test
-    public void testRedisSpringCache() {
+    public void testRedisSingleSpringCache() {
         try {
-            AbstractSpringCacheManager manager = (RedisSpringCacheManager) applicationContext.getBean("redisSpringCacheManager");
+            // 单机模式下Spring缓存管理类
+            AbstractSpringCacheManager manager = (RedisSingleSpringCacheManager) applicationContext.getBean("redisSingleSpringCacheManager");
             LOGGER.debug("RedisCacheManager={}", manager);
 
             AbstractSpringCache cache = manager.getCache("fleaparadetail");

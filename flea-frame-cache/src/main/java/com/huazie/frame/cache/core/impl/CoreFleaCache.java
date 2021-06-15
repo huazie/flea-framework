@@ -2,12 +2,9 @@ package com.huazie.frame.cache.core.impl;
 
 import com.huazie.frame.cache.AbstractFleaCache;
 import com.huazie.frame.cache.common.CacheConfigUtils;
-import com.huazie.frame.cache.common.CacheConstants.FleaCacheConfigConstants;
 import com.huazie.frame.cache.common.FleaCacheFactory;
-import com.huazie.frame.cache.config.CacheItem;
 import com.huazie.frame.common.slf4j.FleaLogger;
 import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
-import com.huazie.frame.common.util.ObjectUtils;
 
 /**
  * 核心Flea缓存类，实现读、写和删除缓存的基本操作方法，用于整合各类缓存的接入。
@@ -17,7 +14,7 @@ import com.huazie.frame.common.util.ObjectUtils;
  * 【{@code fleaCache}】的具体实现。
  *
  * @author huazie
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.0.0
  */
 public class CoreFleaCache extends AbstractFleaCache {
@@ -73,11 +70,6 @@ public class CoreFleaCache extends AbstractFleaCache {
 
     @Override
     public String getSystemName() {
-        // 获取缓存初始化配置项集之缓存所属系统名配置项
-        CacheItem cacheItem = CacheConfigUtils.getCacheItem(FleaCacheConfigConstants.FLEA_CACHE_INIT, FleaCacheConfigConstants.SYSTEM_NAME);
-        if (ObjectUtils.isEmpty(cacheItem)) {
-            throw new RuntimeException("无法获取缓存系统名，请检查flea-cache-config.xml配置【<cache-item key=" + FleaCacheConfigConstants.SYSTEM_NAME + " >】\"");
-        }
-        return cacheItem.getValue();
+        return CacheConfigUtils.getSystemName();
     }
 }

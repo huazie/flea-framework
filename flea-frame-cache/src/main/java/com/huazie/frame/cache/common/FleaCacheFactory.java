@@ -7,6 +7,7 @@ import com.huazie.frame.cache.config.CacheData;
 import com.huazie.frame.cache.config.CacheGroup;
 import com.huazie.frame.cache.config.CacheItem;
 import com.huazie.frame.cache.config.CacheServer;
+import com.huazie.frame.cache.exceptions.FleaCacheConfigException;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.ReflectUtils;
@@ -23,14 +24,15 @@ import java.util.concurrent.ConcurrentMap;
  * key="缓存数据主关键字"></cache>}】；它的值为具体的缓存实现类。
  *
  * @author huazie
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.0.0
  */
 public class FleaCacheFactory {
 
     private static final ConcurrentMap<String, AbstractFleaCache> fleaCacheMap = new ConcurrentHashMap<>();
 
-    private FleaCacheFactory() {}
+    private FleaCacheFactory() {
+    }
 
     /**
      * <p> 根据缓存数据主关键字获取指定Flea缓存对象 </p>
@@ -61,41 +63,41 @@ public class FleaCacheFactory {
         // 获取Flea缓存配置信息
         Cache cache = CacheConfigUtils.getCache(name);
         if (ObjectUtils.isEmpty(cache)) {
-            throw new RuntimeException("无法初始化Flea缓存，请检查flea-cache.xml配置【<cache key=" + name + " >】");
+            throw new FleaCacheConfigException("无法初始化Flea缓存，请检查flea-cache.xml配置【<cache key=" + name + " >】");
         }
         // 获取Flea缓存归属数据配置信息
         CacheData cacheData = CacheConfigUtils.getCacheData(cache.getType());
         if (ObjectUtils.isEmpty(cacheData)) {
-            throw new RuntimeException("无法初始化Flea缓存，请检查flea-cache-config.xml配置【<cache-data type=" + cache.getType() + " >】");
+            throw new FleaCacheConfigException("无法初始化Flea缓存，请检查flea-cache-config.xml配置【<cache-data type=" + cache.getType() + " >】");
         }
         // 获取Flea缓存组
         CacheGroup cacheGroup = CacheConfigUtils.getCacheGroup(cacheData.getGroup());
         if (ObjectUtils.isEmpty(cacheGroup)) {
-            throw new RuntimeException("无法初始化Flea缓存，请检查flea-cache-config.xml配置【<cache-group group=" + cacheData.getGroup() + " >】");
+            throw new FleaCacheConfigException("无法初始化Flea缓存，请检查flea-cache-config.xml配置【<cache-group group=" + cacheData.getGroup() + " >】");
         }
         // 获取缓存系统名
         String cacheSystem = cacheGroup.getCache();
         // 获取Flea缓存服务器
         List<CacheServer> cacheServerList = CacheConfigUtils.getCacheServer(cacheGroup.getGroup());
         if (CollectionUtils.isEmpty(cacheServerList)) {
-            throw new RuntimeException("无法初始化Flea缓存，请检查flea-cache-config.xml配置【<cache-server group=" + cacheGroup.getGroup() + " >】");
+            throw new FleaCacheConfigException("无法初始化Flea缓存，请检查flea-cache-config.xml配置【<cache-server group=" + cacheGroup.getGroup() + " >】");
         }
         // 获取指定缓存系统名对应的Flea缓存建造者
         CacheItem cacheItem = CacheConfigUtils.getCacheItem(CacheConstants.FleaCacheConfigConstants.FLEA_CACHE_BUILDER, cacheSystem);
         if (ObjectUtils.isEmpty(cacheItem)) {
-            throw new RuntimeException("无法初始化Flea缓存，请检查flea-cache-config.xml配置【<cache-item key=" + cacheSystem + " >】");
+            throw new FleaCacheConfigException("无法初始化Flea缓存，请检查flea-cache-config.xml配置【<cache-item key=" + cacheSystem + " >】");
         }
         // Flea缓存建造者
         String builder = cacheItem.getValue();
         if (ObjectUtils.isEmpty(builder)) {
-            throw new RuntimeException("无法初始化Flea缓存，请检查flea-cache-config.xml配置【<cache-item key=" + cacheSystem + " ></cache-item>】配置项值不能为空");
+            throw new FleaCacheConfigException("无法初始化Flea缓存，请检查flea-cache-config.xml配置【<cache-item key=" + cacheSystem + " ></cache-item>】配置项值不能为空");
         }
         AbstractFleaCache fleaCache;
         try {
             IFleaCacheBuilder fleaCacheBuilder = (IFleaCacheBuilder) ReflectUtils.newInstance(builder);
             fleaCache = fleaCacheBuilder.build(name, cacheServerList);
         } catch (Exception e) {
-            throw new RuntimeException("构建Flea缓存出现异常：\n" + e);
+            throw new FleaCacheConfigException("构建Flea缓存出现异常：\n" + e);
         }
         return fleaCache;
     }
