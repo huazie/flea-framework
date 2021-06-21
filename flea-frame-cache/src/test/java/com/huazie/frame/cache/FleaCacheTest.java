@@ -3,10 +3,16 @@ package com.huazie.frame.cache;
 import com.huazie.frame.cache.common.CacheEnum;
 import com.huazie.frame.cache.common.FleaCacheManagerFactory;
 import com.huazie.frame.cache.memcached.config.MemCachedConfig;
+import com.huazie.frame.cache.redis.RedisSingleSpringCacheManager;
+import com.huazie.frame.cache.redis.config.RedisClusterConfig;
 import com.huazie.frame.cache.redis.config.RedisSingleConfig;
 import com.huazie.frame.common.slf4j.FleaLogger;
 import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
+import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisCluster;
@@ -19,85 +25,23 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * Flea 缓存单测类
+ *
  * @author huazie
- * @version v1.0.0
- * @date 2018年1月22日
+ * @version 1.0.0
  */
 public class FleaCacheTest {
 
     private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaCacheTest.class);
 
     @Test
-    public void testMemeCachedFleaCache() {
-
-        try {
-            AbstractFleaCacheManager manager = FleaCacheManagerFactory.getFleaCacheManager(CacheEnum.MemCached.getName());
-            AbstractFleaCache cache = manager.getCache("fleaparadetail");
-            LOGGER.debug("Cache={}", cache);
-            //#### 1.  简单字符串
-//            cache.put("menu1", "huazie");
-//            cache.put("menu2", null);
-//            cache.get("menu1");
-//            cache.get("menu2");
-//            cache.delete("menu1");
-//            cache.delete("menu2");
-//            cache.clear();
-            cache.getCacheKey();
-            LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
-        } catch (Exception e) {
-            LOGGER.error("Exception:", e);
-        }
-    }
-
-    @Test
-    public void testRedisSingleFleaCache() {
-        try {
-            // 单机模式下Flea缓存管理类
-            AbstractFleaCacheManager manager = FleaCacheManagerFactory.getFleaCacheManager(CacheEnum.Redis.getName());
-            AbstractFleaCache cache = manager.getCache("fleaparadetail");
-            LOGGER.debug("Cache={}", cache);
-            //#### 1.  简单字符串
-//            cache.put("menu1", "huazie");
-//            cache.put("menu2", null);
-//            cache.get("menu1");
-//            cache.get("menu2");
-//            cache.delete("menu1");
-//            cache.delete("menu2");
-//            cache.clear();
-            cache.getCacheKey();
-            LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
-        } catch (Exception e) {
-            LOGGER.error("Exception:", e);
-        }
-    }
-
-    @Test
-    public void testCoreFleaCache() {
-        try {
-            AbstractFleaCacheManager manager = FleaCacheManagerFactory.getFleaCacheManager(CacheEnum.FleaCore.getName());
-            AbstractFleaCache cache = manager.getCache("fleaparadetail");
-            LOGGER.debug("Cache={}", cache);
-            //#### 1.  简单字符串
-//            cache.put("menu1", "huazie");
-//            cache.put("menu2", null);
-//            cache.get("menu1");
-//            cache.get("menu2");
-//            cache.delete("menu1");
-//            cache.delete("menu2");
-            cache.clear();
-            cache.getCacheKey();
-            LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
-        } catch (Exception e) {
-            LOGGER.error("Exception:", e);
-        }
-    }
-
-    @Test
     public void testProperties() {
         MemCachedConfig memCachedConfig = MemCachedConfig.getConfig();
         LOGGER.debug("MemCachedConfig={}", memCachedConfig);
         RedisSingleConfig redisSingleConfig = RedisSingleConfig.getConfig();
-        LOGGER.debug("RedisConfig={}", redisSingleConfig);
+        LOGGER.debug("RedisSingleConfig={}", redisSingleConfig);
+        RedisClusterConfig redisClusterConfig = RedisClusterConfig.getConfig();
+        LOGGER.debug("RedisClusterConfig={}", redisClusterConfig);
     }
 
     @Test
@@ -178,6 +122,71 @@ public class FleaCacheTest {
         // jedis.set("huazie", "hello world");
 
         LOGGER.debug("get huazie = {}", jedis.get("huazie"));
+    }
+
+    @Test
+    public void testMemeCachedFleaCache() {
+
+        try {
+            AbstractFleaCacheManager manager = FleaCacheManagerFactory.getFleaCacheManager(CacheEnum.MemCached.getName());
+            AbstractFleaCache cache = manager.getCache("fleaparadetail");
+            LOGGER.debug("Cache={}", cache);
+            //#### 1.  简单字符串
+//            cache.put("menu1", "huazie");
+//            cache.put("menu2", null);
+//            cache.get("menu1");
+//            cache.get("menu2");
+//            cache.delete("menu1");
+//            cache.delete("menu2");
+//            cache.clear();
+            cache.getCacheKey();
+            LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
+        } catch (Exception e) {
+            LOGGER.error("Exception:", e);
+        }
+    }
+
+    @Test
+    public void testRedisSingleFleaCache() {
+        try {
+            // 单机模式下Flea缓存管理类
+            AbstractFleaCacheManager manager = FleaCacheManagerFactory.getFleaCacheManager(CacheEnum.Redis.getName());
+            AbstractFleaCache cache = manager.getCache("fleaparadetail");
+            LOGGER.debug("Cache={}", cache);
+            //#### 1.  简单字符串
+//            cache.put("menu1", "huazie");
+//            cache.put("menu2", null);
+//            cache.get("menu1");
+//            cache.get("menu2");
+//            cache.delete("menu1");
+//            cache.delete("menu2");
+//            cache.clear();
+            cache.getCacheKey();
+            LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
+        } catch (Exception e) {
+            LOGGER.error("Exception:", e);
+        }
+    }
+
+    @Test
+    public void testCoreFleaCache() {
+        try {
+            AbstractFleaCacheManager manager = FleaCacheManagerFactory.getFleaCacheManager(CacheEnum.FleaCore.getName());
+            AbstractFleaCache cache = manager.getCache("fleaparadetail");
+            LOGGER.debug("Cache={}", cache);
+            //#### 1.  简单字符串
+//            cache.put("menu1", "huazie");
+//            cache.put("menu2", null);
+//            cache.get("menu1");
+//            cache.get("menu2");
+//            cache.delete("menu1");
+//            cache.delete("menu2");
+            cache.clear();
+            cache.getCacheKey();
+            LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
+        } catch (Exception e) {
+            LOGGER.error("Exception:", e);
+        }
     }
 
     @Test
