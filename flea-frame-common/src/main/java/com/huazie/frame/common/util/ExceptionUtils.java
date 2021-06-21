@@ -12,6 +12,9 @@ import com.huazie.frame.common.exception.CommonException;
  */
 public class ExceptionUtils {
 
+    private ExceptionUtils() {
+    }
+
     /**
      * 抛出指定的异常，对应异常类的构造方法：{@code 异常类名(String message)}
      *

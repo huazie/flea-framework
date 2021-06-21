@@ -19,6 +19,9 @@ public class FastJsonUtils {
 
     private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FastJsonUtils.class);
 
+    private FastJsonUtils() {
+    }
+
     /**
      * <p> 使用FastJson进行解析 ,获取T对象 </p>
      *

@@ -17,7 +17,7 @@ import com.huazie.frame.cache.config.Caches;
 import com.huazie.frame.cache.config.FleaCache;
 import com.huazie.frame.cache.config.FleaCacheConfig;
 import com.huazie.frame.cache.exceptions.FleaCacheConfigException;
-import com.huazie.frame.common.XmlDigesterHelper;
+import com.huazie.frame.common.util.xml.XmlDigesterHelper;
 import com.huazie.frame.common.slf4j.FleaLogger;
 import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.CollectionUtils;

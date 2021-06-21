@@ -13,6 +13,9 @@ import java.util.Collection;
  */
 public class CollectionUtils {
 
+    private CollectionUtils() {
+    }
+
     /**
      * <p> 判断Collection集合是否空（Collection集合为null 或 无数据） </p>
      *

@@ -27,6 +27,9 @@ public class IOUtils {
 
     private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(IOUtils.class);
 
+    private IOUtils() {
+    }
+
     /**
      * <p> 根据文件路径获取文件输入流对象 </p>
      *

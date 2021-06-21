@@ -11,6 +11,9 @@ import org.apache.commons.codec.binary.Base64;
  */
 public class Base64Helper {
 
+    private Base64Helper() {
+    }
+
     /**
      * <p> 获取Base64对象实例 (仅当第一次调用该方法，加载内部类，初始化Base64对象)</p>
      *

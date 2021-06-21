@@ -30,6 +30,9 @@ public class HttpUtils {
 
     private static final String SINA_IP_URL = "http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js&ip=";
 
+    private HttpUtils() {
+    }
+
     /**
      * <p> 获取Http请求的客户端IP地址 </p>
      * <p> X-Forwarded-For: 简称XFF头，它代表客户端，也就是HTTP的请求端真实的IP，只有在通过了HTTP代理或者负载均衡服务器时才会添加该项 </p>

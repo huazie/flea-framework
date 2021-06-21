@@ -13,6 +13,9 @@ import java.util.Map;
  */
 public class ArrayUtils {
 
+    private ArrayUtils() {
+    }
+
     /**
      * <p>检查对象数组是否为空</p>
      *

@@ -23,6 +23,9 @@ public class JsonUtils {
 
     private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(JsonUtils.class);
 
+    private JsonUtils() {
+    }
+
     /**
      * <p> 使用net.sf.json解析，获取String对象的List集合 </p>
      *
