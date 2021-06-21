@@ -19,6 +19,8 @@
 |git config --system --list             |  查看系统config                         |
 |git config --global --list             |  查看当前用户（global）配置              |
 |git config --local --list              |  查看当前仓库配置信息                    |
+|git config user.name "用户名"           | 修改当前项目的用户名                    |
+|git config user.email "邮箱"            | 修改当前项目的邮箱                      |
 |git tag                                |  查看tag列表                            |
 |git tag -d tag名                       |  删除tag                                |
 |git push origin :tag名                 |  提交删除tag                            |
