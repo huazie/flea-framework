@@ -15,6 +15,9 @@ import java.util.List;
  */
 public class Factor {
 
+    private Factor() {
+    }
+
     /**
      * 因数分解
      *

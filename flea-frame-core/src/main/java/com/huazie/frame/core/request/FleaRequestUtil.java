@@ -24,6 +24,9 @@ import java.io.IOException;
  */
 public class FleaRequestUtil {
 
+    private FleaRequestUtil() {
+    }
+
     /**
      * <p> 执行过滤器任务 </p>
      *

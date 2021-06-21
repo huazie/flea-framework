@@ -42,6 +42,9 @@ public class RedisClientFactory {
 
     private static final ConcurrentMap<String, RedisClient> redisClients = new ConcurrentHashMap<>();
 
+    private RedisClientFactory() {
+    }
+
     /**
      * 获取单机模式下默认连接池的Redis客户端
      *

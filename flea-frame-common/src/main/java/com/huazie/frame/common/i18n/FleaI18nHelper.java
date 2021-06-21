@@ -14,6 +14,9 @@ import java.util.Locale;
  */
 public class FleaI18nHelper {
 
+    private FleaI18nHelper() {
+    }
+
     /**
      * <p>i18n资源数据获取</p>
      *

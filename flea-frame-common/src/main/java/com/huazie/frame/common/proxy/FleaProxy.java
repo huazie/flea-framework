@@ -18,6 +18,9 @@ import java.lang.reflect.Proxy;
  */
 public class FleaProxy {
 
+    private FleaProxy() {
+    }
+
     /**
      * 返回指定接口的代理类的实例，该接口将方法调用分派到指定的调用处理程序
      *

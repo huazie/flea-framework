@@ -14,6 +14,9 @@ import com.huazie.frame.common.util.ObjectUtils;
  */
 public class FleaConfigManager {
 
+    private FleaConfigManager() {
+    }
+
     /**
      * <p> 获取配置项列表 </p>
      *
