@@ -19,7 +19,7 @@ import java.util.concurrent.Callable;
  * 调用对应的 读、写、删除 和 清空 缓存的基本操作方法。
  *
  * @author huazie
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.0.0
  */
 public abstract class AbstractSpringCache implements Cache, IFleaCache {
@@ -60,16 +60,16 @@ public abstract class AbstractSpringCache implements Cache, IFleaCache {
     @Override
     @SuppressWarnings(value = "unchecked")
     public <T> T get(Object key, Class<T> type) {
-        if (ObjectUtils.isEmpty(key))
+        if (ObjectUtils.isEmpty(key) || ObjectUtils.isEmpty(type))
             return null;
         Object cacheValue = get(key.toString());
-        if (ObjectUtils.isNotEmpty(type) && !type.isInstance(cacheValue)) {
+        if (!type.isInstance(cacheValue)) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug1(new Object() {}, "Cached value is not of required type [{}] : {}", type.getName(), cacheValue);
             }
             return null;
         }
-        return (T) cacheValue;
+        return type.cast(cacheValue);
     }
 
     @Override

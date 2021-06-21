@@ -12,6 +12,7 @@ import com.huazie.frame.common.util.ArrayUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.PropertiesUtil;
 import com.huazie.frame.common.util.StringUtils;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.Protocol;
 
@@ -216,5 +217,10 @@ public class RedisClusterConfig extends RedisCommonConfig {
      */
     public String getClientName() {
         return CacheConfigUtils.getClientName(getSystemName());
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 }
