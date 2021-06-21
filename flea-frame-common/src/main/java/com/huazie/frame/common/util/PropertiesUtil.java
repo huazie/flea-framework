@@ -19,6 +19,9 @@ public class PropertiesUtil {
 
     private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(PropertiesUtil.class);
 
+    private PropertiesUtil() {
+    }
+
     /**
      * <p> 获取指定配置文件对象 </p>
      *

@@ -13,6 +13,9 @@ import java.util.Map;
  */
 public class MapUtils {
 
+    private MapUtils() {
+    }
+
     /**
      * <p> 判断Map集合是否空（Map集合为null 或 无数据） </p>
      *

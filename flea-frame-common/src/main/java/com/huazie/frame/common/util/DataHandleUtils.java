@@ -22,6 +22,9 @@ public class DataHandleUtils {
 
     private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(DataHandleUtils.class);
 
+    private DataHandleUtils() {
+    }
+
     /**
      * <p> 十六进制字符串转化为字节数组 </p>
      *

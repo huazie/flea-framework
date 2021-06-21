@@ -12,6 +12,9 @@ public class UnicodeUtils {
     private static final int LENGTH_OF_SINGLE_UNICODE = 4;
     private static final String COMPLEMENT_UNICODE_STRING = "0";
 
+    private UnicodeUtils() {
+    }
+
     /**
      * <p> 本地字符串转换为Unicode字符串 </p>
      *

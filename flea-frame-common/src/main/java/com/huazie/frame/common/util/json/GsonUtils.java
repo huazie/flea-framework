@@ -19,6 +19,9 @@ public class GsonUtils {
 
     private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(GsonUtils.class);
 
+    private GsonUtils() {
+    }
+
     /**
      * <p> 使用Gson进行解析 ,并获取T对象 </p>
      *

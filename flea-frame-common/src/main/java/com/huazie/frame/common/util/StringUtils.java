@@ -16,6 +16,9 @@ import java.util.Map;
  */
 public class StringUtils {
 
+    private StringUtils() {
+    }
+
     /**
      * <p> 判断字符串是否为空 </p>
      *

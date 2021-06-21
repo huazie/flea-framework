@@ -1,6 +1,6 @@
 package com.huazie.frame.jersey.common;
 
-import com.huazie.frame.common.XmlDigesterHelper;
+import com.huazie.frame.common.util.xml.XmlDigesterHelper;
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.slf4j.FleaLogger;
 import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;

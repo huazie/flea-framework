@@ -27,6 +27,9 @@ public class PinyinUtils {
 
     private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(PinyinUtils.class);
 
+    private PinyinUtils() {
+    }
+
     /**
      * <p> 获取中文的简拼 </p>
      *

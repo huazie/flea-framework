@@ -14,6 +14,9 @@ import java.math.BigInteger;
  */
 public class NumberUtils {
 
+    private NumberUtils() {
+    }
+
     /**
      * <p> 对象值转数字值 </p>
      *
