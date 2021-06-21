@@ -21,6 +21,9 @@ public class FleaAuthLogger {
     private static final String METHOD_SAVE_LOGIN_LOG = "saveLoginLog";
     private static final String METHOD_SAVE_QUIT_LOG = "saveQuitLog";
 
+    private FleaAuthLogger() {
+    }
+
     /**
      * <p> 异步保存登录日志 </p>
      *

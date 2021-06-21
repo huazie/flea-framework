@@ -29,6 +29,9 @@ public class FleaCacheManagerFactory {
 
     private static final ConcurrentMap<String, AbstractFleaCacheManager> managerMap = new ConcurrentHashMap<>();
 
+    private FleaCacheManagerFactory() {
+    }
+
     /**
      * <p> 获取Flea Cache管理类对象实例 </p>
      *

@@ -40,6 +40,9 @@ public class TableSplitHelper {
 
     private static Boolean isTableSplitHandlerInit = Boolean.FALSE;
 
+    private TableSplitHelper() {
+    }
+
     /**
      * <p> 获取分表对象 </p>
      *
