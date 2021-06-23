@@ -18,7 +18,7 @@ public class CacheUtils {
      * 根据指定缓存模式枚举，判断是否是集群模式
      *
      * @param cacheMode 缓存模式枚举
-     * @return true：集群模式  false：单机模式
+     * @return true：集群模式  false：非集群模式
      * @since 1.1.0
      */
     public static boolean isClusterMode(CacheModeEnum cacheMode) {

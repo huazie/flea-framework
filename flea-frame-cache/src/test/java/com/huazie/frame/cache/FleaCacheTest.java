@@ -3,16 +3,11 @@ package com.huazie.frame.cache;
 import com.huazie.frame.cache.common.CacheEnum;
 import com.huazie.frame.cache.common.FleaCacheManagerFactory;
 import com.huazie.frame.cache.memcached.config.MemCachedConfig;
-import com.huazie.frame.cache.redis.RedisSingleSpringCacheManager;
 import com.huazie.frame.cache.redis.config.RedisClusterConfig;
-import com.huazie.frame.cache.redis.config.RedisSingleConfig;
+import com.huazie.frame.cache.redis.config.RedisShardedConfig;
 import com.huazie.frame.common.slf4j.FleaLogger;
 import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
-import org.junit.Before;
 import org.junit.Test;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisCluster;
@@ -38,8 +33,8 @@ public class FleaCacheTest {
     public void testProperties() {
         MemCachedConfig memCachedConfig = MemCachedConfig.getConfig();
         LOGGER.debug("MemCachedConfig={}", memCachedConfig);
-        RedisSingleConfig redisSingleConfig = RedisSingleConfig.getConfig();
-        LOGGER.debug("RedisSingleConfig={}", redisSingleConfig);
+        RedisShardedConfig redisShardedConfig = RedisShardedConfig.getConfig();
+        LOGGER.debug("RedisShardedConfig={}", redisShardedConfig);
         RedisClusterConfig redisClusterConfig = RedisClusterConfig.getConfig();
         LOGGER.debug("RedisClusterConfig={}", redisClusterConfig);
     }
@@ -149,7 +144,7 @@ public class FleaCacheTest {
     @Test
     public void testRedisSingleFleaCache() {
         try {
-            // 单机模式下Flea缓存管理类
+            // 分片模式下Flea缓存管理类
             AbstractFleaCacheManager manager = FleaCacheManagerFactory.getFleaCacheManager(CacheEnum.Redis.getName());
             AbstractFleaCache cache = manager.getCache("fleaparadetail");
             LOGGER.debug("Cache={}", cache);

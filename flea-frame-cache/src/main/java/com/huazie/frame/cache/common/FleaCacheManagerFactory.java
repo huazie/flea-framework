@@ -4,7 +4,7 @@ import com.huazie.frame.cache.AbstractFleaCacheManager;
 import com.huazie.frame.cache.core.CoreFleaCacheManager;
 import com.huazie.frame.cache.memcached.MemCachedFleaCacheManager;
 import com.huazie.frame.cache.redis.RedisClusterFleaCacheManager;
-import com.huazie.frame.cache.redis.RedisSingleFleaCacheManager;
+import com.huazie.frame.cache.redis.RedisShardedFleaCacheManager;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -20,7 +20,7 @@ import java.util.concurrent.ConcurrentMap;
  * @author huazie
  * @version 1.1.0
  * @see MemCachedFleaCacheManager
- * @see RedisSingleFleaCacheManager
+ * @see RedisShardedFleaCacheManager
  * @see RedisClusterFleaCacheManager
  * @see CoreFleaCacheManager
  * @since 1.0.0
@@ -47,7 +47,7 @@ public class FleaCacheManagerFactory {
                     if (CacheEnum.MemCached.getName().equals(name)) {
                         manager = new MemCachedFleaCacheManager();
                     } else if (CacheEnum.Redis.getName().equals(name)) {
-                        manager = new RedisSingleFleaCacheManager();
+                        manager = new RedisShardedFleaCacheManager();
                     } else if (CacheEnum.RedisCluster.getName().equals(name)) {
                         manager = new RedisClusterFleaCacheManager();
                     } else if (CacheEnum.FleaCore.getName().equals(name)) {

@@ -36,7 +36,7 @@ public class RedisSpringCache extends AbstractSpringCache {
      * @param name            缓存数据主关键字
      * @param expiry          缓存数据有效期（单位：s）
      * @param nullCacheExpiry 空缓存数据有效期（单位：s）
-     * @param cacheMode       缓存模式【分单机模式和集群模式】
+     * @param cacheMode       缓存模式【分片模式和集群模式】
      * @param redisClient     Redis客户端
      * @since 1.0.0
      */
