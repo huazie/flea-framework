@@ -5,7 +5,7 @@ import com.huazie.frame.cache.common.CacheConstants.RedisConfigConstants;
 import com.huazie.frame.cache.config.CacheParam;
 import com.huazie.frame.cache.config.CacheServer;
 import com.huazie.frame.cache.exceptions.FleaCacheConfigException;
-import com.huazie.frame.cache.redis.config.RedisSingleConfig;
+import com.huazie.frame.cache.redis.config.RedisShardedConfig;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.util.CollectionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
@@ -28,29 +28,29 @@ import java.util.concurrent.ConcurrentMap;
  * 可参考如下：
  * <pre>
  *   // 初始化默认连接池
- *   RedisSinglePool.getInstance().initialize(); </pre>
+ *   RedisShardedPool.getInstance().initialize(); </pre>
  *
  * <p> 针对整合缓存接入场景，采用指定连接池初始化的方式；<br/>
  * 可参考如下：
  * <pre>
  *   // 初始化指定连接池
- *   RedisSinglePool.getInstance(group).initialize(cacheServerList); </pre>
+ *   RedisShardedPool.getInstance(group).initialize(cacheServerList); </pre>
  *
  * @author huazie
  * @version 1.1.0
- * @see RedisSingleFleaCacheManager
- * @see RedisSingleFleaCacheBuilder
+ * @see RedisShardedFleaCacheManager
+ * @see RedisShardedFleaCacheBuilder
  * @since 1.0.0
  */
-public class RedisSinglePool {
+public class RedisShardedPool {
 
-    private static final ConcurrentMap<String, RedisSinglePool> redisPools = new ConcurrentHashMap<>();
+    private static final ConcurrentMap<String, RedisShardedPool> redisPools = new ConcurrentHashMap<>();
 
     private String poolName; // 连接池名
 
     private ShardedJedisPool shardedJedisPool; // 分布式Jedis连接池
 
-    private RedisSinglePool(String poolName) {
+    private RedisShardedPool(String poolName) {
         this.poolName = poolName;
     }
 
@@ -60,7 +60,7 @@ public class RedisSinglePool {
      * @return Redis连接池实例对象
      * @since 1.0.0
      */
-    public static RedisSinglePool getInstance() {
+    public static RedisShardedPool getInstance() {
         return getInstance(CommonConstants.FleaPoolConstants.DEFAULT_POOL_NAME);
     }
 
@@ -71,12 +71,12 @@ public class RedisSinglePool {
      * @return Redis连接池实例对象
      * @since 1.0.0
      */
-    public static RedisSinglePool getInstance(String poolName) {
+    public static RedisShardedPool getInstance(String poolName) {
         if (!redisPools.containsKey(poolName)) {
             synchronized (redisPools) {
                 if (!redisPools.containsKey(poolName)) {
-                    RedisSinglePool redisSinglePool = new RedisSinglePool(poolName);
-                    redisPools.putIfAbsent(poolName, redisSinglePool);
+                    RedisShardedPool redisShardedPool = new RedisShardedPool(poolName);
+                    redisPools.putIfAbsent(poolName, redisShardedPool);
                 }
             }
         }
@@ -92,9 +92,9 @@ public class RedisSinglePool {
         if (!CommonConstants.FleaPoolConstants.DEFAULT_POOL_NAME.equals(poolName)) {
             throw new FleaCacheConfigException("采用默认初始化，请使用RedisPool##getInstance()");
         }
-        RedisSingleConfig redisSingleConfig = RedisSingleConfig.getConfig();
+        RedisShardedConfig redisShardedConfig = RedisShardedConfig.getConfig();
         if (ObjectUtils.isEmpty(shardedJedisPool)) {
-            shardedJedisPool = new ShardedJedisPool(redisSingleConfig.getJedisPoolConfig(), redisSingleConfig.getServerInfos(), redisSingleConfig.getHashingAlg());
+            shardedJedisPool = new ShardedJedisPool(redisShardedConfig.getJedisPoolConfig(), redisShardedConfig.getServerInfos(), redisShardedConfig.getHashingAlg());
         }
     }
 

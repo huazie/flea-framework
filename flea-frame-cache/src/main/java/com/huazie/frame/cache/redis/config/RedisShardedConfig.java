@@ -21,18 +21,18 @@ import java.util.List;
 import java.util.Properties;
 
 /**
- * Redis单机模式缓存配置类，用于单个缓存接入场景，相关配置项可查看
+ * Redis分片模式缓存配置类，用于单个缓存接入场景，相关配置项可查看
  * Redis缓存配置文件【redis.properties】
  *
  * @author huazie
  * @version 1.1.0
  * @since 1.0.0
  */
-public class RedisSingleConfig extends RedisCommonConfig {
+public class RedisShardedConfig extends RedisCommonConfig {
 
-    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(RedisSingleConfig.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(RedisShardedConfig.class);
 
-    private static volatile RedisSingleConfig config;
+    private static volatile RedisShardedConfig config;
 
     private static Properties prop;
 
@@ -55,7 +55,7 @@ public class RedisSingleConfig extends RedisCommonConfig {
         prop = PropertiesUtil.getProperties(fileName);
     }
 
-    private RedisSingleConfig() {
+    private RedisShardedConfig() {
         try {
             // 缓存归属系统
             setSystemName(prop);
@@ -82,11 +82,11 @@ public class RedisSingleConfig extends RedisCommonConfig {
      * @return Redis缓存配置类实例
      * @since 1.0.0
      */
-    public static RedisSingleConfig getConfig() {
+    public static RedisShardedConfig getConfig() {
         if (ObjectUtils.isEmpty(config)) {
-            synchronized (RedisSingleConfig.class) {
+            synchronized (RedisShardedConfig.class) {
                 if (ObjectUtils.isEmpty(config)) {
-                    config = new RedisSingleConfig();
+                    config = new RedisShardedConfig();
                 }
             }
         }

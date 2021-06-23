@@ -10,7 +10,7 @@
     <!-- Flea缓存建造者配置项集 -->
     <cache-items key="FleaCacheBuilder" desc="Flea缓存建造者实现">
         <cache-item key="MemCached" desc="MemCached的Flea缓存建造者实现">com.huazie.frame.cache.memcached.MemCachedFleaCacheBuilder</cache-item>
-        <cache-item key="Redis" desc="Redis单机模式下的Flea缓存建造者实现">com.huazie.frame.cache.redis.RedisSingleFleaCacheBuilder</cache-item>
+        <cache-item key="Redis" desc="Redis分片模式下的Flea缓存建造者实现">com.huazie.frame.cache.redis.RedisShardedFleaCacheBuilder</cache-item>
         <cache-item key="RedisCluster" desc="Redis集群模式下的Flea缓存建造者实现">com.huazie.frame.cache.redis.RedisClusterFleaCacheBuilder</cache-item>
     </cache-items>
 
@@ -74,16 +74,16 @@
         <cache-server group="authGroup" weight="1" desc="MemCached缓存服务器">127.0.0.1:31113</cache-server>
         <cache-server group="authGroup" weight="1" desc="MemCached缓存服务器">127.0.0.1:31114</cache-server>
 
-        <cache-server group="configGroup" password="huazie123" weight="1" desc="Redis缓存服务器【单机模式】">127.0.0.1:10001</cache-server>
-        <cache-server group="configGroup" password="huazie123" weight="1" desc="Redis缓存服务器【单机模式】">127.0.0.1:10002</cache-server>
-        <cache-server group="configGroup" password="huazie123" weight="1" desc="Redis缓存服务器【单机模式】">127.0.0.1:10003</cache-server>
+        <cache-server group="configGroup" password="huazie123" weight="1" desc="Redis缓存服务器【分片模式】">127.0.0.1:10001</cache-server>
+        <cache-server group="configGroup" password="huazie123" weight="1" desc="Redis缓存服务器【分片模式】">127.0.0.1:10002</cache-server>
+        <cache-server group="configGroup" password="huazie123" weight="1" desc="Redis缓存服务器【分片模式】">127.0.0.1:10003</cache-server>
 
-        <cache-server group="dynamicGroup" desc="Redis集群服务器节点">127.0.0.1:20011</cache-server>
-        <cache-server group="dynamicGroup" desc="Redis集群服务器节点">127.0.0.1:20012</cache-server>
-        <cache-server group="dynamicGroup" desc="Redis集群服务器节点">127.0.0.1:20021</cache-server>
-        <cache-server group="dynamicGroup" desc="Redis集群服务器节点">127.0.0.1:20022</cache-server>
-        <cache-server group="dynamicGroup" desc="Redis集群服务器节点">127.0.0.1:20031</cache-server>
-        <cache-server group="dynamicGroup" desc="Redis集群服务器节点">127.0.0.1:20032</cache-server>
+        <cache-server group="dynamicGroup" desc="Redis缓存服务器【集群模式】">127.0.0.1:20011</cache-server>
+        <cache-server group="dynamicGroup" desc="Redis缓存服务器【集群模式】">127.0.0.1:20012</cache-server>
+        <cache-server group="dynamicGroup" desc="Redis缓存服务器【集群模式】">127.0.0.1:20021</cache-server>
+        <cache-server group="dynamicGroup" desc="Redis缓存服务器【集群模式】">127.0.0.1:20022</cache-server>
+        <cache-server group="dynamicGroup" desc="Redis缓存服务器【集群模式】">127.0.0.1:20031</cache-server>
+        <cache-server group="dynamicGroup" desc="Redis缓存服务器【集群模式】">127.0.0.1:20032</cache-server>
     </cache-servers>
 
 </flea-cache-config>

@@ -14,7 +14,7 @@ import com.huazie.frame.common.util.CollectionUtils;
 import java.util.List;
 
 /**
- * Redis单机模式Flea缓存建造者实现类，用于整合各类缓存接入时创建Redis Flea缓存。
+ * Redis分片模式Flea缓存建造者实现类，用于整合各类缓存接入时创建Redis Flea缓存。
  *
  * <p> 缓存定义文件【flea-cache.xml】中，每一个缓存定义配置都对应缓存配置文件
  * 【flea-cache-config.xml】中的一类缓存数据，每类缓存数据都归属一个缓存组，
@@ -29,14 +29,14 @@ import java.util.List;
  * @see com.huazie.frame.cache.common.FleaCacheFactory
  * @since 1.0.0
  */
-public class RedisSingleFleaCacheBuilder implements IFleaCacheBuilder {
+public class RedisShardedFleaCacheBuilder implements IFleaCacheBuilder {
 
-    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(RedisSingleFleaCacheBuilder.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(RedisShardedFleaCacheBuilder.class);
 
     @Override
     public AbstractFleaCache build(String name, List<CacheServer> cacheServerList) {
         if (CollectionUtils.isEmpty(cacheServerList)) {
-            throw new FleaCacheConfigException("无法初始化单机模式下Redis Flea缓存，缓存服务器列表【cacheServerList】为空");
+            throw new FleaCacheConfigException("无法初始化分片模式下Redis Flea缓存，缓存服务器列表【cacheServerList】为空");
         }
         // 获取缓存数据有效期（单位：s）
         int expiry = CacheConfigUtils.getExpiry(name);
@@ -44,17 +44,17 @@ public class RedisSingleFleaCacheBuilder implements IFleaCacheBuilder {
         int nullCacheExpiry = CacheConfigUtils.getNullCacheExpiry();
         // 获取缓存组名
         String group = cacheServerList.get(0).getGroup();
-        // 初始化指定连接池名【group】的Redis单机模式连接池
-        RedisSinglePool.getInstance(group).initialize(cacheServerList);
-        // 获取单机模式下的指定连接池名【group】的Redis客户端
+        // 初始化指定连接池名【group】的Redis分片模式连接池
+        RedisShardedPool.getInstance(group).initialize(cacheServerList);
+        // 获取分片模式下的指定连接池名【group】的Redis客户端
         RedisClient redisClient = RedisClientFactory.getInstance(group);
         // 创建一个Redis Flea缓存
-        AbstractFleaCache fleaCache = new RedisFleaCache(name, expiry, nullCacheExpiry, CacheModeEnum.SINGLE, redisClient);
+        AbstractFleaCache fleaCache = new RedisFleaCache(name, expiry, nullCacheExpiry, CacheModeEnum.SHARDED, redisClient);
 
         if (LOGGER.isDebugEnabled()) {
             Object obj = new Object() {};
-            LOGGER.debug1(obj, "Pool Name = {}", RedisSinglePool.getInstance(group).getPoolName());
-            LOGGER.debug1(obj, "Pool = {}", RedisSinglePool.getInstance(group).getJedisPool());
+            LOGGER.debug1(obj, "Pool Name = {}", RedisShardedPool.getInstance(group).getPoolName());
+            LOGGER.debug1(obj, "Pool = {}", RedisShardedPool.getInstance(group).getJedisPool());
         }
 
         return fleaCache;

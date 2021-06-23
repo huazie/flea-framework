@@ -4,8 +4,8 @@ import com.huazie.frame.cache.common.CacheConfigUtils;
 import com.huazie.frame.cache.redis.FleaRedisClient;
 import com.huazie.frame.cache.redis.RedisClient;
 import com.huazie.frame.cache.redis.RedisClientCommand;
-import com.huazie.frame.cache.redis.RedisSinglePool;
-import com.huazie.frame.cache.redis.config.RedisSingleConfig;
+import com.huazie.frame.cache.redis.RedisShardedPool;
+import com.huazie.frame.cache.redis.config.RedisShardedConfig;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
@@ -16,18 +16,18 @@ import redis.clients.jedis.params.SetParams;
 import redis.clients.jedis.util.SafeEncoder;
 
 /**
- * Flea单机模式Redis客户端实现类，封装了Flea框架操作Redis缓存的基本操作。
+ * Flea分片模式Redis客户端实现类，封装了Flea框架操作Redis缓存的基本操作。
  *
  * <p> 它内部具体操作Redis缓存的功能，由分布式Jedis对象完成，
  * 包含读、写、删除Redis缓存的基本操作方法。
  *
- * <p> 单机模式下，单个缓存接入场景，可通过如下方式使用：
+ * <p> 分片模式下，单个缓存接入场景，可通过如下方式使用：
  * <pre>
  *  RedisClient redisClient = new FleaRedisClient.Builder().build();
  *  // 执行读，写，删除等基本操作
  *  redisClient.set("key", "value"); </pre>
  *
- * <p> 单机模式下，整合缓存接入场景，可通过如下方式使用：
+ * <p> 分片模式下，整合缓存接入场景，可通过如下方式使用：
  * <pre>
  *  RedisClient redisClient = new FleaRedisClient.Builder(poolName).build();
  *  // 执行读，写，删除等基本操作
@@ -35,23 +35,23 @@ import redis.clients.jedis.util.SafeEncoder;
  *
  * <p> 当然每次都新建Redis客户端显然不可取，我们可通过Redis客户端工厂获取Redis客户端。
  *
- * <p> 单机模式下，单个缓存接入场景，可通过如下方式使用：
+ * <p> 分片模式下，单个缓存接入场景，可通过如下方式使用：
  * <pre>
  *  RedisClient redisClient = RedisClientFactory.getInstance();
  *  或者
- *  RedisClient redisClient = RedisClientFactory.getInstance(CacheModeEnum.SINGLE);</pre>
+ *  RedisClient redisClient = RedisClientFactory.getInstance(CacheModeEnum.SHARDED);</pre>
  *
- * <p> 单机模式下，整合缓存接入场景，可通过如下方式使用：
+ * <p> 分片模式下，整合缓存接入场景，可通过如下方式使用：
  * <pre>
  *  RedisClient redisClient = RedisClientFactory.getInstance(poolName);
  *  或者
- *  RedisClient redisClient = RedisClientFactory.getInstance(poolName, CacheModeEnum.SINGLE); </pre>
+ *  RedisClient redisClient = RedisClientFactory.getInstance(poolName, CacheModeEnum.SHARDED); </pre>
  *
  * @author huazie
  * @version 1.1.0
  * @since 1.0.0
  */
-public class FleaRedisSingleClient extends FleaRedisClient {
+public class FleaRedisShardedClient extends FleaRedisClient {
 
     private ShardedJedisPool shardedJedisPool; // 分布式Jedis连接池
 
@@ -62,7 +62,7 @@ public class FleaRedisSingleClient extends FleaRedisClient {
      *
      * @since 1.0.0
      */
-    private FleaRedisSingleClient() {
+    private FleaRedisShardedClient() {
         this(CommonConstants.FleaPoolConstants.DEFAULT_POOL_NAME);
     }
 
@@ -72,7 +72,7 @@ public class FleaRedisSingleClient extends FleaRedisClient {
      * @param poolName 连接池名
      * @since 1.0.0
      */
-    private FleaRedisSingleClient(String poolName) {
+    private FleaRedisShardedClient(String poolName) {
         super(poolName);
         init();
     }
@@ -84,10 +84,10 @@ public class FleaRedisSingleClient extends FleaRedisClient {
      */
     private void init() {
         if (CommonConstants.FleaPoolConstants.DEFAULT_POOL_NAME.equals(getPoolName())) {
-            shardedJedisPool = RedisSinglePool.getInstance().getJedisPool();
-            maxAttempts = RedisSingleConfig.getConfig().getMaxAttempts();
+            shardedJedisPool = RedisShardedPool.getInstance().getJedisPool();
+            maxAttempts = RedisShardedConfig.getConfig().getMaxAttempts();
         } else {
-            shardedJedisPool = RedisSinglePool.getInstance(getPoolName()).getJedisPool();
+            shardedJedisPool = RedisShardedPool.getInstance(getPoolName()).getJedisPool();
             maxAttempts = CacheConfigUtils.getMaxAttempts();
         }
     }
@@ -266,9 +266,9 @@ public class FleaRedisSingleClient extends FleaRedisClient {
          */
         public RedisClient build() {
             if (StringUtils.isBlank(poolName)) {
-                return new FleaRedisSingleClient();
+                return new FleaRedisShardedClient();
             } else {
-                return new FleaRedisSingleClient(poolName);
+                return new FleaRedisShardedClient(poolName);
             }
         }
     }

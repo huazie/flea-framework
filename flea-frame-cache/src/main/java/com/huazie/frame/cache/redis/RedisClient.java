@@ -6,12 +6,12 @@ import redis.clients.jedis.params.SetParams;
 /**
  * Redis客户端接口，定义了 读、写、删除 Redis缓存的基本操作方法。
  *
- * <p> 单机模式下，针对单独缓存接入场景，可以通过如下方式对外使用Redis客户端，
+ * <p> 分片模式下，针对单独缓存接入场景，可以通过如下方式对外使用Redis客户端，
  * 使用之前需要先初始化Redis连接池【默认default】：
  * <pre>
  *   // 初始化默认连接池
- *   RedisSinglePool.getInstance().initialize();
- *   // 获取单机模式下默认连接池的Redis客户端
+ *   RedisShardedPool.getInstance().initialize();
+ *   // 获取分片模式下默认连接池的Redis客户端
  *   RedisClient redisClient = RedisClientFactory.getInstance(); </pre>
  *
  * <p> 集群模式下，针对单独缓存接入场景，可以通过如下方式对外使用Redis客户端，
@@ -22,12 +22,12 @@ import redis.clients.jedis.params.SetParams;
  *   // 获取集群模式下默认连接池的Redis客户端
  *   RedisClient redisClient = RedisClientFactory.getInstance(CacheModeEnum.CLUSTER); </pre>
  *
- * <p> 单机模式下，针对整合缓存接入场景，可以通过如下方式对外使用Redis客户端，
+ * <p> 分片模式下，针对整合缓存接入场景，可以通过如下方式对外使用Redis客户端，
  * 使用之前需要先初始化Redis连接池【指定缓存组名】：
  * <pre>
  *   // 初始化指定缓存组名的连接池
  *   RedisPool.getInstance(group).initialize(cacheServerList);
- *   // 获取单机模式下指定连接池【group】的Redis客户端
+ *   // 获取分片模式下指定连接池【group】的Redis客户端
  *   RedisClient redisClient = RedisClientFactory.getInstance(group); </pre>
  *
  * <p> 集群模式下，针对整合缓存接入场景，可以通过如下方式对外使用Redis客户端，

@@ -2,7 +2,7 @@ package com.huazie.frame.cache.redis;
 
 import com.huazie.frame.cache.common.CacheModeEnum;
 import com.huazie.frame.cache.redis.impl.FleaRedisClusterClient;
-import com.huazie.frame.cache.redis.impl.FleaRedisSingleClient;
+import com.huazie.frame.cache.redis.impl.FleaRedisShardedClient;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.util.StringUtils;
 
@@ -13,9 +13,9 @@ import java.util.concurrent.ConcurrentMap;
  * Redis客户端工厂，用于获取Redis客户端。
  *
  * <p> 它有四种方式获取Redis客户端：<br/>
- * 一是获取单机模式下默认连接池的Redis客户端，应用在单个缓存接入场景；<br/>
+ * 一是获取分片模式下默认连接池的Redis客户端，应用在单个缓存接入场景；<br/>
  * 二是获取指定模式下默认连接池的Redis客户端，应用在单个缓存接入场景；<br/>
- * 三是获取单机模式下指定连接池的Redis客户端，应用在整合缓存接入场景；<br/>
+ * 三是获取分片模式下指定连接池的Redis客户端，应用在整合缓存接入场景；<br/>
  * 四是获取指定模式下指定连接池的Redis客户端，应用在整合缓存接入场景。
  *
  * <p> 同步集合类【{@code redisClients}】，存储的键为连接池名，值为Redis客户端。
@@ -23,14 +23,14 @@ import java.util.concurrent.ConcurrentMap;
  * <p> 针对单个缓存接入场景，存储的键为【default_缓存模式】；<br/>
  * 例如：
  * <pre>
- *  default_0 ：表示单机模式下默认连接池的Redis客户端
+ *  default_0 ：表示分片模式下默认连接池的Redis客户端
  *  default_1 ：表示集群模式下默认连接池的Redis客户端
  * </pre>
  *
  * <p> 针对整合缓存接入场景，存储的键为【缓存组名_缓存模式】。
  * 例如【group代指缓存组名】：
  * <pre>
- *  group_0 ：表示单机模式下指定连接池为group的Redis客户端
+ *  group_0 ：表示分片模式下指定连接池为group的Redis客户端
  *  group_1 ：表示集群模式下指定连接池为group的Redis客户端
  * </pre>
  *
@@ -46,9 +46,9 @@ public class RedisClientFactory {
     }
 
     /**
-     * 获取单机模式下默认连接池的Redis客户端
+     * 获取分片模式下默认连接池的Redis客户端
      *
-     * @return 单机模式的Redis客户端
+     * @return 分片模式的Redis客户端
      * @since 1.0.0
      */
     public static RedisClient getInstance() {
@@ -67,14 +67,14 @@ public class RedisClientFactory {
     }
 
     /**
-     * 获取单机模式下指定连接池的Redis客户端
+     * 获取分片模式下指定连接池的Redis客户端
      *
      * @param poolName 连接池名
-     * @return 单机模式的Redis客户端
+     * @return 分片模式的Redis客户端
      * @since 1.0.0
      */
     public static RedisClient getInstance(String poolName) {
-        return getInstance(poolName, CacheModeEnum.SINGLE);
+        return getInstance(poolName, CacheModeEnum.SHARDED);
     }
 
     /**
@@ -91,12 +91,12 @@ public class RedisClientFactory {
             synchronized (redisClients) {
                 if (!redisClients.containsKey(key)) {
                     RedisClient originRedisClient = null;
-                    if (CacheModeEnum.SINGLE.getMode() == mode.getMode()) { // 单机模式
+                    if (CacheModeEnum.SHARDED.getMode() == mode.getMode()) { // 分片模式
                         // 新建一个Flea Redis客户端类实例
                         if (CommonConstants.FleaPoolConstants.DEFAULT_POOL_NAME.equals(poolName)) {
-                            originRedisClient = new FleaRedisSingleClient.Builder().build();
+                            originRedisClient = new FleaRedisShardedClient.Builder().build();
                         } else {
-                            originRedisClient = new FleaRedisSingleClient.Builder(poolName).build();
+                            originRedisClient = new FleaRedisShardedClient.Builder(poolName).build();
                         }
                     } else if (CacheModeEnum.CLUSTER.getMode() == mode.getMode()) { // 集群模式
                         // 新建一个Flea Redis集群客户端类实例

@@ -92,7 +92,7 @@ public class RedisClusterConfig extends RedisCommonConfig {
      */
     public static RedisClusterConfig getConfig() {
         if (ObjectUtils.isEmpty(config)) {
-            synchronized (RedisSingleConfig.class) {
+            synchronized (RedisShardedConfig.class) {
                 if (ObjectUtils.isEmpty(config)) {
                     config = new RedisClusterConfig();
                 }
