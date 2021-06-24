@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentMap;
  * Flea缓存管理者工厂类，不同缓存实现对应不同的Flea缓存管理者。
  *
  * <p> 同步集合类【{@code cacheMap}】，存储的键为缓存实现名，
- * 目前仅包含 MemCached、Redis、RedisCluster 和 FleaCore；
+ * 目前仅包含 MemCached、RedisSharded、RedisCluster 和 FleaCore；
  * 存储的值为Flea缓存管理者，目前包含MemCached缓存管理者、
  * Redis缓存管理者、Redis集群缓存管理者和Flea核心缓存管理者。
  *
@@ -46,14 +46,14 @@ public class FleaCacheManagerFactory {
                     AbstractFleaCacheManager manager;
                     if (CacheEnum.MemCached.getName().equals(name)) {
                         manager = new MemCachedFleaCacheManager();
-                    } else if (CacheEnum.Redis.getName().equals(name)) {
+                    } else if (CacheEnum.RedisSharded.getName().equals(name)) {
                         manager = new RedisShardedFleaCacheManager();
                     } else if (CacheEnum.RedisCluster.getName().equals(name)) {
                         manager = new RedisClusterFleaCacheManager();
                     } else if (CacheEnum.FleaCore.getName().equals(name)) {
                         manager = new CoreFleaCacheManager();
                     } else {
-                        throw new Exception("'" + name + "' is invalid, it must be 'MemCached' or 'Redis' or 'FleaCore' ");
+                        throw new Exception("'" + name + "' is invalid, it must be 'MemCached' or 'RedisSharded' or 'RedisCluster' or 'FleaCore' ");
                     }
                     managerMap.put(name, manager);
                 }

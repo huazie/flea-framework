@@ -142,15 +142,15 @@ public class FleaCacheTest {
     }
 
     @Test
-    public void testRedisSingleFleaCache() {
+    public void testRedisShardedFleaCache() {
         try {
             // 分片模式下Flea缓存管理类
-            AbstractFleaCacheManager manager = FleaCacheManagerFactory.getFleaCacheManager(CacheEnum.Redis.getName());
+            AbstractFleaCacheManager manager = FleaCacheManagerFactory.getFleaCacheManager(CacheEnum.RedisSharded.getName());
             AbstractFleaCache cache = manager.getCache("fleaparadetail");
             LOGGER.debug("Cache={}", cache);
             //#### 1.  简单字符串
-//            cache.put("menu1", "huazie");
-//            cache.put("menu2", null);
+            cache.put("menu1", "huazie");
+            cache.put("menu2", null);
 //            cache.get("menu1");
 //            cache.get("menu2");
 //            cache.delete("menu1");
@@ -172,11 +172,11 @@ public class FleaCacheTest {
             //#### 1.  简单字符串
 //            cache.put("menu1", "huazie");
 //            cache.put("menu2", null);
-//            cache.get("menu1");
-//            cache.get("menu2");
+            cache.get("menu1");
+            cache.get("menu2");
 //            cache.delete("menu1");
 //            cache.delete("menu2");
-            cache.clear();
+//            cache.clear();
             cache.getCacheKey();
             LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
         } catch (Exception e) {

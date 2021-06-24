@@ -22,7 +22,7 @@ import java.util.List;
  * 每个具体的缓存实现名都配置了Flea缓存建造着实现类。
  *
  * <p> 可查看Flea缓存配置文件【flea-cache-config.xml】，
- * 获取Redis Flea缓存建造者配置项【{@code <cache-item key="Redis">}】
+ * 获取Redis Flea缓存建造者配置项【{@code <cache-item key="RedisCluster">}】
  *
  * @author huazie
  * @version 1.1.0

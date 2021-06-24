@@ -57,7 +57,7 @@ public class RedisFleaCache extends AbstractFleaCache {
         if (CacheUtils.isClusterMode(cacheMode))
             cache = CacheEnum.RedisCluster; // 缓存实现之Redis集群模式
         else
-            cache = CacheEnum.Redis; // 缓存实现之Redis分片模式
+            cache = CacheEnum.RedisSharded; // 缓存实现之Redis分片模式
     }
 
     @Override

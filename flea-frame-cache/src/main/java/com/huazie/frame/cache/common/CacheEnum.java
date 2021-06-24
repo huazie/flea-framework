@@ -3,8 +3,8 @@ package com.huazie.frame.cache.common;
 /**
  * 缓存实现枚举，定义了Flea框架支持的缓存实现。
  *
- * <p> 目前包含MemCached、Redis 和 FleaCore，其中【{@code FleaCore}】
- * 是Flea框架为了整合各类缓存而抽象出来的一类缓存实现。
+ * <p> 目前包含MemCached、RedisSharded、RedisCluster 和 FleaCore，
+ * 其中【{@code FleaCore}】是Flea框架为了整合各类缓存而抽象出来的一类缓存实现。
  *
  * @author huazie
  * @version 1.1.0
@@ -19,7 +19,7 @@ public enum CacheEnum {
      * 一个开源的使用ANSI C语言编写、支持网络、可基于内存亦可持久化的高性能的日志型、Key-Value存储系统。<br/>
      * 这里缓存实现主要使用分片模式，支持使用分布式Jedis对象操作Redis缓存。
      */
-    Redis("Redis", "一个开源的使用ANSI C语言编写、支持网络、可基于内存亦可持久化的高性能的日志型、Key-Value存储系统。这里缓存实现主要针对分片模式，支持使用分布式Jedis对象操作Redis缓存。"),
+    RedisSharded("RedisSharded", "一个开源的使用ANSI C语言编写、支持网络、可基于内存亦可持久化的高性能的日志型、Key-Value存储系统。这里缓存实现主要针对分片模式，支持使用分布式Jedis对象操作Redis缓存。"),
     /**
      * 一个开源的使用ANSI C语言编写、支持网络、可基于内存亦可持久化的高性能的日志型、Key-Value存储系统。<br/>
      * 这里缓存实现主要使用集群模式，支持使用Jedis集群实例对象操作Redis缓存。
