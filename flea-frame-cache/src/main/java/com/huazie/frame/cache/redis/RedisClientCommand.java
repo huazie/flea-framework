@@ -9,10 +9,10 @@ import redis.clients.jedis.ShardedJedisPool;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 
 /**
- * Redis客户端命令行，封装了操作Redis缓存的公共逻辑，
- * 如果出现异常可以重试 {@code maxAttempts} 次。
- * <p>
- * 抽象方法 {@code execute}，由子类或匿名类实现。在实际调用前，
+ * Redis客户端命令行，封装了使用ShardedJedis操作Redis缓存的公共逻辑，
+ * 如果出现异常可以重试{@code maxAttempts} 次。
+ *
+ * <p> 抽象方法 {@code execute}，由子类或匿名类实现。在实际调用前，
  * 需要从分布式Jedis连接池中获取分布式Jedis对象；调用结束后，
  * 关闭分布式Jedis对象，归还给分布式Jedis连接池。
  *
