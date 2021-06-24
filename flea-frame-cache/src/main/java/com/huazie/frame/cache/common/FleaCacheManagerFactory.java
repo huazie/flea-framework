@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentMap;
  * <p> 同步集合类【{@code cacheMap}】，存储的键为缓存实现名，
  * 目前仅包含 MemCached、RedisSharded、RedisCluster 和 FleaCore；
  * 存储的值为Flea缓存管理者，目前包含MemCached缓存管理者、
- * Redis缓存管理者、Redis集群缓存管理者和Flea核心缓存管理者。
+ * Redis分片缓存管理者、Redis集群缓存管理者和Flea核心缓存管理者。
  *
  * @author huazie
  * @version 1.1.0
