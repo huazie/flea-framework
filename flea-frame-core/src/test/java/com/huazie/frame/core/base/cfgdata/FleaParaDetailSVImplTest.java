@@ -87,10 +87,10 @@ public class FleaParaDetailSVImplTest {
     }
 
     @Test
-    public void testRedisSingleFleaCache() {
+    public void testRedisShardedFleaCache() {
         try {
             // 分片模式下Flea缓存管理类
-            AbstractFleaCacheManager manager = FleaCacheManagerFactory.getFleaCacheManager(CacheEnum.Redis.getName());
+            AbstractFleaCacheManager manager = FleaCacheManagerFactory.getFleaCacheManager(CacheEnum.RedisSharded.getName());
             LOGGER.debug("RedisCacheManager={}", manager);
             AbstractFleaCache cache = manager.getCache("fleajerseyresclient");
             LOGGER.debug("Cache={}", cache);
@@ -153,7 +153,7 @@ public class FleaParaDetailSVImplTest {
     }
 
     @Test
-    public void testRedisSingleSpringCache() {
+    public void testRedisShardedSpringCache() {
         try {
             // 分片模式下Spring缓存管理类
             AbstractSpringCacheManager manager = (RedisShardedSpringCacheManager) applicationContext.getBean("redisShardedSpringCacheManager");

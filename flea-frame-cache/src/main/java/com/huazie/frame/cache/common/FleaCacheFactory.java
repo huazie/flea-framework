@@ -75,22 +75,22 @@ public class FleaCacheFactory {
         if (ObjectUtils.isEmpty(cacheGroup)) {
             throw new FleaCacheConfigException("无法初始化Flea缓存，请检查flea-cache-config.xml配置【<cache-group group=" + cacheData.getGroup() + " >】");
         }
-        // 获取缓存系统名
-        String cacheSystem = cacheGroup.getCache();
+        // 获取缓存实现名
+        String cacheImplName = cacheGroup.getCache();
         // 获取Flea缓存服务器
         List<CacheServer> cacheServerList = CacheConfigUtils.getCacheServer(cacheGroup.getGroup());
         if (CollectionUtils.isEmpty(cacheServerList)) {
             throw new FleaCacheConfigException("无法初始化Flea缓存，请检查flea-cache-config.xml配置【<cache-server group=" + cacheGroup.getGroup() + " >】");
         }
         // 获取指定缓存系统名对应的Flea缓存建造者
-        CacheItem cacheItem = CacheConfigUtils.getCacheItem(CacheConstants.FleaCacheConfigConstants.FLEA_CACHE_BUILDER, cacheSystem);
+        CacheItem cacheItem = CacheConfigUtils.getCacheItem(CacheConstants.FleaCacheConfigConstants.FLEA_CACHE_BUILDER, cacheImplName);
         if (ObjectUtils.isEmpty(cacheItem)) {
-            throw new FleaCacheConfigException("无法初始化Flea缓存，请检查flea-cache-config.xml配置【<cache-item key=" + cacheSystem + " >】");
+            throw new FleaCacheConfigException("无法初始化Flea缓存，请检查flea-cache-config.xml配置【<cache-item key=" + cacheImplName + " >】");
         }
         // Flea缓存建造者
         String builder = cacheItem.getValue();
         if (ObjectUtils.isEmpty(builder)) {
-            throw new FleaCacheConfigException("无法初始化Flea缓存，请检查flea-cache-config.xml配置【<cache-item key=" + cacheSystem + " ></cache-item>】配置项值不能为空");
+            throw new FleaCacheConfigException("无法初始化Flea缓存，请检查flea-cache-config.xml配置【<cache-item key=" + cacheImplName + " ></cache-item>】配置项值不能为空");
         }
         AbstractFleaCache fleaCache;
         try {

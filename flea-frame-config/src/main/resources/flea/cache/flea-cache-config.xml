@@ -10,7 +10,7 @@
     <!-- Flea缓存建造者配置项集 -->
     <cache-items key="FleaCacheBuilder" desc="Flea缓存建造者实现">
         <cache-item key="MemCached" desc="MemCached的Flea缓存建造者实现">com.huazie.frame.cache.memcached.MemCachedFleaCacheBuilder</cache-item>
-        <cache-item key="Redis" desc="Redis分片模式下的Flea缓存建造者实现">com.huazie.frame.cache.redis.RedisShardedFleaCacheBuilder</cache-item>
+        <cache-item key="RedisSharded" desc="Redis分片模式下的Flea缓存建造者实现">com.huazie.frame.cache.redis.RedisShardedFleaCacheBuilder</cache-item>
         <cache-item key="RedisCluster" desc="Redis集群模式下的Flea缓存建造者实现">com.huazie.frame.cache.redis.RedisClusterFleaCacheBuilder</cache-item>
     </cache-items>
 
@@ -29,7 +29,7 @@
         <cache-param key="redis.maxAttempts" desc="Redis客户端操作最大尝试次数【包含第一次操作】">5</cache-param>
 
         <!-- Redis Cluster 缓存参数-->
-        <cache-param key="redis.cluster.connectionTimeout" desc="Redis集群客户端socket连接超时时间（单位：ms）">2000</cache-param>
+        <cache-param key="redis.cluster.connectionTimeout" desc="Redis客户端socket连接超时时间（单位：ms）">2000</cache-param>
         <cache-param key="redis.cluster.soTimeout" desc="Redis客户端socket读写超时时间（单位：ms）">2000</cache-param>
         <cache-param key="redis.cluster.password" desc="Redis集群服务节点登录密码（集群各节点配置同一个）">huazie123</cache-param>
 
@@ -62,10 +62,11 @@
     <!-- Flea缓存组集 -->
     <cache-groups>
         <!-- group 对应 <cache-data>group</cache-date>  -->
-        <!-- MemCached 对应 <cache-item key="MemCached"> -->
-        <!-- Redis 对应 <cache-item key="Redis"> -->
+        <!-- group = MemCached 对应 <cache-item key="MemCached"> -->
+        <!-- group = RedisSharded 对应 <cache-item key="RedisSharded"> -->
+        <!-- group = RedisCluster 对应 <cache-item key="RedisCluster"> -->
         <cache-group group="authGroup" desc="Flea权限数据缓存组">MemCached</cache-group>
-        <cache-group group="configGroup" desc="Flea配置数据缓存组">Redis</cache-group>
+        <cache-group group="configGroup" desc="Flea配置数据缓存组">RedisSharded</cache-group>
         <cache-group group="dynamicGroup" desc="Flea动态数据缓存组">RedisCluster</cache-group>
     </cache-groups>
 
