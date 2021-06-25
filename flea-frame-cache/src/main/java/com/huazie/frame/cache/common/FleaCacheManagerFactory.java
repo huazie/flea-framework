@@ -5,6 +5,9 @@ import com.huazie.frame.cache.core.CoreFleaCacheManager;
 import com.huazie.frame.cache.memcached.MemCachedFleaCacheManager;
 import com.huazie.frame.cache.redis.RedisClusterFleaCacheManager;
 import com.huazie.frame.cache.redis.RedisShardedFleaCacheManager;
+import com.huazie.frame.common.FleaCommonConfig;
+import com.huazie.frame.common.strategy.FleaStrategyFacade;
+import com.huazie.frame.common.strategy.IFleaStrategyContext;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -29,6 +32,8 @@ public class FleaCacheManagerFactory {
 
     private static final ConcurrentMap<String, AbstractFleaCacheManager> managerMap = new ConcurrentHashMap<>();
 
+    private static final IFleaStrategyContext<AbstractFleaCacheManager, FleaCommonConfig> fleaStrategy = new FCMStrategyContext();
+
     private FleaCacheManagerFactory() {
     }
 
@@ -39,22 +44,11 @@ public class FleaCacheManagerFactory {
      * @return Flea Cache管理类对象实例
      * @since 1.0.0
      */
-    public static AbstractFleaCacheManager getFleaCacheManager(String name) throws Exception {
+    public static AbstractFleaCacheManager getFleaCacheManager(String name) {
         if (!managerMap.containsKey(name)) {
             synchronized (managerMap) {
                 if (!managerMap.containsKey(name)) {
-                    AbstractFleaCacheManager manager;
-                    if (CacheEnum.MemCached.getName().equals(name)) {
-                        manager = new MemCachedFleaCacheManager();
-                    } else if (CacheEnum.RedisSharded.getName().equals(name)) {
-                        manager = new RedisShardedFleaCacheManager();
-                    } else if (CacheEnum.RedisCluster.getName().equals(name)) {
-                        manager = new RedisClusterFleaCacheManager();
-                    } else if (CacheEnum.FleaCore.getName().equals(name)) {
-                        manager = new CoreFleaCacheManager();
-                    } else {
-                        throw new Exception("'" + name + "' is invalid, it must be 'MemCached' or 'RedisSharded' or 'RedisCluster' or 'FleaCore' ");
-                    }
+                    AbstractFleaCacheManager manager = FleaStrategyFacade.invoke(name, fleaStrategy);
                     managerMap.put(name, manager);
                 }
             }
