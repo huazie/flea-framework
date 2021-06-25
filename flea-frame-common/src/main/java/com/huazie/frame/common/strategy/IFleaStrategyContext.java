@@ -1,5 +1,7 @@
 package com.huazie.frame.common.strategy;
 
+import com.huazie.frame.common.exception.FleaException;
+
 /**
  * Flea策略上下文接口，定义统一的策略上下文调用方法。
  *
@@ -18,7 +20,7 @@ public interface IFleaStrategyContext<T, P> {
      * @return 策略执行结果对应的类型
      * @since 1.1.0
      */
-    T invoke(String strategy);
+    T invoke(String strategy) throws FleaException;
 
     /**
      * 设置策略上下文参数

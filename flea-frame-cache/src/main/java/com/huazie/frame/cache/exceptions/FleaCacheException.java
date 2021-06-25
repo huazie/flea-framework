@@ -1,5 +1,7 @@
 package com.huazie.frame.cache.exceptions;
 
+import com.huazie.frame.common.exception.FleaException;
+
 /**
  * Flea缓存异常
  *
@@ -7,7 +9,7 @@ package com.huazie.frame.cache.exceptions;
  * @version 1.1.0
  * @since 1.0.0
  */
-public class FleaCacheException extends RuntimeException {
+public class FleaCacheException extends FleaException {
 
     private static final long serialVersionUID = 2526455706598295071L;
 
