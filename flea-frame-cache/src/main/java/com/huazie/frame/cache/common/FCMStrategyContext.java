@@ -2,7 +2,7 @@ package com.huazie.frame.cache.common;
 
 import com.huazie.frame.cache.AbstractFleaCacheManager;
 import com.huazie.frame.cache.core.CoreFCMStrategy;
-import com.huazie.frame.cache.memcached.MemcachedFCMStrategy;
+import com.huazie.frame.cache.memcached.MemCachedFCMStrategy;
 import com.huazie.frame.cache.redis.RedisClusterFCMStrategy;
 import com.huazie.frame.cache.redis.RedisShardedFCMStrategy;
 import com.huazie.frame.common.FleaCommonConfig;
@@ -25,7 +25,7 @@ public class FCMStrategyContext extends FleaStrategyContext<AbstractFleaCacheMan
     @Override
     public Map<String, IFleaStrategy<AbstractFleaCacheManager, FleaCommonConfig>> init() {
         Map<String, IFleaStrategy<AbstractFleaCacheManager, FleaCommonConfig>> fleaStrategyMap = new HashMap<>();
-        fleaStrategyMap.put(CacheEnum.MemCached.getName(), new MemcachedFCMStrategy());
+        fleaStrategyMap.put(CacheEnum.MemCached.getName(), new MemCachedFCMStrategy());
         fleaStrategyMap.put(CacheEnum.RedisSharded.getName(), new RedisShardedFCMStrategy());
         fleaStrategyMap.put(CacheEnum.RedisCluster.getName(), new RedisClusterFCMStrategy());
         fleaStrategyMap.put(CacheEnum.FleaCore.getName(), new CoreFCMStrategy());

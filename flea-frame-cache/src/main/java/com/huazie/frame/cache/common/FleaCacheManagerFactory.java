@@ -48,8 +48,7 @@ public class FleaCacheManagerFactory {
         if (!managerMap.containsKey(name)) {
             synchronized (managerMap) {
                 if (!managerMap.containsKey(name)) {
-                    AbstractFleaCacheManager manager = FleaStrategyFacade.invoke(name, fleaStrategy);
-                    managerMap.put(name, manager);
+                    managerMap.put(name, FleaStrategyFacade.invoke(name, fleaStrategy));
                 }
             }
         }
