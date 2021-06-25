@@ -11,7 +11,7 @@ import com.huazie.frame.common.strategy.IFleaStrategy;
  * @version 1.1.0
  * @since 1.1.0
  */
-public class MemcachedFCMStrategy implements IFleaStrategy<AbstractFleaCacheManager, FleaCommonConfig> {
+public class MemCachedFCMStrategy implements IFleaStrategy<AbstractFleaCacheManager, FleaCommonConfig> {
 
     @Override
     public AbstractFleaCacheManager execute(final FleaCommonConfig contextParam) {

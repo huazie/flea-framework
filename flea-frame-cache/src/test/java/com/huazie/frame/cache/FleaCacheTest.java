@@ -1,14 +1,12 @@
 package com.huazie.frame.cache;
 
 import com.huazie.frame.cache.common.CacheEnum;
-import com.huazie.frame.cache.common.FCMStrategyContext;
 import com.huazie.frame.cache.common.FleaCacheManagerFactory;
 import com.huazie.frame.cache.memcached.config.MemCachedConfig;
 import com.huazie.frame.cache.redis.config.RedisClusterConfig;
 import com.huazie.frame.cache.redis.config.RedisShardedConfig;
 import com.huazie.frame.common.slf4j.FleaLogger;
 import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
-import com.huazie.frame.common.strategy.FleaStrategyFacade;
 import org.junit.Test;
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.Jedis;
@@ -30,25 +28,6 @@ import java.util.Set;
 public class FleaCacheTest {
 
     private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaCacheTest.class);
-
-    @Test
-    public void testFCMStrategy() {
-        String name = CacheEnum.FleaCore.getName();
-        AbstractFleaCacheManager manager = FleaStrategyFacade.invoke(name, new FCMStrategyContext());
-        LOGGER.debug("FleaCacheManager = {}", manager);
-
-        String name1 = CacheEnum.MemCached.getName();
-        AbstractFleaCacheManager manager1 = FleaStrategyFacade.invoke(name1, new FCMStrategyContext());
-        LOGGER.debug("FleaCacheManager = {}", manager1);
-
-        String name2 = CacheEnum.RedisSharded.getName();
-        AbstractFleaCacheManager manager2 = FleaStrategyFacade.invoke(name2, new FCMStrategyContext());
-        LOGGER.debug("FleaCacheManager = {}", manager2);
-
-        String name3 = CacheEnum.RedisCluster.getName();
-        AbstractFleaCacheManager manager3 = FleaStrategyFacade.invoke(name3, new FCMStrategyContext());
-        LOGGER.debug("FleaCacheManager = {}", manager3);
-    }
 
     @Test
     public void testProperties() {

@@ -1,6 +1,6 @@
 package com.huazie.frame.common.strategy;
 
-import com.huazie.frame.common.exception.FleaException;
+import com.huazie.frame.common.exception.FleaStrategyException;
 import com.huazie.frame.common.exception.FleaStrategyNotFoundException;
 import com.huazie.frame.common.util.ObjectUtils;
 
@@ -50,10 +50,13 @@ public abstract class FleaStrategyContext<T, P> implements IFleaStrategyContext<
     protected abstract Map<String, IFleaStrategy<T, P>> init();
 
     @Override
-    public T invoke(String strategy) throws FleaException {
+    public T invoke(String strategy) throws FleaStrategyException {
+        if (ObjectUtils.isEmpty(fleaStrategyMap)) {
+            throw new FleaStrategyException("The Strategy Map is not initialized!");
+        }
         IFleaStrategy<T, P> fleaStrategy = fleaStrategyMap.get(strategy);
         if (ObjectUtils.isEmpty(fleaStrategy)) {
-            throw new FleaStrategyNotFoundException("The Name [" + strategy + "] of Strategy is not found");
+            throw new FleaStrategyNotFoundException("The Strategy [name =\"" + strategy + "\"] is not found!");
         }
         return fleaStrategy.execute(contextParam);
     }
