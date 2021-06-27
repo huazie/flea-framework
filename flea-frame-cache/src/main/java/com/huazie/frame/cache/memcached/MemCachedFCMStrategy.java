@@ -5,7 +5,7 @@ import com.huazie.frame.common.FleaCommonConfig;
 import com.huazie.frame.common.strategy.IFleaStrategy;
 
 /**
- * Memcached Flea缓存管理者策略
+ * MemCached Flea缓存管理者策略
  *
  * @author huazie
  * @version 1.1.0

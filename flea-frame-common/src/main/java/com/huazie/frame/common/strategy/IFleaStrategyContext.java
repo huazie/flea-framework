@@ -27,7 +27,7 @@ public interface IFleaStrategyContext<T, P> {
      * 设置策略上下文参数
      *
      * @param contextParam 上下文参数对象
-     * @since 1.0.0
+     * @since 1.1.0
      */
     void setContext(P contextParam);
 
@@ -35,7 +35,7 @@ public interface IFleaStrategyContext<T, P> {
      * 获取策略上下文参数
      *
      * @return 策略上下文参数
-     * @since 1.0.0
+     * @since 1.1.0
      */
     P getContext();
 }

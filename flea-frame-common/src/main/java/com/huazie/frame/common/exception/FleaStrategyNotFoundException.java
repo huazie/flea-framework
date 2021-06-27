@@ -9,6 +9,8 @@ package com.huazie.frame.common.exception;
  */
 public class FleaStrategyNotFoundException extends FleaStrategyException {
 
+    private static final long serialVersionUID = 4458928226088864331L;
+
     public FleaStrategyNotFoundException(String message) {
         super(message);
     }

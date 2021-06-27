@@ -40,7 +40,7 @@ public class FleaCacheManagerFactory {
     /**
      * <p> 获取Flea Cache管理类对象实例 </p>
      *
-     * @param name 缓存系统名称
+     * @param name 缓存实现名称
      * @return Flea Cache管理类对象实例
      * @since 1.0.0
      */
