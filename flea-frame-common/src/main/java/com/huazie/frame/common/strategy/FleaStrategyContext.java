@@ -7,7 +7,9 @@ import com.huazie.frame.common.util.ObjectUtils;
 import java.util.Map;
 
 /**
- * Flea抽象策略上下文。
+ * Flea抽象策略上下文，封装了公共的策略执行逻辑，
+ * 其中Flea策略Map由其子类进行初始化，键为策略名，
+ * 值为具体的Flea策略实例。
  *
  * @param <T> Flea策略执行结果对应的类型
  * @param <P> Flea策略上下文参数

@@ -9,6 +9,8 @@ package com.huazie.frame.common.exception;
  */
 public class FleaStrategyException extends FleaException {
 
+    private static final long serialVersionUID = 1814380613775967198L;
+
     public FleaStrategyException(String message) {
         super(message);
     }

@@ -1,10 +1,9 @@
 package com.huazie.frame.common.strategy;
 
-import com.huazie.frame.common.exception.FleaException;
 import com.huazie.frame.common.exception.FleaStrategyException;
 
 /**
- * Flea策略门面
+ * Flea策略门面，定义策略调用的统一入口。
  *
  * @author huazie
  * @version 1.1.0
@@ -23,8 +22,8 @@ public class FleaStrategyFacade {
      * @param <T>                 Flea策略执行结果对应的类型
      * @param <P>                 Flea策略上下文参数
      * @return Flea策略执行结果对应的类型
-     * @throws FleaException Flea异常
-     * @since 1.0.0
+     * @throws FleaStrategyException Flea策略异常
+     * @since 1.1.0
      */
     public static <T, P> T invoke(String strategy, IFleaStrategyContext<T, P> fleaStrategyContext) throws FleaStrategyException {
         return fleaStrategyContext.invoke(strategy);
