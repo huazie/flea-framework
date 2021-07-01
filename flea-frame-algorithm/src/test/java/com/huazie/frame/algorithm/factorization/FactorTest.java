@@ -31,38 +31,28 @@ public class FactorTest {
 
     @Test
     public void test() {
-        LOGGER.debug(convert("A", 1));
+        LOGGER.debug("O = {}", reverse(2147483647));
     }
 
-    public String convert(String s, int numRows) {
-
-        StringBuilder result = new StringBuilder();
-        int len = s.length();
-        if (numRows == 1) {
-            return s;
-        }
-        for (int m = 0; m < numRows; m++) {
-            boolean isOdd = true; // 奇数次遍历
-            int n = m;
-            // n 记录新字符串中字符在s中的位置
-            // 一次循环处理一行的字符
-            while (n < len) {
-                result.append(s.charAt(n));
-                if (m == 0) { // 第一行，默认采用奇数次计算位置
-                    isOdd = true;
-                } else if (m == numRows - 1) { // 最后一行，默认采用偶数次计算位置
-                    isOdd = false;
-                }
-                if (isOdd) { // 奇数次计算位置
-                    n += 2 * (numRows - m) - 2;
-                    isOdd = false;
-                } else { // 偶数次计算位置
-                    n += 2 * (m + 1) - 2;
-                    isOdd = true;
-                }
+    /**
+     * 思路：
+     * （1）如果带反转整数不为0，一直循环下面3和4
+     * （2）最大或最小边界判断，如果在边界外，则直接返回0
+     * （3）取带反转整数末尾数字，并添加到新数字的末尾
+     * （4）带反转整数除以10，以便继续处理下一个数字
+     */
+    public int reverse(int x) {
+        int result = 0;
+        while (x != 0) {
+            // 最大或最小边界判断
+            if (Integer.MAX_VALUE / 10 < result || Integer.MIN_VALUE / 10 > result) {
+                return 0;
             }
+            // 取带反转整数末尾数字，并添加到新数字的末尾
+            result = result * 10 + x % 10;
+            // 带反转整数除以10，以便继续处理下一个数字
+            x /= 10;
         }
-
-        return result.toString();
+        return result;
     }
 }

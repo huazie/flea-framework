@@ -4,9 +4,7 @@ import com.huazie.frame.common.slf4j.FleaLogger;
 import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import org.junit.Test;
 
-import java.math.BigInteger;
-
-import static org.junit.Assert.assertTrue;
+import java.text.NumberFormat;
 
 /**
  * <p> 数字相关工具测试类 </p>
@@ -53,8 +51,11 @@ public class NumberUtilsTest {
     }
 
     @Test
-    public void testSqrtForBigInteger() {
-        BigInteger sqrtNum = NumberUtils.sqrt(BigInteger.valueOf(1000002));
-        assertTrue(sqrtNum.compareTo(BigInteger.valueOf(1000)) == 0);
+    public void testStorageUnit() {
+        long size = 600000L;
+        int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
+        LOGGER.debug("digitGroups = {}", digitGroups);
+        double result = size / Math.pow(1024, digitGroups);
+        LOGGER.debug("result = {}", NumberFormat.getInstance().format(result));
     }
 }
