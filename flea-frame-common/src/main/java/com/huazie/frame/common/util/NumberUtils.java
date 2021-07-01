@@ -1,9 +1,13 @@
 package com.huazie.frame.common.util;
 
+import com.google.common.math.BigIntegerMath;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.exception.CommonException;
 
 import java.math.BigInteger;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 /**
  * <p> 数字相关工具类 </p>
@@ -109,23 +113,5 @@ public class NumberUtils {
         if (!isPositiveNumber(value)) {
             ExceptionUtils.throwCommonException(exceptionClazz, params);
         }
-    }
-
-    /**
-     * 大数的开平方根（取整）
-     *
-     * @param value 指定大数
-     * @return 大数的开平方根（取整）
-     * @since 1.0.0
-     */
-    public static BigInteger sqrt(BigInteger value) {
-        BigInteger two = BigInteger.valueOf(2);
-        BigInteger prv = value.divide(two);
-        BigInteger now = prv.add(value.divide(prv)).divide(two);
-        while (prv.compareTo(now) > 0) {
-            prv = now;
-            now = prv.add(value.divide(prv)).divide(two);
-        }
-        return now;
     }
 }
