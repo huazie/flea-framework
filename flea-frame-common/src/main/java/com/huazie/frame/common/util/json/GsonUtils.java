@@ -34,8 +34,8 @@ public class GsonUtils {
         Object obj = null;
         if (LOGGER.isDebugEnabled()) {
             obj = new Object() {};
-            LOGGER.debug1(obj, "Json converted to Entity, Json = {}", json);
-            LOGGER.debug1(obj, "Json converted to Entity, Class = {}", clazz);
+            LOGGER.debug1(obj, "#G# Json converted to Entity, Json = {}", json);
+            LOGGER.debug1(obj, "#G# Json converted to Entity, Class = {}", clazz);
         }
         T t = null;
         try {
@@ -47,7 +47,7 @@ public class GsonUtils {
             }
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj, "Json converted to Entity, Entity = {}", t);
+            LOGGER.debug1(obj, "#G# Json converted to Entity, Entity = {}", t);
         }
         return t;
     }
@@ -64,19 +64,19 @@ public class GsonUtils {
         Object obj = null;
         if (LOGGER.isDebugEnabled()) {
             obj = new Object() {};
-            LOGGER.debug1(obj, "Json converted to EntityList, Json = {}", json);
-            LOGGER.debug1(obj, "Json converted to EntityList, Class = {}", clazz);
+            LOGGER.debug1(obj, "#G# Json converted to EntityList, Json = {}", json);
+            LOGGER.debug1(obj, "#G# Json converted to EntityList, Class = {}", clazz);
         }
         List<T> entityList = null;
         try {
             entityList = new Gson().fromJson(json, new TypeToken<List<T>>() {}.getType());
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "Json converted to EntityList, Exception = \n", e);
+                LOGGER.error1(new Object() {}, "#G# Json converted to EntityList, Exception = \n", e);
             }
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj, "Json converted to EntityList, EntityList={}", entityList);
+            LOGGER.debug1(obj, "#G# Json converted to EntityList, EntityList={}", entityList);
         }
         return entityList;
     }
@@ -92,18 +92,18 @@ public class GsonUtils {
         Object obj = null;
         if (LOGGER.isDebugEnabled()) {
             obj = new Object() {};
-            LOGGER.debug1(obj, "Json converted to Map, Json = {}", json);
+            LOGGER.debug1(obj, "#G# Json converted to Map, Json = {}", json);
         }
         Map<String, Object> map = null;
         try {
             map = new Gson().fromJson(json, new TypeToken<Map<String, Object>>() {}.getType());
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "Json converted to Map, Exception = \n", e);
+                LOGGER.error1(new Object() {}, "#G# Json converted to Map, Exception = \n", e);
             }
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj, "Json converted to Map, Map = {}", map);
+            LOGGER.debug1(obj, "#G# Json converted to Map, Map = {}", map);
         }
         return map;
     }
@@ -119,7 +119,7 @@ public class GsonUtils {
         Object obj = null;
         if (LOGGER.isDebugEnabled()) {
             obj = new Object() {};
-            LOGGER.debug1(obj, "Json converted to MapList, Json = {}", json);
+            LOGGER.debug1(obj, "#G# Json converted to MapList, Json = {}", json);
         }
         List<Map<String, Object>> mapList = null;
         try {
@@ -127,11 +127,11 @@ public class GsonUtils {
             mapList = gson.fromJson(json, new TypeToken<List<Map<String, Object>>>() {}.getType());
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "Json converted to MapList, Exception = ", e);
+                LOGGER.error1(new Object() {}, "#G# Json converted to MapList, Exception = ", e);
             }
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj, "Json converted to MapList, MapList={}", mapList);
+            LOGGER.debug1(obj, "#G# Json converted to MapList, MapList={}", mapList);
         }
         return mapList;
     }
@@ -147,12 +147,12 @@ public class GsonUtils {
         Object obj = null;
         if (LOGGER.isDebugEnabled()) {
             obj = new Object() {};
-            LOGGER.debug1(obj, "Object converted to Json String, Object = {}", object);
+            LOGGER.debug1(obj, "#G# Object converted to Json String, Object = {}", object);
         }
         Gson gson = new Gson();
         String json = gson.toJson(object);
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj, "Object converted to Json String, Json = {}", json);
+            LOGGER.debug1(obj, "#G# Object converted to Json String, Json = {}", json);
         }
         return json;
     }
