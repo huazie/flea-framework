@@ -1,13 +1,7 @@
 package com.huazie.frame.common.util;
 
-import com.google.common.math.BigIntegerMath;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.exception.CommonException;
-
-import java.math.BigInteger;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 
 /**
  * <p> 数字相关工具类 </p>
