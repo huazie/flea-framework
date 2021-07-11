@@ -7,7 +7,7 @@
 	-->
 	<table name="flea_file_info" exp="(FLEA_TABLE_NAME)_(FILE_ID)" desc="Flea文件信息表分表规则">
 		<splits>
-			<!-- 定义分表后缀
+			<!-- 定义分表实现
 				key : 分表类型关键字 (可查看 com.huazie.frame.db.common.table.split.TableSplitEnum )
 				column : 分表属性列字段名
 				implClass : 分表字段值转换实现类

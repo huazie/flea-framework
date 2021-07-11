@@ -4,19 +4,17 @@ import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.db.common.DBConstants;
 
 /**
- * <p> 三位十六进制分表实现 </p>
+ * <p> 两位十六进制分表实现，截取分表字段后2位字符，并以大写返回 </p>
  *
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0
  */
-public final class ThreeHexTableSplitImpl extends AbstractTableSplitImpl {
-
-    private static final long serialVersionUID = -3748910333438155964L;
+public final class TwoHexUpperTableSplitImpl extends AbstractTableSplitImpl {
 
     @Override
     public String convert(Object tableSplitColumn) throws CommonException {
-        return convert(tableSplitColumn, DBConstants.TableSplitConstants.THREE);
+        return convert(tableSplitColumn, DBConstants.TableSplitConstants.TWO, false, true);
     }
 
 }
