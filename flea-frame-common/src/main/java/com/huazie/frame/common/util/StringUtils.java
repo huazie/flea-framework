@@ -210,7 +210,7 @@ public class StringUtils {
      * @since 1.0.0
      */
     public static String subStrLast(String value, int length) {
-        return subStr(value, length, Boolean.FALSE.booleanValue());
+        return subStr(value, length, false);
     }
 
     /**
@@ -223,7 +223,7 @@ public class StringUtils {
      * @since 1.0.0
      */
     public static String subStrBefore(String value, int length) {
-        return subStr(value, length, Boolean.TRUE.booleanValue());
+        return subStr(value, length, true);
     }
 
     /**

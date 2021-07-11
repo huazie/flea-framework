@@ -3,7 +3,6 @@ package com.huazie.frame.db.common.table.split.impl;
 import com.huazie.frame.common.DateFormatEnum;
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.DateUtils;
-import com.huazie.frame.common.util.ExceptionUtils;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.exception.TableSplitException;
@@ -19,8 +18,6 @@ import java.util.Date;
  * @since 1.0.0
  */
 public abstract class AbstractTableSplitImpl implements ITableSplit {
-
-    private static final long serialVersionUID = 142194326684219859L;
 
     /**
      * <p> 分表转换(指定日期格式化分表字段获取分表后缀) </p>
@@ -40,7 +37,7 @@ public abstract class AbstractTableSplitImpl implements ITableSplit {
             tSplitPrefix = DateUtils.date2String((Date) tableSplitColumn, dateFormatEnum);
         } else {
             // 分表属性列必须是日期类型
-            ExceptionUtils.throwCommonException(TableSplitException.class, "ERROR-DB-TSP0000000002");
+            ObjectUtils.checkNotEmpty(tableSplitColumn, TableSplitException.class, "ERROR-DB-TSP0000000002");
         }
         // 获取【{0}】分表后缀异常
         StringUtils.checkBlank(tSplitPrefix, TableSplitException.class, "ERROR-DB-TSP0000000001", dateFormatEnum.getFormat());
@@ -56,7 +53,7 @@ public abstract class AbstractTableSplitImpl implements ITableSplit {
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    protected String convert(Object tableSplitColumn, int len) throws CommonException {
+    protected String convert(Object tableSplitColumn, int len, boolean isBefore, boolean isUpperCase) throws CommonException {
 
         // 分表属性列值不能为空
         ObjectUtils.checkEmpty(tableSplitColumn, TableSplitException.class, "ERROR-DB-TSP0000000003");
@@ -65,7 +62,16 @@ public abstract class AbstractTableSplitImpl implements ITableSplit {
         // 分表属性列值不能为空
         StringUtils.checkBlank(tSplitCol, TableSplitException.class, "ERROR-DB-TSP0000000003");
 
-        String tSplitPrefix = StringUtils.subStrLast(tSplitCol, len);
-        return tSplitPrefix.toLowerCase();
+        String tSplitPrefix;
+        if (isBefore) {
+            tSplitPrefix = StringUtils.subStrBefore(tSplitCol, len);
+        } else {
+            tSplitPrefix = StringUtils.subStrLast(tSplitCol, len);
+        }
+        if (isUpperCase) {
+            return tSplitPrefix.toUpperCase();
+        } else {
+            return tSplitPrefix.toLowerCase();
+        }
     }
 }
