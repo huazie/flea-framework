@@ -93,6 +93,7 @@ public class FleaAccountAttrSVImpl extends AbstractFleaJPASVImpl<FleaAccountAttr
 
         return new FleaAccountAttr(accountId, attrCode,
                 fleaAccountAttrPOJO.getAttrValue(),
+                fleaAccountAttrPOJO.getAttrDesc(),
                 fleaAccountAttrPOJO.getEffectiveDate(),
                 fleaAccountAttrPOJO.getExpiryDate(),
                 fleaAccountAttrPOJO.getRemarks());

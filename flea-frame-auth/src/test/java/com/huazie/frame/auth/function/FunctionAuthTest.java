@@ -87,6 +87,8 @@ public class FunctionAuthTest {
         fleaFunctionAttr.setAttrCode(FleaAuthConstants.AttrCodeConstants.ATTR_CODE_SYSTEM_IN_USE);
         // 属性值
         fleaFunctionAttr.setAttrValue("1000");
+        // 属性描述
+        fleaFunctionAttr.setAttrDesc("菜单归属系统【跳蚤管家】");
         // 属性状态(0: 删除 1: 正常）
         fleaFunctionAttr.setState(EntityStateEnum.IN_USE.getState());
         fleaFunctionAttr.setCreateDate(DateUtils.getCurrentTime());
@@ -374,6 +376,7 @@ public class FunctionAuthTest {
         FleaFunctionAttrPOJO fleaFunctionAttrPOJO = new FleaFunctionAttrPOJO();
         fleaFunctionAttrPOJO.setAttrCode(FleaAuthConstants.AttrCodeConstants.ATTR_CODE_SYSTEM_IN_USE);
         fleaFunctionAttrPOJO.setAttrValue("1000");
+        fleaFunctionAttrPOJO.setAttrDesc("菜单归属系统【跳蚤管家】");
         fleaFunctionAttrPOJO.setRemarks("【跳蚤管家】正在使用中");
         List<FleaFunctionAttrPOJO> fleaFunctionAttrPOJOList = new ArrayList<>();
         fleaFunctionAttrPOJOList.add(fleaFunctionAttrPOJO);
