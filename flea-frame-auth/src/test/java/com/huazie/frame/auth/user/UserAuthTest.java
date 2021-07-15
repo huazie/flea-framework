@@ -81,6 +81,7 @@ public class UserAuthTest {
         FleaUserAttrPOJO fleaUserAttrInfo1 = new FleaUserAttrPOJO();
         fleaUserAttrInfo1.setAttrCode(FleaAuthConstants.AttrCodeConstants.ATTR_CODE_USER_TYPE);
         fleaUserAttrInfo1.setAttrValue(UserTypeEnum.OPERATOR_USER.getType());
+        fleaUserAttrInfo1.setAttrDesc("操作用户");
         fleaUserAttrInfoList.add(fleaUserAttrInfo1);
 
         // 添加账户属性
@@ -89,6 +90,7 @@ public class UserAuthTest {
         FleaAccountAttrPOJO fleaAccountAttrInfo1 = new FleaAccountAttrPOJO();
         fleaAccountAttrInfo1.setAttrCode(FleaAuthConstants.AttrCodeConstants.ATTR_CODE_ACCOUNT_TYPE);
         fleaAccountAttrInfo1.setAttrValue(AccountTypeEnum.OPERATOR_ACCOUNT.getType());
+        fleaAccountAttrInfo1.setAttrDesc("操作账户");
         fleaAccountAttrInfoList.add(fleaAccountAttrInfo1);
 
         fleaUserRegisterPOJO.setUserAttrList(fleaUserAttrInfoList);
@@ -122,6 +124,7 @@ public class UserAuthTest {
         FleaUserAttrPOJO fleaUserAttrInfo1 = new FleaUserAttrPOJO();
         fleaUserAttrInfo1.setAttrCode(FleaAuthConstants.AttrCodeConstants.ATTR_CODE_USER_TYPE);
         fleaUserAttrInfo1.setAttrValue(UserTypeEnum.SYSTEM_USER.getType());
+        fleaUserAttrInfo1.setAttrDesc("系统用户");
         fleaUserAttrInfoList.add(fleaUserAttrInfo1);
 
         // 添加账户属性
@@ -130,6 +133,7 @@ public class UserAuthTest {
         FleaAccountAttrPOJO fleaAccountAttrInfo1 = new FleaAccountAttrPOJO();
         fleaAccountAttrInfo1.setAttrCode(FleaAuthConstants.AttrCodeConstants.ATTR_CODE_ACCOUNT_TYPE);
         fleaAccountAttrInfo1.setAttrValue(AccountTypeEnum.SYSTEM_ACCOUNT.getType());
+        fleaAccountAttrInfo1.setAttrDesc("系统账户");
         fleaAccountAttrInfoList.add(fleaAccountAttrInfo1);
 
         fleaUserRegisterPOJO.setUserAttrList(fleaUserAttrInfoList);

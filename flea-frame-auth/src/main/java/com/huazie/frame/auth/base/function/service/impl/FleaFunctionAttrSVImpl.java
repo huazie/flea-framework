@@ -76,6 +76,7 @@ public class FleaFunctionAttrSVImpl extends AbstractFleaJPASVImpl<FleaFunctionAt
 
         return new FleaFunctionAttr(functionId, functionType, attrCode,
                 fleaFunctionAttrPOJO.getAttrValue(),
+                fleaFunctionAttrPOJO.getAttrDesc(),
                 fleaFunctionAttrPOJO.getEffectiveDate(),
                 fleaFunctionAttrPOJO.getExpiryDate(),
                 fleaFunctionAttrPOJO.getRemarks());

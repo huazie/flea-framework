@@ -17,6 +17,8 @@ public class FleaAttrPOJO extends FleaEffExpDatePOJO {
 
     private String attrValue; // 属性值
 
+    private String attrDesc; // 属性描述
+
     public String getAttrCode() {
         return attrCode;
     }
@@ -33,4 +35,11 @@ public class FleaAttrPOJO extends FleaEffExpDatePOJO {
         this.attrValue = attrValue;
     }
 
+    public String getAttrDesc() {
+        return attrDesc;
+    }
+
+    public void setAttrDesc(String attrDesc) {
+        this.attrDesc = attrDesc;
+    }
 }
