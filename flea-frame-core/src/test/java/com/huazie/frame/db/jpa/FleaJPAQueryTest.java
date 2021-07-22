@@ -4,8 +4,8 @@ import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.pool.FleaObjectPoolFactory;
 import com.huazie.frame.common.slf4j.FleaLogger;
 import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
+import com.huazie.frame.core.base.cfgdata.entity.FleaConfigData;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResource;
-import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
 import com.huazie.frame.db.jpa.common.FleaJPAQuery;
 import com.huazie.frame.db.jpa.common.FleaJPAQueryPool;
 import org.junit.AfterClass;
@@ -64,9 +64,9 @@ public class FleaJPAQueryTest {
             FleaJPAQueryPool fleaJPAQueryPool = FleaObjectPoolFactory.getFleaObjectPool(FleaJPAQuery.class, FleaJPAQueryPool.class);
             FleaJPAQuery query = fleaJPAQueryPool.getFleaObject();
             LOGGER.debug("FleaJPAQuery: {}", query);
-            query.init(em, FleaParaDetail.class, null);
-            // 去重查询某一列数据, 模糊查询 para_code
-            query.distinct("para1").like("paraCode","FLEA");
+            query.init(em, FleaConfigData.class, null);
+            // 去重查询某一列数据, 模糊查询 config_code
+            query.distinct("data1").like("configCode","hua");
             List<String> list = query.getSingleResultList();
             LOGGER.debug("List : {}", list);
 

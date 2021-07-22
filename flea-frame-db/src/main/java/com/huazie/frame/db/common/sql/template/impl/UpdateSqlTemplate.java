@@ -30,9 +30,12 @@ import java.util.Map;
  *   <!-- SQL模板参数配置 -->
  *   <params>
  *     <param id="update" name="SQL模板參數" desc="用于定义SQL模板中的替换参数">
- *       <property key="table" value="flea_para_detail" />
- *       <property key="sets" value="para1 = :para1, para2 = :para2" />
- *       <property key="conditions" value="para_id = :paraId and ( para_type = :paraType or para_type = 'nihao') " />
+ *       <!-- 表名 -->
+ *       <property key="table" value="flea_config_data" />
+ *       <!-- SET 子句 -->
+ *       <property key="sets" value="config_type = :configType:, config_code = :configCode:" />
+ *       <!-- WHERE 子句 -->
+ *       <property key="conditions" value="config_id = :configId:" />
  *     </param>
  *   </params>
  *   <!-- SQL模板和模板参数关联关系配置（简称 SQL关系配置）-->

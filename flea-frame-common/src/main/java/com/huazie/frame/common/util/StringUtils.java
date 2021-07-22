@@ -320,6 +320,35 @@ public class StringUtils {
     }
 
     /**
+     * <p> 拼接对象数组objs中每个对象的属性attrName对应的值 </p>
+     * <p>（拼接方式： before + value1 + after + after1 + before + value2 + after）</p>
+     *
+     * @param objs     待拼接的对象数组
+     * @param attrName 对象数组中每个对象的一个属性名attrName
+     * @param before   待拼接字符串（在属性值前）
+     * @param after    待拼接字符串（在属性值后）
+     * @param after1   待拼接字符串（在属性值后）
+     * @return 拼接后的字符串
+     * @since 1.0.0
+     */
+    public static String strCombined(Object[] objs, String attrName, String before, String after, String after1) {
+        if (objs == null || objs.length == 0 || isBlank(attrName)) {
+            return "";
+        }
+        StringBuilder strBuilder = new StringBuilder();
+        for (int i = 0; i < objs.length; i++) {
+            Object value = ReflectUtils.getObjectAttrValue(objs[i], attrName);
+            if (i < objs.length - 1) {
+                strBuilder.append(before).append(value).append(after).append(after1);
+            } else {
+                strBuilder.append(before).append(value).append(after);
+            }
+        }
+
+        return strBuilder.toString();
+    }
+
+    /**
      * <p>判断是否满足模糊查询/p>
      * <p>（中文模糊比较，简拼，全拼比较）</p>
      *

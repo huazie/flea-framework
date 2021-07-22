@@ -8,7 +8,7 @@
             type   : 缓存数据类型，对应 flea-cache-config.xml中 <cache-data type="缓存数据类型">
             expiry : 缓存数据有效期
         -->
-        <cache key="fleaparadetail" type="fleaFrame" expiry="86400" desc="Flea配置数据缓存" />
+        <cache key="fleaconfigdata" type="fleaFrame" expiry="86400" desc="Flea配置数据缓存" />
 
         <cache key="fleajerseyi18nerrormapping" type="fleaJersey" expiry="86400" desc="Flea Jersey 国际码和错误码映射缓存" />
         <cache key="fleajerseyresservice" type="fleaJersey" expiry="86400" desc="Flea Jersey 资源服务缓存" />
