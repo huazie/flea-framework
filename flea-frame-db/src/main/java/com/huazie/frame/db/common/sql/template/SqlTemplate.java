@@ -392,7 +392,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
 
             if (ObjectUtils.isNotEmpty(column)) {
                 String attrN = column.getAttrName();
-                if (attrName.equals(StringUtils.strCat(SQLConstants.SQL_COLON, attrN))) {
+                if (attrName.equals(StringUtils.strCat(SQLConstants.SQL_COLON, attrN, SQLConstants.SQL_COLON))) {
                     cols.add(column);
                 } else {
                     if (!checkAttrName(attrName, cols, tabColName)) {
@@ -483,7 +483,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
                 // 添加SQL参数
                 sqlParams.add(sqlParam);
                 // 将sql中的 :实体属性变量名 替换为 ?
-                StringUtils.replace(sql, SQLConstants.SQL_COLON + key, SQLConstants.SQL_PLACEHOLDER);
+                StringUtils.replace(sql, SQLConstants.SQL_COLON + key + SQLConstants.SQL_COLON, SQLConstants.SQL_PLACEHOLDER);
             }
         }
 

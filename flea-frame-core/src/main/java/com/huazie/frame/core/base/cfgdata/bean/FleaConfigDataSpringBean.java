@@ -2,18 +2,18 @@ package com.huazie.frame.core.base.cfgdata.bean;
 
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.CollectionUtils;
+import com.huazie.frame.core.base.cfgdata.entity.FleaConfigData;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyI18nErrorMapping;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResClient;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResService;
 import com.huazie.frame.core.base.cfgdata.entity.FleaJerseyResource;
 import com.huazie.frame.core.base.cfgdata.entity.FleaMenuFavorites;
-import com.huazie.frame.core.base.cfgdata.entity.FleaParaDetail;
+import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaConfigDataSV;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaJerseyI18nErrorMappingSV;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaJerseyResClientSV;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaJerseyResServiceSV;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaJerseyResourceSV;
 import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaMenuFavoritesSV;
-import com.huazie.frame.core.base.cfgdata.service.interfaces.IFleaParaDetailSV;
 import com.huazie.frame.core.common.pojo.FleaMenuFavoritesPOJO;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
@@ -33,7 +33,7 @@ public class FleaConfigDataSpringBean {
 
     private IFleaJerseyI18nErrorMappingSV mappingSV;
 
-    private IFleaParaDetailSV paraDetailSV;
+    private IFleaConfigDataSV configDataSV;
 
     private IFleaJerseyResServiceSV resServiceSV;
 
@@ -46,11 +46,6 @@ public class FleaConfigDataSpringBean {
     @Resource(name = "i18nErrorMappingSV")
     public void setMappingSV(IFleaJerseyI18nErrorMappingSV mappingSV) {
         this.mappingSV = mappingSV;
-    }
-
-    @Resource(name = "fleaParaDetailSV")
-    public void setParaDetailSV(IFleaParaDetailSV paraDetailSV) {
-        this.paraDetailSV = paraDetailSV;
     }
 
     @Resource(name = "resServiceSV")
@@ -103,31 +98,31 @@ public class FleaConfigDataSpringBean {
     }
 
     /**
-     * <p> 获取参数配置数据集合 </p>
+     * <p> 获取配置数据集合 </p>
      *
-     * @param paraType 参数配置数据类型
-     * @param paraCode 参数配置数据编码
-     * @return 参数配置数据集合
+     * @param configType 配置数据类型
+     * @param configCode 配置数据编码
+     * @return 配置数据集合
      * @throws CommonException 通用异常
-     * @since 1.0.0
+     * @since 1.1.0
      */
-    @Cacheable(value = "fleaparadetail", key = "#paraType")
-    public List<FleaParaDetail> getParaDetails(String paraType, String paraCode) throws CommonException {
-        return paraDetailSV.getParaDetails(paraType, paraCode);
+    @Cacheable(value = "fleaconfigdata", key = "#configType")
+    public List<FleaConfigData> getConfigDatas(String configType, String configCode) throws CommonException {
+        return configDataSV.getConfigDatas(configType, configCode);
     }
 
     /**
-     * <p> 获取单个参数配置数据 </p>
+     * <p> 获取单个配置数据集合 </p>
      *
-     * @param paraType 参数配置数据类型
-     * @param paraCode 参数配置数据编码
-     * @return 单个参数配置数据
+     * @param configType 配置数据类型
+     * @param configCode 配置数据编码
+     * @return 配置数据
      * @throws CommonException 通用异常
-     * @since 1.0.0
+     * @since 1.1.0
      */
-    @Cacheable(value = "fleaparadetail", key = "#paraType + '_' + #paraCode")
-    public FleaParaDetail getParaDetail(String paraType, String paraCode) throws CommonException {
-        return paraDetailSV.getParaDetail(paraType, paraCode);
+    @Cacheable(value = "fleaparadetail", key = "#configType + '_' + #configCode")
+    public FleaConfigData getConfigData(String configType, String configCode) throws CommonException {
+        return configDataSV.getConfigData(configType, configCode);
     }
 
     /**
