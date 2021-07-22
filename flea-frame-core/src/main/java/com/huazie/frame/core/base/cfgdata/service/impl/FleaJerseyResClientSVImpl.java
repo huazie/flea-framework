@@ -20,10 +20,11 @@ import org.springframework.stereotype.Service;
 @Service("resClientSV")
 public class FleaJerseyResClientSVImpl extends AbstractFleaJPASVImpl<FleaJerseyResClient> implements IFleaJerseyResClientSV {
 
-    private final IFleaJerseyResClientDAO resClientDAO;
+    private IFleaJerseyResClientDAO resClientDAO;
 
     @Autowired
-    public FleaJerseyResClientSVImpl(@Qualifier("resClientDAO") IFleaJerseyResClientDAO resClientDAO) {
+    @Qualifier("resClientDAO")
+    public void setResClientDAO(IFleaJerseyResClientDAO resClientDAO) {
         this.resClientDAO = resClientDAO;
     }
 
