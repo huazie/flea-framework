@@ -111,7 +111,7 @@
     <bean id="memCachedSpringCacheManager" class="com.huazie.frame.cache.memcached.MemCachedSpringCacheManager">
         <property name="configMap">
             <map>
-                <entry key="fleaparadetail" value="86400"/>
+                <entry key="fleaconfigdata" value="86400"/>
                 <entry key="fleajerseyi18nerrormapping" value="86400" />
                 <entry key="fleajerseyresservice" value="86400" />
                 <entry key="fleajerseyresclient" value="86400" />
@@ -127,7 +127,7 @@
     <bean id="redisShardedSpringCacheManager" class="com.huazie.frame.cache.redis.RedisShardedSpringCacheManager">
         <property name="configMap">
             <map>
-                <entry key="fleaparadetail" value="86400"/>
+                <entry key="fleaconfigdata" value="86400"/>
                 <entry key="fleajerseyi18nerrormapping" value="86400" />
                 <entry key="fleajerseyresservice" value="86400" />
                 <entry key="fleajerseyresclient" value="86400" />

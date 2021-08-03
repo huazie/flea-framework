@@ -22,7 +22,7 @@ public class FleaConfigDAOImpl<T> extends AbstractFleaJPADAOImpl<T> {
 	protected EntityManager entityManager;
 
 	@Override
-	@Transactional("fleaAuthTransactionManager")
+	@Transactional("fleaConfigTransactionManager")
 	public Long getFleaNextValue(T entity) throws CommonException {
 		return super.getFleaNextValue(entity);
 	}
