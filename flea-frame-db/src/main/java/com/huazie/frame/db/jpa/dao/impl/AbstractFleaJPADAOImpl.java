@@ -53,15 +53,13 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         Class<?> clz = getClass();
         // 获取子类对象的泛型父类类型（也就是AbstractDaoImpl<T>）
         ParameterizedType type = (ParameterizedType) clz.getGenericSuperclass();
-        Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            LOGGER.debug1(obj, "Type={}", type);
+            LOGGER.debug("Type = {}", type);
         }
         Type[] types = type.getActualTypeArguments();
         clazz = (Class<T>) types[0];
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj, "ClassName={}", clazz.getName());
+            LOGGER.debug("ClassName = {}", clazz.getName());
         }
     }
 

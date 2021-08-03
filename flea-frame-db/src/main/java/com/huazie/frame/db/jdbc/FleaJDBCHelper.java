@@ -631,7 +631,7 @@ public class FleaJDBCHelper {
                 }
 
                 // 设置属性类型
-                if ("INT".equals(typeName) || ("NUMBER".equals(typeName) && columnSize >= 10)) {
+                if ("INT".equals(typeName) || "BIGINT".equals(typeName) || ("NUMBER".equals(typeName) && columnSize >= 10)) {
                     column.setAttrType(Long.class);
                 }
 
