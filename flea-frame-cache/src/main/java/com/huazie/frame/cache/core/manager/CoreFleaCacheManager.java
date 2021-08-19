@@ -1,4 +1,4 @@
-package com.huazie.frame.cache.core;
+package com.huazie.frame.cache.core.manager;
 
 import com.huazie.frame.cache.AbstractFleaCache;
 import com.huazie.frame.cache.AbstractFleaCacheManager;

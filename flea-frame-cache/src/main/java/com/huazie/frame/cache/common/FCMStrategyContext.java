@@ -1,10 +1,10 @@
 package com.huazie.frame.cache.common;
 
 import com.huazie.frame.cache.AbstractFleaCacheManager;
-import com.huazie.frame.cache.core.CoreFCMStrategy;
-import com.huazie.frame.cache.memcached.MemCachedFCMStrategy;
-import com.huazie.frame.cache.redis.RedisClusterFCMStrategy;
-import com.huazie.frame.cache.redis.RedisShardedFCMStrategy;
+import com.huazie.frame.cache.core.strategy.CoreFCMStrategy;
+import com.huazie.frame.cache.memcached.strategy.MemCachedFCMStrategy;
+import com.huazie.frame.cache.redis.strategy.RedisClusterFCMStrategy;
+import com.huazie.frame.cache.redis.strategy.RedisShardedFCMStrategy;
 import com.huazie.frame.common.FleaCommonConfig;
 import com.huazie.frame.common.strategy.FleaStrategyContext;
 import com.huazie.frame.common.strategy.IFleaStrategy;

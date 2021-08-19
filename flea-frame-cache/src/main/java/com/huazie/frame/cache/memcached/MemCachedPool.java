@@ -77,7 +77,7 @@ public class MemCachedPool {
      *
      * @since 1.0.0
      */
-    void initialize() {
+    public void initialize() {
         if (ObjectUtils.isEmpty(memCachedConfig)) {
             throw new FleaCacheException("采用默认初始化，请使用MemCachedPool##getInstance()");
         }
@@ -100,7 +100,7 @@ public class MemCachedPool {
      * @param cacheServerList 缓存服务器集
      * @since 1.0.0
      */
-    void initialize(List<CacheServer> cacheServerList) {
+    public void initialize(List<CacheServer> cacheServerList) {
         if (StringUtils.isBlank(poolName)) {
             throw new FleaCacheException("采用指定连接池名初始化，请使用MemCachedPool##getInstance(String poolName)");
         }

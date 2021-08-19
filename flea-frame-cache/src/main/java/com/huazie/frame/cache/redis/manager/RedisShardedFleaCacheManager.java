@@ -1,28 +1,30 @@
-package com.huazie.frame.cache.redis;
+package com.huazie.frame.cache.redis.manager;
 
-import com.huazie.frame.cache.AbstractSpringCache;
-import com.huazie.frame.cache.AbstractSpringCacheManager;
+import com.huazie.frame.cache.AbstractFleaCache;
+import com.huazie.frame.cache.AbstractFleaCacheManager;
 import com.huazie.frame.cache.common.CacheModeEnum;
+import com.huazie.frame.cache.redis.RedisClient;
+import com.huazie.frame.cache.redis.RedisClientFactory;
+import com.huazie.frame.cache.redis.RedisShardedPool;
 import com.huazie.frame.cache.redis.config.RedisShardedConfig;
-import com.huazie.frame.cache.redis.impl.RedisSpringCache;
+import com.huazie.frame.cache.redis.impl.RedisFleaCache;
 
 /**
- * Redis分片模式Spring缓存管理类，用于接入Spring框架管理Redis缓存。
+ * Redis分片模式Flea缓存管理类，用于接入Flea框架管理Redis缓存。
  *
  * <p> 它的默认构造方法，用于初始化分片模式下默认连接池的Redis客户端,
  * 这里需要先初始化Redis连接池，默认连接池名为【default】；
  * 然后通过Redis客户端工厂类来获取Redis客户端。
  *
- * <p> 方法【{@code newCache}】用于创建一个Redis Spring缓存，
- * 而它内部是由Redis Flea缓存实现具体的 读、写、删除 和 清空
- * 缓存的基本操作。
+ * <p> 方法 {@code newCache} 用于创建一个Redis Flea缓存，
+ * 它里面包含了 读、写、删除 和 清空 缓存的基本操作。
  *
  * @author huazie
  * @version 1.1.0
- * @see RedisSpringCache
+ * @see RedisFleaCache
  * @since 1.0.0
  */
-public class RedisShardedSpringCacheManager extends AbstractSpringCacheManager {
+public class RedisShardedFleaCacheManager extends AbstractFleaCacheManager {
 
     private RedisClient redisClient; // Redis客户端
 
@@ -31,7 +33,7 @@ public class RedisShardedSpringCacheManager extends AbstractSpringCacheManager {
      *
      * @since 1.0.0
      */
-    public RedisShardedSpringCacheManager() {
+    public RedisShardedFleaCacheManager() {
         // 初始化默认连接池
         RedisShardedPool.getInstance().initialize();
         // 获取分片模式下默认连接池的Redis客户端
@@ -39,9 +41,9 @@ public class RedisShardedSpringCacheManager extends AbstractSpringCacheManager {
     }
 
     @Override
-    protected AbstractSpringCache newCache(String name, int expiry) {
+    protected AbstractFleaCache newCache(String name, int expiry) {
         int nullCacheExpiry = RedisShardedConfig.getConfig().getNullCacheExpiry();
-        return new RedisSpringCache(name, expiry, nullCacheExpiry, CacheModeEnum.SHARDED, redisClient);
+        return new RedisFleaCache(name, expiry, nullCacheExpiry, CacheModeEnum.SHARDED, redisClient);
     }
 
 }
