@@ -1,7 +1,7 @@
 package com.huazie.frame.cache;
 
-import com.huazie.frame.cache.core.CoreSpringCacheManager;
-import com.huazie.frame.cache.redis.RedisClusterSpringCacheManager;
+import com.huazie.frame.cache.core.manager.CoreSpringCacheManager;
+import com.huazie.frame.cache.redis.manager.RedisClusterSpringCacheManager;
 import com.huazie.frame.common.slf4j.FleaLogger;
 import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import org.junit.Before;

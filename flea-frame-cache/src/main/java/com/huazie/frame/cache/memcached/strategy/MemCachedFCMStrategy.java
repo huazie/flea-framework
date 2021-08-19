@@ -1,6 +1,7 @@
-package com.huazie.frame.cache.memcached;
+package com.huazie.frame.cache.memcached.strategy;
 
 import com.huazie.frame.cache.AbstractFleaCacheManager;
+import com.huazie.frame.cache.memcached.manager.MemCachedFleaCacheManager;
 import com.huazie.frame.common.FleaCommonConfig;
 import com.huazie.frame.common.strategy.IFleaStrategy;
 

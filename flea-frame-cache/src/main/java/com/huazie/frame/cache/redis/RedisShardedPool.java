@@ -38,8 +38,6 @@ import java.util.concurrent.ConcurrentMap;
  *
  * @author huazie
  * @version 1.1.0
- * @see RedisShardedFleaCacheManager
- * @see RedisShardedFleaCacheBuilder
  * @since 1.0.0
  */
 public class RedisShardedPool {
@@ -88,7 +86,7 @@ public class RedisShardedPool {
      *
      * @since 1.0.0
      */
-    void initialize() {
+    public void initialize() {
         if (!CommonConstants.FleaPoolConstants.DEFAULT_POOL_NAME.equals(poolName)) {
             throw new FleaCacheConfigException("采用默认初始化，请使用RedisPool##getInstance()");
         }
@@ -104,7 +102,7 @@ public class RedisShardedPool {
      * @param cacheServerList 缓存服务器集
      * @since 1.0.0
      */
-    void initialize(List<CacheServer> cacheServerList) {
+    public void initialize(List<CacheServer> cacheServerList) {
         if (CommonConstants.FleaPoolConstants.DEFAULT_POOL_NAME.equals(poolName)) {
             throw new FleaCacheConfigException("采用指定连接池名初始化，请使用RedisPool##getInstance(String poolName)");
         }

@@ -23,13 +23,13 @@ import redis.clients.jedis.util.SafeEncoder;
  *
  * <p> 分片模式下，单个缓存接入场景，可通过如下方式使用：
  * <pre>
- *  RedisClient redisClient = new FleaRedisClient.Builder().build();
+ *  RedisClient redisClient = new FleaRedisShardedClient.Builder().build();
  *  // 执行读，写，删除等基本操作
  *  redisClient.set("key", "value"); </pre>
  *
  * <p> 分片模式下，整合缓存接入场景，可通过如下方式使用：
  * <pre>
- *  RedisClient redisClient = new FleaRedisClient.Builder(poolName).build();
+ *  RedisClient redisClient = new FleaRedisShardedClient.Builder(poolName).build();
  *  // 执行读，写，删除等基本操作
  *  redisClient.set("key", "value"); </pre>
  *

@@ -1,9 +1,9 @@
 package com.huazie.frame.cache.redis;
 
 import com.huazie.frame.cache.common.CacheModeEnum;
-import com.huazie.frame.cache.redis.impl.FleaRedisClusterClient;
-import com.huazie.frame.cache.redis.impl.FleaRedisShardedClient;
+import com.huazie.frame.cache.common.RedisClientStrategyContext;
 import com.huazie.frame.common.CommonConstants;
+import com.huazie.frame.common.strategy.FleaStrategyFacade;
 import com.huazie.frame.common.util.StringUtils;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -90,23 +90,8 @@ public class RedisClientFactory {
         if (!redisClients.containsKey(key)) {
             synchronized (redisClients) {
                 if (!redisClients.containsKey(key)) {
-                    RedisClient originRedisClient = null;
-                    if (CacheModeEnum.SHARDED.getMode() == mode.getMode()) { // 分片模式
-                        // 新建一个Flea Redis客户端类实例
-                        if (CommonConstants.FleaPoolConstants.DEFAULT_POOL_NAME.equals(poolName)) {
-                            originRedisClient = new FleaRedisShardedClient.Builder().build();
-                        } else {
-                            originRedisClient = new FleaRedisShardedClient.Builder(poolName).build();
-                        }
-                    } else if (CacheModeEnum.CLUSTER.getMode() == mode.getMode()) { // 集群模式
-                        // 新建一个Flea Redis集群客户端类实例
-                        if (CommonConstants.FleaPoolConstants.DEFAULT_POOL_NAME.equals(poolName)) {
-                            originRedisClient = new FleaRedisClusterClient.Builder().build();
-                        } else {
-                            originRedisClient = new FleaRedisClusterClient.Builder(poolName).build();
-                        }
-                    }
-                    redisClients.putIfAbsent(key, originRedisClient);
+                    RedisClientStrategyContext context = new RedisClientStrategyContext(poolName);
+                    redisClients.putIfAbsent(key, FleaStrategyFacade.invoke(mode.name(), context));
                 }
             }
         }

@@ -41,11 +41,13 @@ public class CacheXmlDigesterHelper {
 
     private static volatile CacheXmlDigesterHelper xmlDigester;
 
-    private static Boolean isFleaCacheInit = Boolean.FALSE;
-    private static Boolean isFleaCacheConfigInit = Boolean.FALSE;
+    private final Object fleaCacheInitLock = new Object();
 
-    private static FleaCache fleaCache;
-    private static FleaCacheConfig fleaCacheConfig;
+    private final Object fleaCacheConfigInitLock = new Object();
+
+    private FleaCache fleaCache;
+
+    private FleaCacheConfig fleaCacheConfig;
 
     /**
      * <p> 只允许通过getInstance()获取 XML解析类 </p>
@@ -62,9 +64,9 @@ public class CacheXmlDigesterHelper {
      * @since 1.0.0
      */
     public static CacheXmlDigesterHelper getInstance() {
-        if (null == xmlDigester) {
+        if (ObjectUtils.isEmpty(xmlDigester)) {
             synchronized (CacheXmlDigesterHelper.class) {
-                if (null == xmlDigester) {
+                if (ObjectUtils.isEmpty(xmlDigester)) {
                     xmlDigester = new CacheXmlDigesterHelper();
                 }
             }
@@ -79,12 +81,11 @@ public class CacheXmlDigesterHelper {
      * @since 1.0.0
      */
     public FleaCache getFleaCache() {
-        if (isFleaCacheInit.equals(Boolean.FALSE)) {
-            synchronized (isFleaCacheInit) {
-                if (isFleaCacheInit.equals(Boolean.FALSE)) {
+        if (ObjectUtils.isEmpty(fleaCache)) {
+            synchronized (fleaCacheInitLock) {
+                if (ObjectUtils.isEmpty(fleaCache)) {
                     try {
                         fleaCache = newFleaCache();
-                        isFleaCacheInit = Boolean.TRUE;
                     } catch (Exception e) {
                         throw new FleaCacheConfigException(e);
                     }
@@ -186,12 +187,11 @@ public class CacheXmlDigesterHelper {
      * @since 1.0.0
      */
     public FleaCacheConfig getFleaCacheConfig() {
-        if (isFleaCacheConfigInit.equals(Boolean.FALSE)) {
-            synchronized (isFleaCacheConfigInit) {
-                if (isFleaCacheConfigInit.equals(Boolean.FALSE)) {
+        if (ObjectUtils.isEmpty(fleaCacheConfig)) {
+            synchronized (fleaCacheConfigInitLock) {
+                if (ObjectUtils.isEmpty(fleaCacheConfig)) {
                     try {
                         fleaCacheConfig = newFleaCacheConfig();
-                        isFleaCacheConfigInit = Boolean.TRUE;
                     } catch (Exception e) {
                         throw new FleaCacheConfigException(e);
                     }

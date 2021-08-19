@@ -1,10 +1,11 @@
-package com.huazie.frame.cache.memcached;
+package com.huazie.frame.cache.memcached.builder;
 
 import com.huazie.frame.cache.AbstractFleaCache;
 import com.huazie.frame.cache.IFleaCacheBuilder;
 import com.huazie.frame.cache.common.CacheConfigUtils;
 import com.huazie.frame.cache.config.CacheServer;
 import com.huazie.frame.cache.exceptions.FleaCacheConfigException;
+import com.huazie.frame.cache.memcached.MemCachedPool;
 import com.huazie.frame.cache.memcached.impl.MemCachedFleaCache;
 import com.huazie.frame.common.slf4j.FleaLogger;
 import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;

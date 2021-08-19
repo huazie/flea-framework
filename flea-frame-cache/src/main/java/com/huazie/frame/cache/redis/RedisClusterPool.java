@@ -86,7 +86,7 @@ public class RedisClusterPool {
      *
      * @since 1.1.0
      */
-    void initialize() {
+    public void initialize() {
         if (!CommonConstants.FleaPoolConstants.DEFAULT_POOL_NAME.equals(poolName)) {
             throw new FleaCacheConfigException("采用默认初始化，请使用RedisClusterPool##getInstance()");
         }
@@ -119,7 +119,7 @@ public class RedisClusterPool {
      * @param cacheServerList 缓存服务器集
      * @since 1.1.0
      */
-    void initialize(List<CacheServer> cacheServerList) {
+    public void initialize(List<CacheServer> cacheServerList) {
         if (CommonConstants.FleaPoolConstants.DEFAULT_POOL_NAME.equals(poolName)) {
             throw new FleaCacheConfigException("采用指定连接池名初始化，请使用RedisClusterPool##getInstance(String poolName)");
         }

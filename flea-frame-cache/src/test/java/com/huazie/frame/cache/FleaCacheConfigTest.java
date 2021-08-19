@@ -10,6 +10,7 @@ import com.huazie.frame.cache.config.CacheItem;
 import com.huazie.frame.cache.config.CacheParams;
 import com.huazie.frame.cache.config.CacheServer;
 import com.huazie.frame.cache.config.FleaCache;
+import com.huazie.frame.cache.config.FleaCacheConfig;
 import com.huazie.frame.common.slf4j.FleaLogger;
 import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import org.junit.Test;
@@ -29,7 +30,7 @@ public class FleaCacheConfigTest {
 
     @Test
     public void testGetFleaCache() {
-        Cache cache = CacheConfigUtils.getCache("fleaparadetail");
+        Cache cache = CacheConfigUtils.getCache("fleaconfigdata");
         LOGGER.debug("Cache={}", cache);
         CacheData cacheData = CacheConfigUtils.getCacheData(cache.getType());
         LOGGER.debug("CacheData={}", cacheData);
@@ -51,5 +52,11 @@ public class FleaCacheConfigTest {
     public void testCacheFiles() {
         FleaCache fleaCache = CacheXmlDigesterHelper.getInstance().getFleaCache();
         LOGGER.debug("CacheFiles={}", fleaCache.getCacheFiles());
+    }
+
+    @Test
+    public void testCacheServers() {
+        FleaCacheConfig fleaCacheConfig = CacheXmlDigesterHelper.getInstance().getFleaCacheConfig();
+        LOGGER.debug("CacheServers={}", fleaCacheConfig.getCacheServers());
     }
 }

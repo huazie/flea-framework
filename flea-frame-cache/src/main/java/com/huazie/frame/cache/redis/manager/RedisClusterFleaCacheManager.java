@@ -1,8 +1,11 @@
-package com.huazie.frame.cache.redis;
+package com.huazie.frame.cache.redis.manager;
 
 import com.huazie.frame.cache.AbstractFleaCache;
 import com.huazie.frame.cache.AbstractFleaCacheManager;
 import com.huazie.frame.cache.common.CacheModeEnum;
+import com.huazie.frame.cache.redis.RedisClient;
+import com.huazie.frame.cache.redis.RedisClientFactory;
+import com.huazie.frame.cache.redis.RedisClusterPool;
 import com.huazie.frame.cache.redis.config.RedisClusterConfig;
 import com.huazie.frame.cache.redis.impl.RedisFleaCache;
 
