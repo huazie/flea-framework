@@ -19,10 +19,10 @@ public class FleaStrategyTest {
         AnimalVoiceContext context = new AnimalVoiceContext("旺财");
         LOGGER.debug(FleaStrategyFacade.invoke("dog", context));
 
-        context = new AnimalVoiceContext("Tom");
+        context.setContext("Tom");
         LOGGER.debug(FleaStrategyFacade.invoke("cat", context));
 
-        context = new AnimalVoiceContext("Donald");
+        context.setContext("Donald");
         LOGGER.debug(FleaStrategyFacade.invoke("duck", context));
 
     }
