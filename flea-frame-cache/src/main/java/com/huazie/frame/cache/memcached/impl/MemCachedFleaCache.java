@@ -12,7 +12,19 @@ import com.whalin.MemCached.MemCachedClient;
 import java.util.Date;
 
 /**
- * <p> MemCached Flea缓存类 </p>
+ * MemCached Flea缓存类，实现了以Flea框架操作MemCached缓存的基本操作方法。
+ *
+ * <p> 在上述基本操作方法中，实际使用MemCached客户端【{@code} memCachedClient】
+ * 读、写和删除MemCached缓存。其中写缓存方法【{@code putNativeValue}】在
+ * 添加的数据值为【{@code null}】时，默认添加空缓存数据【{@code NullCache}】
+ * 到MemCached中，有效期取初始化参数【{@code nullCacheExpiry}】。
+ *
+ * <p> 单个缓存接入场景，有效期配置可查看【memcached.properties】中的配置
+ * 参数【memcached.nullCacheExpiry】
+ *
+ * <p> 整合缓存接入场景，有效期配置可查看【flea-cache-config.xml】
+ * 中的缓存参数【{@code <cache-param key="fleacore.nullCacheExpiry"
+ * desc="空缓存数据有效期（单位：s）">300</cache-param>}】
  *
  * @author huazie
  * @version 1.0.0
@@ -25,7 +37,7 @@ public class MemCachedFleaCache extends AbstractFleaCache {
     private final MemCachedClient memCachedClient;  // MemCached客户端
 
     /**
-     * <p> 带参数的构造方法，初始化MemCached Flea缓存类 </p>
+     * <p> 初始化MemCached Flea缓存类 </p>
      *
      * @param name            缓存数据主关键字
      * @param expiry          缓存数据有效期（单位：s）
@@ -48,7 +60,7 @@ public class MemCachedFleaCache extends AbstractFleaCache {
     }
 
     @Override
-    public void putNativeValue(String key, Object value, int expiry) {
+    public Object putNativeValue(String key, Object value, int expiry) {
         if (LOGGER.isDebugEnabled()) {
             Object obj = new Object() {};
             LOGGER.debug1(obj, "MEMCACHED FLEA CACHE, KEY = {}", key);
@@ -57,17 +69,17 @@ public class MemCachedFleaCache extends AbstractFleaCache {
             LOGGER.debug1(obj, "MEMCACHED FLEA CACHE, NULL CACHE EXPIRY = {}s", getNullCacheExpiry());
         }
         if (ObjectUtils.isEmpty(value))
-            memCachedClient.set(key, new NullCache(key), new Date(getNullCacheExpiry() * 1000));
+            return memCachedClient.set(key, new NullCache(key), new Date(getNullCacheExpiry() * 1000));
         else
-            memCachedClient.set(key, value, new Date(expiry * 1000));
+            return memCachedClient.set(key, value, new Date(expiry * 1000));
     }
 
     @Override
-    public void deleteNativeValue(String key) {
+    public Object deleteNativeValue(String key) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug1(new Object() {}, "KEY = {}", key);
         }
-        memCachedClient.delete(key);
+        return memCachedClient.delete(key);
     }
 
     @Override

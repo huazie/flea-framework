@@ -11,6 +11,9 @@ import java.util.regex.Pattern;
  */
 public class PatternMatcherUtils {
 
+    private PatternMatcherUtils() {
+    }
+
     /**
      * <p> 正则匹配 </p>
      *

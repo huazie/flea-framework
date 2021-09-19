@@ -11,15 +11,15 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 
 /**
- * 抽象 Spring 缓存类，实现Spring的Cache接口和IFleaCache接口，
- * 由具体的Spring缓存管理类初始化。
+ * 抽象 Spring 缓存类，实现Spring的Cache接口 和 Flea
+ * 的IFleaCache接口，由具体的Spring缓存管理类初始化。
  *
- * <p> 它实现的读 {@code get}写 {@code put}、删除 {@code delete}
- * 和 清空 {@code clear}缓存的基本操作方法，由具体Flea缓存实现类
- * {@code fleaCache} 调用对应的方法实现。
+ * <p> 它实现了读、写、删除和清空缓存的基本操作方法，
+ * 内部由具体Flea缓存实现类【{@code fleaCache}】
+ * 调用对应的 读、写、删除 和 清空 缓存的基本操作方法。
  *
  * @author huazie
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.0.0
  */
 public abstract class AbstractSpringCache implements Cache, IFleaCache {
@@ -60,16 +60,16 @@ public abstract class AbstractSpringCache implements Cache, IFleaCache {
     @Override
     @SuppressWarnings(value = "unchecked")
     public <T> T get(Object key, Class<T> type) {
-        if (ObjectUtils.isEmpty(key))
+        if (ObjectUtils.isEmpty(key) || ObjectUtils.isEmpty(type))
             return null;
         Object cacheValue = get(key.toString());
-        if (ObjectUtils.isNotEmpty(type) && !type.isInstance(cacheValue)) {
+        if (!type.isInstance(cacheValue)) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug1(new Object() {}, "Cached value is not of required type [{}]: {}", type.getName(), cacheValue);
+                LOGGER.debug1(new Object() {}, "Cached value is not of required type [{}] : {}", type.getName(), cacheValue);
             }
             return null;
         }
-        return (T) cacheValue;
+        return type.cast(cacheValue);
     }
 
     @Override

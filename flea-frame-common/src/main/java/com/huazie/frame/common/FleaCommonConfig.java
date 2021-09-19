@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class FleaCommonConfig {
 
-    private Map<String, Object> config = new HashMap<String, Object>();
+    private Map<String, Object> config = new HashMap<>();
 
     /**
      * <p> 添加配置数据 </p>

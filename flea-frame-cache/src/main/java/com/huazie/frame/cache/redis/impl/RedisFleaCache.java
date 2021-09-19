@@ -3,32 +3,33 @@ package com.huazie.frame.cache.redis.impl;
 import com.huazie.frame.cache.AbstractFleaCache;
 import com.huazie.frame.cache.NullCache;
 import com.huazie.frame.cache.common.CacheEnum;
+import com.huazie.frame.cache.common.CacheModeEnum;
+import com.huazie.frame.cache.common.CacheUtils;
 import com.huazie.frame.cache.redis.RedisClient;
-import com.huazie.frame.cache.redis.config.RedisConfig;
+import com.huazie.frame.cache.redis.config.RedisClusterConfig;
+import com.huazie.frame.cache.redis.config.RedisShardedConfig;
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.slf4j.FleaLogger;
 import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ObjectUtils;
 
 /**
- * Redis Flea缓存类，实现了以Flea框架操作Redis缓存的基本操作方法，
- * 包含读【{@code getNativeValue}】、写【{@code putNativeValue}】
- * 和删除【{@code deleteNativeValue}】。
+ * Redis Flea缓存类，实现了以Flea框架操作Redis缓存的基本操作方法。
  *
- * <p> 在上述基本操作方法中，实际使用Redis客户端【{@code} redisClient】
+ * <p> 在上述基本操作方法中，实际使用Redis客户端【{@code redisClient}】
  * 读、写和删除Redis缓存。其中写缓存方法【{@code putNativeValue}】在
  * 添加的数据值为【{@code null}】时，默认添加空缓存数据【{@code NullCache}】
  * 到Redis中，有效期取初始化参数【{@code nullCacheExpiry}】。
  *
- * <p> 单个缓存接入场景，有效期配置可查看【redis.properties】中的配置
- * 参数【redis.nullCacheExpiry】
+ * <p> 单个缓存接入场景，有效期配置可查看【redis.properties】中的配置参数
+ * 【redis.nullCacheExpiry】
  *
- * <p> 整合缓存接入场景，有效期配置可查看【flea-cache-config.xml】
- * 中的缓存参数【{@code <cache-param key="fleacore.nullCacheExpiry"
+ * <p> 整合缓存接入场景，有效期配置可查看【flea-cache-config.xml】中的缓存参数
+ * 【{@code <cache-param key="fleacore.nullCacheExpiry"
  * desc="空缓存数据有效期（单位：s）">300</cache-param>}】
  *
  * @author huazie
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.0.0
  */
 public class RedisFleaCache extends AbstractFleaCache {
@@ -37,19 +38,26 @@ public class RedisFleaCache extends AbstractFleaCache {
 
     private RedisClient redisClient; // Redis客户端
 
+    private CacheModeEnum cacheMode; // 缓存模式【分片模式和集群模式】
+
     /**
      * <p> 带参数的构造方法，初始化Redis Flea缓存类 </p>
      *
      * @param name            缓存数据主关键字
      * @param expiry          缓存数据有效期（单位：s）
      * @param nullCacheExpiry 空缓存数据有效期（单位：s）
+     * @param cacheMode       缓存模式【分分片模式和集群模式】
      * @param redisClient     Redis客户端
      * @since 1.0.0
      */
-    public RedisFleaCache(String name, int expiry, int nullCacheExpiry, RedisClient redisClient) {
+    public RedisFleaCache(String name, int expiry, int nullCacheExpiry, CacheModeEnum cacheMode, RedisClient redisClient) {
         super(name, expiry, nullCacheExpiry);
+        this.cacheMode = cacheMode;
         this.redisClient = redisClient;
-        cache = CacheEnum.Redis;
+        if (CacheUtils.isClusterMode(cacheMode))
+            cache = CacheEnum.RedisCluster; // 缓存实现之Redis集群模式
+        else
+            cache = CacheEnum.RedisSharded; // 缓存实现之Redis分片模式
     }
 
     @Override
@@ -61,7 +69,7 @@ public class RedisFleaCache extends AbstractFleaCache {
     }
 
     @Override
-    public void putNativeValue(String key, Object value, int expiry) {
+    public Object putNativeValue(String key, Object value, int expiry) {
         if (LOGGER.isDebugEnabled()) {
             Object obj = new Object() {};
             LOGGER.debug1(obj, "REDIS FLEA CACHE, KEY = {}", key);
@@ -70,26 +78,31 @@ public class RedisFleaCache extends AbstractFleaCache {
             LOGGER.debug1(obj, "REDIS FLEA CACHE, NULL CACHE EXPIRY = {}s", getNullCacheExpiry());
         }
         if (ObjectUtils.isEmpty(value)) {
-            redisClient.set(key, new NullCache(key), getNullCacheExpiry());
+            return redisClient.set(key, new NullCache(key), getNullCacheExpiry());
         } else {
             if (expiry == CommonConstants.NumeralConstants.INT_ZERO) {
-                redisClient.set(key, value);
+                return redisClient.set(key, value);
             } else {
-                redisClient.set(key, value, expiry);
+                return redisClient.set(key, value, expiry);
             }
         }
     }
 
     @Override
-    public void deleteNativeValue(String key) {
+    public Object deleteNativeValue(String key) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug1(new Object() {}, "KEY = {}", key);
         }
-        redisClient.del(key);
+        return redisClient.del(key);
     }
 
     @Override
     public String getSystemName() {
-        return RedisConfig.getConfig().getSystemName();
+        if (CacheUtils.isClusterMode(cacheMode))
+            // 集群模式下获取缓存归属系统名
+            return RedisClusterConfig.getConfig().getSystemName();
+        else
+            // 分片模式下获取缓存归属系统名
+            return RedisShardedConfig.getConfig().getSystemName();
     }
 }

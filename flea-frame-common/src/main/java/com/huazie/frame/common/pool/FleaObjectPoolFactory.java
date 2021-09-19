@@ -25,6 +25,9 @@ public class FleaObjectPoolFactory {
 
     private static final ConcurrentMap<String, FleaObjectPool> fleaObjectPools = new ConcurrentHashMap<String, FleaObjectPool>();
 
+    private FleaObjectPoolFactory() {
+    }
+
     /**
      * <p> 默认Flea对象池（指定对象Class） </p>
      *

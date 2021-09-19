@@ -7,6 +7,7 @@ import com.huazie.frame.common.slf4j.FleaLogger;
 import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.StringUtils;
+import com.huazie.frame.common.util.xml.XmlDigesterHelper;
 import org.apache.commons.digester.Digester;
 
 /**

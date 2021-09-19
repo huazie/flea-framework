@@ -18,6 +18,9 @@ import java.util.List;
  */
 public class LoggerUtils {
 
+    private LoggerUtils() {
+    }
+
     /**
      * <p> 清理日志上下文数据 </p>
      *

@@ -1,8 +1,9 @@
 package com.huazie.frame.algorithm.factorization;
 
-import com.huazie.frame.common.util.NumberUtils;
+import com.google.common.math.BigIntegerMath;
 
 import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,9 @@ import java.util.List;
  * @since 1.0.0
  */
 public class Factor {
+
+    private Factor() {
+    }
 
     /**
      * 因数分解
@@ -62,7 +66,7 @@ public class Factor {
     public static BigInteger[] factor(BigInteger factor) {
         List<BigInteger> resultList = new ArrayList<>();
         BigInteger mFactor = new BigInteger(factor.toString());
-        for (BigInteger first = BigInteger.valueOf(2); first.compareTo(NumberUtils.sqrt(mFactor)) <= 0; first = first.add(BigInteger.ONE)) {
+        for (BigInteger first = BigInteger.valueOf(2); first.compareTo(BigIntegerMath.sqrt(mFactor, RoundingMode.DOWN)) <= 0; first = first.add(BigInteger.ONE)) {
             if (mFactor.remainder(first).compareTo(BigInteger.ZERO) == 0) {
                 resultList.add(first);
                 mFactor = mFactor.divide(first);

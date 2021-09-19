@@ -9,8 +9,10 @@ package com.huazie.frame.db.common.table.split;
  */
 public enum TableSplitEnum {
 
-    TWOHEX("twohex", "com.huazie.frame.db.common.table.split.impl.TwoHexTableSplitImpl", "按两位十六进制分表"),
-    THREEHEX("threehex", "com.huazie.frame.db.common.table.split.impl.ThreeHexTableSplitImpl", "按三位十六进制分表"),
+    TWOHEX("twohex", "com.huazie.frame.db.common.table.split.impl.TwoHexTableSplitImpl", "按两位十六进制分表，截取分表字段后2位字符，并以小写返回"),
+    TWOHEXB("twohexb", "com.huazie.frame.db.common.table.split.impl.TwoHexBeforeTableSplitImpl", "按两位十六进制分表，截取分表字段前2位字符，并以小写返回"),
+    TWOHEXU("twohexu", "com.huazie.frame.db.common.table.split.impl.TwoHexUpperTableSplitImpl", "按两位十六进制分表，截取分表字段后2位字符，并以大写返回"),
+    TWOHEXBU("twohexbu", "com.huazie.frame.db.common.table.split.impl.TwoHexBeforeUpperTableSplitImpl", "按两位十六进制分表，截取分表字段前2位字符，并以大写返回"),
     YYYY("yyyy", "com.huazie.frame.db.common.table.split.impl.YYYYTableSplitImpl", "按年分表"),
     YYYYMM("yyyymm", "com.huazie.frame.db.common.table.split.impl.YYYYMMTableSplitImpl", "按年月分表"),
     YYYYMMDD("yyyymmdd", "com.huazie.frame.db.common.table.split.impl.YYYYMMDDTableSplitImpl", "按年月日分表");

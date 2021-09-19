@@ -22,6 +22,9 @@ public class DateUtils {
 
     private static final String DEFAULT_EXPIRY_TIME_FOREVER = "29991231235959";
 
+    private DateUtils() {
+    }
+
     /**
      * <p> 获取当前系统时间 </p>
      *

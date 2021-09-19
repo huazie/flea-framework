@@ -2,8 +2,6 @@ package com.huazie.frame.db.common.table.split;
 
 import com.huazie.frame.common.exception.CommonException;
 
-import java.io.Serializable;
-
 /**
  * <p> 分表接口类定义 </p>
  *
@@ -11,7 +9,7 @@ import java.io.Serializable;
  * @version 1.0.0
  * @since 1.0.0
  */
-public interface ITableSplit extends Serializable {
+public interface ITableSplit {
 
     /**
      * <p> 分表后缀转换 </p>

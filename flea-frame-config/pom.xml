@@ -5,7 +5,7 @@
     <parent>
         <artifactId>flea-frame</artifactId>
         <groupId>com.huazie.frame</groupId>
-        <version>1.0.0</version>
+        <version>1.1.0</version>
     </parent>
     <name>FLEA FRAME CONFIG</name>
     <modelVersion>4.0.0</modelVersion>

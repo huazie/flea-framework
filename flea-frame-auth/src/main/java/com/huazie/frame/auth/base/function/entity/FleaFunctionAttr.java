@@ -28,7 +28,7 @@ import java.util.Date;
 @Table(name = "flea_function_attr")
 public class FleaFunctionAttr extends FleaEntity {
 
-    private static final long serialVersionUID = -1325218604346017313L;
+    private static final long serialVersionUID = -2625735433988202320L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "FLEA_FUNCTION_ATTR_GENERATOR")
@@ -60,6 +60,9 @@ public class FleaFunctionAttr extends FleaEntity {
 
     @Column(name = "attr_value")
     private String attrValue; // 属性值
+
+    @Column(name = "attr_desc")
+    private String attrDesc; // 属性描述
 
     @Column(name = "state", nullable = false)
     private Integer state; // 属性状态(0: 删除 1: 正常）
@@ -101,11 +104,12 @@ public class FleaFunctionAttr extends FleaEntity {
      * @param remarks      备注
      * @since 1.0.0
      */
-    public FleaFunctionAttr(Long functionId, String functionType, String attrCode, String attrValue, Date effectiveDate, Date expiryDate, String remarks) {
+    public FleaFunctionAttr(Long functionId, String functionType, String attrCode, String attrValue, String attrDesc, Date effectiveDate, Date expiryDate, String remarks) {
         this.functionId = functionId;
         this.functionType = functionType;
         this.attrCode = attrCode;
         this.attrValue = attrValue;
+        this.attrDesc = attrDesc;
         this.state = EntityStateEnum.IN_USE.getState();
         this.createDate = DateUtils.getCurrentTime();
         if (ObjectUtils.isEmpty(effectiveDate)) {
@@ -157,6 +161,14 @@ public class FleaFunctionAttr extends FleaEntity {
 
     public void setAttrValue(String attrValue) {
         this.attrValue = attrValue;
+    }
+
+    public String getAttrDesc() {
+        return attrDesc;
+    }
+
+    public void setAttrDesc(String attrDesc) {
+        this.attrDesc = attrDesc;
     }
 
     public Integer getState() {

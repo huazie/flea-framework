@@ -11,7 +11,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <p> 其他缓存定义配置文件 </p>
+ * 其他缓存定义配置文件，对应【flea-cache.xml】中
+ * 【{@code <cache-file> </cache-file>}】
  *
  * @author huazie
  * @version 1.0.0

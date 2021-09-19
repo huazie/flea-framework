@@ -30,6 +30,9 @@ public class RandomCode {
 
     private static final int NUMBER_TEN = 10;
 
+    private RandomCode() {
+    }
+
     /**
      * <p> 产生随机的数字，位数由len控制,以字符串形式返回 </p>
      *
