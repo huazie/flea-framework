@@ -16,6 +16,9 @@ import java.util.Random;
  */
 public class ImageUtils {
 
+    private ImageUtils() {
+    }
+
     /**
      * <p> 图像字节流输出对象 </p>
      *

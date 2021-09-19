@@ -14,6 +14,9 @@ import com.huazie.frame.db.common.sql.template.impl.UpdateSqlTemplate;
  */
 public class SqlTemplateFactory {
 
+    private SqlTemplateFactory() {
+    }
+
     /**
      * <p> 新建SQL模板 </p>
      *

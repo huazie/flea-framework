@@ -9,6 +9,9 @@ package com.huazie.frame.common.util;
  */
 public class POJOUtils {
 
+    private POJOUtils() {
+    }
+
     /**
      * <p> 将POJO类数据拷贝到实体类中 </p>
      *

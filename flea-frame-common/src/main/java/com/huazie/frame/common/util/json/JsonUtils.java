@@ -2,6 +2,7 @@ package com.huazie.frame.common.util.json;
 
 import com.huazie.frame.common.slf4j.FleaLogger;
 import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
+import com.huazie.frame.common.util.ObjectUtils;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.util.JSONTokener;
@@ -23,6 +24,9 @@ public class JsonUtils {
 
     private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(JsonUtils.class);
 
+    private JsonUtils() {
+    }
+
     /**
      * <p> 使用net.sf.json解析，获取String对象的List集合 </p>
      *
@@ -41,15 +45,14 @@ public class JsonUtils {
         List<String> list = null;
         try {
             JSONTokener jsonTokener = new JSONTokener(json);
-            if (null != jsonTokener) {
-                JSONObject jsonObject = (JSONObject) jsonTokener.nextValue();
-                if (null != jsonObject) {
-                    JSONArray jsonArray = jsonObject.getJSONArray(key);
-                    if (null != jsonArray && !jsonArray.isEmpty()) {
-                        list = new ArrayList<String>();
-                        for (int i = 0; i < jsonArray.size(); i++) {
-                            list.add(jsonArray.getString(i));
-                        }
+            Object object = jsonTokener.nextValue();
+            if (ObjectUtils.isNotEmpty(object) && object instanceof JSONObject) {
+                JSONObject jsonObject = (JSONObject) object;
+                JSONArray jsonArray = jsonObject.getJSONArray(key);
+                if (null != jsonArray && !jsonArray.isEmpty()) {
+                    list = new ArrayList<>();
+                    for (int i = 0; i < jsonArray.size(); i++) {
+                        list.add(jsonArray.getString(i));
                     }
                 }
             }
@@ -83,24 +86,23 @@ public class JsonUtils {
         List<Map<String, Object>> list = null;
         try {
             JSONTokener jsonTokener = new JSONTokener(json);
-            if (null != jsonTokener) {
-                JSONObject jsonObject = (JSONObject) jsonTokener.nextValue();
-                if (null != jsonObject) {
-                    JSONArray jsonArray = jsonObject.getJSONArray(key);
-                    if (null != jsonArray && !jsonArray.isEmpty()) {
-                        list = new ArrayList<Map<String, Object>>();
-                        for (int i = 0; i < jsonArray.size(); i++) {
-                            JSONObject jsonObject2 = jsonArray.getJSONObject(i);
-                            if (null != jsonObject2) {
-                                Map<String, Object> map = new HashMap<String, Object>();
-                                Iterator<String> iterator = jsonObject2.keys();
-                                while (iterator.hasNext()) {
-                                    String jsonKey = iterator.next();
-                                    Object jsonValue = jsonObject2.get(jsonKey);
-                                    map.put(jsonKey, jsonValue);
-                                }
-                                list.add(map);
+            Object object = jsonTokener.nextValue();
+            if (ObjectUtils.isNotEmpty(object) && object instanceof JSONObject) {
+                JSONObject jsonObject = (JSONObject) object;
+                JSONArray jsonArray = jsonObject.getJSONArray(key);
+                if (null != jsonArray && !jsonArray.isEmpty()) {
+                    list = new ArrayList<>();
+                    for (int i = 0; i < jsonArray.size(); i++) {
+                        JSONObject jsonObject2 = jsonArray.getJSONObject(i);
+                        if (null != jsonObject2) {
+                            Map<String, Object> map = new HashMap<String, Object>();
+                            Iterator<String> iterator = jsonObject2.keys();
+                            while (iterator.hasNext()) {
+                                String jsonKey = iterator.next();
+                                Object jsonValue = jsonObject2.get(jsonKey);
+                                map.put(jsonKey, jsonValue);
                             }
+                            list.add(map);
                         }
                     }
                 }

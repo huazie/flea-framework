@@ -32,10 +32,11 @@ import java.util.Map;
  *   <!-- SQL模板参数配置 -->
  *   <params>
  *     <param id="insert" name="SQL模板參數" desc="用于定义SQL模板中的替换参数">
- *       <property key="table" value="flea_para_detail" />
+ *       <!-- 表名 -->
+ *       <property key="table" value="flea_config_data" />
  *       <!-- 这两个不填，表示表的字段全部使用
- *       <property key="columns" value="para_id, para_type, para_code, para_name, para1, para_state" />
- *       <property key="values" value=":paraId, :paraType, :paraCode, :paraName, :para1, :paraState" />-->
+ *       <property key="columns" value="config_id, config_type, config_code, config_name, data1, config_state" />
+ *       <property key="values" value=":configId:, :configType:, :configCode:, :configName:, :data1:, :configState:" />-->
  *     </param>
  *   </params>
  *   <!-- SQL模板和模板参数关联关系配置（简称 SQL关系配置）-->
@@ -127,7 +128,7 @@ public class InsertSqlTemplate<T> extends SqlTemplate<T> {
         String valStr = "";
         if (ObjectUtils.isEmpty(columns) && ObjectUtils.isEmpty(values)) { // 表示将实体类的全部变量替换
             colStr = StringUtils.strCombined(entityCols, Column.COLUMN_TAB_COL_NAME, SQLConstants.SQL_BLANK, SQLConstants.SQL_COMMA);
-            valStr = StringUtils.strCombined(entityCols, Column.COLUMN_ATTR_NAME, SQLConstants.SQL_BLANK + SQLConstants.SQL_COLON, SQLConstants.SQL_COMMA);
+            valStr = StringUtils.strCombined(entityCols, Column.COLUMN_ATTR_NAME, SQLConstants.SQL_BLANK + SQLConstants.SQL_COLON, SQLConstants.SQL_COLON, SQLConstants.SQL_COMMA);
             createParamMap(params, entityCols);// 设置SQL参数
         } else if (ObjectUtils.isNotEmpty(columns) && ObjectUtils.isNotEmpty(values)) {
             colStr = columns.getValue();
@@ -186,7 +187,7 @@ public class InsertSqlTemplate<T> extends SqlTemplate<T> {
             Column column = checkColumn(entityCols, tabColumnName);
             // 取属性列对应的实体类中的变量名
             String attrN = column.getAttrName();
-            if (!attrName.equals(StringUtils.strCat(SQLConstants.SQL_COLON, attrN))) {
+            if (!attrName.equals(StringUtils.strCat(SQLConstants.SQL_COLON, attrN, SQLConstants.SQL_COLON))) {
                 // 请检查SQL模板参数【id="{0}"】配置（属性【key="columns"】中的字段【{1}】与属性【key="values"】中的字段【{2}】不一一对应）
                 ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000028", paramId, tabColumnName, attrName);
             }

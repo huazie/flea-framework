@@ -108,10 +108,10 @@
         配置缓存管理MemCachedSpringCacheManager
         配置缓存时间 configMap (key缓存对象名称 value缓存过期时间)
     -->
-    <bean id="memCachedSpringCacheManager" class="com.huazie.frame.cache.memcached.MemCachedSpringCacheManager">
+    <bean id="memCachedSpringCacheManager" class="com.huazie.frame.cache.memcached.manager.MemCachedSpringCacheManager">
         <property name="configMap">
             <map>
-                <entry key="fleaparadetail" value="86400"/>
+                <entry key="fleaconfigdata" value="86400"/>
                 <entry key="fleajerseyi18nerrormapping" value="86400" />
                 <entry key="fleajerseyresservice" value="86400" />
                 <entry key="fleajerseyresclient" value="86400" />
@@ -121,13 +121,13 @@
     </bean>
 
     <!--
-        配置缓存管理RedisSpringCacheManager
+        配置缓存管理 redisShardedSpringCacheManager
         配置缓存时间 configMap (key缓存对象名称 value缓存过期时间)
     -->
-    <bean id="redisSpringCacheManager" class="com.huazie.frame.cache.redis.RedisSpringCacheManager">
+    <bean id="redisShardedSpringCacheManager" class="com.huazie.frame.cache.redis.manager.RedisShardedSpringCacheManager">
         <property name="configMap">
             <map>
-                <entry key="fleaparadetail" value="86400"/>
+                <entry key="fleaconfigdata" value="86400"/>
                 <entry key="fleajerseyi18nerrormapping" value="86400" />
                 <entry key="fleajerseyresservice" value="86400" />
                 <entry key="fleajerseyresclient" value="86400" />
@@ -136,8 +136,20 @@
         </property>
     </bean>
 
+    <!--
+        配置缓存管理 redisClusterSpringCacheManager
+        配置缓存时间 configMap (key缓存对象名称 value缓存过期时间)
+    -->
+    <bean id="redisClusterSpringCacheManager" class="com.huazie.frame.cache.redis.manager.RedisClusterSpringCacheManager">
+        <property name="configMap">
+            <map>
+                <entry key="fleamenufavorites" value="100"/>
+            </map>
+        </property>
+    </bean>
+
     <!-- 配置核心Flea缓存管理类 RedisSpringCacheManager -->
-    <bean id="coreSpringCacheManager" class="com.huazie.frame.cache.core.CoreSpringCacheManager" />
+    <bean id="coreSpringCacheManager" class="com.huazie.frame.cache.core.manager.CoreSpringCacheManager" />
 
     <!-- 开启缓存 -->
     <cache:annotation-driven cache-manager="coreSpringCacheManager" proxy-target-class="true"/>

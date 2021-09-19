@@ -11,6 +11,12 @@ import com.huazie.frame.common.FleaEntityConstants;
  */
 public interface FleaConfigEntityConstants extends FleaEntityConstants {
 
+    String E_CONFIG_TYPE = "configType";
+
+    String E_CONFIG_CODE = "configCode";
+
+    String E_CONFIG_STATE = "configState";
+
     String E_PARA_TYPE = "paraType";
 
     String E_PARA_CODE = "paraCode";

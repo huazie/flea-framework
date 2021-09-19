@@ -1,6 +1,5 @@
 package com.huazie.frame.core.filter.task;
 
-import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.core.common.FleaCoreCommonException;
 
 /**

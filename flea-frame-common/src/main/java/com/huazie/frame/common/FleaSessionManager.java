@@ -11,6 +11,9 @@ import com.huazie.frame.common.util.ObjectUtils;
  */
 public class FleaSessionManager {
 
+    private FleaSessionManager() {
+    }
+
     /**
      * <p> 获取当前线程的用户信息 </p>
      *

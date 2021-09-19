@@ -22,6 +22,9 @@ public class JABXUtils {
 
     private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(JABXUtils.class);
 
+    private JABXUtils() {
+    }
+
     /**
      * <p> 将带有JAXB注解的pojo类转换为XML字符串 </p>
      *

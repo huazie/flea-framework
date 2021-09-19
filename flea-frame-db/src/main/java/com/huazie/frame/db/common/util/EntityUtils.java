@@ -34,6 +34,9 @@ import java.util.Map;
  */
 public class EntityUtils {
 
+    private EntityUtils() {
+    }
+
     /**
      * <p> 获取SQL模板的Map集合，便于根据SQL模板id查找 </p>
      *

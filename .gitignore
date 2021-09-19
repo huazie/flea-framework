@@ -23,6 +23,7 @@
 hs_err_pid*
 .idea/
 *.iml
+target/
 flea-frame-algorithm/target/
 flea-frame-auth/target/
 flea-frame-cache/target/
@@ -35,3 +36,4 @@ flea-frame-jersey/flea-frame-jersey-client/target/
 flea-frame-jersey/flea-frame-jersey-common/target/
 flea-frame-jersey/flea-frame-jersey-server/target/
 flea-frame-tools/target/
+target/

@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p> 其他缓存定义配置文件集合 </p>
+ * 其他缓存定义配置文件集，对应【flea-cache.xml】中
+ * 【{@code <cache-files> </cache-files>}】
  *
  * @author huazie
  * @version 1.0.0

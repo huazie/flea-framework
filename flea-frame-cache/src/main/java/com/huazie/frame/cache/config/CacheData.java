@@ -3,7 +3,8 @@ package com.huazie.frame.cache.config;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
- * <p> 定义一类缓存数据 </p>
+ * 缓存数据，对应【flea-cache-config.xml】中
+ * 【{@code <cache-data type="" desc="">缓存组名</cache-data>}】
  *
  * @author huazie
  * @version 1.0.0

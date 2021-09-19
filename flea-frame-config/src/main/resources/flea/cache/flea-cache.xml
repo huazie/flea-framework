@@ -3,15 +3,19 @@
 <flea-cache>
 
     <caches>
-
-        <cache key="fleaparadetail" type="fleaFrame" expiry="86400" desc="Flea配置数据缓存" />
+        <!--
+            key    : 缓存数据主关键字
+            type   : 缓存数据类型，对应 flea-cache-config.xml中 <cache-data type="缓存数据类型">
+            expiry : 缓存数据有效期
+        -->
+        <cache key="fleaconfigdata" type="fleaFrame" expiry="86400" desc="Flea配置数据缓存" />
 
         <cache key="fleajerseyi18nerrormapping" type="fleaJersey" expiry="86400" desc="Flea Jersey 国际码和错误码映射缓存" />
         <cache key="fleajerseyresservice" type="fleaJersey" expiry="86400" desc="Flea Jersey 资源服务缓存" />
         <cache key="fleajerseyresclient" type="fleaJersey" expiry="86400" desc="Flea Jersey 资源客户端缓存" />
         <cache key="fleajerseyresource" type="fleaJersey" expiry="86400" desc="Flea Jersey 资源缓存" />
 
-        <cache key="fleamenufavorites" type="fleaFrame" expiry="0" desc="Flea菜单收藏夹数据缓存" />
+        <cache key="fleamenufavorites" type="fleaDynamic" expiry="0" desc="Flea菜单收藏夹数据缓存" />
 
     </caches>
 

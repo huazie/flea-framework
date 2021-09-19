@@ -22,10 +22,11 @@ import java.util.List;
 @Service("i18nErrorMappingSV")
 public class FleaJerseyI18nErrorMappingSVImpl extends AbstractFleaJPASVImpl<FleaJerseyI18nErrorMapping> implements IFleaJerseyI18nErrorMappingSV {
 
-    private final IFleaJerseyI18nErrorMappingDAO i18NErrorMappingDAO;
+    private IFleaJerseyI18nErrorMappingDAO i18NErrorMappingDAO;
 
     @Autowired
-    public FleaJerseyI18nErrorMappingSVImpl(@Qualifier("i18nErrorMappingDAO") IFleaJerseyI18nErrorMappingDAO i18NErrorMappingDAO) {
+    @Qualifier("i18nErrorMappingDAO")
+    public void setI18NErrorMappingDAO(IFleaJerseyI18nErrorMappingDAO i18NErrorMappingDAO) {
         this.i18NErrorMappingDAO = i18NErrorMappingDAO;
     }
 

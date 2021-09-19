@@ -19,7 +19,7 @@ public class JsonTest {
         data1.setKey("CACHE0000002");
         data1.setValue("我是谁");
 
-        List<FleaI18nData> entityList = new ArrayList<FleaI18nData>();
+        List<FleaI18nData> entityList = new ArrayList<>();
         entityList.add(data);
         entityList.add(data1);
 
@@ -50,7 +50,7 @@ public class JsonTest {
         data1.setKey("CACHE0000004");
         data1.setValue("我要去往何方");
 
-        List<FleaI18nData> entityList = new ArrayList<FleaI18nData>();
+        List<FleaI18nData> entityList = new ArrayList<>();
         entityList.add(data);
         entityList.add(data1);
 

@@ -11,6 +11,9 @@ import java.sql.Timestamp;
  */
 public class TimeUtil {
 
+    private TimeUtil() {
+    }
+
     /**
      * <p> 获取系统当前时间戳 </p>
      *

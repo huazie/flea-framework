@@ -4,7 +4,8 @@ import com.huazie.frame.common.config.ConfigValue;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
- * <p> 缓存配置项 </p>
+ * 缓存配置项，对应【flea-cache-config.xml】中
+ * 【{@code <cache-item key="" desc=""></cache-item>}】
  *
  * @author huazie
  * @version 1.0.0

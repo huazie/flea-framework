@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <p> 缓存组列表 </p>
+ * 缓存组集，对应【flea-cache-config.xml】中
+ * 【{@code <cache-groups> </cache-groups>}】
  *
  * @author huazie
  * @version 1.0.0
@@ -17,7 +18,7 @@ import java.util.Map;
  */
 public class CacheGroups {
 
-    private List<CacheGroup> cacheGroupList = new ArrayList<>(); // 缓存组列表中的各个缓存组
+    private List<CacheGroup> cacheGroupList = new ArrayList<>(); // 缓存组集中的各个缓存组
 
     public List<CacheGroup> getCacheGroupList() {
         return cacheGroupList;

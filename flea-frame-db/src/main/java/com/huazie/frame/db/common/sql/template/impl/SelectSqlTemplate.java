@@ -34,8 +34,11 @@ import java.util.regex.Pattern;
  *   <!-- SQL模板参数配置 -->
  *   <params>
  *     <param id="select" name="SQL模板參數" desc="用于定义SQL模板中的替换参数; 如需查询全部，则设置key=columns的属性值为 *，即可">
- *       <property key="table" value="flea_para_detail" />
+ *       <!-- 表名 -->
+ *       <property key="table" value="flea_config_data" />
+ *       <!-- SELECT 显示列 -->
  *       <property key="columns" value="*" />
+ *       <!-- WHERE 子句 -->
  *       <property key="conditions" value="para_id = :paraId and ( para_type = :paraType or para_type = 'CERT')" />
  *     </param>
  *   </params>

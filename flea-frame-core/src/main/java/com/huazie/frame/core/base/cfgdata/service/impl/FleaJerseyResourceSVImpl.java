@@ -24,10 +24,11 @@ import java.util.List;
 @Service("resourceSV")
 public class FleaJerseyResourceSVImpl extends AbstractFleaJPASVImpl<FleaJerseyResource> implements IFleaJerseyResourceSV {
 
-    private final IFleaJerseyResourceDAO fleaJerseyResourceDAO;
+    private IFleaJerseyResourceDAO fleaJerseyResourceDAO;
 
     @Autowired
-    public FleaJerseyResourceSVImpl(@Qualifier("resourceDAO") IFleaJerseyResourceDAO fleaJerseyResourceDAO) {
+    @Qualifier("resourceDAO")
+    public void setFleaJerseyResourceDAO(IFleaJerseyResourceDAO fleaJerseyResourceDAO) {
         this.fleaJerseyResourceDAO = fleaJerseyResourceDAO;
     }
 

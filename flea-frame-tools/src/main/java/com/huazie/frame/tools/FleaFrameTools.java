@@ -166,7 +166,7 @@ public class FleaFrameTools extends JFrame implements ActionListener, ChangeList
         if (e.getSource() == mExitMenuItem) {
             System.exit(0);
         } else if (e.getSource() == mAboutMenuItem) {
-            JOptionPane.showMessageDialog(this, "Frame框架工具集\n\n版本号:   1.0.0\n\n", "关于", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Frame框架工具集\n\n版本号:   1.1.0\n\n", "关于", JOptionPane.INFORMATION_MESSAGE);
         } else if (e.getSource() == mTabbedPanePreBtn) {
             int i = mTabbedPane.getSelectedIndex();
             if (i == 0) {

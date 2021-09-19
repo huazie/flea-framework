@@ -18,6 +18,9 @@ public class ReflectUtils {
 
     public static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(ReflectUtils.class);
 
+    private ReflectUtils() {
+    }
+
     /**
      * <p> 获取类Class </p>
      *

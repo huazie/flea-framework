@@ -22,6 +22,9 @@ public class SecurityUtils {
 
     private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(SecurityUtils.class);
 
+    private SecurityUtils() {
+    }
+
     /**
      * <p> 进行MD5加密, 单向 </p>
      *

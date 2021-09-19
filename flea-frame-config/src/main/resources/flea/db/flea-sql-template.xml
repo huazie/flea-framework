@@ -48,32 +48,32 @@
 	<params>
 		<param id="insert" name="SQL模板參數" desc="用于定义SQL模板中的替换参数">
 			<!-- 表名 -->
-			<property key="table" value="flea_para_detail" />
+			<property key="table" value="flea_config_data" />
 			<!-- 这两个不填，表示表的字段全部使用
-            <property key="columns" value="para_id, para_type, para_code, para_name, para1, para_state" />
-            <property key="values" value=":paraId, :paraType, :paraCode, :paraName, :para1, :paraState" />-->
+            <property key="columns" value="config_id, config_type, config_code, config_name, data1, config_state" />
+            <property key="values" value=":configId:, :configType:, :configCode:, :configName:, :data1:, :configState:" />-->
 		</param>
 		<param id="update" name="SQL模板參數" desc="用于定义SQL模板中的替换参数">
 			<!-- 表名 -->
-			<property key="table" value="flea_para_detail" />
+			<property key="table" value="flea_config_data" />
 			<!-- SET 子句 -->
-			<property key="sets" value="para_type = :paraType, para_code = :paraCode" />
+			<property key="sets" value="config_type = :configType:, config_code = :configCode:" />
 			<!-- WHERE 子句 -->
-			<property key="conditions" value="para_id = :paraId" />
+			<property key="conditions" value="config_id = :configId:" />
 		</param>
 		<param id="select" name="SQL模板參數" desc="用于定义SQL模板中的替换参数; 如需查询全部，则设置key=columns的属性值为 *，即可">
 			<!-- 表名 -->
-			<property key="table" value="flea_para_detail" />
+			<property key="table" value="flea_config_data" />
 			<!-- SELECT 显示列 -->
 			<property key="columns" value="*" />
 			<!-- WHERE 子句 -->
-			<property key="conditions" value="para_type = :paraType and para_code = :paraCode" />
+			<property key="conditions" value="config_type = :configType: and config_code = :configCode:" />
 		</param>
 		<param id="delete" name="SQL模板參數" desc="用于定义SQL模板中的替换参数">
 			<!-- 表名 -->
-			<property key="table" value="flea_para_detail" />
+			<property key="table" value="flea_config_data" />
 			<!-- WHERE 子句 -->
-			<property key="conditions" value="para_id = :paraId and para_state = :paraState" />
+			<property key="conditions" value="config_id = :configId: and config_state = :configState:" />
 		</param>
 	</params>
 	<!-- SQL模板和模板参数关联关系配置（简称 SQL关系配置）-->

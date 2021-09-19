@@ -1,6 +1,6 @@
 package com.huazie.frame.cache;
 
-import com.huazie.frame.cache.common.CacheConfigManager;
+import com.huazie.frame.cache.common.CacheConfigUtils;
 import com.huazie.frame.cache.common.CacheConstants;
 import com.huazie.frame.cache.common.CacheXmlDigesterHelper;
 import com.huazie.frame.cache.config.Cache;
@@ -10,6 +10,7 @@ import com.huazie.frame.cache.config.CacheItem;
 import com.huazie.frame.cache.config.CacheParams;
 import com.huazie.frame.cache.config.CacheServer;
 import com.huazie.frame.cache.config.FleaCache;
+import com.huazie.frame.cache.config.FleaCacheConfig;
 import com.huazie.frame.common.slf4j.FleaLogger;
 import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import org.junit.Test;
@@ -29,21 +30,21 @@ public class FleaCacheConfigTest {
 
     @Test
     public void testGetFleaCache() {
-        Cache cache = CacheConfigManager.getCache("fleaparadetail");
+        Cache cache = CacheConfigUtils.getCache("fleaconfigdata");
         LOGGER.debug("Cache={}", cache);
-        CacheData cacheData = CacheConfigManager.getCacheData(cache.getType());
+        CacheData cacheData = CacheConfigUtils.getCacheData(cache.getType());
         LOGGER.debug("CacheData={}", cacheData);
-        CacheGroup cacheGroup = CacheConfigManager.getCacheGroup(cacheData.getGroup());
+        CacheGroup cacheGroup = CacheConfigUtils.getCacheGroup(cacheData.getGroup());
         LOGGER.debug("CacheGroup={}", cacheGroup);
-        CacheParams cacheParams = CacheConfigManager.getCacheParams();
+        CacheParams cacheParams = CacheConfigUtils.getCacheParams();
         LOGGER.debug("CacheParams={}", cacheParams);
-        List<CacheServer> cacheServers = CacheConfigManager.getCacheServer(cacheGroup.getGroup());
+        List<CacheServer> cacheServers = CacheConfigUtils.getCacheServer(cacheGroup.getGroup());
         LOGGER.debug("CacheServers={}", cacheServers);
     }
 
     @Test
     public void testGetCacheItem() {
-        CacheItem cacheItem = CacheConfigManager.getCacheItem(CacheConstants.FleaCacheConfigConstants.FLEA_CACHE_INIT, CacheConstants.FleaCacheConfigConstants.SYSTEM_NAME);
+        CacheItem cacheItem = CacheConfigUtils.getCacheItem(CacheConstants.FleaCacheConfigConstants.FLEA_CACHE_INIT, CacheConstants.FleaCacheConfigConstants.SYSTEM_NAME);
         LOGGER.debug("CacheItem={}", cacheItem);
     }
 
@@ -51,5 +52,11 @@ public class FleaCacheConfigTest {
     public void testCacheFiles() {
         FleaCache fleaCache = CacheXmlDigesterHelper.getInstance().getFleaCache();
         LOGGER.debug("CacheFiles={}", fleaCache.getCacheFiles());
+    }
+
+    @Test
+    public void testCacheServers() {
+        FleaCacheConfig fleaCacheConfig = CacheXmlDigesterHelper.getInstance().getFleaCacheConfig();
+        LOGGER.debug("CacheServers={}", fleaCacheConfig.getCacheServers());
     }
 }
