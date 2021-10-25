@@ -5,7 +5,7 @@
     <parent>
         <artifactId>flea-frame</artifactId>
         <groupId>com.huazie.frame</groupId>
-        <version>1.1.0</version>
+        <version>1.2.0</version>
     </parent>
     <name>FLEA FRAME BOM</name>
     <modelVersion>4.0.0</modelVersion>
@@ -59,10 +59,31 @@
                 <version>${project.version}</version>
             </dependency>
 
-            <!-- FLEA FRAME DB-->
+            <!-- FLEA FRAME DB COMMON-->
             <dependency>
                 <groupId>com.huazie.frame</groupId>
-                <artifactId>flea-frame-db</artifactId>
+                <artifactId>flea-frame-db-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- FLEA FRAME DB ECLIPSELINK-->
+            <dependency>
+                <groupId>com.huazie.frame</groupId>
+                <artifactId>flea-frame-db-eclipselink</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- FLEA FRAME DB JDBC-->
+            <dependency>
+                <groupId>com.huazie.frame</groupId>
+                <artifactId>flea-frame-db-jdbc</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- FLEA FRAME DB JPA-->
+            <dependency>
+                <groupId>com.huazie.frame</groupId>
+                <artifactId>flea-frame-db-jpa</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

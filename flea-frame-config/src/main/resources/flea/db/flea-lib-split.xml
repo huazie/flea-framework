@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<libs>
+
+    <!-- 分库配置
+        name : 模板库名
+        count: 分库总数
+        exp  : 分库名表达式 (模板库名)(分库序列键)
+    -->
+    <lib name="fleafs" count="4" exp="(FLEA_LIB_NAME)(SEQ)" desc="flea文件服务器核心库分库规则">
+        <!-- 分库事物配置
+            name : 模板事物名
+            exp  : 分库事物名表达式 (模板事物名)(分库序列键)
+        -->
+        <transaction name="fleaFSTransactionManager" exp="(FLEA_TRANSACTION_NAME)(SEQ)" />
+        <splits>
+            <!-- 分库转换实现配置
+                key : 分库转换类型关键字【可查看 LibSplitEnum】
+                seq : 分库序列键【】
+                implClass : 分库转换实现类【可自行定义，需实现com.huazie.frame.db.com.huazie.frame.db.common.lib.split.ILibSplit】
+                注意：
+                （1）key不为空，implClass可不填
+                （2）key为空，implClass必填
+                （3）key 和 implClass 都不为空，implClass需要和分库转换类型枚举中分库转换实现类对应上
+            -->
+            <split key="NUM" seq="SEQ"/>
+        </splits>
+    </lib>
+
+</libs>

@@ -18,14 +18,14 @@ public interface FleaAuthEntityConstants extends FleaEntityConstants {
      */
     interface UserEntityConstants {
         /**
-         * <p> 账户编号 </p>
+         * <p> 操作账户编号 </p>
          */
         String E_ACCOUNT_ID = "accountId";
 
         /**
-         *
+         * <p> 系统账号编号 </p>
          */
-        String E_SYSTEM_ACCOUNT_ID = "system_account_id";
+        String E_SYSTEM_ACCOUNT_ID = "systemAccountId";
 
         /**
          * <p> 账号 </p>

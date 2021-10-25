@@ -2,6 +2,7 @@ package com.huazie.frame.auth.base;
 
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.db.jpa.dao.impl.AbstractFleaJPADAOImpl;
+import com.huazie.frame.db.jpa.transaction.FleaTransactional;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -9,7 +10,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 /**
- * <p> FleaAuth数据源DAO层父类 </p>
+ * FleaAuth数据源DAO层父类
  *
  * @author huazie
  * @version 1.0.0
@@ -18,11 +19,11 @@ import java.util.List;
 public class FleaAuthDAOImpl<T> extends AbstractFleaJPADAOImpl<T> {
 
     @PersistenceContext(unitName="fleaauth")
-    protected EntityManager entityManager;
+    private EntityManager entityManager;
 
     @Override
     @Transactional("fleaAuthTransactionManager")
-    public Long getFleaNextValue(T entity) throws CommonException {
+    public Number getFleaNextValue(T entity) throws CommonException {
         return super.getFleaNextValue(entity);
     }
 
@@ -51,37 +52,43 @@ public class FleaAuthDAOImpl<T> extends AbstractFleaJPADAOImpl<T> {
     }
 
     @Override
-    @Transactional("fleaAuthTransactionManager")
+    @FleaTransactional("fleaAuthTransactionManager")
+    public boolean remove(T entity) throws CommonException {
+        return super.remove(entity);
+    }
+
+    @Override
+    @FleaTransactional("fleaAuthTransactionManager")
     public boolean removeNew(long entityId, T entity) throws CommonException {
         return super.removeNew(entityId, entity);
     }
 
     @Override
-    @Transactional("fleaAuthTransactionManager")
+    @FleaTransactional("fleaAuthTransactionManager")
     public boolean removeNew(String entityId, T entity) throws CommonException {
         return super.removeNew(entityId, entity);
     }
 
     @Override
-    @Transactional("fleaAuthTransactionManager")
+    @FleaTransactional("fleaAuthTransactionManager")
     public T update(T entity) throws CommonException {
         return super.update(entity);
     }
 
     @Override
-    @Transactional("fleaAuthTransactionManager")
+    @FleaTransactional("fleaAuthTransactionManager")
     public List<T> batchUpdate(List<T> entities) throws CommonException {
         return super.batchUpdate(entities);
     }
 
     @Override
-    @Transactional("fleaAuthTransactionManager")
+    @FleaTransactional("fleaAuthTransactionManager")
     public void save(T entity) throws CommonException {
         super.save(entity);
     }
 
     @Override
-    @Transactional("fleaAuthTransactionManager")
+    @FleaTransactional("fleaAuthTransactionManager")
     public void batchSave(List<T> entities) throws CommonException {
         super.batchSave(entities);
     }

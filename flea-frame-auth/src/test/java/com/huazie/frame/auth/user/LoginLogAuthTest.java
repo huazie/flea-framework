@@ -41,7 +41,7 @@ public class LoginLogAuthTest {
             fleaLoginLog.setLoginTime(DateUtils.getCurrentTime());
             fleaLoginLog.setCreateDate(DateUtils.getCurrentTime());
 
-            Long fleaLoginId = fleaLoginLogSV.getFleaNextValue(fleaLoginLog);
+            Long fleaLoginId = (Long) fleaLoginLogSV.getFleaNextValue(fleaLoginLog);
             fleaLoginLog.setLoginLogId(fleaLoginId);
 
             // 保存至分表

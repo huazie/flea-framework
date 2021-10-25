@@ -5,7 +5,9 @@ import com.huazie.frame.common.slf4j.FleaLogger;
 import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 /**
  * <p> 反射工具类 </p>
@@ -162,6 +164,29 @@ public class ReflectUtils {
     }
 
     /**
+     * 设置指定对象的指定私有成员变量的值
+     *
+     * @param obj   待处理对象
+     * @param name  成员变量名
+     * @param value 成员变量值
+     * @since 1.0.0
+     */
+    public static void setValue(Object obj, String name, Object value) {
+        try {
+            // 获取指定的成员变量Field
+            Field field = obj.getClass().getDeclaredField(name);
+            // 设置true，可以访问私有变量
+            field.setAccessible(true);
+            // 设置对应成员变量的值
+            field.set(obj, value);
+        } catch (Exception e) {
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error1(new Object() {}, "设置对象指定属性【" + name + "】对应的值出错，Exception=", e);
+            }
+        }
+    }
+
+    /**
      * <p> 获取对象指定属性的值 </p>
      *
      * @param obj      待取值对象
@@ -176,7 +201,7 @@ public class ReflectUtils {
             value = method.invoke(obj);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "获取对象指定属性值出错，Exception=", e);
+                LOGGER.error1(new Object() {}, "获取对象指定属性【" + attrName + "】对应的值出错，Exception=", e);
             }
         }
         return value;
@@ -197,35 +222,54 @@ public class ReflectUtils {
             method = obj.getClass().getMethod(getter);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "获取对象指定属性对应get方法出错，Exception=", e);
+                LOGGER.error1(new Object() {}, "获取对象指定属性【" + attrName + "】对应get方法出错，Exception=", e);
             }
         }
         return method;
     }
 
     /**
-     * <p> 反射调用obj对象指定方法并返回 </p>
+     * 反射调用指定对象的指定方法并返回
      *
-     * @param obj        实例对象
+     * @param obj        对象实例
+     * @param methodName 方法名
+     * @param args       参数列表
+     * @param types      参数Class类型列表
+     * @return 指定对象的指定方法调用后的返回值
+     */
+    public static Object invoke(Object obj, String methodName, Object[] args, Class<?>[] types) {
+        Object result = null;
+        try {
+            Method method = obj.getClass().getMethod(methodName, types);
+            result = method.invoke(obj, args);
+        } catch (Exception e) {
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error1(new Object() {}, "反射调用对象指定方法【" + methodName + "】、指定参数列表【" + Arrays.toString(types) + "】出错，Exception = ", e);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 反射调用指定对象指定方法并返回
+     *
+     * @param obj        对象实例
      * @param methodName 方法名
      * @param inputObj   入参对象
      * @param inputClazz 入参对象Class
-     * @return 出参对象
+     * @return 指定对象的指定方法调用后的返回值
      * @since 1.0.0
      */
     public static Object invoke(Object obj, String methodName, Object inputObj, Class inputClazz) {
-
         Object outputObj = null;
-
         try {
             Method method = obj.getClass().getMethod(methodName, inputClazz);
             outputObj = method.invoke(obj, inputObj);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "反射调用对象指定方法出错，Exception = ", e);
+                LOGGER.error1(new Object() {}, "反射调用对象指定方法【" + methodName + "】出错，Exception = ", e);
             }
         }
-
         return outputObj;
     }
 
