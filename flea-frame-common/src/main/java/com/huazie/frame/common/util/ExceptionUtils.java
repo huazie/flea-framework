@@ -2,6 +2,7 @@ package com.huazie.frame.common.util;
 
 import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.exception.CommonException;
+import com.huazie.frame.common.exception.FleaException;
 
 /**
  * 异常工具类，封装了自定义异常抛出的通用逻辑
@@ -13,6 +14,50 @@ import com.huazie.frame.common.exception.CommonException;
 public class ExceptionUtils {
 
     private ExceptionUtils() {
+    }
+
+    /**
+     * 抛出指定的异常，对应异常类的构造方法：{@code 异常类名(String message)}
+     *
+     * @param exceptionClazz 异常类Class对象
+     * @param message        错误描述
+     * @since 1.2.0
+     */
+    public static void throwFleaException(Class<? extends FleaException> exceptionClazz, String message) throws FleaException {
+        Object exceptionInstance = ReflectUtils.newInstance(exceptionClazz, message);
+        if (ObjectUtils.isNotEmpty(exceptionInstance)) {
+            throw exceptionClazz.cast(exceptionInstance);
+        }
+    }
+
+    /**
+     * 抛出指定的异常，对应异常类的构造方法：{@code 异常类名(Throwable cause)}
+     *
+     * @param exceptionClazz 异常类Class对象
+     * @param cause          捕获的异常对象
+     * @since 1.2.0
+     */
+    public static void throwFleaException(Class<? extends FleaException> exceptionClazz, Throwable cause) throws FleaException {
+        Object exceptionInstance = ReflectUtils.newInstance(exceptionClazz, new Object[]{cause}, new Class<?>[]{Throwable.class});
+        if (ObjectUtils.isNotEmpty(exceptionInstance)) {
+            throw exceptionClazz.cast(exceptionInstance);
+        }
+    }
+
+    /**
+     * 抛出指定的异常，对应异常类的构造方法：{@code 异常类名(String message, Throwable cause)}
+     *
+     * @param exceptionClazz 异常类Class对象
+     * @param message        错误描述
+     * @param cause          捕获的异常对象
+     * @since 1.2.0
+     */
+    public static void throwFleaException(Class<? extends FleaException> exceptionClazz, String message, Throwable cause) throws FleaException {
+        Class[] paramTypes = new Class[]{String.class, Throwable.class};
+        Object exceptionInstance = ReflectUtils.newInstance(exceptionClazz, new Object[]{message, cause}, paramTypes);
+        if (ObjectUtils.isNotEmpty(exceptionInstance)) {
+            throw exceptionClazz.cast(exceptionInstance);
+        }
     }
 
     /**

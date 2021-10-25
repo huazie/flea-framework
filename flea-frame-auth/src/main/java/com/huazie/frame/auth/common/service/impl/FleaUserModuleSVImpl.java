@@ -342,7 +342,7 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
                 if (null != fleaLoginLog) {
                     fleaLoginLog.setLoginState(FleaAuthConstants.UserConstants.LOGIN_STATE_2);
                     fleaLoginLog.setLogoutTime(DateUtils.getCurrentTime());
-                    fleaLoginLog.setDoneDate(fleaLoginLog.getLoginTime());
+                    fleaLoginLog.setDoneDate(DateUtils.getCurrentTime());
                     fleaLoginLog.setRemarks("用户已退出");
                     // 更新当月用户最近一次的登录日志的登录状态（2：已退出）
                     fleaLoginLogSV.update(fleaLoginLog);

@@ -5,7 +5,7 @@
     <parent>
         <artifactId>flea-frame</artifactId>
         <groupId>com.huazie.frame</groupId>
-        <version>1.1.0</version>
+        <version>1.2.0</version>
     </parent>
     <name>FLEA FRAME TOOLS</name>
     <modelVersion>4.0.0</modelVersion>
@@ -27,10 +27,22 @@
 
     <dependencies>
 
-        <!-- FLEA FRAME COMMON -->
+        <!-- 数据库JDBC连接相关 （MySQL的JDBC驱动）-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <!-- Java Persistence API -->
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>javax.persistence</artifactId>
+        </dependency>
+
+        <!-- FLEA FRAME DB JDBC -->
         <dependency>
             <groupId>com.huazie.frame</groupId>
-            <artifactId>flea-frame-db</artifactId>
+            <artifactId>flea-frame-db-jdbc</artifactId>
             <version>${parent.version}</version>
         </dependency>
 

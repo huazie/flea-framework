@@ -4,7 +4,7 @@ import %CODE_PACKAGE%.entity.%ENTITY_CLASS_NAME%;
 import com.huazie.frame.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 
 /**
- * <p> %TABLE_DESC%DAO层接口 </p>
+ * %TABLE_DESC%DAO层接口
  *
  * @author %AUTHOR%
  * @version %VERSION%

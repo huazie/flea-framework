@@ -4,7 +4,7 @@ import %CODE_PACKAGE%.entity.%ENTITY_CLASS_NAME%;
 import com.huazie.frame.db.jpa.service.interfaces.IAbstractFleaJPASV;
 
 /**
- * <p> %TABLE_DESC%SV层接口定义 </p>
+ * %TABLE_DESC%SV层接口定义
  *
  * @author %AUTHOR%
  * @version %VERSION%

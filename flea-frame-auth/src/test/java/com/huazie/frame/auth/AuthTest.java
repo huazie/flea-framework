@@ -43,6 +43,7 @@ public class AuthTest {
         // 显示查询SQL
         map.put("eclipselink.logging.level.sql", "FINE");
         map.put("eclipselink.logging.parameters", "true");
+        map.put("eclipselink.logging.thread", "true"); // 打印线程信息
         emf = Persistence.createEntityManagerFactory("fleaauth", map);
         em = emf.createEntityManager();
     }

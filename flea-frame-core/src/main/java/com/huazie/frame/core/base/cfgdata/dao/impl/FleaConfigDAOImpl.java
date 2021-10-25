@@ -19,11 +19,11 @@ import java.util.List;
 public class FleaConfigDAOImpl<T> extends AbstractFleaJPADAOImpl<T> {
 	
 	@PersistenceContext(unitName="fleaconfig")
-	protected EntityManager entityManager;
+	private EntityManager entityManager;
 
 	@Override
 	@Transactional("fleaConfigTransactionManager")
-	public Long getFleaNextValue(T entity) throws CommonException {
+	public Number getFleaNextValue(T entity) throws CommonException {
 		return super.getFleaNextValue(entity);
 	}
 

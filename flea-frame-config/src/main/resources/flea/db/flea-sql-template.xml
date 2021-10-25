@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sql version="1.0">
+<sql>
 	<!-- 这边的规则为固定写法，一般不做修改 -->
 	<rules>
 		<rule id="insert" name="INSERT SQL模板的校验规则配置">
