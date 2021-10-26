@@ -138,17 +138,13 @@ public class EclipseLinkLibTableSplitHandler extends FleaLibTableSplitHandler {
         // 获取分表名
         FleaEntity fleaEntity = (FleaEntity) entity;
         SplitTable splitTable = fleaEntity.get(DBConstants.LibTableSplitConstants.SPLIT_TABLE, SplitTable.class);
-        // 分表信息为空或不存在分表，默认不处理
-        if (ObjectUtils.isEmpty(splitTable) || !splitTable.isExistSplitTable()) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {
-                }, "分表信息为空或不存在分表，本次不执行【remove】！");
-            }
-            return false;
+        // 分表场景
+        if (ObjectUtils.isNotEmpty(splitTable) && splitTable.isExistSplitTable()) {
+            // 删除实体数据
+            FleaEntityManagerImpl.getFleaEntityManagerImpl(entityManager).remove(entity);
+        } else {
+            entityManager.remove(entity);
         }
-
-        // 删除实体数据
-        FleaEntityManagerImpl.getFleaEntityManagerImpl(entityManager).remove(entity);
         return true;
     }
 
@@ -165,17 +161,13 @@ public class EclipseLinkLibTableSplitHandler extends FleaLibTableSplitHandler {
         // 获取分表名
         FleaEntity fleaEntity = (FleaEntity) entity;
         SplitTable splitTable = fleaEntity.get(DBConstants.LibTableSplitConstants.SPLIT_TABLE, SplitTable.class);
-        // 分表信息为空或不存在分表，默认不处理
-        if (ObjectUtils.isEmpty(splitTable) || !splitTable.isExistSplitTable()) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {
-                }, "分表信息为空或不存在分表，本次不执行【merge】！");
-            }
-            return null;
+        // 分表场景
+        if (ObjectUtils.isNotEmpty(splitTable) && splitTable.isExistSplitTable()) {
+            // 合并实体数据的状态至当前持久化上下文中
+            return FleaEntityManagerImpl.getFleaEntityManagerImpl(entityManager).merge(entity);
+        } else {
+            return entityManager.merge(entity);
         }
-
-        // 合并实体数据的状态至当前持久化上下文中
-        return FleaEntityManagerImpl.getFleaEntityManagerImpl(entityManager).merge(entity);
     }
 
     @Override
@@ -191,17 +183,13 @@ public class EclipseLinkLibTableSplitHandler extends FleaLibTableSplitHandler {
         // 获取分表名
         FleaEntity fleaEntity = (FleaEntity) entity;
         SplitTable splitTable = fleaEntity.get(DBConstants.LibTableSplitConstants.SPLIT_TABLE, SplitTable.class);
-        // 分表信息为空或不存在分表，默认不处理
-        if (ObjectUtils.isEmpty(splitTable) || !splitTable.isExistSplitTable()) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {
-                }, "分表信息为空或不存在分表，本次不执行【persist】！");
-            }
-            return;
+        // 分表场景
+        if (ObjectUtils.isNotEmpty(splitTable) && splitTable.isExistSplitTable()) {
+            // 向工作单元注册对象
+            FleaEntityManagerImpl.getFleaEntityManagerImpl(entityManager).persist(entity);
+        } else {
+            entityManager.persist(entity);
         }
-
-        // 向工作单元注册对象
-        FleaEntityManagerImpl.getFleaEntityManagerImpl(entityManager).persist(entity);
     }
 
 }
