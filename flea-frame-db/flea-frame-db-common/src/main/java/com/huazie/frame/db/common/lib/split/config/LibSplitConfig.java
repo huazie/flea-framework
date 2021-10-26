@@ -40,7 +40,7 @@ public class LibSplitConfig {
                         config = new LibSplitConfig();
                     } catch (Exception e) {
                         if (LOGGER.isErrorEnabled()) {
-                            LOGGER.error("Fail to init flea-lib-split.xml");
+                            LOGGER.error("Fail to init flea-lib-split.xml", e);
                         }
                     }
                 }

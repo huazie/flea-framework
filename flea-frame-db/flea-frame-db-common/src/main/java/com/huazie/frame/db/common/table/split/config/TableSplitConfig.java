@@ -40,7 +40,7 @@ public class TableSplitConfig {
                         config = new TableSplitConfig();
                     } catch (Exception e) {
                         if (LOGGER.isErrorEnabled()) {
-                            LOGGER.error("Fail to init flea-table-split.xml");
+                            LOGGER.error("Fail to init flea-table-split.xml", e);
                         }
                     }
                 }
