@@ -160,11 +160,6 @@ public class EclipseLinkUtils {
                     ((TableSequence) splitSequence).getSelectQuery().setDescriptor(splitClassDescriptor);
                     // 为主键值更新SQL添加分表的实体类的描述信息
                     ((TableSequence) splitSequence).getUpdateQuery().setDescriptor(splitClassDescriptor);
-                    // 为TableSequence序列的查询SQL和更新SQL提供统一的连接访问器，以应对并发环境下默认取连接导致获取下一个主键值异常的情形
-//                    FleaSequencePartitioningPolicy fleaSequencePartitioningPolicy = new FleaSequencePartitioningPolicy();
-//                    // 设置序列表中指定序列名称的列的名称
-//                    fleaSequencePartitioningPolicy.setNameFieldName(((TableSequence) splitSequence).getNameFieldName());
-//                    splitClassDescriptor.setPartitioningPolicy(fleaSequencePartitioningPolicy);
                 }
                 splitClassDescriptor.setSequence(splitSequence);
                 session.getDatasourcePlatform().addSequence(splitSequence, session.isConnected());

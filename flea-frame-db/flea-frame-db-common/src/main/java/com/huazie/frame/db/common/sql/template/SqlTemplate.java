@@ -430,6 +430,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
             for (String aName : aNameArr) {
                 aName = StringUtils.trim(aName);
                 String aNameVar = StringUtils.subStrLast(aName, aName.length() - 1);
+                aNameVar = StringUtils.subStrBefore(aNameVar, aNameVar.length() - 1);
                 if (ObjectUtils.isNotEmpty(fleaEntity) && !fleaEntity.contains(aNameVar)) {
                     isValid = false;
                     break;
