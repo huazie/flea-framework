@@ -4,17 +4,17 @@ import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.StringUtils;
 
 /**
- * 数字分库转换实现类，即转换后的分库序列键为整数数字，
- * 从1开始，到分库数 {@code count} 结束。
+ * 十六进制大写字母分库转换实现类，即转换后的分库序列键为大写字母，
+ * 从A开始，共即 {@code count} 个 。
  *
  * @author huazie
  * @version 1.1.0
  * @since 1.1.0
  */
-public final class NumberLibSplitImpl extends AbstractLibSplitImpl {
+public final class HexUpperAlphabetLibSplitImpl extends AbstractLibSplitImpl {
 
     @Override
     public String convert(Object splitLibObj, int count) throws CommonException {
-        return StringUtils.valueOf(convertCommon(splitLibObj, count) + 1);
+        return StringUtils.valueOf((char)(convertCommon(splitLibObj, INT_HEX, count) + UPPER_A));
     }
 }
