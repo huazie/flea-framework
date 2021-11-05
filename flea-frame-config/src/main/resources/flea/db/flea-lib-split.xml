@@ -22,7 +22,7 @@
                 （2）key为空，implClass必填
                 （3）key 和 implClass 都不为空，implClass需要和分库转换类型枚举中分库转换实现类对应上
             -->
-            <split key="NUM" seq="SEQ"/>
+            <split key="HEX_NUM" seq="SEQ"/>
         </splits>
     </lib>
 

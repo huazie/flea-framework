@@ -16,15 +16,22 @@ import com.huazie.frame.db.common.lib.split.ILibSplit;
  */
 public abstract class AbstractLibSplitImpl implements ILibSplit {
 
+    protected static final int INT_DEC = 10; // 十进制的基数值
+    protected static final int INT_HEX = 16; // 十六进制的基数值
+
+    protected static final char LOWER_A = 'a'; // 分库名起始小写字母
+    protected static final char UPPER_A = 'A'; // 分库名起始大写字母
+
     /**
      * 分库转换的通用实现逻辑
      *
      * @param splitLibObj 分库对象
+     * @param radix       基数
      * @param count       分库总数
      * @return 分库转换值
      * @throws CommonException 通用异常
      */
-    protected int convertCommon(Object splitLibObj, int count) throws CommonException {
+    protected int convertCommon(Object splitLibObj, int radix, int count) throws CommonException {
         // 【{0}】不能为空
         ObjectUtils.checkEmpty(splitLibObj, LibSplitException.class, "ERROR-DB-DAO0000000002", "splitLibObj");
 
@@ -35,6 +42,6 @@ public abstract class AbstractLibSplitImpl implements ILibSplit {
 
         String splitLibStr = splitLibObj.toString();
         String lastChar = splitLibStr.substring(splitLibStr.length() - 1);
-        return Integer.parseInt(lastChar, 16) % count;
+        return Integer.parseInt(lastChar, radix) % count;
     }
 }
