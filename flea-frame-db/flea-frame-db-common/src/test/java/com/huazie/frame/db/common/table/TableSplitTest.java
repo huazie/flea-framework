@@ -5,6 +5,13 @@ import com.huazie.frame.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.frame.db.common.table.split.ITableSplit;
 import com.huazie.frame.db.common.table.split.TableSplitEnum;
 import com.huazie.frame.db.common.table.split.config.TableSplitConfig;
+import com.huazie.frame.db.common.table.split.impl.OddEvenAlphabetTableSplitImpl;
+import com.huazie.frame.db.common.table.split.impl.OddEvenNumberTableSplitImpl;
+import com.huazie.frame.db.common.table.split.impl.OddEvenUpperAlphabetTableSplitImpl;
+import com.huazie.frame.db.common.table.split.impl.OneBeforeTableSplitImpl;
+import com.huazie.frame.db.common.table.split.impl.OneBeforeUpperTableSplitImpl;
+import com.huazie.frame.db.common.table.split.impl.OneTableSplitImpl;
+import com.huazie.frame.db.common.table.split.impl.OneUpperTableSplitImpl;
 import com.huazie.frame.db.common.table.split.impl.TwoBeforeTableSplitImpl;
 import com.huazie.frame.db.common.table.split.impl.TwoBeforeUpperTableSplitImpl;
 import com.huazie.frame.db.common.table.split.impl.TwoTableSplitImpl;
@@ -26,7 +33,40 @@ public class TableSplitTest {
     private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(TableSplitTest.class);
 
     @Test
-    public void testTwoHexTableSplitEmpty() {
+    public void testOddEvenNumberSplitEmpty() {
+        //FleaFrameManager.getManager().setLocale(Locale.US);
+        ITableSplit tableSplit = new OddEvenNumberTableSplitImpl();
+        try {
+            LOGGER.debug(tableSplit.convert("123123120"));
+        } catch (Exception e) {
+            LOGGER.error("Exception=", e);
+        }
+    }
+
+    @Test
+    public void testOddEvenAlphabetSplitEmpty() {
+        //FleaFrameManager.getManager().setLocale(Locale.US);
+        ITableSplit tableSplit = new OddEvenAlphabetTableSplitImpl();
+        try {
+            LOGGER.debug(tableSplit.convert("123123121"));
+        } catch (Exception e) {
+            LOGGER.error("Exception=", e);
+        }
+    }
+
+    @Test
+    public void testOddEvenUpperAlphabetSplitEmpty() {
+        //FleaFrameManager.getManager().setLocale(Locale.US);
+        ITableSplit tableSplit = new OddEvenUpperAlphabetTableSplitImpl();
+        try {
+            LOGGER.debug(tableSplit.convert("123123122"));
+        } catch (Exception e) {
+            LOGGER.error("Exception=", e);
+        }
+    }
+
+    @Test
+    public void testTwoTableSplitEmpty() {
         //FleaFrameManager.getManager().setLocale(Locale.US);
         ITableSplit tableSplit = new TwoTableSplitImpl();
         try {
@@ -37,7 +77,7 @@ public class TableSplitTest {
     }
 
     @Test
-    public void testTwoHexTableSplit() {
+    public void testTwoTableSplit() {
         ITableSplit tableSplit = new TwoTableSplitImpl();
         try {
             LOGGER.debug(tableSplit.convert("DF312311FF"));
@@ -47,7 +87,7 @@ public class TableSplitTest {
     }
 
     @Test
-    public void testTwoHexBeforeTableSplit() {
+    public void testTwoBeforeTableSplit() {
         ITableSplit tableSplit = new TwoBeforeTableSplitImpl();
         try {
             LOGGER.debug(tableSplit.convert("DF312311FF"));
@@ -57,7 +97,7 @@ public class TableSplitTest {
     }
 
     @Test
-    public void testTwoHexUpperTableSplit() {
+    public void testTwoUpperTableSplit() {
         ITableSplit tableSplit = new TwoUpperTableSplitImpl();
         try {
             LOGGER.debug(tableSplit.convert("df312311ff"));
@@ -67,8 +107,48 @@ public class TableSplitTest {
     }
 
     @Test
-    public void testTwoHexBeforeUpperTableSplit() {
+    public void testTwoBeforeUpperTableSplit() {
         ITableSplit tableSplit = new TwoBeforeUpperTableSplitImpl();
+        try {
+            LOGGER.debug(tableSplit.convert("df312311ff"));
+        } catch (Exception e) {
+            LOGGER.error("Exception=", e);
+        }
+    }
+
+    @Test
+    public void testOneTableSplit() {
+        ITableSplit tableSplit = new OneTableSplitImpl();
+        try {
+            LOGGER.debug(tableSplit.convert("DF312311FF"));
+        } catch (Exception e) {
+            LOGGER.error("Exception=", e);
+        }
+    }
+
+    @Test
+    public void testOneBeforeTableSplit() {
+        ITableSplit tableSplit = new OneBeforeTableSplitImpl();
+        try {
+            LOGGER.debug(tableSplit.convert("DF312311FF"));
+        } catch (Exception e) {
+            LOGGER.error("Exception=", e);
+        }
+    }
+
+    @Test
+    public void testOneUpperTableSplit() {
+        ITableSplit tableSplit = new OneUpperTableSplitImpl();
+        try {
+            LOGGER.debug(tableSplit.convert("df312311ff"));
+        } catch (Exception e) {
+            LOGGER.error("Exception=", e);
+        }
+    }
+
+    @Test
+    public void testOneBeforeUpperTableSplit() {
+        ITableSplit tableSplit = new OneBeforeUpperTableSplitImpl();
         try {
             LOGGER.debug(tableSplit.convert("df312311ff"));
         } catch (Exception e) {

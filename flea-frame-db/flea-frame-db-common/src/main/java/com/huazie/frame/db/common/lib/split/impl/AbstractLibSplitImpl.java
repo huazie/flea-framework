@@ -41,7 +41,7 @@ public abstract class AbstractLibSplitImpl implements ILibSplit {
         }
 
         String splitLibStr = splitLibObj.toString();
-        String lastChar = splitLibStr.substring(splitLibStr.length() - 1);
+        String lastChar = splitLibStr.substring(splitLibStr.length() - CommonConstants.NumeralConstants.INT_ONE);
         return Integer.parseInt(lastChar, radix) % count;
     }
 }

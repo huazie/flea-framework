@@ -1,5 +1,6 @@
 package com.huazie.frame.db.common.table.split.impl;
 
+import com.huazie.frame.common.CommonConstants;
 import com.huazie.frame.common.DateFormatEnum;
 import com.huazie.frame.common.exception.CommonException;
 import com.huazie.frame.common.util.DateUtils;
@@ -20,7 +21,7 @@ import java.util.Date;
 public abstract class AbstractTableSplitImpl implements ITableSplit {
 
     /**
-     * <p> 分表转换(指定日期格式化分表字段获取分表后缀) </p>
+     * <p> 分表转换 (指定日期格式化分表字段获取分表后缀) </p>
      *
      * @param tableSplitColumn 分表字段
      * @param dateFormatEnum   日期格式化类型枚举
@@ -45,7 +46,7 @@ public abstract class AbstractTableSplitImpl implements ITableSplit {
     }
 
     /**
-     * <p> 分表转换(截取分表字段后len位得到) </p>
+     * <p> 分表转换 (截取分表字段前面或后面len位得到) </p>
      *
      * @param tableSplitColumn 分表字段
      * @param len              分表后缀长度
@@ -73,5 +74,26 @@ public abstract class AbstractTableSplitImpl implements ITableSplit {
         } else {
             return tSplitPrefix.toLowerCase();
         }
+    }
+
+    /**
+     * 奇偶分表转换的通用实现逻辑
+     *
+     * @param tableSplitColumn 分表字段
+     * @param radix            基数
+     * @return 分库转换值
+     * @throws CommonException 通用异常
+     * @since 1.2.0
+     */
+    protected int convertCommon(Object tableSplitColumn, int radix) throws CommonException {
+        // 分表属性列值不能为空
+        ObjectUtils.checkEmpty(tableSplitColumn, TableSplitException.class, "ERROR-DB-TSP0000000003");
+
+        String tSplitCol = tableSplitColumn.toString();
+        // 分表属性列值不能为空
+        StringUtils.checkBlank(tSplitCol, TableSplitException.class, "ERROR-DB-TSP0000000003");
+
+        String lastChar = tSplitCol.substring(tSplitCol.length() - CommonConstants.NumeralConstants.INT_ONE);
+        return Integer.parseInt(lastChar, radix) % CommonConstants.NumeralConstants.INT_TWO;
     }
 }
