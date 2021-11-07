@@ -83,8 +83,7 @@ public class FleaSplitUtils {
 
         Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {
-            };
+            obj = new Object() {};
             LOGGER.debug1(obj, "The name of main table = {}", tableName);
         }
 
@@ -144,13 +143,15 @@ public class FleaSplitUtils {
 
                 // 获取分表转换实现类
                 ITableSplit tableSplit = (ITableSplit) ReflectUtils.newInstance(implClass);
+                // 获取分表列的属性值
+                Object attrValue = entityCol.getAttrValue();
                 // 获取分表字段值【即分表规则转换后的值】
-                String splitTableFieldValue = tableSplit.convert(entityCol.getAttrValue());
+                String splitTableFieldValue = tableSplit.convert(attrValue);
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug1(obj, "The field value of split table = {}", splitTableFieldValue);
                 }
-                String columnPlaceholder = DBConstants.SQLConstants.SQL_LEFT_ROUND_BRACKETS +
-                        column.toUpperCase() + DBConstants.SQLConstants.SQL_RIGHT_ROUND_BRACKETS;
+                String columnPlaceholder = DBConstants.SQLConstants.SQL_LEFT_ROUND_BRACKETS + column.toUpperCase()
+                        + DBConstants.SQLConstants.SQL_RIGHT_ROUND_BRACKETS;
                 StringUtils.replace(tableNameBuilder, columnPlaceholder, splitTableFieldValue);
                 // 分表场景下，替换生成器表中的主键值模板，为指定分表
                 StringUtils.replace(pkColumnValueBuilder, columnPlaceholder, splitTableFieldValue);
@@ -161,8 +162,8 @@ public class FleaSplitUtils {
                     if (ObjectUtils.isEmpty(splitLibObjMap)) {
                         splitLibObjMap = new HashMap<>();
                     }
-                    // 添加分库对象
-                    splitLibObjMap.put(seq, splitTableFieldValue);
+                    // 添加分库对象，键为分库序列键，值为分表字段值
+                    splitLibObjMap.put(seq, attrValue);
                 }
             }
             // 设置分表名
@@ -219,11 +220,9 @@ public class FleaSplitUtils {
 
             Object obj = null;
             if (LOGGER.isDebugEnabled()) {
-                obj = new Object() {
-                };
+                obj = new Object() {};
                 LOGGER.debug1(obj, "The name of template library = {}", libName);
             }
-
 
             // 分库信息
             Lib lib = LibSplitConfig.getConfig().getLib(libName);

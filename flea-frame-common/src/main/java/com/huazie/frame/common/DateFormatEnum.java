@@ -1,7 +1,7 @@
 package com.huazie.frame.common;
 
 /**
- * <p>日期格式化类型枚举</p>
+ * 日期格式化类型枚举
  *
  * @author huazie
  * @version 1.0.0

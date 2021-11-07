@@ -18,13 +18,13 @@
 				（2）key为空，implClass必填
 				（3）key 和 implClass 都不为空，implClass需要和分表转换类型枚举中分表转换实现类对应上
 			-->
-			<split key="two" column="file_id" seq="SEQ" />
+			<split key="TWO" column="file_id" seq="SEQ" />
 		</splits>
 	</table>
 
 	<table name="flea_login_log" exp="(FLEA_TABLE_NAME)_(CREATE_DATE)" desc="Flea登录日志表分表规则">
 		<splits>
-			<split key="yyyymm" column="create_date" />
+			<split key="YYYY_MM" column="create_date" />
 		</splits>
 	</table>
 
