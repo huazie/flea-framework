@@ -21,6 +21,10 @@ public class SplitTable {
 
     private boolean isExistSplitTable; // 是否存在分表 【true：存在 false：不存在】
 
+    private boolean isExistSplitTablePkColumn; // 是否存在ID生成器表中分表的主键值
+
+    private boolean generatorFlag; // 生成器标识
+
     private SplitLib splitLib; // 分库信息
 
     public String getTableName() {
@@ -61,6 +65,22 @@ public class SplitTable {
 
     public void setExistSplitTable(boolean existSplitTable) {
         isExistSplitTable = existSplitTable;
+    }
+
+    public boolean isExistSplitTablePkColumn() {
+        return isExistSplitTablePkColumn;
+    }
+
+    public void setExistSplitTablePkColumn(boolean existSplitTablePkColumn) {
+        isExistSplitTablePkColumn = existSplitTablePkColumn;
+    }
+
+    public boolean isGeneratorFlag() {
+        return generatorFlag;
+    }
+
+    public void setGeneratorFlag(boolean generatorFlag) {
+        this.generatorFlag = generatorFlag;
     }
 
     public SplitLib getSplitLib() {

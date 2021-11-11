@@ -38,11 +38,10 @@ public abstract class FleaLibTableSplitHandler implements IFleaJPASplitHandler {
         // 获取分表信息（包括主表名 和 分表名 【如果存在分表返回】）
         SplitTable splitTable = FleaEntityManager.getSplitTable(entity);
 
+        SplitLib splitLib;
         // 存在分表，需要查询指定分表
         if (splitTable.isExistSplitTable()) {
-            SplitLib splitLib = splitTable.getSplitLib();
-            // 分库场景，重新初始化Flea JPA查询对象
-            handleInner(query, splitLib);
+            splitLib = splitTable.getSplitLib();
             // 设置分表信息
             fleaEntity.put(DBConstants.LibTableSplitConstants.SPLIT_TABLE, splitTable);
         } else {
@@ -54,14 +53,14 @@ public abstract class FleaLibTableSplitHandler implements IFleaJPASplitHandler {
                 }
                 return;
             }
-            SplitLib splitLib = FleaSplitUtils.getSplitLib(libName, fleaEntity.getEntityMap());
-            // 分库场景，重新初始化Flea JPA查询对象
-            handleInner(query, splitLib);
+            splitLib = FleaSplitUtils.getSplitLib(libName, fleaEntity.getEntityMap());
         }
+        // 分库场景，重新初始化Flea JPA查询对象
+        handleInner(query, splitLib);
     }
 
     @Override
-    public EntityManager handle(EntityManager entityManager, Object entity) throws CommonException {
+    public EntityManager handle(EntityManager entityManager, Object entity, boolean flag) throws CommonException {
 
         if (ObjectUtils.isEmpty(entityManager) || ObjectUtils.isEmpty(entity) || !(entity instanceof FleaEntity)) {
             return entityManager;
@@ -91,6 +90,12 @@ public abstract class FleaLibTableSplitHandler implements IFleaJPASplitHandler {
             // 设置分库信息
             fleaEntity.put(DBConstants.LibTableSplitConstants.SPLIT_LIB, splitLib);
         }
+
+        // 如果是getFleaNextValue获取实体管理器，并且主键生成器在模板库中，直接返回实体管理器
+        if (flag && splitTable.isGeneratorFlag()) {
+            return entityManager;
+        }
+
         // 分库场景，重新初始化实体管理类
         return handleInner(entityManager, splitLib);
     }

@@ -43,10 +43,11 @@ public interface IFleaJPASplitHandler {
      *
      * @param entityManager 持久化接口对象实例
      * @param entity        实体类对象实例
+     * @param flag          获取实体管理器标识【true：getFleaNextValue获取实体管理器， false: 其他场景获取实体管理器】
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    EntityManager handle(EntityManager entityManager, Object entity) throws CommonException;
+    EntityManager handle(EntityManager entityManager, Object entity, boolean flag) throws CommonException;
 
     /**
      * 分表场景下，取事物管理器中的实体管理器工厂类，并将其作为键，

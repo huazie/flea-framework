@@ -167,7 +167,7 @@ public final class FleaEntityManagerImpl extends EntityManagerImpl {
         descriptor = EclipseLinkUtils.getSplitDescriptor(descriptor, session, splitTable);
 
         Number nextValue;
-        if (ObjectUtils.isNotEmpty(splitTable) && splitTable.isExistSplitTable()) {
+        if (ObjectUtils.isNotEmpty(splitTable) && splitTable.isExistSplitTablePkColumn()) {
             String sequenceName = splitTable.getSplitTablePkColumnValue();
             Sequencing sequencing = session.getSequencing();
             FleaSequencingManager fleaSequencingManager = FleaSequencingManager.getFleaSequencingManager(sequenceName, sequencing, descriptor);
