@@ -66,7 +66,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 
     @Override
     public Number getFleaNextValue(T entity) throws CommonException {
-        return FleaEntityManager.getFleaNextValue(getEntityManager(entity), entityClass, entity);
+        return FleaEntityManager.getFleaNextValue(getEntityManager(entity, true), entityClass, entity);
     }
 
     @Override
@@ -468,28 +468,41 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     }
 
     /**
-     * <p> 获取JPA持久化对象 </p>
+     * 获取实体管理器
      *
-     * @return JPA持久化对象
+     * @return 实体管理器
      * @since 1.0.0
      */
     protected abstract EntityManager getEntityManager();
 
     /**
-     * <p> 获取JPA持久化对象 </p>
+     * 获取实体管理器
      *
      * @param entity 实体类对象实例
-     * @return JPA持久化对象
+     * @return 实体管理器类
      * @since 1.0.0
      */
     public EntityManager getEntityManager(T entity) throws CommonException {
+        return getEntityManager(entity, false);
+    }
+
+    /**
+     * 获取实体管理器
+     *
+     * @param entity 实体类对象实例
+     * @param flag   获取实体管理器标识【true：getFleaNextValue获取实体管理器， false: 其他场景获取实体管理器】
+     * @return 实体管理器类
+     * @throws CommonException 通用异常
+     * @since 1.2.0
+     */
+    private EntityManager getEntityManager(T entity, boolean flag) throws CommonException {
         EntityManager entityManager = getEntityManager();
 
         // 实体类设置默认库名
         setDefaultLibName(entity);
 
         // 处理并添加分表信息，如果不存在分表则不处理
-        entityManager = LibTableSplitHelper.findTableSplitHandle().handle(entityManager, entity);
+        entityManager = LibTableSplitHelper.findTableSplitHandle().handle(entityManager, entity, flag);
         return entityManager;
     }
 
