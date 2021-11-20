@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 /**
- * <p> %FLEA_PERSISTENCE_UNIT_ALIAS_NAME%数据源DAO层父类 </p>
+ * %FLEA_PERSISTENCE_UNIT_ALIAS_NAME%数据源DAO层父类
  *
  * @author %AUTHOR%
  * @version %VERSION%
@@ -18,11 +18,11 @@ import java.util.List;
 public class %FLEA_PERSISTENCE_UNIT_ALIAS_NAME%DAOImpl<T> extends AbstractFleaJPADAOImpl<T> {
 
     @PersistenceContext(unitName="%FLEA_PERSISTENCE_UNIT_NAME%")
-    protected EntityManager entityManager;
+    private EntityManager entityManager;
 
     @Override
     @Transactional("%FLEA_PERSISTENCE_UNIT_ALIAS_NAME_1%TransactionManager")
-    public Long getFleaNextValue(T entity) throws CommonException {
+    public Number getFleaNextValue(T entity) throws CommonException {
         return super.getFleaNextValue(entity);
     }
 
@@ -48,6 +48,12 @@ public class %FLEA_PERSISTENCE_UNIT_ALIAS_NAME%DAOImpl<T> extends AbstractFleaJP
     @Transactional("%FLEA_PERSISTENCE_UNIT_ALIAS_NAME_1%TransactionManager")
     public boolean remove(String entityId) throws CommonException {
         return super.remove(entityId);
+    }
+
+    @Override
+    @Transactional("%FLEA_PERSISTENCE_UNIT_ALIAS_NAME_1%TransactionManager")
+    public boolean remove(T entity) throws CommonException {
+        return super.remove(entity);
     }
 
     @Override
