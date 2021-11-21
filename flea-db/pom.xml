@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>flea-framework</artifactId>
+        <groupId>com.huazie.fleaframework</groupId>
+        <version>2.0.0</version>
+    </parent>
+    <name>FLEA DB</name>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>flea-db</artifactId>
+    <packaging>pom</packaging>
+
+    <dependencies>
+
+        <!-- FLEA FRAME CONFIG -->
+        <dependency>
+            <groupId>com.huazie.fleaframework</groupId>
+            <artifactId>flea-config</artifactId>
+            <version>${project.parent.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- 数据库JDBC连接相关 （MySQL的JDBC驱动）-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <modules>
+        <module>flea-db-common</module>
+        <module>flea-db-jdbc</module>
+        <module>flea-db-jpa</module>
+        <module>flea-db-eclipselink</module>
+    </modules>
+</project>

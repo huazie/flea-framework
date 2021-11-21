@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>flea-framework</artifactId>
+        <groupId>com.huazie.fleaframework</groupId>
+        <version>2.0.0</version>
+    </parent>
+    <name>FLEA FRAMEWORK BOM</name>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>flea-framework-bom</artifactId>
+    <packaging>pom</packaging>
+    <url>https://github.com/Huazie/flea-frame</url>
+
+    <developers>
+        <developer>
+            <id>huazie</id>
+            <name>Huazie Lau</name>
+            <email>huazie.lgh@gmail.com</email>
+        </developer>
+    </developers>
+
+    <dependencyManagement>
+        <dependencies>
+
+            <!-- FLEA FRAME ALGORITHM-->
+            <dependency>
+                <groupId>com.huazie.fleaframework</groupId>
+                <artifactId>flea-algorithm</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- FLEA FRAME AUTH-->
+            <dependency>
+                <groupId>com.huazie.fleaframework</groupId>
+                <artifactId>flea-auth</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- FLEA FRAME CACHE-->
+            <dependency>
+                <groupId>com.huazie.fleaframework</groupId>
+                <artifactId>flea-cache</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- FLEA FRAME COMMON-->
+            <dependency>
+                <groupId>com.huazie.fleaframework</groupId>
+                <artifactId>flea-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- FLEA FRAME CORE-->
+            <dependency>
+                <groupId>com.huazie.fleaframework</groupId>
+                <artifactId>flea-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- FLEA FRAME DB COMMON-->
+            <dependency>
+                <groupId>com.huazie.fleaframework</groupId>
+                <artifactId>flea-db-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- FLEA FRAME DB ECLIPSELINK-->
+            <dependency>
+                <groupId>com.huazie.fleaframework</groupId>
+                <artifactId>flea-db-eclipselink</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- FLEA FRAME DB JDBC-->
+            <dependency>
+                <groupId>com.huazie.fleaframework</groupId>
+                <artifactId>flea-db-jdbc</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- FLEA FRAME DB JPA-->
+            <dependency>
+                <groupId>com.huazie.fleaframework</groupId>
+                <artifactId>flea-db-jpa</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- FLEA FRAME JERSEY CLIENT-->
+            <dependency>
+                <groupId>com.huazie.fleaframework</groupId>
+                <artifactId>flea-jersey-client</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- FLEA FRAME JERSEY COMMON -->
+            <dependency>
+                <groupId>com.huazie.fleaframework</groupId>
+                <artifactId>flea-jersey-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- FLEA FRAME JERSEY SERVER-->
+            <dependency>
+                <groupId>com.huazie.fleaframework</groupId>
+                <artifactId>flea-jersey-server</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+</project>

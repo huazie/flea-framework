@@ -1,12 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.huazie.frame</groupId>
-    <artifactId>flea-frame</artifactId>
-    <version>1.2.0</version>
+    <groupId>com.huazie.fleaframework</groupId>
+    <artifactId>flea-framework</artifactId>
+    <version>2.0.0</version>
     <packaging>pom</packaging>
-    <name>FLEA FRAME</name>
-    <url>https://github.com/Huazie/flea-frame</url>
+    <name>FLEA FRAMEWORK</name>
+    <url>https://github.com/Huazie/flea-framework</url>
 
     <developers>
         <developer>
@@ -336,16 +336,16 @@
     </dependencies>
 
     <modules>
-        <module>flea-frame-config</module>
-        <module>flea-frame-common</module>
-        <module>flea-frame-cache</module>
-        <module>flea-frame-db</module>
-        <module>flea-frame-core</module>
-        <module>flea-frame-tools</module>
-        <module>flea-frame-auth</module>
-        <module>flea-frame-jersey</module>
-        <module>flea-frame-bom</module>
-        <module>flea-frame-algorithm</module>
+        <module>flea-algorithm</module>
+        <module>flea-auth</module>
+        <module>flea-cache</module>
+        <module>flea-common</module>
+        <module>flea-config</module>
+        <module>flea-core</module>
+        <module>flea-db</module>
+        <module>flea-framework-bom</module>
+        <module>flea-jersey</module>
+        <module>flea-tools</module>
     </modules>
 
 </project>

@@ -1,3 +1,0 @@
-    @Column(name = "%COLUMN_NAME%", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date %VARIABLE%; // %COLUMN_DESC%
