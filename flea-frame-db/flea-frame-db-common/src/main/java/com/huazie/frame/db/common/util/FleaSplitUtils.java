@@ -65,10 +65,12 @@ public class FleaSplitUtils {
     public static SplitTable getSplitTable(String tableName, Column[] entityCols) throws CommonException {
 
         String pkColumnValue = "";
+        boolean generatorFlag = true;
         if (!ArrayUtils.isEmpty(entityCols)) {
             for (Column entityCol : entityCols) {
                 if (entityCol.isPrimaryKey()) {
                     pkColumnValue = entityCol.getPkColumnValue();
+                    generatorFlag = entityCol.isGeneratorFlag();
                     break;
                 }
             }
@@ -79,7 +81,9 @@ public class FleaSplitUtils {
         splitTable.setSplitTableName(tableName); // 设置分表名默认为主表名
         splitTable.setPkColumnValue(pkColumnValue); // 生成器表中的主键值，为主键中@TableGenerator中的pkColumnValue
         splitTable.setSplitTablePkColumnValue(pkColumnValue); // 生成器表中分表的主键值，默认为主键中@TableGenerator中的pkColumnValue
-        splitTable.setExistSplitTable(false);
+        splitTable.setExistSplitTable(false); // 默认没有分表
+        splitTable.setExistSplitTablePkColumn(false); // 默认没有ID生成器表中分表的主键值
+        splitTable.setGeneratorFlag(generatorFlag);
 
         Object obj = null;
         if (LOGGER.isDebugEnabled()) {
@@ -172,6 +176,10 @@ public class FleaSplitUtils {
             splitTable.setSplitTablePkColumnValue(pkColumnValueBuilder.toString());
             // 存在分表
             splitTable.setExistSplitTable(true);
+            // 存在ID生成器表中分表的主键值
+            if (!pkColumnValue.equals(splitTable.getSplitTablePkColumnValue())) {
+                splitTable.setExistSplitTablePkColumn(true);
+            }
             // 添加分库信息
             splitTable.setSplitLib(getSplitLib(tab.getLib(), splitLibObjMap));
         }

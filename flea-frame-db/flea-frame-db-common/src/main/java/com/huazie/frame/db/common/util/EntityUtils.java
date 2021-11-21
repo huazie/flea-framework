@@ -9,6 +9,7 @@ import com.huazie.frame.common.util.ObjectUtils;
 import com.huazie.frame.common.util.ReflectUtils;
 import com.huazie.frame.common.util.StringUtils;
 import com.huazie.frame.db.common.FleaTable;
+import com.huazie.frame.db.common.FleaTableGenerator;
 import com.huazie.frame.db.common.exception.DaoException;
 import com.huazie.frame.db.common.sql.template.config.Param;
 import com.huazie.frame.db.common.sql.template.config.Relation;
@@ -127,10 +128,11 @@ public class EntityUtils {
                 column.setAttrValue(value);
 
                 String colName = ""; // 当前属性对应的字段名
-                boolean isPrimarykey = false;// 判断当前的属性是否是主键
-                boolean isNullable = false;// 判断当前的属性是否可空
-                boolean isUnique = false;// 判断当前的属性是否唯一
+                boolean isPrimarykey = false; // 判断当前的属性是否是主键
+                boolean isNullable = false; // 判断当前的属性是否可空
+                boolean isUnique = false; // 判断当前的属性是否唯一
                 String pkColumnValue = ""; // ID生成器表中的主键值模板
+                boolean generatorFlag = true; // 生成器标识，默认为true【true：生成器表在模板库中 false：生成器表在分库中】
 
                 Annotation[] annotations = field.getAnnotations();// 获取属性上的注解
                 if (ArrayUtils.isEmpty(annotations)) {// 表示属性上没有注解
@@ -173,12 +175,18 @@ public class EntityUtils {
                         javax.persistence.TableGenerator tableGenerator = (javax.persistence.TableGenerator) an;
                         pkColumnValue = tableGenerator.pkColumnValue();
                     }
+                    // 生成器标识
+                    if (FleaTableGenerator.class.getName().equals(an.annotationType().getName())) {
+                        FleaTableGenerator fleaTableGenerator = (FleaTableGenerator) an;
+                        generatorFlag = fleaTableGenerator.generatorFlag();
+                    }
                 }
                 column.setTabColumnName(colName);
                 column.setPrimaryKey(isPrimarykey);
                 column.setNullable(isNullable);
                 column.setUnique(isUnique);
                 column.setPkColumnValue(pkColumnValue);
+                column.setGeneratorFlag(generatorFlag);
 
                 columns.add(column);
             }
