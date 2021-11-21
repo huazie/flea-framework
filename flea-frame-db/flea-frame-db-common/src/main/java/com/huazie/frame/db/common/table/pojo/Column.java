@@ -33,9 +33,11 @@ public class Column implements Serializable {
 
     private boolean nullable; // 是否可空
 
-    private Boolean unique; // 是否唯一
+    private boolean unique; // 是否唯一
 
     private String pkColumnValue; // ID生成器表中的主键值模板
+
+    private boolean generatorFlag; // 生成器标识
 
     public Class<?> getAttrType() {
         return attrType;
@@ -93,11 +95,11 @@ public class Column implements Serializable {
         this.nullable = nullable;
     }
 
-    public Boolean getUnique() {
+    public boolean getUnique() {
         return unique;
     }
 
-    public void setUnique(Boolean unique) {
+    public void setUnique(boolean unique) {
         this.unique = unique;
     }
 
@@ -107,6 +109,14 @@ public class Column implements Serializable {
 
     public void setPkColumnValue(String pkColumnValue) {
         this.pkColumnValue = pkColumnValue;
+    }
+
+    public boolean isGeneratorFlag() {
+        return generatorFlag;
+    }
+
+    public void setGeneratorFlag(boolean generatorFlag) {
+        this.generatorFlag = generatorFlag;
     }
 
     @Override
