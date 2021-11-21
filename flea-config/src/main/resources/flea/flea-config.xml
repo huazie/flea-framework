@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<flea-config>
+    <!-- flea-frame -->
+    <config-items key="flea-frame-init" desc="Flea Frame初始化配置">
+        <config-item key="expiry_time_forever" desc="失效时间(永久)">29991231235959</config-item>
+    </config-items>
+
+    <!-- flea-frame-jersey -->
+    <config-items key="flea-jersey-client" desc="Flea Jersey 客户端配置">
+        <config-item key="system_account_id" desc="系统账户编号">1000</config-item>
+        <config-item key="system_account_pwd" desc="系统账户密码">31DAA1C5BA8F0874A2383145686D90CCD238483F</config-item>
+    </config-items>
+
+    <!-- flea-frame-common -->
+    <config-items key="flea-i18n-config" desc="Flea国际化相关配置">
+        <config-item key="error" desc="error国际化资源特殊配置，指定路径和文件前缀，逗号分隔">flea/i18n,flea_i18n</config-item>
+    </config-items>
+
+    <config-items key="flea-object-pool" desc="Flea对象池配置">
+        <!-- flea-frame-db-jpa -->
+        <config-item key="FleaJPAQuery" desc="Flea JPA查询对象池构建者">com.huazie.fleaframework.db.jpa.common.FleaJPAQueryPoolBuilder</config-item>
+    </config-items>
+
+    <config-items key="flea-jpa-query" desc="Flea JPA查询对象池配置">
+        <config-item key="pool.maxTotal" desc="Flea JPA查询对象池最大连接数">100</config-item>
+        <config-item key="pool.maxIdle" desc="Flea JPA查询对象池最大空闲连接数">10</config-item>
+        <config-item key="pool.minIdle" desc="Flea JPA查询对象池最小空闲连接数">0</config-item>
+        <config-item key="pool.maxWaitMillis" desc="Flea JPA查询对象池获取连接时的最大等待毫秒数">2000</config-item>
+    </config-items>
+
+    <config-items key="flea-jpa" desc="Flea JPA配置">
+        <config-item key="flea_split_handler" desc="Flea JPA分表处理者实现类">com.huazie.fleaframework.db.eclipselink.EclipseLinkLibTableSplitHandler</config-item>
+    </config-items>
+
+    <config-items key="mysql-fleaconfig" desc="JDBC数据库配置【key=数据库系统-数据库或数据库用户】">
+        <config-item key="driver" desc="mysql数据库驱动名">com.mysql.jdbc.Driver</config-item>
+        <config-item key="url" desc="mysql数据库连接地址">jdbc:mysql://localhost:3306/fleaconfig?useUnicode=true&amp;characterEncoding=UTF-8</config-item>
+        <config-item key="user" desc="mysql数据库登录用户名">root</config-item>
+        <config-item key="password" desc="mysql数据库登录密码">root</config-item>
+    </config-items>
+
+    <config-items key="mysql-fleaauth" desc="JDBC数据库配置【key=数据库系统-数据库或数据库用户】">
+        <config-item key="driver" desc="mysql数据库驱动名">com.mysql.jdbc.Driver</config-item>
+        <config-item key="url" desc="mysql数据库连接地址">jdbc:mysql://localhost:3306/fleaauth?useUnicode=true&amp;characterEncoding=UTF-8</config-item>
+        <config-item key="user" desc="mysql数据库登录用户名">root</config-item>
+        <config-item key="password" desc="mysql数据库登录密码">root</config-item>
+    </config-items>
+
+    <config-items key="mysql-fleamarket" desc="JDBC数据库配置【key=数据库系统-数据库或数据库用户】">
+        <config-item key="driver" desc="mysql数据库驱动名">com.mysql.jdbc.Driver</config-item>
+        <config-item key="url" desc="mysql数据库连接地址">jdbc:mysql://localhost:3306/fleamarket?useUnicode=true&amp;characterEncoding=UTF-8</config-item>
+        <config-item key="user" desc="mysql数据库登录用户名">root</config-item>
+        <config-item key="password" desc="mysql数据库登录密码">root</config-item>
+    </config-items>
+
+    <config-items key="mysql-fleamanagement" desc="JDBC数据库配置【key=数据库系统-数据库或数据库用户】">
+        <config-item key="driver" desc="mysql数据库驱动名">com.mysql.jdbc.Driver</config-item>
+        <config-item key="url" desc="mysql数据库连接地址">jdbc:mysql://localhost:3306/fleamanagement?useUnicode=true&amp;characterEncoding=UTF-8</config-item>
+        <config-item key="user" desc="mysql数据库登录用户名">root</config-item>
+        <config-item key="password" desc="mysql数据库登录密码">root</config-item>
+    </config-items>
+
+    <config-items key="mysql-fleafs" desc="JDBC数据库配置【key=数据库系统-数据库或数据库用户】">
+        <config-item key="driver" desc="mysql数据库驱动名">com.mysql.jdbc.Driver</config-item>
+        <config-item key="url" desc="mysql数据库连接地址">jdbc:mysql://localhost:3306/fleafs?useUnicode=true&amp;characterEncoding=UTF-8</config-item>
+        <config-item key="user" desc="mysql数据库登录用户名">root</config-item>
+        <config-item key="password" desc="mysql数据库登录密码">root</config-item>
+    </config-items>
+
+</flea-config>

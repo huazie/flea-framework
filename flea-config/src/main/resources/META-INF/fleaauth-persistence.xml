@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	
+	<persistence-unit name="fleaauth" transaction-type="RESOURCE_LOCAL">
+		<!-- provider -->
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<!-- Connection JDBC -->
+		<!-- 用户子模块 -->
+		<class>com.huazie.fleaframework.auth.base.user.entity.FleaAccount</class>
+		<class>com.huazie.fleaframework.auth.base.user.entity.FleaAccountAttr</class>
+		<class>com.huazie.fleaframework.auth.base.user.entity.FleaRealNameInfo</class>
+		<class>com.huazie.fleaframework.auth.base.user.entity.FleaLoginLog</class>
+		<class>com.huazie.fleaframework.auth.base.user.entity.FleaUser</class>
+		<class>com.huazie.fleaframework.auth.base.user.entity.FleaUserAttr</class>
+		<class>com.huazie.fleaframework.auth.base.user.entity.FleaUserRel</class>
+		<class>com.huazie.fleaframework.auth.base.user.entity.FleaUserGroup</class>
+		<class>com.huazie.fleaframework.auth.base.user.entity.FleaUserGroupRel</class>
+		<!-- 角色子模块 -->
+		<class>com.huazie.fleaframework.auth.base.role.entity.FleaRole</class>
+		<class>com.huazie.fleaframework.auth.base.role.entity.FleaRoleRel</class>
+		<class>com.huazie.fleaframework.auth.base.role.entity.FleaRoleGroup</class>
+		<class>com.huazie.fleaframework.auth.base.role.entity.FleaRoleGroupRel</class>
+		<!-- 权限子模块 -->
+		<class>com.huazie.fleaframework.auth.base.privilege.entity.FleaPrivilege</class>
+		<class>com.huazie.fleaframework.auth.base.privilege.entity.FleaPrivilegeRel</class>
+		<class>com.huazie.fleaframework.auth.base.privilege.entity.FleaPrivilegeGroup</class>
+		<class>com.huazie.fleaframework.auth.base.privilege.entity.FleaPrivilegeGroupRel</class>
+		<!-- 功能子模块 -->
+		<class>com.huazie.fleaframework.auth.base.function.entity.FleaElement</class>
+		<class>com.huazie.fleaframework.auth.base.function.entity.FleaMenu</class>
+		<class>com.huazie.fleaframework.auth.base.function.entity.FleaOperation</class>
+		<class>com.huazie.fleaframework.auth.base.function.entity.FleaFunctionAttr</class>
+
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		
+		<properties>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+			<property name="javax.persistence.jdbc.url"
+				value="jdbc:mysql://localhost:3306/fleaauth?useUnicode=true&amp;characterEncoding=UTF-8" />
+			<property name="javax.persistence.jdbc.user" value="root" />
+			<property name="javax.persistence.jdbc.password" value="root" />
+			<!--<property name="eclipselink.ddl-generation" value="create-tables"/> -->
+		</properties>
+	</persistence-unit>
+	
+</persistence>
