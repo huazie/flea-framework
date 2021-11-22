@@ -1,12 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.huazie.frame</groupId>
-    <artifactId>flea-frame</artifactId>
-    <version>1.2.0</version>
+    <groupId>com.huazie.fleaframework</groupId>
+    <artifactId>flea-framework</artifactId>
+    <version>2.0.0</version>
     <packaging>pom</packaging>
-    <name>FLEA FRAME</name>
-    <url>https://github.com/Huazie/flea-frame</url>
+    <name>FLEA FRAMEWORK</name>
+    <url>https://github.com/Huazie/flea-framework</url>
 
     <developers>
         <developer>
@@ -18,10 +18,22 @@
 
     <properties>
         <jdk.version>1.7</jdk.version>
-        <jersey.version>2.9</jersey.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <slf4j.version>1.7.21</slf4j.version>
+        <memcached.version>3.0.2</memcached.version>
+        <jedis.version>3.0.1</jedis.version>
+        <httpcomponents.version>4.5.13</httpcomponents.version>
+        <fastjson.version>1.2.44</fastjson.version>
+        <gson.version>2.8.2</gson.version>
+        <json.lib.version>2.4</json.lib.version>
+        <pinyin4j.version>2.5.0</pinyin4j.version>
+        <guava.version>30.1.1-jre</guava.version>
+        <mysql.version>5.1.25</mysql.version>
+        <javax.persistence.version>2.1.0</javax.persistence.version>
+        <eclipselink.version>2.5.0</eclipselink.version>
         <spring.version>4.3.29.RELEASE</spring.version>
         <struts2.version>2.3.20</struts2.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jersey.version>2.9</jersey.version>
     </properties>
 
     <build>
@@ -119,19 +131,14 @@
         <dependencies>
             <!-- 日志相关, 此处使用log4j -->
             <dependency>
-                <groupId>log4j</groupId>
-                <artifactId>log4j</artifactId>
-                <version>1.2.17</version>
-            </dependency>
-            <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
-                <version>1.7.21</version>
+                <version>${slf4j.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-log4j12</artifactId>
-                <version>1.7.21</version>
+                <version>${slf4j.version}</version>
             </dependency>
 
             <!-- 提供一些基础的、通用的操作和处理 -->
@@ -189,62 +196,6 @@
                 <version>2.7</version>
             </dependency>
 
-            <!-- 参数校验相关 -->
-            <dependency>
-                <groupId>javax.validation</groupId>
-                <artifactId>validation-api</artifactId>
-                <version>1.1.0.Final</version>
-            </dependency>
-
-            <!-- Memcached相关 https://mvnrepository.com/artifact/com.whalin/Memcached-Java-Client -->
-            <dependency>
-                <groupId>com.whalin</groupId>
-                <artifactId>Memcached-Java-Client</artifactId>
-                <version>3.0.2</version>
-            </dependency>
-
-            <!-- Java redis -->
-            <dependency>
-                <groupId>redis.clients</groupId>
-                <artifactId>jedis</artifactId>
-                <version>3.0.1</version>
-            </dependency>
-
-            <!-- Http操作相关 -->
-            <dependency>
-                <groupId>org.apache.httpcomponents</groupId>
-                <artifactId>httpclient</artifactId>
-                <version>4.5.13</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.httpcomponents</groupId>
-                <artifactId>httpclient-cache</artifactId>
-                <version>4.5.13</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.httpcomponents</groupId>
-                <artifactId>httpmime</artifactId>
-                <version>4.5.13</version>
-            </dependency>
-
-            <!-- Json数据操作相关 -->
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>fastjson</artifactId>
-                <version>1.2.44</version>
-            </dependency>
-            <dependency>
-                <groupId>com.google.code.gson</groupId>
-                <artifactId>gson</artifactId>
-                <version>2.8.2</version>
-            </dependency>
-            <dependency>
-                <groupId>net.sf.json-lib</groupId>
-                <artifactId>json-lib</artifactId>
-                <classifier>jdk15</classifier>
-                <version>2.4</version>
-            </dependency>
-
             <!-- Xml数据操作相关 -->
             <dependency>
                 <groupId>commons-digester</groupId>
@@ -259,39 +210,95 @@
                 <version>3.0.1</version>
             </dependency>
 
+            <!-- 参数校验相关 -->
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>1.1.0.Final</version>
+            </dependency>
+
+            <!-- Memcached相关 https://mvnrepository.com/artifact/com.whalin/Memcached-Java-Client -->
+            <dependency>
+                <groupId>com.whalin</groupId>
+                <artifactId>Memcached-Java-Client</artifactId>
+                <version>${memcached.version}</version>
+            </dependency>
+
+            <!-- Java redis -->
+            <dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>${jedis.version}</version>
+            </dependency>
+
+            <!-- Http操作相关 -->
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${httpcomponents.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient-cache</artifactId>
+                <version>${httpcomponents.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpmime</artifactId>
+                <version>${httpcomponents.version}</version>
+            </dependency>
+
+            <!-- Json数据操作相关 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>${gson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.sf.json-lib</groupId>
+                <artifactId>json-lib</artifactId>
+                <classifier>jdk15</classifier>
+                <version>${json.lib.version}</version>
+            </dependency>
+
             <!-- 汉子拼音工具相关 https://mvnrepository.com/artifact/com.belerweb/pinyin4j -->
             <dependency>
                 <groupId>com.belerweb</groupId>
                 <artifactId>pinyin4j</artifactId>
-                <version>2.5.0</version>
+                <version>${pinyin4j.version}</version>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
-                <version>30.1.1-jre</version>
+                <version>${guava.version}</version>
             </dependency>
 
             <!-- 数据库JDBC连接相关 （MySQL的JDBC驱动）-->
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
-                <version>5.1.25</version>
+                <version>${mysql.version}</version>
             </dependency>
 
             <!-- Java Persistence API -->
             <dependency>
                 <groupId>org.eclipse.persistence</groupId>
                 <artifactId>javax.persistence</artifactId>
-                <version>2.1.0</version>
+                <version>${javax.persistence.version}</version>
             </dependency>
 
             <!-- 数据库持久化相关 EclipseLink-->
             <dependency>
                 <groupId>org.eclipse.persistence</groupId>
                 <artifactId>eclipselink</artifactId>
-                <version>2.5.0</version>
+                <version>${eclipselink.version}</version>
             </dependency>
 
             <!-- Spring -->
@@ -336,16 +343,16 @@
     </dependencies>
 
     <modules>
-        <module>flea-frame-config</module>
-        <module>flea-frame-common</module>
-        <module>flea-frame-cache</module>
-        <module>flea-frame-db</module>
-        <module>flea-frame-core</module>
-        <module>flea-frame-tools</module>
-        <module>flea-frame-auth</module>
-        <module>flea-frame-jersey</module>
-        <module>flea-frame-bom</module>
-        <module>flea-frame-algorithm</module>
+        <module>flea-algorithm</module>
+        <module>flea-auth</module>
+        <module>flea-cache</module>
+        <module>flea-common</module>
+        <module>flea-config</module>
+        <module>flea-core</module>
+        <module>flea-db</module>
+        <module>flea-framework-bom</module>
+        <module>flea-jersey</module>
+        <module>flea-tools</module>
     </modules>
 
 </project>
