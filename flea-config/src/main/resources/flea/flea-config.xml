@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <flea-config>
-    <!-- flea-frame -->
+    <!-- flea-framework -->
     <config-items key="flea-frame-init" desc="Flea Frame初始化配置">
         <config-item key="expiry_time_forever" desc="失效时间(永久)">29991231235959</config-item>
     </config-items>
 
-    <!-- flea-frame-jersey -->
+    <!-- flea-jersey -->
     <config-items key="flea-jersey-client" desc="Flea Jersey 客户端配置">
         <config-item key="system_account_id" desc="系统账户编号">1000</config-item>
         <config-item key="system_account_pwd" desc="系统账户密码">31DAA1C5BA8F0874A2383145686D90CCD238483F</config-item>
     </config-items>
 
-    <!-- flea-frame-common -->
+    <!-- flea-common -->
     <config-items key="flea-i18n-config" desc="Flea国际化相关配置">
         <config-item key="error" desc="error国际化资源特殊配置，指定路径和文件前缀，逗号分隔">flea/i18n,flea_i18n</config-item>
     </config-items>
 
     <config-items key="flea-object-pool" desc="Flea对象池配置">
-        <!-- flea-frame-db-jpa -->
+        <!-- flea-db-jpa -->
         <config-item key="FleaJPAQuery" desc="Flea JPA查询对象池构建者">com.huazie.fleaframework.db.jpa.common.FleaJPAQueryPoolBuilder</config-item>
     </config-items>
 
