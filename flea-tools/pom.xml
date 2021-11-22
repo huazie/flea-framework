@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>flea-framework</artifactId>
+        <groupId>com.huazie.fleaframework</groupId>
+        <version>2.0.0</version>
+    </parent>
+    <name>FLEA TOOLS</name>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>flea-tools</artifactId>
+    <packaging>jar</packaging>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+
+        <!-- 数据库JDBC连接相关 （MySQL的JDBC驱动）-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <!-- Java Persistence API -->
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>javax.persistence</artifactId>
+        </dependency>
+
+        <!-- FLEA FRAME DB JDBC -->
+        <dependency>
+            <groupId>com.huazie.fleaframework</groupId>
+            <artifactId>flea-db-jdbc</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.jvnet.substance/substance -->
+        <dependency>
+            <groupId>org.jvnet.substance</groupId>
+            <artifactId>substance</artifactId>
+            <version>4.3</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/substance-4.3.jar</systemPath>
+        </dependency>
+
+    </dependencies>
+
+</project>
