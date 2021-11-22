@@ -7,7 +7,7 @@ Flea框架，包含授权操作，缓存处理，通用处理，数据库操作�
 |---------------------------|-----------------------| 
 |  flea-algorithm           |  Flea 通用算法包        |
 |  flea-auth                |  Flea 授权操作包        |
-|  flea-bom                 |  Flea 框架依赖清单      |
+|  flea-framework-bom       |  Flea 框架依赖清单      |
 |  flea-cache               |  Flea 缓存处理包        |
 |  flea-common              |  Flea 通用处理包        |
 |  flea-config              |  Flea 配置包            |
