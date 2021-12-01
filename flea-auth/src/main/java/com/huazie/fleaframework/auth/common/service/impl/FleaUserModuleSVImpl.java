@@ -322,6 +322,7 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
 
             try {
                 FleaLoginLog fleaLoginLog = new FleaLoginLog(accountId, ip4, ip6, address, "");
+                fleaLoginLog.setLoginLogId((Long) fleaLoginLogSV.getFleaNextValue(fleaLoginLog));
                 // 保存用户登录信息
                 fleaLoginLogSV.save(fleaLoginLog);
             } catch (Exception e) {

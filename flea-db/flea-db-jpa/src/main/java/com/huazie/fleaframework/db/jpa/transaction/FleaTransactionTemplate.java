@@ -98,9 +98,8 @@ public class FleaTransactionTemplate extends DefaultTransactionDefinition implem
         if (this.transactionManager instanceof CallbackPreferringPlatformTransactionManager) {
             return ((CallbackPreferringPlatformTransactionManager) this.transactionManager).execute(this, action);
         } else {
-            TransactionStatus status = this.transactionManager.getTransaction(this);
             // 分表场景下，处理事物代码，以支持JPA的增删改操作
-            status = LibTableSplitHelper.findTableSplitHandle().handle(status, this, transactionManager, entityManager);
+            TransactionStatus status = LibTableSplitHelper.findTableSplitHandle().getTransaction(this, transactionManager, entityManager);
             T result;
             try {
                 result = action.doInTransaction(status);

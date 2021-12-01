@@ -1,6 +1,6 @@
 package %CODE_PACKAGE%.entity;
 
-import FleaEntity;
+import com.huazie.fleaframework.common.FleaEntity;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import javax.persistence.Column;

@@ -252,9 +252,9 @@ public final class FleaJPAQuery implements Closeable {
         if (LOGGER.isDebugEnabled()) {
             Object obj = new Object() {};
             if (isEqual) {
-                LOGGER.debug1(obj, "attrName = {}, value = {}", attrName, value);
+                LOGGER.debug1(obj, "Equal, attrName = {}, value = {}", attrName, value);
             } else {
-                LOGGER.debug1(obj, "attrName = {}, value = {}", attrName, value);
+                LOGGER.debug1(obj, "Not Equal, attrName = {}, value = {}", attrName, value);
             }
         }
         if (isEqual) {
@@ -282,9 +282,9 @@ public final class FleaJPAQuery implements Closeable {
         if (LOGGER.isDebugEnabled()) {
             Object obj = new Object() {};
             if (isEqual) {
-                LOGGER.debug1(obj, "attrNames = {}", attrNames);
+                LOGGER.debug1(obj, "Equal, attrNames = {}", attrNames);
             } else {
-                LOGGER.debug1(obj, "attrNames = {}", attrNames);
+                LOGGER.debug1(obj, "Not Equal, attrNames = {}", attrNames);
             }
         }
         for (String attrName : attrNames) {
@@ -319,9 +319,9 @@ public final class FleaJPAQuery implements Closeable {
         if (LOGGER.isDebugEnabled()) {
             Object obj = new Object() {};
             if (isEqual) {
-                LOGGER.debug1(obj, "paramMap = {}", paramMap);
+                LOGGER.debug1(obj, "Equal, paramMap = {}", paramMap);
             } else {
-                LOGGER.debug1(obj, "paramMap = {}", paramMap);
+                LOGGER.debug1(obj, "Not Equal, paramMap = {}", paramMap);
             }
         }
         Set<String> keySet = paramMap.keySet();
@@ -376,9 +376,9 @@ public final class FleaJPAQuery implements Closeable {
         if (LOGGER.isDebugEnabled()) {
             Object obj = new Object() {};
             if (isNull) {
-                LOGGER.debug1(obj, "attrName = {}", attrName);
+                LOGGER.debug1(obj, "Null, attrName = {}", attrName);
             } else {
-                LOGGER.debug1(obj, "attrName = {}", attrName);
+                LOGGER.debug1(obj, "Not Null, attrName = {}", attrName);
             }
         }
         if (isNull) {
@@ -436,9 +436,9 @@ public final class FleaJPAQuery implements Closeable {
         if (LOGGER.isDebugEnabled()) {
             Object obj = new Object() {};
             if (isIn) {
-                LOGGER.debug1(obj, "in, attrName = {}, value = {}", attrName, value);
+                LOGGER.debug1(obj, "In, attrName = {}, value = {}", attrName, value);
             } else {
-                LOGGER.debug1(obj, "notIn, attrName = {}, value = {}", attrName, value);
+                LOGGER.debug1(obj, "Not In, attrName = {}, value = {}", attrName, value);
             }
         }
         Iterator iterator = value.iterator();

@@ -53,15 +53,6 @@ public class FleaPrivilegeRelDAOImpl extends FleaAuthDAOImpl<FleaPrivilegeRel> i
                 .equal(FleaAuthEntityConstants.FleaRelEntityConstants.E_REL_STATE, EntityStateEnum.IN_USE.getState())
                 .getResultList();
 
-        FleaPrivilegeRel fleaPrivilegeRel = null;
-        if (CollectionUtils.isNotEmpty(privilegeRelList)) {
-            fleaPrivilegeRel = privilegeRelList.get(0);
-        }
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("PrivilegeRelMenu = {}", fleaPrivilegeRel);
-        }
-
-        return fleaPrivilegeRel;
+        return CollectionUtils.getFirstElement(privilegeRelList, FleaPrivilegeRel.class);
     }
 }
