@@ -40,16 +40,6 @@ public class FleaUserDAOImpl extends FleaAuthDAOImpl<FleaUser> implements IFleaU
                 .greaterThan(FleaAuthEntityConstants.E_EXPIRY_DATE, currentDate)
                 .getResultList();
 
-        FleaUser fleaUser = null;
-
-        if (CollectionUtils.isNotEmpty(fleaUserList)) {
-            fleaUser = fleaUserList.get(0);
-        }
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "FleaUser = {}", fleaUser);
-        }
-
-        return fleaUser;
+        return CollectionUtils.getFirstElement(fleaUserList, FleaUser.class);
     }
 }

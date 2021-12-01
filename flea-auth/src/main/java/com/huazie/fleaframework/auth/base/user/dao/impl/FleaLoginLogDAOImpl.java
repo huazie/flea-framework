@@ -42,10 +42,6 @@ public class FleaLoginLogDAOImpl extends FleaAuthDAOImpl<FleaLoginLog> implement
                 .addOrderBy(FleaAuthEntityConstants.UserEntityConstants.E_LOGIN_TIME, DBConstants.SQLConstants.SQL_ORDER_DESC)
                 .getResultList(0, 1);
 
-        if (CollectionUtils.isNotEmpty(fleaLoginLogList)) {
-            return fleaLoginLogList.get(0);
-        } else {
-            return null;
-        }
+        return CollectionUtils.getFirstElement(fleaLoginLogList, FleaLoginLog.class);
     }
 }

@@ -55,8 +55,8 @@ public abstract class FleaLibTableSplitHandler implements IFleaJPASplitHandler {
             }
             splitLib = FleaSplitUtils.getSplitLib(libName, fleaEntity.getEntityMap());
         }
-        // 分库场景，重新初始化Flea JPA查询对象
-        handleInner(query, splitLib);
+        // 分库 或 分表场景，重新初始化Flea JPA查询对象
+        handleInner(query, splitLib, splitTable);
     }
 
     @Override
@@ -101,21 +101,32 @@ public abstract class FleaLibTableSplitHandler implements IFleaJPASplitHandler {
     }
 
     /**
-     * 分库场景，重新初始化Flea JPA查询对象
+     * 分库 或 分表 场景，重新初始化Flea JPA查询对象
      *
-     * @param query    Flea JPA 查询对象
-     * @param splitLib 分库对象
+     * @param query      Flea JPA 查询对象
+     * @param splitLib   分库对象
+     * @param splitTable 分表对象
      * @throws CommonException 通用异常
      * @since 1.1.0
      */
-    private void handleInner(FleaJPAQuery query, SplitLib splitLib) throws CommonException {
+    private void handleInner(FleaJPAQuery query, SplitLib splitLib, SplitTable splitTable) throws CommonException {
         // 分库场景，重新获取对应分库下的实体管理类
         EntityManager splitEntityManager = handleInner(splitLib);
+        // 分表场景，需要获取Flea实体管理器实现，以解决FleaJPAQuery 和 后续的
+        if (splitTable.isExistSplitTable()) {
+            if (ObjectUtils.isEmpty(splitEntityManager)) {
+                splitEntityManager = getFleaEntityMangerImpl(query.getEntityManager());
+            } else {
+                splitEntityManager = getFleaEntityMangerImpl(splitEntityManager);
+            }
+        }
         if (ObjectUtils.isNotEmpty(splitEntityManager)) {
-            // 分库场景，重新初始化Flea JPA查询对象
+            // 分库 或 分表 场景，重新初始化Flea JPA查询对象
             query.init(splitEntityManager, query.getSourceClazz(), query.getResultClazz());
         }
     }
+
+    protected abstract EntityManager getFleaEntityMangerImpl(EntityManager entityManager);
 
     /**
      * 分库场景，重新初始化实体管理类

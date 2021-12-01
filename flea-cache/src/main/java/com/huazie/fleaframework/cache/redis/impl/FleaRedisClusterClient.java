@@ -13,7 +13,7 @@ import redis.clients.jedis.util.JedisClusterCRC16;
 import redis.clients.jedis.util.SafeEncoder;
 
 /**
- * Flea Redis集群客户端实现，封装了Flea框架操作Redis缓存的基本操作。
+ * Flea集群模式Redis客户端实现，封装了Flea框架操作Redis缓存的基本操作。
  *
  * <p> 它内部具体操作Redis集群缓存的功能，由Jedis集群实例对象完成，
  * 包含读、写、删除Redis缓存的基本操作方法。

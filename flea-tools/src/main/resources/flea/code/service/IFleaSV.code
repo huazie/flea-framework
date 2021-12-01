@@ -1,7 +1,7 @@
 package %CODE_PACKAGE%.service.interfaces;
 
 import %CODE_PACKAGE%.entity.%ENTITY_CLASS_NAME%;
-import IAbstractFleaJPASV;
+import com.huazie.fleaframework.db.jpa.service.interfaces.IAbstractFleaJPASV;
 
 /**
  * %TABLE_DESC%SV层接口定义
