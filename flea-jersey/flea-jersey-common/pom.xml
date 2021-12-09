@@ -69,14 +69,14 @@
             <artifactId>jersey-media-multipart</artifactId>
         </dependency>
 
-        <!-- FLEA FRAME CORE -->
+        <!-- FLEA CORE -->
         <dependency>
             <groupId>com.huazie.fleaframework</groupId>
             <artifactId>flea-core</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
 
-        <!-- FLEA FRAME AUTH -->
+        <!-- FLEA AUTH -->
         <dependency>
             <groupId>com.huazie.fleaframework</groupId>
             <artifactId>flea-auth</artifactId>
