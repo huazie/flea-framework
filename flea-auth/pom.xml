@@ -35,7 +35,7 @@
 
     <dependencies>
 
-        <!-- FLEA FRAME CONFIG -->
+        <!-- FLEA CONFIG -->
         <dependency>
             <groupId>com.huazie.fleaframework</groupId>
             <artifactId>flea-config</artifactId>
@@ -50,14 +50,14 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- FLEA FRAME DB ECLIPSELINK-->
+        <!-- FLEA DB ECLIPSELINK-->
         <dependency>
             <groupId>com.huazie.fleaframework</groupId>
             <artifactId>flea-db-eclipselink</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
 
-        <!-- FLEA FRAME CACHE -->
+        <!-- FLEA CACHE -->
         <dependency>
             <groupId>com.huazie.fleaframework</groupId>
             <artifactId>flea-cache</artifactId>

@@ -20,10 +20,10 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 /**
- * <p> flea i18n 配置类 </p>
+ * Flea I18N 配置类
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 public class FleaI18nConfig {
@@ -37,15 +37,16 @@ public class FleaI18nConfig {
     private Map<String, ResourceBundle> resources = new HashMap<>(); // 资源集合
 
     /**
-     * <p> 只允许通过getConfig()获取 flea i18n配置类实例 </p>
+     * 只允许通过 getConfig() 获取 Flea I18N 配置类实例
      */
     private FleaI18nConfig() {
+        init(); // 初始化资源文件相关属性
     }
 
     /**
-     * <p>获取Flea i18n 配置类实例</p>
+     * 获取 Flea I18N 配置类实例
      *
-     * @return Flea I18n 配置类实例
+     * @return Flea I18N 配置类实例
      * @since 1.0.0
      */
     public static FleaI18nConfig getConfig() {
@@ -53,7 +54,6 @@ public class FleaI18nConfig {
             synchronized (FleaI18nConfig.class) {
                 if (ObjectUtils.isEmpty(config)) {
                     config = new FleaI18nConfig();
-                    config.init(); // 初始化资源文件相关属性
                 }
             }
         }
@@ -61,7 +61,7 @@ public class FleaI18nConfig {
     }
 
     /**
-     * <p> 初始化资源文件相关属性 </p>
+     * 初始化资源名和资源文件相关属性的映射关系
      *
      * @since 1.0.0
      */
@@ -108,7 +108,22 @@ public class FleaI18nConfig {
     }
 
     /**
-     * <p> 通过国际化数据的key，获取当前系统指定资源的国际化资源 </p>
+     * 通过国际化数据的key，获取当前系统指定资源的国际化资源；
+     * 其中国际化资源中使用 {} 标记的，需要values中的数据替换。
+     *
+     * @param key     国际化资源KEY
+     * @param values  待替换字符串数组
+     * @param resName 资源名
+     * @param locale  国际化标识
+     * @return 国际化资源数据
+     * @since 2.0.0
+     */
+    public FleaI18nData getI18NData(String key, String[] values, String resName, Locale locale) {
+        return new FleaI18nData(key, this.getI18NDataValue(key, values, resName, locale));
+    }
+
+    /**
+     * 通过国际化数据的key，获取当前系统指定资源的国际化资源
      *
      * @param key     国际化资源KEY
      * @param resName 资源名
@@ -154,7 +169,8 @@ public class FleaI18nConfig {
     public String getI18NDataValue(String key, String resName, Locale locale) {
         Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
+            obj = new Object() {
+            };
             LOGGER.debug1(obj, "Find the key     : {}", key);
             LOGGER.debug1(obj, "Find the resName : {}", resName);
             LOGGER.debug1(obj, "Find the locale  : {} , {}", locale == null ? Locale.getDefault() : locale, locale == null ? Locale.getDefault().getDisplayLanguage() : locale.getDisplayLanguage());
@@ -189,7 +205,8 @@ public class FleaI18nConfig {
 
         Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
+            obj = new Object() {
+            };
             LOGGER.debug1(obj, "Find the resKey  : {}", key);
         }
 
@@ -203,9 +220,9 @@ public class FleaI18nConfig {
 
         if (LOGGER.isDebugEnabled()) {
             if (ObjectUtils.isEmpty(locale)) {
-                LOGGER.debug1(obj, "Find the fileName: {}.properties", fileName);
+                LOGGER.debug1(obj, "Find the expected fileName: {}.properties", fileName);
             } else {
-                LOGGER.debug1(obj, "Find the fileName: {}_{}.properties", fileName, locale);
+                LOGGER.debug1(obj, "Find the expected fileName: {}_{}.properties", fileName, locale);
             }
         }
 
@@ -217,6 +234,15 @@ public class FleaI18nConfig {
                 resource = ResourceBundle.getBundle(fileName.toString(), locale);
             }
             resources.put(key, resource);
+        }
+
+        if (LOGGER.isDebugEnabled()) {
+            Locale realLocale = resource.getLocale();
+            if (ObjectUtils.isEmpty(locale) || StringUtils.isBlank(realLocale.toString())) {
+                LOGGER.debug1(obj, "Find the real fileName: {}.properties", fileName);
+            } else {
+                LOGGER.debug1(obj, "Find the real fileName: {}_{}.properties", fileName, realLocale);
+            }
         }
 
         return resource;

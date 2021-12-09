@@ -39,7 +39,7 @@
             <artifactId>javax.persistence</artifactId>
         </dependency>
 
-        <!-- FLEA FRAME DB JDBC -->
+        <!-- FLEA DB JDBC -->
         <dependency>
             <groupId>com.huazie.fleaframework</groupId>
             <artifactId>flea-db-jdbc</artifactId>

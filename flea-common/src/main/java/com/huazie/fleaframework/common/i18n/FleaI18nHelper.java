@@ -6,7 +6,7 @@ import com.huazie.fleaframework.common.FleaFrameManager;
 import java.util.Locale;
 
 /**
- * <p>Flea I18N 工具类</p>
+ * Flea I18N 工具类
  *
  * @author huazie
  * @version 1.0.0
@@ -18,12 +18,12 @@ public class FleaI18nHelper {
     }
 
     /**
-     * <p>i18n资源数据获取</p>
+     * I18N资源数据获取
      *
      * @param key     资源数据编码
      * @param resName 资源文件名
      * @param locale  国际化标识
-     * @return i18n资源数据
+     * @return I18N资源数据
      * @since 1.0.0
      */
     public static String i18n(String key, String resName, Locale locale) {
@@ -31,13 +31,13 @@ public class FleaI18nHelper {
     }
 
     /**
-     * <p>i18n资源数据获取</p>
+     * I18N资源数据获取
      *
      * @param key     资源数据编码
      * @param values  待替换字符串数组
      * @param resName 资源文件名
      * @param locale  国际化标识
-     * @return i18n资源数据
+     * @return I18N资源数据
      * @since 1.0.0
      */
     public static String i18n(String key, String[] values, String resName, Locale locale) {
@@ -45,11 +45,11 @@ public class FleaI18nHelper {
     }
 
     /**
-     * <p>i18n资源数据获取</p>
+     * I18N资源数据获取
      *
      * @param key     资源数据编码
      * @param resName 资源文件名
-     * @return i18n资源数据
+     * @return I18N资源数据
      * @since 1.0.0
      */
     public static String i18n(String key, String resName) {
@@ -57,12 +57,12 @@ public class FleaI18nHelper {
     }
 
     /**
-     * <p>i18n资源数据获取</p>
+     * I18N资源数据获取
      *
      * @param key     资源数据编码
      * @param values  待替换字符串数组
      * @param resName 资源文件名
-     * @return i18n资源数据
+     * @return I18N资源数据
      * @since 1.0.0
      */
     public static String i18n(String key, String[] values, String resName) {
@@ -70,10 +70,10 @@ public class FleaI18nHelper {
     }
 
     /**
-     * <p>错误码资源数据获取</p>
+     * 错误码资源数据获取
      *
      * @param key 资源数据编码
-     * @return i18n资源数据
+     * @return I18N资源数据
      * @since 1.0.0
      */
     public static String i18nForError(String key) {
@@ -81,11 +81,11 @@ public class FleaI18nHelper {
     }
 
     /**
-     * <p>错误码资源数据获取</p>
+     * 错误码资源数据获取
      *
      * @param key    资源数据编码
      * @param values 待替换字符串数组
-     * @return i18n资源数据
+     * @return I18N资源数据
      * @since 1.0.0
      */
     public static String i18nForError(String key, String[] values) {
@@ -93,11 +93,11 @@ public class FleaI18nHelper {
     }
 
     /**
-     * <p>错误码资源数据获取</p>
+     * 错误码资源数据获取
      *
      * @param key    资源数据编码
      * @param locale 国际化标识
-     * @return i18n资源数据
+     * @return I18N资源数据
      * @since 1.0.0
      */
     public static String i18nForError(String key, Locale locale) {
@@ -105,12 +105,12 @@ public class FleaI18nHelper {
     }
 
     /**
-     * <p>错误码资源数据获取</p>
+     * 错误码资源数据获取
      *
      * @param key    资源数据编码
      * @param values 待替换字符串数组
      * @param locale 国际化标识
-     * @return i18n资源数据
+     * @return I18N资源数据
      * @since 1.0.0
      */
     public static String i18nForError(String key, String[] values, Locale locale) {
@@ -118,10 +118,10 @@ public class FleaI18nHelper {
     }
 
     /**
-     * <p> Auth 资源数据获取 </p>
+     * Auth 资源数据获取
      *
      * @param key 资源数据编码
-     * @return i18n资源数据
+     * @return I18N资源数据
      * @since 1.0.0
      */
     public static String i18nForAuth(String key) {
@@ -129,11 +129,11 @@ public class FleaI18nHelper {
     }
 
     /**
-     * <p> Auth 资源数据获取 </p>
+     * Auth 资源数据获取
      *
      * @param key    资源数据编码
      * @param values 待替换字符串数组
-     * @return i18n资源数据
+     * @return I18N资源数据
      * @since 1.0.0
      */
     public static String i18nForAuth(String key, String[] values) {
@@ -141,11 +141,11 @@ public class FleaI18nHelper {
     }
 
     /**
-     * <p> Auth 资源数据获取 </p>
+     * Auth 资源数据获取
      *
      * @param key    资源数据编码
      * @param locale 国际化标识
-     * @return i18n资源数据
+     * @return I18N资源数据
      * @since 1.0.0
      */
     public static String i18nForAuth(String key, Locale locale) {
@@ -153,12 +153,12 @@ public class FleaI18nHelper {
     }
 
     /**
-     * <p> Auth 资源数据获取 </p>
+     * Auth 资源数据获取
      *
      * @param key    资源数据编码
      * @param values 待替换字符串数组
      * @param locale 国际化标识
-     * @return i18n资源数据
+     * @return I18N资源数据
      * @since 1.0.0
      */
     public static String i18nForAuth(String key, String[] values, Locale locale) {
@@ -166,10 +166,10 @@ public class FleaI18nHelper {
     }
 
     /**
-     * <p>公共资源数据获取</p>
+     * 公共资源数据获取
      *
      * @param key 资源数据编码
-     * @return i18n资源数据
+     * @return I18N资源数据
      * @since 1.0.0
      */
     public static String i18nForCommon(String key) {
@@ -177,11 +177,11 @@ public class FleaI18nHelper {
     }
 
     /**
-     * <p>公共资源数据获取</p>
+     * 公共资源数据获取
      *
      * @param key    资源数据编码
      * @param values 待替换字符串数组
-     * @return i18n资源数据
+     * @return I18N资源数据
      * @since 1.0.0
      */
     public static String i18nForCommon(String key, String[] values) {
@@ -189,11 +189,11 @@ public class FleaI18nHelper {
     }
 
     /**
-     * <p>公共资源数据获取</p>
+     * 公共资源数据获取
      *
      * @param key    资源数据编码
      * @param locale 国际化标识
-     * @return i18n资源数据
+     * @return I18N资源数据
      * @since 1.0.0
      */
     public static String i18nForCommon(String key, Locale locale) {
@@ -201,12 +201,12 @@ public class FleaI18nHelper {
     }
 
     /**
-     * <p>公共资源数据获取</p>
+     * 公共资源数据获取
      *
      * @param key    资源数据编码
      * @param values 待替换字符串数组
      * @param locale 国际化标识
-     * @return i18n资源数据
+     * @return I18N资源数据
      * @since 1.0.0
      */
     public static String i18nForCommon(String key, String[] values, Locale locale) {

@@ -35,7 +35,7 @@
 
     <dependencies>
 
-        <!-- FLEA FRAME JERSEY COMMON-->
+        <!-- FLEA JERSEY COMMON-->
         <dependency>
             <groupId>com.huazie.fleaframework</groupId>
             <artifactId>flea-jersey-common</artifactId>
