@@ -2,7 +2,7 @@
 
 <flea-config>
     <!-- flea-framework -->
-    <config-items key="flea-frame-init" desc="Flea Frame初始化配置">
+    <config-items key="flea-framework-init" desc="Flea Framework初始化配置">
         <config-item key="expiry_time_forever" desc="失效时间(永久)">29991231235959</config-item>
     </config-items>
 

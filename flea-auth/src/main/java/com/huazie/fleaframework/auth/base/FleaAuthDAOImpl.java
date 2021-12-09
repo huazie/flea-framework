@@ -29,18 +29,6 @@ public class FleaAuthDAOImpl<T> extends AbstractFleaJPADAOImpl<T> {
 
     @Override
     @Transactional("fleaAuthTransactionManager")
-    public T queryNew(long entityId, T entity) throws CommonException {
-        return super.queryNew(entityId, entity);
-    }
-
-    @Override
-    @Transactional("fleaAuthTransactionManager")
-    public T queryNew(String entityId, T entity) throws CommonException {
-        return super.queryNew(entityId, entity);
-    }
-
-    @Override
-    @Transactional("fleaAuthTransactionManager")
     public boolean remove(long entityId) throws CommonException {
         return super.remove(entityId);
     }

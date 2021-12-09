@@ -17,6 +17,7 @@ import com.huazie.fleaframework.auth.common.pojo.user.register.FleaUserRegisterP
 import com.huazie.fleaframework.auth.common.service.interfaces.IFleaAuthSV;
 import com.huazie.fleaframework.auth.common.service.interfaces.IFleaUserModuleSV;
 import com.huazie.fleaframework.common.EntityStateEnum;
+import com.huazie.fleaframework.common.FleaSessionManager;
 import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
@@ -26,6 +27,7 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -154,7 +156,15 @@ public class UserAuthTest {
     @Test
     public void testSaveQuitLog() {
         IFleaUserModuleSV fleaUserModuleSV = (IFleaUserModuleSV) applicationContext.getBean("fleaUserModuleSV");
-        fleaUserModuleSV.saveQuitLog(1L);
+        fleaUserModuleSV.saveQuitLog(10000L);
+    }
+
+    @Test
+    public void testSaveLoginAndQuitLog() {
+        IFleaUserModuleSV fleaUserModuleSV = (IFleaUserModuleSV) applicationContext.getBean("fleaUserModuleSV");
+        fleaUserModuleSV.saveLoginLog(10000L, null);
+
+        fleaUserModuleSV.saveQuitLog(10000L);
     }
 
     @Test

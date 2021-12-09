@@ -41,7 +41,7 @@
             <artifactId>spring-orm</artifactId>
         </dependency>
 
-        <!-- FLEA FRAME DB COMMON -->
+        <!-- FLEA DB COMMON -->
         <dependency>
             <groupId>com.huazie.fleaframework</groupId>
             <artifactId>flea-db-common</artifactId>

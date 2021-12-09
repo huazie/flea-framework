@@ -41,7 +41,7 @@
             <artifactId>eclipselink</artifactId>
         </dependency>
 
-        <!-- FLEA FRAME DB JPA -->
+        <!-- FLEA DB JPA -->
         <dependency>
             <groupId>com.huazie.fleaframework</groupId>
             <artifactId>flea-db-jpa</artifactId>

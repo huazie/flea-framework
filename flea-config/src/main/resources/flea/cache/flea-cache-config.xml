@@ -9,9 +9,9 @@
 
     <!-- Flea缓存建造者配置项集 -->
     <cache-items key="FleaCacheBuilder" desc="Flea缓存建造者实现">
-        <cache-item key="MemCached" desc="MemCached的Flea缓存建造者实现">MemCachedFleaCacheBuilder</cache-item>
-        <cache-item key="RedisSharded" desc="Redis分片模式下的Flea缓存建造者实现">RedisShardedFleaCacheBuilder</cache-item>
-        <cache-item key="RedisCluster" desc="Redis集群模式下的Flea缓存建造者实现">RedisClusterFleaCacheBuilder</cache-item>
+        <cache-item key="MemCached" desc="MemCached的Flea缓存建造者实现">com.huazie.fleaframework.cache.memcached.builder.MemCachedFleaCacheBuilder</cache-item>
+        <cache-item key="RedisSharded" desc="Redis分片模式下的Flea缓存建造者实现">com.huazie.fleaframework.cache.redis.builder.RedisShardedFleaCacheBuilder</cache-item>
+        <cache-item key="RedisCluster" desc="Redis集群模式下的Flea缓存建造者实现">com.huazie.fleaframework.cache.redis.builder.RedisClusterFleaCacheBuilder</cache-item>
     </cache-items>
 
     <!-- 缓存参数集 -->

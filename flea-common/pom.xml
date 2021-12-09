@@ -35,7 +35,7 @@
 
     <dependencies>
 
-        <!-- FLEA FRAME CONFIG -->
+        <!-- FLEA CONFIG -->
         <dependency>
             <groupId>com.huazie.fleaframework</groupId>
             <artifactId>flea-config</artifactId>

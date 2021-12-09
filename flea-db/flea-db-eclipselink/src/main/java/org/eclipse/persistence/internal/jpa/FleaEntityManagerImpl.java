@@ -26,7 +26,7 @@ import java.util.Map;
  * Flea 实体管理器 EclipseLink 版实现
  *
  * @author huazie
- * @version 1.2.0
+ * @version 2.0.0
  * @since 1.2.0
  */
 public final class FleaEntityManagerImpl extends EntityManagerImpl {
@@ -41,8 +41,7 @@ public final class FleaEntityManagerImpl extends EntityManagerImpl {
     public static FleaEntityManagerImpl getFleaEntityManagerImpl(EntityManager entityManager) {
         FleaEntityManagerImpl fleaEntityManagerImpl = (FleaEntityManagerImpl) FleaEntityManager.getResource(entityManager);
         if (ObjectUtils.isEmpty(fleaEntityManagerImpl)) {
-            EntityManagerImpl entityManagerImpl = entityManager.unwrap(EntityManagerImpl.class);
-            fleaEntityManagerImpl = new FleaEntityManagerImpl(entityManagerImpl);
+            fleaEntityManagerImpl = new FleaEntityManagerImpl(entityManager);
             FleaEntityManager.bindResource(entityManager, fleaEntityManagerImpl);
         }
         return fleaEntityManagerImpl;
@@ -51,11 +50,11 @@ public final class FleaEntityManagerImpl extends EntityManagerImpl {
     /**
      * 通过EntityManagerImpl构建FleaEntityManagerImpl
      *
-     * @param entityManagerImpl EclipseLink的实体管理器实现
+     * @param entityManager 实体管理器
      * @since 1.2.0
      */
-    private FleaEntityManagerImpl(EntityManagerImpl entityManagerImpl) {
-        super((EntityManagerFactoryDelegate) entityManagerImpl.getEntityManagerFactory(), entityManagerImpl.getProperties(), entityManagerImpl.getSyncType());
+    private FleaEntityManagerImpl(EntityManager entityManager) {
+        super(entityManager.getEntityManagerFactory().unwrap(EntityManagerFactoryImpl.class).unwrap(), entityManager.getProperties(), null);
     }
 
     /**

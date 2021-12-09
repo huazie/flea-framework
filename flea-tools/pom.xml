@@ -39,7 +39,7 @@
             <artifactId>javax.persistence</artifactId>
         </dependency>
 
-        <!-- FLEA FRAME DB JDBC -->
+        <!-- FLEA DB JDBC -->
         <dependency>
             <groupId>com.huazie.fleaframework</groupId>
             <artifactId>flea-db-jdbc</artifactId>
@@ -52,7 +52,7 @@
             <artifactId>substance</artifactId>
             <version>4.3</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/substance-4.3.jar</systemPath>
+            <systemPath>${pom.basedir}/lib/substance-4.3.jar</systemPath>
         </dependency>
 
     </dependencies>

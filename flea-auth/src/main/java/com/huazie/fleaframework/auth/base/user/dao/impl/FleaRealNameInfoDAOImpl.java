@@ -40,17 +40,7 @@ public class FleaRealNameInfoDAOImpl extends FleaAuthDAOImpl<FleaRealNameInfo> i
                 .greaterThan(FleaAuthEntityConstants.E_EXPIRY_DATE, currentDate)
                 .getResultList();
 
-        FleaRealNameInfo fleaRealNameInfo = null;
-
-        if (CollectionUtils.isNotEmpty(realNameInfoList)) {
-            fleaRealNameInfo = realNameInfoList.get(0);
-        }
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "FleaRealNameInfo = {}", fleaRealNameInfo);
-        }
-
-        return fleaRealNameInfo;
+        return CollectionUtils.getFirstElement(realNameInfoList, FleaRealNameInfo.class);
     }
 
 }

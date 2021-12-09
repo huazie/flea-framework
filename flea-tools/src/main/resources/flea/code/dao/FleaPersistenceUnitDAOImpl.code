@@ -1,7 +1,7 @@
 package %FLEA_PERSISTENCE_UNIT_DAO_CLASS_PACKAGE%;
 
-import CommonException;
-import AbstractFleaJPADAOImpl;
+import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.db.jpa.dao.impl.AbstractFleaJPADAOImpl;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -24,18 +24,6 @@ public class %FLEA_PERSISTENCE_UNIT_ALIAS_NAME%DAOImpl<T> extends AbstractFleaJP
     @Transactional("%FLEA_PERSISTENCE_UNIT_ALIAS_NAME_1%TransactionManager")
     public Number getFleaNextValue(T entity) throws CommonException {
         return super.getFleaNextValue(entity);
-    }
-
-    @Override
-    @Transactional("%FLEA_PERSISTENCE_UNIT_ALIAS_NAME_1%TransactionManager")
-    public T queryNew(long entityId, T entity) throws CommonException {
-        return super.queryNew(entityId, entity);
-    }
-
-    @Override
-    @Transactional("%FLEA_PERSISTENCE_UNIT_ALIAS_NAME_1%TransactionManager")
-    public T queryNew(String entityId, T entity) throws CommonException {
-        return super.queryNew(entityId, entity);
     }
 
     @Override

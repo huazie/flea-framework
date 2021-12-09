@@ -53,13 +53,12 @@ public interface IFleaJPASplitHandler {
      * 分表场景下，取事物管理器中的实体管理器工厂类，并将其作为键，
      * 绑定实体管理器对应的包装类资源到当前线程。以支持JPA的增删改操作。
      *
-     * @param status             事物状态
      * @param definition         事物属性
      * @param transactionManager 事物管理器
      * @param entityManager      持久化接口对象实例
      * @since 1.2.0
      */
-    TransactionStatus handle(TransactionStatus status, TransactionDefinition definition, PlatformTransactionManager transactionManager, EntityManager entityManager);
+    TransactionStatus getTransaction(TransactionDefinition definition, PlatformTransactionManager transactionManager, EntityManager entityManager);
 
     /**
      * 获取下一个主键值

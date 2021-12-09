@@ -24,84 +24,84 @@
     <dependencyManagement>
         <dependencies>
 
-            <!-- FLEA FRAME ALGORITHM-->
+            <!-- FLEA ALGORITHM-->
             <dependency>
                 <groupId>com.huazie.fleaframework</groupId>
                 <artifactId>flea-algorithm</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
-            <!-- FLEA FRAME AUTH-->
+            <!-- FLEA AUTH-->
             <dependency>
                 <groupId>com.huazie.fleaframework</groupId>
                 <artifactId>flea-auth</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
-            <!-- FLEA FRAME CACHE-->
+            <!-- FLEA CACHE-->
             <dependency>
                 <groupId>com.huazie.fleaframework</groupId>
                 <artifactId>flea-cache</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
-            <!-- FLEA FRAME COMMON-->
+            <!-- FLEA COMMON-->
             <dependency>
                 <groupId>com.huazie.fleaframework</groupId>
                 <artifactId>flea-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
-            <!-- FLEA FRAME CORE-->
+            <!-- FLEA CORE-->
             <dependency>
                 <groupId>com.huazie.fleaframework</groupId>
                 <artifactId>flea-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
-            <!-- FLEA FRAME DB COMMON-->
+            <!-- FLEA DB COMMON-->
             <dependency>
                 <groupId>com.huazie.fleaframework</groupId>
                 <artifactId>flea-db-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
-            <!-- FLEA FRAME DB ECLIPSELINK-->
+            <!-- FLEA DB ECLIPSELINK-->
             <dependency>
                 <groupId>com.huazie.fleaframework</groupId>
                 <artifactId>flea-db-eclipselink</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
-            <!-- FLEA FRAME DB JDBC-->
+            <!-- FLEA DB JDBC-->
             <dependency>
                 <groupId>com.huazie.fleaframework</groupId>
                 <artifactId>flea-db-jdbc</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
-            <!-- FLEA FRAME DB JPA-->
+            <!-- FLEA DB JPA-->
             <dependency>
                 <groupId>com.huazie.fleaframework</groupId>
                 <artifactId>flea-db-jpa</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
-            <!-- FLEA FRAME JERSEY CLIENT-->
+            <!-- FLEA JERSEY CLIENT-->
             <dependency>
                 <groupId>com.huazie.fleaframework</groupId>
                 <artifactId>flea-jersey-client</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
-            <!-- FLEA FRAME JERSEY COMMON -->
+            <!-- FLEA JERSEY COMMON -->
             <dependency>
                 <groupId>com.huazie.fleaframework</groupId>
                 <artifactId>flea-jersey-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
-            <!-- FLEA FRAME JERSEY SERVER-->
+            <!-- FLEA JERSEY SERVER-->
             <dependency>
                 <groupId>com.huazie.fleaframework</groupId>
                 <artifactId>flea-jersey-server</artifactId>
