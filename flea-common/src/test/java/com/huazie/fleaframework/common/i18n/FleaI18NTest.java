@@ -1,6 +1,7 @@
 package com.huazie.fleaframework.common.i18n;
 
 import com.huazie.fleaframework.common.i18n.config.FleaI18nConfig;
+import com.huazie.fleaframework.common.i18n.pojo.FleaI18nData;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.common.util.StringUtils;
@@ -20,20 +21,20 @@ public class FleaI18NTest {
     @Test
     public void fleaI18NConfigTest() {
         FleaI18nConfig config = FleaI18nConfig.getConfig();
-        try {
-            config.getI18NData("ERROR-CORE-FILTER0000000001", "error", Locale.US);
-        } catch (Exception e) {
-            LOGGER.error("Exception={}", e);
-        }
+        FleaI18nData fleaI18nData = config.getI18NData("ERROR0000000001", "error", Locale.US);
+        LOGGER.debug("FleaI18nData = {}", fleaI18nData);
     }
 
     @Test
     public void fleaI18NHelperTest() {
-        try {
-            FleaI18nHelper.i18n("ERROR-CORE-FILTER0000000001", "error", Locale.US);
-        } catch (Exception e) {
-            LOGGER.error("Exception={}", e);
-        }
+        String value = FleaI18nHelper.i18n("ERROR0000000001", "error", Locale.FRANCE);
+        LOGGER.debug("Value = {}", value);
+    }
+
+    @Test
+    public void fleaI18NHelperTest1() {
+        String value = FleaI18nHelper.i18n("ERROR0000000001", "error", Locale.US);
+        LOGGER.debug("Value = {}", value);
     }
 
     @Test

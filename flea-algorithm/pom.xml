@@ -34,7 +34,7 @@
     </build>
 
     <dependencies>
-        <!-- FLEA FRAME CONFIG -->
+        <!-- FLEA CONFIG -->
         <dependency>
             <groupId>com.huazie.fleaframework</groupId>
             <artifactId>flea-config</artifactId>
@@ -42,7 +42,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- FLEA FRAME COMMON-->
+        <!-- FLEA COMMON-->
         <dependency>
             <groupId>com.huazie.fleaframework</groupId>
             <artifactId>flea-common</artifactId>

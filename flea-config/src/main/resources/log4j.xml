@@ -4,8 +4,8 @@
 	<!--
 		org.apache.log4j.ConsoleAppender 日志输出到控制台
 		org.apache.log4j.FileAppender 日志输出到文件
-		org.apache.log4j.DailyRollingFileAppender 日志输出到文件，文件达到一定阈值时，自动备份日志文件;
-		org.apache.log4j.RollingFileAppender 可定期备份日志文件，默认一天一个文件，也可设置为每分钟一个、每小时一个；
+		org.apache.log4j.DailyRollingFileAppender 可定期备份日志文件，默认一天一个文件，也可设置为每分钟一个、每小时一个；
+		org.apache.log4j.RollingFileAppender 日志输出到文件，文件达到一定阈值时，自动备份日志文件;
 		org.apache.log4j.WriterAppender 可自定义日志输出位置
 
 		日志级别

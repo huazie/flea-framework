@@ -48,8 +48,7 @@ public class EclipseLinkLibTableSplitHandler extends FleaLibTableSplitHandler {
         // 分表信息为空或不存在分表，默认不处理
         if (ObjectUtils.isEmpty(splitTable) || !splitTable.isExistSplitTable()) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {
-                }, "分表信息为空或不存在分表，本次不处理【FleaJPAQuery】！");
+                LOGGER.error1(new Object() {}, "分表信息为空或不存在分表，本次不处理【FleaJPAQuery】！");
             }
             return;
         }
@@ -57,7 +56,8 @@ public class EclipseLinkLibTableSplitHandler extends FleaLibTableSplitHandler {
         EntityType entityType = query.getRoot().getModel();
         // 获取实体类对应的持久化信息
         ClassDescriptor classDescriptor = ((EntityTypeImpl) entityType).getDescriptor();
-        AbstractSession abstractSession = ((EJBQueryImpl) typedQuery.unwrap(null)).getEntityManager().getAbstractSession();
+        // 分表场景，这里的entityManager已经重新设置为 FleaEntityManagerImpl
+        AbstractSession abstractSession = ((FleaEntityManagerImpl) query.getEntityManager()).getDatabaseSession();
         classDescriptor = EclipseLinkUtils.getSplitDescriptor(classDescriptor, abstractSession, splitTable);
         // 获取内部DatabaseQuery对象
         ReadAllQuery readAllQuery = typedQuery.unwrap(ReadAllQuery.class);
@@ -68,13 +68,17 @@ public class EclipseLinkLibTableSplitHandler extends FleaLibTableSplitHandler {
     }
 
     @Override
-    public TransactionStatus handle(TransactionStatus status, TransactionDefinition definition, PlatformTransactionManager transactionManager, EntityManager entityManager) {
+    protected EntityManager getFleaEntityMangerImpl(EntityManager entityManager) {
+        return FleaEntityManagerImpl.getFleaEntityManagerImpl(entityManager);
+    }
+
+    @Override
+    public TransactionStatus getTransaction(TransactionDefinition definition, PlatformTransactionManager transactionManager, EntityManager entityManager) {
         if (ObjectUtils.isEmpty(entityManager)) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {
-                }, "分表信息为空或不存在分表，本次不处理【TransactionStatus】！");
+                LOGGER.error1(new Object() {}, "分表信息为空或不存在分表，本次不处理【TransactionStatus】！");
             }
-            return status;
+            return transactionManager.getTransaction(definition);
         }
         // 获取Flea实体管理器实现类
         FleaEntityManagerImpl fleaEntityManagerImpl = FleaEntityManagerImpl.getFleaEntityManagerImpl(entityManager);
@@ -82,8 +86,11 @@ public class EclipseLinkLibTableSplitHandler extends FleaLibTableSplitHandler {
         EntityManagerHolder entityManagerHolder = new EntityManagerHolder(fleaEntityManagerImpl);
         // JPA事物管理器
         JpaTransactionManager jpaTransactionManager = (JpaTransactionManager) transactionManager;
-        // 从当前线程解除给定实体管理器工厂类的实体管理器包装类资源绑定。
-        TransactionSynchronizationManager.unbindResource(jpaTransactionManager.getEntityManagerFactory());
+        Object obj = TransactionSynchronizationManager.getResource(jpaTransactionManager.getEntityManagerFactory());
+        if (ObjectUtils.isNotEmpty(obj)) {
+            // 从当前线程解除给定实体管理器工厂类的实体管理器包装类资源绑定。
+            TransactionSynchronizationManager.unbindResource(jpaTransactionManager.getEntityManagerFactory());
+        }
         // 将实体管理器工厂类的实体管理器包装类资源绑定到当前线程
         TransactionSynchronizationManager.bindResource(jpaTransactionManager.getEntityManagerFactory(), entityManagerHolder);
         // 重新获取事物状态对象，并开启事物
@@ -115,8 +122,7 @@ public class EclipseLinkLibTableSplitHandler extends FleaLibTableSplitHandler {
         // 分表信息为空或不存在分表，默认不处理
         if (ObjectUtils.isEmpty(splitTable) || !splitTable.isExistSplitTable()) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {
-                }, "分表信息为空或不存在分表，本次不执行【find】！");
+                LOGGER.error1(new Object() {}, "分表信息为空或不存在分表，本次不执行【find】！");
             }
             return null;
         }
@@ -129,8 +135,7 @@ public class EclipseLinkLibTableSplitHandler extends FleaLibTableSplitHandler {
     public <T> boolean remove(EntityManager entityManager, T entity) {
         if (ObjectUtils.isEmpty(entity) || !(entity instanceof FleaEntity)) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {
-                }, "待删除实体对象为空或不是FleaEntity的子类，本次不执行【remove】！");
+                LOGGER.error1(new Object() {}, "待删除实体对象为空或不是FleaEntity的子类，本次不执行【remove】！");
             }
             return false;
         }
@@ -152,8 +157,7 @@ public class EclipseLinkLibTableSplitHandler extends FleaLibTableSplitHandler {
     public <T> T merge(EntityManager entityManager, T entity) {
         if (ObjectUtils.isEmpty(entity) || !(entity instanceof FleaEntity)) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {
-                }, "待删除实体对象为空或不是FleaEntity的子类，本次不执行【merge】！");
+                LOGGER.error1(new Object() {}, "待删除实体对象为空或不是FleaEntity的子类，本次不执行【merge】！");
             }
             return null;
         }
@@ -174,8 +178,7 @@ public class EclipseLinkLibTableSplitHandler extends FleaLibTableSplitHandler {
     public <T> void persist(EntityManager entityManager, T entity) {
         if (ObjectUtils.isEmpty(entity) || !(entity instanceof FleaEntity)) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {
-                }, "待删除实体对象为空或不是FleaEntity的子类，本次不执行【persist】！");
+                LOGGER.error1(new Object() {}, "待删除实体对象为空或不是FleaEntity的子类，本次不执行【persist】！");
             }
             return;
         }

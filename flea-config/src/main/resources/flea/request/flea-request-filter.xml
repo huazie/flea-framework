@@ -5,9 +5,9 @@
 
         <filter-tasks>
 
-            <filter-task clazz="UrlCheckFilterTask" order="0" desc="URL校验过滤器任务" />
+            <filter-task clazz="com.huazie.fleaframework.core.filter.task.impl.UrlCheckFilterTask" order="0" desc="URL校验过滤器任务" />
 
-            <filter-task clazz="SessionCheckFilterTask" order="1" desc="SESSION信息校验过滤器任务" />
+            <filter-task clazz="com.huazie.fleaframework.core.filter.task.impl.SessionCheckFilterTask" order="1" desc="SESSION信息校验过滤器任务" />
 
         </filter-tasks>
 
