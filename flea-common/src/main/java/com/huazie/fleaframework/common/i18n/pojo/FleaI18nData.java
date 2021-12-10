@@ -5,18 +5,19 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import java.io.Serializable;
 
 /**
- * <p>Flea I18n 数据</p>
+ * Flea I18N 数据
  *
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0
  */
-@SuppressWarnings("serial")
 public class FleaI18nData implements Serializable {
 
-    private String key;
+    private static final long serialVersionUID = 5073383168723394410L;
 
-    private String value;
+    private String key; // 国际化编码
+
+    private String value; // 国际化数据
 
     public FleaI18nData() {
     }
