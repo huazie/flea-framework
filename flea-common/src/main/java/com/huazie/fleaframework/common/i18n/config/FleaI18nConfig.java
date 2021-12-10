@@ -20,7 +20,20 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 /**
- * Flea I18N 配置类
+ * Flea I18N 配置类，用于获取指定语言环境下的指定资源对应的国际化数据。
+ *
+ * <p> 它默认读取资源路径为 flea/i18n，资源文件前缀为 flea_i18n，当然
+ * 也可以在 flea-config.xml 中为指定资源文件配置路径和前缀，从而可以
+ * 实现读取任意位置的资源数据。
+ *
+ * <p> 可参考如下进行配置：
+ * <pre>
+ * {@code
+ *   <config-items key="flea-i18n-config" desc="Flea国际化相关配置">
+ *       <config-item key="error" desc="error国际化资源特殊配置，指定路径和文件前缀，逗号分隔">flea/i18n,flea_i18n</config-item>
+ *   </config-items>
+ * }
+ * </pre>
  *
  * @author huazie
  * @version 2.0.0
@@ -34,13 +47,13 @@ public class FleaI18nConfig {
 
     private Map<String, String> resFilePath = new HashMap<>(); // 资源文件路径集
 
-    private Map<String, ResourceBundle> resources = new HashMap<>(); // 资源集合
+    private Map<String, ResourceBundle> resources = new HashMap<>(); // 资源集
 
     /**
      * 只允许通过 getConfig() 获取 Flea I18N 配置类实例
      */
     private FleaI18nConfig() {
-        init(); // 初始化资源文件相关属性
+        init(); // 初始化资源文件相关配置
     }
 
     /**
@@ -169,8 +182,7 @@ public class FleaI18nConfig {
     public String getI18NDataValue(String key, String resName, Locale locale) {
         Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {
-            };
+            obj = new Object() {};
             LOGGER.debug1(obj, "Find the key     : {}", key);
             LOGGER.debug1(obj, "Find the resName : {}", resName);
             LOGGER.debug1(obj, "Find the locale  : {} , {}", locale == null ? Locale.getDefault() : locale, locale == null ? Locale.getDefault().getDisplayLanguage() : locale.getDisplayLanguage());
@@ -205,8 +217,7 @@ public class FleaI18nConfig {
 
         Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {
-            };
+            obj = new Object() {};
             LOGGER.debug1(obj, "Find the resKey  : {}", key);
         }
 

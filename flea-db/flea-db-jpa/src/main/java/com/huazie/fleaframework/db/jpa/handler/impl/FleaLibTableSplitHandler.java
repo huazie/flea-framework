@@ -112,7 +112,7 @@ public abstract class FleaLibTableSplitHandler implements IFleaJPASplitHandler {
     private void handleInner(FleaJPAQuery query, SplitLib splitLib, SplitTable splitTable) throws CommonException {
         // 分库场景，重新获取对应分库下的实体管理类
         EntityManager splitEntityManager = handleInner(splitLib);
-        // 分表场景，需要获取Flea实体管理器实现，以解决FleaJPAQuery 和 后续的
+        // 分表场景，需要获取Flea实体管理器实现，以应对FleaJPAQuery获取的对象不能用于后续的修改和删除
         if (splitTable.isExistSplitTable()) {
             if (ObjectUtils.isEmpty(splitEntityManager)) {
                 splitEntityManager = getFleaEntityMangerImpl(query.getEntityManager());
