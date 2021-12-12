@@ -1,8 +1,8 @@
 package com.huazie.fleaframework.cache.common;
 
 import com.huazie.fleaframework.cache.redis.RedisClient;
-import com.huazie.fleaframework.cache.redis.strategy.RedisShardedClientStrategy;
 import com.huazie.fleaframework.cache.redis.strategy.RedisClusterClientStrategy;
+import com.huazie.fleaframework.cache.redis.strategy.RedisShardedClientStrategy;
 import com.huazie.fleaframework.common.strategy.FleaStrategyContext;
 import com.huazie.fleaframework.common.strategy.IFleaStrategy;
 

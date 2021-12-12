@@ -1,8 +1,8 @@
 package com.huazie.fleaframework.common.util;
 
+import com.huazie.fleaframework.common.CommonConstants;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
-import com.huazie.fleaframework.common.CommonConstants;
 import com.huazie.fleaframework.common.util.json.FastJsonUtils;
 import com.huazie.fleaframework.common.util.json.GsonUtils;
 

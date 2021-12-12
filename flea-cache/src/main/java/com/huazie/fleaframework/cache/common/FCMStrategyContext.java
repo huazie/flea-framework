@@ -1,8 +1,8 @@
 package com.huazie.fleaframework.cache.common;
 
+import com.huazie.fleaframework.cache.AbstractFleaCacheManager;
 import com.huazie.fleaframework.cache.core.strategy.CoreFCMStrategy;
 import com.huazie.fleaframework.cache.memcached.strategy.MemCachedFCMStrategy;
-import com.huazie.fleaframework.cache.AbstractFleaCacheManager;
 import com.huazie.fleaframework.cache.redis.strategy.RedisClusterFCMStrategy;
 import com.huazie.fleaframework.cache.redis.strategy.RedisShardedFCMStrategy;
 import com.huazie.fleaframework.common.FleaCommonConfig;

@@ -9,9 +9,9 @@ import com.huazie.fleaframework.db.common.DBConstants;
 import com.huazie.fleaframework.db.common.lib.pojo.SplitLib;
 import com.huazie.fleaframework.db.common.table.pojo.SplitTable;
 import com.huazie.fleaframework.db.common.util.FleaSplitUtils;
-import com.huazie.fleaframework.db.jpa.persistence.FleaEntityManager;
 import com.huazie.fleaframework.db.jpa.common.FleaJPAQuery;
 import com.huazie.fleaframework.db.jpa.handler.IFleaJPASplitHandler;
+import com.huazie.fleaframework.db.jpa.persistence.FleaEntityManager;
 
 import javax.persistence.EntityManager;
 
@@ -49,7 +49,8 @@ public abstract class FleaLibTableSplitHandler implements IFleaJPASplitHandler {
             String libName = query.getPoolName();
             if (ObjectUtils.isEmpty(libName)) {
                 if (LOGGER.isErrorEnabled()) {
-                    LOGGER.error1(new Object() {}, "默认库名为空，本次不处理【FleaJPAQuery】！");
+                    LOGGER.error1(new Object() {
+                    }, "默认库名为空，本次不处理【FleaJPAQuery】！");
                 }
                 return;
             }
@@ -82,7 +83,8 @@ public abstract class FleaLibTableSplitHandler implements IFleaJPASplitHandler {
             String libName = fleaEntity.get(DBConstants.LibTableSplitConstants.FLEA_LIB_NAME, String.class);
             if (ObjectUtils.isEmpty(libName)) {
                 if (LOGGER.isErrorEnabled()) {
-                    LOGGER.error1(new Object() {}, "默认库名为空，本次不处理【EntityManager】！");
+                    LOGGER.error1(new Object() {
+                    }, "默认库名为空，本次不处理【EntityManager】！");
                 }
                 return entityManager;
             }

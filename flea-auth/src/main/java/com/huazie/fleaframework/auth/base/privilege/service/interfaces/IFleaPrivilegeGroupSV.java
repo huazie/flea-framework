@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.auth.base.privilege.service.interfaces;
 
-import com.huazie.fleaframework.auth.common.pojo.privilege.FleaPrivilegeGroupPOJO;
 import com.huazie.fleaframework.auth.base.privilege.entity.FleaPrivilegeGroup;
+import com.huazie.fleaframework.auth.common.pojo.privilege.FleaPrivilegeGroupPOJO;
 import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.db.jpa.service.interfaces.IAbstractFleaJPASV;
 

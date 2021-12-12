@@ -12,6 +12,8 @@ import com.huazie.fleaframework.common.i18n.FleaI18nResEnum;
  */
 public class FleaCoreCommonException extends CommonException {
 
+    private static final long serialVersionUID = 4343210993561487190L;
+
     public FleaCoreCommonException(String key) {
         super(key, FleaI18nResEnum.ERROR_CORE);
     }

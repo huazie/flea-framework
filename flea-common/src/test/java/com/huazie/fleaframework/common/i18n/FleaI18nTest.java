@@ -14,25 +14,25 @@ import java.util.Locale;
  * @author huazie
  * @version 1.0.0
  */
-public class FleaI18NTest {
+public class FleaI18nTest {
 
-    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaI18NTest.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaI18nTest.class);
 
     @Test
-    public void fleaI18NConfigTest() {
+    public void fleaI18nConfigTest() {
         FleaI18nConfig config = FleaI18nConfig.getConfig();
         FleaI18nData fleaI18nData = config.getI18NData("ERROR0000000001", "error", Locale.US);
         LOGGER.debug("FleaI18nData = {}", fleaI18nData);
     }
 
     @Test
-    public void fleaI18NHelperTest() {
+    public void fleaI18nHelperTest() {
         String value = FleaI18nHelper.i18n("ERROR0000000001", "error", Locale.FRANCE);
         LOGGER.debug("Value = {}", value);
     }
 
     @Test
-    public void fleaI18NHelperTest1() {
+    public void fleaI18nHelperTest1() {
         String value = FleaI18nHelper.i18n("ERROR0000000001", "error", Locale.US);
         LOGGER.debug("Value = {}", value);
     }

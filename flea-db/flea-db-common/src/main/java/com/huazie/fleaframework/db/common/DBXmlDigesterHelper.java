@@ -20,14 +20,14 @@ import com.huazie.fleaframework.db.common.sql.template.config.Property;
 import com.huazie.fleaframework.db.common.sql.template.config.Relation;
 import com.huazie.fleaframework.db.common.sql.template.config.Relations;
 import com.huazie.fleaframework.db.common.sql.template.config.Rule;
-import com.huazie.fleaframework.db.common.sql.template.config.Template;
-import com.huazie.fleaframework.db.common.sql.template.config.Templates;
-import com.huazie.fleaframework.db.common.table.split.config.Tables;
 import com.huazie.fleaframework.db.common.sql.template.config.Rules;
 import com.huazie.fleaframework.db.common.sql.template.config.Sql;
+import com.huazie.fleaframework.db.common.sql.template.config.Template;
+import com.huazie.fleaframework.db.common.sql.template.config.Templates;
 import com.huazie.fleaframework.db.common.table.split.config.Split;
 import com.huazie.fleaframework.db.common.table.split.config.Splits;
 import com.huazie.fleaframework.db.common.table.split.config.Table;
+import com.huazie.fleaframework.db.common.table.split.config.Tables;
 import org.apache.commons.digester.Digester;
 
 import java.io.InputStream;

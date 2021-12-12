@@ -1,8 +1,8 @@
 package com.huazie.fleaframework.cache.memcached.impl;
 
-import com.huazie.fleaframework.cache.common.CacheEnum;
 import com.huazie.fleaframework.cache.AbstractFleaCache;
 import com.huazie.fleaframework.cache.NullCache;
+import com.huazie.fleaframework.cache.common.CacheEnum;
 import com.huazie.fleaframework.cache.memcached.config.MemCachedConfig;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;

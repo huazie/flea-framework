@@ -1,9 +1,9 @@
 package com.huazie.fleaframework.common.config;
 
+import com.huazie.fleaframework.common.FleaConfigXmlDigesterHelper;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.common.util.ObjectUtils;
-import com.huazie.fleaframework.common.FleaConfigXmlDigesterHelper;
 import org.junit.Test;
 
 /**

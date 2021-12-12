@@ -8,7 +8,6 @@ import com.huazie.fleaframework.common.util.NumberUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.ReflectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
-import com.huazie.fleaframework.db.common.table.pojo.SplitTable;
 import com.huazie.fleaframework.db.common.FleaTable;
 import com.huazie.fleaframework.db.common.FleaTableGenerator;
 import com.huazie.fleaframework.db.common.exception.DaoException;
@@ -16,6 +15,7 @@ import com.huazie.fleaframework.db.common.sql.template.config.Param;
 import com.huazie.fleaframework.db.common.sql.template.config.Relation;
 import com.huazie.fleaframework.db.common.sql.template.config.Template;
 import com.huazie.fleaframework.db.common.table.pojo.Column;
+import com.huazie.fleaframework.db.common.table.pojo.SplitTable;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;

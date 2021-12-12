@@ -2,10 +2,10 @@ package com.huazie.fleaframework.auth.base.user.service.impl;
 
 import com.huazie.fleaframework.auth.base.user.dao.interfaces.IFleaUserDAO;
 import com.huazie.fleaframework.auth.base.user.entity.FleaUser;
+import com.huazie.fleaframework.auth.base.user.service.interfaces.IFleaUserSV;
 import com.huazie.fleaframework.auth.common.FleaAuthEntityConstants;
 import com.huazie.fleaframework.auth.common.exception.FleaAuthCommonException;
 import com.huazie.fleaframework.auth.common.pojo.user.FleaUserPOJO;
-import com.huazie.fleaframework.auth.base.user.service.interfaces.IFleaUserSV;
 import com.huazie.fleaframework.common.CommonConstants;
 import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.common.util.ObjectUtils;

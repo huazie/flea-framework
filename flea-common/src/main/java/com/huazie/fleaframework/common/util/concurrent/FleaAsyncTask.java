@@ -1,8 +1,8 @@
 package com.huazie.fleaframework.common.util.concurrent;
 
+import com.huazie.fleaframework.common.IFleaUser;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
-import com.huazie.fleaframework.common.IFleaUser;
 import com.huazie.fleaframework.common.util.ArrayUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;

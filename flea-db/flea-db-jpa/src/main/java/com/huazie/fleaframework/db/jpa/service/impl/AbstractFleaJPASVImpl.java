@@ -1,8 +1,8 @@
 package com.huazie.fleaframework.db.jpa.service.impl;
 
 import com.huazie.fleaframework.common.exception.CommonException;
-import com.huazie.fleaframework.db.jpa.service.interfaces.IAbstractFleaJPASV;
 import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
+import com.huazie.fleaframework.db.jpa.service.interfaces.IAbstractFleaJPASV;
 
 import java.util.List;
 import java.util.Map;

@@ -12,6 +12,8 @@ import com.huazie.fleaframework.common.i18n.FleaI18nResEnum;
  */
 public class FleaJerseyCommonException extends CommonException {
 
+    private static final long serialVersionUID = -7784333975625919329L;
+
     public FleaJerseyCommonException(String key) {
         super(key, FleaI18nResEnum.ERROR_JERSEY);
     }

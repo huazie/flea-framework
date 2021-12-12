@@ -17,10 +17,10 @@ import com.huazie.fleaframework.db.common.sql.template.ITemplate;
 import com.huazie.fleaframework.db.common.sql.template.SqlTemplateFactory;
 import com.huazie.fleaframework.db.common.sql.template.TemplateTypeEnum;
 import com.huazie.fleaframework.db.jpa.LibTableSplitHelper;
-import com.huazie.fleaframework.db.jpa.persistence.FleaEntityManager;
 import com.huazie.fleaframework.db.jpa.common.FleaJPAQuery;
 import com.huazie.fleaframework.db.jpa.common.FleaJPAQueryPool;
 import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
+import com.huazie.fleaframework.db.jpa.persistence.FleaEntityManager;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;

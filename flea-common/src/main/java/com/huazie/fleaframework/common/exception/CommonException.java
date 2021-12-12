@@ -9,7 +9,7 @@ import com.huazie.fleaframework.common.util.ObjectUtils;
 import java.util.Locale;
 
 /**
- * <p> Flea I18N 通用异常 </p>
+ * Flea I18N 通用异常，由子类传入具体的国际化资源枚举类型
  *
  * @author huazie
  * @version 1.0.0
@@ -73,9 +73,12 @@ public abstract class CommonException extends Exception {
 
     private static String convert(String key, String[] values, FleaI18nResEnum i18nResEnum, Locale locale) {
         if (ObjectUtils.isEmpty(locale)) {
-            locale = FleaFrameManager.getManager().getLocale(); // 使用服务器当前默认的国际化区域设置
+            locale = FleaFrameManager.getManager().getLocale(); // 使用当前线程默认的国际化区域设置
         }
-        if (ArrayUtils.isNotEmpty(values) && ObjectUtils.isNotEmpty(i18nResEnum)) {
+        if (ObjectUtils.isEmpty(i18nResEnum)) {
+            i18nResEnum = FleaI18nResEnum.ERROR; // 默认使用 国际化资源名为 error
+        }
+        if (ArrayUtils.isNotEmpty(values)) {
             return FleaI18nHelper.i18n(key, values, i18nResEnum.getResName(), locale);
         } else {
             return FleaI18nHelper.i18n(key, i18nResEnum.getResName(), locale);

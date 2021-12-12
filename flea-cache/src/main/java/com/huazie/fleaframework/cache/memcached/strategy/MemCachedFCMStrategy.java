@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.cache.memcached.strategy;
 
-import com.huazie.fleaframework.cache.memcached.manager.MemCachedFleaCacheManager;
 import com.huazie.fleaframework.cache.AbstractFleaCacheManager;
+import com.huazie.fleaframework.cache.memcached.manager.MemCachedFleaCacheManager;
 import com.huazie.fleaframework.common.FleaCommonConfig;
 import com.huazie.fleaframework.common.strategy.IFleaStrategy;
 

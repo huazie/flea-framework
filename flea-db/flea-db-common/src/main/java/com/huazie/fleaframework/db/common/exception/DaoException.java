@@ -4,13 +4,16 @@ import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.common.i18n.FleaI18nResEnum;
 
 /**
- * <p> 持久化Dao层操作出现的异常 </p>
+ * 持久化层异常类，定义了数据持久化层抛出的异常，
+ * 其对应的国际化资源名为【error_db】
  *
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0
  */
 public class DaoException extends CommonException {
+
+    private static final long serialVersionUID = -7126580845210939289L;
 
     public DaoException(String key) {
         super(key, FleaI18nResEnum.ERROR_DB);
