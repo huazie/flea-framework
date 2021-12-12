@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.auth.common.pojo.function.menu;
 
-import com.huazie.fleaframework.common.pojo.FleaEffExpDatePOJO;
 import com.huazie.fleaframework.auth.common.pojo.function.attr.FleaFunctionAttrPOJO;
+import com.huazie.fleaframework.common.pojo.FleaEffExpDatePOJO;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.util.List;

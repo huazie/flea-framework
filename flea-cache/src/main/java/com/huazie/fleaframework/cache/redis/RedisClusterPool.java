@@ -1,12 +1,12 @@
 package com.huazie.fleaframework.cache.redis;
 
-import com.huazie.fleaframework.cache.config.CacheServer;
-import com.huazie.fleaframework.cache.redis.config.RedisClusterConfig;
 import com.huazie.fleaframework.cache.common.CacheConfigUtils;
 import com.huazie.fleaframework.cache.common.CacheConstants.RedisConfigConstants;
 import com.huazie.fleaframework.cache.common.CacheUtils;
 import com.huazie.fleaframework.cache.config.CacheParam;
+import com.huazie.fleaframework.cache.config.CacheServer;
 import com.huazie.fleaframework.cache.exceptions.FleaCacheConfigException;
+import com.huazie.fleaframework.cache.redis.config.RedisClusterConfig;
 import com.huazie.fleaframework.common.CommonConstants;
 import com.huazie.fleaframework.common.util.CollectionUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;

@@ -1,8 +1,8 @@
 package com.huazie.fleaframework.auth.base.role.service.impl;
 
-import com.huazie.fleaframework.auth.base.role.service.interfaces.IFleaRoleSV;
 import com.huazie.fleaframework.auth.base.role.dao.interfaces.IFleaRoleDAO;
 import com.huazie.fleaframework.auth.base.role.entity.FleaRole;
+import com.huazie.fleaframework.auth.base.role.service.interfaces.IFleaRoleSV;
 import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import com.huazie.fleaframework.db.jpa.service.impl.AbstractFleaJPASVImpl;
 import org.springframework.beans.factory.annotation.Autowired;

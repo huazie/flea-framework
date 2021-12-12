@@ -1,8 +1,8 @@
 package com.huazie.fleaframework.common.util;
 
+import com.huazie.fleaframework.common.EncryptionAlgorithmEnum;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
-import com.huazie.fleaframework.common.EncryptionAlgorithmEnum;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;

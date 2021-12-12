@@ -1,9 +1,9 @@
 package com.huazie.fleaframework.auth.base.role.dao.impl;
 
+import com.huazie.fleaframework.auth.base.FleaAuthDAOImpl;
 import com.huazie.fleaframework.auth.base.role.dao.interfaces.IFleaRoleGroupRelDAO;
 import com.huazie.fleaframework.auth.base.role.entity.FleaRoleGroupRel;
 import com.huazie.fleaframework.auth.common.FleaAuthEntityConstants;
-import com.huazie.fleaframework.auth.base.FleaAuthDAOImpl;
 import com.huazie.fleaframework.common.EntityStateEnum;
 import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;

@@ -1,5 +1,7 @@
 package com.huazie.fleaframework.cache.redis.builder;
 
+import com.huazie.fleaframework.cache.AbstractFleaCache;
+import com.huazie.fleaframework.cache.IFleaCacheBuilder;
 import com.huazie.fleaframework.cache.common.CacheConfigUtils;
 import com.huazie.fleaframework.cache.common.CacheModeEnum;
 import com.huazie.fleaframework.cache.common.FleaCacheFactory;
@@ -9,8 +11,6 @@ import com.huazie.fleaframework.cache.redis.RedisClient;
 import com.huazie.fleaframework.cache.redis.RedisClientFactory;
 import com.huazie.fleaframework.cache.redis.RedisClusterPool;
 import com.huazie.fleaframework.cache.redis.impl.RedisFleaCache;
-import com.huazie.fleaframework.cache.AbstractFleaCache;
-import com.huazie.fleaframework.cache.IFleaCacheBuilder;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.common.util.CollectionUtils;

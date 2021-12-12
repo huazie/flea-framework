@@ -17,12 +17,12 @@ import com.huazie.fleaframework.cache.config.Caches;
 import com.huazie.fleaframework.cache.config.FleaCache;
 import com.huazie.fleaframework.cache.config.FleaCacheConfig;
 import com.huazie.fleaframework.cache.exceptions.FleaCacheConfigException;
-import com.huazie.fleaframework.common.util.xml.XmlDigesterHelper;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.common.util.CollectionUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
+import com.huazie.fleaframework.common.util.xml.XmlDigesterHelper;
 import org.apache.commons.digester.Digester;
 
 import java.util.List;

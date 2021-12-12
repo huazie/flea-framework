@@ -1,9 +1,9 @@
 package com.huazie.fleaframework.core.base.cfgdata.service.impl;
 
 import com.huazie.fleaframework.common.exception.CommonException;
-import com.huazie.fleaframework.core.base.cfgdata.service.interfaces.IFleaJerseyResClientSV;
 import com.huazie.fleaframework.core.base.cfgdata.dao.interfaces.IFleaJerseyResClientDAO;
 import com.huazie.fleaframework.core.base.cfgdata.entity.FleaJerseyResClient;
+import com.huazie.fleaframework.core.base.cfgdata.service.interfaces.IFleaJerseyResClientSV;
 import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import com.huazie.fleaframework.db.jpa.service.impl.AbstractFleaJPASVImpl;
 import org.springframework.beans.factory.annotation.Autowired;

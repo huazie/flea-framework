@@ -1,8 +1,8 @@
 package com.huazie.fleaframework.cache.common;
 
+import com.huazie.fleaframework.cache.AbstractFleaCacheManager;
 import com.huazie.fleaframework.cache.core.manager.CoreFleaCacheManager;
 import com.huazie.fleaframework.cache.memcached.manager.MemCachedFleaCacheManager;
-import com.huazie.fleaframework.cache.AbstractFleaCacheManager;
 import com.huazie.fleaframework.cache.redis.manager.RedisClusterFleaCacheManager;
 import com.huazie.fleaframework.cache.redis.manager.RedisShardedFleaCacheManager;
 import com.huazie.fleaframework.common.FleaCommonConfig;

@@ -1,9 +1,9 @@
 package com.huazie.fleaframework.common.util;
 
-import com.huazie.fleaframework.common.slf4j.FleaLogger;
-import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.common.CommonConstants;
 import com.huazie.fleaframework.common.PinyinEnum;
+import com.huazie.fleaframework.common.slf4j.FleaLogger;
+import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 
 import java.util.Random;
 import java.util.UUID;

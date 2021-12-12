@@ -1,8 +1,8 @@
 package com.huazie.fleaframework.cache.core.manager;
 
-import com.huazie.fleaframework.cache.core.impl.CoreSpringCache;
 import com.huazie.fleaframework.cache.AbstractSpringCache;
 import com.huazie.fleaframework.cache.AbstractSpringCacheManager;
+import com.huazie.fleaframework.cache.core.impl.CoreSpringCache;
 
 /**
  * 核心Spring缓存管理类，用于接入Spring框架管理核心Spring缓存。

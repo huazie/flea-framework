@@ -1,9 +1,5 @@
 package com.huazie.fleaframework.auth.common.service.impl;
 
-import com.huazie.fleaframework.auth.common.pojo.function.menu.FleaMenuPOJO;
-import com.huazie.fleaframework.auth.common.pojo.privilege.FleaPrivilegePOJO;
-import com.huazie.fleaframework.auth.common.pojo.privilege.FleaPrivilegeRelPOJO;
-import com.huazie.fleaframework.auth.common.service.interfaces.IFleaFunctionModuleSV;
 import com.huazie.fleaframework.auth.base.function.entity.FleaMenu;
 import com.huazie.fleaframework.auth.base.function.service.interfaces.IFleaFunctionAttrSV;
 import com.huazie.fleaframework.auth.base.function.service.interfaces.IFleaMenuSV;
@@ -13,6 +9,10 @@ import com.huazie.fleaframework.auth.base.privilege.service.interfaces.IFleaPriv
 import com.huazie.fleaframework.auth.common.AuthRelTypeEnum;
 import com.huazie.fleaframework.auth.common.FunctionTypeEnum;
 import com.huazie.fleaframework.auth.common.pojo.function.attr.FleaFunctionAttrPOJO;
+import com.huazie.fleaframework.auth.common.pojo.function.menu.FleaMenuPOJO;
+import com.huazie.fleaframework.auth.common.pojo.privilege.FleaPrivilegePOJO;
+import com.huazie.fleaframework.auth.common.pojo.privilege.FleaPrivilegeRelPOJO;
+import com.huazie.fleaframework.auth.common.service.interfaces.IFleaFunctionModuleSV;
 import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.common.i18n.FleaI18nHelper;
 import com.huazie.fleaframework.common.util.ObjectUtils;

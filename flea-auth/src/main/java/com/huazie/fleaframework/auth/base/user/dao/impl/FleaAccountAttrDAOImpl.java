@@ -1,8 +1,8 @@
 package com.huazie.fleaframework.auth.base.user.dao.impl;
 
+import com.huazie.fleaframework.auth.base.FleaAuthDAOImpl;
 import com.huazie.fleaframework.auth.base.user.dao.interfaces.IFleaAccountAttrDAO;
 import com.huazie.fleaframework.auth.base.user.entity.FleaAccountAttr;
-import com.huazie.fleaframework.auth.base.FleaAuthDAOImpl;
 import com.huazie.fleaframework.auth.common.FleaAuthEntityConstants;
 import com.huazie.fleaframework.auth.common.UserStateEnum;
 import com.huazie.fleaframework.common.exception.CommonException;

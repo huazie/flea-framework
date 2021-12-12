@@ -1,8 +1,8 @@
 package com.huazie.fleaframework.auth.base.user.dao.impl;
 
+import com.huazie.fleaframework.auth.base.FleaAuthDAOImpl;
 import com.huazie.fleaframework.auth.base.user.dao.interfaces.IFleaUserGroupDAO;
 import com.huazie.fleaframework.auth.base.user.entity.FleaUserGroup;
-import com.huazie.fleaframework.auth.base.FleaAuthDAOImpl;
 import org.springframework.stereotype.Repository;
 
 /**

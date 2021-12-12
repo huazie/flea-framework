@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.common.i18n;
 
-import com.huazie.fleaframework.common.i18n.config.FleaI18nConfig;
 import com.huazie.fleaframework.common.FleaFrameManager;
+import com.huazie.fleaframework.common.i18n.config.FleaI18nConfig;
 
 import java.util.Locale;
 

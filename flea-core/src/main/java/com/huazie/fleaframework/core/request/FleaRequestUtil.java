@@ -4,11 +4,11 @@ import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.common.util.ExceptionUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.core.common.FleaCoreCommonException;
+import com.huazie.fleaframework.core.filter.taskchain.FleaFilterTaskChainManager;
+import com.huazie.fleaframework.core.request.config.FleaRequestConfig;
 import com.huazie.fleaframework.core.request.config.FleaSession;
 import com.huazie.fleaframework.core.request.config.FleaUrl;
 import com.huazie.fleaframework.core.request.config.Property;
-import com.huazie.fleaframework.core.filter.taskchain.FleaFilterTaskChainManager;
-import com.huazie.fleaframework.core.request.config.FleaRequestConfig;
 import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;

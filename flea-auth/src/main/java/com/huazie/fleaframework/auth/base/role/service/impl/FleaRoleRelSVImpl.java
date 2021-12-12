@@ -1,8 +1,8 @@
 package com.huazie.fleaframework.auth.base.role.service.impl;
 
-import com.huazie.fleaframework.auth.base.role.service.interfaces.IFleaRoleRelSV;
 import com.huazie.fleaframework.auth.base.role.dao.interfaces.IFleaRoleRelDAO;
 import com.huazie.fleaframework.auth.base.role.entity.FleaRoleRel;
+import com.huazie.fleaframework.auth.base.role.service.interfaces.IFleaRoleRelSV;
 import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import com.huazie.fleaframework.db.jpa.service.impl.AbstractFleaJPASVImpl;

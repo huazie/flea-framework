@@ -10,7 +10,6 @@ import com.huazie.fleaframework.db.eclipselink.util.EclipseLinkUtils;
 import com.huazie.fleaframework.db.jpa.common.FleaJPAQuery;
 import com.huazie.fleaframework.db.jpa.handler.impl.FleaLibTableSplitHandler;
 import org.eclipse.persistence.descriptors.ClassDescriptor;
-import org.eclipse.persistence.internal.jpa.EJBQueryImpl;
 import org.eclipse.persistence.internal.jpa.FleaEntityManagerImpl;
 import org.eclipse.persistence.internal.jpa.metamodel.EntityTypeImpl;
 import org.eclipse.persistence.internal.sessions.AbstractSession;
