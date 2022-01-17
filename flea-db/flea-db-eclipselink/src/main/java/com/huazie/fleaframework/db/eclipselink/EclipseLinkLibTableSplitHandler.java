@@ -1,5 +1,6 @@
 package com.huazie.fleaframework.db.eclipselink;
 
+import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.db.common.table.pojo.SplitTable;
 import com.huazie.fleaframework.db.eclipselink.util.EclipseLinkUtils;
 import com.huazie.fleaframework.db.jpa.common.FleaJPAQuery;
@@ -9,6 +10,7 @@ import org.eclipse.persistence.internal.jpa.FleaEntityManagerImpl;
 import org.eclipse.persistence.internal.jpa.metamodel.EntityTypeImpl;
 import org.eclipse.persistence.internal.sessions.AbstractSession;
 import org.eclipse.persistence.queries.ReadAllQuery;
+import org.eclipse.persistence.sessions.UnitOfWork;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -30,7 +32,7 @@ public class EclipseLinkLibTableSplitHandler extends FleaLibTableSplitHandler {
         // 获取实体类对应的持久化信息
         ClassDescriptor classDescriptor = ((EntityTypeImpl) entityType).getDescriptor();
         // 分表场景，这里的entityManager已经重新设置为 FleaEntityManagerImpl
-            AbstractSession abstractSession = ((FleaEntityManagerImpl) query.getEntityManager()).getDatabaseSession();
+        AbstractSession abstractSession = ((FleaEntityManagerImpl) query.getEntityManager()).getDatabaseSession();
         classDescriptor = EclipseLinkUtils.getSplitDescriptor(classDescriptor, abstractSession, splitTable);
         // 获取内部DatabaseQuery对象
         ReadAllQuery readAllQuery = typedQuery.unwrap(ReadAllQuery.class);
@@ -51,7 +53,7 @@ public class EclipseLinkLibTableSplitHandler extends FleaLibTableSplitHandler {
     }
 
     @Override
-    protected  <T> T findInner(EntityManager entityManager, Object primaryKey, Class<T> entityClass, SplitTable splitTable) {
+    protected <T> T findInner(EntityManager entityManager, Object primaryKey, Class<T> entityClass, SplitTable splitTable) {
         return FleaEntityManagerImpl.getFleaEntityManagerImpl(entityManager).find(entityClass, primaryKey, splitTable);
     }
 
@@ -73,5 +75,18 @@ public class EclipseLinkLibTableSplitHandler extends FleaLibTableSplitHandler {
     @Override
     protected void flushInner(EntityManager entityManager) {
         FleaEntityManagerImpl.getFleaEntityManagerImpl(entityManager).flush();
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    protected <T> T registerObject(EntityManager entityManager, T entity) {
+        // 如果已经注册过了，直接返回待注册对象
+        if (entityManager.contains(entity) || ObjectUtils.isEmpty(entity)) {
+            return entity;
+        }
+
+        UnitOfWork unitOfWork = entityManager.unwrap(UnitOfWork.class);
+        Object result = unitOfWork.registerObject(entity);
+        return (T) result;
     }
 }
