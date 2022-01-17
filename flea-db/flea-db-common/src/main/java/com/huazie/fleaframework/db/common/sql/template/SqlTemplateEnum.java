@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.db.common.sql.template;
 
 /**
- * <p> SQL模板关键字枚举 </p>
+ * SQL模板关键字枚举
  *
  * @author huazie
  * @version 1.0.0

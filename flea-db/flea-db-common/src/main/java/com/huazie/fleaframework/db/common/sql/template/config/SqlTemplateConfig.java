@@ -10,7 +10,7 @@ import com.huazie.fleaframework.db.common.DBXmlDigesterHelper;
 import java.util.Map;
 
 /**
- * <p> SQL模板配置工具类 </p>
+ * SQL模板配置工具类
  *
  * @author huazie
  * @version 1.0.0

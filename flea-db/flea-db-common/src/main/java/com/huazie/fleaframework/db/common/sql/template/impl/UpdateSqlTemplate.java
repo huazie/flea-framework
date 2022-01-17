@@ -15,8 +15,8 @@ import org.apache.commons.lang.ArrayUtils;
 import java.util.Map;
 
 /**
- * <p> 更新SQL模板, 用于使用原生SQL实现分表; </p>
- * <p> 更新SQL模板定义配置在<b>flea-sql-template.xml</b>; </p>
+ * 更新SQL模板, 用于使用原生SQL实现分表。
+ * <p> 更新SQL模板定义配置在<b>flea-sql-template.xml</b>。
  * <pre>
  * (1) 模板配置信息：
  * {@code

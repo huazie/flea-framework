@@ -29,18 +29,6 @@ public class FleaConfigDAOImpl<T> extends AbstractFleaJPADAOImpl<T> {
 
 	@Override
 	@Transactional("fleaConfigTransactionManager")
-	public T queryNew(long entityId, T entity) throws CommonException {
-		return super.queryNew(entityId, entity);
-	}
-
-	@Override
-	@Transactional("fleaConfigTransactionManager")
-	public T queryNew(String entityId, T entity) throws CommonException {
-		return super.queryNew(entityId, entity);
-	}
-	
-	@Override
-	@Transactional("fleaConfigTransactionManager")
 	public boolean remove(long entityId) throws CommonException {
 		return super.remove(entityId);
 	}
@@ -53,14 +41,14 @@ public class FleaConfigDAOImpl<T> extends AbstractFleaJPADAOImpl<T> {
 
 	@Override
 	@Transactional("fleaConfigTransactionManager")
-	public boolean removeNew(long entityId, T entity) throws CommonException {
-		return super.removeNew(entityId, entity);
+	public boolean remove(long entityId, T entity) throws CommonException {
+		return super.remove(entityId, entity);
 	}
 
 	@Override
 	@Transactional("fleaConfigTransactionManager")
-	public boolean removeNew(String entityId, T entity) throws CommonException {
-		return super.removeNew(entityId, entity);
+	public boolean remove(String entityId, T entity) throws CommonException {
+		return super.remove(entityId, entity);
 	}
 
 	@Override

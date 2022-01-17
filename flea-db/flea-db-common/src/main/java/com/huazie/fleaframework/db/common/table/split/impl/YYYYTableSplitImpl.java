@@ -4,7 +4,7 @@ import com.huazie.fleaframework.common.DateFormatEnum;
 import com.huazie.fleaframework.common.exception.CommonException;
 
 /**
- * <p> 按年分表实现 </p>
+ * 按年分表实现
  *
  * @author huazie
  * @version 1.0.0

@@ -55,8 +55,7 @@ public class FleaAccountAttrSVImpl extends AbstractFleaJPASVImpl<FleaAccountAttr
             fleaAccountAttrList = new ArrayList<>();
             for (FleaAccountAttrPOJO fleaAccountAttrPOJO : fleaAccountAttrPOJOList) {
                 if (ObjectUtils.isNotEmpty(fleaAccountAttrPOJO)) {
-                    FleaAccountAttr fleaAccountAttr = newFleaAccountAttr(fleaAccountAttrPOJO);
-                    fleaAccountAttrList.add(fleaAccountAttr);
+                    fleaAccountAttrList.add(newFleaAccountAttr(fleaAccountAttrPOJO));
                 }
             }
         }

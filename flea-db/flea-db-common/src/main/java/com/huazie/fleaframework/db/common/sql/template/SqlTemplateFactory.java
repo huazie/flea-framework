@@ -6,7 +6,7 @@ import com.huazie.fleaframework.db.common.sql.template.impl.SelectSqlTemplate;
 import com.huazie.fleaframework.db.common.sql.template.impl.UpdateSqlTemplate;
 
 /**
- * <p> SQL模板工厂类 </p>
+ * SQL模板工厂类
  *
  * @author huazie
  * @version 1.0.0

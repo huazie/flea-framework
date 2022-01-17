@@ -61,7 +61,7 @@ public class SecurityUtils {
         if (LOGGER.isDebugEnabled()) {
             obj = new Object() {};
             LOGGER.debug1(obj, "Algorithm = {}", algorithm.getAlgorithm());
-            LOGGER.debug1(obj, "info = {}", info);
+            LOGGER.debug1(obj, "Info = {}", info);
         }
         byte[] digestInfo = null;
         try {

@@ -217,7 +217,7 @@ public class FleaConfigDataSVImplTest {
         fleaConfigData.setConfigType("huazie");
         fleaConfigData.setConfigCode("huazie");
         try {
-            List<FleaConfigData> list = sv.query("select", fleaConfigData);
+            List<FleaConfigData> list = sv.queryAll("select", fleaConfigData);
             LOGGER.debug("list={}", list);
             LOGGER.debug("count={}", list.size());
         } catch (Exception e) {

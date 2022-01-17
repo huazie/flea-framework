@@ -5,6 +5,7 @@ import com.huazie.fleaframework.common.FleaEntity;
 import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.common.exception.FleaException;
 import com.huazie.fleaframework.common.util.ArrayUtils;
+import com.huazie.fleaframework.common.util.CollectionUtils;
 import com.huazie.fleaframework.common.util.ExceptionUtils;
 import com.huazie.fleaframework.common.util.FleaAspectUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
@@ -14,6 +15,9 @@ import com.huazie.fleaframework.db.common.exception.DaoException;
 import com.huazie.fleaframework.db.common.exception.FleaDBException;
 import com.huazie.fleaframework.db.common.lib.pojo.SplitLib;
 import com.huazie.fleaframework.db.common.table.pojo.SplitTable;
+import com.huazie.fleaframework.db.common.util.FleaLibUtil;
+import com.huazie.fleaframework.db.common.util.FleaSplitUtils;
+import com.huazie.fleaframework.db.jpa.dao.impl.AbstractFleaJPADAOImpl;
 import com.huazie.fleaframework.db.jpa.persistence.FleaEntityManager;
 import com.huazie.fleaframework.db.jpa.transaction.FleaTransactionTemplate;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -26,12 +30,13 @@ import org.springframework.transaction.support.TransactionCallback;
 
 import javax.persistence.EntityManager;
 import java.lang.reflect.Method;
+import java.util.List;
 
 /**
- * Flea自定义事物切面
+ * Flea自定义事物切面，处理自定义事物注解 @FleaTransactional
  *
  * @author huazie
- * @version 1.2.0
+ * @version 2.0.0
  * @since 1.2.0
  */
 @Aspect
@@ -46,15 +51,23 @@ public class FleaTransactionalAspect {
         Method method = FleaAspectUtils.getTargetMethod(joinPoint);
         // 获取当前连接点方法上的自定义Flea事物注解上对应的事物名称
         String transactionName = FleaEntityManager.getTransactionName(method);
-        EntityManager entityManager = null;
         // 获取连接点方法签名上的参数列表
         Object[] args = joinPoint.getArgs();
-        // 统一取最后一个参数，即实体类对象实例
-        if (ArrayUtils.isNotEmpty(args) && args[args.length - 1] instanceof FleaEntity) {
-            FleaEntity fleaEntity = (FleaEntity) args[args.length - 1];
-            Object daoImplObj = joinPoint.getTarget();
+        // 获取标记Flea事物注解的目标对象
+        Object tObj = joinPoint.getTarget();
+
+        // 获取最后一个参数【实体对象】
+        FleaEntity fleaEntity = null;
+        if (ArrayUtils.isNotEmpty(args)) {
+            fleaEntity = getFleaEntityFromLastParam(args);
+        }
+
+        EntityManager entityManager;
+
+        // 标记Flea事物注解的目标对象 为 AbstractFleaJPADAOImpl 的子类
+        if (ObjectUtils.isNotEmpty(fleaEntity) && tObj instanceof AbstractFleaJPADAOImpl) {
             // 获取实体管理器
-            entityManager = (EntityManager) ReflectUtils.invoke(daoImplObj, METHOD_NAME_GET_ENTITY_MANAGER, fleaEntity, Object.class);
+            entityManager = (EntityManager) ReflectUtils.invoke(tObj, METHOD_NAME_GET_ENTITY_MANAGER, fleaEntity, Object.class);
             // 获取分表信息
             SplitTable splitTable = fleaEntity.get(DBConstants.LibTableSplitConstants.SPLIT_TABLE, SplitTable.class);
             // 获取分库信息
@@ -62,13 +75,21 @@ public class FleaTransactionalAspect {
             if (ObjectUtils.isNotEmpty(splitTable)) {
                 splitLib = splitTable.getSplitLib();
             }
+            // 分库场景
             if (ObjectUtils.isNotEmpty(splitLib) && splitLib.isExistSplitLib()) {
                 transactionName = splitLib.getSplitLibTxName();
             }
-            // 不是分表场景
-            if (ObjectUtils.isEmpty(splitTable) || !splitTable.isExistSplitTable()) {
-                entityManager = null;
+        } else {
+            // 获取当前连接点方法上的自定义Flea事物注解上对应的持久化单元名
+            String unitName = FleaEntityManager.getUnitName(method);
+            // 获取分库对象
+            SplitLib splitLib = FleaSplitUtils.getSplitLib(unitName, FleaLibUtil.getSplitLibSeqValues());
+            // 分库场景
+            if (splitLib.isExistSplitLib()) {
+                transactionName = splitLib.getSplitLibTxName();
+                unitName = splitLib.getSplitLibName();
             }
+            entityManager = FleaEntityManager.getEntityManager(unitName, transactionName);
         }
 
         // 根据事物名，获取配置的事物管理者
@@ -88,6 +109,24 @@ public class FleaTransactionalAspect {
                 return null;
             }
         });
+    }
+
+    /**
+     * 从最后一个参数中获取 Flea实体对象
+     *
+     * @param args 标记Flea事物注解的目标对象的目标方法的参数列表
+     * @return Flea实体对象
+     * @since 2.0.0
+     */
+    private FleaEntity getFleaEntityFromLastParam(Object[] args) {
+        Object lastParam = args[args.length - 1];
+        FleaEntity fleaEntity = null;
+        if (lastParam instanceof FleaEntity) {
+            fleaEntity = (FleaEntity) lastParam;
+        } else if (lastParam instanceof List && CollectionUtils.isNotEmpty(((List) lastParam)) && ((List) lastParam).get(0) instanceof FleaEntity) {
+            fleaEntity = ((FleaEntity) ((List) lastParam).get(0));
+        }
+        return fleaEntity;
     }
 
 }

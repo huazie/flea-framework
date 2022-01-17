@@ -16,7 +16,7 @@
             <!-- 分库转换实现配置
                 key : 分库转换类型关键字【可查看 LibSplitEnum】
                 seq : 分库序列键【】
-                implClass : 分库转换实现类【可自行定义，需实现com.huazie.frame.db.ILibSplit】
+                implClass : 分库转换实现类【可自行定义，需实现com.huazie.fleaframework.db.common.lib.split.ILibSplit】
                 注意：
                 （1）key不为空，implClass可不填
                 （2）key为空，implClass必填

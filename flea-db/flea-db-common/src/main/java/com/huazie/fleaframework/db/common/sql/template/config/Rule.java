@@ -3,7 +3,7 @@ package com.huazie.fleaframework.db.common.sql.template.config;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
- * <p> SQL模板校验规则 </p>
+ * SQL模板校验规则
  *
  * @author huazie
  * @version 1.0.0

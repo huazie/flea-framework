@@ -18,6 +18,7 @@ import org.eclipse.persistence.queries.ObjectBuildingQuery;
  * @version 1.2.0
  * @since 1.2.0
  */
+@SuppressWarnings("serial")
 public class FleaObjectBuilder extends ObjectBuilder {
 
     public FleaObjectBuilder(ClassDescriptor descriptor) {
@@ -31,13 +32,9 @@ public class FleaObjectBuilder extends ObjectBuilder {
         Object domainObject;
         Object primaryKey = extractPrimaryKeyFromRow(databaseRow, session);
         primaryKey = generateCacheKey(primaryKey, descriptor);
-        // Check for null primary key, this is not allowed.
         if ((primaryKey == null) && (!query.hasPartialAttributeExpressions()) && (!this.descriptor.isAggregateCollectionDescriptor())) {
-            //BUG 3168689: EJBQL: "Select Distinct s.customer from SpouseBean s"
-            //BUG 3168699: EJBQL: "Select s.customer from SpouseBean s where s.id = '6'"
-            //If we return either a single null, or a Collection containing at least
-            //one null, then we want the nulls returned/included if the indicated
-            //property is set in the query. (As opposed to throwing an Exception).
+            // BUG 3168689: EJBQL: "Select Distinct s.customer from SpouseBean s"
+            // BUG 3168699: EJBQL: "Select s.customer from SpouseBean s where s.id = '6'"
             if (query.shouldBuildNullForNullPk()) {
                 return null;
             } else {
@@ -55,8 +52,6 @@ public class FleaObjectBuilder extends ObjectBuilder {
             }
         }
         if (isUnitOfWork) {
-            // Do not wrap yet if in UnitOfWork, as there is still much more
-            // processing ahead.
             domainObject = buildObjectInUnitOfWork(query, joinManager, databaseRow, (UnitOfWorkImpl) session, primaryKey, concreteDescriptor);
         } else {
             domainObject = buildObject(false, query, databaseRow, session, primaryKey, concreteDescriptor, joinManager);
@@ -64,7 +59,6 @@ public class FleaObjectBuilder extends ObjectBuilder {
                 query.cacheResult(domainObject);
             }
 
-            // wrap the object if the query requires it.
             if (shouldUseWrapperPolicy) {
                 domainObject = concreteDescriptor.getObjectBuilder().wrapObject(domainObject, session);
             }

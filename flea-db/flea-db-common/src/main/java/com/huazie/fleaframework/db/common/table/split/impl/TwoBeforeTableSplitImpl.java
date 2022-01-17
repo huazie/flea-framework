@@ -4,7 +4,7 @@ import com.huazie.fleaframework.common.CommonConstants;
 import com.huazie.fleaframework.common.exception.CommonException;
 
 /**
- * <p> 两位分表实现，截取分表字段前2位字符，并以小写返回 </p>
+ * 两位分表实现，截取分表字段前2位字符，并以小写返回
  *
  * @author huazie
  * @version 1.0.0

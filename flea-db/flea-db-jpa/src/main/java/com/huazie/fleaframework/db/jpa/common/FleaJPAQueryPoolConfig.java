@@ -8,7 +8,7 @@ import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.db.common.DBConstants.JPAQueryPoolConfigConstants;
 
 /**
- * <p> Flea JPA查询对象池配置 </p>
+ * Flea JPA查询对象池配置
  *
  * @author huazie
  * @version 1.0.0
@@ -19,7 +19,7 @@ public class FleaJPAQueryPoolConfig extends FleaObjectPoolConfig {
     private static volatile FleaJPAQueryPoolConfig config;
 
     /**
-     * <p> 无参构造方法，初始化部分默认配置 </p>
+     * 无参构造方法，初始化部分默认配置
      *
      * @since 1.0.0
      */
@@ -28,7 +28,7 @@ public class FleaJPAQueryPoolConfig extends FleaObjectPoolConfig {
     }
 
     /**
-     * <p> 获取Flea JPA查询对象池配置实例 </p>
+     * 获取Flea JPA查询对象池配置实例
      *
      * @return Flea JPA查询对象池配置实例
      * @since 1.0.0
@@ -46,7 +46,7 @@ public class FleaJPAQueryPoolConfig extends FleaObjectPoolConfig {
     }
 
     /**
-     * <p> 初始化对象池配置 </p>
+     * 初始化对象池配置
      *
      * @since 1.0.0
      */

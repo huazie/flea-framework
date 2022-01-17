@@ -12,7 +12,7 @@ import com.huazie.fleaframework.common.util.ReflectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
 import com.huazie.fleaframework.db.common.DBConstants.SQLConstants;
 import com.huazie.fleaframework.db.common.exception.DaoException;
-import com.huazie.fleaframework.db.jpa.LibTableSplitHelper;
+import com.huazie.fleaframework.db.jpa.FleaJPASplitHelper;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import javax.persistence.EntityManager;
@@ -36,11 +36,12 @@ import java.util.Set;
 /**
  * 自定义 Flea JPA 查询对象
  *
- * <p> 封装了 JPA 标准化查询 API，可以自行组装各种常见的查询条件；
+ * <p> 封装了 JPA 标准化查询 API，可以自行组装各种常见的查询条件。
  *
  * @author huazie
  * @version 1.0.0
- * @see FleaJPAQueryPool Flea JPA查询对象池
+ * @see FleaJPAQueryPool
+ * @see FleaJPAQueryPoolConfig
  * @since 1.0.0
  */
 @SuppressWarnings({"rawtypes", "unchecked"})
@@ -82,7 +83,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> Flea JPA查询对象池获取之后，一定要调用该方法进行初始化 </p>
+     * Flea JPA查询对象池获取之后，一定要调用该方法进行初始化。
      *
      * @param entityManager JPA中用于增删改查的接口
      * @param sourceClazz   实体类类对象
@@ -120,7 +121,7 @@ public final class FleaJPAQuery implements Closeable {
 
         if (ObjectUtils.isNotEmpty(entity) && (ObjectUtils.isNotEmpty(sourceClazz) && sourceClazz.isInstance(entity))) {
             this.entity = entity;
-            LibTableSplitHelper.findTableSplitHandle().handle(this, entity);
+            FleaJPASplitHelper.getHandler().handle(this, entity);
         } else {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error1(new Object() {}, "初始化查询实体类【entity = {}】不是【sourceClazz = {}】的实例，请检查!", entity, sourceClazz);
@@ -130,8 +131,8 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 等于条件 </p>
-     * <p> 需要先初始化实体类,即调用initQueryEntity(Object entity) </p>
+     * 等于条件；调用该方法前需要先初始化实体类，
+     * 即调用 initQueryEntity(Object entity)。
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
@@ -143,7 +144,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 等于条件 </p>
+     * 等于条件
      *
      * @param attrName 属性名
      * @param value    属性值
@@ -156,12 +157,13 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 等于条件 </p>
-     * <p> 需要先初始化实体类,即调用initQueryEntity(Object entity) </p>
+     * 等于条件；调用该方法前需要先初始化实体类，
+     * 即调用 initQueryEntity(Object entity)。
      *
      * @param attrNames 实体属性名集合
      * @return Flea JPA查询对象
      * @throws CommonException 通用异常
+     * @see #initQueryEntity(Object)
      * @since 1.0.0
      */
     public FleaJPAQuery equal(Set<String> attrNames) throws CommonException {
@@ -169,7 +171,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 等于条件 </p>
+     * 等于条件
      *
      * @param paramMap 参数集合
      * @return Flea JPA查询对象
@@ -181,12 +183,13 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 不等于条件 </p>
-     * <p> 需要先初始化实体类,即调用initQueryEntity(Object entity) </p>
+     * 不等于条件；调用该方法前需要先初始化实体类，
+     * 即调用 initQueryEntity(Object entity)。
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
      * @throws CommonException 通用异常
+     * @see #initQueryEntity(Object)
      * @since 1.0.0
      */
     public FleaJPAQuery notEqual(String attrName) throws CommonException {
@@ -194,7 +197,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 不等于条件 </p>
+     * 不等于条件
      *
      * @param attrName 属性名
      * @param value    属性值
@@ -207,12 +210,13 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 不等于条件 </p>
-     * <p> 需要先初始化实体类,即调用initQueryEntity(Object entity) </p>
+     * 不等于条件；调用该方法前需要先初始化实体类，
+     * 即调用 initQueryEntity(Object entity)。
      *
      * @param attrNames 实体属性名集合
      * @return Flea JPA查询对象
      * @throws CommonException 通用异常
+     * @see #initQueryEntity(Object)
      * @since 1.0.0
      */
     public FleaJPAQuery notEqual(Set<String> attrNames) throws CommonException {
@@ -220,7 +224,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 不等于条件 </p>
+     * 不等于条件
      *
      * @param paramMap 条件集合
      * @return Flea JPA查询对象
@@ -232,7 +236,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 构建 equal 或 notEqual 表达式 </p>
+     * 构建 equal 或 notEqual 表达式
      *
      * @param attrName 属性名
      * @param value    属性值
@@ -266,7 +270,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 构建 equal 或 notEqual 表达式 </p>
+     * 构建 equal 或 notEqual 表达式
      *
      * @param attrNames 属性名集合
      * @param isEqual   true: 构建equal表达式; false: 构建notEqual表达式
@@ -303,7 +307,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 构建 equal 或 notEqual 表达式 </p>
+     * 构建 equal 或 notEqual 表达式
      *
      * @param paramMap 条件集合
      * @param isEqual  true: 构建equal表达式; false: 构建notEqual表达式
@@ -337,7 +341,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p>某属性值为空的条件</p>
+     * 某属性值为空的条件
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
@@ -349,7 +353,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 某属性值为非空的条件 </p>
+     * 某属性值为非空的条件
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
@@ -361,7 +365,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 构建 isNull 或 isNotNull 表达式  </p>
+     * 构建 isNull 或 isNotNull 表达式
      *
      * @param attrName 属性名
      * @param isNull   true: 构建isNull表达式; false: 构建isNotNull表达式
@@ -390,7 +394,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> in条件，attrName属性的值在value集合中 </p>
+     * in条件，attrName属性的值在value集合中
      *
      * @param attrName 属性名称
      * @param value    值集合
@@ -403,7 +407,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> not in条件，attrName属性的值不在value集合中 </p>
+     * not in条件，attrName属性的值不在value集合中
      *
      * @param attrName 属性名称
      * @param value    值集合
@@ -416,7 +420,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 构建 In 或 notIn 表达式 </p>
+     * 构建 In 或 notIn 表达式
      *
      * @param attrName 属性名称
      * @param value    值集合
@@ -455,12 +459,13 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 模糊匹配条件（value一定要是字符串类型的） </p>
-     * <p> 需要先初始化实体类,即调用initQueryEntity(Object entity) </p>
+     * 模糊匹配条件；调用该方法前需要先初始化实体类，
+     * 即调用 initQueryEntity(Object entity)。
      *
      * @param attrName 属性名称
      * @return Flea JPA查询对象
      * @throws CommonException 通用异常
+     * @see #initQueryEntity(Object)
      * @since 1.0.0
      */
     public FleaJPAQuery like(String attrName) throws CommonException {
@@ -468,7 +473,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 模糊匹配条件（value一定要是字符串类型的） </p>
+     * 模糊匹配条件
      *
      * @param attrName 属性名称
      * @param value    属性值
@@ -495,12 +500,13 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 小于等于条件 </p>
-     * <p> 需要先初始化实体类,即调用initQueryEntity(Object entity) </p>
+     * 小于等于条件；调用该方法前需要先初始化实体类，
+     * 即调用 initQueryEntity(Object entity)。
      *
      * @param attrName 属性名称
      * @return Flea JPA查询对象
      * @throws CommonException 通用异常
+     * @see #initQueryEntity(Object)
      * @since 1.0.0
      */
     public FleaJPAQuery le(String attrName) throws CommonException {
@@ -508,7 +514,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 小于等于条件 </p>
+     * 小于等于条件
      *
      * @param attrName 属性名称
      * @param value    属性值
@@ -532,12 +538,13 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 小于条件 </p>
-     * <p> 需要先初始化实体类,即调用initQueryEntity(Object entity) </p>
+     * 小于条件；调用该方法前需要先初始化实体类，
+     * 即调用 initQueryEntity(Object entity)。
      *
      * @param attrName 属性名称
      * @return Flea JPA查询对象
      * @throws CommonException 通用异常
+     * @see #initQueryEntity(Object)
      * @since 1.0.0
      */
     public FleaJPAQuery lt(String attrName) throws CommonException {
@@ -545,7 +552,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p>小于条件</p>
+     * 小于条件
      *
      * @param attrName 属性名称
      * @param value    属性值
@@ -569,12 +576,13 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 大于等于条件 </p>
-     * <p> 需要先初始化实体类,即调用initQueryEntity(Object entity) </p>
+     * 大于等于条件；调用该方法前需要先初始化实体类，
+     * 即调用 initQueryEntity(Object entity)。
      *
      * @param attrName 属性名称
      * @return Flea JPA查询对象
      * @throws CommonException 通用异常
+     * @see #initQueryEntity(Object)
      * @since 1.0.0
      */
     public FleaJPAQuery ge(String attrName) throws CommonException {
@@ -582,7 +590,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 大于等于条件 </p>
+     * 大于等于条件
      *
      * @param attrName 属性名称
      * @param value    属性值
@@ -606,12 +614,13 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 大于条件 </p>
-     * <p> 需要先初始化实体类,即调用initQueryEntity(Object entity) </p>
+     * 大于条件；调用该方法前需要先初始化实体类，
+     * 即调用 initQueryEntity(Object entity)。
      *
      * @param attrName 属性名称
      * @return Flea JPA查询对象
      * @throws CommonException 通用异常
+     * @see #initQueryEntity(Object)
      * @since 1.0.0
      */
     public FleaJPAQuery gt(String attrName) throws CommonException {
@@ -619,7 +628,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 大于条件 </p>
+     * 大于条件
      *
      * @param attrName 属性名称
      * @param value    属性值
@@ -643,7 +652,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 时间区间查询条件 </p>
+     * 时间区间查询条件
      *
      * @param attrName  属性名
      * @param startTime 开始时间
@@ -672,12 +681,13 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 大于某个日期值条件 </p>
-     * <p> 需要先初始化实体类,即调用initQueryEntity(Object entity) </p>
+     * 大于某个日期值条件；调用该方法前需要先初始化实体类，
+     * 即调用 initQueryEntity(Object entity)。
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
      * @throws CommonException 通用异常
+     * @see #initQueryEntity(Object)
      * @since 1.0.0
      */
     public FleaJPAQuery greaterThan(String attrName) throws CommonException {
@@ -685,7 +695,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 大于某个日期值条件 </p>
+     * 大于某个日期值条件
      *
      * @param attrName 属性名
      * @param value    指定日期值
@@ -709,12 +719,13 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 大于等于某个日期值 </p>
-     * <p> 需要先初始化实体类,即调用initQueryEntity(Object entity) </p>
+     * 大于等于某个日期值；调用该方法前需要先初始化实体类，
+     * 即调用 initQueryEntity(Object entity)。
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
      * @throws CommonException 通用异常
+     * @see #initQueryEntity(Object)
      * @since 1.0.0
      */
     public FleaJPAQuery greaterThanOrEqualTo(String attrName) throws CommonException {
@@ -722,7 +733,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 大于等于某个日期值 </p>
+     * 大于等于某个日期值
      *
      * @param attrName 属性名
      * @param value    指定日期值
@@ -746,12 +757,13 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 小于某个日期值条件 </p>
-     * <p> 需要先初始化实体类,即调用initQueryEntity(Object entity) </p>
+     * 小于某个日期值条件; 调用该方法需要先初始化实体类，
+     * 即调用 initQueryEntity(Object entity)。
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
      * @throws CommonException 通用异常
+     * @see #initQueryEntity(Object)
      * @since 1.0.0
      */
     public FleaJPAQuery lessThan(String attrName) throws CommonException {
@@ -759,7 +771,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 小于某个日期值条件 </p>
+     * 小于某个日期值条件
      *
      * @param attrName 属性名
      * @param value    指定日期值
@@ -783,12 +795,13 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 小于等于某个日期值条件 </p>
-     * <p> 需要先初始化实体类,即调用initQueryEntity(Object entity) </p>
+     * 小于等于某个日期值条件；调用该方法需要先初始化实体类,
+     * 即调用 initQueryEntity(Object entity) 。
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
      * @throws CommonException 通用异常
+     * @see #initQueryEntity(Object)
      * @since 1.0.0
      */
     public FleaJPAQuery lessThanOrEqualTo(String attrName) throws CommonException {
@@ -796,7 +809,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 小于等于某个日期值条件 </p>
+     * 小于等于某个日期值条件
      *
      * @param attrName 属性名
      * @param value    指定日期值
@@ -820,7 +833,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 统计数目，在getSingleResult调用之前使用 </p>
+     * 统计数目，在getSingleResult调用之前使用
      *
      * @return Flea JPA查询对象
      * @since 1.0.0
@@ -831,7 +844,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 统计数目(带distinct参数)，在getSingleResult调用之前使用 </p>
+     * 统计数目(带distinct参数)，在getSingleResult调用之前使用
      *
      * @return Flea JPA查询对象
      * @since 1.0.0
@@ -849,7 +862,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 设置查询某属性的最大值，在getSingleResult调用之前使用 </p>
+     * 设置查询某属性的最大值，在getSingleResult调用之前使用
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
@@ -868,7 +881,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 设置查询某属性的最小值，在getSingleResult调用之前使用 </p>
+     * 设置查询某属性的最小值，在getSingleResult调用之前使用
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
@@ -887,7 +900,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 设置查询某属性的平均值，在getSingleResult调用之前使用 </p>
+     * 设置查询某属性的平均值，在getSingleResult调用之前使用
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
@@ -906,7 +919,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 设置查询某属性的值的总和，在getSingleResult调用之前使用 </p>
+     * 设置查询某属性的值的总和，在getSingleResult调用之前使用
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
@@ -925,7 +938,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 设置查询某属性的值的总和，在getSingleResult调用之前使用 </p>
+     * 设置查询某属性的值的总和，在getSingleResult调用之前使用
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
@@ -944,7 +957,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 设置查询某属性的值的总和，在getSingleResult调用之前使用 </p>
+     * 设置查询某属性的值的总和，在getSingleResult调用之前使用
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
@@ -963,7 +976,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 去重某一列 </p>
+     * 去重某一列
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
@@ -982,7 +995,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 添加order by子句 </p>
+     * 添加order by子句
      *
      * @param attrName 属性名
      * @param orderBy  排序顺序
@@ -1012,7 +1025,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 添加group by子句 </p>
+     * 添加 group by子句
      *
      * @param attrName 属性名
      * @return Flea JPA查询对象
@@ -1036,7 +1049,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 获取查询的记录行结果集合 </p>
+     * 获取查询的记录行结果集合
      *
      * @return 记录行结果集合
      * @throws CommonException 通用异常
@@ -1052,7 +1065,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 获取查询的记录行结果集合（设置查询范围，可用于分页） </p>
+     * 获取查询的记录行结果集合（设置查询范围，可用于分页）
      *
      * @param start 开始查询记录行
      * @param max   最大查询数量
@@ -1075,8 +1088,23 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 获取查询的单个属性列结果集合 </p>
-     * <p> 需要先调用 distinct，否则默认返回行记录结果集合 </p>
+     * 以分页方式获取查询的记录行结果集合
+     *
+     * @param pageNum   指定页
+     * @param pageCount 每页条数
+     * @return 记录行结果集合
+     * @throws CommonException 通用异常
+     * @since 2.0.0
+     */
+    public List getResultList4Page(int pageNum, int pageCount) throws CommonException {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug1(new Object() {}, "pageNum = {}, pageCount = {}", pageNum, pageCount);
+        }
+        return getResultList((pageNum - 1) * pageCount, pageCount);
+    }
+
+    /**
+     * 获取查询的单个属性列结果集合
      *
      * @return 单个属性列结果集合
      * @throws CommonException 通用异常
@@ -1092,8 +1120,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 获取查询的单个属性列结果集合（设置查询范围，可用于分页） </p>
-     * <p> 需要先调用 distinct，否则默认返回行记录结果集合 </p>
+     * 获取查询的单个属性列结果集合（设置查询范围，可用于分页）
      *
      * @param start 开始查询记录行
      * @param max   最大查询数量
@@ -1116,11 +1143,35 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 获取查询的单个结果 </p>
-     * <p> select 提前调用 (count, countDistinct, max, min, avg, sum, sumAsLong, sumAsDouble) </p>
+     * 以分页方式获取查询的单个属性列结果集合
+     *
+     * @param pageNum   指定页
+     * @param pageCount 每页条数
+     * @return 记录行结果集合
+     * @throws CommonException 通用异常
+     * @since 2.0.0
+     */
+    public List getSingleResultList4Page(int pageNum, int pageCount) throws CommonException {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug1(new Object() {}, "pageNum = {}, pageCount = {}", pageNum, pageCount);
+        }
+        return getSingleResultList((pageNum - 1) * pageCount, pageCount);
+    }
+
+    /**
+     * 获取查询的单个结果; 调用该方法需要先调用如下的单个结果的方法：
+     * count, countDistinct, max, min, avg, sum, sumAsLong, sumAsDouble
      *
      * @return 查询的单个结果
      * @throws CommonException 通用异常
+     * @see #count()
+     * @see #countDistinct(String)
+     * @see #max(String)
+     * @see #min(String)
+     * @see #avg(String)
+     * @see #sum(String)
+     * @see #sumAsLong(String)
+     * @see #sumAsDouble(String)
      * @since 1.0.0
      */
     public Object getSingleResult() throws CommonException {
@@ -1133,7 +1184,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 创建查询对象 </p>
+     * 创建类型查询对象；如果存在分表，则重新设置类型查询对象的持久化信息。
      *
      * @return 查询对象
      * @throws CommonException 通用异常
@@ -1161,12 +1212,12 @@ public final class FleaJPAQuery implements Closeable {
         }
         TypedQuery typedQuery = entityManager.createQuery(criteriaQuery);
         // 如果存在分表，需要重新设置查询对象的持久化信息
-        LibTableSplitHelper.findTableSplitHandle().handle(this, typedQuery);
+        FleaJPASplitHelper.getHandler().handle(this, typedQuery);
         return typedQuery;
     }
 
     /**
-     * <p> 属性列名非空校验 </p>
+     * 属性列名非空校验
      *
      * @param attrName 属性列名
      * @throws CommonException 通用异常
@@ -1178,7 +1229,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 根据属性名，从查询实体类实例中获取对应值 </p>
+     * 根据属性名，从查询实体类实例中获取对应值。
      *
      * @param attrName 属性列名
      * @return 属性值
@@ -1196,7 +1247,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 根据属性名，从查询实体类中获取对应的数字值 </p>
+     * 根据属性名，从查询实体类中获取对应的数字值。
      *
      * @param attrName 属性列名
      * @return 属性值
@@ -1208,7 +1259,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 根据属性名，从查询实体类中获取对应的日期值 </p>
+     * 根据属性名，从查询实体类中获取对应的日期值。
      *
      * @param attrName 属性列名
      * @return 属性值
@@ -1225,21 +1276,21 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * <p> 设置Flea对象池 </p>
+     * 设置Flea对象池
      *
      * @param fleaObjectPool Flea JPA查询对象池
      * @since 1.0.0
      */
-    public void setFleaObjectPool(FleaJPAQueryPool fleaObjectPool) {
+    void setFleaObjectPool(FleaJPAQueryPool fleaObjectPool) {
         this.fleaObjectPool = fleaObjectPool;
     }
 
     /**
-     * <p> 重置Flea JPA查询对象 </p>
+     * 重置Flea JPA查询对象
      *
      * @since 1.0.0
      */
-    public void reset() {
+    void reset() {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Start");
             LOGGER.debug("Before FleaJPAQuery = {}", toString());

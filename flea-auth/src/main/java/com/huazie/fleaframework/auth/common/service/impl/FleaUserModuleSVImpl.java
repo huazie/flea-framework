@@ -17,7 +17,6 @@ import com.huazie.fleaframework.auth.common.pojo.user.register.FleaUserRegisterP
 import com.huazie.fleaframework.auth.common.service.interfaces.IFleaAuthSV;
 import com.huazie.fleaframework.auth.common.service.interfaces.IFleaUserModuleSV;
 import com.huazie.fleaframework.auth.util.FleaMenuTree;
-import com.huazie.fleaframework.common.CommonConstants;
 import com.huazie.fleaframework.common.FleaSessionManager;
 import com.huazie.fleaframework.common.IFleaUser;
 import com.huazie.fleaframework.common.exception.CommonException;
@@ -30,10 +29,10 @@ import com.huazie.fleaframework.common.util.MapUtils;
 import com.huazie.fleaframework.common.util.NumberUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
+import com.huazie.fleaframework.db.jpa.transaction.FleaTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -151,7 +150,7 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
      * @since 1.0.0
      */
     private FleaMenuTree toFleaMenuTree(Long accountId, Long systemAccountId) {
-        FleaMenuTree fleaMenuTree = new FleaMenuTree("FleaFrameAuth");
+        FleaMenuTree fleaMenuTree = new FleaMenuTree("FleaAuth");
         try {
             // 获取所有可以访问的菜单
             List<FleaMenu> fleaMenuList = fleaAuthSV.queryAllAccessibleMenus(accountId, systemAccountId);
@@ -261,7 +260,7 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
     }
 
     @Override
-    @Transactional(value = "fleaAuthTransactionManager", rollbackFor = Exception.class)
+    @FleaTransactional(value = "fleaAuthTransactionManager", unitName = "fleaauth")
     public FleaAccount register(FleaUserRegisterPOJO fleaUserRegisterPOJO) throws CommonException {
 
         // 校验用户注册信息对象是否为空
@@ -285,14 +284,10 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
 
         // 新建一个flea用户
         FleaUser fleaUser = fleaUserSV.saveFleaUser(fleaUserRegisterPOJO.newFleaUserPOJO());
-        // 将用户信息持久化到数据库中，否则同一事物下，无法获取userId
-        fleaUserSV.flush();
 
         Long userId = fleaUser.getUserId();
         // 新建一个flea账户
         FleaAccount newFleaAccount = fleaAccountSV.saveFleaAccount(fleaUserRegisterPOJO.newFleaAccountPOJO(userId));
-        // 将账户信息持久化到数据库中，否则同一事物下，无法获取accountId
-        fleaAccountSV.flush();
 
         // 用户扩展属性批量设置用户编号
         fleaUserRegisterPOJO.setUserId(userId);
@@ -310,7 +305,7 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
     @Override
     public void saveLoginLog(Long accountId, HttpServletRequest request) {
 
-        if (ObjectUtils.isNotEmpty(accountId) && accountId > CommonConstants.NumeralConstants.ZERO) {
+        if (NumberUtils.isPositiveNumber(accountId)) {
             // 获取用户登录的ip4地址
             String ip4 = HttpUtils.getIp(request);
 
