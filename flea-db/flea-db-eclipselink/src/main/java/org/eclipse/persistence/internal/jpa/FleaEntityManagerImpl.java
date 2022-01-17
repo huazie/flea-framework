@@ -10,6 +10,7 @@ import org.eclipse.persistence.internal.localization.ExceptionLocalization;
 import org.eclipse.persistence.internal.sequencing.FleaSequencingManager;
 import org.eclipse.persistence.internal.sequencing.Sequencing;
 import org.eclipse.persistence.internal.sessions.AbstractSession;
+import org.eclipse.persistence.internal.sessions.CommitManager;
 import org.eclipse.persistence.internal.sessions.FleaCommitManager;
 import org.eclipse.persistence.internal.sessions.FleaUnitOfWork;
 import org.eclipse.persistence.internal.sessions.RepeatableWriteUnitOfWork;
@@ -18,6 +19,7 @@ import org.eclipse.persistence.sessions.broker.SessionBroker;
 import org.eclipse.persistence.sessions.server.ServerSession;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.LockModeType;
 import javax.persistence.LockTimeoutException;
 import java.util.Map;
@@ -32,17 +34,18 @@ import java.util.Map;
 public final class FleaEntityManagerImpl extends EntityManagerImpl {
 
     /**
-     * 获取指定JPA实体管理器对应的Flea实体管理器
+     * 获取指定JPA实体管理器工厂类对应的自定义的Flea实体管理器实现
      *
      * @param entityManager 实体管理器
      * @return Flea实体管理器
      * @since 1.2.0
      */
     public static FleaEntityManagerImpl getFleaEntityManagerImpl(EntityManager entityManager) {
-        FleaEntityManagerImpl fleaEntityManagerImpl = (FleaEntityManagerImpl) FleaEntityManager.getResource(entityManager);
+        EntityManagerFactory entityManagerFactory = entityManager.getEntityManagerFactory();
+        FleaEntityManagerImpl fleaEntityManagerImpl = (FleaEntityManagerImpl) FleaEntityManager.getResource(entityManagerFactory);
         if (ObjectUtils.isEmpty(fleaEntityManagerImpl)) {
             fleaEntityManagerImpl = new FleaEntityManagerImpl(entityManager);
-            FleaEntityManager.bindResource(entityManager, fleaEntityManagerImpl);
+            FleaEntityManager.bindResource(entityManagerFactory, fleaEntityManagerImpl);
         }
         return fleaEntityManagerImpl;
     }
@@ -205,6 +208,10 @@ public final class FleaEntityManagerImpl extends EntityManagerImpl {
             this.extendedPersistenceContext.setShouldOrderUpdates(this.shouldOrderUpdates);
             this.extendedPersistenceContext.setShouldCascadeCloneToJoinedRelationship(true);
             this.extendedPersistenceContext.setShouldStoreByPassCache(this.cacheStoreBypass);
+            // 设置CommitManager
+            CommitManager commitManager = new FleaCommitManager(this.extendedPersistenceContext);
+            commitManager.initializeCommitOrder();
+            this.extendedPersistenceContext.setCommitManager(commitManager);
             if (txn != null) {
                 // if there is a txn, it means we have been marked to join with it.
                 // All that is left is to register the UOW with the transaction
@@ -218,7 +225,6 @@ public final class FleaEntityManagerImpl extends EntityManagerImpl {
             // gf3334, force persistence context early transaction
             this.extendedPersistenceContext.beginEarlyTransaction();
         }
-        this.extendedPersistenceContext.setCommitManager(new FleaCommitManager(this.extendedPersistenceContext));
         return this.extendedPersistenceContext;
     }
 }

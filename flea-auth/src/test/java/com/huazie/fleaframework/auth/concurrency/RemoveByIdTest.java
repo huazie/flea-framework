@@ -40,7 +40,7 @@ public class RemoveByIdTest {
                 FleaLoginLog fleaLoginLog = new FleaLoginLog();
                 fleaLoginLog.setCreateDate(DateUtils.getCurrentTime());
 
-                boolean isRemoved = fleaLoginLogSV.removeNew(1L, fleaLoginLog);
+                boolean isRemoved = fleaLoginLogSV.remove(1L, fleaLoginLog);
 
                 LOGGER.debug("REMOVE0 = {}", isRemoved);
             } catch (CommonException e) {
@@ -63,7 +63,7 @@ public class RemoveByIdTest {
                 FleaLoginLog fleaLoginLog = new FleaLoginLog();
                 fleaLoginLog.setCreateDate(DateUtils.string2Date("2021-08-01 15:20:00"));
 
-                boolean isRemoved = fleaLoginLogSV.removeNew(1L, fleaLoginLog);
+                boolean isRemoved = fleaLoginLogSV.remove(1L, fleaLoginLog);
 
                 LOGGER.debug("REMOVE0 = {}", isRemoved);
             } catch (CommonException e) {
@@ -86,7 +86,7 @@ public class RemoveByIdTest {
                 FleaLoginLog fleaLoginLog = new FleaLoginLog();
                 fleaLoginLog.setCreateDate(DateUtils.string2Date("2021-07-01 15:20:00"));
 
-                boolean isRemoved = fleaLoginLogSV.removeNew(1L, fleaLoginLog);
+                boolean isRemoved = fleaLoginLogSV.remove(1L, fleaLoginLog);
 
                 LOGGER.debug("REMOVE0 = {}", isRemoved);
             } catch (CommonException e) {

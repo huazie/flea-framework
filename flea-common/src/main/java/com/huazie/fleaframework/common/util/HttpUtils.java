@@ -36,10 +36,10 @@ public class HttpUtils {
     /**
      * 获取Http请求的客户端IP地址;
      * <p> X-Forwarded-For: 简称XFF头，它代表客户端，也就是HTTP的请求端真实的IP，
-     * 只有在通过了HTTP代理或者负载均衡服务器时才会添加该项 </p>
+     * 只有在通过了HTTP代理或者负载均衡服务器时才会添加该项
      *
      * @param request Http请求对象
-     * @return ip地址
+     * @return IP地址
      * @since 1.0.0
      */
     public static String getIp(HttpServletRequest request) {

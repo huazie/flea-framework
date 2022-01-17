@@ -187,9 +187,9 @@ public interface CommonConstants {
      */
     interface FleaFrameInitConstants {
         /**
-         * <p> Flea Frame初始化配置 </p>
+         * <p> Flea Framework 初始化配置 </p>
          */
-        String FLEA_FRAME_INIT = "flea-framework-init";
+        String FLEA_FRAMEWORK_INIT = "flea-framework-init";
 
         /**
          * <p> 失效时间(永久) </p>

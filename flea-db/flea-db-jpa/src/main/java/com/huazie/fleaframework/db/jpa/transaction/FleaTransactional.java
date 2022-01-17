@@ -28,4 +28,11 @@ public @interface FleaTransactional {
      * @return 事物名
      */
     String value() default "fleaTransaction";
+
+    /**
+     * 指定持久化单元名
+     *
+     * @return 持久化单元名
+     */
+    String unitName() default "";
 }

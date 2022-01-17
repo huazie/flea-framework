@@ -46,14 +46,14 @@ public class %FLEA_PERSISTENCE_UNIT_ALIAS_NAME%DAOImpl<T> extends AbstractFleaJP
 
     @Override
     @Transactional("%FLEA_PERSISTENCE_UNIT_ALIAS_NAME_1%TransactionManager")
-    public boolean removeNew(long entityId, T entity) throws CommonException {
-        return super.removeNew(entityId, entity);
+    public boolean remove(long entityId, T entity) throws CommonException {
+        return super.remove(entityId, entity);
     }
 
     @Override
     @Transactional("%FLEA_PERSISTENCE_UNIT_ALIAS_NAME_1%TransactionManager")
-    public boolean removeNew(String entityId, T entity) throws CommonException {
-        return super.removeNew(entityId, entity);
+    public boolean remove(String entityId, T entity) throws CommonException {
+        return super.remove(entityId, entity);
     }
 
     @Override

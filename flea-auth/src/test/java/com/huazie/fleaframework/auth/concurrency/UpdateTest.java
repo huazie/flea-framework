@@ -40,11 +40,11 @@ public class UpdateTest {
                 FleaLoginLog fleaLoginLog = new FleaLoginLog();
                 fleaLoginLog.setCreateDate(DateUtils.getCurrentTime());
 
-                fleaLoginLog = fleaLoginLogSV.queryNew(2L, fleaLoginLog);
+                fleaLoginLog = fleaLoginLogSV.query(2L, fleaLoginLog);
 
                 fleaLoginLog.setDoneDate(DateUtils.getCurrentTime());
                 fleaLoginLog.setLoginState(2);
-                fleaLoginLog.setLoginIp4("0.0.0.0");
+                fleaLoginLog.setLoginIp4("0.0.0.2");
                 fleaLoginLogSV.update(fleaLoginLog);
 
                 LOGGER.debug("FleaLoginLog = {}", fleaLoginLog);
@@ -68,11 +68,11 @@ public class UpdateTest {
                 FleaLoginLog fleaLoginLog = new FleaLoginLog();
                 fleaLoginLog.setCreateDate(DateUtils.string2Date("2021-08-01 15:20:00"));
 
-                fleaLoginLog = fleaLoginLogSV.queryNew(2L, fleaLoginLog);
+                fleaLoginLog = fleaLoginLogSV.query(2L, fleaLoginLog);
 
                 fleaLoginLog.setDoneDate(DateUtils.getCurrentTime());
                 fleaLoginLog.setLoginState(3);
-                fleaLoginLog.setLoginIp4("0.0.0.0");
+                fleaLoginLog.setLoginIp4("0.0.0.3");
                 fleaLoginLogSV.update(fleaLoginLog);
 
                 LOGGER.debug("FleaLoginLog = {}", fleaLoginLog);
@@ -96,11 +96,11 @@ public class UpdateTest {
                 FleaLoginLog fleaLoginLog = new FleaLoginLog();
                 fleaLoginLog.setCreateDate(DateUtils.string2Date("2021-07-01 15:20:00"));
 
-                fleaLoginLog = fleaLoginLogSV.queryNew(2L, fleaLoginLog);
+                fleaLoginLog = fleaLoginLogSV.query(2L, fleaLoginLog);
 
                 fleaLoginLog.setDoneDate(DateUtils.getCurrentTime());
                 fleaLoginLog.setLoginState(4);
-                fleaLoginLog.setLoginIp4("0.0.0.0");
+                fleaLoginLog.setLoginIp4("0.0.0.4");
                 fleaLoginLogSV.update(fleaLoginLog);
 
                 LOGGER.debug("FleaLoginLog = {}", fleaLoginLog);

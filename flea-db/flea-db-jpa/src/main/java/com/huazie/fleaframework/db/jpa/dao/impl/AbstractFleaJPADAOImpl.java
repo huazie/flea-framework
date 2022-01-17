@@ -16,7 +16,7 @@ import com.huazie.fleaframework.db.common.sql.pojo.SqlParam;
 import com.huazie.fleaframework.db.common.sql.template.ITemplate;
 import com.huazie.fleaframework.db.common.sql.template.SqlTemplateFactory;
 import com.huazie.fleaframework.db.common.sql.template.TemplateTypeEnum;
-import com.huazie.fleaframework.db.jpa.LibTableSplitHelper;
+import com.huazie.fleaframework.db.jpa.FleaJPASplitHelper;
 import com.huazie.fleaframework.db.jpa.common.FleaJPAQuery;
 import com.huazie.fleaframework.db.jpa.common.FleaJPAQueryPool;
 import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
@@ -31,10 +31,10 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * <p> 抽象Flea JPA DAO层实现类，该类实现了基本的增删改查功能，可以自行拓展 </p>
+ * 抽象Flea JPA DAO层实现类，该类实现了基本的增删改查功能，可以自行拓展
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 @SuppressWarnings({"rawtypes", "unchecked"})
@@ -45,7 +45,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     private Class<T> entityClass; // 实体类对应的Class对象
 
     /**
-     * <p> 获取T类型的Class对象 </p>
+     * 获取T类型的Class对象
      *
      * @since 1.0.0
      */
@@ -80,17 +80,17 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     }
 
     @Override
-    public T queryNew(long entityId, T entity) throws CommonException {
+    public T query(long entityId, T entity) throws CommonException {
         return queryById(entityId, entity);
     }
 
     @Override
-    public T queryNew(String entityId, T entity) throws CommonException {
+    public T query(String entityId, T entity) throws CommonException {
         return queryById(entityId, entity);
     }
 
     /**
-     * <p> 根据主键编号查询数据行对应的实体类信息 </p>
+     * 根据主键编号查询数据行对应的实体类信息
      *
      * @param entityId 主键编号
      * @return 数据行对应的实体类信息
@@ -227,17 +227,17 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     }
 
     @Override
-    public boolean removeNew(long entityId, T entity) throws CommonException {
+    public boolean remove(long entityId, T entity) throws CommonException {
         return removeById(entityId, entity);
     }
 
     @Override
-    public boolean removeNew(String entityId, T entity) throws CommonException {
+    public boolean remove(String entityId, T entity) throws CommonException {
         return removeById(entityId, entity);
     }
 
     /**
-     * <p> 根据主键编号删除指定行数据 </p>
+     * 根据主键编号删除指定行数据
      *
      * @param entityId 主键数据
      * @return true : 删除成功, false : 删除失败
@@ -288,7 +288,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     }
 
     @Override
-    public List<T> query(String relationId, T entity) throws CommonException {
+    public List<T> queryAll(String relationId, T entity) throws CommonException {
         return createNativeQuery(relationId, entity, false).getResultList();
     }
 
@@ -298,7 +298,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     }
 
     /**
-     * <p> 构建原生查询对象 </p>
+     * 构建原生查询对象
      *
      * @param relationId 关系编号
      * @param entity     实体类
@@ -348,7 +348,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     }
 
     /**
-     * <p> 处理INSERT,UPDATE,DELETE SQL模板 </p>
+     * 处理INSERT,UPDATE,DELETE SQL模板
      *
      * @param sqlTemplate SQL模板（包含 INSERT,UPDATE,DELETE）
      * @throws CommonException 通用异常
@@ -377,7 +377,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     }
 
     /**
-     * <p> 校验主键合法性 </p>
+     * 校验主键合法性
      *
      * @param entityId 实体类对应的主键编号
      * @throws CommonException 通用异常
@@ -399,9 +399,9 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     }
 
     /**
-     * <p> 为<code>Query</code>对象设置参数 </p>
+     * 查询对象设置参数
      *
-     * @param query     <code>Query</code>对象
+     * @param query     查询对象
      * @param sqlParams 原生Sql参数
      * @since 1.0.0
      */
@@ -424,7 +424,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     }
 
     /**
-     * <p> 获取指定的查询对象 </p>
+     * 获取指定的Flea JPA 查询对象
      *
      * @return 自定义Flea JPA查询对象
      * @since 1.0.0
@@ -459,12 +459,12 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 
     @Override
     public void flush() {
-        getEntityManager().flush();
+        FleaEntityManager.flush(getEntityManager(), null);
     }
 
     @Override
-    public void flush(T entity) throws CommonException{
-        getEntityManager(entity).flush();
+    public void flush(T entity) throws CommonException {
+        FleaEntityManager.flush(getEntityManager(entity), entity);
     }
 
     /**
@@ -502,7 +502,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         setDefaultLibName(entity);
 
         // 处理并添加分表信息，如果不存在分表则不处理
-        entityManager = LibTableSplitHelper.findTableSplitHandle().handle(entityManager, entity, flag);
+        entityManager = FleaJPASplitHelper.getHandler().handle(entityManager, entity, flag);
         return entityManager;
     }
 

@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * <p> 抽象Flea JPA SV层实现类 </p>
+ * 抽象Flea JPA SV层实现类，该类实现了基本的增删改查功能，可以自行拓展
  *
  * @author huazie
  * @version 1.0.0
@@ -33,13 +33,13 @@ public abstract class AbstractFleaJPASVImpl<T> implements IAbstractFleaJPASV<T> 
     }
 
     @Override
-    public T queryNew(long entityId, T entity) throws CommonException {
-        return getDAO().queryNew(entityId, entity);
+    public T query(long entityId, T entity) throws CommonException {
+        return getDAO().query(entityId, entity);
     }
 
     @Override
-    public T queryNew(String entityId, T entity) throws CommonException {
-        return getDAO().queryNew(entityId, entity);
+    public T query(String entityId, T entity) throws CommonException {
+        return getDAO().query(entityId, entity);
     }
 
     @Override
@@ -159,13 +159,13 @@ public abstract class AbstractFleaJPASVImpl<T> implements IAbstractFleaJPASV<T> 
     }
 
     @Override
-    public boolean removeNew(long entityId, T entity) throws CommonException {
-        return getDAO().removeNew(entityId, entity);
+    public boolean remove(long entityId, T entity) throws CommonException {
+        return getDAO().remove(entityId, entity);
     }
 
     @Override
-    public boolean removeNew(String entityId, T entity) throws CommonException {
-        return getDAO().removeNew(entityId, entity);
+    public boolean remove(String entityId, T entity) throws CommonException {
+        return getDAO().remove(entityId, entity);
     }
 
     @Override
@@ -189,8 +189,8 @@ public abstract class AbstractFleaJPASVImpl<T> implements IAbstractFleaJPASV<T> 
     }
 
     @Override
-    public List<T> query(String relationId, T entity) throws CommonException {
-        return getDAO().query(relationId, entity);
+    public List<T> queryAll(String relationId, T entity) throws CommonException {
+        return getDAO().queryAll(relationId, entity);
     }
 
     @Override

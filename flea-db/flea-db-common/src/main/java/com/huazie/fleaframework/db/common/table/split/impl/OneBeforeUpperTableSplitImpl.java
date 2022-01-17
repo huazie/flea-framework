@@ -4,7 +4,7 @@ import com.huazie.fleaframework.common.CommonConstants;
 import com.huazie.fleaframework.common.exception.CommonException;
 
 /**
- * <p> 一位分表实现，截取分表字段前1位字符，并以大写返回 </p>
+ * 一位分表实现，截取分表字段前1位字符，并以大写返回
  *
  * @author huazie
  * @version 1.2.0

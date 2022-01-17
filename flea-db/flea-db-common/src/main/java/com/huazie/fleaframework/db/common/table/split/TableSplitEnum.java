@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.db.common.table.split;
 
 /**
- * <p> 分表转换类型枚举 </p>
+ * 分表转换类型枚举
  *
  * @author huazie
  * @version 1.0.0

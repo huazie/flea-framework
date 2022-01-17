@@ -55,8 +55,7 @@ public class FleaUserAttrSVImpl extends AbstractFleaJPASVImpl<FleaUserAttr> impl
             fleaUserAttrList = new ArrayList<>();
             for (FleaUserAttrPOJO fleaUserAttrPOJO : fleaUserAttrPOJOList) {
                 if (ObjectUtils.isNotEmpty(fleaUserAttrPOJO)) {
-                    FleaUserAttr fleaUserAttr = newFleaUserAttr(fleaUserAttrPOJO);
-                    fleaUserAttrList.add(fleaUserAttr);
+                    fleaUserAttrList.add(newFleaUserAttr(fleaUserAttrPOJO));
                 }
             }
         }

@@ -10,7 +10,7 @@ import com.huazie.fleaframework.common.util.StringUtils;
 import com.huazie.fleaframework.db.common.exception.DaoException;
 import com.huazie.fleaframework.db.common.table.pojo.SplitTable;
 import com.huazie.fleaframework.db.common.util.EntityUtils;
-import com.huazie.fleaframework.db.jpa.LibTableSplitHelper;
+import com.huazie.fleaframework.db.jpa.FleaJPASplitHelper;
 import com.huazie.fleaframework.db.jpa.transaction.FleaTransactional;
 import org.springframework.core.NamedThreadLocal;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -33,7 +33,7 @@ import java.util.concurrent.ConcurrentMap;
  * Flea实体管理器
  *
  * @author huazie
- * @version 1.2.0
+ * @version 2.0.0
  * @since 1.1.0
  */
 public class FleaEntityManager {
@@ -83,7 +83,7 @@ public class FleaEntityManager {
     }
 
     /**
-     * 从指定类的成员变量上，获取持久化单元名称。在 <b> flea-frame-db </b> 模块中，
+     * 从指定类的成员变量上，获取持久化单元名称。在 <b> flea-db </b> 模块中，
      * 该名称一般定义在 {@code AbstractFleaJPADAOImpl} 的子类的成员变量上，由 注解
      * {@code PersistenceContext} 或 注解 {@code FleaPersistenceContext} 进行标识。
      *
@@ -114,7 +114,7 @@ public class FleaEntityManager {
     }
 
     /**
-     * 从指定类的第一个成员方法上，获取事物名。在 <b> flea-frame-db </b> 模块中，
+     * 从指定类的第一个成员方法上，获取事物名。在 <b> flea-db </b> 模块中，
      * 该名称一般定义在 {@code AbstractFleaJPADAOImpl} 的子类的成员方法上，
      * 由注解 {@code Transactional}或{@code FleaTransactional} 进行标识。
      *
@@ -144,7 +144,7 @@ public class FleaEntityManager {
     }
 
     /**
-     * 从指定类的成员方法上，获取事物名。在 <b> flea-frame-db </b> 模块中，
+     * 从指定类的成员方法上，获取事物名。在 <b> flea-db </b> 模块中，
      * 该名称一般定义在 {@code AbstractFleaJPADAOImpl} 的子类的成员方法上，
      * 由注解 {@code Transactional}或{@code FleaTransactional} 进行标识。
      *
@@ -165,6 +165,25 @@ public class FleaEntityManager {
             }
         }
         return transactionName;
+    }
+
+    /**
+     * 从指定类的成员方法上，获取持久化单元名。在 <b> flea-db </b> 模块中，
+     * 该名称定义在注解{@code FleaTransactional} 中，用于启动自定的事物。
+     *
+     * @param method 类的成员方法
+     * @return 持久化单元名
+     * @since 2.0.0
+     */
+    public static String getUnitName(Method method) {
+        String unitName = "";
+        if (ObjectUtils.isNotEmpty(method)) {
+            FleaTransactional fleaTransactional = method.getAnnotation(FleaTransactional.class);
+            if (ObjectUtils.isNotEmpty(fleaTransactional)) {
+                unitName = fleaTransactional.unitName();
+            }
+        }
+        return unitName;
     }
 
     /**
@@ -192,7 +211,7 @@ public class FleaEntityManager {
      */
     public static Map<Object, Object> getResourceMap() {
         Map<Object, Object> map = resources.get();
-        return (map != null ? Collections.unmodifiableMap(map) : Collections.emptyMap());
+        return (ObjectUtils.isNotEmpty(map) ? Collections.unmodifiableMap(map) : Collections.emptyMap());
     }
 
     /**
@@ -211,14 +230,13 @@ public class FleaEntityManager {
      * 检索绑定到当前线程的给定键的资源。
      *
      * @param key 要检查的键
-     * @return 绑定到当前线程（通常是活动资源对象）的null如果没有，则为null
+     * @return 绑定到当前线程（通常是活动资源对象）的给定键的资源；如果没有，则为null。
      * @since 1.2.0
      */
     public static Object getResource(Object key) {
         Object value = doGetResource(key);
         if (ObjectUtils.isNotEmpty(value) && LOGGER.isTraceEnabled()) {
-            LOGGER.trace1(new Object() {
-            }, "Retrieved value [{}] for key [{}] bound to thread [{}]", value, key, Thread.currentThread().getName());
+            LOGGER.trace1(new Object() {}, "Retrieved value [{}] for key [{}] bound to thread [{}]", value, key, Thread.currentThread().getName());
         }
         return value;
     }
@@ -259,8 +277,7 @@ public class FleaEntityManager {
             throw new IllegalStateException("Already value [" + oldValue + "] for key [" + key + "] bound to thread [" + Thread.currentThread().getName() + "]");
         }
         if (LOGGER.isTraceEnabled()) {
-            LOGGER.trace1(new Object() {
-            }, "Bound value [{}] for key [{}] to thread [{}]", value, key, Thread.currentThread().getName());
+            LOGGER.trace1(new Object() {}, "Bound value [{}] for key [{}] to thread [{}]", value, key, Thread.currentThread().getName());
         }
     }
 
@@ -308,8 +325,7 @@ public class FleaEntityManager {
             resources.remove();
         }
         if (value != null && LOGGER.isTraceEnabled()) {
-            LOGGER.trace1(new Object() {
-            }, "Removed value [{}] for key [{}] from thread [{}]", value, actualKey, Thread.currentThread().getName());
+            LOGGER.trace1(new Object() {}, "Removed value [{}] for key [{}] from thread [{}]", value, actualKey, Thread.currentThread().getName());
         }
         return value;
     }
@@ -325,7 +341,7 @@ public class FleaEntityManager {
      * @since 1.1.0
      */
     public static <T> Number getFleaNextValue(EntityManager entityManager, Class<T> entityClass, T entity) {
-        return LibTableSplitHelper.findTableSplitHandle().getNextValue(entityManager, entityClass, entity);
+        return FleaJPASplitHelper.getHandler().getNextValue(entityManager, entityClass, entity);
     }
 
     /**
@@ -339,11 +355,7 @@ public class FleaEntityManager {
      * @since 1.0.0
      */
     public static <T> T find(EntityManager entityManager, Object primaryKey, Class<T> entityClass, T entity) {
-        if (ObjectUtils.isEmpty(entity) && ObjectUtils.isNotEmpty(entityClass)) {
-            return entityManager.find(entityClass, primaryKey);
-        } else {
-            return LibTableSplitHelper.findTableSplitHandle().find(entityManager, primaryKey, entityClass, entity);
-        }
+        return FleaJPASplitHelper.getHandler().find(entityManager, primaryKey, entityClass, entity);
     }
 
     /**
@@ -355,7 +367,7 @@ public class FleaEntityManager {
      * @since 1.0.0
      */
     public static <T> boolean remove(EntityManager entityManager, T entity) {
-        return LibTableSplitHelper.findTableSplitHandle().remove(entityManager, entity);
+        return FleaJPASplitHelper.getHandler().remove(entityManager, entity);
     }
 
     /**
@@ -368,7 +380,7 @@ public class FleaEntityManager {
      * @return 已合并（更新）状态的托管实体对象
      */
     public static <T> T merge(EntityManager entityManager, T entity) {
-        return LibTableSplitHelper.findTableSplitHandle().merge(entityManager, entity);
+        return FleaJPASplitHelper.getHandler().merge(entityManager, entity);
     }
 
     /**
@@ -381,6 +393,18 @@ public class FleaEntityManager {
      * @since 1.0.0
      */
     public static <T> void persist(EntityManager entityManager, T entity) {
-        LibTableSplitHelper.findTableSplitHandle().persist(entityManager, entity);
+        FleaJPASplitHelper.getHandler().persist(entityManager, entity);
+    }
+
+    /**
+     * 将持久化上下文同步到底层数据库。
+     *
+     * @param entityManager 实体管理类
+     * @param entity        实体类对象
+     * @param <T>           实体类型
+     * @since 2.0.0
+     */
+    public static <T> void flush(EntityManager entityManager, T entity) {
+        FleaJPASplitHelper.getHandler().flush(entityManager, entity);
     }
 }

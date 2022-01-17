@@ -6,7 +6,7 @@ import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 
 /**
- * <p> Flea JPA查询对象池构建者 </p>
+ * Flea JPA查询对象池构建者
  *
  * @author huazie
  * @version 1.0.0

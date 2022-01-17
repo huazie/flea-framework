@@ -116,4 +116,14 @@ public interface IFleaJPASplitHandler {
      * @since 1.2.0
      */
     <T> void persist(EntityManager entityManager, T entity);
+
+    /**
+     * 将持久化上下文同步到底层数据库。
+     *
+     * @param entityManager 实体管理器
+     * @param entity        实体类对象
+     * @param <T>           实体类型
+     * @since 2.0.0
+     */
+    <T> void flush(EntityManager entityManager, T entity);
 }

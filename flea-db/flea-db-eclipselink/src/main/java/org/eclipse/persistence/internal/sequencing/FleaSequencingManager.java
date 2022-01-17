@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentMap;
 
 /**
  * Flea序列管理器EclipseLink版实现，由于{@code SequencingManager}
- * 为EclipseLink私有，所以该类包目录同{@code SequencingManager}，
+ * 为EclipseLink私有，所以该类包目录同 {@code SequencingManager}，
  * 该类主要用于分表场景的分表序列的获取。
  *
  * @author huazie

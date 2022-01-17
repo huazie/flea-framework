@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * <p> 模板接口类 </p>
+ * 模板接口类
  *
  * @author huazie
  * @version 1.0.0

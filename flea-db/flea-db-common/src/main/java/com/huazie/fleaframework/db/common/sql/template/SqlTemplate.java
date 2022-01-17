@@ -33,12 +33,13 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 /**
- * <p> Sql模板抽象类 </p>
+ * Sql模板抽象类
  *
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0
  */
+@SuppressWarnings("serial")
 public abstract class SqlTemplate<T> implements ITemplate<T> {
 
     private StringBuilder sql = new StringBuilder();

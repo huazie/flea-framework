@@ -42,13 +42,11 @@ public class FleaCommitManager extends CommitManager {
 
         for (Object objectToDelete : objects) {
             if (ObjectUtils.isNotEmpty(objectToDelete) && objectToDelete.getClass() == theClass) {
-                // PERF: Get the descriptor query, to avoid extra query creation.
                 DeleteObjectQuery deleteQuery = descriptor.getQueryManager().getDeleteQuery();
                 if (ObjectUtils.isEmpty(deleteQuery)) {
                     deleteQuery = new DeleteObjectQuery();
                     deleteQuery.setDescriptor(descriptor);
                 } else {
-                    // Ensure original query has been prepared.
                     deleteQuery.checkPrepare(session, deleteQuery.getTranslationRow());
                     deleteQuery = (DeleteObjectQuery) deleteQuery.clone();
                 }
@@ -107,7 +105,7 @@ public class FleaCommitManager extends CommitManager {
     @Override
     protected void commitNewObjectsForClassWithChangeSet(UnitOfWorkChangeSet uowChangeSet, Class theClass) {
         Map<ObjectChangeSet, ObjectChangeSet> newObjectChangesList = uowChangeSet.getNewObjectChangeSets().get(theClass);
-        if (newObjectChangesList != null) { // may be no changes for that class type.
+        if (newObjectChangesList != null) { // 该类型可能没有更改
             AbstractSession session = getSession();
             ClassDescriptor descriptor = null;
             List<ObjectChangeSet> newChangeSets = new ArrayList<>(newObjectChangesList.values());
@@ -117,13 +115,11 @@ public class FleaCommitManager extends CommitManager {
                     if (descriptor == null) {
                         descriptor = session.getDescriptor(objectToWrite);
                     }
-                    // PERF: Get the descriptor query, to avoid extra query creation.
                     InsertObjectQuery commitQuery = descriptor.getQueryManager().getInsertQuery();
                     if (commitQuery == null) {
                         commitQuery = new InsertObjectQuery();
                         commitQuery.setDescriptor(descriptor);
                     } else {
-                        // Ensure original query has been prepared.
                         commitQuery.checkPrepare(session, commitQuery.getTranslationRow());
                         commitQuery = (InsertObjectQuery) commitQuery.clone();
                     }

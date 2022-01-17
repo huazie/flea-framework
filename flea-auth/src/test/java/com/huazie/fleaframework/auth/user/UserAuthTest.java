@@ -52,8 +52,8 @@ public class UserAuthTest {
     public void userLoginTest() {
 
         FleaUserLoginPOJO fleaUserLoginInfo = new FleaUserLoginPOJO();
-        fleaUserLoginInfo.setAccountCode("huazie");
-        fleaUserLoginInfo.setAccountPwd("2020#huazie");
+        fleaUserLoginInfo.setAccountCode("LGH");
+        fleaUserLoginInfo.setAccountPwd("2022#lgh");
 
         IFleaUserModuleSV fleaUserModuleSV = (IFleaUserModuleSV) applicationContext.getBean("fleaUserModuleSV");
 
@@ -71,8 +71,8 @@ public class UserAuthTest {
 
         FleaUserRegisterPOJO fleaUserRegisterPOJO = new FleaUserRegisterPOJO();
 
-        fleaUserRegisterPOJO.setAccountCode("huazie");
-        fleaUserRegisterPOJO.setAccountPwd("2020#huazie");
+        fleaUserRegisterPOJO.setAccountCode("LGH");
+        fleaUserRegisterPOJO.setAccountPwd("2022#lgh");
         fleaUserRegisterPOJO.setState(UserStateEnum.IN_USE.getState());
 
         // 添加用户属性

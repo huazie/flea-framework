@@ -3,7 +3,7 @@ package com.huazie.fleaframework.db.common.sql.template.config;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
- * <p> 定义模板和规则中各语句的属性 </p>
+ * 定义模板和规则中各语句的属性
  *
  * @author huazie
  * @version 1.0.0

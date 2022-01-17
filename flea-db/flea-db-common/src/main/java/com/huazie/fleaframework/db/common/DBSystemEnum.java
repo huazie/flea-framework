@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.db.common;
 
 /**
- * <p> 数据库系统枚举类 </p>
+ * 数据库系统枚举类
  *
  * @author huazie
  * @version 1.0.0

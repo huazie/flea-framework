@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <p> 定义SQL模板集合 </p>
+ * 定义SQL模板集合
  *
  * @author huazie
  * @version 1.0.0

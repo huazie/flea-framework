@@ -83,7 +83,7 @@ public class FleaSplitUtils {
         splitTable.setSplitTablePkColumnValue(pkColumnValue); // 生成器表中分表的主键值，默认为主键中@TableGenerator中的pkColumnValue
         splitTable.setExistSplitTable(false); // 默认没有分表
         splitTable.setExistSplitTablePkColumn(false); // 默认没有ID生成器表中分表的主键值
-        splitTable.setGeneratorFlag(generatorFlag);
+        splitTable.setGeneratorFlag(generatorFlag); // 默认主键生成器表在模板库中
 
         Object obj = null;
         if (LOGGER.isDebugEnabled()) {
@@ -182,6 +182,10 @@ public class FleaSplitUtils {
             }
             // 添加分库信息
             splitTable.setSplitLib(getSplitLib(tab.getLib(), splitLibObjMap));
+        } else {
+            SplitLib splitLib = new SplitLib();
+            splitLib.setExistSplitLib(false);
+            splitTable.setSplitLib(splitLib);
         }
 
         if (LOGGER.isDebugEnabled()) {
@@ -217,14 +221,12 @@ public class FleaSplitUtils {
      */
     public static SplitLib getSplitLib(String libName, Map<String, Object> splitLibObjMap) throws CommonException {
 
-        SplitLib splitLib = null;
+        SplitLib splitLib = new SplitLib();
+        splitLib.setExistSplitLib(false);
+        splitLib.setLibName(libName);
+        splitLib.setSplitLibName(libName);
 
         if (StringUtils.isNotBlank(libName) && MapUtils.isNotEmpty(splitLibObjMap)) {
-
-            splitLib = new SplitLib();
-            splitLib.setLibName(libName);
-            splitLib.setSplitLibName(libName);
-            splitLib.setExistSplitLib(false);
 
             Object obj = null;
             if (LOGGER.isDebugEnabled()) {
