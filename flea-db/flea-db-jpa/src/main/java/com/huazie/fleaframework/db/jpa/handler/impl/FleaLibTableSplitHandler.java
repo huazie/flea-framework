@@ -238,8 +238,7 @@ public abstract class FleaLibTableSplitHandler implements IFleaJPASplitHandler {
             removeInner(entityManager, entity);
         } else {
             if (!entityManager.contains(entity)) {
-                LOGGER.debug("Entity is not registered !");
-
+                entity = registerObject(entityManager, entity);
             }
             entityManager.remove(entity);
         }
@@ -424,4 +423,14 @@ public abstract class FleaLibTableSplitHandler implements IFleaJPASplitHandler {
      * @since 2.0.0
      */
     protected abstract void flushInner(EntityManager entityManager);
+
+    /**
+     * 注册实体对象
+     *
+     * @param entity 待注册的实体对象
+     * @param <T> 实体类型
+     * @return 注册后复制的实体对象
+     * @since 2.0.0
+     */
+    protected abstract <T> T registerObject(EntityManager entityManager, T entity);
 }

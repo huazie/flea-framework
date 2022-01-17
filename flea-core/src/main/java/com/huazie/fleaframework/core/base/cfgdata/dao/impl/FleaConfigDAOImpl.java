@@ -39,6 +39,12 @@ public class FleaConfigDAOImpl<T> extends AbstractFleaJPADAOImpl<T> {
 		return super.remove(entityId);
 	}
 
+    @Override
+    @Transactional("fleaConfigTransactionManager")
+    public boolean remove(T entity) throws CommonException {
+        return super.remove(entity);
+    }
+
 	@Override
 	@Transactional("fleaConfigTransactionManager")
 	public boolean remove(long entityId, T entity) throws CommonException {
