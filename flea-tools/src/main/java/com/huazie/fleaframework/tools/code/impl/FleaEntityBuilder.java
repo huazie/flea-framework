@@ -157,7 +157,9 @@ public class FleaEntityBuilder extends FleaCodeBuilder {
         String pkVariableContent = "";
 
         String idGeneratorStrategy = StringUtils.valueOf(pubParam.get(ToolsConstants.CodeConstants.ID_GENERATOR_STRATEGY));
-        if (GenerationType.TABLE.name().equals(idGeneratorStrategy)) {
+        if (ToolsConstants.CodeConstants.NONE.equals(idGeneratorStrategy)) {
+            pkVariableContent = IOUtils.toNativeStringFromResource("flea/code/entity/VariablePrimaryKeyStr.code");
+        } else if (GenerationType.TABLE.name().equals(idGeneratorStrategy)) {
             pkVariableContent = IOUtils.toNativeStringFromResource("flea/code/entity/VariablePrimaryKeyNum4Table.code");
         } else if (GenerationType.IDENTITY.name().equals(idGeneratorStrategy)){
             pkVariableContent = IOUtils.toNativeStringFromResource("flea/code/entity/VariablePrimaryKeyNum4Identity.code");

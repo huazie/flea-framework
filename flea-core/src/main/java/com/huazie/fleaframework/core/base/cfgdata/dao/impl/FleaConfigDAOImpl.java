@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 /**
- * <p> FleaConfig数据源DAO层父类 </p>
+ * FleaConfig数据源DAO层父类
  * 
  * @author huazie
  * @version 1.0.0
