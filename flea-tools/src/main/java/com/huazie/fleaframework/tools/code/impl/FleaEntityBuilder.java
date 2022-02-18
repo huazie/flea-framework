@@ -121,7 +121,7 @@ public class FleaEntityBuilder extends FleaCodeBuilder {
             } else {
                 if (isPrimaryKey) {
                     if (String.class.equals(attrType)) {
-                        variableContent = IOUtils.toNativeStringFromResource("flea/code/entity/VariablePrimaryKeyStr.code");
+                        variableContent = IOUtils.toNativeStringFromResource("flea/code/entity/VariablePrimaryKey4NoneStrategy.code");
                     } else {
                         variableContent = toVariablePrimaryKeyNum(pubParam);
                     }
@@ -158,7 +158,7 @@ public class FleaEntityBuilder extends FleaCodeBuilder {
 
         String idGeneratorStrategy = StringUtils.valueOf(pubParam.get(ToolsConstants.CodeConstants.ID_GENERATOR_STRATEGY));
         if (ToolsConstants.CodeConstants.NONE.equals(idGeneratorStrategy)) {
-            pkVariableContent = IOUtils.toNativeStringFromResource("flea/code/entity/VariablePrimaryKeyStr.code");
+            pkVariableContent = IOUtils.toNativeStringFromResource("flea/code/entity/VariablePrimaryKey4NoneStrategy.code");
         } else if (GenerationType.TABLE.name().equals(idGeneratorStrategy)) {
             pkVariableContent = IOUtils.toNativeStringFromResource("flea/code/entity/VariablePrimaryKeyNum4Table.code");
         } else if (GenerationType.IDENTITY.name().equals(idGeneratorStrategy)){

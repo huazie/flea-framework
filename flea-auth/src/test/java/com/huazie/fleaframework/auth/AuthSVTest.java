@@ -1,11 +1,13 @@
 package com.huazie.fleaframework.auth;
 
+import com.huazie.fleaframework.common.i18n.FleaI18nHelper;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * <p>  </p>
@@ -37,5 +39,11 @@ public class AuthSVTest {
         a1.retainAll(a2);
 
         LOGGER.debug("a1 = {}", a1);
+    }
+
+    @Test
+    public void fleaI18nHelperTest() {
+        String value = FleaI18nHelper.i18n("AUTH-COMMON0000000001", "auth");
+        LOGGER.debug("Value = {}", value);
     }
 }

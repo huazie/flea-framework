@@ -20,6 +20,7 @@ import com.huazie.fleaframework.auth.util.FleaMenuTree;
 import com.huazie.fleaframework.common.FleaSessionManager;
 import com.huazie.fleaframework.common.IFleaUser;
 import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.i18n.FleaI18nHelper;
 import com.huazie.fleaframework.common.object.FleaObjectFactory;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
@@ -339,7 +340,8 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
                     fleaLoginLog.setLoginState(FleaAuthConstants.UserConstants.LOGIN_STATE_2);
                     fleaLoginLog.setLogoutTime(DateUtils.getCurrentTime());
                     fleaLoginLog.setDoneDate(DateUtils.getCurrentTime());
-                    fleaLoginLog.setRemarks("用户已退出");
+                    // AUTH-COMMON0000000001 用户已登出
+                    fleaLoginLog.setRemarks(FleaI18nHelper.i18nForAuth("AUTH-COMMON0000000001"));
                     // 更新当月用户最近一次的登录日志的登录状态（2：已退出）
                     fleaLoginLogSV.update(fleaLoginLog);
                 }
