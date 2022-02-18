@@ -94,7 +94,7 @@ public class DataHandleUtils {
         Object obj = null;
         if (LOGGER.isDebugEnabled()) {
             obj = new Object() {};
-            LOGGER.debug1(obj, "Original Length = {}", originalStr.length());
+            LOGGER.debug1(obj, "[GZIP] Original Length = {}", originalStr.length());
         }
 
         String compressedStr = null;
@@ -135,7 +135,7 @@ public class DataHandleUtils {
         Object obj = null;
         if (LOGGER.isDebugEnabled()) {
             obj = new Object() {};
-            LOGGER.debug1(obj,"Compressed Length = {}", compressedStr.length());
+            LOGGER.debug1(obj,"[GZIP] Compressed Length = {}", compressedStr.length());
         }
 
         String originalStr = null;
@@ -173,7 +173,7 @@ public class DataHandleUtils {
         Object obj = null;
         if (LOGGER.isDebugEnabled()) {
             obj = new Object() {};
-            LOGGER.debug1(obj,"Original Length = {}", originalStr.length());
+            LOGGER.debug1(obj,"[ZIP] Original Length = {}", originalStr.length());
         }
 
         String compressedStr = null;
@@ -216,7 +216,7 @@ public class DataHandleUtils {
         Object obj = null;
         if (LOGGER.isDebugEnabled()) {
             obj = new Object() {};
-            LOGGER.debug1(obj,"Compressed Length = {}", compressedStr.length());
+            LOGGER.debug1(obj,"[ZIP] Compressed Length = {}", compressedStr.length());
         }
 
         String originalStr = null;
