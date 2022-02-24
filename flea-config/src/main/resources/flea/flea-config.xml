@@ -6,6 +6,10 @@
         <config-item key="expiry_time_forever" desc="失效时间(永久)">29991231235959</config-item>
     </config-items>
 
+    <config-items key="flea-url-config" desc="Flea URL配置">
+        <config-item key="taobao_ip_url" desc="淘宝IP地址信息查询URL">https://ip.taobao.com/outGetIpInfo?accessKey=alibaba-inc&amp;ip=</config-item>
+    </config-items>
+
     <!-- flea-jersey -->
     <config-items key="flea-jersey-client" desc="Flea Jersey 客户端配置">
         <config-item key="system_account_id" desc="系统账户编号">1000</config-item>
