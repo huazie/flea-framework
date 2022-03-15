@@ -10,10 +10,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 /**
- * Flea JPA 分库分表处理者接口，定义JPA分库分表相关的处理方法。
+ * Flea JPA 分库分表处理者接口，包含分库分表相关的处理接口方法、
+ * 增删改查的数据操作接口方法。
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 public interface IFleaJPASplitHandler {
