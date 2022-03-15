@@ -33,10 +33,27 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 /**
- * Flea自定义事物切面，处理自定义事物注解 @FleaTransactional
+ * Flea自定义事物切面，拦截由自定义事物注解标记的Spring注入的方法，
+ * 实现在方法调用之前开启事物，调用成功后提交事物，出现异常回滚事务。
+ *
+ * <p> Flea自定义事物注解主要标记在两类方法上：
+ *
+ * <p> 一类方法是，AbstractFleaJPADAOImpl 的子类的增删改方法；
+ * 这些方法一般某某数据源DAO层实现类中，注解中需要指定事物名。
+ *
+ * <p> 另一类方法是，除了上一类方法的其他方法；需要特别注意的是，
+ * 自定义事物注解上不仅需要指定事物名、而且还需要指定持久化单元名；
+ * 如果存在分库的场景，在调用之前，需要设置当前线程下的分库序列值。
+ * <pre>举例如下：
+ *   // 设置当前线程下的分库序列值
+ *   FleaLibUtil.setSplitLibSeqValue("SEQ", "123123123");
+ *   // 调用自定义事物注解标记的方法
+ * </pre>
  *
  * @author huazie
  * @version 2.0.0
+ * @see FleaTransactionTemplate
+ * @see com.huazie.fleaframework.db.jpa.transaction.FleaTransactional
  * @since 1.2.0
  */
 @Aspect

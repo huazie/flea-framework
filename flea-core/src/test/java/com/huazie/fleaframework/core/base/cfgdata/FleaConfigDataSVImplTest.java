@@ -347,10 +347,20 @@ public class FleaConfigDataSVImplTest {
     }
 
     @Test
-    public void testFleaConfigDataSpringBean() {
+    public void testFleaConfigDatas() {
         FleaConfigDataSpringBean bean = (FleaConfigDataSpringBean) applicationContext.getBean("fleaConfigDataSpringBean");
         try {
             bean.getConfigDatas("huazie", "huazie");
+        } catch (Exception e) {
+            LOGGER.error("Exception:", e);
+        }
+    }
+
+    @Test
+    public void testFleaConfigData() {
+        FleaConfigDataSpringBean bean = (FleaConfigDataSpringBean) applicationContext.getBean("fleaConfigDataSpringBean");
+        try {
+            bean.getConfigData("huazie", "huazie");
         } catch (Exception e) {
             LOGGER.error("Exception:", e);
         }

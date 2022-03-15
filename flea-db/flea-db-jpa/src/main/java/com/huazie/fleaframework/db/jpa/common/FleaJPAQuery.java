@@ -34,12 +34,66 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * 自定义 Flea JPA 查询对象
+ * 自定义Flea JPA查询对象，封装了JPA标准化查询的常用API，
+ * 通过自由组装各种常见的查询条件，使数据的查询更加灵活方便。
  *
- * <p> 封装了 JPA 标准化查询 API，可以自行组装各种常见的查询条件。
+ * <p> 下面介绍下Flea JPA查询对象的使用，大致分为如下四步：
+ *
+ * <p> 第一步，获取Flea JPA查询对象，请参考Flea JPA查询对象池；
+ * <pre>举例如下：
+ *   // 从Flea JPA查询对象池中获取
+ *   FleaJPAQuery query = pool.getFleaObject();
+ * </pre>
+ *
+ * <p> 第二步，调用 init 方法进行初始化；如果需要分库分表的场景，
+ * 则需要再调用 initQueryEntity 方法，初始化查询实体对象；
+ * <pre>举例如下：
+ *   // 初始化Flea JPA查询对象
+ *   query.init(entityManager, sourceClazz, resultClazz);
+ *   // 初始化查询实体对象
+ *   query.initQueryEntity(entity);
+ * </pre>
+ *
+ * <p> 第三步，自由组装各种常见的查询条件；
+ * <pre>举例如下：
+ *   // 组装查询条件
+ *   query.equal(attrName1, attrValue);
+ *   query.like(attrName2, attrValue);
+ *   query.in(attrName3, value);
+ *
+ *   // 当然上述查询条件可以写在一起
+ *   query.equal(attrName1, attrValue)
+ *        .like(attrName2, attrValue)
+ *        .in(attrName3, value);
+ *
+ *   // 如果第二步已经初始化过查询实体对象，也可以这样组装查询条件
+ *   // 其中各attrName对应的值，定义在查询实体entity对象示例里。
+ *   query.equal(attrName1).like(attrName2).in(attrName3, value);
+ * </pre>
+ *
+ * <p> 第四步，获取JPA的查询结果。
+ * <pre>举例如下：
+ *   // 获取查询的记录行结果集合
+ *   query.getResultList();
+ *
+ *   // 设置查询范围，可用于分页
+ *   query.getResultList(start, max);
+ *
+ *   // 以分页方式获取查询的记录行结果集合
+ *   query.getResultList4Page(pageNum, pageCount);
+ *
+ *   // 获取查询的单个结果
+ *   query.getSingleResult();
+ *
+ *   // 获取查询的单个属性列结果集合
+ *   query.getSingleResultList();
+ *
+ *   // 设置查询范围
+ *   query.getSingleResultList(start, max);
+ * </pre>
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @see FleaJPAQueryPool
  * @see FleaJPAQueryPoolConfig
  * @since 1.0.0
@@ -1120,7 +1174,7 @@ public final class FleaJPAQuery implements Closeable {
     }
 
     /**
-     * 获取查询的单个属性列结果集合（设置查询范围，可用于分页）
+     * 获取查询的单个属性列结果集合（设置查询范围）
      *
      * @param start 开始查询记录行
      * @param max   最大查询数量
@@ -1140,22 +1194,6 @@ public final class FleaJPAQuery implements Closeable {
             // 将Flea JPA查询对象重置，并归还给对象池
             close();
         }
-    }
-
-    /**
-     * 以分页方式获取查询的单个属性列结果集合
-     *
-     * @param pageNum   指定页
-     * @param pageCount 每页条数
-     * @return 记录行结果集合
-     * @throws CommonException 通用异常
-     * @since 2.0.0
-     */
-    public List getSingleResultList4Page(int pageNum, int pageCount) throws CommonException {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "pageNum = {}, pageCount = {}", pageNum, pageCount);
-        }
-        return getSingleResultList((pageNum - 1) * pageCount, pageCount);
     }
 
     /**

@@ -9,7 +9,12 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * 抽象Flea JPA SV层实现类，该类实现了基本的增删改查功能，可以自行拓展
+ * 抽象Flea JPA SV层实现类，该类实现了基本的增删改查的数据操作功能，
+ * 子类可以自行拓展其他功能。
+ *
+ * <p> 该类定义了抽象方法 <code> getDAO </code>，由子类实现该方法，
+ * 实际的增删改查的数据操作，都是由DAO层子类实现；当然这些代码都可以
+ * 使用 <b> flea-tools </b> 中的工具自动生成。
  *
  * @author huazie
  * @version 1.0.0

@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * 数据处理的基本接口
+ * 数据处理的基本接口，包含了增删改查的各类基本操作。
  *
  * @author huazie
  * @version 1.0.0

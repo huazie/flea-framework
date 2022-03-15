@@ -30,7 +30,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
- * Flea实体管理器
+ * Flea 实体管理器工具类，提供了获取持久化上下文交互的实体管理器接口、
+ * 持久化单元名、事物名、分表信息、各持久化上下文交互接口的静态方法。
  *
  * @author huazie
  * @version 2.0.0

@@ -20,12 +20,14 @@ import java.lang.reflect.UndeclaredThrowableException;
 
 /**
  * Flea事物模板，简化程序化事务划分和事务异常处理的模板类。
- * <p>核心方法是{@link #execute}, 支持实现 {@link TransactionCallback}
- * 接口的事务代码。此模板处理事务生命周期和可能的异常，因此
- * {@link TransactionCallback} 实现和调用代码都不需要显式处理事务。
+ *
+ * <p> 核心方法是 {@link #execute}, 参数是实现事物回调接口
+ * 的事务代码。此模板收敛了处理事务生命周期和可能的异常的逻辑，
+ * 因此事物回调接口的实现和调用代码都不需要显式处理事务。
  *
  * @author huazie
  * @version 2.0.0
+ * @see TransactionCallback 事物回调接口
  * @since 1.2.0
  */
 @SuppressWarnings("serial")

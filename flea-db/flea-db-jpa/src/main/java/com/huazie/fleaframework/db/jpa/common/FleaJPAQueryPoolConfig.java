@@ -8,7 +8,8 @@ import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.db.common.DBConstants.JPAQueryPoolConfigConstants;
 
 /**
- * Flea JPA查询对象池配置
+ * Flea JPA查询对象池配置，包含最大连接数、最大空闲连接数、
+ * 最小空闲连接数、获取连接时的最大等待毫秒数等。
  *
  * @author huazie
  * @version 1.0.0

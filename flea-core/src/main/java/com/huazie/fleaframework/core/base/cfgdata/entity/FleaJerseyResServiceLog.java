@@ -14,7 +14,7 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 /**
- * <p> Flea Jersey资源服务调用日志表对应的实体类 </p>
+ * Flea Jersey资源服务调用日志表对应的实体类
  *
  * @author huazie
  * @version 1.0.0

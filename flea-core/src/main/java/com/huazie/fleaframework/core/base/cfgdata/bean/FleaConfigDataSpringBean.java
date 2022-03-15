@@ -22,7 +22,15 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * <p> Flea Config 配置数据Bean </p>
+ * Flea 配置数据 Spring Bean，对外提供了配置数据的查询服务。
+ *
+ * <p> 配置数据在这里可以理解为程序运行过程中始终不变的数据，
+ * 这部分数据因为始终不变，所以每当应用程序通过代码访问它们，
+ * 不能每次都从数据库中获取，除第一次访问，后续都应从缓存获取。
+ *
+ * <p> 这些配置数据的查询服务上采用注解 {@code Cacheable} 标记，
+ * 在 Spring 的配置中开启缓存后，后续这些查询服务方法被调用时，
+ * 首先从缓存中获取，如果没有则从数据库中获取，然后再添加到缓存中。
  *
  * @author huazie
  * @version 1.0.0
@@ -48,6 +56,11 @@ public class FleaConfigDataSpringBean {
         this.mappingSV = mappingSV;
     }
 
+    @Resource(name = "fleaConfigDataSV")
+    public void setConfigDataSV(IFleaConfigDataSV configDataSV) {
+        this.configDataSV = configDataSV;
+    }
+
     @Resource(name = "resServiceSV")
     public void setResServiceSV(IFleaJerseyResServiceSV resServiceSV) {
         this.resServiceSV = resServiceSV;
@@ -69,7 +82,7 @@ public class FleaConfigDataSpringBean {
     }
 
     /**
-     * <p> 获取国际码和错误码映射数据集合 </p>
+     * 获取国际码和错误码映射数据集合
      *
      * @param resourceCode 资源编码
      * @param serviceCode  服务编码
@@ -83,7 +96,7 @@ public class FleaConfigDataSpringBean {
     }
 
     /**
-     * <p> 获取国际码和错误码映射数据 </p>
+     * 获取国际码和错误码映射数据
      *
      * @param resourceCode 资源编码
      * @param serviceCode  服务编码
@@ -98,7 +111,7 @@ public class FleaConfigDataSpringBean {
     }
 
     /**
-     * <p> 获取配置数据集合 </p>
+     * 获取配置数据集合
      *
      * @param configType 配置数据类型
      * @param configCode 配置数据编码
@@ -112,7 +125,7 @@ public class FleaConfigDataSpringBean {
     }
 
     /**
-     * <p> 获取单个配置数据集合 </p>
+     * 获取单个配置数据集合
      *
      * @param configType 配置数据类型
      * @param configCode 配置数据编码
@@ -120,13 +133,13 @@ public class FleaConfigDataSpringBean {
      * @throws CommonException 通用异常
      * @since 1.1.0
      */
-    @Cacheable(value = "fleaparadetail", key = "#configType + '_' + #configCode")
+    @Cacheable(value = "fleaconfigdata", key = "#configType + '_' + #configCode")
     public FleaConfigData getConfigData(String configType, String configCode) throws CommonException {
         return configDataSV.getConfigData(configType, configCode);
     }
 
     /**
-     * <p> 获取资源服务 </p>
+     * 获取资源服务
      *
      * @param serviceCode  服务编码
      * @param resourceCode 资源编码
@@ -140,7 +153,7 @@ public class FleaConfigDataSpringBean {
     }
 
     /**
-     * <p> 获取资源客户端配置数据 </p>
+     * 获取资源客户端配置数据
      *
      * @param clientCode 客户端编码
      * @return 资源客户端配置数据
@@ -153,7 +166,7 @@ public class FleaConfigDataSpringBean {
     }
 
     /**
-     * <p> 获取指定资源定义 </p>
+     * 获取指定资源定义
      *
      * @param resourceCode 资源编码
      * @return 资源
@@ -166,7 +179,7 @@ public class FleaConfigDataSpringBean {
     }
 
     /**
-     * <p> 获取全部资源包名 </p>
+     * 获取全部资源包名
      *
      * @return 所有资源包名列表
      * @throws CommonException 通用异常
@@ -178,7 +191,7 @@ public class FleaConfigDataSpringBean {
     }
 
     /**
-     * <p> 保存菜单收藏夹 </p>
+     * 保存菜单收藏夹
      *
      * @param fleaMenuFavoritesPOJO 菜单收藏夹POJO类对象
      * @return Flea菜单收藏夹
@@ -190,7 +203,7 @@ public class FleaConfigDataSpringBean {
     }
 
     /**
-     * <p> 查询有效的菜单收藏夹 </p>
+     * 查询有效的菜单收藏夹
      *
      * @param accountId 操作账户编号
      * @return 菜单收藏夹列表
@@ -203,7 +216,7 @@ public class FleaConfigDataSpringBean {
     }
 
     /**
-     * <p> 查询有效的菜单收藏夹 </p>
+     * 查询有效的菜单收藏夹
      *
      * @param accountId 操作账户编号
      * @param menuCode  菜单编码

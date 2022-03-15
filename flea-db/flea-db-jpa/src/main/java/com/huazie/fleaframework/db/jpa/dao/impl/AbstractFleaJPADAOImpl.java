@@ -31,7 +31,34 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * 抽象Flea JPA DAO层实现类，该类实现了基本的增删改查功能，可以自行拓展
+ * 抽象Flea JPA DAO层实现类，实现了基本的增删改查的数据操作功能，
+ * 子类可以自行拓展其他功能。
+ *
+ * <p> 该类一般由数据源DAO层实现类（子类A）继承，子类A中主要包含
+ * 标记了持久化上下文注解（其中定义了持久化单元名）的实体管理器
+ * 和 标记了事物注解的增删改方法；数据源这里跟持久化单元相对应。
+ *
+ * <p> 然后归属于该数据源的某表DAO层实现类（子类B），再继承子类A，
+ * 当然这些代码都可以使用 flea-tools 中的工具自动生成。实际使用中，
+ * 子类B中可以调用 getQuery 方法，获取指定的Flea JPA 查询对象，
+ * 从而组装各种查询条件，根据业务需要定制化查询代码。
+ * <pre>举例如下：
+ *   // 获取指定的Flea JPA 查询对象【传null表示返回记录行结果】
+ *   FleaJPAQuery query = getQuery(null);
+ *   // 组装各种查询条件
+ *   query.equal(attrName1, attrValue)
+ *        .like(attrName2, attrValue)
+ *        .in(attrName3, value);
+ *   // 获取查询的记录行结果集合
+ *   List<T> entityList = query.getResultList();
+ *
+ *   // 当然上述也可以写成一行代码
+ *   List<T> entityList = getQuery(null)
+ *          .equal(attrName1, attrValue)
+ *          .like(attrName2, attrValue)
+ *          .in(attrName3, value)
+ *          .getResultList();
+ * </pre>
  *
  * @author huazie
  * @version 2.0.0
