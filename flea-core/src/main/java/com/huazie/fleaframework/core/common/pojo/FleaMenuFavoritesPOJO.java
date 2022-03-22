@@ -4,7 +4,7 @@ import com.huazie.fleaframework.common.pojo.FleaEffExpDatePOJO;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
- * <p> Flea菜单收藏夹POJO类 </p>
+ * Flea菜单收藏夹POJO类
  *
  * @author huazie
  * @version 1.0.0

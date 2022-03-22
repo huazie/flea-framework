@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * <p> Flea 配置数据SV层实现类 </p>
+ * Flea 配置数据SV层实现类
  *
  * @author huazie
  * @version 1.1.0
@@ -41,13 +41,7 @@ public class FleaConfigDataSVImpl extends AbstractFleaJPASVImpl<FleaConfigData> 
 
         List<FleaConfigData> fleaConfigDataList = this.getConfigDatas(configType, configCode);
 
-        FleaConfigData fleaConfigData = null;
-
-        if (CollectionUtils.isNotEmpty(fleaConfigDataList)) {
-            fleaConfigData = fleaConfigDataList.get(0);
-        }
-
-        return fleaConfigData;
+        return CollectionUtils.getFirstElement(fleaConfigDataList, FleaConfigData.class);
     }
 
     @Override

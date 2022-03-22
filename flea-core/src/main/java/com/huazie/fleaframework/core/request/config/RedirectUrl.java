@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p> 重定向URL，flea-request.xml 配置 {@code <redirect-url> </redirect-url>} 节点 </p>
+ * 重定向URL，在配置文件 <b>flea-request.xml</b>
+ * 中查看 {@code <redirect-url> } 节点。
  *
  * @author huazie
  * @version 1.0.0

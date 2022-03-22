@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * <p> Flea菜单收藏夹SV层实现类 </p>
+ * Flea菜单收藏夹SV层实现类
  *
  * @author huazie
  * @version 1.0.0
@@ -37,6 +37,8 @@ public class FleaMenuFavoritesSVImpl extends AbstractFleaJPASVImpl<FleaMenuFavor
 
     @Override
     public List<FleaMenuFavorites> queryValidFleaMenuFavorites(Long accountId, String menuCode) throws CommonException {
+        // 【{0}】必须是正数！
+        NumberUtils.checkNonPositiveNumber(accountId, FleaCoreCommonException.class, "ERROR-CORE-COMMON0000000002", "accountId");
         return fleaMenuFavoritesDao.queryValidFleaMenuFavorites(accountId, menuCode);
     }
 
@@ -49,7 +51,7 @@ public class FleaMenuFavoritesSVImpl extends AbstractFleaJPASVImpl<FleaMenuFavor
     }
 
     /**
-     * <p> 新建一个Flea菜单收藏夹实体对象 </p>
+     * 新建一个Flea菜单收藏夹实体对象
      *
      * @param fleaMenuFavoritesPOJO Flea菜单收藏夹POJO类
      * @return 菜单收藏夹实体对象
@@ -62,7 +64,6 @@ public class FleaMenuFavoritesSVImpl extends AbstractFleaJPASVImpl<FleaMenuFavor
         // ERROR-CORE-COMMON0000000001 【{0}】不能为空，请检查
         ObjectUtils.checkEmpty(fleaMenuFavoritesPOJO, FleaCoreCommonException.class, "ERROR-CORE-COMMON0000000001", FleaMenuFavoritesPOJO.class.getSimpleName());
 
-        // 校验操作账户编号不能为空
         Long accountId = fleaMenuFavoritesPOJO.getAccountId();
         // 【{0}】必须是正数！
         NumberUtils.checkNonPositiveNumber(accountId, FleaCoreCommonException.class, "ERROR-CORE-COMMON0000000002", "accountId");

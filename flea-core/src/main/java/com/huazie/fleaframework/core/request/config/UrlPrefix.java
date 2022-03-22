@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p> URL 前缀，flea-request.xml 配置 {@code <url-prefix> </url-prefix>} 节点 </p>
+ * URL 前缀，在配置文件 <b>flea-request.xml</b>
+ * 中查看 {@code <url-prefix>} 节点。
  *
  * @author huazie
  * @version 1.0.0

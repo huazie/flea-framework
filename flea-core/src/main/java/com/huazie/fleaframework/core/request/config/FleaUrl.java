@@ -14,7 +14,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <p> flea-request.xml 配置 {@code <flea-url> </flea-url>} 节点 </p>
+ * Flea URL，在配置文件 <b>flea-request.xml</b>
+ * 中查看 {@code <flea-url>} 节点。
  *
  * @author huazie
  * @version 1.0.0

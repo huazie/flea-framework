@@ -12,7 +12,7 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 /**
- * <p> Flea Jersey 资源实体类 </p>
+ * Flea Jersey 资源实体类
  *
  * @author huazie
  * @version 1.0.0

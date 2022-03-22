@@ -1,6 +1,7 @@
 package com.huazie.fleaframework.core.base.cfgdata.entity;
 
 import com.huazie.fleaframework.common.FleaEntity;
+import com.huazie.fleaframework.common.util.DateUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import javax.persistence.Column;
@@ -65,6 +66,35 @@ public class FleaJerseyResServiceLog extends FleaEntity {
 
     @Column(name = "remarks")
     private String remarks; // 备注
+
+    public FleaJerseyResServiceLog() {
+    }
+
+    /**
+     * 新增资源服务调用日志时，进行初始化
+     *
+     * @param resourceCode    资源编码
+     * @param serviceCode     服务编码
+     * @param input           业务入参
+     * @param output          业务出餐
+     * @param resultCode      操作结果码
+     * @param resultMess      操作结果信息
+     * @param accountId       操作账户编号
+     * @param systemAccountId 系统账户编号
+     * @param remarks         备注
+     */
+    public FleaJerseyResServiceLog(String resourceCode, String serviceCode, String input, String output, String resultCode, String resultMess, Long accountId, Long systemAccountId, String remarks) {
+        this.resourceCode = resourceCode;
+        this.serviceCode = serviceCode;
+        this.input = input;
+        this.output = output;
+        this.resultCode = resultCode;
+        this.resultMess = resultMess;
+        this.accountId = accountId;
+        this.systemAccountId = systemAccountId;
+        this.createDate = DateUtils.getCurrentTime();
+        this.remarks = remarks;
+    }
 
     public Long getLogId() {
         return logId;

@@ -6,13 +6,15 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 /**
- * <p> Flea请求上下文 </p>
+ * Flea请求上下文，包含 Servlet请求对象 和 响应对象。
  *
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0
  */
 public class FleaRequestContext extends FleaCommonConfig {
+
+    private static final long serialVersionUID = 4962127931313870946L;
 
     public static final String REDIRECT_FLAG = "REDIRECT_FLAG"; // 重定向标识
 

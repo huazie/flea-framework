@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p> flea-request-filter.xml 配置 {@code <filter-tasks> </filter-tasks>} 节点 </p>
+ * 过滤器任务集，在配置文件 <b>flea-request-filter.xml</b>
+ * 中查看 {@code <filter-tasks>} 节点。
  *
  * @author huazie
  * @version 1.0.0

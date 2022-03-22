@@ -19,7 +19,8 @@ import com.huazie.fleaframework.core.request.config.UrlPrefix;
 import org.apache.commons.digester.Digester;
 
 /**
- * <p> Flea 请求配置文件XML解析类 【flea-request.xml 和 flea-request-filter.xml】 </p>
+ * Flea 请求配置文件XML解析类，用于解析 <b>flea-request.xml</b>
+ * 和 <b>flea-request-filter.xml</b> 配置文件。
  *
  * @author huazie
  * @version 1.0.0

@@ -6,7 +6,7 @@ import com.huazie.fleaframework.core.filter.taskchain.impl.FleaFilterTaskChain;
 import com.huazie.fleaframework.core.request.FleaRequestContext;
 
 /**
- * <p> 过滤器任务链管理类 </p>
+ * 过滤器任务链管理类，采用单例模式，对外提供统一的执行过滤器任务的API。
  *
  * @author huazie
  * @version 1.0.0
@@ -23,7 +23,7 @@ public class FleaFilterTaskChainManager {
     }
 
     /**
-     * <p> 获取过滤器任务链管理类 </p>
+     * 获取过滤器任务链管理类
      *
      * @return 过滤器任务链管理类对象
      * @since 1.0.0
@@ -40,7 +40,7 @@ public class FleaFilterTaskChainManager {
     }
 
     /**
-     * <p> 执行过滤器任务链 </p>
+     * 执行过滤器任务链
      *
      * @param fleaRequestContext Flea请求上下文
      * @throws CommonException 通用异常

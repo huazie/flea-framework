@@ -5,7 +5,7 @@ import com.huazie.fleaframework.core.base.cfgdata.entity.FleaJerseyResClient;
 import com.huazie.fleaframework.db.jpa.service.interfaces.IAbstractFleaJPASV;
 
 /**
- * <p> Flea Jersey 资源客户端服务层接口 </p>
+ * Flea Jersey 资源客户端服务层接口
  *
  * @author huazie
  * @version 1.0.0
@@ -14,7 +14,7 @@ import com.huazie.fleaframework.db.jpa.service.interfaces.IAbstractFleaJPASV;
 public interface IFleaJerseyResClientSV extends IAbstractFleaJPASV<FleaJerseyResClient> {
 
     /**
-     * <p> 获取资源客户端配置数据 </p>
+     * 根据客户断编码，获取唯一的资源客户端配置数据。
      *
      * @param clientCode 客户端编码
      * @return 资源客户端配置数据

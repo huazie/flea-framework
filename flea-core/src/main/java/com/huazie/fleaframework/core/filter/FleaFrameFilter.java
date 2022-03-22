@@ -14,7 +14,8 @@ import javax.servlet.ServletResponse;
 import java.io.IOException;
 
 /**
- * <p> Flea Frame Filter </p>
+ * Flea框架 Web 请求过滤器，用于拦截 Web 请求。在请求执行之前，
+ * 先执行过滤器任务链，其中包含了URL校验、SESSION校验等任务。
  *
  * @author huazie
  * @version 1.0.0

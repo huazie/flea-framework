@@ -29,9 +29,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-public class FleaConfigDataSVImplTest {
+public class FleaConfigDataTest {
 
-    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaConfigDataSVImplTest.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaConfigDataTest.class);
 
     private ApplicationContext applicationContext;
 

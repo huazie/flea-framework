@@ -2,8 +2,6 @@ package com.huazie.fleaframework.core.base.cfgdata.dao.impl;
 
 import com.huazie.fleaframework.common.EntityStateEnum;
 import com.huazie.fleaframework.common.exception.CommonException;
-import com.huazie.fleaframework.common.slf4j.FleaLogger;
-import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.common.util.CollectionUtils;
 import com.huazie.fleaframework.core.base.cfgdata.dao.interfaces.IFleaJerseyI18nErrorMappingDAO;
 import com.huazie.fleaframework.core.base.cfgdata.entity.FleaJerseyI18nErrorMapping;
@@ -13,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * <p> 国际码和错误码映射DAO层实现类 </p>
+ * 国际码和错误码映射DAO层实现类
  *
  * @author huazie
  * @version 1.0.0
@@ -22,25 +20,14 @@ import java.util.List;
 @Repository("i18nErrorMappingDAO")
 public class FleaJerseyI18nErrorMappingDAOImpl extends FleaConfigDAOImpl<FleaJerseyI18nErrorMapping> implements IFleaJerseyI18nErrorMappingDAO {
 
-    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaJerseyI18nErrorMappingDAOImpl.class);
-
     @Override
     @SuppressWarnings(value = "unchecked")
     public List<FleaJerseyI18nErrorMapping> getMappings(String resourceCode, String serviceCode) throws CommonException {
-
-        List<FleaJerseyI18nErrorMapping> mappingList = getQuery(null)
+        return getQuery(null)
                 .equal(FleaConfigEntityConstants.E_RESOURCE_CODE, resourceCode)
                 .equal(FleaConfigEntityConstants.E_SERVICE_CODE, serviceCode)
                 .equal(FleaConfigEntityConstants.E_STATE, EntityStateEnum.IN_USE.getState())
                 .getResultList();
-
-        if (LOGGER.isDebugEnabled()) {
-            Object obj = new Object() {};
-            LOGGER.debug1(obj, "FleaJerseyI18NErrorMappingDAOImpl##getMappings(String, String) List={}", mappingList);
-            LOGGER.debug1(obj, "FleaJerseyI18NErrorMappingDAOImpl##getMappings(String, String) Count={}", mappingList.size());
-        }
-
-        return mappingList;
     }
 
     @Override
@@ -54,17 +41,7 @@ public class FleaJerseyI18nErrorMappingDAOImpl extends FleaConfigDAOImpl<FleaJer
                 .equal(FleaConfigEntityConstants.E_STATE, EntityStateEnum.IN_USE.getState())
                 .getResultList();
 
-        FleaJerseyI18nErrorMapping mapping = null;
-
-        if (CollectionUtils.isNotEmpty(mappingList)) {
-            mapping = mappingList.get(0);
-        }
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "FleaJerseyI18NErrorMappingDAOImpl##getMapping(String, String, String) Mapping={}", mapping);
-        }
-
-        return mapping;
+        return CollectionUtils.getFirstElement(mappingList, FleaJerseyI18nErrorMapping.class);
     }
 
 }
