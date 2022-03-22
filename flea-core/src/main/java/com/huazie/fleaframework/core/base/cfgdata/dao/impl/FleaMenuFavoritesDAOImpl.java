@@ -12,17 +12,17 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * <p> Flea菜单收藏夹DAO层实现类 </p>
+ * Flea菜单收藏夹DAO层实现类
  *
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0
  */
 @Repository("fleaMenuFavoritesDAO")
-@SuppressWarnings(value = "unchecked")
 public class FleaMenuFavoritesDAOImpl extends FleaConfigDAOImpl<FleaMenuFavorites> implements IFleaMenuFavoritesDAO {
 
     @Override
+    @SuppressWarnings(value = "unchecked")
     public List<FleaMenuFavorites> queryValidFleaMenuFavorites(Long accountId, String menuCode) throws CommonException {
 
         Date currentDate = DateUtils.getCurrentTime();

@@ -14,7 +14,7 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 /**
- * <p> Flea Jersey 国际码和错误码映射表对应实体类 </p>
+ * Flea Jersey 国际码和错误码映射表对应实体类
  *
  * @author huazie
  * @version 1.0.0

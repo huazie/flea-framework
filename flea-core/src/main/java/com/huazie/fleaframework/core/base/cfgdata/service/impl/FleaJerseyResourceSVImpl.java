@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * <p> Flea Jersey 资源SV实现类 </p>
+ * Flea Jersey 资源SV层实现类
  *
  * @author huazie
  * @version 1.0.0
@@ -37,9 +37,7 @@ public class FleaJerseyResourceSVImpl extends AbstractFleaJPASVImpl<FleaJerseyRe
         FleaJerseyResource resource = null;
         if (StringUtils.isNotBlank(resourceCode)) {
             List<FleaJerseyResource> resourceList = fleaJerseyResourceDAO.getResource(resourceCode);
-            if (CollectionUtils.isNotEmpty(resourceList)) {
-                resource = resourceList.get(0);
-            }
+            resource = CollectionUtils.getFirstElement(resourceList, FleaJerseyResource.class);
         }
         return resource;
     }

@@ -11,9 +11,11 @@ import com.huazie.fleaframework.core.base.cfgdata.entity.FleaMenuFavorites;
 import com.huazie.fleaframework.core.base.cfgdata.service.interfaces.IFleaConfigDataSV;
 import com.huazie.fleaframework.core.base.cfgdata.service.interfaces.IFleaJerseyI18nErrorMappingSV;
 import com.huazie.fleaframework.core.base.cfgdata.service.interfaces.IFleaJerseyResClientSV;
+import com.huazie.fleaframework.core.base.cfgdata.service.interfaces.IFleaJerseyResServiceLogSV;
 import com.huazie.fleaframework.core.base.cfgdata.service.interfaces.IFleaJerseyResServiceSV;
 import com.huazie.fleaframework.core.base.cfgdata.service.interfaces.IFleaJerseyResourceSV;
 import com.huazie.fleaframework.core.base.cfgdata.service.interfaces.IFleaMenuFavoritesSV;
+import com.huazie.fleaframework.core.common.pojo.FleaJerseyResServiceLogPOJO;
 import com.huazie.fleaframework.core.common.pojo.FleaMenuFavoritesPOJO;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
@@ -49,6 +51,8 @@ public class FleaConfigDataSpringBean {
 
     private IFleaJerseyResourceSV resourceSV;
 
+    private IFleaJerseyResServiceLogSV resServiceLogSV;
+
     private IFleaMenuFavoritesSV fleaMenuFavoritesSV;
 
     @Resource(name = "i18nErrorMappingSV")
@@ -74,6 +78,11 @@ public class FleaConfigDataSpringBean {
     @Resource(name = "resourceSV")
     public void setResourceSV(IFleaJerseyResourceSV resourceSV) {
         this.resourceSV = resourceSV;
+    }
+
+    @Resource(name = "resServiceLogSV")
+    public void setResServiceLogSV(IFleaJerseyResServiceLogSV resServiceLogSV) {
+        this.resServiceLogSV = resServiceLogSV;
     }
 
     @Resource(name = "fleaMenuFavoritesSV")
@@ -147,9 +156,9 @@ public class FleaConfigDataSpringBean {
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    @Cacheable(value = "fleajerseyresservice", key = "#serviceCode + '_' + #resourceCode")
-    public FleaJerseyResService getResService(String serviceCode, String resourceCode) throws CommonException {
-        return resServiceSV.getResService(serviceCode, resourceCode);
+    @Cacheable(value = "fleajerseyresservice", key = "#resourceCode + '_' + #serviceCode")
+    public FleaJerseyResService getResService(String resourceCode, String serviceCode) throws CommonException {
+        return resServiceSV.getResService(resourceCode, serviceCode);
     }
 
     /**
@@ -188,6 +197,17 @@ public class FleaConfigDataSpringBean {
     @Cacheable(value = "fleajerseyresource", key = "'packages'")
     public List<String> getResourcePackages() throws CommonException {
         return resourceSV.getResourcePackages();
+    }
+
+    /**
+     * 保存资源服务调用日志
+     *
+     * @param resServiceLogPOJO 资源服务调用日志POJO类
+     * @throws CommonException 通用异常
+     * @since 2.0.0
+     */
+    public void saveResServiceLog(FleaJerseyResServiceLogPOJO resServiceLogPOJO) throws CommonException {
+        resServiceLogSV.saveResServiceLog(resServiceLogPOJO);
     }
 
     /**

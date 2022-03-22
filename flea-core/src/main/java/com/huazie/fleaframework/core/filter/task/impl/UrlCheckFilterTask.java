@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.regex.Pattern;
 
 /**
- * <p> URL校验过滤器任务 </p>
+ * URL校验过滤器任务
  *
  * @author huazie
  * @version 1.0.0

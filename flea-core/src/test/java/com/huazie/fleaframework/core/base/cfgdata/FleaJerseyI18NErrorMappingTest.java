@@ -19,9 +19,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class FleaJerseyI18NErrorMappingSVImplTest {
+public class FleaJerseyI18NErrorMappingTest {
 
-    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaJerseyI18NErrorMappingSVImplTest.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaJerseyI18NErrorMappingTest.class);
 
     private ApplicationContext applicationContext;
 

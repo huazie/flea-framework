@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**
- * <p> Flea Jersey 资源客户端服务层实现 </p>
+ * Flea Jersey 资源客户端服务层实现
  *
  * @author huazie
  * @version 1.0.0

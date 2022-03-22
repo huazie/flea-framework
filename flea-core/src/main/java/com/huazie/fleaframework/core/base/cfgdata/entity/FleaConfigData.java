@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * <p> Flea 配置数据表对应的实体类 </p>
+ * Flea 配置数据表对应的实体类
  *
  * @author huazie
  * @version 1.1.0
@@ -20,6 +20,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "flea_config_data")
 public class FleaConfigData extends FleaEntity {
+
+    private static final long serialVersionUID = 4036225722111295306L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

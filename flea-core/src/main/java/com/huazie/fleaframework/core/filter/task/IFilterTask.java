@@ -5,7 +5,7 @@ import com.huazie.fleaframework.core.filter.taskchain.IFilterTaskChain;
 import com.huazie.fleaframework.core.request.FleaRequestContext;
 
 /**
- * <p> 过滤器任务接口类 </p>
+ * 过滤器任务接口类，定义了执行过滤器任务的API。
  *
  * @author huazie
  * @version 1.0.0
@@ -14,7 +14,7 @@ import com.huazie.fleaframework.core.request.FleaRequestContext;
 public interface IFilterTask {
 
     /**
-     * <p> 执行过滤器任务 </p>
+     * 执行过滤器任务
      *
      * @param fleaRequestContext Flea请求上下文
      * @param filterTaskChain 过滤器任务链
