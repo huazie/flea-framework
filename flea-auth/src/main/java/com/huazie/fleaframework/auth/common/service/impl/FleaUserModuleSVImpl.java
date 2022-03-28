@@ -217,7 +217,7 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
                 // 获取当月用户最近一次的登录日志
                 FleaLoginLog fleaLoginLog = fleaLoginLogSV.queryLastUserLoginLog(accountId);
                 if (null != fleaLoginLog) {
-                    fleaLoginLog.setLoginState(FleaAuthConstants.UserConstants.LOGIN_STATE_2);
+                    fleaLoginLog.setLoginState(FleaAuthConstants.UserModuleConstants.LOGIN_STATE_2);
                     fleaLoginLog.setLogoutTime(DateUtils.getCurrentTime());
                     fleaLoginLog.setDoneDate(DateUtils.getCurrentTime());
                     // AUTH-COMMON0000000001 用户已登出
