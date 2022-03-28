@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * <p> Flea登录日志DAO层实现类 </p>
+ * Flea登录日志DAO层实现类
  *
  * @author huazie
  * @version 1.0.0

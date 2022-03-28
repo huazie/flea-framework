@@ -18,7 +18,7 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 /**
- * <p> Flea功能扩展属性表对应的实体类 </p>
+ * Flea功能扩展属性表对应的实体类
  *
  * @author huazie
  * @version 1.0.0
@@ -87,7 +87,7 @@ public class FleaFunctionAttr extends FleaEntity {
     private String remarks; // 备注信息
 
     /**
-     * <p> 无参数构造方法 </p>
+     * 无参数构造方法
      *
      * @since 1.0.0
      */
@@ -95,7 +95,7 @@ public class FleaFunctionAttr extends FleaEntity {
     }
 
     /**
-     * <p> 带参数构造方法 </p>
+     * 带参数构造方法
      *
      * @param functionId   功能编号
      * @param functionType 功能类型

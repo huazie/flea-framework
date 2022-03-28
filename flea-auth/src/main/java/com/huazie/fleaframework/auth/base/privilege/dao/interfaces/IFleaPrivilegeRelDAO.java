@@ -7,7 +7,7 @@ import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import java.util.List;
 
 /**
- * <p> Flea权限关联（菜单， 操作， 元素）DAO层接口 </p>
+ * Flea权限关联（菜单， 操作， 元素）DAO层接口
  *
  * @author huazie
  * @version 1.0.0
@@ -16,7 +16,7 @@ import java.util.List;
 public interface IFleaPrivilegeRelDAO extends IAbstractFleaJPADAO<FleaPrivilegeRel> {
 
     /**
-     * <p> 获取指定权限编号【privilegeId】关联的指定授权关联类型【authRelType】的权限关联信息 </p>
+     * 获取指定权限编号【privilegeId】关联的指定授权关联类型【authRelType】的权限关联信息
      *
      * @param privilegeId 权限编号
      * @param authRelType 授权关联类型
@@ -27,7 +27,7 @@ public interface IFleaPrivilegeRelDAO extends IAbstractFleaJPADAO<FleaPrivilegeR
     List<FleaPrivilegeRel> getPrivilegeRelList(Long privilegeId, String authRelType) throws CommonException;
 
     /**
-     * <p> 获取指定菜单编号【menuId】关联的授权类型【rel_type = PRIVILEGE_REL_MENU】权限关联信息 </p>
+     * 获取指定菜单编号【menuId】关联的授权类型【rel_type = PRIVILEGE_REL_MENU】权限关联信息
      *
      * @param menuId 菜单编号
      * @return 权限关联信息

@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p> Flea账户属性SV层实现类 </p>
+ * Flea账户属性SV层实现类
  *
  * @author huazie
  * @version 1.0.0
@@ -69,7 +69,7 @@ public class FleaAccountAttrSVImpl extends AbstractFleaJPASVImpl<FleaAccountAttr
     }
 
     /**
-     * <p> 新建一个Flea账户扩展属性实体对象 </p>
+     * 新建一个Flea账户扩展属性实体对象
      *
      * @param fleaAccountAttrPOJO Flea账户扩展属性POJO类对象
      * @return Flea账户扩展属性实体对象

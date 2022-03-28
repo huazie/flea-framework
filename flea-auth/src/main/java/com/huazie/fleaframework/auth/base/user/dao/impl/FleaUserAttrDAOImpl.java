@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * <p> Flea用户属性DAO层实现类 </p>
+ * Flea用户属性DAO层实现类
  *
  * @author huazie
  * @version 1.0.0
@@ -32,7 +32,7 @@ public class FleaUserAttrDAOImpl extends FleaAuthDAOImpl<FleaUserAttr> implement
 
         Date currentDate = DateUtils.getCurrentTime();
 
-        List<FleaUserAttr> fleaUserList = getQuery(null)
+        List<FleaUserAttr> fleaUserAttrList = getQuery(null)
                 .equal(FleaAuthEntityConstants.UserEntityConstants.E_USER_ID, userId)
                 .equal(FleaAuthEntityConstants.E_STATE, UserStateEnum.IN_USE.getState())
                 .lessThan(FleaAuthEntityConstants.E_EFFECTIVE_DATE, currentDate)
@@ -40,9 +40,9 @@ public class FleaUserAttrDAOImpl extends FleaAuthDAOImpl<FleaUserAttr> implement
                 .getResultList();
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "FleaUserList = {}", fleaUserList);
+            LOGGER.debug1(new Object() {}, "FleaUserAttrList = {}", fleaUserAttrList);
         }
 
-        return fleaUserList;
+        return fleaUserAttrList;
     }
 }

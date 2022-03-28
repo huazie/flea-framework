@@ -3,7 +3,7 @@ package com.huazie.fleaframework.auth.common.pojo;
 import com.huazie.fleaframework.common.pojo.FleaRemarksPOJO;
 
 /**
- * <p> Flea关联POJO类 </p>
+ * Flea关联POJO类
  *
  * @author huazie
  * @version 1.0.0

@@ -8,7 +8,7 @@ import com.huazie.fleaframework.db.jpa.service.interfaces.IAbstractFleaJPASV;
 import java.util.List;
 
 /**
- * <p> Flea菜单SV层接口定义 </p>
+ * Flea菜单SV层接口定义
  *
  * @author huazie
  * @version 1.0.0
@@ -17,7 +17,7 @@ import java.util.List;
 public interface IFleaMenuSV extends IAbstractFleaJPASV<FleaMenu> {
 
     /**
-     * <p> 获取用户授权的指定系统的菜单 </p>
+     * 获取用户授权的指定系统的菜单
      *
      * @param systemRelMenuIdList 系统关联菜单列表
      * @param menuIdList          用户授权菜单列表
@@ -28,7 +28,7 @@ public interface IFleaMenuSV extends IAbstractFleaJPASV<FleaMenu> {
     List<FleaMenu> queryAllAccessibleMenus(List<Long> systemRelMenuIdList, List<Long> menuIdList) throws CommonException;
 
     /**
-     * <p> 获取有效的菜单信息 </p>
+     * 获取有效的菜单信息
      *
      * @param menuId    菜单编号
      * @param menuCode  菜单编码
@@ -42,7 +42,7 @@ public interface IFleaMenuSV extends IAbstractFleaJPASV<FleaMenu> {
     List<FleaMenu> queryValidMenus(Long menuId, String menuCode, String menuName, Integer menuLevel, Long parentId) throws CommonException;
 
     /**
-     * <p> 获取所有有效的菜单信息 </p>
+     * 获取所有有效的菜单信息
      *
      * @return 所有有效的菜单信息列表
      * @throws CommonException 通用异常
@@ -51,7 +51,7 @@ public interface IFleaMenuSV extends IAbstractFleaJPASV<FleaMenu> {
     List<FleaMenu> queryAllValidMenus() throws CommonException;
 
     /**
-     * <p> 保存Flea菜单 </p>
+     * 保存Flea菜单
      *
      * @param fleaMenuPOJO flea菜单POJO对象
      * @return Flea菜单

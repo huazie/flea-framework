@@ -4,7 +4,7 @@ import com.huazie.fleaframework.auth.common.pojo.privilege.FleaPrivilegeGroupRel
 import com.huazie.fleaframework.common.exception.CommonException;
 
 /**
- * <p> Flea权限管理服务层接口 </p>
+ * Flea权限管理服务层接口
  *
  * @author huazie
  * @version 1.0.0
@@ -13,7 +13,7 @@ import com.huazie.fleaframework.common.exception.CommonException;
 public interface IFleaPrivilegeModuleSV {
 
     /**
-     * <p> 添加权限组关联 </p>
+     * 添加权限组关联
      *
      * @param fleaPrivilegeGroupRelPOJO Flea权限组关联POJO类
      * @throws CommonException 通用异常

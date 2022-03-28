@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.auth.common;
 
 /**
- * <p> Flea Auth 常量 </p>
+ * Flea Auth 常量
  *
  * @author huazie
  * @version 1.0.0
@@ -10,34 +10,34 @@ package com.huazie.fleaframework.auth.common;
 public interface FleaAuthConstants {
 
     /**
-     * <p> 属性编码常量 </p>
+     * 属性编码常量
      *
      * @since 1.0.0
      */
     interface AttrCodeConstants {
         /**
-         * <p> 用户类型属性编码 </p>
+         * 用户类型属性编码
          */
         String ATTR_CODE_USER_TYPE = "USER_TYPE";
 
         /**
-         * <p> 账户类型属性编码 </p>
+         * 账户类型属性编码
          */
         String ATTR_CODE_ACCOUNT_TYPE = "ACCOUNT_TYPE";
 
         /**
-         * <p> 正在使用中的系统 </p>
+         * 正在使用中的系统
          */
         String ATTR_CODE_SYSTEM_IN_USE = "SYSTEM_IN_USE";
 
         /**
-         * <p> 用户关联的实名编号 </p>
+         * 用户关联的实名编号
          */
         String ATTR_CODE_REAL_NAME_ID = "REAL_NAME_ID";
     }
 
     /**
-     * <p> 用户常量 </p>
+     * 用户常量
      *
      * @since 1.0.0
      */
@@ -64,10 +64,12 @@ public interface FleaAuthConstants {
         String USER_PHONE = "USER_PHONE";
 
         String ACCOUNT_CODE = "ACCOUNT_CODE";
+
+        String SYSTEM_ACCOUNT_CODE = "SYSTEM_ACCOUNT_CODE";
     }
 
     /**
-     * <p> 功能常量 </p>
+     * 功能常量
      *
      * @since 1.0.0
      */
@@ -76,7 +78,7 @@ public interface FleaAuthConstants {
     }
 
     /**
-     * <p> 权限常量 </p>
+     * 权限常量
      *
      * @since 1.0.0
      */
@@ -85,7 +87,7 @@ public interface FleaAuthConstants {
     }
 
     /**
-     * <p> 角色常量 </p>
+     * 角色常量
      *
      * @since 1.0.0
      */

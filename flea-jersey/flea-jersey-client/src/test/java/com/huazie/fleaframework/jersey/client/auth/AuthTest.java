@@ -1,6 +1,8 @@
-package com.huazie.fleaframework.jersey.server.auth;
+package com.huazie.fleaframework.jersey.client.auth;
 
 import com.huazie.fleaframework.auth.common.service.interfaces.IFleaUserModuleSV;
+import com.huazie.fleaframework.common.IFleaUser;
+import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.jersey.common.FleaUserImplObjectFactory;
@@ -29,16 +31,16 @@ public class AuthTest {
     }
 
     @Test
-    public void testInitUserInfo() {
+    public void testInitUserInfo() throws CommonException {
 
         IFleaUserModuleSV fleaUserModuleSV = (IFleaUserModuleSV) applicationContext.getBean("fleaUserModuleSV");
-        Long userId = 10000L;
         Long accountId = 10000L;
         Long systemAccountId = 1000L;
 
-        fleaUserModuleSV.initUserInfo(userId, accountId, systemAccountId, null, new FleaUserImplObjectFactory() {
+        fleaUserModuleSV.initUserInfo(accountId, systemAccountId, null, new FleaUserImplObjectFactory() {
             @Override
-            public void initObject() {
+            public void initObject(IFleaUser fleaUser) {
+                LOGGER.debug("USER_INFO = {}", fleaUser.toMap());
                 LOGGER.debug("Ending to init userInfo");
             }
         });

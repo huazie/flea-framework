@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * <p> Flea权限关联（菜单， 操作， 元素）DAO层实现类 </p>
+ * Flea权限关联（菜单， 操作， 元素）DAO层实现类
  *
  * @author huazie
  * @version 1.0.0

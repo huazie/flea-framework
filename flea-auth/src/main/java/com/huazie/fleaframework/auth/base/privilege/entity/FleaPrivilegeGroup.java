@@ -15,7 +15,7 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 /**
- * <p> Flea权限组表对应的实体类 </p>
+ * Flea权限组表对应的实体类
  *
  * @author huazie
  * @version 1.0.0
@@ -67,7 +67,7 @@ public class FleaPrivilegeGroup extends FleaEntity {
     private String remarks; // 备注信息
 
     /**
-     * <p> 无参数构造方法 </p>
+     * 无参数构造方法
      *
      * @since 1.0.0
      */
@@ -75,7 +75,7 @@ public class FleaPrivilegeGroup extends FleaEntity {
     }
 
     /**
-     * <p> 带参数构造方法 </p>
+     * 带参数构造方法
      *
      * @param privilegeGroupName 权限组名称
      * @param privilegeGroupDesc 权限组描述

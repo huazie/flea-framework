@@ -7,7 +7,7 @@ import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import java.util.List;
 
 /**
- * <p> Flea账户属性DAO层接口 </p>
+ * Flea账户属性DAO层接口
  *
  * @author huazie
  * @version 1.0.0
@@ -16,7 +16,7 @@ import java.util.List;
 public interface IFleaAccountAttrDAO extends IAbstractFleaJPADAO<FleaAccountAttr> {
 
     /**
-     * <p> 根据账户编号获取账户扩展属性信息（属性状态 1 正常，未失效）</p>
+     * 根据账户编号获取账户扩展属性信息（属性状态 1 正常，未失效）</p>
      *
      * @param accountId 账户编号
      * @return 账户扩展属性信息

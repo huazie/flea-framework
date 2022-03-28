@@ -8,7 +8,7 @@ import com.huazie.fleaframework.db.jpa.service.interfaces.IAbstractFleaJPASV;
 import java.util.List;
 
 /**
- * <p> Flea功能扩展属性SV层接口定义 </p>
+ * Flea功能扩展属性SV层接口定义
  *
  * @author huazie
  * @version 1.0.0
@@ -17,7 +17,7 @@ import java.util.List;
 public interface IFleaFunctionAttrSV extends IAbstractFleaJPASV<FleaFunctionAttr> {
 
     /**
-     * <p> 获取功能扩展属性列表 </p>
+     * 获取功能扩展属性列表
      *
      * @param functionId   功能编号
      * @param functionType 功能类型
@@ -29,7 +29,7 @@ public interface IFleaFunctionAttrSV extends IAbstractFleaJPASV<FleaFunctionAttr
     List<FleaFunctionAttr> getFunctionAttrList(Long functionId, String functionType, String attrCode) throws CommonException;
 
     /**
-     * <p> 保存功能扩展属性 </p>
+     * 保存功能扩展属性
      *
      * @param fleaFunctionAttrPOJO flea功能扩展属性POJO类
      * @return 功能扩展属性

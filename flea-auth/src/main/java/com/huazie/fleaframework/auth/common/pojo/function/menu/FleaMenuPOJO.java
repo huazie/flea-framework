@@ -7,7 +7,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import java.util.List;
 
 /**
- * <p> Flea菜单POJO类 </p>
+ * Flea菜单POJO类
  *
  * @author huazie
  * @version 1.0.0

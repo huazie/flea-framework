@@ -8,7 +8,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * <p> Flea 权限日志工具类 </p>
+ * Flea 权限日志工具类
  *
  * @author huazie
  * @version 1.0.0
@@ -25,7 +25,7 @@ public class FleaAuthLogger {
     }
 
     /**
-     * <p> 异步保存登录日志 </p>
+     * 异步保存登录日志
      *
      * @param asyncTaskExecObj 异步任务执行类
      * @param accountId        账户编号
@@ -40,7 +40,7 @@ public class FleaAuthLogger {
     }
 
     /**
-     * <p> 异步保存登出日志 </p>
+     * 异步保存登出日志
      *
      * @param asyncTaskExecObj 异步任务执行类
      * @param accountId        账户编号

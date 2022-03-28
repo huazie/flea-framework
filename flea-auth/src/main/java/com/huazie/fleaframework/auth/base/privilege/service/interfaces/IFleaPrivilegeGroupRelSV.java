@@ -8,7 +8,7 @@ import com.huazie.fleaframework.db.jpa.service.interfaces.IAbstractFleaJPASV;
 import java.util.List;
 
 /**
- * <p> Flea权限组关联（权限）SV层接口定义 </p>
+ * Flea权限组关联（权限）SV层接口定义
  *
  * @author huazie
  * @version 1.0.0
@@ -17,7 +17,7 @@ import java.util.List;
 public interface IFleaPrivilegeGroupRelSV extends IAbstractFleaJPASV<FleaPrivilegeGroupRel> {
 
     /**
-     * <p> 获取指定权限组编号【privilegeGroupId】关联的指定授权关联类型【authRelType】的权限组关联信息 </p>
+     * 获取指定权限组编号【privilegeGroupId】关联的指定授权关联类型【authRelType】的权限组关联信息
      *
      * @param privilegeGroupId 权限组编号
      * @param authRelType      授权关联类型
@@ -28,7 +28,7 @@ public interface IFleaPrivilegeGroupRelSV extends IAbstractFleaJPASV<FleaPrivile
     List<FleaPrivilegeGroupRel> getPrivilegeGroupRelList(Long privilegeGroupId, String authRelType) throws CommonException;
 
     /**
-     * <p> 保存Flea权限组关联 </p>
+     * 保存Flea权限组关联
      *
      * @param fleaPrivilegeGroupRelPOJO Flea权限组关联POJO类对象
      * @return Flea权限组关联实体类对象

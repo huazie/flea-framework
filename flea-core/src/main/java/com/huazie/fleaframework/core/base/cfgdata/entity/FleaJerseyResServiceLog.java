@@ -39,10 +39,10 @@ public class FleaJerseyResServiceLog extends FleaEntity {
     private String serviceCode; // 服务编码
 
     @Column(name = "input")
-    private String input; // 业务入参
+    private String input; // 请求入参
 
     @Column(name = "output")
-    private String output; // 业务出参
+    private String output; // 响应出参
 
     @Column(name = "result_code")
     private String resultCode; // 操作结果码
@@ -75,8 +75,8 @@ public class FleaJerseyResServiceLog extends FleaEntity {
      *
      * @param resourceCode    资源编码
      * @param serviceCode     服务编码
-     * @param input           业务入参
-     * @param output          业务出餐
+     * @param input           请求入参
+     * @param output          响应出参
      * @param resultCode      操作结果码
      * @param resultMess      操作结果信息
      * @param accountId       操作账户编号

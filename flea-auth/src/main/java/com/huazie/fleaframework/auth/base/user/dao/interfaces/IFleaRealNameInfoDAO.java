@@ -5,7 +5,7 @@ import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 
 /**
- * <p> Flea实名信息DAO层接口 </p>
+ * Flea实名信息DAO层接口
  *
  * @author huazie
  * @version 1.0.0
@@ -14,7 +14,7 @@ import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 public interface IFleaRealNameInfoDAO extends IAbstractFleaJPADAO<FleaRealNameInfo> {
 
     /**
-     * <p> 根据实名编号获取实名信息（实名状态 1 正常，未失效）</p>
+     * 根据实名编号获取实名信息（实名状态 1 正常，未失效）</p>
      *
      * @param realNameId 实名编号
      * @return 实名信息

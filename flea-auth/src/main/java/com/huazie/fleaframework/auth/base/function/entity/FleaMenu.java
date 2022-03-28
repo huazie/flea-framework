@@ -19,7 +19,7 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 /**
- * <p> Flea菜单表对应的实体类 </p>
+ * Flea菜单表对应的实体类
  *
  * @author huazie
  * @version 1.0.0
@@ -94,7 +94,7 @@ public class FleaMenu extends FleaEntity implements Comparable<FleaMenu> {
     private String remarks; // 菜单描述
 
     /**
-     * <p> 无参数构造方法 </p>
+     * 无参数构造方法
      *
      * @since 1.0.0
      */
@@ -102,7 +102,7 @@ public class FleaMenu extends FleaEntity implements Comparable<FleaMenu> {
     }
 
     /**
-     * <p> 带参数构造方法 </p>
+     * 带参数构造方法
      *
      * @param menuCode      菜单编码
      * @param menuName      菜单名称

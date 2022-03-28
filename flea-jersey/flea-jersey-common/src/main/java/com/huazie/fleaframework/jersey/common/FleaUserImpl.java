@@ -7,13 +7,15 @@ import com.huazie.fleaframework.common.IFleaUser;
 import java.util.Map;
 
 /**
- * <p> 用户信息实现 </p>
+ * 用户信息实现
  *
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0
  */
 public class FleaUserImpl extends FleaCommonConfig implements IFleaUser {
+
+    private static final long serialVersionUID = 4478158086769800361L;
 
     @Override
     public Long getUserId() {

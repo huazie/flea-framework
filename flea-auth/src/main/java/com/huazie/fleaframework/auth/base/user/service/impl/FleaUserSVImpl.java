@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**
- * <p> Flea用户SV层实现类 </p>
+ * Flea用户SV层实现类
  *
  * @author huazie
  * @version 1.0.0
@@ -52,7 +52,7 @@ public class FleaUserSVImpl extends AbstractFleaJPASVImpl<FleaUser> implements I
     }
 
     /**
-     * <p> 新建一个Flea用户 </p>
+     * 新建一个Flea用户
      *
      * @param fleaUserPOJO Flea用户POJO类实例
      * @return Flea用户实体类实例

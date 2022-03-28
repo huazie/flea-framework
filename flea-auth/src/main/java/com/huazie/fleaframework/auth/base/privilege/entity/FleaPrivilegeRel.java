@@ -17,7 +17,7 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 /**
- * <p> Flea权限关联（菜单， 操作， 元素）表对应的实体类 </p>
+ * Flea权限关联（菜单， 操作， 元素）表对应的实体类
  *
  * @author huazie
  * @version 1.0.0
@@ -90,7 +90,7 @@ public class FleaPrivilegeRel extends FleaEntity {
     private String relExtZ; // 关联扩展字段Z
 
     /**
-     * <p> 无参数构造方法 </p>
+     * 无参数构造方法
      *
      * @since 1.0.0
      */
@@ -98,7 +98,7 @@ public class FleaPrivilegeRel extends FleaEntity {
     }
 
     /**
-     * <p> 带参数构造方法 </p>
+     * 带参数构造方法
      *
      * @param privilegeId 权限编号
      * @param relId       关联编号

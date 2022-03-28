@@ -20,7 +20,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
- * <p>  </p>
+ *
  *
  * @author huazie
  * @version 1.0.0

@@ -6,7 +6,7 @@ import com.huazie.fleaframework.common.object.FleaObject;
 import com.huazie.fleaframework.common.object.FleaObjectFactory;
 
 /**
- * <p> Flea用户实现对象工厂类 </p>
+ * Flea 用户实现对象工厂类
  *
  * @author huazie
  * @version 1.0.0
@@ -21,7 +21,7 @@ public class FleaUserImplObjectFactory implements FleaObjectFactory<IFleaUser> {
     }
 
     @Override
-    public void initObject() {
+    public void initObject(IFleaUser fleaUser) {
         // 空实现
     }
 }

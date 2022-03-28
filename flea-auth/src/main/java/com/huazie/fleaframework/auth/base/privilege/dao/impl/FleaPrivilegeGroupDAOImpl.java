@@ -6,7 +6,7 @@ import com.huazie.fleaframework.auth.base.privilege.entity.FleaPrivilegeGroup;
 import org.springframework.stereotype.Repository;
 
 /**
- * <p> Flea权限组DAO层实现类 </p>
+ * Flea权限组DAO层实现类
  *
  * @author huazie
  * @version 1.0.0

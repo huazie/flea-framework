@@ -19,7 +19,7 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 /**
- * <p> Flea用户表对应的实体类 </p>
+ * Flea用户表对应的实体类
  *
  * @author huazie
  * @version 1.0.0
@@ -95,7 +95,7 @@ public class FleaUser extends FleaEntity {
     private String remarks; // 备注信息
 
     /**
-     * <p> 无参数构造方法 </p>
+     * 无参数构造方法
      *
      * @since 1.0.0
      */
@@ -103,7 +103,7 @@ public class FleaUser extends FleaEntity {
     }
 
     /**
-     * <p> 带参数构造方法 </p>
+     * 带参数构造方法
      *
      * @param userName  账号
      * @param groupId   用户组编号
