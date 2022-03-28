@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * <p> Flea用户注册信息POJO类 </p>
+ * Flea用户注册信息POJO类
  *
  * @author huazie
  * @version 1.0.0
@@ -123,7 +123,7 @@ public class FleaUserRegisterPOJO extends FleaUserLoginPOJO {
     }
 
     /**
-     * <p> Flea用户属性POJO类设置用户编号 </p>
+     * Flea用户属性POJO类设置用户编号
      *
      * @param userId 用户编号
      * @since 1.0.0
@@ -147,7 +147,7 @@ public class FleaUserRegisterPOJO extends FleaUserLoginPOJO {
     }
 
     /**
-     * <p> Flea用户属性POJO类设置用户编号 </p>
+     * Flea用户属性POJO类设置用户编号
      *
      * @param accountId 用户编号
      * @since 1.0.0
@@ -163,7 +163,7 @@ public class FleaUserRegisterPOJO extends FleaUserLoginPOJO {
     }
 
     /**
-     * <p> 获取Flea用户POJO类 </p>
+     * 获取Flea用户POJO类
      *
      * @return Flea用户POJO类实例
      * @since 1.0.0
@@ -184,7 +184,7 @@ public class FleaUserRegisterPOJO extends FleaUserLoginPOJO {
     }
 
     /**
-     * <p> 获取Flea账户POJO类 </p>
+     * 获取Flea账户POJO类
      *
      * @param userId 用户编号
      * @return Flea账户POJO类实例

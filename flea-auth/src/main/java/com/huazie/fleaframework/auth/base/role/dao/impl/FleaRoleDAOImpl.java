@@ -6,7 +6,7 @@ import com.huazie.fleaframework.auth.base.role.entity.FleaRole;
 import org.springframework.stereotype.Repository;
 
 /**
- * <p> Flea角色DAO层实现类 </p>
+ * Flea角色DAO层实现类
  *
  * @author huazie
  * @version 1.0.0

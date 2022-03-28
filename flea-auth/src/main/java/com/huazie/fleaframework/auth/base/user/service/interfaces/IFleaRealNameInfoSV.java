@@ -5,7 +5,7 @@ import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.db.jpa.service.interfaces.IAbstractFleaJPASV;
 
 /**
- * <p> Flea实名信息SV层接口定义 </p>
+ * Flea实名信息SV层接口定义
  *
  * @author huazie
  * @version 1.0.0
@@ -14,7 +14,7 @@ import com.huazie.fleaframework.db.jpa.service.interfaces.IAbstractFleaJPASV;
 public interface IFleaRealNameInfoSV extends IAbstractFleaJPASV<FleaRealNameInfo> {
 
     /**
-     * <p> 根据实名编号获取实名信息（实名状态 1 正常，未失效）</p>
+     * 根据实名编号获取实名信息（实名状态 1 正常，未失效）</p>
      *
      * @param realNameId 实名编号
      * @return 实名信息

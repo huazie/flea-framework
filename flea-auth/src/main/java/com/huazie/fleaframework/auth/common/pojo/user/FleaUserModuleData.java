@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p> Flea用户模块数据 </p>
+ * Flea用户模块数据
  *
  * @author huazie
  * @version 1.0.0

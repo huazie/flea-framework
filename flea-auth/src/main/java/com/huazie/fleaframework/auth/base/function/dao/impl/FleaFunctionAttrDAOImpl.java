@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * <p> Flea功能扩展属性DAO层实现类 </p>
+ * Flea功能扩展属性DAO层实现类
  *
  * @author huazie
  * @version 1.0.0

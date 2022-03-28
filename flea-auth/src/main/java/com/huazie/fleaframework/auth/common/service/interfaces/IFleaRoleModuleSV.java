@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.auth.common.service.interfaces;
 
 /**
- * <p> Flea角色管理服务接口类 </p>
+ * Flea角色管理服务接口
  *
  * @author huazie
  * @version 1.0.0

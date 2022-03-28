@@ -10,10 +10,38 @@ Target Server Type    : MYSQL
 Target Server Version : 50538
 File Encoding         : 65001
 
-Date: 2020-10-13 23:12:03
+Date: 2022-03-23 14:45:41
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for `flea_config_data`
+-- ----------------------------
+DROP TABLE IF EXISTS `flea_config_data`;
+CREATE TABLE `flea_config_data` (
+  `config_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '配置编号',
+  `config_type` varchar(50) NOT NULL COMMENT '配置类型',
+  `config_code` varchar(50) NOT NULL COMMENT '配置编码',
+  `config_name` varchar(60) NOT NULL COMMENT '配置名称',
+  `config_desc` varchar(200) DEFAULT NULL COMMENT '配置描述',
+  `config_state` tinyint(2) NOT NULL COMMENT '配置状态',
+  `data1` varchar(2048) DEFAULT NULL COMMENT '数据1',
+  `data2` varchar(2048) DEFAULT NULL COMMENT '数据2',
+  `data3` varchar(2048) DEFAULT NULL COMMENT '数据3',
+  `data4` varchar(2048) DEFAULT NULL COMMENT '数据4',
+  `data5` varchar(2048) DEFAULT NULL COMMENT '数据5',
+  `data6` varchar(2048) DEFAULT NULL COMMENT '数据6',
+  `data7` varchar(2048) DEFAULT NULL COMMENT '数据7',
+  `data8` varchar(2048) DEFAULT NULL COMMENT '数据8',
+  `data9` varchar(2048) DEFAULT NULL COMMENT '数据9',
+  `data10` varchar(2048) DEFAULT NULL COMMENT '数据10',
+  PRIMARY KEY (`config_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of flea_config_data
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `flea_jersey_i18n_error_mapping`
@@ -120,8 +148,8 @@ CREATE TABLE `flea_jersey_res_service_log` (
   `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '资源服务日志编号',
   `resource_code` varchar(30) NOT NULL COMMENT '资源编码',
   `service_code` varchar(30) NOT NULL COMMENT '服务编码',
-  `input` text COMMENT '业务入参',
-  `output` text COMMENT '业务出参',
+  `input` text COMMENT '请求入参',
+  `output` text COMMENT '响应出参',
   `result_code` varchar(50) DEFAULT NULL COMMENT '操作结果码',
   `result_mess` varchar(2048) DEFAULT NULL COMMENT '操作结果信息',
   `account_id` int(11) NOT NULL COMMENT '操作账户编号',
@@ -161,24 +189,5 @@ CREATE TABLE `flea_menu_favorites` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Table structure for `flea_para_detail`
--- ----------------------------
-DROP TABLE IF EXISTS `flea_para_detail`;
-CREATE TABLE `flea_para_detail` (
-  `para_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '参数编号',
-  `para_type` varchar(50) NOT NULL COMMENT '参数类型',
-  `para_code` varchar(50) NOT NULL COMMENT '参数编码',
-  `para_name` varchar(60) NOT NULL COMMENT '参数名称',
-  `para1` varchar(255) DEFAULT NULL COMMENT '参数1',
-  `para2` varchar(255) DEFAULT NULL COMMENT '参数2',
-  `para3` varchar(255) DEFAULT NULL COMMENT '参数3',
-  `para4` varchar(255) DEFAULT NULL COMMENT '参数4',
-  `para5` varchar(255) DEFAULT NULL COMMENT '参数5',
-  `para_state` tinyint(2) NOT NULL COMMENT '参数状态',
-  `para_desc` varchar(200) DEFAULT NULL COMMENT '参数描述',
-  PRIMARY KEY (`para_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of flea_para_detail
+-- Records of flea_menu_favorites
 -- ----------------------------

@@ -7,7 +7,7 @@ import com.huazie.fleaframework.common.exception.CommonException;
 import java.util.List;
 
 /**
- * <p> 功能管理服务层接口 </p>
+ * Flea功能管理服务层接口
  *
  * @author huazie
  * @version 1.0.0
@@ -16,7 +16,7 @@ import java.util.List;
 public interface IFleaFunctionModuleSV {
 
     /**
-     * <p> 添加菜单 </p>
+     * 添加菜单
      *
      * @param fleaMenuPOJO Flea菜单POJO类对象
      * @return 菜单编号
@@ -26,7 +26,7 @@ public interface IFleaFunctionModuleSV {
     Long addFleaMenu(FleaMenuPOJO fleaMenuPOJO) throws CommonException;
 
     /**
-     * <p> 获取菜单信息列表 </p>
+     * 获取菜单信息列表
      *
      * @param fleaMenuPOJO Flea菜单POJO类对象
      * @return 菜单信息列表

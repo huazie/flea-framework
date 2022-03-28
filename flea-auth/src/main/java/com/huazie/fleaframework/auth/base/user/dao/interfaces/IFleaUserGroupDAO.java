@@ -4,7 +4,7 @@ import com.huazie.fleaframework.auth.base.user.entity.FleaUserGroup;
 import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 
 /**
- * <p> Flea用户组DAO层接口 </p>
+ * Flea用户组DAO层接口
  *
  * @author huazie
  * @version 1.0.0

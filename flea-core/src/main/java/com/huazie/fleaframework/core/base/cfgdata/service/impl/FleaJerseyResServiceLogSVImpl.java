@@ -9,7 +9,6 @@ import com.huazie.fleaframework.core.base.cfgdata.entity.FleaJerseyResServiceLog
 import com.huazie.fleaframework.core.base.cfgdata.service.interfaces.IFleaJerseyResServiceLogSV;
 import com.huazie.fleaframework.core.common.FleaCoreCommonException;
 import com.huazie.fleaframework.core.common.pojo.FleaJerseyResServiceLogPOJO;
-import com.huazie.fleaframework.core.common.pojo.FleaMenuFavoritesPOJO;
 import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import com.huazie.fleaframework.db.jpa.service.impl.AbstractFleaJPASVImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,13 +60,13 @@ public class FleaJerseyResServiceLogSVImpl extends AbstractFleaJPASVImpl<FleaJer
         // 【{0}】必须是正数！
         NumberUtils.checkNonPositiveNumber(systemAccountId, FleaCoreCommonException.class, "ERROR-CORE-COMMON0000000002", "systemAccountId");
 
-        return new FleaJerseyResServiceLog(resourceCode, serviceCode
-                , resServiceLogPOJO.getInput()
-                , resServiceLogPOJO.getOutput()
-                , resServiceLogPOJO.getResultCode()
-                , resServiceLogPOJO.getResultMess()
-                , accountId, systemAccountId
-                , resServiceLogPOJO.getRemarks());
+        return new FleaJerseyResServiceLog(resourceCode, serviceCode,
+                resServiceLogPOJO.getInput(),
+                resServiceLogPOJO.getOutput(),
+                resServiceLogPOJO.getResultCode(),
+                resServiceLogPOJO.getResultMess(),
+                accountId, systemAccountId,
+                resServiceLogPOJO.getRemarks());
     }
 
     @Override

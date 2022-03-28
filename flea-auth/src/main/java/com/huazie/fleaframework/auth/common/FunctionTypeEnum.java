@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.auth.common;
 
 /**
- * <p> 功能类型枚举 </p>
+ * 功能类型枚举
  *
  * @author huazie
  * @version 1.0.0

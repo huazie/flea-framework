@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**
- * <p> Flea权限SV层实现类 </p>
+ * Flea权限SV层实现类
  *
  * @author huazie
  * @version 1.0.0
@@ -42,7 +42,7 @@ public class FleaPrivilegeSVImpl extends AbstractFleaJPASVImpl<FleaPrivilege> im
     }
 
     /**
-     * <p> 新建一个Flea权限实体类对象 </p>
+     * 新建一个Flea权限实体类对象
      *
      * @param fleaPrivilegePOJO Flea权限POJO类对象
      * @return Flea权限实体对象

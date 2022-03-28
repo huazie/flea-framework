@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.auth.common;
 
 /**
- * <p> 菜单层级枚举 </p>
+ * 菜单层级枚举
  *
  * @author huazie
  * @version 1.0.0

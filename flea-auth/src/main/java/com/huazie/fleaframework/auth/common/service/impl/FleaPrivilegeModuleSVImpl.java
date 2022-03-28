@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * <p> Flea权限管理服务层 </p>
+ * Flea权限管理服务层
  *
  * @author huazie
  * @version 1.0.0

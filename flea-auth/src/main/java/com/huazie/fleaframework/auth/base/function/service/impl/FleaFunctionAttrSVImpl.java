@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * <p> Flea功能扩展属性SV层实现类 </p>
+ * Flea功能扩展属性SV层实现类
  *
  * @author huazie
  * @version 1.0.0
@@ -49,7 +49,7 @@ public class FleaFunctionAttrSVImpl extends AbstractFleaJPASVImpl<FleaFunctionAt
     }
 
     /**
-     * <p> 新建一个Flea功能扩展属性实体对象 </p>
+     * 新建一个Flea功能扩展属性实体对象
      *
      * @param fleaFunctionAttrPOJO flea功能扩展属性POJO类
      * @return Flea功能扩展属性实体对象

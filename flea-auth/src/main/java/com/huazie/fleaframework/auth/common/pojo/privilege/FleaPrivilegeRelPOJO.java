@@ -4,13 +4,15 @@ import com.huazie.fleaframework.auth.common.pojo.FleaAuthRelPOJO;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
- * <p> Flea权限关联POJO类 </p>
+ * Flea权限关联POJO类
  *
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0
  */
 public class FleaPrivilegeRelPOJO extends FleaAuthRelPOJO {
+
+    private static final long serialVersionUID = -4471796331075923369L;
 
     private Long privilegeId; // 权限编号
 

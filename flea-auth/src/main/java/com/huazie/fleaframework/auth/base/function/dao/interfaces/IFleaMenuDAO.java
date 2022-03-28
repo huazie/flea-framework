@@ -7,7 +7,7 @@ import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import java.util.List;
 
 /**
- * <p> Flea菜单DAO层接口 </p>
+ * Flea菜单DAO层接口
  *
  * @author huazie
  * @version 1.0.0
@@ -16,7 +16,7 @@ import java.util.List;
 public interface IFleaMenuDAO extends IAbstractFleaJPADAO<FleaMenu> {
 
     /**
-     * <p> 获取有效的菜单信息 </p>
+     * 获取有效的菜单信息
      *
      * @param menuId    菜单编号
      * @param menuCode  菜单编码

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * <p> Flea角色关联（角色， 权限， 权限组）DAO层实现类 </p>
+ * Flea角色关联（角色， 权限， 权限组）DAO层实现类
  *
  * @author huazie
  * @version 1.0.0

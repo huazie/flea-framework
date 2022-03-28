@@ -7,7 +7,7 @@ import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import java.util.List;
 
 /**
- * <p> Flea功能扩展属性DAO层接口 </p>
+ * Flea功能扩展属性DAO层接口
  *
  * @author huazie
  * @version 1.0.0
@@ -16,7 +16,7 @@ import java.util.List;
 public interface IFleaFunctionAttrDAO extends IAbstractFleaJPADAO<FleaFunctionAttr> {
 
     /**
-     * <p> 获取功能扩展属性列表 </p>
+     * 获取功能扩展属性列表
      *
      * @param functionId   功能编号
      * @param functionType 功能类型

@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * <p> Flea权限关联（菜单， 操作， 元素）SV层实现类 </p>
+ * Flea权限关联（菜单， 操作， 元素）SV层实现类
  *
  * @author huazie
  * @version 1.0.0
@@ -54,7 +54,7 @@ public class FleaPrivilegeRelSVImpl extends AbstractFleaJPASVImpl<FleaPrivilegeR
     }
 
     /**
-     * <p> 新建一个Flea权限关联实体类对象 </p>
+     * 新建一个Flea权限关联实体类对象
      *
      * @param fleaPrivilegeRelPOJO Flea权限关联POJO类对象
      * @return Flea权限实体类对象
