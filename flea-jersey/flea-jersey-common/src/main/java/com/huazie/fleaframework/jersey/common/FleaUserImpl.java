@@ -19,12 +19,12 @@ public class FleaUserImpl extends FleaCommonConfig implements IFleaUser {
 
     @Override
     public Long getUserId() {
-        return get(FleaAuthConstants.UserConstants.USER_ID, Long.class);
+        return get(FleaAuthConstants.UserModuleConstants.USER_ID, Long.class);
     }
 
     @Override
     public void setUserId(Long userId) {
-        put(FleaAuthConstants.UserConstants.USER_ID, userId);
+        put(FleaAuthConstants.UserModuleConstants.USER_ID, userId);
     }
 
     @Override
@@ -50,6 +50,11 @@ public class FleaUserImpl extends FleaCommonConfig implements IFleaUser {
     @Override
     public void set(String key, Object value) {
         put(key, value);
+    }
+
+    @Override
+    public void addAll(Map<String, Object> otherMap) {
+        putAll(otherMap);
     }
 
     @Override

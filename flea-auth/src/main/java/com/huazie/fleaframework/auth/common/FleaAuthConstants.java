@@ -15,33 +15,25 @@ public interface FleaAuthConstants {
      * @since 1.0.0
      */
     interface AttrCodeConstants {
-        /**
-         * 用户类型属性编码
-         */
+        // 用户类型属性编码
         String ATTR_CODE_USER_TYPE = "USER_TYPE";
 
-        /**
-         * 账户类型属性编码
-         */
+        // 账户类型属性编码
         String ATTR_CODE_ACCOUNT_TYPE = "ACCOUNT_TYPE";
 
-        /**
-         * 正在使用中的系统
-         */
+        // 正在使用中的系统
         String ATTR_CODE_SYSTEM_IN_USE = "SYSTEM_IN_USE";
 
-        /**
-         * 用户关联的实名编号
-         */
+        // 用户关联的实名编号
         String ATTR_CODE_REAL_NAME_ID = "REAL_NAME_ID";
     }
 
     /**
-     * 用户常量
+     * 用户模块常量
      *
      * @since 1.0.0
      */
-    interface UserConstants {
+    interface UserModuleConstants {
 
         Integer LOGIN_STATE_1 = 1; // 登录中
 
@@ -66,32 +58,41 @@ public interface FleaAuthConstants {
         String ACCOUNT_CODE = "ACCOUNT_CODE";
 
         String SYSTEM_ACCOUNT_CODE = "SYSTEM_ACCOUNT_CODE";
-    }
 
-    /**
-     * 功能常量
-     *
-     * @since 1.0.0
-     */
-    interface FunctionConstants {
+        String USER_ATTR = "USER_ATTR";
 
-    }
+        String SYSTEM_USER_ATTR = "SYSTEM_USER_ATTR";
 
-    /**
-     * 权限常量
-     *
-     * @since 1.0.0
-     */
-    interface PrivilegeConstants {
+        String ACCOUNT_ATTR = "ACCOUNT_ATTR";
+
+        String SYSTEM_ACCOUNT_ATTR = "SYSTEM_ACCOUNT_ATTR";
 
     }
 
     /**
-     * 角色常量
+     * 功能模块常量
      *
      * @since 1.0.0
      */
-    interface RoleConstants {
+    interface FunctionModuleConstants {
+
+    }
+
+    /**
+     * 权限模块常量
+     *
+     * @since 1.0.0
+     */
+    interface PrivilegeModuleConstants {
+
+    }
+
+    /**
+     * 角色模块常量
+     *
+     * @since 1.0.0
+     */
+    interface RoleModuleConstants {
 
     }
 

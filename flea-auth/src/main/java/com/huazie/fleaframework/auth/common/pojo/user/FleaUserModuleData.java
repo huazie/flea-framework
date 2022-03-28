@@ -5,18 +5,23 @@ import com.huazie.fleaframework.auth.base.user.entity.FleaAccountAttr;
 import com.huazie.fleaframework.auth.base.user.entity.FleaRealNameInfo;
 import com.huazie.fleaframework.auth.base.user.entity.FleaUser;
 import com.huazie.fleaframework.auth.base.user.entity.FleaUserAttr;
+import com.huazie.fleaframework.auth.util.FleaAuthManager;
+import com.huazie.fleaframework.common.util.CollectionUtils;
+import com.huazie.fleaframework.common.util.MapUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Flea用户模块数据
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 public class FleaUserModuleData implements Serializable {
@@ -53,7 +58,49 @@ public class FleaUserModuleData implements Serializable {
             fleaAccount = new FleaAccount();
         }
         this.fleaAccount = fleaAccount;
-        this.fleaAccount.setAccountPwd(null); // 虽然已经加密过了，密码不透露出去
+    }
+
+    /**
+     * 获取用户属性的Map集合，其中键为属性码，值为属性值。
+     *
+     * @return 用户属性的Map集合
+     * @since 2.0.0
+     */
+    public Map<String, Object> toUserAttrMap() {
+        return toUserAttrMap(null);
+    }
+
+    /**
+     * 获取用户属性的Map集合，其中键为prefix + 下划线 + 属性码，值为属性值。
+     *
+     * @param prefix 前缀标识
+     * @return 用户属性的Map集合
+     * @since 2.0.0
+     */
+    public Map<String, Object> toUserAttrMap(String prefix) {
+        Map<String, Object> userAttrMap = null;
+        if (CollectionUtils.isNotEmpty(fleaUserAttrs)) {
+            userAttrMap = new HashMap<>();
+            for (FleaUserAttr userAttr : fleaUserAttrs) {
+                String attrCode = FleaAuthManager.generateAttrMapKey(prefix, userAttr.getAttrCode());
+                userAttrMap.put(attrCode, userAttr.getAttrValue());
+            }
+        }
+        return userAttrMap;
+    }
+
+    /**
+     * 获取指定属性码对应的用户属性值
+     *
+     * @param attrCode 属性码
+     * @return 用户属性值
+     * @since 2.0.0
+     */
+    public Object getUserAttrValue(String attrCode) {
+        Map<String, Object> userAttrMap = toUserAttrMap();
+        if (MapUtils.isNotEmpty(userAttrMap))
+            return userAttrMap.get(attrCode);
+        return null;
     }
 
     public List<FleaUserAttr> getFleaUserAttrs() {
@@ -65,6 +112,49 @@ public class FleaUserModuleData implements Serializable {
             fleaUserAttrs = new ArrayList<>();
         }
         this.fleaUserAttrs = fleaUserAttrs;
+    }
+
+    /**
+     * 获取账户属性的Map集合，其中键为属性码，值为属性值。
+     *
+     * @return 账户属性的Map集合
+     * @since 2.0.0
+     */
+    public Map<String, Object> toAccountAttrMap() {
+        return toAccountAttrMap(null);
+    }
+
+    /**
+     * 获取账户属性的Map集合，其中键为prefix + 下划线 + 属性码，值为属性值。
+     *
+     * @param prefix 前缀标识
+     * @return 账户属性的Map集合
+     * @since 2.0.0
+     */
+    public Map<String, Object> toAccountAttrMap(String prefix) {
+        Map<String, Object> accountAttrMap = null;
+        if (CollectionUtils.isNotEmpty(fleaAccountAttrs)) {
+            accountAttrMap = new HashMap<>();
+            for (FleaAccountAttr accountAttr : fleaAccountAttrs) {
+                String attrCode = FleaAuthManager.generateAttrMapKey(prefix, accountAttr.getAttrCode());
+                accountAttrMap.put(attrCode, accountAttr.getAttrValue());
+            }
+        }
+        return accountAttrMap;
+    }
+
+    /**
+     * 获取指定属性码对应的账户属性值
+     *
+     * @param attrCode 属性码
+     * @return 账户属性值
+     * @since 2.0.0
+     */
+    public Object getAccountAttrValue(String attrCode) {
+        Map<String, Object> accountAttrMap = toAccountAttrMap();
+        if (MapUtils.isNotEmpty(accountAttrMap))
+            return accountAttrMap.get(attrCode);
+        return null;
     }
 
     public List<FleaAccountAttr> getFleaAccountAttrs() {
