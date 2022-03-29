@@ -2,6 +2,7 @@ package com.huazie.fleaframework.db.jpa.dao.impl;
 
 import com.huazie.fleaframework.common.FleaEntity;
 import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exception.FleaException;
 import com.huazie.fleaframework.common.pool.FleaObjectPoolFactory;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
@@ -469,7 +470,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         }
 
         if (ObjectUtils.isEmpty(pool)) {
-            throw new RuntimeException("Can not get a object pool instance");
+            throw new FleaException("Can not get a object pool instance");
         }
 
         // 获取Flea JPA查询对象实例

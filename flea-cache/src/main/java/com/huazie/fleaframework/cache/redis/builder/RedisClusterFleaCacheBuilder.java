@@ -14,6 +14,7 @@ import com.huazie.fleaframework.cache.redis.impl.RedisFleaCache;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.common.util.CollectionUtils;
+import com.huazie.fleaframework.common.util.ExceptionUtils;
 
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class RedisClusterFleaCacheBuilder implements IFleaCacheBuilder {
     @Override
     public AbstractFleaCache build(String name, List<CacheServer> cacheServerList) {
         if (CollectionUtils.isEmpty(cacheServerList)) {
-            throw new FleaCacheConfigException("无法初始化集群模式下Redis Flea缓存，缓存服务器列表【cacheServerList】为空");
+            ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "无法初始化集群模式下Redis Flea缓存，缓存服务器列表【cacheServerList】为空");
 
         }
         // 获取缓存数据有效期（单位：s）

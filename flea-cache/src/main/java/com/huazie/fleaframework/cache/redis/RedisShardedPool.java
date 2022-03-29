@@ -8,6 +8,7 @@ import com.huazie.fleaframework.cache.exceptions.FleaCacheConfigException;
 import com.huazie.fleaframework.cache.redis.config.RedisShardedConfig;
 import com.huazie.fleaframework.common.CommonConstants;
 import com.huazie.fleaframework.common.util.CollectionUtils;
+import com.huazie.fleaframework.common.util.ExceptionUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
 import redis.clients.jedis.JedisPoolConfig;
@@ -88,7 +89,7 @@ public class RedisShardedPool {
      */
     public void initialize() {
         if (!CommonConstants.FleaPoolConstants.DEFAULT_POOL_NAME.equals(poolName)) {
-            throw new FleaCacheConfigException("采用默认初始化，请使用RedisPool##getInstance()");
+            ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "采用默认初始化，请使用RedisPool##getInstance()");
         }
         RedisShardedConfig redisShardedConfig = RedisShardedConfig.getConfig();
         if (ObjectUtils.isEmpty(shardedJedisPool)) {
@@ -104,7 +105,7 @@ public class RedisShardedPool {
      */
     public void initialize(List<CacheServer> cacheServerList) {
         if (CommonConstants.FleaPoolConstants.DEFAULT_POOL_NAME.equals(poolName)) {
-            throw new FleaCacheConfigException("采用指定连接池名初始化，请使用RedisPool##getInstance(String poolName)");
+            ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "采用指定连接池名初始化，请使用RedisPool##getInstance(String poolName)");
         }
 
         if (CollectionUtils.isEmpty(cacheServerList)) {
@@ -118,13 +119,13 @@ public class RedisShardedPool {
         // Redis客户端socket连接超时时间
         CacheParam connectionTimeoutParam = CacheConfigUtils.getCacheParam(RedisConfigConstants.REDIS_CONFIG_CONNECTIONTIMEOUT);
         if (ObjectUtils.isEmpty(connectionTimeoutParam) || StringUtils.isBlank(connectionTimeoutParam.getValue())) {
-            throw new FleaCacheConfigException("请检查flea-cache-config.xml配置，【<cache-param key=" + RedisConfigConstants.REDIS_CONFIG_CONNECTIONTIMEOUT + " ></cache-param>】未配置或配置值为空");
+            ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "请检查flea-cache-config.xml配置，【<cache-param key=" + RedisConfigConstants.REDIS_CONFIG_CONNECTIONTIMEOUT + " ></cache-param>】未配置或配置值为空");
         }
         int connectionTimeout = Integer.parseInt(connectionTimeoutParam.getValue());
         // Redis客户端socket读写超时时间
         CacheParam soTimeoutParam = CacheConfigUtils.getCacheParam(RedisConfigConstants.REDIS_CONFIG_SOTIMEOUT);
         if (ObjectUtils.isEmpty(soTimeoutParam) || StringUtils.isBlank(soTimeoutParam.getValue())) {
-            throw new FleaCacheConfigException("请检查flea-cache-config.xml配置，【<cache-param key=" + RedisConfigConstants.REDIS_CONFIG_SOTIMEOUT + " ></cache-param>】未配置或配置值为空");
+            ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "请检查flea-cache-config.xml配置，【<cache-param key=" + RedisConfigConstants.REDIS_CONFIG_SOTIMEOUT + " ></cache-param>】未配置或配置值为空");
         }
         int soTimeout = Integer.parseInt(soTimeoutParam.getValue());
         // 遍历缓存服务器集
@@ -134,7 +135,7 @@ public class RedisShardedPool {
 
                 String server = cacheServer.getServer();
                 if (StringUtils.isBlank(server)) {
-                    throw new FleaCacheConfigException("请检查flea-cache-config.xml配置,【<cache-server group=" + poolName + " ></cache-server>】未配置缓存服务器");
+                    ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "请检查flea-cache-config.xml配置,【<cache-server group=" + poolName + " ></cache-server>】未配置缓存服务器");
                 }
                 String host = StringUtils.subStrBefore(server, server.indexOf(CommonConstants.SymbolConstants.COLON));
                 int port = Integer.parseInt(StringUtils.subStrLast(server, server.length() - server.indexOf(CommonConstants.SymbolConstants.COLON) - 1));
@@ -160,16 +161,16 @@ public class RedisShardedPool {
         // 3. 获取Redis分布式hash算法
         CacheParam hashingAlgParam = CacheConfigUtils.getCacheParam(RedisConfigConstants.REDIS_CONFIG_HASHINGALG);
         if (ObjectUtils.isEmpty(hashingAlgParam) || StringUtils.isBlank(hashingAlgParam.getValue())) {
-            throw new FleaCacheConfigException("请检查flea-cache-config.xml配置，【<cache-param key=" + RedisConfigConstants.REDIS_CONFIG_HASHINGALG + " ></cache-param>】未配置或配置值为空");
+            ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "请检查flea-cache-config.xml配置，【<cache-param key=" + RedisConfigConstants.REDIS_CONFIG_HASHINGALG + " ></cache-param>】未配置或配置值为空");
         }
         int alg = Integer.parseInt(hashingAlgParam.getValue());
-        Hashing hashingAlg;
+        Hashing hashingAlg = null;
         if (RedisConfigConstants.REDIS_CONFIG_HASHINGALG_MURMUR_HASH == alg) {
             hashingAlg = Hashing.MURMUR_HASH;
         } else if (RedisConfigConstants.REDIS_CONFIG_HASHINGALG_MD5 == alg) {
             hashingAlg = Hashing.MD5;
         } else {
-            throw new FleaCacheConfigException("请检查flea-cache-config.xml配置，【<cache-param key=" + RedisConfigConstants.REDIS_CONFIG_HASHINGALG + " ></cache-param>】Redis分布式hash算法配置值非法");
+            ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "请检查flea-cache-config.xml配置，【<cache-param key=" + RedisConfigConstants.REDIS_CONFIG_HASHINGALG + " ></cache-param>】Redis分布式hash算法配置值非法");
         }
 
         if (ObjectUtils.isEmpty(shardedJedisPool)) {
@@ -196,7 +197,7 @@ public class RedisShardedPool {
      */
     public ShardedJedisPool getJedisPool() {
         if (ObjectUtils.isEmpty(shardedJedisPool)) {
-            throw new FleaCacheConfigException("获取分布式Jedis连接池失败：请先调用initialize初始化");
+            ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "获取分布式Jedis连接池失败：请先调用initialize初始化");
         }
         return shardedJedisPool;
     }
