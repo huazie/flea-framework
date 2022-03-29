@@ -10,6 +10,7 @@ import com.huazie.fleaframework.cache.memcached.impl.MemCachedFleaCache;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.common.util.CollectionUtils;
+import com.huazie.fleaframework.common.util.ExceptionUtils;
 import com.whalin.MemCached.MemCachedClient;
 
 import java.util.List;
@@ -36,7 +37,7 @@ public class MemCachedFleaCacheBuilder implements IFleaCacheBuilder {
     @Override
     public AbstractFleaCache build(String name, List<CacheServer> cacheServerList) {
         if (CollectionUtils.isEmpty(cacheServerList)) {
-            throw new FleaCacheConfigException("无法初始化MemCached Flea缓存，缓存服务器列表【cacheServerList】为空");
+            ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "无法初始化MemCached Flea缓存，缓存服务器列表【cacheServerList】为空");
         }
         // 获取缓存数据有效期（单位：s）
         int expiry = CacheConfigUtils.getExpiry(name);
