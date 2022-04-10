@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
+
+    <!--
+        配置缓存管理MemCachedSpringCacheManager
+        配置缓存时间 configMap (key缓存对象名称 value缓存过期时间)
+    -->
+    <bean id="memCachedSpringCacheManager" class="com.huazie.fleaframework.cache.memcached.manager.MemCachedSpringCacheManager">
+        <property name="configMap">
+            <map>
+                <entry key="fleaconfigdata" value="86400"/>
+                <entry key="fleajerseyi18nerrormapping" value="86400"/>
+                <entry key="fleajerseyresservice" value="86400"/>
+                <entry key="fleajerseyresclient" value="86400"/>
+                <entry key="fleajerseyresource" value="86400"/>
+            </map>
+        </property>
+    </bean>
+
+    <!--
+        配置缓存管理 redisShardedSpringCacheManager
+        配置缓存时间 configMap (key缓存对象名称 value缓存过期时间)
+    -->
+    <bean id="redisShardedSpringCacheManager" class="com.huazie.fleaframework.cache.redis.manager.RedisShardedSpringCacheManager">
+        <property name="configMap">
+            <map>
+                <entry key="fleaconfigdata" value="86400"/>
+                <entry key="fleajerseyi18nerrormapping" value="86400"/>
+                <entry key="fleajerseyresservice" value="86400"/>
+                <entry key="fleajerseyresclient" value="86400"/>
+                <entry key="fleajerseyresource" value="86400"/>
+            </map>
+        </property>
+    </bean>
+
+    <!--
+        配置缓存管理 redisClusterSpringCacheManager
+        配置缓存时间 configMap (key缓存对象名称 value缓存过期时间)
+
+    <bean id="redisClusterSpringCacheManager" class="com.huazie.fleaframework.cache.redis.manager.RedisClusterSpringCacheManager">
+        <property name="configMap">
+            <map>
+                <entry key="fleamenufavorites" value="100"/>
+            </map>
+        </property>
+    </bean>
+    -->
+
+    <!-- 配置核心Flea缓存管理类 CoreSpringCacheManager -->
+    <bean id="coreSpringCacheManager" class="com.huazie.fleaframework.cache.core.manager.CoreSpringCacheManager"/>
+
+    <!-- 开启缓存 -->
+    <cache:annotation-driven cache-manager="coreSpringCacheManager" proxy-target-class="true"/>
+
+</beans>
