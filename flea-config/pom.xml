@@ -12,4 +12,15 @@
     <artifactId>flea-config</artifactId>
     <packaging>jar</packaging>
 
+    <!-- 添加这个只是为了applicationContext.xml中内容不报错，
+     打包时需要将这里注释掉-->
+    <!--<dependencies>-->
+        <!--<dependency>-->
+            <!--<groupId>com.huazie.fleaframework</groupId>-->
+            <!--<artifactId>flea-core</artifactId>-->
+            <!--<version>${project.parent.version}</version>-->
+            <!--<scope>provided</scope>-->
+        <!--</dependency>-->
+    <!--</dependencies>-->
+
 </project>

@@ -2,18 +2,15 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:cache="http://www.springframework.org/schema/cache"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="
-	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
-	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
-	http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd"
-       default-autowire="byName" default-lazy-init="false">
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	   http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"
+       default-lazy-init="true">
 
     <!-- 自动扫描-->
-    <context:component-scan base-package="com.huazie.**.dao.impl,com.huazie.**.service.impl,com.huazie.**.web,com.huazie.**.bean,com.huazie.**.client.core,com.huazie.**.aspect"/>
+    <context:component-scan base-package="com.huazie.**.dao.impl,com.huazie.**.service.impl,com.huazie.**.bean,com.huazie.**.aspect"/>
 
     <bean id="fleaApplicationContext" class="com.huazie.fleaframework.common.FleaApplicationContext" lazy-init="false"/>
     <!--
@@ -29,140 +26,24 @@
         <property name="fileEncoding" value="UTF-8"/>
     </bean>
     -->
-    <bean id="defaultPersistenceManager"
-          class="org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager">
-        <property name="persistenceXmlLocations">
-            <!-- 可以配置多个持久单元 -->
-            <list>
-                <value>classpath:META-INF/fleaconfig-persistence.xml</value>
-                <value>classpath:META-INF/fleaauth-persistence.xml</value>
-            </list>
-        </property>
-    </bean>
 
-    <bean id="defaultPersistenceProvider" class="org.eclipse.persistence.jpa.PersistenceProvider"/>
+    <!-- 构建JPA实体工厂类所需要的Bean，固定 -->
+    <import resource="spring/db/jpa/fleajpabeans-spring.xml"/>
 
-    <bean id="defaultLoadTimeWeaver" class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver"/>
+    <!-- 持久化单元【fleaconfig】对应的JPA相关Bean配置 -->
+    <import resource="spring/db/jpa/fleaconfig-spring.xml"/>
 
-    <bean id="defaultVendorAdapter" class="org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter">
-        <property name="showSql" value="true"/>
-    </bean>
+    <!-- 持久化单元【fleaauth】对应的JPA相关Bean配置 -->
+    <import resource="spring/db/jpa/fleaauth-spring.xml"/>
 
-    <bean id="defaultJpaDialect" class="org.springframework.orm.jpa.vendor.EclipseLinkJpaDialect"/>
+    <!-- Flea缓存模块对应的Bean配置-->
+    <import resource="spring/cache/fleacache-spring.xml"/>
 
-    <!-- ################################## -->
-    <!-- FleaConfig TransAction Manager JPA -->
-    <!-- ################################## -->
-    <!-- <bean tempId="fleaConfigDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
-        destroy-method="close">
-        <property dbName="driverClass" value="${mysql.fleaconfig.driver}" />
-        <property dbName="jdbcUrl" value="${mysql.fleaconfig.url}" />
-        <property dbName="user" value="${mysql.fleaconfig.user}" />
-        <property dbName="password" value="${mysql.fleaconfig.password}" />
-    </bean> -->
-    <bean id="fleaConfigEntityManagerFactory"
-          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="persistenceUnitManager" ref="defaultPersistenceManager"/>
-        <property name="persistenceUnitName" value="fleaconfig"/>
-        <!-- <property dbName="dataSource" ref="fleaMarketDataSource" /> -->
-        <property name="persistenceProvider" ref="defaultPersistenceProvider"/>
-        <!-- <property dbName="loadTimeWeaver" ref="defaultLoadTimeWeaver" /> -->
-        <property name="jpaVendorAdapter" ref="defaultVendorAdapter"/>
-        <property name="jpaDialect" ref="defaultJpaDialect"/>
-        <property name="jpaPropertyMap">
-            <map>
-                <entry key="eclipselink.weaving" value="false"/>
-                <entry key="eclipselink.logging.thread" value="true"/>
-            </map>
-        </property>
-    </bean>
-
-    <bean id="fleaConfigTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="fleaConfigEntityManagerFactory"/>
-    </bean>
-
-    <tx:annotation-driven transaction-manager="fleaConfigTransactionManager"/>
-
-    <!-- ################################## -->
-    <!-- FleaAuth TransAction Manager JPA -->
-    <!-- ################################## -->
-    <bean id="fleaAuthEntityManagerFactory"
-          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="persistenceUnitManager" ref="defaultPersistenceManager"/>
-        <property name="persistenceUnitName" value="fleaauth"/>
-        <property name="persistenceProvider" ref="defaultPersistenceProvider"/>
-        <property name="jpaVendorAdapter" ref="defaultVendorAdapter"/>
-        <property name="jpaDialect" ref="defaultJpaDialect"/>
-        <property name="jpaPropertyMap">
-            <map>
-                <entry key="eclipselink.weaving" value="false"/>
-                <entry key="eclipselink.logging.thread" value="true"/>
-            </map>
-        </property>
-    </bean>
-
-    <bean id="fleaAuthTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="fleaAuthEntityManagerFactory"/>
-    </bean>
-
-    <tx:annotation-driven transaction-manager="fleaAuthTransactionManager"/>
-
-    <!--
-        配置缓存管理MemCachedSpringCacheManager
-        配置缓存时间 configMap (key缓存对象名称 value缓存过期时间)
-    -->
-    <bean id="memCachedSpringCacheManager" class="com.huazie.fleaframework.cache.memcached.manager.MemCachedSpringCacheManager">
-        <property name="configMap">
-            <map>
-                <entry key="fleaconfigdata" value="86400"/>
-                <entry key="fleajerseyi18nerrormapping" value="86400"/>
-                <entry key="fleajerseyresservice" value="86400"/>
-                <entry key="fleajerseyresclient" value="86400"/>
-                <entry key="fleajerseyresource" value="86400"/>
-            </map>
-        </property>
-    </bean>
-
-    <!--
-        配置缓存管理 redisShardedSpringCacheManager
-        配置缓存时间 configMap (key缓存对象名称 value缓存过期时间)
-    -->
-    <bean id="redisShardedSpringCacheManager" class="com.huazie.fleaframework.cache.redis.manager.RedisShardedSpringCacheManager">
-        <property name="configMap">
-            <map>
-                <entry key="fleaconfigdata" value="86400"/>
-                <entry key="fleajerseyi18nerrormapping" value="86400"/>
-                <entry key="fleajerseyresservice" value="86400"/>
-                <entry key="fleajerseyresclient" value="86400"/>
-                <entry key="fleajerseyresource" value="86400"/>
-            </map>
-        </property>
-    </bean>
-
-    <!--
-        配置缓存管理 redisClusterSpringCacheManager
-        配置缓存时间 configMap (key缓存对象名称 value缓存过期时间)
-
-    <bean id="redisClusterSpringCacheManager" class="com.huazie.fleaframework.cache.redis.manager.RedisClusterSpringCacheManager">
-        <property name="configMap">
-            <map>
-                <entry key="fleamenufavorites" value="100"/>
-            </map>
-        </property>
-    </bean>
-    -->
-
-    <!-- 配置核心Flea缓存管理类 CoreSpringCacheManager -->
-    <bean id="coreSpringCacheManager" class="com.huazie.fleaframework.cache.core.manager.CoreSpringCacheManager"/>
-
-    <!-- 开启缓存 -->
-    <cache:annotation-driven cache-manager="coreSpringCacheManager" proxy-target-class="true"/>
-
-    <!-- 导入调度任务 -->
+    <!-- 调度任务对应的Bean配置 -->
     <!-- <import resource="spring-quartz.xml" /> -->
 
     <!-- 织入使用注解定义的增强，需要引入AOP命名空间 -->
-    <aop:aspectj-autoproxy />
+    <aop:aspectj-autoproxy/>
 
 
 </beans>
