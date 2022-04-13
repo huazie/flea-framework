@@ -17,9 +17,11 @@ import java.util.Locale;
  */
 public abstract class CommonException extends Exception {
 
-    private static final long serialVersionUID = 1746312829236028651L;
+    private static final long serialVersionUID = -3631865415922051268L;
 
     private String key;                     // 国际化资源数据关键字
+
+    private String[] values;                // 待替换字符串数组
 
     private Locale locale;                  // 国际化区域标识
 
@@ -44,6 +46,7 @@ public abstract class CommonException extends Exception {
         // 使用指定的国际化区域设置
         super(convert(mKey, mValues, mI18nResEnum, mLocale));
         key = mKey;
+        values = mValues;
         locale = mLocale;
         i18nResEnum = mI18nResEnum;
     }
@@ -67,6 +70,7 @@ public abstract class CommonException extends Exception {
         // 使用指定的国际化区域设置
         super(convert(mKey, mValues, mI18nResEnum, mLocale), cause);
         key = mKey;
+        values = mValues;
         locale = mLocale;
         i18nResEnum = mI18nResEnum;
     }
@@ -87,6 +91,10 @@ public abstract class CommonException extends Exception {
 
     public String getKey() {
         return key;
+    }
+
+    public String[] getValues() {
+        return values;
     }
 
     public Locale getLocale() {
