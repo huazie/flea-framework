@@ -1,5 +1,6 @@
 package com.huazie.fleaframework.common.i18n;
 
+import com.huazie.fleaframework.common.FleaFrameManager;
 import com.huazie.fleaframework.common.i18n.config.FleaI18nConfig;
 import com.huazie.fleaframework.common.i18n.pojo.FleaI18nData;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
@@ -27,14 +28,13 @@ public class FleaI18nTest {
 
     @Test
     public void fleaI18nHelperTest() {
-        String value = FleaI18nHelper.i18n("ERROR0000000001", "error", Locale.FRANCE);
-        LOGGER.debug("Value = {}", value);
-    }
-
-    @Test
-    public void fleaI18nHelperTest1() {
-        String value = FleaI18nHelper.i18n("ERROR0000000001", "error", Locale.US);
-        LOGGER.debug("Value = {}", value);
+        String value1 = FleaI18nHelper.i18n("ERROR0000000001", "error", Locale.FRANCE);
+        LOGGER.debug("Value1 = {}", value1);
+        String value2 = FleaI18nHelper.i18n("ERROR0000000002", new String[]{"Test"}, "error", Locale.US);
+        LOGGER.debug("Value2 = {}", value2);
+        FleaFrameManager.getManager().setLocale(Locale.CHINESE);
+        String value3 = FleaI18nHelper.i18n("ERROR0000000002", new String[]{"Test"}, "error");
+        LOGGER.debug("Value3 = {}", value3);
     }
 
     @Test

@@ -455,4 +455,26 @@ public class StringUtils {
 
         return value.split(phs.toString());
     }
+
+    /**
+     * 获取替换后的真实字符串，替换前的字符串包含{0}、
+     * {1} 这样子的占位符，相关值从占位字符串中取。
+     *
+     * @param before       替换前的字符串
+     * @param placeholders 占位字符串
+     * @return 替换后的真实字符串
+     * @since 2.0.0
+     */
+    public static String getRealValue(String before, String... placeholders) {
+        String after = before;
+        if (ArrayUtils.isNotEmpty(placeholders)) {
+            StringBuilder builder = new StringBuilder(before);
+            for (int i = 0; i < placeholders.length; i++) {
+                StringUtils.replace(builder, CommonConstants.SymbolConstants.LEFT_CURLY_BRACE + i +
+                        CommonConstants.SymbolConstants.RIGHT_CURLY_BRACE, placeholders[i]);
+            }
+            after = builder.toString();
+        }
+        return after;
+    }
 }

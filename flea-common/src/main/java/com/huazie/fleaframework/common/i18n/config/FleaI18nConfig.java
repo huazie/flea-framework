@@ -146,15 +146,7 @@ public class FleaI18nConfig {
      * @since 1.0.0
      */
     public String getI18NDataValue(String key, String[] values, String resName, Locale locale) {
-        String value = getI18NDataValue(key, resName, locale);
-        if (ArrayUtils.isNotEmpty(values)) {
-            StringBuilder builder = new StringBuilder(value);
-            for (int i = 0; i < values.length; i++) {
-                StringUtils.replace(builder, CommonConstants.SymbolConstants.LEFT_CURLY_BRACE + i + CommonConstants.SymbolConstants.RIGHT_CURLY_BRACE, values[i]);
-            }
-            value = builder.toString();
-        }
-        return value;
+        return StringUtils.getRealValue(getI18NDataValue(key, resName, locale), values);
     }
 
     /**
