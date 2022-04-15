@@ -5,17 +5,17 @@ import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.db.common.table.split.ITableSplit;
 import com.huazie.fleaframework.db.common.table.split.TableSplitEnum;
 import com.huazie.fleaframework.db.common.table.split.config.TableSplitConfig;
-import com.huazie.fleaframework.db.common.table.split.impl.OddEvenAlphabetTableSplitImpl;
+import com.huazie.fleaframework.db.common.table.split.impl.OddEvenLowercaseTableSplitImpl;
 import com.huazie.fleaframework.db.common.table.split.impl.OddEvenNumberTableSplitImpl;
-import com.huazie.fleaframework.db.common.table.split.impl.OddEvenUpperAlphabetTableSplitImpl;
-import com.huazie.fleaframework.db.common.table.split.impl.OneBeforeTableSplitImpl;
-import com.huazie.fleaframework.db.common.table.split.impl.OneBeforeUpperTableSplitImpl;
-import com.huazie.fleaframework.db.common.table.split.impl.OneTableSplitImpl;
-import com.huazie.fleaframework.db.common.table.split.impl.OneUpperTableSplitImpl;
-import com.huazie.fleaframework.db.common.table.split.impl.TwoBeforeTableSplitImpl;
-import com.huazie.fleaframework.db.common.table.split.impl.TwoBeforeUpperTableSplitImpl;
-import com.huazie.fleaframework.db.common.table.split.impl.TwoTableSplitImpl;
-import com.huazie.fleaframework.db.common.table.split.impl.TwoUpperTableSplitImpl;
+import com.huazie.fleaframework.db.common.table.split.impl.OddEvenUppercaseTableSplitImpl;
+import com.huazie.fleaframework.db.common.table.split.impl.OneBeforeLowercaseTableSplitImpl;
+import com.huazie.fleaframework.db.common.table.split.impl.OneBeforeUppercaseTableSplitImpl;
+import com.huazie.fleaframework.db.common.table.split.impl.OneLowercaseTableSplitImpl;
+import com.huazie.fleaframework.db.common.table.split.impl.OneUppercaseTableSplitImpl;
+import com.huazie.fleaframework.db.common.table.split.impl.TwoBeforeLowercaseTableSplitImpl;
+import com.huazie.fleaframework.db.common.table.split.impl.TwoBeforeUppercaseTableSplitImpl;
+import com.huazie.fleaframework.db.common.table.split.impl.TwoLowercaseTableSplitImpl;
+import com.huazie.fleaframework.db.common.table.split.impl.TwoUppercaseTableSplitImpl;
 import com.huazie.fleaframework.db.common.table.split.impl.YYYYMMDDTableSplitImpl;
 import com.huazie.fleaframework.db.common.table.split.impl.YYYYMMTableSplitImpl;
 import com.huazie.fleaframework.db.common.table.split.impl.YYYYTableSplitImpl;
@@ -46,7 +46,7 @@ public class TableSplitTest {
     @Test
     public void testOddEvenAlphabetSplitEmpty() {
         //FleaFrameManager.getManager().setLocale(Locale.US);
-        ITableSplit tableSplit = new OddEvenAlphabetTableSplitImpl();
+        ITableSplit tableSplit = new OddEvenLowercaseTableSplitImpl();
         try {
             LOGGER.debug(tableSplit.convert("123123121"));
         } catch (Exception e) {
@@ -57,7 +57,7 @@ public class TableSplitTest {
     @Test
     public void testOddEvenUpperAlphabetSplitEmpty() {
         //FleaFrameManager.getManager().setLocale(Locale.US);
-        ITableSplit tableSplit = new OddEvenUpperAlphabetTableSplitImpl();
+        ITableSplit tableSplit = new OddEvenUppercaseTableSplitImpl();
         try {
             LOGGER.debug(tableSplit.convert("123123122"));
         } catch (Exception e) {
@@ -68,7 +68,7 @@ public class TableSplitTest {
     @Test
     public void testTwoTableSplitEmpty() {
         //FleaFrameManager.getManager().setLocale(Locale.US);
-        ITableSplit tableSplit = new TwoTableSplitImpl();
+        ITableSplit tableSplit = new TwoLowercaseTableSplitImpl();
         try {
             LOGGER.debug(tableSplit.convert(null));
         } catch (Exception e) {
@@ -78,7 +78,7 @@ public class TableSplitTest {
 
     @Test
     public void testTwoTableSplit() {
-        ITableSplit tableSplit = new TwoTableSplitImpl();
+        ITableSplit tableSplit = new TwoLowercaseTableSplitImpl();
         try {
             LOGGER.debug(tableSplit.convert("DF312311FF"));
         } catch (Exception e) {
@@ -88,7 +88,7 @@ public class TableSplitTest {
 
     @Test
     public void testTwoBeforeTableSplit() {
-        ITableSplit tableSplit = new TwoBeforeTableSplitImpl();
+        ITableSplit tableSplit = new TwoBeforeLowercaseTableSplitImpl();
         try {
             LOGGER.debug(tableSplit.convert("DF312311FF"));
         } catch (Exception e) {
@@ -98,7 +98,7 @@ public class TableSplitTest {
 
     @Test
     public void testTwoUpperTableSplit() {
-        ITableSplit tableSplit = new TwoUpperTableSplitImpl();
+        ITableSplit tableSplit = new TwoUppercaseTableSplitImpl();
         try {
             LOGGER.debug(tableSplit.convert("df312311ff"));
         } catch (Exception e) {
@@ -108,7 +108,7 @@ public class TableSplitTest {
 
     @Test
     public void testTwoBeforeUpperTableSplit() {
-        ITableSplit tableSplit = new TwoBeforeUpperTableSplitImpl();
+        ITableSplit tableSplit = new TwoBeforeUppercaseTableSplitImpl();
         try {
             LOGGER.debug(tableSplit.convert("df312311ff"));
         } catch (Exception e) {
@@ -118,7 +118,7 @@ public class TableSplitTest {
 
     @Test
     public void testOneTableSplit() {
-        ITableSplit tableSplit = new OneTableSplitImpl();
+        ITableSplit tableSplit = new OneLowercaseTableSplitImpl();
         try {
             LOGGER.debug(tableSplit.convert("DF312311FF"));
         } catch (Exception e) {
@@ -128,7 +128,7 @@ public class TableSplitTest {
 
     @Test
     public void testOneBeforeTableSplit() {
-        ITableSplit tableSplit = new OneBeforeTableSplitImpl();
+        ITableSplit tableSplit = new OneBeforeLowercaseTableSplitImpl();
         try {
             LOGGER.debug(tableSplit.convert("DF312311FF"));
         } catch (Exception e) {
@@ -138,7 +138,7 @@ public class TableSplitTest {
 
     @Test
     public void testOneUpperTableSplit() {
-        ITableSplit tableSplit = new OneUpperTableSplitImpl();
+        ITableSplit tableSplit = new OneUppercaseTableSplitImpl();
         try {
             LOGGER.debug(tableSplit.convert("df312311ff"));
         } catch (Exception e) {
@@ -148,7 +148,7 @@ public class TableSplitTest {
 
     @Test
     public void testOneBeforeUpperTableSplit() {
-        ITableSplit tableSplit = new OneBeforeUpperTableSplitImpl();
+        ITableSplit tableSplit = new OneBeforeUppercaseTableSplitImpl();
         try {
             LOGGER.debug(tableSplit.convert("df312311ff"));
         } catch (Exception e) {
@@ -191,7 +191,7 @@ public class TableSplitTest {
 
     @Test
     public void testTableSplitConfig() {
-        LOGGER.debug("tables = {}", TableSplitConfig.getConfig().getTables());
+        LOGGER.debug("tables = {}", TableSplitConfig.getConfig().getFleaTableSplit());
     }
 
     @Test

@@ -428,6 +428,38 @@ public class FunctionAuthTest {
         } catch (CommonException e) {
             LOGGER.error("Exception: ", e);
         }
+    }
+
+    @Test
+    public void testSaveOperationAttr() {
+
+        FleaFunctionAttr fleaFunctionAttr = new FleaFunctionAttr();
+
+        // 功能编号
+        fleaFunctionAttr.setFunctionId(1000L);
+        // 功能类型(菜单、操作、元素)
+        fleaFunctionAttr.setFunctionType(FunctionTypeEnum.OPERATION.getType());
+        // 属性码
+        fleaFunctionAttr.setAttrCode("TEST1");
+        // 属性值
+        fleaFunctionAttr.setAttrValue("TEST1");
+        // 属性描述
+        fleaFunctionAttr.setAttrDesc("TEST1");
+        // 属性状态(0: 删除 1: 正常）
+        fleaFunctionAttr.setState(EntityStateEnum.IN_USE.getState());
+        fleaFunctionAttr.setCreateDate(DateUtils.getCurrentTime());
+        fleaFunctionAttr.setEffectiveDate(fleaFunctionAttr.getCreateDate());
+        fleaFunctionAttr.setExpiryDate(DateUtils.getExpiryTimeForever());
+        fleaFunctionAttr.setRemarks("TEST1");
+
+
+        try {
+            IFleaFunctionAttrSV fleaFunctionAttrSV = (IFleaFunctionAttrSV) applicationContext.getBean("fleaFunctionAttrSV");
+            fleaFunctionAttr.setAttrId((Long) fleaFunctionAttrSV.getFleaNextValue(fleaFunctionAttr));
+            fleaFunctionAttrSV.save(fleaFunctionAttr);
+        } catch (CommonException e) {
+            LOGGER.error("Exception: ", e);
+        }
 
     }
 }

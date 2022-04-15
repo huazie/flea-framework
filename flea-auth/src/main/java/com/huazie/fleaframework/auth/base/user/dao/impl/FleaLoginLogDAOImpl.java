@@ -34,8 +34,7 @@ public class FleaLoginLogDAOImpl extends FleaAuthDAOImpl<FleaLoginLog> implement
         fleaLoginLogEntity.setLoginState(FleaAuthConstants.UserModuleConstants.LOGIN_STATE_1); // 登录中
         fleaLoginLogEntity.setCreateDate(DateUtils.getCurrentTime());
 
-        List<FleaLoginLog> fleaLoginLogList = getQuery(null)
-                .initQueryEntity(fleaLoginLogEntity)
+        List<FleaLoginLog> fleaLoginLogList = getQuery(null).initQueryEntity(fleaLoginLogEntity)
                 .equal(FleaAuthEntityConstants.UserEntityConstants.E_ACCOUNT_ID)
                 .equal(FleaAuthEntityConstants.UserEntityConstants.E_SYSTEM_ACCOUNT_ID)
                 .equal(FleaAuthEntityConstants.UserEntityConstants.E_LOGIN_STATE)

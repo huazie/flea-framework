@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 
 /**
  * 查找SQL模板, 用于使用原生SQL实现分表。
- * <p> 查找SQL模板定义配置在<b>flea-sql-template.xml</b>。
+ * 查找SQL模板定义配置在<b>flea-sql-template.xml</b>。
  * <pre>
  * (1) 模板配置信息：
  * {@code
@@ -90,7 +90,7 @@ public class SelectSqlTemplate<T> extends SqlTemplate<T> {
     private static final String EQUAL_EXP = "[ ]*1[ ]*=[ ]*1[ ]*";
 
     /**
-     * <p> SELECT模板构造方法, 参考示例1 </p>
+     * SELECT模板构造方法, 参考示例1
      *
      * @since 1.0.0
      */
@@ -99,7 +99,7 @@ public class SelectSqlTemplate<T> extends SqlTemplate<T> {
     }
 
     /**
-     * <p> SELECT模板构造方法，参考示例2 </p>
+     * SELECT模板构造方法，参考示例2
      *
      * @param id     关系编号
      * @param entity 实体类的实例对象
@@ -111,7 +111,7 @@ public class SelectSqlTemplate<T> extends SqlTemplate<T> {
     }
 
     /**
-     * <p> SELECT模板构造方法，参考示例3 </p>
+     * SELECT模板构造方法，参考示例3
      *
      * @param id        关系编号
      * @param tableName 表名

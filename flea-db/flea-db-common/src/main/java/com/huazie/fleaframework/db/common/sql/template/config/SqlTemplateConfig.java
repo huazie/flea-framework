@@ -32,7 +32,7 @@ public class SqlTemplateConfig {
     }
 
     /**
-     * <p> 获取Sql模板配置类对象 </p>
+     * 获取Sql模板配置类对象
      *
      * @return SQL模板配置类对象
      */
@@ -52,7 +52,7 @@ public class SqlTemplateConfig {
     }
 
     /**
-     * <p> 根据校验规则编号，获取指定校验规则配置信息 </p>
+     * 根据校验规则编号，获取指定校验规则配置信息
      *
      * @param ruleId 校验规则编号
      * @return 校验规则对象配置信息
@@ -74,7 +74,7 @@ public class SqlTemplateConfig {
     }
 
     /**
-     * <p> 根据SQL模板编号，获取指定的SQL模板配置信息 </p>
+     * 根据SQL模板编号，获取指定的SQL模板配置信息
      *
      * @param templateId SQL模板编号
      * @return SQL模板配置信息
@@ -96,7 +96,7 @@ public class SqlTemplateConfig {
     }
 
     /**
-     * <p> 根据SQL模板参数编号，获取指定的SQL模板参数配置信息 </p>
+     * 根据SQL模板参数编号，获取指定的SQL模板参数配置信息
      *
      * @param paramId SQL模板参数编号
      * @return SQL模板参数配置信息
@@ -118,8 +118,8 @@ public class SqlTemplateConfig {
     }
 
     /**
-     * <p> 根据关系编号，获取指定的关系配置信息 </p>
-     * <p> SQL模板和模板参数关联关系（简称：关系）</p>
+     * 根据关系编号，获取指定的关系配置信息
+     * SQL模板和模板参数关联关系（简称：关系）</p>
      *
      * @param relationId 关系编号
      * @return 关系配置信息

@@ -18,7 +18,7 @@ import java.util.List;
 public interface ITemplate<T> extends Serializable {
 
     /**
-     * <p> 获取模板编号 </p>
+     * 获取模板编号
      *
      * @return 模板编号
      * @since 1.0.0
@@ -26,7 +26,7 @@ public interface ITemplate<T> extends Serializable {
     String getId();
 
     /**
-     * <p> 获取模板对应的表 </p>
+     * 获取模板对应的表
      *
      * @return 模板对应的表名
      * @since 1.0.0
@@ -34,7 +34,7 @@ public interface ITemplate<T> extends Serializable {
     String getTableName();
 
     /**
-     * <p> 获取模板实例化后匹配的实体类 </p>
+     * 获取模板实例化后匹配的实体类
      *
      * @return 模板实例化后匹配的实体类
      * @since 1.0.0
@@ -42,7 +42,7 @@ public interface ITemplate<T> extends Serializable {
     T getEntity();
 
     /**
-     * <p> 获取分表名 </p>
+     * 获取分表名
      *
      * @return 分表名
      * @since 1.0.0
@@ -50,7 +50,7 @@ public interface ITemplate<T> extends Serializable {
     String getSplitTableName();
 
     /**
-     * <p> 获取模板配置对象 </p>
+     * 获取模板配置对象
      *
      * @return 模板配置对象
      * @since 1.0.0
@@ -58,7 +58,7 @@ public interface ITemplate<T> extends Serializable {
     Template getTemplate();
 
     /**
-     * <p> 获取模板对应校验规则对象 </p>
+     * 获取模板对应校验规则对象
      *
      * @return 模板对应校验规则对象
      * @since 1.0.0
@@ -66,7 +66,7 @@ public interface ITemplate<T> extends Serializable {
     Rule getRule();
 
     /**
-     * <p> 初始化SQL模板 </p>
+     * 初始化SQL模板
      *
      * @throws CommonException 通用异常
      * @since 1.0.0
@@ -74,7 +74,7 @@ public interface ITemplate<T> extends Serializable {
     void initialize() throws CommonException;
 
     /**
-     * <p> 获取原生SQL </p>
+     * 获取原生SQL
      *
      * @return 获取原生SQL
      * @since 1.0.0
@@ -82,7 +82,7 @@ public interface ITemplate<T> extends Serializable {
     String toNativeSql();
 
     /**
-     * <p> 获取原生SQL的参数 </p>
+     * 获取原生SQL的参数
      *
      * @return 获取原生SQL的参数
      * @since 1.0.0
@@ -90,7 +90,7 @@ public interface ITemplate<T> extends Serializable {
     List<SqlParam> toNativeParams();
 
     /**
-     * <p> 获取当前模板类型 </p>
+     * 获取当前模板类型
      *
      * @return 返回SQL模板类型枚举对象实例
      * @since 1.0.0

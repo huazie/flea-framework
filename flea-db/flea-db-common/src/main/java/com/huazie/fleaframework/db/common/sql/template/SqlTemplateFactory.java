@@ -18,7 +18,7 @@ public class SqlTemplateFactory {
     }
 
     /**
-     * <p> 新建SQL模板 </p>
+     * 新建SQL模板
      *
      * @param relationId       关系编号
      * @param entity           实体对象实例

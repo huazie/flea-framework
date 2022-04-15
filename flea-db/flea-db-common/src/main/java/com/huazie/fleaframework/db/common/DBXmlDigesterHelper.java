@@ -3,6 +3,7 @@ package com.huazie.fleaframework.db.common;
 import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
+import com.huazie.fleaframework.common.util.CollectionUtils;
 import com.huazie.fleaframework.common.util.ExceptionUtils;
 import com.huazie.fleaframework.common.util.IOUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
@@ -10,7 +11,6 @@ import com.huazie.fleaframework.common.util.StringUtils;
 import com.huazie.fleaframework.common.util.xml.XmlDigesterHelper;
 import com.huazie.fleaframework.db.common.exception.LibSplitException;
 import com.huazie.fleaframework.db.common.exception.SqlTemplateException;
-import com.huazie.fleaframework.db.common.exception.TableSplitException;
 import com.huazie.fleaframework.db.common.lib.split.config.Lib;
 import com.huazie.fleaframework.db.common.lib.split.config.Libs;
 import com.huazie.fleaframework.db.common.lib.split.config.Transaction;
@@ -24,19 +24,24 @@ import com.huazie.fleaframework.db.common.sql.template.config.Rules;
 import com.huazie.fleaframework.db.common.sql.template.config.Sql;
 import com.huazie.fleaframework.db.common.sql.template.config.Template;
 import com.huazie.fleaframework.db.common.sql.template.config.Templates;
+import com.huazie.fleaframework.db.common.table.split.config.FleaTableSplit;
 import com.huazie.fleaframework.db.common.table.split.config.Split;
 import com.huazie.fleaframework.db.common.table.split.config.Splits;
 import com.huazie.fleaframework.db.common.table.split.config.Table;
+import com.huazie.fleaframework.db.common.table.split.config.TableFile;
+import com.huazie.fleaframework.db.common.table.split.config.TableFiles;
 import com.huazie.fleaframework.db.common.table.split.config.Tables;
 import org.apache.commons.digester.Digester;
 
 import java.io.InputStream;
+import java.util.List;
 
 /**
- * XML解析类（涉及SQL模板配置flea-sql-template.xml, 分表配置flea-table-split.xml）
+ * Flea DB 模块 XML配置文件解析类（涉及SQL模板配置 flea-sql-template.xml、
+ * 分表配置 flea-table-split.xml、分库配置 flea-lib-split.xml）
  *
  * @author huazie
- * @version 1.1.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 public class DBXmlDigesterHelper {
@@ -46,13 +51,13 @@ public class DBXmlDigesterHelper {
     private static volatile DBXmlDigesterHelper xmlDigester;
 
     /**
-     * <p> 只允许通过getInstance()获取 XML解析类 </p>
+     * 只允许通过getInstance()获取 XML解析类
      */
     private DBXmlDigesterHelper() {
     }
 
     /**
-     * <p> 获取XML工具类 </p>
+     * 获取XML工具类
      *
      * @return XML解析工具类对象
      * @since 1.0.0
@@ -69,7 +74,7 @@ public class DBXmlDigesterHelper {
     }
 
     /**
-     * <p> 获取分库配置集合定义 </p>
+     * 获取分库配置集合定义
      *
      * @return 分库配置集合定义
      * @throws CommonException 通用异常
@@ -146,18 +151,17 @@ public class DBXmlDigesterHelper {
     }
 
     /**
-     * <p> 获取分表配置集合定义 </p>
+     * 获取分表配置集合定义
      *
      * @return 分表配置集合定义
-     * @throws CommonException 通用异常
-     * @since 1.0.0
+     * @since 2.0.0
      */
-    public Tables getTables() throws CommonException {
-        return newTables();
+    public FleaTableSplit getFleaTableSplit() {
+        return newFleaTableSplit();
     }
 
-    private Tables newTables() throws CommonException {
-        Tables tabs = null;
+    private FleaTableSplit newFleaTableSplit() {
+        FleaTableSplit fleaTableSplit;
         String fileName = DBConstants.LibTableSplitConstants.TABLE_SPLIT_FILE_PATH;
         if (StringUtils.isNotBlank(System.getProperty(DBConstants.LibTableSplitConstants.TABLE_SPLIT_FILE_SYSTEM_KEY))) {
             fileName = StringUtils.trim(System.getProperty(DBConstants.LibTableSplitConstants.TABLE_SPLIT_FILE_SYSTEM_KEY));
@@ -171,23 +175,35 @@ public class DBXmlDigesterHelper {
             LOGGER.debug("Start to parse the flea-table-split.xml");
         }
 
-        try (InputStream input = IOUtils.getInputStreamFromClassPath(fileName)) {
+        Digester digester = newFleaTableSplitFileDigester();
+        fleaTableSplit = XmlDigesterHelper.parse(fileName, digester, FleaTableSplit.class);
 
-            // 该路径下【0】找不到指定配置文件
-            ObjectUtils.checkEmpty(input, TableSplitException.class, "ERROR-DB-SQT0000000030", fileName);
-
-            tabs = XmlDigesterHelper.parse(input, newFleaTableSplitFileDigester(), Tables.class);
-
-        } catch (Exception e) {
-            // XML转化异常：
-            ExceptionUtils.throwCommonException(TableSplitException.class, "ERROR-DB-SQT0000000031", e);
+        if (ObjectUtils.isNotEmpty(fleaTableSplit)) {
+            TableFiles tableFiles = fleaTableSplit.getTableFiles();
+            if (ObjectUtils.isNotEmpty(tableFiles)) {
+                List<TableFile> tableFileList = tableFiles.getTableFiles();
+                if (CollectionUtils.isNotEmpty(tableFileList)) {
+                    for (TableFile tableFile : tableFileList) {
+                        if (ObjectUtils.isNotEmpty(tableFile)) {
+                            // 解析其他分表配置文件
+                            FleaTableSplit other = XmlDigesterHelper.parse(tableFile.getLocation(), digester, FleaTableSplit.class);
+                            if (ObjectUtils.isNotEmpty(other)) {
+                                Tables otherTables = other.getTables();
+                                if (ObjectUtils.isNotEmpty(otherTables)) {
+                                    tableFile.setTableList(otherTables.getTableList());
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("End to parse the flea-table-split.xml");
         }
 
-        return tabs;
+        return fleaTableSplit;
     }
 
     /**
@@ -200,26 +216,42 @@ public class DBXmlDigesterHelper {
         Digester digester = new Digester();
         digester.setValidating(false);
 
-        digester.addObjectCreate("tables", Tables.class.getName());
-        digester.addSetProperties("tables");
+        digester.addObjectCreate("flea-table-split", FleaTableSplit.class.getName());
+        digester.addSetProperties("flea-table-split");
 
-        digester.addObjectCreate("tables/table", Table.class.getName());
-        digester.addSetProperties("tables/table");
+        digester.addObjectCreate("flea-table-split/tables", Tables.class.getName());
+        digester.addSetProperties("flea-table-split/tables");
 
-        digester.addObjectCreate("tables/table/splits", Splits.class.getName());
-        digester.addSetProperties("tables/table/splits");
+        digester.addObjectCreate("flea-table-split/tables/table", Table.class.getName());
+        digester.addSetProperties("flea-table-split/tables/table");
 
-        digester.addObjectCreate("tables/table/splits/split", Split.class.getName());
-        digester.addSetProperties("tables/table/splits/split");
+        digester.addObjectCreate("flea-table-split/tables/table/splits", Splits.class.getName());
+        digester.addSetProperties("flea-table-split/tables/table/splits");
 
-        digester.addSetNext("tables/table", "addTable", Table.class.getName());
-        digester.addSetNext("tables/table/splits", "setSplits", Splits.class.getName());
-        digester.addSetNext("tables/table/splits/split", "addSplit", Split.class.getName());
+        digester.addObjectCreate("flea-table-split/tables/table/splits/split", Split.class.getName());
+        digester.addSetProperties("flea-table-split/tables/table/splits/split");
+
+        digester.addSetNext("flea-table-split/tables", "setTables", Tables.class.getName());
+        digester.addSetNext("flea-table-split/tables/table", "addTable", Table.class.getName());
+        digester.addSetNext("flea-table-split/tables/table/splits", "setSplits", Splits.class.getName());
+        digester.addSetNext("flea-table-split/tables/table/splits/split", "addSplit", Split.class.getName());
+
+        // 其他分表配置文件集
+        digester.addObjectCreate("flea-table-split/table-files", TableFiles.class.getName());
+        digester.addSetProperties("flea-table-split/table-files");
+
+        digester.addObjectCreate("flea-table-split/table-files/table-file", TableFile.class.getName());
+        digester.addSetProperties("flea-table-split/table-files/table-file");
+
+        digester.addSetNext("flea-table-split/table-files", "setTableFiles", TableFiles.class.getName());
+        digester.addSetNext("flea-table-split/table-files/table-file", "addTableFile", TableFile.class.getName());
+        digester.addCallMethod("flea-table-split/table-files/table-file/location", "setLocation", 0);
+
         return digester;
     }
 
     /**
-     * <p> 获取Sql模板配置 </p>
+     * 获取Sql模板配置
      *
      * @return Sql模板对象
      * @throws CommonException 通用异常
