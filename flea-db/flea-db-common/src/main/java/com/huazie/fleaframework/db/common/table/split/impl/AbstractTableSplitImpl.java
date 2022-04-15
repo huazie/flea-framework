@@ -21,7 +21,7 @@ import java.util.Date;
 public abstract class AbstractTableSplitImpl implements ITableSplit {
 
     /**
-     * <p> 分表转换 (指定日期格式化分表字段获取分表后缀) </p>
+     * 分表转换 (指定日期格式化分表字段获取分表后缀)
      *
      * @param tableSplitColumn 分表字段
      * @param dateFormatEnum   日期格式化类型枚举
@@ -46,7 +46,7 @@ public abstract class AbstractTableSplitImpl implements ITableSplit {
     }
 
     /**
-     * <p> 分表转换 (截取分表字段前面或后面len位得到) </p>
+     * 分表转换 (截取分表字段前面或后面len位得到)
      *
      * @param tableSplitColumn 分表字段
      * @param len              分表后缀长度
@@ -63,7 +63,11 @@ public abstract class AbstractTableSplitImpl implements ITableSplit {
         // 分表属性列值不能为空
         StringUtils.checkBlank(tSplitCol, TableSplitException.class, "ERROR-DB-TSP0000000003");
 
-        String tSplitPrefix;
+        if (len <= 0) {
+            len = tSplitCol.length();
+        }
+
+      String tSplitPrefix;
         if (isBefore) {
             tSplitPrefix = StringUtils.subStrBefore(tSplitCol, len);
         } else {

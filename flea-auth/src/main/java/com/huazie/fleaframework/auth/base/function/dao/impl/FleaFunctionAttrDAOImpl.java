@@ -18,7 +18,7 @@ import java.util.List;
  * Flea功能扩展属性DAO层实现类
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 @Repository("fleaFunctionAttrDAO")
@@ -32,13 +32,20 @@ public class FleaFunctionAttrDAOImpl extends FleaAuthDAOImpl<FleaFunctionAttr> i
 
         Date currentDate = DateUtils.getCurrentTime();
 
-        List<FleaFunctionAttr> fleaFunctionAttrList = getQuery(null)
-                .equal(FleaAuthEntityConstants.FunctionEntityConstants.E_FUNCTION_ID, functionId)
-                .equal(FleaAuthEntityConstants.FunctionEntityConstants.E_FUNCTION_TYPE, functionType)
-                .equal(FleaAuthEntityConstants.E_ATTR_CODE, attrCode)
-                .equal(FleaAuthEntityConstants.E_STATE, EntityStateEnum.IN_USE.getState())
-                .lessThan(FleaAuthEntityConstants.E_EFFECTIVE_DATE, currentDate)
-                .greaterThan(FleaAuthEntityConstants.E_EXPIRY_DATE, currentDate)
+        FleaFunctionAttr fleaFunctionAttr = new FleaFunctionAttr();
+        fleaFunctionAttr.setFunctionId(functionId);
+        fleaFunctionAttr.setFunctionType(functionType);
+        fleaFunctionAttr.setAttrCode(attrCode);
+        fleaFunctionAttr.setState(EntityStateEnum.IN_USE.getState());
+        fleaFunctionAttr.setEffectiveDate(currentDate);
+        fleaFunctionAttr.setExpiryDate(currentDate);
+        List<FleaFunctionAttr> fleaFunctionAttrList = getQuery(null).initQueryEntity(fleaFunctionAttr)
+                .equal(FleaAuthEntityConstants.FunctionEntityConstants.E_FUNCTION_ID)
+                .equal(FleaAuthEntityConstants.FunctionEntityConstants.E_FUNCTION_TYPE)
+                .equal(FleaAuthEntityConstants.E_ATTR_CODE)
+                .equal(FleaAuthEntityConstants.E_STATE)
+                .lessThan(FleaAuthEntityConstants.E_EFFECTIVE_DATE)
+                .greaterThan(FleaAuthEntityConstants.E_EXPIRY_DATE)
                 .getResultList();
 
         if (LOGGER.isDebugEnabled()) {

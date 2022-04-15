@@ -4,17 +4,17 @@ import com.huazie.fleaframework.common.CommonConstants;
 import com.huazie.fleaframework.common.exception.CommonException;
 
 /**
- * 两位分表实现，截取分表字段后2位字符，并以大写返回
+ * 一位分表实现，截取分表字段前1位字符，并以小写返回
  *
  * @author huazie
- * @version 1.0.0
- * @since 1.0.0
+ * @version 1.2.0
+ * @since 1.2.0
  */
-public final class TwoUpperTableSplitImpl extends AbstractTableSplitImpl {
+public final class OneBeforeLowercaseTableSplitImpl extends AbstractTableSplitImpl {
 
     @Override
     public String convert(Object tableSplitColumn) throws CommonException {
-        return convert(tableSplitColumn, CommonConstants.NumeralConstants.INT_TWO, false, true);
+        return convert(tableSplitColumn, CommonConstants.NumeralConstants.INT_ONE, true, false);
     }
 
 }

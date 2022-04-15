@@ -5,7 +5,6 @@ import com.huazie.fleaframework.auth.base.user.entity.FleaUser;
 import com.huazie.fleaframework.auth.common.FleaAuthEntityConstants;
 import com.huazie.fleaframework.auth.common.exception.FleaAuthCommonException;
 import com.huazie.fleaframework.auth.common.pojo.FleaAuthRelPOJO;
-import com.huazie.fleaframework.auth.common.pojo.user.FleaAccountPOJO;
 import com.huazie.fleaframework.auth.common.pojo.user.FleaUserModuleData;
 import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.common.util.ExceptionUtils;
@@ -16,7 +15,7 @@ import com.huazie.fleaframework.common.util.StringUtils;
  * 权限校验工具类
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 public class FleaAuthCheck {
@@ -54,7 +53,7 @@ public class FleaAuthCheck {
     public static void checkFleaUserModuleData(FleaUserModuleData fleaUserModuleData, String accountId) throws CommonException {
         // 校验Flea用户模块数据不能为空
         // ERROR-AUTH-COMMON0000000001 【{0}】不能为空
-        ObjectUtils.checkEmpty(fleaUserModuleData, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", FleaAccountPOJO.class.getSimpleName());
+        ObjectUtils.checkEmpty(fleaUserModuleData, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", FleaUserModuleData.class.getSimpleName());
 
         FleaAccount fleaAccount = fleaUserModuleData.getFleaAccount();
         // ERROR-AUTH-COMMON0000000006 账户【account_id = {0}】不存在！

@@ -42,7 +42,7 @@ public class FleaFunctionAttr extends FleaEntity {
         // 存储最后生成的主键值的列的名称
         valueColumnName = "id_generator_value",
         // ID生成器表中的主键值模板，用于将该生成值集与其他可能存储在表中的值区分开
-        pkColumnValue = "pk_flea_function_attr",
+        pkColumnValue = "pk_flea_function_attr_(FUNCTION_TYPE)",
         // 从ID生成器表中分配ID号时增加的数量
         allocationSize = 1
     )

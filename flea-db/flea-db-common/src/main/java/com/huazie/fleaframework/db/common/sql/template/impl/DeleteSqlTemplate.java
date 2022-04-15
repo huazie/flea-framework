@@ -13,7 +13,7 @@ import java.util.Map;
 
 /**
  * 删除SQL模板, 用于使用原生SQL实现分表。
- * <p> 删除SQL模板定义配置在<b>flea-sql-template.xml</b>。
+ * 删除SQL模板定义配置在<b>flea-sql-template.xml</b>。
  * <pre>
  * (1) 模板配置信息：
  * {@code
@@ -77,7 +77,7 @@ public class DeleteSqlTemplate<T> extends SqlTemplate<T> {
     private static final long serialVersionUID = 1270557406520049504L;
 
     /**
-     * <p> DELETE模板构造方法, 参考示例1 </p>
+     * DELETE模板构造方法, 参考示例1
      *
      * @since 1.0.0
      */
@@ -86,7 +86,7 @@ public class DeleteSqlTemplate<T> extends SqlTemplate<T> {
     }
 
     /**
-     * <p> DELETE模板构造方法，参考示例2 </p>
+     * DELETE模板构造方法，参考示例2
      *
      * @param id     关系编号
      * @param entity 实体类的实例对象
@@ -98,7 +98,7 @@ public class DeleteSqlTemplate<T> extends SqlTemplate<T> {
     }
 
     /**
-     * <p> DELETE模板构造方法，参考示例3 </p>
+     * DELETE模板构造方法，参考示例3
      *
      * @param id        关系编号
      * @param tableName 表名

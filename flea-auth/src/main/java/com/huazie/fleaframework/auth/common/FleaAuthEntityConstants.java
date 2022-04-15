@@ -140,7 +140,7 @@ public interface FleaAuthEntityConstants extends FleaEntityConstants {
         String E_MENU_STATE = "menuState";
 
         /**
-         * <P> 父菜单编号 </P>
+         * 父菜单编号
          */
         String E_PARENT_ID = "parentId";
     }

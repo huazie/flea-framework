@@ -8,11 +8,9 @@ import com.huazie.fleaframework.auth.base.user.entity.FleaUserAttr;
 import com.huazie.fleaframework.auth.util.FleaAuthManager;
 import com.huazie.fleaframework.common.util.CollectionUtils;
 import com.huazie.fleaframework.common.util.MapUtils;
-import com.huazie.fleaframework.common.util.ObjectUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,9 +41,6 @@ public class FleaUserModuleData implements Serializable {
     }
 
     public void setFleaUser(FleaUser fleaUser) {
-        if (ObjectUtils.isEmpty(fleaUser)) {
-            fleaUser = new FleaUser();
-        }
         this.fleaUser = fleaUser;
     }
 
@@ -54,9 +49,6 @@ public class FleaUserModuleData implements Serializable {
     }
 
     public void setFleaAccount(FleaAccount fleaAccount) {
-        if (ObjectUtils.isEmpty(fleaAccount)) {
-            fleaAccount = new FleaAccount();
-        }
         this.fleaAccount = fleaAccount;
     }
 
@@ -108,9 +100,6 @@ public class FleaUserModuleData implements Serializable {
     }
 
     public void setFleaUserAttrs(List<FleaUserAttr> fleaUserAttrs) {
-        if (ObjectUtils.isEmpty(fleaUserAttrs)) {
-            fleaUserAttrs = new ArrayList<>();
-        }
         this.fleaUserAttrs = fleaUserAttrs;
     }
 
@@ -162,9 +151,6 @@ public class FleaUserModuleData implements Serializable {
     }
 
     public void setFleaAccountAttrs(List<FleaAccountAttr> fleaAccountAttrs) {
-        if (ObjectUtils.isEmpty(fleaAccountAttrs)) {
-            fleaAccountAttrs = new ArrayList<>();
-        }
         this.fleaAccountAttrs = fleaAccountAttrs;
     }
 
@@ -173,9 +159,6 @@ public class FleaUserModuleData implements Serializable {
     }
 
     public void setFleaRealNameInfo(FleaRealNameInfo fleaRealNameInfo) {
-        if (ObjectUtils.isEmpty(fleaRealNameInfo)) {
-            fleaRealNameInfo = new FleaRealNameInfo();
-        }
         this.fleaRealNameInfo = fleaRealNameInfo;
     }
 

@@ -19,7 +19,7 @@ public class Relations {
     private List<Relation> relations = new ArrayList<>();
 
     /**
-     * <p> 获取SQL模板和模板参数关联关系的List对象 </p>
+     * 获取SQL模板和模板参数关联关系的List对象
      *
      * @return SQL模板和模板参数关联关系的List对象
      * @since 1.0.0
@@ -29,7 +29,7 @@ public class Relations {
     }
 
     /**
-     * <p> 获取SQL模板和模板参数关联关系的数组对象 </p>
+     * 获取SQL模板和模板参数关联关系的数组对象
      *
      * @return SQL模板和模板参数关联关系的数组对象
      * @since 1.0.0
@@ -39,7 +39,7 @@ public class Relations {
     }
 
     /**
-     * <p> 获取SQL模板和模板参数关联关系的Map对象，便于根据关系id查找 </p>
+     * 获取SQL模板和模板参数关联关系的Map对象，便于根据关系id查找
      *
      * @return SQL模板和模板参数关联关系的Map对象
      * @since 1.0.0
@@ -49,7 +49,7 @@ public class Relations {
     }
 
     /**
-     * <p> 添加一个SQL模板和模板参数关联关系 </p>
+     * 添加一个SQL模板和模板参数关联关系
      *
      * @param relation SQL模板和模板参数关联关系
      * @since 1.0.0

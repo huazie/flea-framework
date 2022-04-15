@@ -14,7 +14,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * <p> SQL模板配置自测 </p>
+ * SQL模板配置自测
  *
  * @author huazie
  * @version 1.0.0

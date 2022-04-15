@@ -35,7 +35,6 @@ public class FleaUnitOfWork extends RepeatableWriteUnitOfWork {
         return descriptor;
     }
 
-
     public Object mergeCloneWithReferences(Object rmiClone, int cascadePolicy, boolean forceCascade) {
         Object returnValue;
         try{

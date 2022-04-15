@@ -16,7 +16,7 @@ import java.util.Map;
 
 /**
  * 更新SQL模板, 用于使用原生SQL实现分表。
- * <p> 更新SQL模板定义配置在<b>flea-sql-template.xml</b>。
+ * 更新SQL模板定义配置在<b>flea-sql-template.xml</b>。
  * <pre>
  * (1) 模板配置信息：
  * {@code
@@ -81,7 +81,7 @@ public class UpdateSqlTemplate<T> extends SqlTemplate<T> {
     private static final long serialVersionUID = 7689029751124562960L;
 
     /**
-     * <p> UPDATE模板构造方法, 参考示例1 </p>
+     * UPDATE模板构造方法, 参考示例1
      *
      * @since 1.0.0
      */
@@ -90,7 +90,7 @@ public class UpdateSqlTemplate<T> extends SqlTemplate<T> {
     }
 
     /**
-     * <p> UPDATE模板构造方法，参考示例2 </p>
+     * UPDATE模板构造方法，参考示例2
      *
      * @param id     关系编号
      * @param entity 实体类的实例对象
@@ -102,7 +102,7 @@ public class UpdateSqlTemplate<T> extends SqlTemplate<T> {
     }
 
     /**
-     * <p> UPDATE模板构造方法，参考示例3 </p>
+     * UPDATE模板构造方法，参考示例3
      *
      * @param id        关系编号
      * @param tableName 表名
@@ -138,9 +138,9 @@ public class UpdateSqlTemplate<T> extends SqlTemplate<T> {
     }
 
     /**
-     * <p> 校验【key=columns】和【key=conditions】的数据是否正确 </p>
-     * <p> 注意：(1) set子句【key=columns】的属性列 和 where子句【key=columns】的属性列，一般来说应该不一样;
-     * (2) set子句【key=columns】的属性列和属性变量一一对应，where子句【key=conditions】的属性列和属性变量一一对应 </p>
+     * 校验【key=columns】和【key=conditions】的数据是否正确
+     * 注意：(1) set子句【key=columns】的属性列 和 where子句【key=columns】的属性列，一般来说应该不一样;
+     * (2) set子句【key=columns】的属性列和属性变量一一对应，where子句【key=conditions】的属性列和属性变量一一对应
      *
      * @param entityCols 实体类对象的属性数组
      * @param setMap     SET子句的map集合（key：属性列， map：属性列变量）
