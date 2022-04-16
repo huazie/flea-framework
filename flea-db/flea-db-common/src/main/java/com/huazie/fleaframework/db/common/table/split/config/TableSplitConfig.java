@@ -1,6 +1,5 @@
 package com.huazie.fleaframework.db.common.table.split.config;
 
-import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.common.util.ObjectUtils;
@@ -22,7 +21,7 @@ public class TableSplitConfig {
 
     private FleaTableSplit fleaTableSplit;    // Flea分表定义类
 
-    private TableSplitConfig() throws CommonException {
+    private TableSplitConfig() {
         this.fleaTableSplit = DBXmlDigesterHelper.getInstance().getFleaTableSplit();
     }
 
@@ -36,13 +35,7 @@ public class TableSplitConfig {
         if (ObjectUtils.isEmpty(config)) {
             synchronized (TableSplitConfig.class) {
                 if (ObjectUtils.isEmpty(config)) {
-                    try {
-                        config = new TableSplitConfig();
-                    } catch (Exception e) {
-                        if (LOGGER.isErrorEnabled()) {
-                            LOGGER.error("Fail to init flea-table-split.xml", e);
-                        }
-                    }
+                    config = new TableSplitConfig();
                 }
             }
         }
@@ -52,7 +45,7 @@ public class TableSplitConfig {
     /**
      * 根据name获取指定的分表配置信息
      *
-     * @param name 主表名
+     * @param name 模板表名
      * @return 分表配置信息
      * @since 1.0.0
      */

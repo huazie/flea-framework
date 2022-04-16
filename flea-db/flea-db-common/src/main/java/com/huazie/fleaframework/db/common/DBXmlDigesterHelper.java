@@ -1,17 +1,15 @@
 package com.huazie.fleaframework.db.common;
 
-import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.common.util.CollectionUtils;
-import com.huazie.fleaframework.common.util.ExceptionUtils;
-import com.huazie.fleaframework.common.util.IOUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
 import com.huazie.fleaframework.common.util.xml.XmlDigesterHelper;
-import com.huazie.fleaframework.db.common.exception.LibSplitException;
-import com.huazie.fleaframework.db.common.exception.SqlTemplateException;
+import com.huazie.fleaframework.db.common.lib.split.config.FleaLibSplit;
 import com.huazie.fleaframework.db.common.lib.split.config.Lib;
+import com.huazie.fleaframework.db.common.lib.split.config.LibFile;
+import com.huazie.fleaframework.db.common.lib.split.config.LibFiles;
 import com.huazie.fleaframework.db.common.lib.split.config.Libs;
 import com.huazie.fleaframework.db.common.lib.split.config.Transaction;
 import com.huazie.fleaframework.db.common.sql.template.config.Param;
@@ -33,7 +31,6 @@ import com.huazie.fleaframework.db.common.table.split.config.TableFiles;
 import com.huazie.fleaframework.db.common.table.split.config.Tables;
 import org.apache.commons.digester.Digester;
 
-import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -74,18 +71,16 @@ public class DBXmlDigesterHelper {
     }
 
     /**
-     * 获取分库配置集合定义
+     * 获取Flea分库定义
      *
-     * @return 分库配置集合定义
-     * @throws CommonException 通用异常
+     * @return Flea分表定义
      * @since 1.1.0
      */
-    public Libs getLibs() throws CommonException {
-        return newLibs();
+    public FleaLibSplit getFleaLibSplit() {
+        return newFleaLibSplit();
     }
 
-    private Libs newLibs() throws CommonException {
-        Libs libs = null;
+    private FleaLibSplit newFleaLibSplit() {
         String fileName = DBConstants.LibTableSplitConstants.LIB_SPLIT_FILE_PATH;
         if (StringUtils.isNotBlank(System.getProperty(DBConstants.LibTableSplitConstants.LIB_SPLIT_FILE_SYSTEM_KEY))) {
             fileName = StringUtils.trim(System.getProperty(DBConstants.LibTableSplitConstants.LIB_SPLIT_FILE_SYSTEM_KEY));
@@ -99,23 +94,14 @@ public class DBXmlDigesterHelper {
             LOGGER.debug("Start to parse the flea-lib-split.xml");
         }
 
-        try (InputStream input = IOUtils.getInputStreamFromClassPath(fileName)) {
-
-            // 该路径下【0】找不到指定配置文件
-            ObjectUtils.checkEmpty(input, LibSplitException.class, "ERROR-DB-SQT0000000030", fileName);
-
-            libs = XmlDigesterHelper.parse(input, newFleaLibSplitFileDigester(), Libs.class);
-
-        } catch (Exception e) {
-            // XML转化异常：
-            ExceptionUtils.throwCommonException(LibSplitException.class, "ERROR-DB-SQT0000000031", e);
-        }
+        Digester digester = newFleaLibSplitFileDigester();
+        FleaLibSplit fleaLibSplit = XmlDigesterHelper.parse(fileName, digester, FleaLibSplit.class);
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("End to parse the flea-lib-split.xml");
         }
 
-        return libs;
+        return fleaLibSplit;
     }
 
     /**
@@ -128,25 +114,41 @@ public class DBXmlDigesterHelper {
         Digester digester = new Digester();
         digester.setValidating(false);
 
-        digester.addObjectCreate("libs", Libs.class.getName());
-        digester.addSetProperties("libs");
+        digester.addObjectCreate("flea-lib-split", FleaLibSplit.class.getName());
+        digester.addSetProperties("flea-lib-split");
 
-        digester.addObjectCreate("libs/lib", Lib.class.getName());
-        digester.addSetProperties("libs/lib");
+        digester.addObjectCreate("flea-lib-split/libs", Libs.class.getName());
+        digester.addSetProperties("flea-lib-split/libs");
 
-        digester.addObjectCreate("libs/lib/transaction", Transaction.class.getName());
-        digester.addSetProperties("libs/lib/transaction");
+        digester.addObjectCreate("flea-lib-split/libs/lib", Lib.class.getName());
+        digester.addSetProperties("flea-lib-split/libs/lib");
 
-        digester.addObjectCreate("libs/lib/splits", Splits.class.getName());
-        digester.addSetProperties("libs/lib/splits");
+        digester.addObjectCreate("flea-lib-split/libs/lib/transaction", Transaction.class.getName());
+        digester.addSetProperties("flea-lib-split/libs/lib/transaction");
 
-        digester.addObjectCreate("libs/lib/splits/split", Split.class.getName());
-        digester.addSetProperties("libs/lib/splits/split");
+        digester.addObjectCreate("flea-lib-split/libs/lib/splits", Splits.class.getName());
+        digester.addSetProperties("flea-lib-split/libs/lib/splits");
 
-        digester.addSetNext("libs/lib", "addLib", Lib.class.getName());
-        digester.addSetNext("libs/lib/transaction", "setTransaction", Transaction.class.getName());
-        digester.addSetNext("libs/lib/splits", "setSplits", Splits.class.getName());
-        digester.addSetNext("libs/lib/splits/split", "addSplit", Split.class.getName());
+        digester.addObjectCreate("flea-lib-split/libs/lib/splits/split", Split.class.getName());
+        digester.addSetProperties("flea-lib-split/libs/lib/splits/split");
+
+        digester.addSetNext("flea-lib-split/libs", "setLibs", Libs.class.getName());
+        digester.addSetNext("flea-lib-split/libs/lib", "addLib", Lib.class.getName());
+        digester.addSetNext("flea-lib-split/libs/lib/transaction", "setTransaction", Transaction.class.getName());
+        digester.addSetNext("flea-lib-split/libs/lib/splits", "setSplits", Splits.class.getName());
+        digester.addSetNext("flea-lib-split/libs/lib/splits/split", "addSplit", Split.class.getName());
+
+        // 其他分库配置文件集
+        digester.addObjectCreate("flea-lib-split/lib-files", LibFiles.class.getName());
+        digester.addSetProperties("flea-lib-split/lib-files");
+
+        digester.addObjectCreate("flea-lib-split/lib-files/lib-file", LibFile.class.getName());
+        digester.addSetProperties("flea-lib-split/lib-files/lib-file");
+
+        digester.addSetNext("flea-lib-split/lib-files", "setLibFiles", LibFiles.class.getName());
+        digester.addSetNext("flea-lib-split/lib-files/lib-file", "addLibFile", LibFile.class.getName());
+        digester.addCallMethod("flea-lib-split/lib-files/lib-file/location", "setLocation", 0);
+
         return digester;
     }
 
@@ -161,7 +163,6 @@ public class DBXmlDigesterHelper {
     }
 
     private FleaTableSplit newFleaTableSplit() {
-        FleaTableSplit fleaTableSplit;
         String fileName = DBConstants.LibTableSplitConstants.TABLE_SPLIT_FILE_PATH;
         if (StringUtils.isNotBlank(System.getProperty(DBConstants.LibTableSplitConstants.TABLE_SPLIT_FILE_SYSTEM_KEY))) {
             fileName = StringUtils.trim(System.getProperty(DBConstants.LibTableSplitConstants.TABLE_SPLIT_FILE_SYSTEM_KEY));
@@ -176,7 +177,7 @@ public class DBXmlDigesterHelper {
         }
 
         Digester digester = newFleaTableSplitFileDigester();
-        fleaTableSplit = XmlDigesterHelper.parse(fileName, digester, FleaTableSplit.class);
+        FleaTableSplit fleaTableSplit = XmlDigesterHelper.parse(fileName, digester, FleaTableSplit.class);
 
         if (ObjectUtils.isNotEmpty(fleaTableSplit)) {
             TableFiles tableFiles = fleaTableSplit.getTableFiles();
@@ -254,16 +255,13 @@ public class DBXmlDigesterHelper {
      * 获取Sql模板配置
      *
      * @return Sql模板对象
-     * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public Sql getSqlTemplate() throws CommonException {
+    public Sql getSqlTemplate() {
         return newSqlTemplate();
     }
 
-    private Sql newSqlTemplate() throws CommonException {
-        Sql sqlTemplate = null;
-
+    private Sql newSqlTemplate() {
         String fileName = DBConstants.SqlTemplateConstants.SQL_TEMPLATE_FILE_PATH;
         if (StringUtils.isNotBlank(System.getProperty(DBConstants.SqlTemplateConstants.SQL_TEMPLATE_FILE_SYSTEM_KEY))) {
             fileName = StringUtils.trim(System.getProperty(DBConstants.SqlTemplateConstants.SQL_TEMPLATE_FILE_SYSTEM_KEY));
@@ -277,17 +275,7 @@ public class DBXmlDigesterHelper {
             LOGGER.debug("Start to parse the flea-sql-template.xml");
         }
 
-        try (InputStream input = IOUtils.getInputStreamFromClassPath(fileName)) {
-
-            // 该路径下【0】找不到指定配置文件
-            ObjectUtils.checkEmpty(input, SqlTemplateException.class, "ERROR-DB-SQT0000000030", fileName);
-
-            sqlTemplate = XmlDigesterHelper.parse(input, newFleaSqlTemplateFileDigester(), Sql.class);
-
-        } catch (Exception e) {
-            // XML转化异常：
-            ExceptionUtils.throwCommonException(SqlTemplateException.class, "ERROR-DB-SQT0000000031", e);
-        }
+        Sql sqlTemplate = XmlDigesterHelper.parse(fileName, newFleaSqlTemplateFileDigester(), Sql.class);
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("End to parse the flea-sql-template.xml");

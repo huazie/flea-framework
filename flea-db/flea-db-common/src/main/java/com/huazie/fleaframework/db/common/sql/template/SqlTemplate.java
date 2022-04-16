@@ -46,7 +46,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
 
     private List<SqlParam> sqlParams = new ArrayList<>(); // 原生SQL参数
 
-    private String tableName;       // 主表名
+    private String tableName;       // 模板表名
 
     private String realTableName;   // 分表名
 

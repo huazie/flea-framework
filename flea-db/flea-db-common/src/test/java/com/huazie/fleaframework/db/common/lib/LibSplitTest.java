@@ -5,12 +5,12 @@ import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.db.common.lib.split.ILibSplit;
 import com.huazie.fleaframework.db.common.lib.split.config.LibSplitConfig;
-import com.huazie.fleaframework.db.common.lib.split.impl.DecAlphabetLibSplitImpl;
+import com.huazie.fleaframework.db.common.lib.split.impl.DecLowercaseLibSplitImpl;
 import com.huazie.fleaframework.db.common.lib.split.impl.DecNumberLibSplitImpl;
-import com.huazie.fleaframework.db.common.lib.split.impl.DecUpperAlphabetLibSplitImpl;
-import com.huazie.fleaframework.db.common.lib.split.impl.HexAlphabetLibSplitImpl;
+import com.huazie.fleaframework.db.common.lib.split.impl.DecUppercaseLibSplitImpl;
+import com.huazie.fleaframework.db.common.lib.split.impl.HexLowercaseLibSplitImpl;
 import com.huazie.fleaframework.db.common.lib.split.impl.HexNumberLibSplitImpl;
-import com.huazie.fleaframework.db.common.lib.split.impl.HexUpperAlphabetLibSplitImpl;
+import com.huazie.fleaframework.db.common.lib.split.impl.HexUppercaseLibSplitImpl;
 import org.junit.Test;
 
 /**
@@ -35,24 +35,24 @@ public class LibSplitTest {
     }
 
     @Test
-    public void testDecAlphabetListSplitImpl() {
+    public void testDecLowercaseListSplitImpl() {
         try {
 //            FleaFrameManager.getManager().setLocale(Locale.US);
-            ILibSplit alphabetLibSplit = new DecAlphabetLibSplitImpl();
-            LOGGER.debug("SEQ1 = {}", alphabetLibSplit.convert("2", 2));
-            LOGGER.debug("SEQ2 = {}", alphabetLibSplit.convert("3", 2));
+            ILibSplit decLowercaseLibSplit = new DecLowercaseLibSplitImpl();
+            LOGGER.debug("SEQ1 = {}", decLowercaseLibSplit.convert("2", 2));
+            LOGGER.debug("SEQ2 = {}", decLowercaseLibSplit.convert("3", 2));
         } catch (CommonException e) {
             LOGGER.error("Exception:", e);
         }
     }
 
     @Test
-    public void testDecUpperAlphabetListSplitImpl() {
+    public void testDecUppercaseListSplitImpl() {
         try {
 //            FleaFrameManager.getManager().setLocale(Locale.US);
-            ILibSplit upperAlphabetLibSplit = new DecUpperAlphabetLibSplitImpl();
-            LOGGER.debug("SEQ1 = {}", upperAlphabetLibSplit.convert("8", 2));
-            LOGGER.debug("SEQ2 = {}", upperAlphabetLibSplit.convert("9", 2));
+            ILibSplit decUppercaseLibSplit = new DecUppercaseLibSplitImpl();
+            LOGGER.debug("SEQ1 = {}", decUppercaseLibSplit.convert("8", 2));
+            LOGGER.debug("SEQ2 = {}", decUppercaseLibSplit.convert("9", 2));
         } catch (CommonException e) {
             LOGGER.error("Exception:", e);
         }
@@ -73,26 +73,26 @@ public class LibSplitTest {
     }
 
     @Test
-    public void testHexAlphabetListSplitImpl() {
+    public void testHexLowercaseListSplitImpl() {
         try {
 //            FleaFrameManager.getManager().setLocale(Locale.US);
-            ILibSplit alphabetLibSplit = new HexAlphabetLibSplitImpl();
-            LOGGER.debug("SEQ1 = {}", alphabetLibSplit.convert("8", 4));
-            LOGGER.debug("SEQ2 = {}", alphabetLibSplit.convert("9", 4));
-            LOGGER.debug("SEQ3 = {}", alphabetLibSplit.convert("A", 4));
-            LOGGER.debug("SEQ4 = {}", alphabetLibSplit.convert("b", 4));
+            ILibSplit hexLowercaseLibSplit = new HexLowercaseLibSplitImpl();
+            LOGGER.debug("SEQ1 = {}", hexLowercaseLibSplit.convert("8", 4));
+            LOGGER.debug("SEQ2 = {}", hexLowercaseLibSplit.convert("9", 4));
+            LOGGER.debug("SEQ3 = {}", hexLowercaseLibSplit.convert("A", 4));
+            LOGGER.debug("SEQ4 = {}", hexLowercaseLibSplit.convert("b", 4));
         } catch (CommonException e) {
             LOGGER.error("Exception:", e);
         }
     }
 
     @Test
-    public void testHexUpperAlphabetListSplitImpl() {
+    public void testHexUppercaseListSplitImpl() {
         try {
 //            FleaFrameManager.getManager().setLocale(Locale.US);
-            ILibSplit upperAlphabetLibSplit = new HexUpperAlphabetLibSplitImpl();
-            LOGGER.debug("SEQ = {}", upperAlphabetLibSplit.convert("6", 2));
-            LOGGER.debug("SEQ = {}", upperAlphabetLibSplit.convert("7", 2));
+            ILibSplit hexUppercaseLibSplit = new HexUppercaseLibSplitImpl();
+            LOGGER.debug("SEQ = {}", hexUppercaseLibSplit.convert("6", 2));
+            LOGGER.debug("SEQ = {}", hexUppercaseLibSplit.convert("7", 2));
         } catch (CommonException e) {
             LOGGER.error("Exception:", e);
         }

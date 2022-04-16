@@ -1,6 +1,5 @@
 package com.huazie.fleaframework.db.common.lib.split.config;
 
-import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.common.util.ObjectUtils;
@@ -20,10 +19,12 @@ public class LibSplitConfig {
 
     private static volatile LibSplitConfig config;
 
+    private FleaLibSplit fleaLibSplit; // Flea分库定义
+
     private Libs libs;    // 分库配置集合定义类
 
-    private LibSplitConfig() throws CommonException {
-        this.libs = DBXmlDigesterHelper.getInstance().getLibs();
+    private LibSplitConfig() {
+        this.fleaLibSplit = DBXmlDigesterHelper.getInstance().getFleaLibSplit();
     }
 
     /**
@@ -36,13 +37,7 @@ public class LibSplitConfig {
         if (ObjectUtils.isEmpty(config)) {
             synchronized (LibSplitConfig.class) {
                 if (ObjectUtils.isEmpty(config)) {
-                    try {
-                        config = new LibSplitConfig();
-                    } catch (Exception e) {
-                        if (LOGGER.isErrorEnabled()) {
-                            LOGGER.error("Fail to init flea-lib-split.xml", e);
-                        }
-                    }
+                    config = new LibSplitConfig();
                 }
             }
         }
@@ -50,14 +45,23 @@ public class LibSplitConfig {
     }
 
     /**
-     * 根据name获取指定的分库配置定义
+     * 根据模板库名获取对应的分库配置定义
      *
      * @param name 模板库名
      * @return 分库配置定义
      * @since 1.1.0
      */
     public Lib getLib(String name) {
-        return libs.toLibMap().get(name);
+        Lib lib = null;
+        if (ObjectUtils.isNotEmpty(fleaLibSplit)) {
+            Libs libs = fleaLibSplit.getLibs();
+            // 从主分表配置文件中获取指定分库配置定义
+            if (ObjectUtils.isNotEmpty(libs)) {
+                lib = libs.getFleaLib(name);
+            }
+        }
+
+        return lib;
     }
 
     public Libs getLibs() {

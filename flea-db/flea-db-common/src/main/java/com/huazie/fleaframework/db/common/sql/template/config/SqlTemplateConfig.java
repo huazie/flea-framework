@@ -1,8 +1,5 @@
 package com.huazie.fleaframework.db.common.sql.template.config;
 
-import com.huazie.fleaframework.common.exception.CommonException;
-import com.huazie.fleaframework.common.slf4j.FleaLogger;
-import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.common.util.MapUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.db.common.DBXmlDigesterHelper;
@@ -18,16 +15,14 @@ import java.util.Map;
  */
 public class SqlTemplateConfig {
 
-    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(SqlTemplateConfig.class);
-
     private static volatile SqlTemplateConfig config;
 
     private Sql sql;
 
     /**
-     * 只允许通过getConfig() 获取SQL模板配置类对象
+     * 只允许通过 getConfig() 获取SQL模板配置类对象
      */
-    private SqlTemplateConfig() throws CommonException {
+    private SqlTemplateConfig() {
         this.sql = DBXmlDigesterHelper.getInstance().getSqlTemplate();
     }
 
@@ -40,11 +35,7 @@ public class SqlTemplateConfig {
         if (ObjectUtils.isEmpty(config)) {
             synchronized (SqlTemplateConfig.class) {
                 if (ObjectUtils.isEmpty(config)) {
-                    try {
-                        config = new SqlTemplateConfig();
-                    } catch (Exception e) {
-                        LOGGER.error("Fail to init flea-sql-template.xml ：", e);
-                    }
+                    config = new SqlTemplateConfig();
                 }
             }
         }
@@ -119,7 +110,7 @@ public class SqlTemplateConfig {
 
     /**
      * 根据关系编号，获取指定的关系配置信息
-     * SQL模板和模板参数关联关系（简称：关系）</p>
+     * SQL模板和模板参数关联关系（简称：关系）
      *
      * @param relationId 关系编号
      * @return 关系配置信息

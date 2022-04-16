@@ -11,7 +11,7 @@ import com.huazie.fleaframework.db.common.lib.pojo.SplitLib;
  */
 public class SplitTable {
 
-    private String tableName; // 主表名
+    private String tableName; // 模板表名
 
     private String splitTableName; // 分表名
 

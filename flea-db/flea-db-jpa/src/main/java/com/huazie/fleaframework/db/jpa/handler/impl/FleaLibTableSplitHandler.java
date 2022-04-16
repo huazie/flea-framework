@@ -44,7 +44,7 @@ public abstract class FleaLibTableSplitHandler implements IFleaJPASplitHandler {
 
         FleaEntity fleaEntity = (FleaEntity) entity;
 
-        // 获取分表信息（包括主表名 和 分表名 【如果存在分表返回】）
+        // 获取分表信息（包括模板表名 和 分表名 【如果存在分表返回】）
         SplitTable splitTable = FleaEntityManager.getSplitTable(entity);
 
         SplitLib splitLib;
@@ -89,7 +89,7 @@ public abstract class FleaLibTableSplitHandler implements IFleaJPASplitHandler {
             return entityManager;
         }
 
-        // 获取分表信息（包括主表名 和 分表名 【如果存在分表返回】）
+        // 获取分表信息（包括模板表名 和 分表名 【如果存在分表返回】）
         SplitTable splitTable = FleaEntityManager.getSplitTable(entity);
 
         FleaEntity fleaEntity = (FleaEntity) entity;
