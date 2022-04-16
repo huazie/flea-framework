@@ -56,7 +56,7 @@ public class FleaSplitUtils {
     /**
      * 获取分表信息
      *
-     * @param tableName  主表名
+     * @param tableName  模板表名
      * @param entityCols 实体类属性列集合
      * @return 分表对象
      * @throws CommonException 通用异常
@@ -77,8 +77,8 @@ public class FleaSplitUtils {
         }
 
         SplitTable splitTable = new SplitTable();
-        splitTable.setTableName(tableName); // 设置主表名
-        splitTable.setSplitTableName(tableName); // 设置分表名默认为主表名
+        splitTable.setTableName(tableName); // 设置模板表名
+        splitTable.setSplitTableName(tableName); // 设置分表名默认为模板表名
         splitTable.setPkColumnValue(pkColumnValue); // 生成器表中的主键值，为主键中@TableGenerator中的pkColumnValue
         splitTable.setSplitTablePkColumnValue(pkColumnValue); // 生成器表中分表的主键值，默认为主键中@TableGenerator中的pkColumnValue
         splitTable.setExistSplitTable(false); // 默认没有分表
@@ -200,7 +200,7 @@ public class FleaSplitUtils {
     /**
      * 获取真实的表名，如是分表，则获取分表名
      *
-     * @param tableName  主表名
+     * @param tableName  模板表名
      * @param entityCols 实体类属性列集合
      * @return 真实的表名，如是分表，则返回相应的分表名
      * @throws CommonException 通用异常

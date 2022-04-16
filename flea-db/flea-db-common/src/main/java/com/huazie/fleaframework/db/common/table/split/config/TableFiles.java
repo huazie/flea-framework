@@ -34,9 +34,9 @@ public class TableFiles {
     }
 
     /**
-     * 根据主表名获取指定的分表配置定义
+     * 根据模板表名获取指定的分表配置定义
      *
-     * @param name 主表名
+     * @param name 模板表名
      * @return 分表配置定义
      * @since 2.0.0
      */
@@ -47,7 +47,7 @@ public class TableFiles {
                 if (ObjectUtils.isNotEmpty(tableFile)) {
                     table = tableFile.getFleaTable(name);
                     if (ObjectUtils.isNotEmpty(table)) {
-                        // 取到指定非空的缓存定义配置，则跳出循环
+                        // 取到指定非空的分表配置，则跳出循环
                         break;
                     }
                 }

@@ -44,7 +44,7 @@ public class TableSplitTest {
     }
 
     @Test
-    public void testOddEvenAlphabetSplitEmpty() {
+    public void testOddEvenLowercaseSplitEmpty() {
         //FleaFrameManager.getManager().setLocale(Locale.US);
         ITableSplit tableSplit = new OddEvenLowercaseTableSplitImpl();
         try {
@@ -55,7 +55,7 @@ public class TableSplitTest {
     }
 
     @Test
-    public void testOddEvenUpperAlphabetSplitEmpty() {
+    public void testOddEvenUppercaseSplitEmpty() {
         //FleaFrameManager.getManager().setLocale(Locale.US);
         ITableSplit tableSplit = new OddEvenUppercaseTableSplitImpl();
         try {
@@ -66,7 +66,7 @@ public class TableSplitTest {
     }
 
     @Test
-    public void testTwoTableSplitEmpty() {
+    public void testTwoLowercaseTableSplitEmpty() {
         //FleaFrameManager.getManager().setLocale(Locale.US);
         ITableSplit tableSplit = new TwoLowercaseTableSplitImpl();
         try {
@@ -77,7 +77,7 @@ public class TableSplitTest {
     }
 
     @Test
-    public void testTwoTableSplit() {
+    public void testTwoLowercaseTableSplit() {
         ITableSplit tableSplit = new TwoLowercaseTableSplitImpl();
         try {
             LOGGER.debug(tableSplit.convert("DF312311FF"));
@@ -87,7 +87,7 @@ public class TableSplitTest {
     }
 
     @Test
-    public void testTwoBeforeTableSplit() {
+    public void testTwoBeforeLowercaseTableSplit() {
         ITableSplit tableSplit = new TwoBeforeLowercaseTableSplitImpl();
         try {
             LOGGER.debug(tableSplit.convert("DF312311FF"));
@@ -97,7 +97,7 @@ public class TableSplitTest {
     }
 
     @Test
-    public void testTwoUpperTableSplit() {
+    public void testTwoUppercaseTableSplit() {
         ITableSplit tableSplit = new TwoUppercaseTableSplitImpl();
         try {
             LOGGER.debug(tableSplit.convert("df312311ff"));
@@ -107,7 +107,7 @@ public class TableSplitTest {
     }
 
     @Test
-    public void testTwoBeforeUpperTableSplit() {
+    public void testTwoBeforeUppercaseTableSplit() {
         ITableSplit tableSplit = new TwoBeforeUppercaseTableSplitImpl();
         try {
             LOGGER.debug(tableSplit.convert("df312311ff"));
@@ -117,7 +117,7 @@ public class TableSplitTest {
     }
 
     @Test
-    public void testOneTableSplit() {
+    public void testOneLowercaseTableSplit() {
         ITableSplit tableSplit = new OneLowercaseTableSplitImpl();
         try {
             LOGGER.debug(tableSplit.convert("DF312311FF"));
@@ -127,7 +127,7 @@ public class TableSplitTest {
     }
 
     @Test
-    public void testOneBeforeTableSplit() {
+    public void testOneBeforeLowercaseTableSplit() {
         ITableSplit tableSplit = new OneBeforeLowercaseTableSplitImpl();
         try {
             LOGGER.debug(tableSplit.convert("DF312311FF"));
@@ -137,7 +137,7 @@ public class TableSplitTest {
     }
 
     @Test
-    public void testOneUpperTableSplit() {
+    public void testOneUppercaseTableSplit() {
         ITableSplit tableSplit = new OneUppercaseTableSplitImpl();
         try {
             LOGGER.debug(tableSplit.convert("df312311ff"));
@@ -147,7 +147,7 @@ public class TableSplitTest {
     }
 
     @Test
-    public void testOneBeforeUpperTableSplit() {
+    public void testOneBeforeUppercaseTableSplit() {
         ITableSplit tableSplit = new OneBeforeUppercaseTableSplitImpl();
         try {
             LOGGER.debug(tableSplit.convert("df312311ff"));
@@ -195,8 +195,8 @@ public class TableSplitTest {
     }
 
     @Test
-    public void testEntityUtils() {
-        TableSplitEnum tableSplitEnum = (TableSplitEnum) EntityUtils.getEntity(TableSplitEnum.values(), "key", "twohex1");
-        Assert.assertNull(tableSplitEnum);
+    public void testTableSplitEnum() {
+        TableSplitEnum tableSplitEnum = (TableSplitEnum) EntityUtils.getEntity(TableSplitEnum.values(), "key", "TWO");
+        Assert.assertNotNull(tableSplitEnum);
     }
 }
