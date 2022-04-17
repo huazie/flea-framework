@@ -1,5 +1,6 @@
 package com.huazie.fleaframework.db.common.table.split.config;
 
+import com.huazie.fleaframework.common.util.xml.ImportList;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
@@ -10,7 +11,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @version 2.0.0
  * @since 2.0.0
  */
-public class FleaTableSplit {
+public class FleaTableSplit extends ImportList {
 
     private Tables tables; // 分表配置集
 

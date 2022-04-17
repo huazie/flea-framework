@@ -1,7 +1,5 @@
 package com.huazie.fleaframework.db.common.table.split.config;
 
-import com.huazie.fleaframework.common.slf4j.FleaLogger;
-import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.db.common.DBXmlDigesterHelper;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -14,8 +12,6 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @since 1.0.0
  */
 public class TableSplitConfig {
-
-    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(TableSplitConfig.class);
 
     private static volatile TableSplitConfig config;
 
@@ -54,10 +50,10 @@ public class TableSplitConfig {
         if (ObjectUtils.isNotEmpty(fleaTableSplit)) {
             Tables tables = fleaTableSplit.getTables();
             if (ObjectUtils.isNotEmpty(tables)) {
-                // 从主分表配置文件中获取
+                // 从主分表配置文件中获取指定模板表名的分表配置
                 table = tables.getFleaTable(name);
                 if (ObjectUtils.isEmpty(table)) {
-                    // 从其他配置文件中获取
+                    // 从其他配置文件中获取指定模板表名的分表配置
                     TableFiles tableFiles = fleaTableSplit.getTableFiles();
                     if (ObjectUtils.isNotEmpty(tableFiles)) {
                         table = tableFiles.getFleaTable(name);

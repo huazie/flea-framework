@@ -3,6 +3,7 @@ package com.huazie.fleaframework.auth;
 import com.huazie.fleaframework.common.i18n.FleaI18nHelper;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
+import com.huazie.fleaframework.db.common.table.split.config.TableSplitConfig;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -44,5 +45,10 @@ public class AuthSVTest {
     public void fleaI18nHelperTest() {
         String value = FleaI18nHelper.i18n("AUTH-COMMON0000000001", "auth");
         LOGGER.debug("Value = {}", value);
+    }
+
+    @Test
+    public void testTableSplitConfig() {
+        LOGGER.debug("Flea Table Split = {}", TableSplitConfig.getConfig().getFleaTableSplit());
     }
 }
