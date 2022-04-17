@@ -23,11 +23,7 @@
 		</table>
 	</tables>
 
-	<!-- 其他模块分表配置文件引入 -->
-	<table-files>
-		<table-file>
-			<location>flea/db/flea-auth-table-split.xml</location>
-		</table-file>
-	</table-files>
+	<!-- flea-auth 授权模块分表配置文件引入 -->
+	<import resource="flea/db/flea-auth-table-split.xml"/>
 
 </flea-table-split>

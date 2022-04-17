@@ -1,5 +1,6 @@
 package com.huazie.fleaframework.db.common.lib.split.config;
 
+import com.huazie.fleaframework.common.util.xml.ImportList;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
@@ -10,7 +11,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @version 2.0.0
  * @since 2.0.0
  */
-public class FleaLibSplit {
+public class FleaLibSplit extends ImportList {
 
     private Libs libs; // 分库配置集
 

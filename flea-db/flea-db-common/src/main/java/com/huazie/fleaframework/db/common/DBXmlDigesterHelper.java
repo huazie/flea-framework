@@ -5,6 +5,7 @@ import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.common.util.CollectionUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
+import com.huazie.fleaframework.common.util.xml.Import;
 import com.huazie.fleaframework.common.util.xml.XmlDigesterHelper;
 import com.huazie.fleaframework.db.common.lib.split.config.FleaLibSplit;
 import com.huazie.fleaframework.db.common.lib.split.config.Lib;
@@ -97,6 +98,30 @@ public class DBXmlDigesterHelper {
         Digester digester = newFleaLibSplitFileDigester();
         FleaLibSplit fleaLibSplit = XmlDigesterHelper.parse(fileName, digester, FleaLibSplit.class);
 
+        if (ObjectUtils.isNotEmpty(fleaLibSplit)) {
+            List<Import> importList = fleaLibSplit.getImportList();
+            if (CollectionUtils.isNotEmpty(importList)) {
+                LibFiles libFiles = new LibFiles();
+                for (Import mImport : importList) {
+                    if (ObjectUtils.isNotEmpty(mImport)) {
+                        String resource = mImport.getResource();
+                        // 解析其他分库配置文件
+                        FleaLibSplit other = XmlDigesterHelper.parse(resource, digester, FleaLibSplit.class);
+                        if (ObjectUtils.isNotEmpty(other)) {
+                            LibFile libFile = new LibFile();
+                            libFile.setLocation(resource);
+                            Libs otherLibs = other.getLibs();
+                            if (ObjectUtils.isNotEmpty(otherLibs)) {
+                                libFile.setLibList(otherLibs.getLibList());
+                            }
+                            libFiles.addLibFile(libFile);
+                        }
+                    }
+                }
+                fleaLibSplit.setLibFiles(libFiles);
+            }
+        }
+
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("End to parse the flea-lib-split.xml");
         }
@@ -138,16 +163,10 @@ public class DBXmlDigesterHelper {
         digester.addSetNext("flea-lib-split/libs/lib/splits", "setSplits", Splits.class.getName());
         digester.addSetNext("flea-lib-split/libs/lib/splits/split", "addSplit", Split.class.getName());
 
-        // 其他分库配置文件集
-        digester.addObjectCreate("flea-lib-split/lib-files", LibFiles.class.getName());
-        digester.addSetProperties("flea-lib-split/lib-files");
-
-        digester.addObjectCreate("flea-lib-split/lib-files/lib-file", LibFile.class.getName());
-        digester.addSetProperties("flea-lib-split/lib-files/lib-file");
-
-        digester.addSetNext("flea-lib-split/lib-files", "setLibFiles", LibFiles.class.getName());
-        digester.addSetNext("flea-lib-split/lib-files/lib-file", "addLibFile", LibFile.class.getName());
-        digester.addCallMethod("flea-lib-split/lib-files/lib-file/location", "setLocation", 0);
+        // 其他分表配置文件资源导入
+        digester.addObjectCreate("flea-lib-split/import", Import.class.getName());
+        digester.addSetProperties("flea-lib-split/import");
+        digester.addSetNext("flea-lib-split/import", "addImport", Import.class.getName());
 
         return digester;
     }
@@ -180,23 +199,26 @@ public class DBXmlDigesterHelper {
         FleaTableSplit fleaTableSplit = XmlDigesterHelper.parse(fileName, digester, FleaTableSplit.class);
 
         if (ObjectUtils.isNotEmpty(fleaTableSplit)) {
-            TableFiles tableFiles = fleaTableSplit.getTableFiles();
-            if (ObjectUtils.isNotEmpty(tableFiles)) {
-                List<TableFile> tableFileList = tableFiles.getTableFiles();
-                if (CollectionUtils.isNotEmpty(tableFileList)) {
-                    for (TableFile tableFile : tableFileList) {
-                        if (ObjectUtils.isNotEmpty(tableFile)) {
-                            // 解析其他分表配置文件
-                            FleaTableSplit other = XmlDigesterHelper.parse(tableFile.getLocation(), digester, FleaTableSplit.class);
-                            if (ObjectUtils.isNotEmpty(other)) {
-                                Tables otherTables = other.getTables();
-                                if (ObjectUtils.isNotEmpty(otherTables)) {
-                                    tableFile.setTableList(otherTables.getTableList());
-                                }
+            List<Import> importList = fleaTableSplit.getImportList();
+            if (CollectionUtils.isNotEmpty(importList)) {
+                TableFiles tableFiles = new TableFiles();
+                for (Import mImport : importList) {
+                    if (ObjectUtils.isNotEmpty(mImport)) {
+                        String resource = mImport.getResource();
+                        // 解析其他分表配置文件
+                        FleaTableSplit other = XmlDigesterHelper.parse(resource, digester, FleaTableSplit.class);
+                        if (ObjectUtils.isNotEmpty(other)) {
+                            TableFile tableFile = new TableFile();
+                            tableFile.setLocation(resource);
+                            Tables otherTables = other.getTables();
+                            if (ObjectUtils.isNotEmpty(otherTables)) {
+                                tableFile.setTableList(otherTables.getTableList());
                             }
+                            tableFiles.addTableFile(tableFile);
                         }
                     }
                 }
+                fleaTableSplit.setTableFiles(tableFiles);
             }
         }
 
@@ -237,16 +259,10 @@ public class DBXmlDigesterHelper {
         digester.addSetNext("flea-table-split/tables/table/splits", "setSplits", Splits.class.getName());
         digester.addSetNext("flea-table-split/tables/table/splits/split", "addSplit", Split.class.getName());
 
-        // 其他分表配置文件集
-        digester.addObjectCreate("flea-table-split/table-files", TableFiles.class.getName());
-        digester.addSetProperties("flea-table-split/table-files");
-
-        digester.addObjectCreate("flea-table-split/table-files/table-file", TableFile.class.getName());
-        digester.addSetProperties("flea-table-split/table-files/table-file");
-
-        digester.addSetNext("flea-table-split/table-files", "setTableFiles", TableFiles.class.getName());
-        digester.addSetNext("flea-table-split/table-files/table-file", "addTableFile", TableFile.class.getName());
-        digester.addCallMethod("flea-table-split/table-files/table-file/location", "setLocation", 0);
+        // 其他分表配置文件资源导入
+        digester.addObjectCreate("flea-table-split/import", Import.class.getName());
+        digester.addSetProperties("flea-table-split/import");
+        digester.addSetNext("flea-table-split/import", "addImport", Import.class.getName());
 
         return digester;
     }

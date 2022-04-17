@@ -28,10 +28,6 @@
     </libs>
 
     <!-- 其他模块分库配置文件引入 -->
-    <!--<lib-files>-->
-        <!--<lib-file>-->
-            <!--<location></location>-->
-        <!--</lib-file>-->
-    <!--</lib-files>-->
+    <!--<import resource=""/>-->
 
 </flea-lib-split>

@@ -191,7 +191,7 @@ public class TableSplitTest {
 
     @Test
     public void testTableSplitConfig() {
-        LOGGER.debug("tables = {}", TableSplitConfig.getConfig().getFleaTableSplit());
+        LOGGER.debug("Flea Table Split = {}", TableSplitConfig.getConfig().getFleaTableSplit());
     }
 
     @Test
