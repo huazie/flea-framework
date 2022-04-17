@@ -18,8 +18,6 @@ import org.junit.Test;
 import java.util.List;
 
 /**
- * <p>  </p>
- *
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0

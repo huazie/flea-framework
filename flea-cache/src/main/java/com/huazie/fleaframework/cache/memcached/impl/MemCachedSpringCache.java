@@ -19,7 +19,7 @@ import com.whalin.MemCached.MemCachedClient;
 public class MemCachedSpringCache extends AbstractSpringCache {
 
     /**
-     * <p> 带参数的构造方法，初始化MemCached Spring缓存类 </p>
+     * 带参数的构造方法，初始化MemCached Spring缓存类
      *
      * @param name      缓存数据主关键字
      * @param fleaCache 具体缓存实现
@@ -30,7 +30,7 @@ public class MemCachedSpringCache extends AbstractSpringCache {
     }
 
     /**
-     * <p> 带参数的构造方法，初始化MemCached Spring缓存类 </p>
+     * 带参数的构造方法，初始化MemCached Spring缓存类
      *
      * @param name            缓存数据主关键字
      * @param expiry          缓存数据有效期（单位：s）

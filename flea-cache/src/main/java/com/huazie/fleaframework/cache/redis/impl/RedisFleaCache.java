@@ -41,7 +41,7 @@ public class RedisFleaCache extends AbstractFleaCache {
     private CacheModeEnum cacheMode; // 缓存模式【分片模式和集群模式】
 
     /**
-     * <p> 带参数的构造方法，初始化Redis Flea缓存类 </p>
+     * 带参数的构造方法，初始化Redis Flea缓存类
      *
      * @param name            缓存数据主关键字
      * @param expiry          缓存数据有效期（单位：s）

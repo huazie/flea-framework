@@ -29,7 +29,7 @@ public class FleaCacheConfig {
     private CacheServers cacheServers; // 缓存服务器集
 
     /**
-     * <p> 获取缓存配置项集列表 </p>
+     * 获取缓存配置项集列表
      *
      * @return 缓存配置项集列表
      * @since 1.0.0
@@ -39,7 +39,7 @@ public class FleaCacheConfig {
     }
 
     /**
-     * <p> 获取缓存配置项集列表 </p>
+     * 获取缓存配置项集列表
      *
      * @return 缓存配置项集列表
      * @since 1.0.0
@@ -49,7 +49,7 @@ public class FleaCacheConfig {
     }
 
     /**
-     * <p> 添加一个缓存配置项集 </p>
+     * 添加一个缓存配置项集
      *
      * @param cacheItems 缓存配置项集
      * @since 1.0.0
@@ -59,7 +59,7 @@ public class FleaCacheConfig {
     }
 
     /**
-     * <p> 根据指定key，获取某个指定的缓存配置项集 </p>
+     * 根据指定key，获取某个指定的缓存配置项集
      *
      * @param key 指定缓存配置项集的key
      * @return 某个指定的缓存配置项集
@@ -75,7 +75,7 @@ public class FleaCacheConfig {
     }
 
     /**
-     * <p> 获取缓存配置项集列表的Map，便于根据各缓存配置项集key查找 </p>
+     * 获取缓存配置项集列表的Map，便于根据各缓存配置项集key查找
      *
      * @return 配缓存配置项集列表的Map
      * @since 1.0.0
@@ -89,7 +89,7 @@ public class FleaCacheConfig {
     }
 
     /**
-     * <p> 获取缓存参数集 </p>
+     * 获取缓存参数集
      *
      * @return 缓存参数集
      * @since 1.0.0
@@ -99,7 +99,7 @@ public class FleaCacheConfig {
     }
 
     /**
-     * <p> 设置缓存参数集 </p>
+     * 设置缓存参数集
      *
      * @param cacheParams 缓存参数集
      * @since 1.0.0
@@ -109,7 +109,7 @@ public class FleaCacheConfig {
     }
 
     /**
-     * <p> 获取缓存数据集 </p>
+     * 获取缓存数据集
      *
      * @return 缓存数据集
      * @since 1.0.0
@@ -119,7 +119,7 @@ public class FleaCacheConfig {
     }
 
     /**
-     * <p> 设置缓存数据集 </p>
+     * 设置缓存数据集
      *
      * @param cacheDatas 缓存数据集
      * @since 1.0.0
@@ -129,7 +129,7 @@ public class FleaCacheConfig {
     }
 
     /**
-     * <p> 获取缓存组集 </p>
+     * 获取缓存组集
      *
      * @return 缓存组集
      * @since 1.0.0
@@ -139,7 +139,7 @@ public class FleaCacheConfig {
     }
 
     /**
-     * <p> 设置缓存组集 </p>
+     * 设置缓存组集
      *
      * @param cacheGroups 缓存组集
      * @since 1.0.0
@@ -149,7 +149,7 @@ public class FleaCacheConfig {
     }
 
     /**
-     * <p> 获取缓存服务器集 </p>
+     * 获取缓存服务器集
      *
      * @return 缓存服务器集
      * @since 1.0.0
@@ -159,7 +159,7 @@ public class FleaCacheConfig {
     }
 
     /**
-     * <p> 设置缓存服务器集 </p>
+     * 设置缓存服务器集
      *
      * @param cacheServers 缓存服务器集
      * @since 1.0.0

@@ -47,7 +47,7 @@ public class MemCachedPool {
     }
 
     /**
-     * <p> 获取MemCached连接池实例 (默认) </p>
+     * 获取MemCached连接池实例 (默认)
      *
      * @return MemCached连接池实例对象
      * @since 1.0.0
@@ -60,7 +60,7 @@ public class MemCachedPool {
     }
 
     /**
-     * <p> 获取MemCached连接池实例（指定连接池名poolName） </p>
+     * 获取MemCached连接池实例（指定连接池名poolName）
      *
      * @param poolName 连接池名
      * @return MemCached连接池实例对象
@@ -74,7 +74,7 @@ public class MemCachedPool {
     }
 
     /**
-     * <p> 初始化MemCached连接池 </p>
+     * 初始化MemCached连接池
      *
      * @since 1.0.0
      */
@@ -96,7 +96,7 @@ public class MemCachedPool {
     }
 
     /**
-     * <p> 初始化MemCached连接池 </p>
+     * 初始化MemCached连接池
      *
      * @param cacheServerList 缓存服务器集
      * @since 1.0.0
@@ -189,7 +189,7 @@ public class MemCachedPool {
     }
 
     /**
-     * <p> 关闭连接池 </p>
+     * 关闭连接池
      *
      * @since 1.0.0
      */
@@ -198,7 +198,7 @@ public class MemCachedPool {
     }
 
     /**
-     * <p> 获取 Memcached 缓存连接池名 </p>
+     * 获取 Memcached 缓存连接池名
      *
      * @return Memcached 缓存连接池名
      * @since 1.0.0
@@ -208,7 +208,7 @@ public class MemCachedPool {
     }
 
     /**
-     * <p> 获取 Memcached 套接字连接池 </p>
+     * 获取 Memcached 套接字连接池
      *
      * @return Memcached 套接字连接池
      * @since 1.0.0

@@ -19,7 +19,7 @@
 
     </caches>
 
-    <!-- 其他缓存定义配置文件引入 -->
+    <!-- flea-auth 授权模块缓存定义配置文件引入 -->
     <cache-files>
         <cache-file>
             <location>flea/cache/flea-auth-cache.xml</location>

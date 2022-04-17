@@ -25,7 +25,7 @@ public class Caches {
     }
 
     /**
-     * <p> 添加一个Flea缓存 </p>
+     * 添加一个Flea缓存
      *
      * @param cache Flea缓存
      * @since 1.0.0
@@ -35,7 +35,7 @@ public class Caches {
     }
 
     /**
-     * <p> 获取指定Flea缓存集中的配置项的Map，便于根据各缓存数据key查找 </p>
+     * 获取指定Flea缓存集中的配置项的Map，便于根据各缓存数据key查找
      *
      * @return Flea缓存的Map
      * @since 1.0.0
@@ -49,7 +49,7 @@ public class Caches {
     }
 
     /**
-     * <p> 根据缓存数据键Key获取指定的Flea缓存 </p>
+     * 根据缓存数据键Key获取指定的Flea缓存
      *
      * @param key 缓存数据键
      * @return Flea缓存

@@ -25,7 +25,7 @@ public class CacheGroups {
     }
 
     /**
-     * <p> 添加一个缓存组 </p>
+     * 添加一个缓存组
      *
      * @param cacheGroup 缓存组
      * @since 1.0.0
@@ -35,7 +35,7 @@ public class CacheGroups {
     }
 
     /**
-     * <p> 根据缓存组名group获取指定的缓存组 </p>
+     * 根据缓存组名group获取指定的缓存组
      *
      * @param group 缓存组名
      * @return 缓存组
@@ -51,7 +51,7 @@ public class CacheGroups {
     }
 
     /**
-     * <p> 获取指定缓存组列表中的缓存组的Map，便于根据各缓存组的组名group查找 </p>
+     * 获取指定缓存组列表中的缓存组的Map，便于根据各缓存组的组名group查找
      *
      * @return 缓存组的Map
      * @since 1.0.0

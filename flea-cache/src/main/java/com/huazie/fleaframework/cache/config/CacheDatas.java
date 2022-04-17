@@ -25,7 +25,7 @@ public class CacheDatas {
     }
 
     /**
-     * <p> 添加一类缓存数据 </p>
+     * 添加一类缓存数据
      *
      * @param cacheData 缓存数据
      * @since 1.0.0
@@ -35,7 +35,7 @@ public class CacheDatas {
     }
 
     /**
-     * <p> 根据缓存数据类型获取指定的缓存数据 </p>
+     * 根据缓存数据类型获取指定的缓存数据
      *
      * @param type 缓存数据类型
      * @return 一类缓存数据
@@ -51,7 +51,7 @@ public class CacheDatas {
     }
 
     /**
-     * <p> 获取指定缓存数据集中的缓存数据的Map，便于根据各缓存数据类型type查找 </p>
+     * 获取指定缓存数据集中的缓存数据的Map，便于根据各缓存数据类型type查找
      *
      * @return 缓存集的Map
      * @since 1.0.0

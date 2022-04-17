@@ -36,7 +36,7 @@ public class FleaCacheFactory {
     }
 
     /**
-     * <p> 根据缓存数据主关键字获取指定Flea缓存对象 </p>
+     * 根据缓存数据主关键字获取指定Flea缓存对象
      *
      * @param name 缓存数据主关键字（对应 flea-cache.xml {@code <cache key="缓存数据主关键字"></cache>}）
      * @return Flea缓存对象
@@ -54,7 +54,7 @@ public class FleaCacheFactory {
     }
 
     /**
-     * <p> 根据缓存数据主关键字创建一个Flea缓存对象 </p>
+     * 根据缓存数据主关键字创建一个Flea缓存对象
      *
      * @param name 缓存数据主关键字（对应 flea-cache.xml {@code <cache key="缓存数据主关键字"></cache>}）
      * @return Flea缓存对象
