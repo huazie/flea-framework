@@ -106,9 +106,9 @@ public class MemCachedConfig {
     }
 
     /**
-     * <p> 读取Memcached缓存配置类实例 </p>
+     * 读取 MemCached 缓存配置类实例
      *
-     * @return Memcached缓存配置类实例
+     * @return MemCached 缓存配置类实例
      * @since 1.0.0
      */
     public static MemCachedConfig getConfig() {

@@ -58,7 +58,7 @@ public class FleaRedisShardedClient extends FleaRedisClient {
     private int maxAttempts; // Redis客户端操作最大尝试次数【包含第一次操作】
 
     /**
-     * <p> Redis客户端构造方法 (默认连接池名) </p>
+     * Redis客户端构造方法 (默认连接池名)
      *
      * @since 1.0.0
      */
@@ -67,7 +67,7 @@ public class FleaRedisShardedClient extends FleaRedisClient {
     }
 
     /**
-     * <p> Redis客户端构造方法（指定连接池名） </p>
+     * Redis客户端构造方法（指定连接池名）
      *
      * @param poolName 连接池名
      * @since 1.0.0
@@ -78,7 +78,7 @@ public class FleaRedisShardedClient extends FleaRedisClient {
     }
 
     /**
-     * <p> 初始化分布式Jedis连接池 </p>
+     * 初始化分布式Jedis连接池
      *
      * @since 1.0.0
      */
@@ -205,7 +205,7 @@ public class FleaRedisShardedClient extends FleaRedisClient {
     }
 
     /**
-     * <p> 获取客户端类 </p>
+     * 获取客户端类
      *
      * @param key 数据键
      * @return 客户端类
@@ -230,7 +230,7 @@ public class FleaRedisShardedClient extends FleaRedisClient {
     }
 
     /**
-     * <p> 内部建造者类 </p>
+     * 内部建造者类
      *
      * @author huazie
      * @version 1.1.0
@@ -241,7 +241,7 @@ public class FleaRedisShardedClient extends FleaRedisClient {
         private String poolName; // 连接池名
 
         /**
-         * <p> 默认构造器 </p>
+         * 默认构造器
          *
          * @since 1.0.0
          */
@@ -249,7 +249,7 @@ public class FleaRedisShardedClient extends FleaRedisClient {
         }
 
         /**
-         * <p> 指定连接池的构造器 </p>
+         * 指定连接池的构造器
          *
          * @param poolName 连接池名
          * @since 1.0.0
@@ -259,7 +259,7 @@ public class FleaRedisShardedClient extends FleaRedisClient {
         }
 
         /**
-         * <p> 构建Redis客户端对象 </p>
+         * 构建Redis客户端对象
          *
          * @return Redis客户端
          * @since 1.0.0

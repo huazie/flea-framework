@@ -51,7 +51,7 @@ public class CacheXmlDigesterHelper {
     private FleaCacheConfig fleaCacheConfig;
 
     /**
-     * <p> 只允许通过getInstance()获取 XML解析类 </p>
+     * 只允许通过getInstance()获取 XML解析类
      *
      * @since 1.0.0
      */
@@ -59,7 +59,7 @@ public class CacheXmlDigesterHelper {
     }
 
     /**
-     * <p> 获取XML解析工具类 </p>
+     * 获取XML解析工具类
      *
      * @return XML解析工具类对象
      * @since 1.0.0
@@ -76,7 +76,7 @@ public class CacheXmlDigesterHelper {
     }
 
     /**
-     * <p> 获取Flea缓存 </p>
+     * 获取Flea缓存
      *
      * @return Flea缓存
      * @since 1.0.0
@@ -137,7 +137,6 @@ public class CacheXmlDigesterHelper {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Config = {}", obj);
             LOGGER.debug("End to parse the flea-cache.xml");
         }
 
@@ -145,7 +144,7 @@ public class CacheXmlDigesterHelper {
     }
 
     /**
-     * <p> 解析flea-cache.xml的Digester对象 </p>
+     * 解析flea-cache.xml的Digester对象
      *
      * @return Digester对象
      * @since 1.0.0
@@ -182,7 +181,7 @@ public class CacheXmlDigesterHelper {
     }
 
     /**
-     * <p> 获取Flea缓存配置 </p>
+     * 获取Flea缓存配置
      *
      * @return Flea缓存配置
      * @since 1.0.0
@@ -221,7 +220,6 @@ public class CacheXmlDigesterHelper {
         FleaCacheConfig obj = XmlDigesterHelper.parse(fileName, digester, FleaCacheConfig.class);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Config = {}", obj);
             LOGGER.debug("End to parse the flea-cache-config.xml");
         }
 
@@ -229,7 +227,7 @@ public class CacheXmlDigesterHelper {
     }
 
     /**
-     * <p> 解析flea-cache-config.xml的Digester对象 </p>
+     * 解析flea-cache-config.xml的Digester对象
      *
      * @return Digester对象
      * @since 1.0.0

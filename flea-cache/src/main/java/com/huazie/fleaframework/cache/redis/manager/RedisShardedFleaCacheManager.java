@@ -29,7 +29,7 @@ public class RedisShardedFleaCacheManager extends AbstractFleaCacheManager {
     private RedisClient redisClient; // Redis客户端
 
     /**
-     * <p> 默认构造方法，初始化分片模式下默认连接池的Redis客户端 </p>
+     * 默认构造方法，初始化分片模式下默认连接池的Redis客户端
      *
      * @since 1.0.0
      */

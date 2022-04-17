@@ -72,7 +72,7 @@ public abstract class FleaRedisClient implements RedisClient {
     }
 
     /**
-     * <p> 获取数据所在的Redis服务器ip(主机地址+端口) </p>
+     * 获取数据所在的Redis服务器ip(主机地址+端口)
      *
      * @param key 数据键
      * @return 当前数据所在的Redis服务器ip
@@ -88,7 +88,7 @@ public abstract class FleaRedisClient implements RedisClient {
     }
 
     /**
-     * <p> 获取数据所在的Redis服务器主机 </p>
+     * 获取数据所在的Redis服务器主机
      *
      * @param key 数据键
      * @return 数据所在的Redis服务器主机
@@ -103,7 +103,7 @@ public abstract class FleaRedisClient implements RedisClient {
     }
 
     /**
-     * <p> 获取数据所在的Redis服务器主机端口 </p>
+     * 获取数据所在的Redis服务器主机端口
      *
      * @param key 数据键
      * @return 数据所在的Redis服务器主机端口
@@ -118,7 +118,7 @@ public abstract class FleaRedisClient implements RedisClient {
     }
 
     /**
-     * <p> 获取客户端类 </p>
+     * 获取客户端类
      *
      * @param key 数据键
      * @return 客户端类

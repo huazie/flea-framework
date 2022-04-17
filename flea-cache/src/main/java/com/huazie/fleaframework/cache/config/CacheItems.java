@@ -26,7 +26,7 @@ public class CacheItems extends ConfigKey {
     }
 
     /**
-     * <p> 添加一个缓存配置项 </p>
+     * 添加一个缓存配置项
      *
      * @param cacheItem 缓存配置项
      * @since 1.0.0
@@ -36,7 +36,7 @@ public class CacheItems extends ConfigKey {
     }
 
     /**
-     * <p> 根据Key获取指定的缓存配置项 </p>
+     * 根据Key获取指定的缓存配置项
      *
      * @param key 配置项键
      * @return 缓存配置项
@@ -52,7 +52,7 @@ public class CacheItems extends ConfigKey {
     }
 
     /**
-     * <p> 获取指定配置项集中的配置项的Map，便于根据各配置项key查找 </p>
+     * 获取指定配置项集中的配置项的Map，便于根据各配置项key查找
      *
      * @return 配置项的Map
      * @since 1.0.0

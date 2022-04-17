@@ -54,7 +54,7 @@ public class RedisClusterPool {
     }
 
     /**
-     * <p> 获取Redis集群连接池实例 (默认连接池) </p>
+     * 获取Redis集群连接池实例 (默认连接池)
      *
      * @return Redis集群连接池实例对象
      * @since 1.1.0
@@ -64,7 +64,7 @@ public class RedisClusterPool {
     }
 
     /**
-     * <p> 获取Redis集群连接池实例 (指定连接池名)</p>
+     * 获取Redis集群连接池实例 (指定连接池名)
      *
      * @param poolName 连接池名
      * @return Redis集群连接池实例
@@ -83,7 +83,7 @@ public class RedisClusterPool {
     }
 
     /**
-     * <p> 默认初始化 </p>
+     * 默认初始化
      *
      * @since 1.1.0
      */
@@ -115,7 +115,7 @@ public class RedisClusterPool {
     }
 
     /**
-     * <p> 初始化 (非默认连接池) </p>
+     * 初始化 (非默认连接池)
      *
      * @param cacheServerList 缓存服务器集
      * @since 1.1.0
@@ -177,7 +177,7 @@ public class RedisClusterPool {
     }
 
     /**
-     * <p> 获取当前连接池名 </p>
+     * 获取当前连接池名
      *
      * @return 连接池名
      * @since 1.1.0
@@ -187,7 +187,7 @@ public class RedisClusterPool {
     }
 
     /**
-     * <p> 获取Jedis集群实例对象 </p>
+     * 获取Jedis集群实例对象
      *
      * @return Jedis集群实例对象
      * @since 1.1.0

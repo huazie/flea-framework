@@ -64,7 +64,7 @@ public abstract class AbstractSpringCacheManager extends AbstractTransactionSupp
     protected abstract AbstractSpringCache newCache(String name, int expiry);
 
     /**
-     * <p> 设置各缓存有效期配置Map </p>
+     * 设置各缓存有效期配置Map
      *
      * @param configMap 有效期配置Map
      * @since 1.0.0

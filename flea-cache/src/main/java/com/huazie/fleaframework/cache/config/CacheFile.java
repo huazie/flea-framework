@@ -38,7 +38,7 @@ public class CacheFile {
     }
 
     /**
-     * <p> 添加一个需要过滤的缓存key配置 </p>
+     * 添加一个需要过滤的缓存key配置
      *
      * @param execution 要过滤的缓存key
      * @since 1.0.0
@@ -50,7 +50,7 @@ public class CacheFile {
     }
 
     /**
-     * <p> 判断是否包含指定缓存键</p>
+     * 判断是否包含指定缓存键
      *
      * @param cacheKey 指定缓存键
      * @return true：包含; false: 不包含.
@@ -65,7 +65,7 @@ public class CacheFile {
     }
 
     /**
-     * <p> 获取缓存文件中Flea缓存集中的配置项的Map，便于根据各缓存数据key查找 </p>
+     * 获取缓存文件中Flea缓存集中的配置项的Map，便于根据各缓存数据key查找
      *
      * @return Flea缓存的Map
      * @since 1.0.0
@@ -83,7 +83,7 @@ public class CacheFile {
     }
 
     /**
-     * <p> 根据缓存数据键Key获取指定的Flea缓存 </p>
+     * 根据缓存数据键Key获取指定的Flea缓存
      *
      * @param key 缓存数据键
      * @return Flea缓存

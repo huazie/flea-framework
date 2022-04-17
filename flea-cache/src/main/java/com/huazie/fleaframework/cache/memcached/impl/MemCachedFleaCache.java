@@ -37,7 +37,7 @@ public class MemCachedFleaCache extends AbstractFleaCache {
     private final MemCachedClient memCachedClient;  // MemCached客户端
 
     /**
-     * <p> 初始化MemCached Flea缓存类 </p>
+     * 初始化MemCached Flea缓存类
      *
      * @param name            缓存数据主关键字
      * @param expiry          缓存数据有效期（单位：s）

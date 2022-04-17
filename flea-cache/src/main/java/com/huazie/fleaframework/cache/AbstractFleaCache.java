@@ -126,7 +126,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
     }
 
     /**
-     * <p> 将指定数据键关键字{@code key}记录到当前Cache所有数据键关键字的缓存中 </p>
+     * 将指定数据键关键字{@code key}记录到当前Cache所有数据键关键字的缓存中
      *
      * @param key 指定Cache的数据键关键字
      * @since 1.0.0
@@ -146,7 +146,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
     }
 
     /**
-     * <p> 从 记录当前Cache所有数据键关键字 的缓存中 删除指定数据键关键字{@code key} </p>
+     * 从 记录当前Cache所有数据键关键字 的缓存中 删除指定数据键关键字{@code key}
      *
      * @param key 指定Cache的数据键关键字
      * @since 1.0.0
@@ -181,7 +181,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
     }
 
     /**
-     * <p> 删除 记录当前Cache所有数据键关键字 的缓存 </p>
+     * 删除 记录当前Cache所有数据键关键字 的缓存
      *
      * @since 1.0.0
      */
@@ -224,7 +224,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
     }
 
     /**
-     * <p> 获取缓存值 </p>
+     * 获取缓存值
      *
      * @param key 缓存数据键关键字
      * @return 缓存值
@@ -233,7 +233,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
     public abstract Object getNativeValue(String key);
 
     /**
-     * <p> 添加缓存数据 </p>
+     * 添加缓存数据
      *
      * @param key    缓存数据键关键字
      * @param value  缓存值
@@ -243,7 +243,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
     public abstract Object putNativeValue(String key, Object value, int expiry);
 
     /**
-     * <p> 删除指定缓存数据 </p>
+     * 删除指定缓存数据
      *
      * @param key 缓存数据键关键字
      * @since 1.0.0
@@ -251,7 +251,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
     public abstract Object deleteNativeValue(String key);
 
     /**
-     * <p> 获取实际存储的缓存键【缓存所属系统名 + 缓存名（缓存数据主关键字）+ 缓存数据键（缓存数据关键字）】 </p>
+     * 获取实际存储的缓存键【缓存所属系统名 + 缓存名（缓存数据主关键字）+ 缓存数据键（缓存数据关键字）】
      *
      * @param key 缓存数据键关键字
      * @return 实际存储的缓存键
@@ -262,7 +262,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
     }
 
     /**
-     * <p> 获取缓存主键【包含缓存所属系统名 + 缓存名（缓存数据主关键字）】 </p>
+     * 获取缓存主键【包含缓存所属系统名 + 缓存名（缓存数据主关键字）】
      *
      * @param name 缓存名【缓存数据主关键字】
      * @return 缓存主键【缓存所属系统名 + 缓存名（缓存数据主关键字）】
@@ -273,7 +273,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
     }
 
     /**
-     * <p> 获取缓存数据主关键字 </p>
+     * 获取缓存数据主关键字
      *
      * @return 缓存数据主关键字
      * @since 1.0.0
@@ -283,7 +283,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
     }
 
     /**
-     * <p> 获取缓存数据有效期（单位：s） </p>
+     * 获取缓存数据有效期（单位：s）
      *
      * @return 缓存数据有效期（单位：s）
      * @since 1.0.0
@@ -293,7 +293,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
     }
 
     /**
-     * <p> 获取空缓存数据有效期（单位：s） </p>
+     * 获取空缓存数据有效期（单位：s）
      *
      * @return 空缓存数据有效期（单位：s）
      * @since 1.0.0

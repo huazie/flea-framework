@@ -42,7 +42,6 @@ public class RedisClusterFleaCacheBuilder implements IFleaCacheBuilder {
     public AbstractFleaCache build(String name, List<CacheServer> cacheServerList) {
         if (CollectionUtils.isEmpty(cacheServerList)) {
             ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "无法初始化集群模式下Redis Flea缓存，缓存服务器列表【cacheServerList】为空");
-
         }
         // 获取缓存数据有效期（单位：s）
         int expiry = CacheConfigUtils.getExpiry(name);

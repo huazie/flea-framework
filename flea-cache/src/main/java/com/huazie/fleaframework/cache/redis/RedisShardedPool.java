@@ -54,7 +54,7 @@ public class RedisShardedPool {
     }
 
     /**
-     * <p> 获取Redis连接池实例 (默认连接池) </p>
+     * 获取Redis连接池实例 (默认连接池)
      *
      * @return Redis连接池实例对象
      * @since 1.0.0
@@ -64,7 +64,7 @@ public class RedisShardedPool {
     }
 
     /**
-     * <p> 获取Redis连接池实例 (指定连接池名) </p>
+     * 获取Redis连接池实例 (指定连接池名)
      *
      * @param poolName 连接池名
      * @return Redis连接池实例对象
@@ -83,7 +83,7 @@ public class RedisShardedPool {
     }
 
     /**
-     * <p> 默认初始化 </p>
+     * 默认初始化
      *
      * @since 1.0.0
      */
@@ -98,7 +98,7 @@ public class RedisShardedPool {
     }
 
     /**
-     * <p> 初始化 (非默认连接池) </p>
+     * 初始化 (非默认连接池)
      *
      * @param cacheServerList 缓存服务器集
      * @since 1.0.0
@@ -180,7 +180,7 @@ public class RedisShardedPool {
     }
 
     /**
-     * <p> 获取当前连接池名 </p>
+     * 获取当前连接池名
      *
      * @return 连接池名
      * @since 1.0.0
@@ -190,7 +190,7 @@ public class RedisShardedPool {
     }
 
     /**
-     * <p> 分布式Jedis连接池 </p>
+     * 分布式Jedis连接池
      *
      * @return 分布式Jedis连接池
      * @since 1.0.0

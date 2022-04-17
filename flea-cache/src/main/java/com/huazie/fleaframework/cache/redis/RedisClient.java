@@ -45,7 +45,7 @@ import redis.clients.jedis.params.SetParams;
 public interface RedisClient {
 
     /**
-     * <p> 往Redis塞数据 </p>
+     * 往Redis塞数据
      *
      * @param key   数据键
      * @param value 数据值
@@ -55,7 +55,7 @@ public interface RedisClient {
     String set(final String key, final Object value);
 
     /**
-     * <p> 往Redis赛数据（用于序列化对象） </p>
+     * 往Redis赛数据（用于序列化对象）
      *
      * @param key   数据键
      * @param value 数据值
@@ -65,8 +65,7 @@ public interface RedisClient {
     String set(final byte[] key, final byte[] value);
 
     /**
-     * <p> 往Redis塞数据 (可以带有效期) </p>
-     * <p> 注意 ： (单位：s)</p>
+     * 往Redis塞数据 (带有效期)
      *
      * @param key    数据键
      * @param value  数据值
@@ -77,8 +76,7 @@ public interface RedisClient {
     String set(final String key, final Object value, final int expiry);
 
     /**
-     * <p> 往Redis塞数据 (可以带有效期，用于序列化对象) </p>
-     * <p> 注意 ： (单位：s)</p>
+     * 往Redis塞数据 (带有效期，用于序列化对象)
      *
      * @param key    数据键
      * @param value  数据值
@@ -89,8 +87,7 @@ public interface RedisClient {
     String set(final byte[] key, final byte[] value, final int expiry);
 
     /**
-     * <p> 往Redis塞数据 (可以带有效期) </p>
-     * <p> 注意：（单位：ms） </p>
+     * 往Redis塞数据 (带有效期)
      *
      * @param key    数据键
      * @param value  数据值
@@ -101,8 +98,7 @@ public interface RedisClient {
     String set(final String key, final Object value, final long expiry);
 
     /**
-     * <p> 往Redis塞数据 (可以带有效期，用于序列化对象) </p>
-     * <p> 注意：（单位：ms） </p>
+     * 往Redis塞数据 (带有效期，用于序列化对象)
      *
      * @param key    数据键
      * @param value  数据值
@@ -113,7 +109,7 @@ public interface RedisClient {
     String set(final byte[] key, final byte[] value, final long expiry);
 
     /**
-     * <p> 往Redis塞数据 (带参数) </p>
+     * 往Redis塞数据 (带参数)
      *
      * @param key    数据键
      * @param value  数据值
@@ -124,7 +120,7 @@ public interface RedisClient {
     String set(final String key, final Object value, final SetParams params);
 
     /**
-     * <p> 往Redis塞数据 (带参数，用于序列化对象) </p>
+     * 往Redis塞数据 (带参数，用于序列化对象)
      *
      * @param key    数据键
      * @param value  数据值
@@ -135,7 +131,7 @@ public interface RedisClient {
     String set(final byte[] key, final byte[] value, final SetParams params);
 
     /**
-     * <p> 从Redis取数据 </p>
+     * 从Redis取数据
      *
      * @param key 数据键
      * @return 数据值
@@ -144,7 +140,7 @@ public interface RedisClient {
     Object get(final String key);
 
     /**
-     * <p> 从Redis取数据（用于获取序列化对象） </p>
+     * 从Redis取数据（用于获取序列化对象）
      *
      * @param key 数据键
      * @return 数据值
@@ -153,7 +149,7 @@ public interface RedisClient {
     byte[] get(final byte[] key);
 
     /**
-     * <p> 从Redis中删除数据 </p>
+     * 从Redis中删除数据
      *
      * @param key 数据键
      * @return 被删除key的数量
@@ -162,7 +158,7 @@ public interface RedisClient {
     Long del(final String key);
 
     /**
-     * <p> 获取数据所在的Redis服务器ip(主机地址+端口) </p>
+     * 获取数据所在的Redis服务器ip(主机地址+端口)
      *
      * @param key 数据键
      * @return 当前数据所在的Redis服务器ip
@@ -171,7 +167,7 @@ public interface RedisClient {
     String getLocation(final String key);
 
     /**
-     * <p> 获取数据所在的Redis服务器ip(主机地址+端口) </p>
+     * 获取数据所在的Redis服务器ip(主机地址+端口)
      *
      * @param key 数据键(字节数组)
      * @return 当前数据所在的Redis服务器ip
@@ -180,7 +176,7 @@ public interface RedisClient {
     String getLocation(final byte[] key);
 
     /**
-     * <p> 获取数据所在的Redis服务器主机 </p>
+     * 获取数据所在的Redis服务器主机
      *
      * @param key 数据键
      * @return 数据所在的Redis服务器主机
@@ -189,7 +185,7 @@ public interface RedisClient {
     String getHost(final String key);
 
     /**
-     * <p> 获取数据所在的Redis服务器主机 </p>
+     * 获取数据所在的Redis服务器主机
      *
      * @param key 数据键(字节数组)
      * @return 数据所在的Redis服务器主机
@@ -198,7 +194,7 @@ public interface RedisClient {
     String getHost(final byte[] key);
 
     /**
-     * <p> 获取数据所在的Redis服务器主机端口 </p>
+     * 获取数据所在的Redis服务器主机端口
      *
      * @param key 数据键
      * @return 数据所在的Redis服务器主机端口
@@ -207,7 +203,7 @@ public interface RedisClient {
     Integer getPort(final String key);
 
     /**
-     * <p> 获取数据所在的Redis服务器主机端口 </p>
+     * 获取数据所在的Redis服务器主机端口
      *
      * @param key 数据键(字节数组)
      * @return 数据所在的Redis服务器主机端口
@@ -216,7 +212,7 @@ public interface RedisClient {
     Integer getPort(final byte[] key);
 
     /**
-     * <p> 获取数据所在的客户端类 </p>
+     * 获取数据所在的客户端类
      *
      * @param key 数据键
      * @return 数据所在的客户端类
@@ -225,7 +221,7 @@ public interface RedisClient {
     Client getClient(final String key);
 
     /**
-     * <p> 获取数据所在的客户端类 </p>
+     * 获取数据所在的客户端类
      *
      * @param key 数据键
      * @return 数据所在的客户端类
@@ -234,7 +230,7 @@ public interface RedisClient {
     Client getClient(final byte[] key);
 
     /**
-     * <p> 获取连接池名 </p>
+     * 获取连接池名
      *
      * @return 连接池名
      * @since 1.0.0
