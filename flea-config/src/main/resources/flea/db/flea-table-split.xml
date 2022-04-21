@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <flea-table-split>
-	<tables>
-		<!-- 定义分表配置
+    <tables>
+        <!-- 定义分表配置
             name : 分表对应的模板表名
             lib  : 分表对应模板库名
             exp  : 分表名表达式 (FLEA_TABLE_NAME)_(列名大写)_(列名大写)
         -->
-		<table name="flea_file_info" lib="fleafs" exp="(FLEA_TABLE_NAME)_(FILE_ID)" desc="Flea文件信息表分表规则">
-			<splits>
-				<!-- 定义分表转换实现
+        <table name="flea_file_info" lib="fleafs" exp="(FLEA_TABLE_NAME)_(FILE_ID)" desc="Flea文件信息表分表规则">
+            <splits>
+                <!-- 定义分表转换实现
                     key    : 分表转换类型关键字【可查看 TableSplitEnum】
                     column : 分表属性列字段名
                     seq    : 分库序列键【若不为空，值需对应flea-lib-split.xml中<split seq="SEQ" />】
@@ -18,12 +18,12 @@
                     （2）key为空，implClass必填
                     （3）key 和 implClass 都不为空，implClass需要和分表转换类型枚举中分表转换实现类对应上
                 -->
-				<split key="TWO" column="file_id" seq="SEQ" />
-			</splits>
-		</table>
-	</tables>
+                <split key="TWO" column="file_id" seq="SEQ"/>
+            </splits>
+        </table>
+    </tables>
 
-	<!-- flea-auth 授权模块分表配置文件引入 -->
-	<import resource="flea/db/flea-auth-table-split.xml"/>
+    <!-- flea-auth 授权模块分表配置文件引入 -->
+    <import resource="flea/db/flea-auth-table-split.xml"/>
 
 </flea-table-split>

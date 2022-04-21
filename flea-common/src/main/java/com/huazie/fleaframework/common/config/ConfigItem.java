@@ -3,7 +3,8 @@ package com.huazie.fleaframework.common.config;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
- * <p> 配置项 </p>
+ * 配置项，可在【flea-config.xml】文件中
+ * 查看 {@code <config-item />} 节点。
  *
  * @author huazie
  * @version 1.0.0

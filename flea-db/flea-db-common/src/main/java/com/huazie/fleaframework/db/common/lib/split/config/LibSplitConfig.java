@@ -1,7 +1,5 @@
 package com.huazie.fleaframework.db.common.lib.split.config;
 
-import com.huazie.fleaframework.common.slf4j.FleaLogger;
-import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.db.common.DBXmlDigesterHelper;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -15,13 +13,9 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  */
 public class LibSplitConfig {
 
-    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(LibSplitConfig.class);
-
     private static volatile LibSplitConfig config;
 
     private FleaLibSplit fleaLibSplit; // Flea分库定义
-
-    private Libs libs;    // 分库配置集合定义类
 
     private LibSplitConfig() {
         this.fleaLibSplit = DBXmlDigesterHelper.getInstance().getFleaLibSplit();
@@ -67,12 +61,11 @@ public class LibSplitConfig {
                 }
             }
         }
-
         return lib;
     }
 
-    public Libs getLibs() {
-        return libs;
+    public FleaLibSplit getFleaLibSplit() {
+        return fleaLibSplit;
     }
 
     @Override

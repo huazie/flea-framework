@@ -1,22 +1,20 @@
 package com.huazie.fleaframework.cache.config;
 
-import com.huazie.fleaframework.common.util.MapUtils;
+import com.huazie.fleaframework.common.config.ConfigMap;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 缓存参数集，对应【flea-cache-config.xml】中
  * 【{@code <cache-params> </cache-params>}】
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
-public class CacheParams {
+public class CacheParams extends ConfigMap<CacheParam> {
 
     private List<CacheParam> cacheParamList = new ArrayList<>(); // 缓存参数集中的各个缓存参数
 
@@ -34,6 +32,16 @@ public class CacheParams {
         cacheParamList.add(cacheParam);
     }
 
+    @Override
+    protected List<CacheParam> getConfigList() {
+        return cacheParamList;
+    }
+
+    @Override
+    protected String getConfigKey(CacheParam cacheParam) {
+        return cacheParam.getKey();
+    }
+
     /**
      * 从指定缓存参数集，根据Key获取指定的缓存参数
      *
@@ -42,26 +50,7 @@ public class CacheParams {
      * @since 1.0.0
      */
     public CacheParam getCacheParam(String key) {
-        CacheParam cacheParam = null;
-        Map<String, CacheParam> cacheParamMap = toCacheParamMap();
-        if (MapUtils.isNotEmpty(cacheParamMap)) {
-            cacheParam = cacheParamMap.get(key);
-        }
-        return cacheParam;
-    }
-
-    /**
-     * 获取指定配置项列表中的配置项的Map，便于根据各配置项key查找
-     *
-     * @return 配置项的Map
-     * @since 1.0.0
-     */
-    private Map<String, CacheParam> toCacheParamMap() {
-        Map<String, CacheParam> cacheParamMap = new HashMap<>();
-        for (CacheParam cacheParam : cacheParamList) {
-            cacheParamMap.put(cacheParam.getKey(), cacheParam);
-        }
-        return cacheParamMap;
+        return getConfig(key);
     }
 
     @Override

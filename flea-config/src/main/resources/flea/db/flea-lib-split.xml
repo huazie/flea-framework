@@ -11,7 +11,7 @@
                 name : 模板事物名
                 exp  : 分库事物名表达式 (模板事物名)(分库序列键)
             -->
-            <transaction name="fleaFSTransactionManager" exp="(FLEA_TRANSACTION_NAME)(SEQ)" />
+            <transaction name="fleaFSTransactionManager" exp="(FLEA_TRANSACTION_NAME)(SEQ)"/>
             <splits>
                 <!-- 分库转换实现配置
                     key : 分库转换类型关键字【可查看 LibSplitEnum】
