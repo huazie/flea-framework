@@ -1,21 +1,19 @@
 package com.huazie.fleaframework.common.config;
 
-import com.huazie.fleaframework.common.util.MapUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
- * <p> 配置项列表 </p>
+ * 配置项集，可在【flea-config.xml】文件中查看
+ * {@code <config-items> </config-items> }节点。
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
-public class ConfigItems extends ConfigKey {
+public class ConfigItems extends ConfigKeyMap<ConfigItem> {
 
     private List<ConfigItem> configItemList = new ArrayList<>(); // 配置项列表中的各个配置项
 
@@ -33,18 +31,14 @@ public class ConfigItems extends ConfigKey {
         configItemList.add(configItem);
     }
 
-    /**
-     * <p> 获取指定配置项列表中的配置项的Map，便于根据各配置项key查找 </p>
-     *
-     * @return 配置项的Map
-     * @since 1.0.0
-     */
-    public Map<String, ConfigItem> toConfigItemMap() {
-        Map<String, ConfigItem> configItemMap = new HashMap<>();
-        for (ConfigItem configItem : configItemList) {
-            configItemMap.put(configItem.getKey(), configItem);
-        }
-        return configItemMap;
+    @Override
+    protected List<ConfigItem> getConfigList() {
+        return configItemList;
+    }
+
+    @Override
+    protected String getConfigKey(ConfigItem configItem) {
+        return configItem.getKey();
     }
 
     /**
@@ -55,12 +49,7 @@ public class ConfigItems extends ConfigKey {
      * @since 1.0.0
      */
     public ConfigItem getConfigItem(String key) {
-        ConfigItem configItem = null;
-        Map<String, ConfigItem> configItemMap = toConfigItemMap();
-        if (MapUtils.isNotEmpty(configItemMap)) {
-            configItem = configItemMap.get(key);
-        }
-        return configItem;
+        return getConfig(key);
     }
 
     @Override

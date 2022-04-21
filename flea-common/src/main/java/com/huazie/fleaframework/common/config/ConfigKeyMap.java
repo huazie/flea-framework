@@ -1,15 +1,13 @@
 package com.huazie.fleaframework.common.config;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-
 /**
- * 配置键
+ * 配置键 Map
  *
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0
  */
-public class ConfigKey {
+public abstract class ConfigKeyMap<T> extends ConfigMap<T> {
 
     private String key; // 配置键
 
@@ -31,8 +29,4 @@ public class ConfigKey {
         this.desc = desc;
     }
 
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 }

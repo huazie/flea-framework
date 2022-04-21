@@ -1,10 +1,8 @@
 package com.huazie.fleaframework.db.common.lib.split.config;
 
-import com.huazie.fleaframework.common.util.ObjectUtils;
+import com.huazie.fleaframework.common.config.ConfigMap;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 分库配置 Map
@@ -13,26 +11,18 @@ import java.util.Map;
  * @version 2.0.0
  * @since 2.0.0
  */
-public abstract class LibMap {
-
-    private Map<String, Lib> libMap = null;
+public abstract class LibMap extends ConfigMap<Lib> {
 
     public abstract List<Lib> getLibList();
 
-    /**
-     * 获取各分库配置定义
-     *
-     * @return 各分库配置定义集合
-     * @since 2.0.0
-     */
-    public Map<String, Lib> toLibMap() {
-        if (ObjectUtils.isEmpty(libMap)) {
-            libMap = new HashMap<>();
-            for (Lib lib : getLibList()) {
-                libMap.put(lib.getName(), lib);
-            }
-        }
-        return libMap;
+    @Override
+    protected List<Lib> getConfigList() {
+        return getLibList();
+    }
+
+    @Override
+    protected String getConfigKey(Lib lib) {
+        return lib.getName();
     }
 
     /**
@@ -43,6 +33,6 @@ public abstract class LibMap {
      * @since 2.0.0
      */
     public Lib getFleaLib(String name) {
-        return toLibMap().get(name);
+        return getConfig(name);
     }
 }

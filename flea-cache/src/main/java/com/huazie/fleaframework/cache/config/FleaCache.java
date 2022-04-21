@@ -1,5 +1,6 @@
 package com.huazie.fleaframework.cache.config;
 
+import com.huazie.fleaframework.common.util.xml.ImportList;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
@@ -10,7 +11,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class FleaCache {
+public class FleaCache extends ImportList {
 
     private Caches caches; // Flea缓存集
 

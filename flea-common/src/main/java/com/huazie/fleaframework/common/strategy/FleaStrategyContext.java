@@ -3,6 +3,7 @@ package com.huazie.fleaframework.common.strategy;
 import com.huazie.fleaframework.common.exception.FleaStrategyException;
 import com.huazie.fleaframework.common.exception.FleaStrategyNotFoundException;
 import com.huazie.fleaframework.common.util.ExceptionUtils;
+import com.huazie.fleaframework.common.util.MapUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 
 import java.util.Map;
@@ -54,7 +55,7 @@ public abstract class FleaStrategyContext<T, P> implements IFleaStrategyContext<
 
     @Override
     public T invoke(String strategy) throws FleaStrategyException {
-        if (ObjectUtils.isEmpty(fleaStrategyMap)) {
+        if (MapUtils.isEmpty(fleaStrategyMap)) {
             ExceptionUtils.throwFleaException(FleaStrategyException.class, "The Strategy Map is not initialized!");
         }
         IFleaStrategy<T, P> fleaStrategy = fleaStrategyMap.get(strategy);

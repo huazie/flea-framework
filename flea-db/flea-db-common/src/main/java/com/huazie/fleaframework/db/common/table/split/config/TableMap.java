@@ -1,10 +1,8 @@
 package com.huazie.fleaframework.db.common.table.split.config;
 
-import com.huazie.fleaframework.common.util.ObjectUtils;
+import com.huazie.fleaframework.common.config.ConfigMap;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 分表配置 Map
@@ -13,26 +11,18 @@ import java.util.Map;
  * @version 2.0.0
  * @since 2.0.0
  */
-public abstract class TableMap {
-
-    private Map<String, Table> tableMap = null; // 分表配置文件中分表配置Map
+public abstract class TableMap extends ConfigMap<Table> {
 
     public abstract List<Table> getTableList();
 
-    /**
-     * 获取分表配置文件中分表配置定义的Map，便于根据各模板表名查找
-     *
-     * @return 分表配置定义的Map
-     * @since 2.0.0
-     */
-    public Map<String, Table> toTableMap() {
-        if (ObjectUtils.isEmpty(tableMap)) {
-            tableMap = new HashMap<>();
-            for (Table table : getTableList()) {
-                tableMap.put(table.getName(), table);
-            }
-        }
-        return tableMap;
+    @Override
+    protected List<Table> getConfigList() {
+        return getTableList();
+    }
+
+    @Override
+    protected String getConfigKey(Table table) {
+        return table.getName();
     }
 
     /**
@@ -43,6 +33,6 @@ public abstract class TableMap {
      * @since 2.0.0
      */
     public Table getFleaTable(String name) {
-        return toTableMap().get(name);
+        return getConfig(name);
     }
 }

@@ -100,6 +100,7 @@ public class LibSplitTest {
 
     @Test
     public void testLibSplitConfig() {
-        LOGGER.debug("Libs = {}", LibSplitConfig.getConfig().getLibs());
+        LOGGER.debug("Libs = {}", LibSplitConfig.getConfig().getFleaLibSplit());
+        LOGGER.debug("Lib = {}", LibSplitConfig.getConfig().getLib("fleafs"));
     }
 }

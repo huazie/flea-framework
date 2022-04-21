@@ -23,6 +23,7 @@ import com.huazie.fleaframework.common.util.CollectionUtils;
 import com.huazie.fleaframework.common.util.ExceptionUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
+import com.huazie.fleaframework.common.util.xml.Import;
 import com.huazie.fleaframework.common.util.xml.XmlDigesterHelper;
 import org.apache.commons.digester.Digester;
 
@@ -33,7 +34,7 @@ import java.util.List;
  * 【flea-cache.xml】和缓存配置文件【flea-cache-config.xml】
  *
  * @author huazie
- * @version 1.1.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 public class CacheXmlDigesterHelper {
@@ -85,11 +86,7 @@ public class CacheXmlDigesterHelper {
         if (ObjectUtils.isEmpty(fleaCache)) {
             synchronized (fleaCacheInitLock) {
                 if (ObjectUtils.isEmpty(fleaCache)) {
-                    try {
-                        fleaCache = newFleaCache();
-                    } catch (Exception e) {
-                        ExceptionUtils.throwFleaException(FleaCacheConfigException.class, e);
-                    }
+                    fleaCache = newFleaCache();
                 }
             }
         }
@@ -112,27 +109,30 @@ public class CacheXmlDigesterHelper {
         }
 
         Digester digester = newFleaCacheFileDigester();
-        FleaCache obj = XmlDigesterHelper.parse(fileName, digester, FleaCache.class);
+        FleaCache fleaCache = XmlDigesterHelper.parse(fileName, digester, FleaCache.class);
 
-        if (ObjectUtils.isNotEmpty(obj)) {
-            CacheFiles cacheFiles = obj.getCacheFiles();
-            if (ObjectUtils.isNotEmpty(cacheFiles)) {
-                List<CacheFile> cacheFileList = cacheFiles.getCacheFiles();
-                if (CollectionUtils.isNotEmpty(cacheFileList)) {
-                    for (CacheFile cacheFile : cacheFileList) {
-                        if (ObjectUtils.isNotEmpty(cacheFile)) {
-                            // 解析其他缓存定义配置文件
-                            FleaCache other = XmlDigesterHelper.parse(cacheFile.getLocation(), digester, FleaCache.class);
-                            if (ObjectUtils.isNotEmpty(other)) {
-                                Caches otherCaches = other.getCaches();
-                                if (ObjectUtils.isNotEmpty(otherCaches)) {
-                                    // 添加Flea缓存至缓存文件对象中
-                                    cacheFile.setCacheList(otherCaches.getCacheList());
-                                }
+        if (ObjectUtils.isNotEmpty(fleaCache)) {
+            List<Import> importList = fleaCache.getImportList();
+            if (CollectionUtils.isNotEmpty(importList)) {
+                CacheFiles cacheFiles = new CacheFiles();
+                for (Import mImport : importList) {
+                    if (ObjectUtils.isNotEmpty(mImport)) {
+                        String resource = mImport.getResource();
+                        // 解析其他缓存定义配置文件
+                        FleaCache other = XmlDigesterHelper.parse(resource, digester, FleaCache.class);
+                        if (ObjectUtils.isNotEmpty(other)) {
+                            CacheFile cacheFile = new CacheFile();
+                            cacheFile.setLocation(resource);
+                            Caches otherCaches = other.getCaches();
+                            if (ObjectUtils.isNotEmpty(otherCaches)) {
+                                // 添加Flea缓存至缓存文件对象中
+                                cacheFile.setCacheList(otherCaches.getCacheList());
                             }
+                            cacheFiles.addCacheFile(cacheFile);
                         }
                     }
                 }
+                fleaCache.setCacheFiles(cacheFiles);
             }
         }
 
@@ -140,7 +140,7 @@ public class CacheXmlDigesterHelper {
             LOGGER.debug("End to parse the flea-cache.xml");
         }
 
-        return obj;
+        return fleaCache;
     }
 
     /**
@@ -166,17 +166,11 @@ public class CacheXmlDigesterHelper {
         digester.addSetNext("flea-cache/caches", "setCaches", Caches.class.getName());
         digester.addSetNext("flea-cache/caches/cache", "addFleaCache", Cache.class.getName());
 
-        // 其他缓存定义配置文件集
-        digester.addObjectCreate("flea-cache/cache-files", CacheFiles.class.getName());
-        digester.addSetProperties("flea-cache/cache-files");
+        // 其他缓存定义文件资源导入
+        digester.addObjectCreate("flea-cache/import", Import.class.getName());
+        digester.addSetProperties("flea-cache/import");
+        digester.addSetNext("flea-cache/import", "addImport", Import.class.getName());
 
-        digester.addObjectCreate("flea-cache/cache-files/cache-file", CacheFile.class.getName());
-        digester.addSetProperties("flea-cache/cache-files/cache-file");
-
-        digester.addSetNext("flea-cache/cache-files", "setCacheFiles", CacheFiles.class.getName());
-        digester.addSetNext("flea-cache/cache-files/cache-file", "addCacheFile", CacheFile.class.getName());
-        digester.addCallMethod("flea-cache/cache-files/cache-file/location", "setLocation", 0);
-        digester.addCallMethod("flea-cache/cache-files/cache-file/executions/execution", "addExecution", 0);
         return digester;
     }
 
