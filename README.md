@@ -1,4 +1,4 @@
-# Flea Framework
+# <img src="src/docs/flea-framework.png" width="80" height="80"> Flea Framework
 
 ## 介绍
 Flea框架，包含授权操作，缓存处理，通用处理，数据库操作，Flea Jersey客户端和服务端。
