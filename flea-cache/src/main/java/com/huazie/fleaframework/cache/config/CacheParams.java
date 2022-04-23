@@ -30,11 +30,7 @@ public class CacheParams extends ConfigMap<CacheParam> {
      */
     public void addCacheParam(CacheParam cacheParam) {
         cacheParamList.add(cacheParam);
-    }
-
-    @Override
-    protected List<CacheParam> getConfigList() {
-        return cacheParamList;
+        addConfig(cacheParam);
     }
 
     @Override

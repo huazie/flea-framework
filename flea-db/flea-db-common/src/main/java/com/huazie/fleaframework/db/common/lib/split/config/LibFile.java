@@ -29,9 +29,9 @@ public class LibFile extends LibMap {
 
     public void setLibList(List<Lib> libList) {
         this.libList = libList;
+        addConfigList(libList);
     }
 
-    @Override
     public List<Lib> getLibList() {
         return libList;
     }

@@ -2,8 +2,6 @@ package com.huazie.fleaframework.db.common.lib.split.config;
 
 import com.huazie.fleaframework.common.config.ConfigMap;
 
-import java.util.List;
-
 /**
  * 分库配置 Map
  *
@@ -12,13 +10,6 @@ import java.util.List;
  * @since 2.0.0
  */
 public abstract class LibMap extends ConfigMap<Lib> {
-
-    public abstract List<Lib> getLibList();
-
-    @Override
-    protected List<Lib> getConfigList() {
-        return getLibList();
-    }
 
     @Override
     protected String getConfigKey(Lib lib) {

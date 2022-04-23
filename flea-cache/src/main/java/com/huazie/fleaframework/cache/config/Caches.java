@@ -17,7 +17,6 @@ public class Caches extends CacheMap {
 
     private List<Cache> cacheList = new ArrayList<>(); // Flea缓存集中的各个Flea缓存
 
-    @Override
     public List<Cache> getCacheList() {
         return cacheList;
     }
@@ -30,11 +29,7 @@ public class Caches extends CacheMap {
      */
     public void addFleaCache(Cache cache) {
         cacheList.add(cache);
-    }
-
-    @Override
-    protected List<Cache> getConfigList() {
-        return cacheList;
+        addConfig(cache);
     }
 
     @Override

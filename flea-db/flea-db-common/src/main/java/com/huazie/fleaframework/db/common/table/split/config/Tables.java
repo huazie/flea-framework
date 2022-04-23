@@ -16,13 +16,19 @@ public class Tables extends TableMap {
 
     private List<Table> tableList = new ArrayList<>();
 
-    @Override
     public List<Table> getTableList() {
         return tableList;
     }
 
+    /**
+     * 添加分表配置
+     *
+     * @param table 分表配置
+     * @since 2.0.0
+     */
     public void addTable(Table table) {
         tableList.add(table);
+        addConfig(table);
     }
 
     @Override

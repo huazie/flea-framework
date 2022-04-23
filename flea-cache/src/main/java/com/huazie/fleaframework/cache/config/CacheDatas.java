@@ -30,11 +30,7 @@ public class CacheDatas extends ConfigMap<CacheData> {
      */
     public void addCacheData(CacheData cacheData) {
         cacheDataList.add(cacheData);
-    }
-
-    @Override
-    protected List<CacheData> getConfigList() {
-        return cacheDataList;
+        addConfig(cacheData);
     }
 
     @Override

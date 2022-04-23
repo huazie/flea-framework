@@ -2,8 +2,6 @@ package com.huazie.fleaframework.db.common.table.split.config;
 
 import com.huazie.fleaframework.common.config.ConfigMap;
 
-import java.util.List;
-
 /**
  * 分表配置 Map
  *
@@ -12,13 +10,6 @@ import java.util.List;
  * @since 2.0.0
  */
 public abstract class TableMap extends ConfigMap<Table> {
-
-    public abstract List<Table> getTableList();
-
-    @Override
-    protected List<Table> getConfigList() {
-        return getTableList();
-    }
 
     @Override
     protected String getConfigKey(Table table) {
