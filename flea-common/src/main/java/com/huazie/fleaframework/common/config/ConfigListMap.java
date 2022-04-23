@@ -16,15 +16,7 @@ import java.util.Map;
  */
 public abstract class ConfigListMap<T> {
 
-    private Map<String, List<T>> configListMap = null; // 配置数据集 Map
-
-    /**
-     * 获取配置数据集合
-     *
-     * @return 配置数据集合
-     * @since 2.0.0
-     */
-    protected abstract List<T> getConfigList();
+    private Map<String, List<T>> configListMap = new HashMap<>(); // 配置数据集 Map
 
     /**
      * 获取配置数据键
@@ -35,40 +27,34 @@ public abstract class ConfigListMap<T> {
     protected abstract String getConfigKey(T t);
 
     /**
-     * 获取配置数据Map
+     * 添加配置数据
      *
-     * @return 配置数据Map
+     * @param config 配置数据
      * @since 2.0.0
      */
-    public Map<String, List<T>> toConfigListMap() {
-        if (ObjectUtils.isEmpty(configListMap)) {
-            configListMap = new HashMap<>();
-            for (T config : getConfigList()) {
-                if (ObjectUtils.isNotEmpty(config)) {
-                    String key = getConfigKey(config);
-                    List<T> configList;
-                    if (configListMap.containsKey(key)) {
-                        configList = configListMap.get(key);
-                        configList.add(config);
-                    } else {
-                        configList = new ArrayList<>();
-                        configList.add(config);
-                        configListMap.put(key, configList);
-                    }
-                }
+    protected void addConfig(T config) {
+        if (ObjectUtils.isNotEmpty(config)) {
+            String key = getConfigKey(config);
+            List<T> configList;
+            if (configListMap.containsKey(key)) {
+                configList = configListMap.get(key);
+                configList.add(config);
+            } else {
+                configList = new ArrayList<>();
+                configList.add(config);
+                configListMap.put(key, configList);
             }
         }
-        return configListMap;
     }
 
     /**
-     * 根据指定配置数据键获取指定的配置数据
+     * 根据指定配置数据键获取指定的配置数据集
      *
      * @param key 配置数据键
-     * @return 配置数据
+     * @return 配置数据集
      * @since 2.0.0
      */
     public List<T> getConfigList(String key) {
-        return toConfigListMap().get(key);
+        return configListMap.get(key);
     }
 }

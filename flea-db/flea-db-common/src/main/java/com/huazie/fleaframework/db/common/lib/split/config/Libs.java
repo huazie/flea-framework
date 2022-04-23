@@ -17,13 +17,19 @@ public class Libs extends LibMap {
 
     private List<Lib> libList = new ArrayList<>();
 
-    @Override
     public List<Lib> getLibList() {
         return libList;
     }
 
+    /**
+     * 添加分库配置
+     *
+     * @param lib 分库配置
+     * @since 2.0.0
+     */
     public void addLib(Lib lib) {
         libList.add(lib);
+        addConfig(lib);
     }
 
     @Override

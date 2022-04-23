@@ -30,11 +30,7 @@ public class CacheGroups extends ConfigMap<CacheGroup> {
      */
     public void addCacheGroup(CacheGroup cacheGroup) {
         cacheGroupList.add(cacheGroup);
-    }
-
-    @Override
-    protected List<CacheGroup> getConfigList() {
-        return cacheGroupList;
+        addConfig(cacheGroup);
     }
 
     @Override

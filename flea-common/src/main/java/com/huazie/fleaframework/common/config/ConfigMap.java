@@ -1,5 +1,6 @@
 package com.huazie.fleaframework.common.config;
 
+import com.huazie.fleaframework.common.util.CollectionUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 
 import java.util.HashMap;
@@ -15,15 +16,7 @@ import java.util.Map;
  */
 public abstract class ConfigMap<T> {
 
-    private Map<String, T> configMap = null; // 配置数据Map
-
-    /**
-     * 获取配置数据集合
-     *
-     * @return 配置数据集合
-     * @since 2.0.0
-     */
-    protected abstract List<T> getConfigList();
+    private Map<String, T> configMap = new HashMap<>(); // 配置数据Map
 
     /**
      * 获取配置数据键
@@ -34,19 +27,29 @@ public abstract class ConfigMap<T> {
     protected abstract String getConfigKey(T t);
 
     /**
-     * 获取配置数据Map
+     * 添加配置数据
      *
-     * @return 配置数据Map
+     * @param config 配置数据
      * @since 2.0.0
      */
-    public Map<String, T> toConfigMap() {
-        if (ObjectUtils.isEmpty(configMap)) {
-            configMap = new HashMap<>();
-            for (T config : getConfigList()) {
-                configMap.put(getConfigKey(config), config);
+    protected void addConfig(T config) {
+        if (ObjectUtils.isNotEmpty(config)) {
+            configMap.put(getConfigKey(config), config);
+        }
+    }
+
+    /**
+     * 添加配置数据集
+     *
+     * @param configList 配置数据集
+     * @since 2.0.0
+     */
+    protected void addConfigList(List<T> configList) {
+        if (CollectionUtils.isNotEmpty(configList)) {
+            for (T config : configList) {
+                addConfig(config);
             }
         }
-        return configMap;
     }
 
     /**
@@ -57,6 +60,6 @@ public abstract class ConfigMap<T> {
      * @since 2.0.0
      */
     public T getConfig(String key) {
-        return toConfigMap().get(key);
+        return configMap.get(key);
     }
 }

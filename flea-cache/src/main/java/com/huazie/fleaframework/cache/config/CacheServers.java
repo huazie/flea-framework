@@ -30,11 +30,7 @@ public class CacheServers extends ConfigListMap<CacheServer> {
      */
     public void addCacheServer(CacheServer cacheServer) {
         cacheServerList.add(cacheServer);
-    }
-
-    @Override
-    protected List<CacheServer> getConfigList() {
-        return cacheServerList;
+        addConfig(cacheServer);
     }
 
     @Override

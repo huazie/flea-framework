@@ -29,11 +29,7 @@ public class ConfigItems extends ConfigKeyMap<ConfigItem> {
      */
     public void addConfigItem(ConfigItem configItem) {
         configItemList.add(configItem);
-    }
-
-    @Override
-    protected List<ConfigItem> getConfigList() {
-        return configItemList;
+        addConfig(configItem);
     }
 
     @Override

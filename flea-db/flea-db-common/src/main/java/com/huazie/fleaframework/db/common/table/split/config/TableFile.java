@@ -29,9 +29,9 @@ public class TableFile extends TableMap {
 
     public void setTableList(List<Table> tableList) {
         this.tableList = tableList;
+        addConfigList(tableList);
     }
 
-    @Override
     public List<Table> getTableList() {
         return tableList;
     }

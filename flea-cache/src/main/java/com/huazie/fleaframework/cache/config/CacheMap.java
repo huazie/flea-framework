@@ -2,8 +2,6 @@ package com.huazie.fleaframework.cache.config;
 
 import com.huazie.fleaframework.common.config.ConfigMap;
 
-import java.util.List;
-
 /**
  * 缓存定义 Map
  *
@@ -12,13 +10,6 @@ import java.util.List;
  * @since 2.0.0
  */
 public abstract class CacheMap extends ConfigMap<Cache> {
-
-    public abstract List<Cache> getCacheList();
-
-    @Override
-    protected List<Cache> getConfigList() {
-        return getCacheList();
-    }
 
     @Override
     protected String getConfigKey(Cache cache) {

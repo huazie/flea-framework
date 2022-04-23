@@ -30,11 +30,7 @@ public class CacheItems extends ConfigKeyMap<CacheItem> {
      */
     public void addCacheItem(CacheItem cacheItem) {
         cacheItemList.add(cacheItem);
-    }
-
-    @Override
-    protected List<CacheItem> getConfigList() {
-        return cacheItemList;
+        addConfig(cacheItem);
     }
 
     @Override

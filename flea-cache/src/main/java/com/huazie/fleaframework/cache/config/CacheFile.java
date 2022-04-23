@@ -27,13 +27,13 @@ public class CacheFile extends CacheMap {
         this.location = location;
     }
 
-    @Override
     public List<Cache> getCacheList() {
         return cacheList;
     }
 
     public void setCacheList(List<Cache> cacheList) {
         this.cacheList = cacheList;
+        addConfigList(cacheList);
     }
 
     @Override
