@@ -1,6 +1,5 @@
 # <img src="src/docs/flea-framework.png" width="80" height="80"> Flea Framework
-Flea框架，取名跳蚤，源于贡献者Huazie的跳蚤市场毕设项目。同时跳蚤的小型和无处不在的特点，
-也是Flea框架一直努力的目标，成为一款小巧易用的Java应用基础开发框架。
+Flea框架，取名跳蚤，源于贡献者Huazie的跳蚤市场毕设项目，第一版代码更是从中而来。另外提到跳蚤，自然想到它的小个头和无处不在的特点，这也是Flea框架一直努力的目标，成为一款小巧易用的Java应用基础开发框架。
 
 ## 介绍
 
