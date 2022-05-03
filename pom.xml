@@ -373,6 +373,8 @@
         <module>flea-framework-bom</module>
         <module>flea-jersey</module>
         <module>flea-tools</module>
+        <module>flea-job</module>
+        <module>flea-msg</module>
     </modules>
 
 </project>
