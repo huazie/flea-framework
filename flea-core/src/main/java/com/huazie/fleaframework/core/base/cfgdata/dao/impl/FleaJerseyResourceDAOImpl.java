@@ -26,7 +26,6 @@ import java.util.List;
 public class FleaJerseyResourceDAOImpl extends FleaConfigDAOImpl<FleaJerseyResource> implements IFleaJerseyResourceDAO {
 
     @Override
-    @SuppressWarnings(value = "unchecked")
     public List<FleaJerseyResource> getResource(String resourceCode) throws CommonException {
         return getQuery(null)
                 .equal(FleaConfigEntityConstants.E_RESOURCE_CODE, resourceCode)

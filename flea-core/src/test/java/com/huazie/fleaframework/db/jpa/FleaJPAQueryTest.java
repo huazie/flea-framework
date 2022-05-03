@@ -57,7 +57,6 @@ public class FleaJPAQueryTest {
     }
 
     @Test
-    @SuppressWarnings(value = "unchecked")
     public void testFleaJPAQuery() {
         //FleaFrameManager.getManager().setLocale(Locale.US);
         try {

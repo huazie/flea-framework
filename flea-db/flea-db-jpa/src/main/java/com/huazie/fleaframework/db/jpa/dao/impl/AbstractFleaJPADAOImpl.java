@@ -65,7 +65,6 @@ import java.util.Set;
  * @version 2.0.0
  * @since 1.0.0
  */
-@SuppressWarnings({"rawtypes", "unchecked"})
 public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T> {
 
     private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(AbstractFleaJPADAOImpl.class);
@@ -77,6 +76,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
      *
      * @since 1.0.0
      */
+    @SuppressWarnings({"unchecked"})
     public AbstractFleaJPADAOImpl() {
         // 获取泛型类的子类对象的Class对象
         Class<?> clz = getClass();
@@ -316,6 +316,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
     }
 
     @Override
+    @SuppressWarnings({"unchecked"})
     public List<T> queryAll(String relationId, T entity) throws CommonException {
         return createNativeQuery(relationId, entity, false).getResultList();
     }

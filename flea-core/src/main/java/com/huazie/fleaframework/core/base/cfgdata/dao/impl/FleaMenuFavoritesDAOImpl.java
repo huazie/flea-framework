@@ -22,7 +22,6 @@ import java.util.List;
 public class FleaMenuFavoritesDAOImpl extends FleaConfigDAOImpl<FleaMenuFavorites> implements IFleaMenuFavoritesDAO {
 
     @Override
-    @SuppressWarnings(value = "unchecked")
     public List<FleaMenuFavorites> queryValidFleaMenuFavorites(Long accountId, String menuCode) throws CommonException {
 
         Date currentDate = DateUtils.getCurrentTime();

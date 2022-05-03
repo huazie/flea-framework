@@ -21,7 +21,6 @@ import java.util.List;
 public class FleaJerseyResServiceDAOImpl extends FleaConfigDAOImpl<FleaJerseyResService> implements IFleaJerseyResServiceDAO {
 
     @Override
-    @SuppressWarnings(value = "unchecked")
     public FleaJerseyResService getResService(String resourceCode, String serviceCode) throws CommonException {
 
         List<FleaJerseyResService> resServiceList = getQuery(null)

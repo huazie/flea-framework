@@ -1105,13 +1105,14 @@ public final class FleaJPAQuery implements Closeable {
     /**
      * 获取查询的记录行结果集合
      *
+     * @param <T> 返回的实体类型
      * @return 记录行结果集合
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public List getResultList() throws CommonException {
+    public <T> List<T> getResultList() throws CommonException {
         try {
-            return createQuery(false).getResultList();
+            return (List<T>) createQuery(false).getResultList();
         } finally {
             // 将Flea JPA查询对象重置，并归还给对象池
             close();
@@ -1123,18 +1124,19 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param start 开始查询记录行
      * @param max   最大查询数量
+     * @param <T>   返回的实体类型
      * @return 记录行结果集合
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public List getResultList(int start, int max) throws CommonException {
+    public <T> List<T> getResultList(int start, int max) throws CommonException {
         try {
             TypedQuery query = createQuery(false);
             // 设置开始查询记录行
             query.setFirstResult(start);
             // 设置一次最大查询数量
             query.setMaxResults(max);
-            return query.getResultList();
+            return (List<T>) query.getResultList();
         } finally {
             // 将Flea JPA查询对象重置，并归还给对象池
             close();
@@ -1146,11 +1148,12 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param pageNum   指定页
      * @param pageCount 每页条数
+     * @param <T>       返回的实体类型
      * @return 记录行结果集合
      * @throws CommonException 通用异常
      * @since 2.0.0
      */
-    public List getResultList4Page(int pageNum, int pageCount) throws CommonException {
+    public <T> List<T> getResultList4Page(int pageNum, int pageCount) throws CommonException {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug1(new Object() {}, "pageNum = {}, pageCount = {}", pageNum, pageCount);
         }
@@ -1160,13 +1163,14 @@ public final class FleaJPAQuery implements Closeable {
     /**
      * 获取查询的单个属性列结果集合
      *
+     * @param <T> 单个属性列对应的类型
      * @return 单个属性列结果集合
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public List getSingleResultList() throws CommonException {
+    public <T> List<T> getSingleResultList() throws CommonException {
         try {
-            return createQuery(true).getResultList();
+            return (List<T>) createQuery(true).getResultList();
         } finally {
             // 将Flea JPA查询对象重置，并归还给对象池
             close();
@@ -1178,18 +1182,19 @@ public final class FleaJPAQuery implements Closeable {
      *
      * @param start 开始查询记录行
      * @param max   最大查询数量
+     * @param <T>   单个属性列对应的类型
      * @return 单个属性列结果集合
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    public List getSingleResultList(int start, int max) throws CommonException {
+    public <T> List<T> getSingleResultList(int start, int max) throws CommonException {
         try {
             TypedQuery query = createQuery(true);
             // 设置开始查询记录行
             query.setFirstResult(start);
             // 设置一次最大查询数量
             query.setMaxResults(max);
-            return query.getResultList();
+            return (List<T>) query.getResultList();
         } finally {
             // 将Flea JPA查询对象重置，并归还给对象池
             close();
