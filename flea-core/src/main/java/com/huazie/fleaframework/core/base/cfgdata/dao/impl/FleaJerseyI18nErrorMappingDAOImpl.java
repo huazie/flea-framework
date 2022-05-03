@@ -21,7 +21,6 @@ import java.util.List;
 public class FleaJerseyI18nErrorMappingDAOImpl extends FleaConfigDAOImpl<FleaJerseyI18nErrorMapping> implements IFleaJerseyI18nErrorMappingDAO {
 
     @Override
-    @SuppressWarnings(value = "unchecked")
     public List<FleaJerseyI18nErrorMapping> getMappings(String resourceCode, String serviceCode) throws CommonException {
         return getQuery(null)
                 .equal(FleaConfigEntityConstants.E_RESOURCE_CODE, resourceCode)
@@ -31,7 +30,6 @@ public class FleaJerseyI18nErrorMappingDAOImpl extends FleaConfigDAOImpl<FleaJer
     }
 
     @Override
-    @SuppressWarnings(value = "unchecked")
     public FleaJerseyI18nErrorMapping getMapping(String resourceCode, String serviceCode, String i18nCode) throws CommonException {
 
         List<FleaJerseyI18nErrorMapping> mappingList = getQuery(null)

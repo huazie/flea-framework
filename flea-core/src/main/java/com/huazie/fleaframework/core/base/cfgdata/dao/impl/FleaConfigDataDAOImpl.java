@@ -20,7 +20,6 @@ import java.util.List;
 public class FleaConfigDataDAOImpl extends FleaConfigDAOImpl<FleaConfigData> implements IFleaConfigDataDAO {
 
     @Override
-    @SuppressWarnings(value = "unchecked")
     public List<FleaConfigData> getConfigDataList(String configType, String configCode) throws CommonException {
         return getQuery(null)
                 .equal(FleaConfigEntityConstants.E_CONFIG_TYPE, configType)
