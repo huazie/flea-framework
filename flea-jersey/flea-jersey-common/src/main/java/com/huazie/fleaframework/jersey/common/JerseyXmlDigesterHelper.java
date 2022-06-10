@@ -74,7 +74,7 @@ public class JerseyXmlDigesterHelper {
                     try {
                         jersey = newJerseyFilter();
                     } catch (CommonException e) {
-                        throw new FleaException(e);
+                        ExceptionUtils.throwFleaException(FleaException.class, e);
                     }
                 }
             }

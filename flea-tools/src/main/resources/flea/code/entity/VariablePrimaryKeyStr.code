@@ -1,3 +1,0 @@
-    @Id
-    @Column(name = "%COLUMN_NAME%", unique = true, nullable = false)
-    private String %VARIABLE%; // %COLUMN_DESC%

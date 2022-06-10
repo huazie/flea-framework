@@ -1,11 +1,11 @@
 package com.huazie.fleaframework.auth.base.privilege.service.impl;
 
+import com.huazie.fleaframework.auth.base.privilege.dao.interfaces.IFleaPrivilegeGroupDAO;
+import com.huazie.fleaframework.auth.base.privilege.entity.FleaPrivilegeGroup;
 import com.huazie.fleaframework.auth.base.privilege.service.interfaces.IFleaPrivilegeGroupSV;
 import com.huazie.fleaframework.auth.common.FleaAuthEntityConstants;
 import com.huazie.fleaframework.auth.common.exception.FleaAuthCommonException;
 import com.huazie.fleaframework.auth.common.pojo.privilege.FleaPrivilegeGroupPOJO;
-import com.huazie.fleaframework.auth.base.privilege.dao.interfaces.IFleaPrivilegeGroupDAO;
-import com.huazie.fleaframework.auth.base.privilege.entity.FleaPrivilegeGroup;
 import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**
- * <p> Flea权限组SV层实现类 </p>
+ * Flea权限组SV层实现类
  *
  * @author huazie
  * @version 1.0.0
@@ -42,7 +42,7 @@ public class FleaPrivilegeGroupSVImpl extends AbstractFleaJPASVImpl<FleaPrivileg
     }
 
     /**
-     * <p> 保存Flea权限组 </p>
+     * 保存Flea权限组
      *
      * @param fleaPrivilegeGroupPOJO Flea权限组POJO类对象
      * @return Flea权限组实体对象

@@ -58,7 +58,7 @@ public class FleaMap implements Serializable {
     }
 
     /**
-     * <p> 添加其他数据信息，只有数据值键不存在或者属性值为空，才覆盖数据值 </p>
+     * 添加其他数据信息，只有数据值键不存在或者属性值为空，才覆盖数据值
      *
      * @param key   数据键
      * @param value 数据值
@@ -72,7 +72,19 @@ public class FleaMap implements Serializable {
     }
 
     /**
-     * <p> 判断是否包含指定数据键 </p>
+     * 添加多个数据信息
+     *
+     * @param otherMap 其他数据Map
+     * @since 2.0.0
+     */
+    public void putAll(Map<String, Object> otherMap) {
+        if (MapUtils.isNotEmpty(otherMap)) {
+            fleaMap.putAll(otherMap);
+        }
+    }
+
+    /**
+     * 判断是否包含指定数据键
      *
      * @param key 数据键
      * @return 如果包含，返回true；否则返回false
@@ -83,7 +95,7 @@ public class FleaMap implements Serializable {
     }
 
     /**
-     * <p> 判断数据Map是否为空 </p>
+     * 判断数据Map是否为空
      *
      * @return true:数据为空，false: 数据不为空
      * @since 1.1.0
@@ -93,7 +105,7 @@ public class FleaMap implements Serializable {
     }
 
     /**
-     * <p> 清空数据Map </p>
+     * 清空数据Map
      *
      * @since 1.1.0
      */
@@ -102,7 +114,7 @@ public class FleaMap implements Serializable {
     }
 
     /**
-     * <p> 获取数据Map </p>
+     * 获取数据Map
      *
      * @return 数据Map
      * @since 1.1.0

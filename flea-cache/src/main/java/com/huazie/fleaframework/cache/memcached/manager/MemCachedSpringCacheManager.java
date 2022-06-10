@@ -47,7 +47,7 @@ public class MemCachedSpringCacheManager extends AbstractSpringCacheManager {
     }
 
     /**
-     * <p> 初始化MemCached连接池 </p>
+     * 初始化MemCached连接池
      *
      * @since 1.0.0
      */

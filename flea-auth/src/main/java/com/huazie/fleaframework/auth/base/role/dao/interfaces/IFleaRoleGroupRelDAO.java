@@ -7,7 +7,7 @@ import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import java.util.List;
 
 /**
- * <p> Flea角色组关联（角色）DAO层接口 </p>
+ * Flea角色组关联（角色）DAO层接口
  *
  * @author huazie
  * @version 1.0.0
@@ -16,7 +16,7 @@ import java.util.List;
 public interface IFleaRoleGroupRelDAO extends IAbstractFleaJPADAO<FleaRoleGroupRel> {
 
     /**
-     * <p> 获取指定角色组编号【roleGroupId】关联的指定授权关联类型【authRelType】的角色组关联信息 </p>
+     * 获取指定角色组编号【roleGroupId】关联的指定授权关联类型【authRelType】的角色组关联信息
      *
      * @param roleGroupId 角色组编号
      * @param authRelType 授权关联类型

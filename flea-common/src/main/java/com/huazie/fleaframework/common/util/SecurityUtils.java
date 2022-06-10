@@ -1,8 +1,8 @@
 package com.huazie.fleaframework.common.util;
 
+import com.huazie.fleaframework.common.EncryptionAlgorithmEnum;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
-import com.huazie.fleaframework.common.EncryptionAlgorithmEnum;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -61,7 +61,7 @@ public class SecurityUtils {
         if (LOGGER.isDebugEnabled()) {
             obj = new Object() {};
             LOGGER.debug1(obj, "Algorithm = {}", algorithm.getAlgorithm());
-            LOGGER.debug1(obj, "info = {}", info);
+            LOGGER.debug1(obj, "Info = {}", info);
         }
         byte[] digestInfo = null;
         try {

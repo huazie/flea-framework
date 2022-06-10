@@ -6,7 +6,7 @@ import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.db.jpa.service.interfaces.IAbstractFleaJPASV;
 
 /**
- * <p> Flea用户SV层接口定义 </p>
+ * Flea用户SV层接口定义
  *
  * @author huazie
  * @version 1.0.0
@@ -15,7 +15,7 @@ import com.huazie.fleaframework.db.jpa.service.interfaces.IAbstractFleaJPASV;
 public interface IFleaUserSV extends IAbstractFleaJPASV<FleaUser> {
 
     /**
-     * <p> 新建一个Flea用户 </p>
+     * 新建一个Flea用户
      *
      * @param fleaUserPOJO Flea用户POJO类实例
      * @return Flea用户对象
@@ -25,7 +25,7 @@ public interface IFleaUserSV extends IAbstractFleaJPASV<FleaUser> {
     FleaUser saveFleaUser(FleaUserPOJO fleaUserPOJO) throws CommonException;
 
     /**
-     * <p> 根据用户编号获取用户信息（用户状态 1 正常，未失效）</p>
+     * 根据用户编号获取用户信息（用户状态 1 正常，未失效）</p>
      *
      * @param userId 用户编号
      * @return 用户信息

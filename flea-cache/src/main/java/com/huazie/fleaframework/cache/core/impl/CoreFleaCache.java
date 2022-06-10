@@ -1,8 +1,8 @@
 package com.huazie.fleaframework.cache.core.impl;
 
+import com.huazie.fleaframework.cache.AbstractFleaCache;
 import com.huazie.fleaframework.cache.common.CacheConfigUtils;
 import com.huazie.fleaframework.cache.common.FleaCacheFactory;
-import com.huazie.fleaframework.cache.AbstractFleaCache;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 

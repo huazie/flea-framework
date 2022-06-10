@@ -3,7 +3,7 @@ package com.huazie.fleaframework.auth.common.pojo;
 import com.huazie.fleaframework.common.pojo.FleaEffExpDatePOJO;
 
 /**
- * <p> Flea属性POJO类 </p>
+ * Flea属性POJO类
  *
  * @author huazie
  * @version 1.0.0

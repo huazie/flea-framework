@@ -1,14 +1,25 @@
 package com.huazie.fleaframework.core.base.cfgdata.service.interfaces;
 
+import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.core.base.cfgdata.entity.FleaJerseyResServiceLog;
+import com.huazie.fleaframework.core.common.pojo.FleaJerseyResServiceLogPOJO;
 import com.huazie.fleaframework.db.jpa.service.interfaces.IAbstractFleaJPASV;
 
 /**
- * <p> Flea Jersey资源服务调用日志SV层接口定义 </p>
+ * Flea Jersey资源服务调用日志SV层接口
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 public interface IFleaJerseyResServiceLogSV extends IAbstractFleaJPASV<FleaJerseyResServiceLog> {
+
+    /**
+     * 保存资源服务调用日志
+     *
+     * @param resServiceLogPOJO 资源服务调用日志POJO类
+     * @throws CommonException 通用异常
+     * @since 2.0.0
+     */
+    void saveResServiceLog(FleaJerseyResServiceLogPOJO resServiceLogPOJO) throws CommonException;
 }

@@ -10,11 +10,12 @@ import java.lang.annotation.Target;
 /**
  * 自定义Flea事物注解，用于描述某个方法上的事务属性。
  *
- * <p> Flea事物切面，识别带有 {@code FleaTransactional}
- * 注解的方法，为该方法开启数据库事物。
+ * <p> Flea事物切面，识别带有自定义Flea事物注解的方法，
+ * 在该方法调用之前自动开启事物，调用成功后提交事物，
+ * 出现异常时自动回滚事物。
  *
  * @author huazie
- * @version 1.1.0
+ * @version 2.0.0
  * @since 1.1.0
  */
 @Target({ElementType.METHOD})
@@ -28,4 +29,11 @@ public @interface FleaTransactional {
      * @return 事物名
      */
     String value() default "fleaTransaction";
+
+    /**
+     * 指定持久化单元名
+     *
+     * @return 持久化单元名
+     */
+    String unitName() default "";
 }

@@ -2,9 +2,9 @@ package com.huazie.fleaframework.core.base.cfgdata.service.impl;
 
 import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.common.util.CollectionUtils;
-import com.huazie.fleaframework.core.base.cfgdata.service.interfaces.IFleaConfigDataSV;
 import com.huazie.fleaframework.core.base.cfgdata.dao.interfaces.IFleaConfigDataDAO;
 import com.huazie.fleaframework.core.base.cfgdata.entity.FleaConfigData;
+import com.huazie.fleaframework.core.base.cfgdata.service.interfaces.IFleaConfigDataSV;
 import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import com.huazie.fleaframework.db.jpa.service.impl.AbstractFleaJPASVImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * <p> Flea 配置数据SV层实现类 </p>
+ * Flea 配置数据SV层实现类
  *
  * @author huazie
  * @version 1.1.0
@@ -41,13 +41,7 @@ public class FleaConfigDataSVImpl extends AbstractFleaJPASVImpl<FleaConfigData> 
 
         List<FleaConfigData> fleaConfigDataList = this.getConfigDatas(configType, configCode);
 
-        FleaConfigData fleaConfigData = null;
-
-        if (CollectionUtils.isNotEmpty(fleaConfigDataList)) {
-            fleaConfigData = fleaConfigDataList.get(0);
-        }
-
-        return fleaConfigData;
+        return CollectionUtils.getFirstElement(fleaConfigDataList, FleaConfigData.class);
     }
 
     @Override

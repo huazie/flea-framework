@@ -1,14 +1,15 @@
 package com.huazie.fleaframework.cache.common;
 
+import com.huazie.fleaframework.cache.AbstractFleaCache;
+import com.huazie.fleaframework.cache.IFleaCacheBuilder;
 import com.huazie.fleaframework.cache.config.Cache;
 import com.huazie.fleaframework.cache.config.CacheData;
 import com.huazie.fleaframework.cache.config.CacheGroup;
 import com.huazie.fleaframework.cache.config.CacheItem;
 import com.huazie.fleaframework.cache.config.CacheServer;
-import com.huazie.fleaframework.cache.AbstractFleaCache;
-import com.huazie.fleaframework.cache.IFleaCacheBuilder;
 import com.huazie.fleaframework.cache.exceptions.FleaCacheConfigException;
 import com.huazie.fleaframework.common.util.CollectionUtils;
+import com.huazie.fleaframework.common.util.ExceptionUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.ReflectUtils;
 
@@ -35,7 +36,7 @@ public class FleaCacheFactory {
     }
 
     /**
-     * <p> 根据缓存数据主关键字获取指定Flea缓存对象 </p>
+     * 根据缓存数据主关键字获取指定Flea缓存对象
      *
      * @param name 缓存数据主关键字（对应 flea-cache.xml {@code <cache key="缓存数据主关键字"></cache>}）
      * @return Flea缓存对象
@@ -53,7 +54,7 @@ public class FleaCacheFactory {
     }
 
     /**
-     * <p> 根据缓存数据主关键字创建一个Flea缓存对象 </p>
+     * 根据缓存数据主关键字创建一个Flea缓存对象
      *
      * @param name 缓存数据主关键字（对应 flea-cache.xml {@code <cache key="缓存数据主关键字"></cache>}）
      * @return Flea缓存对象
@@ -63,41 +64,41 @@ public class FleaCacheFactory {
         // 获取Flea缓存配置信息
         Cache cache = CacheConfigUtils.getCache(name);
         if (ObjectUtils.isEmpty(cache)) {
-            throw new FleaCacheConfigException("无法初始化Flea缓存，请检查flea-cache.xml配置【<cache key=" + name + " >】");
+            ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "无法初始化Flea缓存，请检查flea-cache.xml配置【<cache key=" + name + " >】");
         }
         // 获取Flea缓存归属数据配置信息
         CacheData cacheData = CacheConfigUtils.getCacheData(cache.getType());
         if (ObjectUtils.isEmpty(cacheData)) {
-            throw new FleaCacheConfigException("无法初始化Flea缓存，请检查flea-cache-config.xml配置【<cache-data type=" + cache.getType() + " >】");
+            ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "无法初始化Flea缓存，请检查flea-cache-config.xml配置【<cache-data type=" + cache.getType() + " >】");
         }
         // 获取Flea缓存组
         CacheGroup cacheGroup = CacheConfigUtils.getCacheGroup(cacheData.getGroup());
         if (ObjectUtils.isEmpty(cacheGroup)) {
-            throw new FleaCacheConfigException("无法初始化Flea缓存，请检查flea-cache-config.xml配置【<cache-group group=" + cacheData.getGroup() + " >】");
+            ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "无法初始化Flea缓存，请检查flea-cache-config.xml配置【<cache-group group=" + cacheData.getGroup() + " >】");
         }
         // 获取缓存实现名
         String cacheImplName = cacheGroup.getCache();
         // 获取Flea缓存服务器
         List<CacheServer> cacheServerList = CacheConfigUtils.getCacheServer(cacheGroup.getGroup());
         if (CollectionUtils.isEmpty(cacheServerList)) {
-            throw new FleaCacheConfigException("无法初始化Flea缓存，请检查flea-cache-config.xml配置【<cache-server group=" + cacheGroup.getGroup() + " >】");
+            ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "无法初始化Flea缓存，请检查flea-cache-config.xml配置【<cache-server group=" + cacheGroup.getGroup() + " >】");
         }
         // 获取指定缓存系统名对应的Flea缓存建造者
         CacheItem cacheItem = CacheConfigUtils.getCacheItem(CacheConstants.FleaCacheConfigConstants.FLEA_CACHE_BUILDER, cacheImplName);
         if (ObjectUtils.isEmpty(cacheItem)) {
-            throw new FleaCacheConfigException("无法初始化Flea缓存，请检查flea-cache-config.xml配置【<cache-item key=" + cacheImplName + " >】");
+            ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "无法初始化Flea缓存，请检查flea-cache-config.xml配置【<cache-item key=" + cacheImplName + " >】");
         }
         // Flea缓存建造者
         String builder = cacheItem.getValue();
         if (ObjectUtils.isEmpty(builder)) {
-            throw new FleaCacheConfigException("无法初始化Flea缓存，请检查flea-cache-config.xml配置【<cache-item key=" + cacheImplName + " ></cache-item>】配置项值不能为空");
+            ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "无法初始化Flea缓存，请检查flea-cache-config.xml配置【<cache-item key=" + cacheImplName + " ></cache-item>】配置项值不能为空");
         }
-        AbstractFleaCache fleaCache;
+        AbstractFleaCache fleaCache = null;
         try {
             IFleaCacheBuilder fleaCacheBuilder = (IFleaCacheBuilder) ReflectUtils.newInstance(builder);
             fleaCache = fleaCacheBuilder.build(name, cacheServerList);
         } catch (Exception e) {
-            throw new FleaCacheConfigException("构建Flea缓存出现异常：\n" + e);
+            ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "构建Flea缓存出现异常：\n", e);
         }
         return fleaCache;
     }

@@ -17,7 +17,6 @@ import com.huazie.fleaframework.auth.common.pojo.user.register.FleaUserRegisterP
 import com.huazie.fleaframework.auth.common.service.interfaces.IFleaAuthSV;
 import com.huazie.fleaframework.auth.common.service.interfaces.IFleaUserModuleSV;
 import com.huazie.fleaframework.common.EntityStateEnum;
-import com.huazie.fleaframework.common.FleaSessionManager;
 import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
@@ -27,7 +26,6 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,8 +52,8 @@ public class UserAuthTest {
     public void userLoginTest() {
 
         FleaUserLoginPOJO fleaUserLoginInfo = new FleaUserLoginPOJO();
-        fleaUserLoginInfo.setAccountCode("huazie");
-        fleaUserLoginInfo.setAccountPwd("2020#huazie");
+        fleaUserLoginInfo.setAccountCode("LGH");
+        fleaUserLoginInfo.setAccountPwd("2022#lgh");
 
         IFleaUserModuleSV fleaUserModuleSV = (IFleaUserModuleSV) applicationContext.getBean("fleaUserModuleSV");
 
@@ -73,8 +71,8 @@ public class UserAuthTest {
 
         FleaUserRegisterPOJO fleaUserRegisterPOJO = new FleaUserRegisterPOJO();
 
-        fleaUserRegisterPOJO.setAccountCode("huazie");
-        fleaUserRegisterPOJO.setAccountPwd("2020#huazie");
+        fleaUserRegisterPOJO.setAccountCode("LGH");
+        fleaUserRegisterPOJO.setAccountPwd("2022#lgh");
         fleaUserRegisterPOJO.setState(UserStateEnum.IN_USE.getState());
 
         // 添加用户属性
@@ -112,12 +110,33 @@ public class UserAuthTest {
 
     @Test
     public void systemUserRegisterTest() {
+        long systemId = 1000L;
+        String userName = "跳蚤管家";
+        String accountCode = "SYS_FLEA_MGMT";
+        String accountPwd = "2020#huazie";
+        String remarks = "【跳蚤管家】";
+
+        systemUserRegisterTest(systemId, userName, accountCode, accountPwd, remarks);
+    }
+
+    @Test
+    public void systemUserRegisterTest1() {
+        long systemId = 1001L;
+        String userName = "跳蚤文件服务器";
+        String accountCode = "SYS_FLEA_FS";
+        String accountPwd = "2020#huazie";
+        String remarks = "【跳蚤文件服务器】";
+
+        systemUserRegisterTest(systemId, userName, accountCode, accountPwd, remarks);
+    }
+
+    private void systemUserRegisterTest(long systemId, String userName, String accountCode, String accountPwd, String remarks) {
         FleaUserRegisterPOJO fleaUserRegisterPOJO = new FleaUserRegisterPOJO();
 
-        fleaUserRegisterPOJO.setSystemId(1000L);
-        fleaUserRegisterPOJO.setUserName("跳蚤管家");
-        fleaUserRegisterPOJO.setAccountCode("SYS_FLEA_MGMT");
-        fleaUserRegisterPOJO.setAccountPwd("2020#huazie");
+        fleaUserRegisterPOJO.setSystemId(systemId);
+        fleaUserRegisterPOJO.setUserName(userName);
+        fleaUserRegisterPOJO.setAccountCode(accountCode);
+        fleaUserRegisterPOJO.setAccountPwd(accountPwd);
         fleaUserRegisterPOJO.setState(UserStateEnum.IN_USE.getState());
 
         // 添加用户属性
@@ -141,7 +160,7 @@ public class UserAuthTest {
         fleaUserRegisterPOJO.setUserAttrList(fleaUserAttrInfoList);
         fleaUserRegisterPOJO.setAccountAttrList(fleaAccountAttrInfoList);
 
-        fleaUserRegisterPOJO.setRemarks("【跳蚤管家】");
+        fleaUserRegisterPOJO.setRemarks(remarks);
 
         IFleaUserModuleSV fleaUserModuleSV = (IFleaUserModuleSV) applicationContext.getBean("fleaUserModuleSV");
 

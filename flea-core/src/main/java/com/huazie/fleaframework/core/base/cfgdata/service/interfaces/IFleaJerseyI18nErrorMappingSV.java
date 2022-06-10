@@ -7,7 +7,7 @@ import com.huazie.fleaframework.db.jpa.service.interfaces.IAbstractFleaJPASV;
 import java.util.List;
 
 /**
- * <p> Flea Jersey 国际码和错误码映射服务层接口 </p>
+ * Flea Jersey 国际码和错误码映射服务层接口
  *
  * @author huazie
  * @version 1.0.0
@@ -16,7 +16,7 @@ import java.util.List;
 public interface IFleaJerseyI18nErrorMappingSV extends IAbstractFleaJPASV<FleaJerseyI18nErrorMapping> {
 
     /**
-     * <p> 获取国际码和错误码映射数据集合 </p>
+     * 根据资源编码和服务编码，获取国际码和错误码映射数据集合。
      *
      * @param resourceCode 资源编码
      * @param serviceCode  服务编码
@@ -27,7 +27,7 @@ public interface IFleaJerseyI18nErrorMappingSV extends IAbstractFleaJPASV<FleaJe
     List<FleaJerseyI18nErrorMapping> getMappings(String resourceCode, String serviceCode) throws CommonException;
 
     /**
-     * <p> 获取国际码和错误码映射数据 </p>
+     * 根据资源编码、服务编码和国际码，匹配唯一的国际码和错误码映射数据
      *
      * @param resourceCode 资源编码
      * @param serviceCode  服务编码

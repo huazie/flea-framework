@@ -30,7 +30,7 @@ public class RedisClusterSpringCacheManager extends AbstractSpringCacheManager {
     private RedisClient redisClient; // Redis客户端
 
     /**
-     * <p> 默认构造方法，初始化集群模式下默认连接池的Redis客户端 </p>
+     * 默认构造方法，初始化集群模式下默认连接池的Redis客户端
      *
      * @since 1.1.0
      */

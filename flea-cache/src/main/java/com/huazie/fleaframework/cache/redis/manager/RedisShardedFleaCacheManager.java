@@ -1,13 +1,13 @@
 package com.huazie.fleaframework.cache.redis.manager;
 
 import com.huazie.fleaframework.cache.AbstractFleaCache;
+import com.huazie.fleaframework.cache.AbstractFleaCacheManager;
 import com.huazie.fleaframework.cache.common.CacheModeEnum;
 import com.huazie.fleaframework.cache.redis.RedisClient;
 import com.huazie.fleaframework.cache.redis.RedisClientFactory;
 import com.huazie.fleaframework.cache.redis.RedisShardedPool;
 import com.huazie.fleaframework.cache.redis.config.RedisShardedConfig;
 import com.huazie.fleaframework.cache.redis.impl.RedisFleaCache;
-import com.huazie.fleaframework.cache.AbstractFleaCacheManager;
 
 /**
  * Redis分片模式Flea缓存管理类，用于接入Flea框架管理Redis缓存。
@@ -29,7 +29,7 @@ public class RedisShardedFleaCacheManager extends AbstractFleaCacheManager {
     private RedisClient redisClient; // Redis客户端
 
     /**
-     * <p> 默认构造方法，初始化分片模式下默认连接池的Redis客户端 </p>
+     * 默认构造方法，初始化分片模式下默认连接池的Redis客户端
      *
      * @since 1.0.0
      */

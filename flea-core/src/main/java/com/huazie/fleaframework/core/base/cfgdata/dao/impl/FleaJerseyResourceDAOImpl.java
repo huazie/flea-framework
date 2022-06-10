@@ -3,8 +3,6 @@ package com.huazie.fleaframework.core.base.cfgdata.dao.impl;
 import com.huazie.fleaframework.common.CommonConstants;
 import com.huazie.fleaframework.common.EntityStateEnum;
 import com.huazie.fleaframework.common.exception.CommonException;
-import com.huazie.fleaframework.common.slf4j.FleaLogger;
-import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.common.util.ArrayUtils;
 import com.huazie.fleaframework.common.util.CollectionUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
@@ -18,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p> Flea Jersey 资源DAO层实现类 </p>
+ * Flea Jersey 资源DAO层实现类
  *
  * @author huazie
  * @version 1.0.0
@@ -27,24 +25,12 @@ import java.util.List;
 @Repository("resourceDAO")
 public class FleaJerseyResourceDAOImpl extends FleaConfigDAOImpl<FleaJerseyResource> implements IFleaJerseyResourceDAO {
 
-    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaJerseyResourceDAOImpl.class);
-
     @Override
-    @SuppressWarnings(value = "unchecked")
     public List<FleaJerseyResource> getResource(String resourceCode) throws CommonException {
-
-        List<FleaJerseyResource> resourceList = getQuery(null)
+        return getQuery(null)
                 .equal(FleaConfigEntityConstants.E_RESOURCE_CODE, resourceCode)
                 .equal(FleaConfigEntityConstants.E_STATE, EntityStateEnum.IN_USE.getState()) // 查询在用状态的资源定义数据
                 .getResultList();
-
-        if (LOGGER.isDebugEnabled()) {
-            Object obj = new Object() {};
-            LOGGER.debug1(obj, "Resource List={}", resourceList);
-            LOGGER.debug1(obj, "Resource Count={}", resourceList.size());
-        }
-
-        return resourceList;
     }
 
     @Override
@@ -72,12 +58,6 @@ public class FleaJerseyResourceDAOImpl extends FleaConfigDAOImpl<FleaJerseyResou
                     }
                 }
             }
-        }
-
-        if (LOGGER.isDebugEnabled()) {
-            Object obj = new Object() {};
-            LOGGER.debug1(obj, "Resource Package List={}", resPackageList);
-            LOGGER.debug1(obj, "Resource Package Count={}", resPackageList == null ? 0 : resourceList.size());
         }
 
         return resPackageList;

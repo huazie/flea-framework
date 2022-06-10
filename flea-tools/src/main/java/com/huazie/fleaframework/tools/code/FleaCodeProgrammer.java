@@ -1,12 +1,12 @@
 package com.huazie.fleaframework.tools.code;
 
 import com.huazie.fleaframework.tools.code.impl.FleaDaoImplBuilder;
-import com.huazie.fleaframework.tools.code.impl.FleaPersistenceUnitDaoImplBuilder;
-import com.huazie.fleaframework.tools.code.interfaces.IFleaCodeBuilder;
 import com.huazie.fleaframework.tools.code.impl.FleaDaoInterfacesBuilder;
 import com.huazie.fleaframework.tools.code.impl.FleaEntityBuilder;
+import com.huazie.fleaframework.tools.code.impl.FleaPersistenceUnitDaoImplBuilder;
 import com.huazie.fleaframework.tools.code.impl.FleaSVImplBuilder;
 import com.huazie.fleaframework.tools.code.impl.FleaSVInterfacesBuilder;
+import com.huazie.fleaframework.tools.code.interfaces.IFleaCodeBuilder;
 
 import java.util.Map;
 

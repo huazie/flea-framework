@@ -2,8 +2,6 @@ package com.huazie.fleaframework.core.base.cfgdata.dao.impl;
 
 import com.huazie.fleaframework.common.EntityStateEnum;
 import com.huazie.fleaframework.common.exception.CommonException;
-import com.huazie.fleaframework.common.slf4j.FleaLogger;
-import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.common.util.CollectionUtils;
 import com.huazie.fleaframework.core.base.cfgdata.dao.interfaces.IFleaJerseyResClientDAO;
 import com.huazie.fleaframework.core.base.cfgdata.entity.FleaJerseyResClient;
@@ -13,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * <p> Flea Jersey 资源客户端DAO层实现 </p>
+ * Flea Jersey 资源客户端DAO层实现类
  *
  * @author huazie
  * @version 1.0.0
@@ -22,10 +20,7 @@ import java.util.List;
 @Repository("resClientDAO")
 public class FleaJerseyResClientDAOImpl extends FleaConfigDAOImpl<FleaJerseyResClient> implements IFleaJerseyResClientDAO {
 
-    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaJerseyResClientDAOImpl.class);
-
     @Override
-    @SuppressWarnings(value = "unchecked")
     public FleaJerseyResClient getResClient(String clientCode) throws CommonException {
 
         List<FleaJerseyResClient> resClientList = getQuery(null)
@@ -33,16 +28,6 @@ public class FleaJerseyResClientDAOImpl extends FleaConfigDAOImpl<FleaJerseyResC
                 .equal(FleaConfigEntityConstants.E_STATE, EntityStateEnum.IN_USE.getState())
                 .getResultList();
 
-        FleaJerseyResClient resClient = null;
-
-        if (CollectionUtils.isNotEmpty(resClientList)) {
-            resClient = resClientList.get(0);
-        }
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "ResClient = {}", resClient);
-        }
-
-        return resClient;
+        return CollectionUtils.getFirstElement(resClientList, FleaJerseyResClient.class);
     }
 }

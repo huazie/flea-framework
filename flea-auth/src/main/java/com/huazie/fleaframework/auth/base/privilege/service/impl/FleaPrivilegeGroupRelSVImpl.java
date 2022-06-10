@@ -1,12 +1,12 @@
 package com.huazie.fleaframework.auth.base.privilege.service.impl;
 
+import com.huazie.fleaframework.auth.base.privilege.dao.interfaces.IFleaPrivilegeGroupRelDAO;
+import com.huazie.fleaframework.auth.base.privilege.entity.FleaPrivilegeGroupRel;
 import com.huazie.fleaframework.auth.base.privilege.service.interfaces.IFleaPrivilegeGroupRelSV;
 import com.huazie.fleaframework.auth.common.FleaAuthEntityConstants;
 import com.huazie.fleaframework.auth.common.exception.FleaAuthCommonException;
 import com.huazie.fleaframework.auth.common.pojo.privilege.FleaPrivilegeGroupRelPOJO;
 import com.huazie.fleaframework.auth.util.FleaAuthCheck;
-import com.huazie.fleaframework.auth.base.privilege.dao.interfaces.IFleaPrivilegeGroupRelDAO;
-import com.huazie.fleaframework.auth.base.privilege.entity.FleaPrivilegeGroupRel;
 import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * <p> Flea权限组关联（权限）SV层实现类 </p>
+ * Flea权限组关联（权限）SV层实现类
  *
  * @author huazie
  * @version 1.0.0
@@ -49,7 +49,7 @@ public class FleaPrivilegeGroupRelSVImpl extends AbstractFleaJPASVImpl<FleaPrivi
     }
 
     /**
-     * <p> 新建一个Flea权限关联实体类对象 </p>
+     * 新建一个Flea权限关联实体类对象
      *
      * @param fleaPrivilegeGroupRelPOJO Flea权限关联POJO类对象
      * @return Flea权限实体类对象

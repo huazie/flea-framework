@@ -1,8 +1,8 @@
 package com.huazie.fleaframework.cache.common;
 
+import com.huazie.fleaframework.cache.AbstractFleaCacheManager;
 import com.huazie.fleaframework.cache.core.manager.CoreFleaCacheManager;
 import com.huazie.fleaframework.cache.memcached.manager.MemCachedFleaCacheManager;
-import com.huazie.fleaframework.cache.AbstractFleaCacheManager;
 import com.huazie.fleaframework.cache.redis.manager.RedisClusterFleaCacheManager;
 import com.huazie.fleaframework.cache.redis.manager.RedisShardedFleaCacheManager;
 import com.huazie.fleaframework.common.FleaCommonConfig;
@@ -38,7 +38,7 @@ public class FleaCacheManagerFactory {
     }
 
     /**
-     * <p> 获取Flea Cache管理类对象实例 </p>
+     * 获取Flea Cache管理类对象实例
      *
      * @param name 缓存实现名称
      * @return Flea Cache管理类对象实例

@@ -6,11 +6,11 @@ import com.huazie.fleaframework.common.util.CollectionUtils;
 import com.huazie.fleaframework.common.util.IOUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
-import com.huazie.fleaframework.tools.code.FleaCodeHelper;
-import com.huazie.fleaframework.tools.common.ToolsConstants;
 import com.huazie.fleaframework.db.common.table.pojo.Column;
 import com.huazie.fleaframework.db.jdbc.FleaJDBCHelper;
 import com.huazie.fleaframework.db.jdbc.config.FleaJDBCConfig;
+import com.huazie.fleaframework.tools.code.FleaCodeHelper;
+import com.huazie.fleaframework.tools.common.ToolsConstants;
 
 import javax.persistence.GenerationType;
 import java.sql.SQLException;
@@ -121,7 +121,7 @@ public class FleaEntityBuilder extends FleaCodeBuilder {
             } else {
                 if (isPrimaryKey) {
                     if (String.class.equals(attrType)) {
-                        variableContent = IOUtils.toNativeStringFromResource("flea/code/entity/VariablePrimaryKeyStr.code");
+                        variableContent = IOUtils.toNativeStringFromResource("flea/code/entity/VariablePrimaryKey4NoneStrategy.code");
                     } else {
                         variableContent = toVariablePrimaryKeyNum(pubParam);
                     }
@@ -157,7 +157,9 @@ public class FleaEntityBuilder extends FleaCodeBuilder {
         String pkVariableContent = "";
 
         String idGeneratorStrategy = StringUtils.valueOf(pubParam.get(ToolsConstants.CodeConstants.ID_GENERATOR_STRATEGY));
-        if (GenerationType.TABLE.name().equals(idGeneratorStrategy)) {
+        if (ToolsConstants.CodeConstants.NONE.equals(idGeneratorStrategy)) {
+            pkVariableContent = IOUtils.toNativeStringFromResource("flea/code/entity/VariablePrimaryKey4NoneStrategy.code");
+        } else if (GenerationType.TABLE.name().equals(idGeneratorStrategy)) {
             pkVariableContent = IOUtils.toNativeStringFromResource("flea/code/entity/VariablePrimaryKeyNum4Table.code");
         } else if (GenerationType.IDENTITY.name().equals(idGeneratorStrategy)){
             pkVariableContent = IOUtils.toNativeStringFromResource("flea/code/entity/VariablePrimaryKeyNum4Identity.code");

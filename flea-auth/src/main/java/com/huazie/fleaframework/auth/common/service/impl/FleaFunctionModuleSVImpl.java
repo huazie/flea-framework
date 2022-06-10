@@ -1,9 +1,5 @@
 package com.huazie.fleaframework.auth.common.service.impl;
 
-import com.huazie.fleaframework.auth.common.pojo.function.menu.FleaMenuPOJO;
-import com.huazie.fleaframework.auth.common.pojo.privilege.FleaPrivilegePOJO;
-import com.huazie.fleaframework.auth.common.pojo.privilege.FleaPrivilegeRelPOJO;
-import com.huazie.fleaframework.auth.common.service.interfaces.IFleaFunctionModuleSV;
 import com.huazie.fleaframework.auth.base.function.entity.FleaMenu;
 import com.huazie.fleaframework.auth.base.function.service.interfaces.IFleaFunctionAttrSV;
 import com.huazie.fleaframework.auth.base.function.service.interfaces.IFleaMenuSV;
@@ -13,6 +9,10 @@ import com.huazie.fleaframework.auth.base.privilege.service.interfaces.IFleaPriv
 import com.huazie.fleaframework.auth.common.AuthRelTypeEnum;
 import com.huazie.fleaframework.auth.common.FunctionTypeEnum;
 import com.huazie.fleaframework.auth.common.pojo.function.attr.FleaFunctionAttrPOJO;
+import com.huazie.fleaframework.auth.common.pojo.function.menu.FleaMenuPOJO;
+import com.huazie.fleaframework.auth.common.pojo.privilege.FleaPrivilegePOJO;
+import com.huazie.fleaframework.auth.common.pojo.privilege.FleaPrivilegeRelPOJO;
+import com.huazie.fleaframework.auth.common.service.interfaces.IFleaFunctionModuleSV;
 import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.common.i18n.FleaI18nHelper;
 import com.huazie.fleaframework.common.util.ObjectUtils;
@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * <p> Flea功能管理服务层实现类 </p>
+ * Flea功能管理服务层实现类
  *
  * @author huazie
  * @version 1.0.0
@@ -103,7 +103,7 @@ public class FleaFunctionModuleSVImpl implements IFleaFunctionModuleSV {
     }
 
     /**
-     * <p> 新建Flea权限POJO对象 </p>
+     * 新建Flea权限POJO对象
      *
      * @param values auth国际码资源数据参数信息
      * @return Flea权限POJO对象
@@ -121,7 +121,7 @@ public class FleaFunctionModuleSVImpl implements IFleaFunctionModuleSV {
     }
 
     /**
-     * <p> 新建Flea权限关联POJO对象 </p>
+     * 新建Flea权限关联POJO对象
      *
      * @param privilegeId 权限编号
      * @param relId       关联编号【这里是菜单编号】

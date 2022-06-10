@@ -12,7 +12,7 @@ import com.huazie.fleaframework.common.exception.CommonException;
 public interface ILibSplit {
 
     /**
-     * <p> 分库转换 </p>
+     * 分库转换
      *
      * @param splitLibObj 分库对象
      * @param count       分库总数

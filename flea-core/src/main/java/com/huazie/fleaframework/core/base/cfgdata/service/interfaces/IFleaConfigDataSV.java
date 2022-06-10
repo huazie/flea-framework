@@ -7,7 +7,7 @@ import com.huazie.fleaframework.db.jpa.service.interfaces.IAbstractFleaJPASV;
 import java.util.List;
 
 /**
- * <p> Flea 配置数据SV层接口定义 </p>
+ * Flea 配置数据SV层接口定义
  *
  * @author huazie
  * @version 1.1.0
@@ -16,7 +16,7 @@ import java.util.List;
 public interface IFleaConfigDataSV extends IAbstractFleaJPASV<FleaConfigData> {
 
     /**
-     * <p> 获取配置数据集合 </p>
+     * 根据配置数据类型和配置数据编码，获取有效的配置数据集合。
      *
      * @param configType 配置数据类型
      * @param configCode 配置数据编码
@@ -27,7 +27,7 @@ public interface IFleaConfigDataSV extends IAbstractFleaJPASV<FleaConfigData> {
     List<FleaConfigData> getConfigDatas(String configType, String configCode) throws CommonException;
 
     /**
-     * <p> 获取单个配置数据集合 </p>
+     * 根据配置数据类型和配置数据编码，获取唯一有效的配置数据。
      *
      * @param configType 配置数据类型
      * @param configCode 配置数据编码

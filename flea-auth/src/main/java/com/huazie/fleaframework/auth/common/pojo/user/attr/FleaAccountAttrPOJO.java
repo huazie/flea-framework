@@ -4,7 +4,7 @@ import com.huazie.fleaframework.auth.common.pojo.FleaAttrPOJO;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
- * <p> Flea账户属性POJO类 </p>
+ * Flea账户属性POJO类
  *
  * @author huazie
  * @version 1.0.0

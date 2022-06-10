@@ -7,7 +7,7 @@ import com.huazie.fleaframework.db.jpa.service.interfaces.IAbstractFleaJPASV;
 import java.util.List;
 
 /**
- * <p> Flea用户关联（角色，角色组）SV层接口定义 </p>
+ * Flea用户关联（角色，角色组）SV层接口定义
  *
  * @author huazie
  * @version 1.0.0
@@ -16,7 +16,7 @@ import java.util.List;
 public interface IFleaUserRelSV extends IAbstractFleaJPASV<FleaUserRel> {
 
     /**
-     * <p> 获取指定用户编号【userId】关联的指定授权关联类型【authRelType】的用户组关联信息 </p>
+     * 获取指定用户编号【userId】关联的指定授权关联类型【authRelType】的用户组关联信息
      *
      * @param userId 用户编号
      * @param authRelType 授权关联类型

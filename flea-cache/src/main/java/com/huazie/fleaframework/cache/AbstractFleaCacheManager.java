@@ -32,7 +32,7 @@ public abstract class AbstractFleaCacheManager {
     private Map<String, Integer> configMap = new HashMap<>();   // 各缓存的时间Map
 
     /**
-     * <p> 获取所有的Flea缓存 </p>
+     * 获取所有的Flea缓存
      *
      * @return 所有的Flea缓存
      * @since 1.0.0
@@ -42,7 +42,7 @@ public abstract class AbstractFleaCacheManager {
     }
 
     /**
-     * <p> 根据指定缓存名获取缓存对象 </p>
+     * 根据指定缓存名获取缓存对象
      *
      * @param name 缓存名
      * @return 缓存对象
@@ -65,7 +65,7 @@ public abstract class AbstractFleaCacheManager {
     }
 
     /**
-     * <p> 新创建一个缓存对象 </p>
+     * 新创建一个缓存对象
      *
      * @param name   缓存名
      * @param expiry 有效期（单位：s  其中0：表示永久）
@@ -75,7 +75,7 @@ public abstract class AbstractFleaCacheManager {
     protected abstract AbstractFleaCache newCache(String name, int expiry);
 
     /**
-     * <p> 设置各缓存有效期配置Map </p>
+     * 设置各缓存有效期配置Map
      *
      * @param configMap 有效期配置Map
      * @since 1.0.0

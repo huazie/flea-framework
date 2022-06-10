@@ -138,31 +138,35 @@ public class EclipseLinkUtils {
                 String splitTablePkColumnValue = splitTable.getSplitTablePkColumnValue();
                 splitClassDescriptor.setSequenceNumberName(splitTablePkColumnValue);
                 DatabaseField sequenceNumberField = descriptor.getSequenceNumberField();
-                splitClassDescriptor.setSequenceNumberField(splitFieldMap.get(sequenceNumberField.getName()));
+                if (ObjectUtils.isNotEmpty(sequenceNumberField)) {
+                    splitClassDescriptor.setSequenceNumberField(splitFieldMap.get(sequenceNumberField.getName()));
+                }
 
                 Sequence sequence = descriptor.getSequence();
-                Sequence splitSequence;
-                if (sequence instanceof TableSequence) {
-                    splitSequence = new TableSequence();
-                    splitSequence.setName(splitTablePkColumnValue);
-                    ((TableSequence) splitSequence).setCounterFieldName(((TableSequence) sequence).getCounterFieldName());
-                    ((TableSequence) splitSequence).setNameFieldName(((TableSequence) sequence).getNameFieldName());
-                    ((TableSequence) splitSequence).setTable(((TableSequence) sequence).getTable());
-                    splitSequence.setInitialValue(sequence.getInitialValue());
-                    splitSequence.setPreallocationSize(sequence.getPreallocationSize());
-                } else {
-                    splitSequence = (Sequence) sequence.clone();
+                if (ObjectUtils.isNotEmpty(sequence)) {
+                    Sequence splitSequence;
+                    if (sequence instanceof TableSequence) {
+                        splitSequence = new TableSequence();
+                        splitSequence.setName(splitTablePkColumnValue);
+                        ((TableSequence) splitSequence).setCounterFieldName(((TableSequence) sequence).getCounterFieldName());
+                        ((TableSequence) splitSequence).setNameFieldName(((TableSequence) sequence).getNameFieldName());
+                        ((TableSequence) splitSequence).setTable(((TableSequence) sequence).getTable());
+                        splitSequence.setInitialValue(sequence.getInitialValue());
+                        splitSequence.setPreallocationSize(sequence.getPreallocationSize());
+                    } else {
+                        splitSequence = (Sequence) sequence.clone();
+                    }
+                    // 初始化分表的Sequence
+                    splitSequence.onConnect(session.getDatasourcePlatform());
+                    if (splitSequence instanceof TableSequence) {
+                        // 为主键值查询SQL添加分表的实体类的描述信息
+                        ((TableSequence) splitSequence).getSelectQuery().setDescriptor(splitClassDescriptor);
+                        // 为主键值更新SQL添加分表的实体类的描述信息
+                        ((TableSequence) splitSequence).getUpdateQuery().setDescriptor(splitClassDescriptor);
+                    }
+                    splitClassDescriptor.setSequence(splitSequence);
+                    session.getDatasourcePlatform().addSequence(splitSequence, session.isConnected());
                 }
-                // 初始化分表的Sequence
-                splitSequence.onConnect(session.getDatasourcePlatform());
-                if (splitSequence instanceof TableSequence) {
-                    // 为主键值查询SQL添加分表的实体类的描述信息
-                    ((TableSequence) splitSequence).getSelectQuery().setDescriptor(splitClassDescriptor);
-                    // 为主键值更新SQL添加分表的实体类的描述信息
-                    ((TableSequence) splitSequence).getUpdateQuery().setDescriptor(splitClassDescriptor);
-                }
-                splitClassDescriptor.setSequence(splitSequence);
-                session.getDatasourcePlatform().addSequence(splitSequence, session.isConnected());
 
                 splitClassDescriptor.preInitialize(session);
                 splitClassDescriptor.initialize(session);

@@ -1,13 +1,13 @@
 package com.huazie.fleaframework.cache.redis.impl;
 
-import com.huazie.fleaframework.cache.redis.config.RedisClusterConfig;
-import com.huazie.fleaframework.cache.redis.config.RedisShardedConfig;
 import com.huazie.fleaframework.cache.AbstractFleaCache;
 import com.huazie.fleaframework.cache.NullCache;
 import com.huazie.fleaframework.cache.common.CacheEnum;
 import com.huazie.fleaframework.cache.common.CacheModeEnum;
 import com.huazie.fleaframework.cache.common.CacheUtils;
 import com.huazie.fleaframework.cache.redis.RedisClient;
+import com.huazie.fleaframework.cache.redis.config.RedisClusterConfig;
+import com.huazie.fleaframework.cache.redis.config.RedisShardedConfig;
 import com.huazie.fleaframework.common.CommonConstants;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
@@ -41,7 +41,7 @@ public class RedisFleaCache extends AbstractFleaCache {
     private CacheModeEnum cacheMode; // 缓存模式【分片模式和集群模式】
 
     /**
-     * <p> 带参数的构造方法，初始化Redis Flea缓存类 </p>
+     * 带参数的构造方法，初始化Redis Flea缓存类
      *
      * @param name            缓存数据主关键字
      * @param expiry          缓存数据有效期（单位：s）

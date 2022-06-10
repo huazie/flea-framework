@@ -8,17 +8,17 @@ import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
 import com.huazie.fleaframework.common.util.TimeUtil;
+import com.huazie.fleaframework.core.filter.task.IFilterTask;
+import com.huazie.fleaframework.core.filter.taskchain.IFilterTaskChain;
 import com.huazie.fleaframework.core.request.FleaRequestContext;
 import com.huazie.fleaframework.core.request.FleaRequestUtil;
 import com.huazie.fleaframework.core.request.config.FleaSession;
-import com.huazie.fleaframework.core.filter.task.IFilterTask;
-import com.huazie.fleaframework.core.filter.taskchain.IFilterTaskChain;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
- * <p> SESSION信息校验过滤器任务 </p>
+ * SESSION信息校验过滤器任务
  *
  * @author huazie
  * @version 1.0.0
@@ -89,7 +89,7 @@ public class SessionCheckFilterTask implements IFilterTask {
     }
 
     /**
-     * <p> 判断用户是否登录 </p>
+     * 判断用户是否登录
      *
      * @param session        HttpSession对象
      * @param userSessionKey 用户SESSION信息键
@@ -114,7 +114,7 @@ public class SessionCheckFilterTask implements IFilterTask {
     }
 
     /**
-     * <p> 判断用户Session是否已经失效 </p>
+     * 判断用户Session是否已经失效
      *
      * @param session HttpSession对象
      * @return true：已失效 , false: 未失效
@@ -158,7 +158,7 @@ public class SessionCheckFilterTask implements IFilterTask {
     }
 
     /**
-     * <p> 激活用户Session信息 </p>
+     * 激活用户Session信息
      *
      * @param session HttpSession对象
      * @param userSessionKey 用户Session信息键

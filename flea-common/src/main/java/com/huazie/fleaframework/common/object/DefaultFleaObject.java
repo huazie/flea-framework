@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.common.object;
 
 /**
- * <p> 默认的Flea对象实现类 </p>
+ * 默认的 Flea 对象实现类，用于包装其实际的 T 对象实例。
  *
  * @author huazie
  * @version 1.0.0

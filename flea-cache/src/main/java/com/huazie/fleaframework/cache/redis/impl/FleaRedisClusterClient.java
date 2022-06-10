@@ -47,7 +47,7 @@ public class FleaRedisClusterClient extends FleaRedisClient {
     private JedisCluster jedisCluster;
 
     /**
-     * <p> Redis集群客户端构造方法 (默认) </p>
+     * Redis集群客户端构造方法 (默认)
      *
      * @since 1.1.0
      */
@@ -56,7 +56,7 @@ public class FleaRedisClusterClient extends FleaRedisClient {
     }
 
     /**
-     * <p> Redis集群客户端构造方法（指定连接池名） </p>
+     * Redis集群客户端构造方法（指定连接池名）
      *
      * @param poolName 连接池名
      * @since 1.1.0
@@ -67,7 +67,7 @@ public class FleaRedisClusterClient extends FleaRedisClient {
     }
 
     /**
-     * <p> 初始化Jedis集群实例 </p>
+     * 初始化Jedis集群实例
      *
      * @since 1.1.0
      */
@@ -143,7 +143,7 @@ public class FleaRedisClusterClient extends FleaRedisClient {
     }
 
     /**
-     * <p> 获取客户端类 </p>
+     * 获取客户端类
      *
      * @param key 缓存实际存储的键
      * @return 客户端类
@@ -167,7 +167,7 @@ public class FleaRedisClusterClient extends FleaRedisClient {
     }
 
     /**
-     * <p> 内部建造者类 </p>
+     * 内部建造者类
      *
      * @author huazie
      * @version 1.1.0
@@ -178,7 +178,7 @@ public class FleaRedisClusterClient extends FleaRedisClient {
         private String poolName; // 连接池名
 
         /**
-         * <p> 默认构造器 </p>
+         * 默认构造器
          *
          * @since 1.1.0
          */
@@ -186,7 +186,7 @@ public class FleaRedisClusterClient extends FleaRedisClient {
         }
 
         /**
-         * <p> 指定连接池的构造器 </p>
+         * 指定连接池的构造器
          *
          * @param poolName 连接池名
          * @since 1.1.0
@@ -196,7 +196,7 @@ public class FleaRedisClusterClient extends FleaRedisClient {
         }
 
         /**
-         * <p> 构建Redis集群客户端对象 </p>
+         * 构建Redis集群客户端对象
          *
          * @return Redis集群客户端
          * @since 1.1.0

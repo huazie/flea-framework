@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.common.i18n;
 
 /**
- * <p> Flea I18n 资源枚举 </p>
+ * Flea I18N 资源枚举
  *
  * @author huazie
  * @version 1.0.0

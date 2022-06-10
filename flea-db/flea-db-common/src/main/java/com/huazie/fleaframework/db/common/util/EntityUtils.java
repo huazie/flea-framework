@@ -8,7 +8,6 @@ import com.huazie.fleaframework.common.util.NumberUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.ReflectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
-import com.huazie.fleaframework.db.common.table.pojo.SplitTable;
 import com.huazie.fleaframework.db.common.FleaTable;
 import com.huazie.fleaframework.db.common.FleaTableGenerator;
 import com.huazie.fleaframework.db.common.exception.DaoException;
@@ -16,6 +15,7 @@ import com.huazie.fleaframework.db.common.sql.template.config.Param;
 import com.huazie.fleaframework.db.common.sql.template.config.Relation;
 import com.huazie.fleaframework.db.common.sql.template.config.Template;
 import com.huazie.fleaframework.db.common.table.pojo.Column;
+import com.huazie.fleaframework.db.common.table.pojo.SplitTable;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <p> 实体工具类 </p>
+ * 实体工具类
  *
  * @author huazie
  * @version 1.0.0
@@ -39,7 +39,7 @@ public class EntityUtils {
     }
 
     /**
-     * <p> 获取SQL模板的Map集合，便于根据SQL模板id查找 </p>
+     * 获取SQL模板的Map集合，便于根据SQL模板id查找
      *
      * @param templates SQL模板的List对象
      * @return SQL模板的Map集合
@@ -54,7 +54,7 @@ public class EntityUtils {
     }
 
     /**
-     * <p> 获取SQL模板参数的Map集合，便于根据SQL模板参数id查找 </p>
+     * 获取SQL模板参数的Map集合，便于根据SQL模板参数id查找
      *
      * @param params SQL模板参数的List对象
      * @return SQL模板参数的Map集合
@@ -69,7 +69,7 @@ public class EntityUtils {
     }
 
     /**
-     * <p> 获取SQL模板和模板参数关联关系的Map集合，便于根据关系id查找 </p>
+     * 获取SQL模板和模板参数关联关系的Map集合，便于根据关系id查找
      *
      * @param relations SQL模板和模板参数关联关系的List对象
      * @return SQL模板和模板参数关联关系的Map集合
@@ -195,7 +195,7 @@ public class EntityUtils {
     }
 
     /**
-     * <p> 根据指定的属性名及其属性值，获取指定实体 </p>
+     * 根据指定的属性名及其属性值，获取指定实体
      *
      * @param objs      实体数组
      * @param attrName  属性名
@@ -250,7 +250,7 @@ public class EntityUtils {
     }
 
     /**
-     * <p> 获取真实的表名，如是分表，则获取分表名 </p>
+     * 获取真实的表名，如是分表，则获取分表名
      *
      * @param entity 实体类对象实例
      * @return 真实的表名，如是分表，则返回相应的分表名

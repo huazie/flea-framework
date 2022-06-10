@@ -1,11 +1,11 @@
 package com.huazie.fleaframework.auth.base.function.service.impl;
 
+import com.huazie.fleaframework.auth.base.function.dao.interfaces.IFleaFunctionAttrDAO;
+import com.huazie.fleaframework.auth.base.function.entity.FleaFunctionAttr;
 import com.huazie.fleaframework.auth.base.function.service.interfaces.IFleaFunctionAttrSV;
 import com.huazie.fleaframework.auth.common.FleaAuthEntityConstants;
 import com.huazie.fleaframework.auth.common.exception.FleaAuthCommonException;
 import com.huazie.fleaframework.auth.common.pojo.function.attr.FleaFunctionAttrPOJO;
-import com.huazie.fleaframework.auth.base.function.dao.interfaces.IFleaFunctionAttrDAO;
-import com.huazie.fleaframework.auth.base.function.entity.FleaFunctionAttr;
 import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * <p> Flea功能扩展属性SV层实现类 </p>
+ * Flea功能扩展属性SV层实现类
  *
  * @author huazie
  * @version 1.0.0
@@ -49,7 +49,7 @@ public class FleaFunctionAttrSVImpl extends AbstractFleaJPASVImpl<FleaFunctionAt
     }
 
     /**
-     * <p> 新建一个Flea功能扩展属性实体对象 </p>
+     * 新建一个Flea功能扩展属性实体对象
      *
      * @param fleaFunctionAttrPOJO flea功能扩展属性POJO类
      * @return Flea功能扩展属性实体对象

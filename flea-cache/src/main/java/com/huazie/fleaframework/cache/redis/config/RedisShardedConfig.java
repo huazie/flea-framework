@@ -7,6 +7,7 @@ import com.huazie.fleaframework.common.CommonConstants;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.common.util.ArrayUtils;
+import com.huazie.fleaframework.common.util.ExceptionUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.PropertiesUtil;
 import com.huazie.fleaframework.common.util.StringUtils;
@@ -137,7 +138,7 @@ public class RedisShardedConfig extends RedisCommonConfig {
                     String ip = serverArr[i];
 
                     if (StringUtils.isBlank(ip)) {
-                        throw new FleaCacheConfigException("服务器配置的IP地址为空，请检查");
+                        ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "服务器配置的IP地址为空，请检查");
                     }
 
                     String host = Protocol.DEFAULT_HOST;    // 默认主机
@@ -215,7 +216,7 @@ public class RedisShardedConfig extends RedisCommonConfig {
         } else if (RedisConfigConstants.REDIS_CONFIG_HASHINGALG_MD5 == alg) {
             this.hashingAlg = Hashing.MD5;
         } else {
-            throw new FleaCacheConfigException("配置的分布式hash算法【" + alg + "】非法, 仅允许1和2，请检查");
+            ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "配置的分布式hash算法【" + alg + "】非法, 仅允许1和2，请检查");
         }
     }
 

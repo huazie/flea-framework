@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**
- * <p> Flea账户信息SV层实现类 </p>
+ * Flea账户信息SV层实现类
  *
  * @author huazie
  * @version 1.0.0
@@ -89,7 +89,7 @@ public class FleaAccountSVImpl extends AbstractFleaJPASVImpl<FleaAccount> implem
     }
 
     /**
-     * <p> 新建一个Flea账户 </p>
+     * 新建一个Flea账户
      *
      * @param fleaAccountPOJO Flea账户POJO类实例
      * @return Flea账户

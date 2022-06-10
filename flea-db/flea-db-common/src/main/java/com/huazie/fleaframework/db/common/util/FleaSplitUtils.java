@@ -10,7 +10,6 @@ import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.ReflectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
 import com.huazie.fleaframework.db.common.DBConstants;
-import com.huazie.fleaframework.db.common.table.pojo.SplitTable;
 import com.huazie.fleaframework.db.common.exception.LibSplitException;
 import com.huazie.fleaframework.db.common.exception.TableSplitException;
 import com.huazie.fleaframework.db.common.lib.pojo.SplitLib;
@@ -20,6 +19,7 @@ import com.huazie.fleaframework.db.common.lib.split.config.Lib;
 import com.huazie.fleaframework.db.common.lib.split.config.LibSplitConfig;
 import com.huazie.fleaframework.db.common.lib.split.config.Transaction;
 import com.huazie.fleaframework.db.common.table.pojo.Column;
+import com.huazie.fleaframework.db.common.table.pojo.SplitTable;
 import com.huazie.fleaframework.db.common.table.split.ITableSplit;
 import com.huazie.fleaframework.db.common.table.split.TableSplitEnum;
 import com.huazie.fleaframework.db.common.table.split.config.Split;
@@ -56,7 +56,7 @@ public class FleaSplitUtils {
     /**
      * 获取分表信息
      *
-     * @param tableName  主表名
+     * @param tableName  模板表名
      * @param entityCols 实体类属性列集合
      * @return 分表对象
      * @throws CommonException 通用异常
@@ -77,13 +77,13 @@ public class FleaSplitUtils {
         }
 
         SplitTable splitTable = new SplitTable();
-        splitTable.setTableName(tableName); // 设置主表名
-        splitTable.setSplitTableName(tableName); // 设置分表名默认为主表名
+        splitTable.setTableName(tableName); // 设置模板表名
+        splitTable.setSplitTableName(tableName); // 设置分表名默认为模板表名
         splitTable.setPkColumnValue(pkColumnValue); // 生成器表中的主键值，为主键中@TableGenerator中的pkColumnValue
         splitTable.setSplitTablePkColumnValue(pkColumnValue); // 生成器表中分表的主键值，默认为主键中@TableGenerator中的pkColumnValue
         splitTable.setExistSplitTable(false); // 默认没有分表
         splitTable.setExistSplitTablePkColumn(false); // 默认没有ID生成器表中分表的主键值
-        splitTable.setGeneratorFlag(generatorFlag);
+        splitTable.setGeneratorFlag(generatorFlag); // 默认主键生成器表在模板库中
 
         Object obj = null;
         if (LOGGER.isDebugEnabled()) {
@@ -182,6 +182,10 @@ public class FleaSplitUtils {
             }
             // 添加分库信息
             splitTable.setSplitLib(getSplitLib(tab.getLib(), splitLibObjMap));
+        } else {
+            SplitLib splitLib = new SplitLib();
+            splitLib.setExistSplitLib(false);
+            splitTable.setSplitLib(splitLib);
         }
 
         if (LOGGER.isDebugEnabled()) {
@@ -196,7 +200,7 @@ public class FleaSplitUtils {
     /**
      * 获取真实的表名，如是分表，则获取分表名
      *
-     * @param tableName  主表名
+     * @param tableName  模板表名
      * @param entityCols 实体类属性列集合
      * @return 真实的表名，如是分表，则返回相应的分表名
      * @throws CommonException 通用异常
@@ -217,14 +221,12 @@ public class FleaSplitUtils {
      */
     public static SplitLib getSplitLib(String libName, Map<String, Object> splitLibObjMap) throws CommonException {
 
-        SplitLib splitLib = null;
+        SplitLib splitLib = new SplitLib();
+        splitLib.setExistSplitLib(false);
+        splitLib.setLibName(libName);
+        splitLib.setSplitLibName(libName);
 
         if (StringUtils.isNotBlank(libName) && MapUtils.isNotEmpty(splitLibObjMap)) {
-
-            splitLib = new SplitLib();
-            splitLib.setLibName(libName);
-            splitLib.setSplitLibName(libName);
-            splitLib.setExistSplitLib(false);
 
             Object obj = null;
             if (LOGGER.isDebugEnabled()) {

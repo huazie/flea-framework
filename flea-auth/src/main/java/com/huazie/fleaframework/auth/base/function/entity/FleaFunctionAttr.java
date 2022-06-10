@@ -18,7 +18,7 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 /**
- * <p> Flea功能扩展属性表对应的实体类 </p>
+ * Flea功能扩展属性表对应的实体类
  *
  * @author huazie
  * @version 1.0.0
@@ -42,7 +42,7 @@ public class FleaFunctionAttr extends FleaEntity {
         // 存储最后生成的主键值的列的名称
         valueColumnName = "id_generator_value",
         // ID生成器表中的主键值模板，用于将该生成值集与其他可能存储在表中的值区分开
-        pkColumnValue = "pk_flea_function_attr",
+        pkColumnValue = "pk_flea_function_attr_(FUNCTION_TYPE)",
         // 从ID生成器表中分配ID号时增加的数量
         allocationSize = 1
     )
@@ -87,7 +87,7 @@ public class FleaFunctionAttr extends FleaEntity {
     private String remarks; // 备注信息
 
     /**
-     * <p> 无参数构造方法 </p>
+     * 无参数构造方法
      *
      * @since 1.0.0
      */
@@ -95,7 +95,7 @@ public class FleaFunctionAttr extends FleaEntity {
     }
 
     /**
-     * <p> 带参数构造方法 </p>
+     * 带参数构造方法
      *
      * @param functionId   功能编号
      * @param functionType 功能类型

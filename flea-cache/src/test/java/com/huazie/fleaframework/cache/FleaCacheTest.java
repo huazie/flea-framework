@@ -1,10 +1,10 @@
 package com.huazie.fleaframework.cache;
 
-import com.huazie.fleaframework.cache.redis.config.RedisClusterConfig;
-import com.huazie.fleaframework.cache.redis.config.RedisShardedConfig;
 import com.huazie.fleaframework.cache.common.CacheEnum;
 import com.huazie.fleaframework.cache.common.FleaCacheManagerFactory;
 import com.huazie.fleaframework.cache.memcached.config.MemCachedConfig;
+import com.huazie.fleaframework.cache.redis.config.RedisClusterConfig;
+import com.huazie.fleaframework.cache.redis.config.RedisShardedConfig;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import org.junit.Test;
@@ -124,7 +124,7 @@ public class FleaCacheTest {
 
         try {
             AbstractFleaCacheManager manager = FleaCacheManagerFactory.getFleaCacheManager(CacheEnum.MemCached.getName());
-            AbstractFleaCache cache = manager.getCache("fleaparadetail");
+            AbstractFleaCache cache = manager.getCache("fleaconfigdata");
             LOGGER.debug("Cache={}", cache);
             //#### 1.  简单字符串
 //            cache.put("menu1", "huazie");
@@ -146,7 +146,7 @@ public class FleaCacheTest {
         try {
             // 分片模式下Flea缓存管理类
             AbstractFleaCacheManager manager = FleaCacheManagerFactory.getFleaCacheManager(CacheEnum.RedisSharded.getName());
-            AbstractFleaCache cache = manager.getCache("fleaparadetail");
+            AbstractFleaCache cache = manager.getCache("fleaconfigdata");
             LOGGER.debug("Cache={}", cache);
             //#### 1.  简单字符串
             cache.put("menu1", "huazie");
@@ -167,7 +167,7 @@ public class FleaCacheTest {
     public void testCoreFleaCache() {
         try {
             AbstractFleaCacheManager manager = FleaCacheManagerFactory.getFleaCacheManager(CacheEnum.FleaCore.getName());
-            AbstractFleaCache cache = manager.getCache("fleaparadetail");
+            AbstractFleaCache cache = manager.getCache("fleaconfigdata");
             LOGGER.debug("Cache={}", cache);
             //#### 1.  简单字符串
 //            cache.put("menu1", "huazie");

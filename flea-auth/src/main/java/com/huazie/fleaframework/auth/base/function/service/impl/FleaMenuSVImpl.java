@@ -1,11 +1,11 @@
 package com.huazie.fleaframework.auth.base.function.service.impl;
 
+import com.huazie.fleaframework.auth.base.function.dao.interfaces.IFleaMenuDAO;
+import com.huazie.fleaframework.auth.base.function.entity.FleaMenu;
 import com.huazie.fleaframework.auth.base.function.service.interfaces.IFleaMenuSV;
 import com.huazie.fleaframework.auth.common.FleaAuthEntityConstants;
 import com.huazie.fleaframework.auth.common.exception.FleaAuthCommonException;
 import com.huazie.fleaframework.auth.common.pojo.function.menu.FleaMenuPOJO;
-import com.huazie.fleaframework.auth.base.function.dao.interfaces.IFleaMenuDAO;
-import com.huazie.fleaframework.auth.base.function.entity.FleaMenu;
 import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.common.util.CollectionUtils;
 import com.huazie.fleaframework.common.util.NumberUtils;
@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p> Flea菜单SV层实现类 </p>
+ * Flea菜单SV层实现类
  *
  * @author huazie
  * @version 1.0.0
@@ -81,7 +81,7 @@ public class FleaMenuSVImpl extends AbstractFleaJPASVImpl<FleaMenu> implements I
     }
 
     /**
-     * <p> 新建一个Flea菜单实体类对象 </p>
+     * 新建一个Flea菜单实体类对象
      *
      * @param fleaMenuPOJO flea菜单POJO对象
      * @return Flea菜单

@@ -7,17 +7,17 @@ import com.huazie.fleaframework.common.util.ExceptionUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.PatternMatcherUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
-import com.huazie.fleaframework.core.request.FleaRequestContext;
-import com.huazie.fleaframework.core.request.FleaRequestUtil;
 import com.huazie.fleaframework.core.filter.task.FleaFilterTaskException;
 import com.huazie.fleaframework.core.filter.task.IFilterTask;
 import com.huazie.fleaframework.core.filter.taskchain.IFilterTaskChain;
+import com.huazie.fleaframework.core.request.FleaRequestContext;
+import com.huazie.fleaframework.core.request.FleaRequestUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.regex.Pattern;
 
 /**
- * <p> URL校验过滤器任务 </p>
+ * URL校验过滤器任务
  *
  * @author huazie
  * @version 1.0.0

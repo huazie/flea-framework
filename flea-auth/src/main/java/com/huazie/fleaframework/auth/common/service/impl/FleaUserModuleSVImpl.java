@@ -1,48 +1,44 @@
 package com.huazie.fleaframework.auth.common.service.impl;
 
-import com.huazie.fleaframework.auth.base.user.entity.FleaAccount;
-import com.huazie.fleaframework.auth.base.user.entity.FleaUser;
-import com.huazie.fleaframework.auth.common.exception.FleaAuthCommonException;
 import com.huazie.fleaframework.auth.base.function.entity.FleaMenu;
+import com.huazie.fleaframework.auth.base.user.entity.FleaAccount;
 import com.huazie.fleaframework.auth.base.user.entity.FleaLoginLog;
+import com.huazie.fleaframework.auth.base.user.entity.FleaUser;
 import com.huazie.fleaframework.auth.base.user.service.interfaces.IFleaAccountAttrSV;
 import com.huazie.fleaframework.auth.base.user.service.interfaces.IFleaAccountSV;
 import com.huazie.fleaframework.auth.base.user.service.interfaces.IFleaLoginLogSV;
 import com.huazie.fleaframework.auth.base.user.service.interfaces.IFleaUserAttrSV;
 import com.huazie.fleaframework.auth.base.user.service.interfaces.IFleaUserSV;
+import com.huazie.fleaframework.auth.cache.bean.FleaAuthCache;
 import com.huazie.fleaframework.auth.common.FleaAuthConstants;
+import com.huazie.fleaframework.auth.common.exception.FleaAuthCommonException;
 import com.huazie.fleaframework.auth.common.pojo.user.FleaUserModuleData;
 import com.huazie.fleaframework.auth.common.pojo.user.login.FleaUserLoginPOJO;
 import com.huazie.fleaframework.auth.common.pojo.user.register.FleaUserRegisterPOJO;
-import com.huazie.fleaframework.auth.common.service.interfaces.IFleaAuthSV;
 import com.huazie.fleaframework.auth.common.service.interfaces.IFleaUserModuleSV;
-import com.huazie.fleaframework.auth.util.FleaMenuTree;
-import com.huazie.fleaframework.common.CommonConstants;
-import com.huazie.fleaframework.common.FleaSessionManager;
+import com.huazie.fleaframework.auth.util.FleaAuthCheck;
+import com.huazie.fleaframework.auth.util.FleaAuthManager;
 import com.huazie.fleaframework.common.IFleaUser;
 import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.i18n.FleaI18nHelper;
 import com.huazie.fleaframework.common.object.FleaObjectFactory;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.common.util.DateUtils;
 import com.huazie.fleaframework.common.util.HttpUtils;
-import com.huazie.fleaframework.common.util.MapUtils;
 import com.huazie.fleaframework.common.util.NumberUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import com.huazie.fleaframework.db.jpa.transaction.FleaTransactional;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
- * <p> Flea用户管理服务实现类 </p>
+ * Flea用户管理服务实现类
  *
  * @author huazie
  * @version 1.0.0
@@ -53,7 +49,7 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
 
     private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaUserModuleSVImpl.class);
 
-    private IFleaAuthSV fleaAuthSV; // Flea授权模块
+    private FleaAuthCache fleaAuthCache; // Flea 授权缓存
 
     private IFleaLoginLogSV fleaLoginLogSV; // Flea登录日志服务
 
@@ -65,174 +61,58 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
 
     private IFleaUserAttrSV fleaUserAttrSV; // Flea用户扩展属性服务
 
-    @Autowired
-    @Qualifier("fleaAuthSV")
-    public void setFleaAuthSV(IFleaAuthSV fleaAuthSV) {
-        this.fleaAuthSV = fleaAuthSV;
+    @Resource(type = FleaAuthCache.class)
+    public void setFleaAuthCache(FleaAuthCache fleaAuthCache) {
+        this.fleaAuthCache = fleaAuthCache;
     }
 
-    @Autowired
-    @Qualifier("fleaLoginLogSV")
+    @Resource(name = "fleaLoginLogSV")
     public void setFleaLoginLogSV(IFleaLoginLogSV fleaLoginLogSV) {
         this.fleaLoginLogSV = fleaLoginLogSV;
     }
 
-    @Autowired
-    @Qualifier("fleaAccountSV")
+    @Resource(name = "fleaAccountSV")
     public void setFleaAccountSV(IFleaAccountSV fleaAccountSV) {
         this.fleaAccountSV = fleaAccountSV;
     }
 
-    @Autowired
-    @Qualifier("fleaUserSV")
+    @Resource(name = "fleaUserSV")
     public void setFleaUserSV(IFleaUserSV fleaUserSV) {
         this.fleaUserSV = fleaUserSV;
     }
 
-    @Autowired
-    @Qualifier("fleaAccountAttrSV")
+    @Resource(name = "fleaAccountAttrSV")
     public void setFleaAccountAttrSV(IFleaAccountAttrSV fleaAccountAttrSV) {
         this.fleaAccountAttrSV = fleaAccountAttrSV;
     }
 
-    @Autowired
-    @Qualifier("fleaUserAttrSV")
+    @Resource(name = "fleaUserAttrSV")
     public void setFleaUserAttrSV(IFleaUserAttrSV fleaUserAttrSV) {
         this.fleaUserAttrSV = fleaUserAttrSV;
     }
 
     @Override
-    public void initUserInfo(Long userId, Long accountId, Long systemAccountId, Map<String, Object> otherAttrs, FleaObjectFactory<IFleaUser> fleaObjectFactory) {
+    public void initUserInfo(Long accountId, Long systemAccountId, Map<String, Object> otherAttrs, FleaObjectFactory<IFleaUser> fleaObjectFactory) throws CommonException {
+        // 获取操作用户模块信息
+        FleaUserModuleData operationUser = fleaAuthCache.getFleaUserModuleData(accountId);
+        // 校验操作用户模块信息
+        FleaAuthCheck.checkFleaUserModuleData(operationUser, StringUtils.valueOf(accountId));
 
-        IFleaUser fleaUser = fleaObjectFactory.newObject().getObject();
+        // 获取系统用户模块信息
+        FleaUserModuleData systemUser = fleaAuthCache.getFleaUserModuleData(systemAccountId);
+        // 校验系统用户模块信息
+        FleaAuthCheck.checkFleaUserModuleData(systemUser, StringUtils.valueOf(systemAccountId));
 
-        if (ObjectUtils.isNotEmpty(userId)) {
-            fleaUser.setUserId(userId);
-        }
+        // 初始化用户信息
+        IFleaUser fleaUser = FleaAuthManager.initUserInfo(accountId, operationUser, systemAccountId, systemUser, otherAttrs, fleaObjectFactory);
 
-        if (ObjectUtils.isNotEmpty(accountId)) {
-            fleaUser.setAccountId(accountId);
-        }
-
-        if (ObjectUtils.isNotEmpty(systemAccountId)) {
-            fleaUser.setSystemAccountId(systemAccountId);
-        }
-
-        if (MapUtils.isNotEmpty(otherAttrs)) {
-            Set<String> attrKeySet = otherAttrs.keySet();
-            for (String key : attrKeySet) {
-                Object value = otherAttrs.get(key);
-                fleaUser.set(key, value);
-            }
-        }
-
-        // 操作账号accountId在系统账户systemAccountId下可以访问的所有菜单
-        fleaUser.set(FleaMenuTree.MENU_TREE, toFleaMenuTree(accountId, systemAccountId));
-
-        // 处理操作账户信息
-        handleOperationUserData(fleaUser, accountId);
-
-        // 处理系统账户信息
-        handleSystemUserData(fleaUser, systemAccountId);
-
-        FleaSessionManager.setUserInfo(fleaUser);
+        // 获取所有可以访问的菜单
+        List<FleaMenu> fleaMenuList = fleaAuthCache.queryAllAccessibleMenus(accountId, systemAccountId);
+        FleaAuthManager.initFleaMenuTree(fleaUser, fleaMenuList);
 
         // 初始化Flea对象信息
-        fleaObjectFactory.initObject();
+        fleaObjectFactory.initObject(fleaUser);
 
-    }
-
-    /**
-     * <p> 获取所有可以访问的菜单，并返回菜单树</p>
-     *
-     * @param accountId       操作账户编号
-     * @param systemAccountId 系统账户编号
-     * @return 所有可以访问的菜单树
-     * @since 1.0.0
-     */
-    private FleaMenuTree toFleaMenuTree(Long accountId, Long systemAccountId) {
-        FleaMenuTree fleaMenuTree = new FleaMenuTree("FleaFrameAuth");
-        try {
-            // 获取所有可以访问的菜单
-            List<FleaMenu> fleaMenuList = fleaAuthSV.queryAllAccessibleMenus(accountId, systemAccountId);
-            fleaMenuTree.addAll(fleaMenuList);
-        } catch (CommonException e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "Getting All Accessible Menus Occurs Exception : \n", e);
-            }
-        }
-        return fleaMenuTree;
-    }
-
-    /**
-     * <p> 处理操作账户信息 </p>
-     *
-     * @param fleaUser 用户信息接口
-     * @param accountId   操作账户编号
-     * @since 1.0.0
-     */
-    private void handleOperationUserData(IFleaUser fleaUser, Long accountId) {
-        try {
-            // 获取操作账户信息
-            FleaUserModuleData operationUser = fleaAuthSV.getFleaUserModuleData(accountId);
-            FleaUser user = operationUser.getFleaUser();
-            // 昵称
-            fleaUser.set(FleaAuthConstants.UserConstants.USER_NAME, user.getUserName());
-            // 性别
-            Integer userSex = user.getUserSex();
-            if (ObjectUtils.isNotEmpty(userSex)) {
-                fleaUser.set(FleaAuthConstants.UserConstants.USER_SEX, userSex);
-            }
-            // 生日
-            Date userBirthday = user.getUserBirthday();
-            if (ObjectUtils.isNotEmpty(userBirthday)) {
-                fleaUser.set(FleaAuthConstants.UserConstants.USER_BIRTHDAY, DateUtils.date2String(userBirthday));
-            }
-            // 住址
-            String userAddress = user.getUserAddress();
-            if (StringUtils.isNotBlank(userAddress)) {
-                fleaUser.set(FleaAuthConstants.UserConstants.USER_ADDRESS, userAddress);
-            }
-            // 邮箱
-            String userEmail = user.getUserEmail();
-            if (StringUtils.isNotBlank(userEmail)) {
-                fleaUser.set(FleaAuthConstants.UserConstants.USER_EMAIL, userEmail);
-            }
-            // 手机
-            String userPhone = user.getUserPhone();
-            if (StringUtils.isNotBlank(userPhone)) {
-                fleaUser.set(FleaAuthConstants.UserConstants.USER_PHONE, userPhone);
-            }
-
-            FleaAccount fleaAccount = operationUser.getFleaAccount();
-            // 账号
-            fleaUser.set(FleaAuthConstants.UserConstants.ACCOUNT_CODE, fleaAccount.getAccountCode());
-
-        } catch (CommonException e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "Getting Operation User Occurs Exception : \n", e);
-            }
-        }
-    }
-
-    /**
-     * <p> 处理系统账户信息 </p>
-     *
-     * @param fleaUser     用户信息接口
-     * @param systemAccountId 系统账户编号
-     * @since 1.0.0
-     */
-    private void handleSystemUserData(IFleaUser fleaUser, Long systemAccountId) {
-        try {
-            // 获取操作账户信息
-            FleaUserModuleData systemUser = fleaAuthSV.getFleaUserModuleData(systemAccountId);
-            FleaUser user = systemUser.getFleaUser();
-            fleaUser.set(FleaAuthConstants.UserConstants.SYSTEM_USER_NAME, user.getUserName());
-        } catch (CommonException e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "Getting System User Occurs Exception : \n", e);
-            }
-        }
     }
 
     @Override
@@ -261,7 +141,7 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
     }
 
     @Override
-    @Transactional(value = "fleaAuthTransactionManager", rollbackFor = Exception.class)
+    @FleaTransactional(value = "fleaAuthTransactionManager", unitName = "fleaauth")
     public FleaAccount register(FleaUserRegisterPOJO fleaUserRegisterPOJO) throws CommonException {
 
         // 校验用户注册信息对象是否为空
@@ -285,14 +165,10 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
 
         // 新建一个flea用户
         FleaUser fleaUser = fleaUserSV.saveFleaUser(fleaUserRegisterPOJO.newFleaUserPOJO());
-        // 将用户信息持久化到数据库中，否则同一事物下，无法获取userId
-        fleaUserSV.flush();
 
         Long userId = fleaUser.getUserId();
         // 新建一个flea账户
         FleaAccount newFleaAccount = fleaAccountSV.saveFleaAccount(fleaUserRegisterPOJO.newFleaAccountPOJO(userId));
-        // 将账户信息持久化到数据库中，否则同一事物下，无法获取accountId
-        fleaAccountSV.flush();
 
         // 用户扩展属性批量设置用户编号
         fleaUserRegisterPOJO.setUserId(userId);
@@ -310,7 +186,7 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
     @Override
     public void saveLoginLog(Long accountId, HttpServletRequest request) {
 
-        if (ObjectUtils.isNotEmpty(accountId) && accountId > CommonConstants.NumeralConstants.ZERO) {
+        if (NumberUtils.isPositiveNumber(accountId)) {
             // 获取用户登录的ip4地址
             String ip4 = HttpUtils.getIp(request);
 
@@ -341,10 +217,11 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
                 // 获取当月用户最近一次的登录日志
                 FleaLoginLog fleaLoginLog = fleaLoginLogSV.queryLastUserLoginLog(accountId);
                 if (null != fleaLoginLog) {
-                    fleaLoginLog.setLoginState(FleaAuthConstants.UserConstants.LOGIN_STATE_2);
+                    fleaLoginLog.setLoginState(FleaAuthConstants.UserModuleConstants.LOGIN_STATE_2);
                     fleaLoginLog.setLogoutTime(DateUtils.getCurrentTime());
                     fleaLoginLog.setDoneDate(DateUtils.getCurrentTime());
-                    fleaLoginLog.setRemarks("用户已退出");
+                    // AUTH-COMMON0000000001 用户已登出
+                    fleaLoginLog.setRemarks(FleaI18nHelper.i18nForAuth("AUTH-COMMON0000000001"));
                     // 更新当月用户最近一次的登录日志的登录状态（2：已退出）
                     fleaLoginLogSV.update(fleaLoginLog);
                 }

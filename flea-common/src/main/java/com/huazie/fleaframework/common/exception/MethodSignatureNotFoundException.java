@@ -9,6 +9,8 @@ package com.huazie.fleaframework.common.exception;
  */
 public class MethodSignatureNotFoundException extends FleaException {
 
+    private static final long serialVersionUID = 2185391165160581173L;
+
     public MethodSignatureNotFoundException(String message) {
         super(message);
     }

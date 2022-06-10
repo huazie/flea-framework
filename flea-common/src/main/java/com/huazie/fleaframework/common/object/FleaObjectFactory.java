@@ -1,7 +1,8 @@
 package com.huazie.fleaframework.common.object;
 
 /**
- * <p> Flea对象工厂类 </p>
+ * Flea 对象工厂类接口，对外提供 新建 和 初始化
+ * Flea 对象的 API。
  *
  * @author huazie
  * @version 1.0.0
@@ -10,7 +11,7 @@ package com.huazie.fleaframework.common.object;
 public interface FleaObjectFactory<T> {
 
     /**
-     * <p> 新建一个T对象，并将之包装进Flea对象中 </p>
+     * 新建一个 T 对象，并将之包装进 Flea 对象中
      *
      * @return Flea对象
      * @since 1.0.0
@@ -18,10 +19,10 @@ public interface FleaObjectFactory<T> {
     FleaObject<T> newObject();
 
     /**
-     * <p> 初始Flea对象相关信息（自定义） </p>
+     * 初始 Flea 对象相关信息（方便扩展）
      *
      * @since 1.0.0
      */
-    void initObject();
+    void initObject(T t);
 
 }

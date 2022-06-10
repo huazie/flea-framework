@@ -1,6 +1,6 @@
-## flea-frame 相关表
+## flea-framework 相关表
 
-#### flea-frame-auth 模块
+#### flea-auth 模块
 |  表名                     |  中文描述                        |
 |-------------------------- |------------------------------   |  
 |  flea_account             |  账户                           |
@@ -27,7 +27,7 @@
    
 ***
 
-#### flea-frame-jersey 模块
+#### flea-jersey 模块
 |  表名                             |  中文描述                       |
 |---------------------------------- |------------------------------  |  
 |  flea_jersey_resource             |  Flea Jersey 资源               |

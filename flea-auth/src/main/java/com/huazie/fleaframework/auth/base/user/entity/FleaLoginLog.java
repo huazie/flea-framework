@@ -18,7 +18,7 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 /**
- * <p> Flea登录日志表对应的实体类 </p>
+ * Flea登录日志表对应的实体类
  *
  * @author huazie
  * @version 1.0.0
@@ -93,7 +93,7 @@ public class FleaLoginLog extends FleaEntity {
     private String ext2; // 扩展字段2
 
     /**
-     * <p> 无参数构造方法 </p>
+     * 无参数构造方法
      *
      * @since 1.0.0
      */
@@ -101,7 +101,7 @@ public class FleaLoginLog extends FleaEntity {
     }
 
     /**
-     * <p> 带参数构造方法 </p>
+     * 带参数构造方法
      *
      * @since 1.0.0
      */

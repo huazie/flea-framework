@@ -3,7 +3,7 @@ package com.huazie.fleaframework.common.config;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
- * <p> 配置Value </p>
+ * 配置值
  *
  * @author huazie
  * @version 1.0.0

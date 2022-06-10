@@ -7,7 +7,7 @@ import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * <p> 自定义实体类注解，用于定义表名 </p>
+ * 自定义实体类注解，用于定义表名
  *
  * @author huazie
  * @version 1.0.0
@@ -17,7 +17,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 public @interface FleaTable {
     /**
-     * <p> 定义实体对应数据库表名 </p>
+     * 定义实体对应数据库表名
      *
      * @return 表名
      * @since 1.0.0

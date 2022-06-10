@@ -9,7 +9,7 @@ import com.huazie.fleaframework.common.util.ObjectUtils;
 import java.util.Locale;
 
 /**
- * <p> Flea I18N 通用异常 </p>
+ * Flea I18N 通用异常，由子类传入具体的国际化资源枚举类型
  *
  * @author huazie
  * @version 1.0.0
@@ -17,9 +17,11 @@ import java.util.Locale;
  */
 public abstract class CommonException extends Exception {
 
-    private static final long serialVersionUID = 1746312829236028651L;
+    private static final long serialVersionUID = -3631865415922051268L;
 
     private String key;                     // 国际化资源数据关键字
+
+    private String[] values;                // 待替换字符串数组
 
     private Locale locale;                  // 国际化区域标识
 
@@ -44,6 +46,7 @@ public abstract class CommonException extends Exception {
         // 使用指定的国际化区域设置
         super(convert(mKey, mValues, mI18nResEnum, mLocale));
         key = mKey;
+        values = mValues;
         locale = mLocale;
         i18nResEnum = mI18nResEnum;
     }
@@ -67,15 +70,19 @@ public abstract class CommonException extends Exception {
         // 使用指定的国际化区域设置
         super(convert(mKey, mValues, mI18nResEnum, mLocale), cause);
         key = mKey;
+        values = mValues;
         locale = mLocale;
         i18nResEnum = mI18nResEnum;
     }
 
     private static String convert(String key, String[] values, FleaI18nResEnum i18nResEnum, Locale locale) {
         if (ObjectUtils.isEmpty(locale)) {
-            locale = FleaFrameManager.getManager().getLocale(); // 使用服务器当前默认的国际化区域设置
+            locale = FleaFrameManager.getManager().getLocale(); // 使用当前线程默认的国际化区域设置
         }
-        if (ArrayUtils.isNotEmpty(values) && ObjectUtils.isNotEmpty(i18nResEnum)) {
+        if (ObjectUtils.isEmpty(i18nResEnum)) {
+            i18nResEnum = FleaI18nResEnum.ERROR; // 默认使用 国际化资源名为 error
+        }
+        if (ArrayUtils.isNotEmpty(values)) {
             return FleaI18nHelper.i18n(key, values, i18nResEnum.getResName(), locale);
         } else {
             return FleaI18nHelper.i18n(key, i18nResEnum.getResName(), locale);
@@ -84,6 +91,10 @@ public abstract class CommonException extends Exception {
 
     public String getKey() {
         return key;
+    }
+
+    public String[] getValues() {
+        return values;
     }
 
     public Locale getLocale() {

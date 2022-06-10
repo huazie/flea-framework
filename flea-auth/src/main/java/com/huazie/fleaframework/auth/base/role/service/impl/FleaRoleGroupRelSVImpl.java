@@ -1,8 +1,8 @@
 package com.huazie.fleaframework.auth.base.role.service.impl;
 
-import com.huazie.fleaframework.auth.base.role.service.interfaces.IFleaRoleGroupRelSV;
 import com.huazie.fleaframework.auth.base.role.dao.interfaces.IFleaRoleGroupRelDAO;
 import com.huazie.fleaframework.auth.base.role.entity.FleaRoleGroupRel;
+import com.huazie.fleaframework.auth.base.role.service.interfaces.IFleaRoleGroupRelSV;
 import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import com.huazie.fleaframework.db.jpa.service.impl.AbstractFleaJPASVImpl;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * <p> Flea角色组关联（角色）SV层实现类 </p>
+ * Flea角色组关联（角色）SV层实现类
  *
  * @author huazie
  * @version 1.0.0

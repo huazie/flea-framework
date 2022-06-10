@@ -1,8 +1,8 @@
 package com.huazie.fleaframework.auth.base.user.dao.impl;
 
+import com.huazie.fleaframework.auth.base.FleaAuthDAOImpl;
 import com.huazie.fleaframework.auth.base.user.dao.interfaces.IFleaUserDAO;
 import com.huazie.fleaframework.auth.base.user.entity.FleaUser;
-import com.huazie.fleaframework.auth.base.FleaAuthDAOImpl;
 import com.huazie.fleaframework.auth.common.FleaAuthEntityConstants;
 import com.huazie.fleaframework.auth.common.UserStateEnum;
 import com.huazie.fleaframework.common.exception.CommonException;
@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * <p> Flea用户DAO层实现类 </p>
+ * Flea用户DAO层实现类
  *
  * @author huazie
  * @version 1.0.0

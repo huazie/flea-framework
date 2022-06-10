@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.db.common;
 
 /**
- * <p> DB常量类 </p>
+ * DB常量类
  *
  * @author huazie
  * @version 1.0.0
@@ -10,7 +10,7 @@ package com.huazie.fleaframework.db.common;
 public class DBConstants {
 
     /**
-     * <p> Flea JPA 配置常量类 </p>
+     * Flea JPA 配置常量类
      *
      * @since 1.0.0
      */
@@ -26,7 +26,7 @@ public class DBConstants {
     }
 
     /**
-     * <p> SQL模板常量类 </p>
+     * SQL模板常量类
      *
      * @since 1.0.0
      */
@@ -42,7 +42,7 @@ public class DBConstants {
     }
 
     /**
-     * <p> 分库分表常量类 </p>
+     * 分库分表常量类
      *
      * @since 1.0.0
      */
@@ -77,7 +77,7 @@ public class DBConstants {
     }
 
     /**
-     * <p> SQL语句中的常用关键字 和 相关符号 </p>
+     * SQL语句中的常用关键字 和 相关符号
      *
      * @since 1.0.0
      */
@@ -127,7 +127,7 @@ public class DBConstants {
     }
 
     /**
-     * <p> 数据库相关配置常量 </p>
+     * 数据库相关配置常量
      *
      * @since 1.0.0
      */
@@ -151,7 +151,7 @@ public class DBConstants {
     }
 
     /**
-     * <p> JPA查询对象池配置常量 </p>
+     * JPA查询对象池配置常量
      *
      * @since 1.0.0
      */

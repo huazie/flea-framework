@@ -1,14 +1,15 @@
 package com.huazie.fleaframework.cache.redis;
 
-import com.huazie.fleaframework.cache.config.CacheServer;
-import com.huazie.fleaframework.cache.redis.config.RedisClusterConfig;
 import com.huazie.fleaframework.cache.common.CacheConfigUtils;
 import com.huazie.fleaframework.cache.common.CacheConstants.RedisConfigConstants;
 import com.huazie.fleaframework.cache.common.CacheUtils;
 import com.huazie.fleaframework.cache.config.CacheParam;
+import com.huazie.fleaframework.cache.config.CacheServer;
 import com.huazie.fleaframework.cache.exceptions.FleaCacheConfigException;
+import com.huazie.fleaframework.cache.redis.config.RedisClusterConfig;
 import com.huazie.fleaframework.common.CommonConstants;
 import com.huazie.fleaframework.common.util.CollectionUtils;
+import com.huazie.fleaframework.common.util.ExceptionUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
 import redis.clients.jedis.HostAndPort;
@@ -53,7 +54,7 @@ public class RedisClusterPool {
     }
 
     /**
-     * <p> 获取Redis集群连接池实例 (默认连接池) </p>
+     * 获取Redis集群连接池实例 (默认连接池)
      *
      * @return Redis集群连接池实例对象
      * @since 1.1.0
@@ -63,7 +64,7 @@ public class RedisClusterPool {
     }
 
     /**
-     * <p> 获取Redis集群连接池实例 (指定连接池名)</p>
+     * 获取Redis集群连接池实例 (指定连接池名)
      *
      * @param poolName 连接池名
      * @return Redis集群连接池实例
@@ -82,13 +83,13 @@ public class RedisClusterPool {
     }
 
     /**
-     * <p> 默认初始化 </p>
+     * 默认初始化
      *
      * @since 1.1.0
      */
     public void initialize() {
         if (!CommonConstants.FleaPoolConstants.DEFAULT_POOL_NAME.equals(poolName)) {
-            throw new FleaCacheConfigException("采用默认初始化，请使用RedisClusterPool##getInstance()");
+            ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "采用默认初始化，请使用RedisClusterPool##getInstance()");
         }
 
         RedisClusterConfig redisClusterConfig = RedisClusterConfig.getConfig();
@@ -114,14 +115,14 @@ public class RedisClusterPool {
     }
 
     /**
-     * <p> 初始化 (非默认连接池) </p>
+     * 初始化 (非默认连接池)
      *
      * @param cacheServerList 缓存服务器集
      * @since 1.1.0
      */
     public void initialize(List<CacheServer> cacheServerList) {
         if (CommonConstants.FleaPoolConstants.DEFAULT_POOL_NAME.equals(poolName)) {
-            throw new FleaCacheConfigException("采用指定连接池名初始化，请使用RedisClusterPool##getInstance(String poolName)");
+            ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "采用指定连接池名初始化，请使用RedisClusterPool##getInstance(String poolName)");
         }
 
         if (CollectionUtils.isEmpty(cacheServerList)) {
@@ -135,7 +136,7 @@ public class RedisClusterPool {
             if (ObjectUtils.isNotEmpty(cacheServer)) {
                 String server = cacheServer.getServer();
                 if (StringUtils.isBlank(server)) {
-                    throw new FleaCacheConfigException("请检查flea-cache-config.xml配置,【<cache-server group=" + poolName + " ></cache-server>】未配置缓存服务器");
+                    ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "请检查flea-cache-config.xml配置,【<cache-server group=" + poolName + " ></cache-server>】未配置缓存服务器");
                 }
                 nodes.add(CacheUtils.parseString(server));
             }
@@ -144,14 +145,14 @@ public class RedisClusterPool {
         // 2. 获取Redis集群客户端socket连接超时时间（单位：ms）
         CacheParam connectionTimeoutParam = CacheConfigUtils.getCacheParam(RedisConfigConstants.REDIS_CLUSTER_CONFIG_CONNECTIONTIMEOUT);
         if (ObjectUtils.isEmpty(connectionTimeoutParam) || StringUtils.isBlank(connectionTimeoutParam.getValue())) {
-            throw new FleaCacheConfigException("请检查flea-cache-config.xml配置，【<cache-param key=" + RedisConfigConstants.REDIS_CLUSTER_CONFIG_CONNECTIONTIMEOUT + " ></cache-param>】未配置或配置值为空");
+            ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "请检查flea-cache-config.xml配置，【<cache-param key=" + RedisConfigConstants.REDIS_CLUSTER_CONFIG_CONNECTIONTIMEOUT + " ></cache-param>】未配置或配置值为空");
         }
         int connectionTimeout = Integer.parseInt(connectionTimeoutParam.getValue());
 
         // 3. 获取Redis集群客户端socket读写超时时间（单位：ms）
         CacheParam soTimeoutParam = CacheConfigUtils.getCacheParam(RedisConfigConstants.REDIS_CLUSTER_CONFIG_SOTIMEOUT);
         if (ObjectUtils.isEmpty(soTimeoutParam) || StringUtils.isBlank(soTimeoutParam.getValue())) {
-            throw new FleaCacheConfigException("请检查flea-cache-config.xml配置，【<cache-param key=" + RedisConfigConstants.REDIS_CLUSTER_CONFIG_SOTIMEOUT + " ></cache-param>】未配置或配置值为空");
+            ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "请检查flea-cache-config.xml配置，【<cache-param key=" + RedisConfigConstants.REDIS_CLUSTER_CONFIG_SOTIMEOUT + " ></cache-param>】未配置或配置值为空");
         }
         int soTimeout = Integer.parseInt(soTimeoutParam.getValue());
 
@@ -161,7 +162,7 @@ public class RedisClusterPool {
         // 5. 获取Redis集群服务节点登录密码（集群各节点配置同一个）
         CacheParam passwordParam = CacheConfigUtils.getCacheParam(RedisConfigConstants.REDIS_CLUSTER_CONFIG_PASSWORD);
         if (ObjectUtils.isEmpty(passwordParam) || StringUtils.isBlank(passwordParam.getValue())) {
-            throw new FleaCacheConfigException("请检查flea-cache-config.xml配置，【<cache-param key=" + RedisConfigConstants.REDIS_CLUSTER_CONFIG_PASSWORD + " ></cache-param>】未配置或配置值为空");
+            ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "请检查flea-cache-config.xml配置，【<cache-param key=" + RedisConfigConstants.REDIS_CLUSTER_CONFIG_PASSWORD + " ></cache-param>】未配置或配置值为空");
         }
         String password = passwordParam.getValue();
 
@@ -176,7 +177,7 @@ public class RedisClusterPool {
     }
 
     /**
-     * <p> 获取当前连接池名 </p>
+     * 获取当前连接池名
      *
      * @return 连接池名
      * @since 1.1.0
@@ -186,14 +187,14 @@ public class RedisClusterPool {
     }
 
     /**
-     * <p> 获取Jedis集群实例对象 </p>
+     * 获取Jedis集群实例对象
      *
      * @return Jedis集群实例对象
      * @since 1.1.0
      */
     public JedisCluster getJedisCluster() {
         if (ObjectUtils.isEmpty(jedisCluster)) {
-            throw new FleaCacheConfigException("获取Jedis集群实例对象失败：请先调用initialize初始化");
+            ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "获取Jedis集群实例对象失败：请先调用initialize初始化");
         }
         return jedisCluster;
     }

@@ -17,7 +17,7 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 /**
- * <p> Flea菜单收藏夹表对应的实体类 </p>
+ * Flea菜单收藏夹表对应的实体类
  *
  * @author huazie
  * @version 1.0.0
@@ -77,16 +77,11 @@ public class FleaMenuFavorites extends FleaEntity {
     @Column(name = "ext3")
     private String ext3; // 扩展字段3
 
-    /**
-     * <p> 无参数构造方法 </p>
-     *
-     * @since 1.0.0
-     */
     public FleaMenuFavorites() {
     }
 
     /**
-     * <p> 带参数构造方法 </p>
+     * 新增菜单收藏夹时，进行初始化
      *
      * @param accountId     操作账户编号
      * @param menuCode      菜单编码

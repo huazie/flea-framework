@@ -2,9 +2,8 @@ package com.huazie.fleaframework.tools.common.impl;
 
 import com.huazie.fleaframework.tools.common.LogAppender;
 
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import java.awt.Point;
+import javax.swing.*;
+import java.awt.*;
 import java.io.PipedReader;
 import java.util.Scanner;
 

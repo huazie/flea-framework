@@ -36,7 +36,7 @@ public class UnicodeUtils {
                             strBuilder.append(COMPLEMENT_UNICODE_STRING);
                         }
                     }
-                    strBuilder.append(hex);
+                    strBuilder.append(hex.toUpperCase());
                 }
             }
         }

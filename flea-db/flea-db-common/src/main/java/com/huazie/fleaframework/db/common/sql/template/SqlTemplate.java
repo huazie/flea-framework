@@ -33,19 +33,20 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 /**
- * <p> Sql模板抽象类 </p>
+ * Sql模板抽象类
  *
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0
  */
+@SuppressWarnings("serial")
 public abstract class SqlTemplate<T> implements ITemplate<T> {
 
     private StringBuilder sql = new StringBuilder();
 
     private List<SqlParam> sqlParams = new ArrayList<>(); // 原生SQL参数
 
-    private String tableName;       // 主表名
+    private String tableName;       // 模板表名
 
     private String realTableName;   // 分表名
 
@@ -195,7 +196,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
     }
 
     /**
-     * <p> SQL模板校验规则 </p>
+     * SQL模板校验规则
      *
      * @param templateValue SQL模板原始值
      * @throws CommonException 通用异常
@@ -229,7 +230,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
     }
 
     /**
-     * <p> 生成SQL模板中的占位符 </p>
+     * 生成SQL模板中的占位符
      *
      * @param str 模板替换参数
      * @return SQL模板中的占位符
@@ -240,7 +241,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
     }
 
     /**
-     * <p> 获取SQL语句中的参数Map集合 </p>
+     * 获取SQL语句中的参数Map集合
      *
      * @param paramMap   SQL语句中的参数Map集合
      * @param entityCols 实体类中属性列集合
@@ -322,7 +323,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
     }
 
     /**
-     * <p> 判断指定关键字的模板参数属性配置是否存在，如果存在，返回相应的值 </p>
+     * 判断指定关键字的模板参数属性配置是否存在，如果存在，返回相应的值
      *
      * @param propMap         模板参数属性Map集合
      * @param sqlTemplateEnum SQL模板关键字枚举
@@ -340,7 +341,8 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
     }
 
     /**
-     * <p> 校验是否存在指定属性列名<code>tabColumnName</code>的属性列对象<code>Column</code>, 如果存在则返回指定的属性列对象<code>Column</code> </p>
+     * 校验是否存在指定属性列名<code>tabColumnName</code>的属性列对象<code>Column</code>,
+     * 如果存在则返回指定的属性列对象<code>Column</code>。
      *
      * @param entityCols    属性列数组
      * @param tabColumnName 属性列名
@@ -358,7 +360,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
     }
 
     /**
-     * <p> 校验 表字段列和变量是否一一对应（如para_id = :paraId）</p>
+     * 校验 表字段列和变量是否一一对应（如para_id = :paraId）</p>
      *
      * @param entityCols 实体类的属性列数组
      * @param map        map的key存表字段列，value存变量
@@ -410,7 +412,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
     }
 
     /**
-     * <p> 校验属性名, 存在多个以逗号分隔 </p>
+     * 校验属性名, 存在多个以逗号分隔
      *
      * @param attrName 属性名
      * @return true：属性名合法；false：属性名不合法
@@ -445,7 +447,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
     }
 
     /**
-     * <p> 原生SQL和对应参数的二次处理 </p>
+     * 原生SQL和对应参数的二次处理
      *
      * @param params SQL参数Map集合(K ：实体属性变量名 V : 参数值)
      * @since 1.0.0
@@ -505,7 +507,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
     }
 
     /**
-     * <p> 根据关系编号，获取对应关系配置信息 </p>
+     * 根据关系编号，获取对应关系配置信息
      *
      * @param relationId 关系编号
      * @return 关系配置信息
@@ -516,7 +518,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
     }
 
     /**
-     * <p> 根据模板编号，获取对应SQL模板 </p>
+     * 根据模板编号，获取对应SQL模板
      *
      * @param templateId SQL模板编号
      * @return SQL模板
@@ -527,7 +529,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
     }
 
     /**
-     * <p> 根据模板参数编号，获取对应SQL模板参数配置信息 </p>
+     * 根据模板参数编号，获取对应SQL模板参数配置信息
      *
      * @param paramId SQL模板参数编号
      * @return SQL模板参数配置
@@ -538,7 +540,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
     }
 
     /**
-     * <p> 特殊处理，初始化由具体模板实现 </p>
+     * 特殊处理，初始化由具体模板实现
      *
      * @param sql        原声SQL
      * @param params     SQL参数
@@ -555,7 +557,7 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
     }
 
     /**
-     * <p> 初始化关系配置（SQL模板和模板参数） </p>
+     * 初始化关系配置（SQL模板和模板参数）
      *
      * @param id 关系编号
      * @since 1.0.0

@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.common;
 
 /**
- * <p> 公共常量类 </p>
+ * 公共常量类
  *
  * @author huazie
  * @version 1.0.0
@@ -129,23 +129,23 @@ public interface CommonConstants {
      */
     interface IPAddressConstants {
         /**
-         * <p>国家</p>
+         * <p> 国家 </p>
          */
         String COUNTRY = "country";
         /**
-         * <p>地区</p>
+         * <p> 地区 </p>
          */
         String REGION = "region";
         /**
-         * <p>省份</p>
+         * <p> 省份 </p>
          */
         String PROVINCE = "province";
         /**
-         * <p>城市</p>
+         * <p> 城市 </p>
          */
         String CITY = "city";
         /**
-         * <p>互联网服务提供商</p>
+         * <p> 互联网服务提供商 </p>
          */
         String ISP = "isp";
     }
@@ -164,6 +164,14 @@ public interface CommonConstants {
          * <p> Flea Config 系统环境变量 </p>
          */
         String FLEA_CONFIG_FILE_SYSTEM_KEY = "fleaframe.flea.config.filename";
+        /**
+         * <p> Flea URL 配置 </p>
+         */
+        String FLEA_URL_CONFIG = "flea-url-config";
+        /**
+         * <p> 淘宝IP地址信息查询URL </p>
+         */
+        String TAOBAO_IP_URL = "taobao_ip_url";
     }
 
     /**
@@ -187,9 +195,9 @@ public interface CommonConstants {
      */
     interface FleaFrameInitConstants {
         /**
-         * <p> Flea Frame初始化配置 </p>
+         * <p> Flea Framework 初始化配置 </p>
          */
-        String FLEA_FRAME_INIT = "flea-framework-init";
+        String FLEA_FRAMEWORK_INIT = "flea-framework-init";
 
         /**
          * <p> 失效时间(永久) </p>

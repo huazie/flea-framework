@@ -5,12 +5,12 @@ import com.huazie.fleaframework.core.base.cfgdata.entity.FleaJerseyResServiceLog
 import org.springframework.stereotype.Repository;
 
 /**
- * <p> Flea Jersey资源服务调用日志DAO层实现类 </p>
+ * Flea Jersey资源服务调用日志DAO层实现类
  *
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0
  */
-@Repository("fleaJerseyResServiceLogDAO")
+@Repository("resServiceLogDAO")
 public class FleaJerseyResServiceLogDAOImpl extends FleaConfigDAOImpl<FleaJerseyResServiceLog> implements IFleaJerseyResServiceLogDAO {
 }

@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 /**
- * <p> FleaConfig数据源DAO层父类 </p>
+ * FleaConfig数据源DAO层父类
  * 
  * @author huazie
  * @version 1.0.0
@@ -29,18 +29,6 @@ public class FleaConfigDAOImpl<T> extends AbstractFleaJPADAOImpl<T> {
 
 	@Override
 	@Transactional("fleaConfigTransactionManager")
-	public T queryNew(long entityId, T entity) throws CommonException {
-		return super.queryNew(entityId, entity);
-	}
-
-	@Override
-	@Transactional("fleaConfigTransactionManager")
-	public T queryNew(String entityId, T entity) throws CommonException {
-		return super.queryNew(entityId, entity);
-	}
-	
-	@Override
-	@Transactional("fleaConfigTransactionManager")
 	public boolean remove(long entityId) throws CommonException {
 		return super.remove(entityId);
 	}
@@ -51,16 +39,22 @@ public class FleaConfigDAOImpl<T> extends AbstractFleaJPADAOImpl<T> {
 		return super.remove(entityId);
 	}
 
+    @Override
+    @Transactional("fleaConfigTransactionManager")
+    public boolean remove(T entity) throws CommonException {
+        return super.remove(entity);
+    }
+
 	@Override
 	@Transactional("fleaConfigTransactionManager")
-	public boolean removeNew(long entityId, T entity) throws CommonException {
-		return super.removeNew(entityId, entity);
+	public boolean remove(long entityId, T entity) throws CommonException {
+		return super.remove(entityId, entity);
 	}
 
 	@Override
 	@Transactional("fleaConfigTransactionManager")
-	public boolean removeNew(String entityId, T entity) throws CommonException {
-		return super.removeNew(entityId, entity);
+	public boolean remove(String entityId, T entity) throws CommonException {
+		return super.remove(entityId, entity);
 	}
 
 	@Override

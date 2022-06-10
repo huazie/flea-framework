@@ -9,6 +9,7 @@ import com.huazie.fleaframework.common.CommonConstants;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.common.util.ArrayUtils;
+import com.huazie.fleaframework.common.util.ExceptionUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.PropertiesUtil;
 import com.huazie.fleaframework.common.util.StringUtils;
@@ -134,10 +135,10 @@ public class RedisClusterConfig extends RedisCommonConfig {
                 }
             }
         } catch (Exception e) {
-            throw new FleaCacheConfigException("Redis集群服务器地址有误，请检查配置【" + RedisConfigConstants.REDIS_CLUSTER_CONFIG_SERVER + "】", e);
+            ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "Redis集群服务器地址有误，请检查配置【" + RedisConfigConstants.REDIS_CLUSTER_CONFIG_SERVER + "】", e);
         }
         if (ObjectUtils.isEmpty(nodes)) {
-            throw new FleaCacheConfigException("未配置Redis集群服务器地址，请检查配置【" + RedisConfigConstants.REDIS_CLUSTER_CONFIG_SERVER + "】");
+            ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "未配置Redis集群服务器地址，请检查配置【" + RedisConfigConstants.REDIS_CLUSTER_CONFIG_SERVER + "】");
         }
         this.nodes = nodes;
     }

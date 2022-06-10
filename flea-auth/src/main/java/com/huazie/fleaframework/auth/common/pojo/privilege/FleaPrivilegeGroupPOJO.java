@@ -4,7 +4,7 @@ import com.huazie.fleaframework.common.pojo.FleaRemarksPOJO;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
- * <p> Flea权限组POJO类 </p>
+ * Flea权限组POJO类
  *
  * @author huazie
  * @version 1.0.0

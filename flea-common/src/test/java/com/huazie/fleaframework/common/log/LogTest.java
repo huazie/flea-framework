@@ -25,4 +25,10 @@ public class LogTest {
         LOGGER.debug1(obj,"method = {}", method);
         LOGGER.debug("hello world");
     }
+
+    @Test
+    public void log4jBugTest() {
+        String request = "${java:os}";
+        LOGGER.debug(request);
+    }
 }
