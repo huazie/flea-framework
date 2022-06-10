@@ -4,13 +4,15 @@ import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.common.i18n.FleaI18nResEnum;
 
 /**
- * <p> Flea Core 通用异常类 </p>
+ * Flea Core 通用异常类，对应国际化资源名为 error_core。
  *
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0
  */
 public class FleaCoreCommonException extends CommonException {
+
+    private static final long serialVersionUID = 4343210993561487190L;
 
     public FleaCoreCommonException(String key) {
         super(key, FleaI18nResEnum.ERROR_CORE);

@@ -1,9 +1,9 @@
 package com.huazie.fleaframework.cache.redis.impl;
 
+import com.huazie.fleaframework.cache.AbstractSpringCache;
 import com.huazie.fleaframework.cache.IFleaCache;
 import com.huazie.fleaframework.cache.common.CacheModeEnum;
 import com.huazie.fleaframework.cache.redis.RedisClient;
-import com.huazie.fleaframework.cache.AbstractSpringCache;
 
 /**
  * Redis Spring缓存类，继承了抽象Spring缓存父类的读、写、删除 和 清空
@@ -20,7 +20,7 @@ import com.huazie.fleaframework.cache.AbstractSpringCache;
 public class RedisSpringCache extends AbstractSpringCache {
 
     /**
-     * <p> 带参数的构造方法，初始化Redis Spring缓存类 </p>
+     * 带参数的构造方法，初始化Redis Spring缓存类
      *
      * @param name      缓存数据主关键字
      * @param fleaCache 具体Flea缓存实现
@@ -31,7 +31,7 @@ public class RedisSpringCache extends AbstractSpringCache {
     }
 
     /**
-     * <p> 带参数的构造方法，初始化Redis Spring缓存类 </p>
+     * 带参数的构造方法，初始化Redis Spring缓存类
      *
      * @param name            缓存数据主关键字
      * @param expiry          缓存数据有效期（单位：s）

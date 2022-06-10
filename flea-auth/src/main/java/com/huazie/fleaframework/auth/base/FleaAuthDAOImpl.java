@@ -3,7 +3,6 @@ package com.huazie.fleaframework.auth.base;
 import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.db.jpa.dao.impl.AbstractFleaJPADAOImpl;
 import com.huazie.fleaframework.db.jpa.transaction.FleaTransactional;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -22,19 +21,19 @@ public class FleaAuthDAOImpl<T> extends AbstractFleaJPADAOImpl<T> {
     private EntityManager entityManager;
 
     @Override
-    @Transactional("fleaAuthTransactionManager")
+    @FleaTransactional("fleaAuthTransactionManager")
     public Number getFleaNextValue(T entity) throws CommonException {
         return super.getFleaNextValue(entity);
     }
 
     @Override
-    @Transactional("fleaAuthTransactionManager")
+    @FleaTransactional("fleaAuthTransactionManager")
     public boolean remove(long entityId) throws CommonException {
         return super.remove(entityId);
     }
 
     @Override
-    @Transactional("fleaAuthTransactionManager")
+    @FleaTransactional("fleaAuthTransactionManager")
     public boolean remove(String entityId) throws CommonException {
         return super.remove(entityId);
     }
@@ -47,14 +46,14 @@ public class FleaAuthDAOImpl<T> extends AbstractFleaJPADAOImpl<T> {
 
     @Override
     @FleaTransactional("fleaAuthTransactionManager")
-    public boolean removeNew(long entityId, T entity) throws CommonException {
-        return super.removeNew(entityId, entity);
+    public boolean remove(long entityId, T entity) throws CommonException {
+        return super.remove(entityId, entity);
     }
 
     @Override
     @FleaTransactional("fleaAuthTransactionManager")
-    public boolean removeNew(String entityId, T entity) throws CommonException {
-        return super.removeNew(entityId, entity);
+    public boolean remove(String entityId, T entity) throws CommonException {
+        return super.remove(entityId, entity);
     }
 
     @Override
@@ -82,19 +81,19 @@ public class FleaAuthDAOImpl<T> extends AbstractFleaJPADAOImpl<T> {
     }
 
     @Override
-    @Transactional("fleaAuthTransactionManager")
+    @FleaTransactional("fleaAuthTransactionManager")
     public int insert(String relationId, T entity) throws CommonException {
         return super.insert(relationId, entity);
     }
 
     @Override
-    @Transactional("fleaAuthTransactionManager")
+    @FleaTransactional("fleaAuthTransactionManager")
     public int update(String relationId, T entity) throws CommonException {
         return super.update(relationId, entity);
     }
 
     @Override
-    @Transactional("fleaAuthTransactionManager")
+    @FleaTransactional("fleaAuthTransactionManager")
     public int delete(String relationId, T entity) throws CommonException {
         return super.delete(relationId, entity);
     }

@@ -1,8 +1,8 @@
 package com.huazie.fleaframework.cache.memcached.impl;
 
-import com.huazie.fleaframework.cache.common.CacheEnum;
 import com.huazie.fleaframework.cache.AbstractFleaCache;
 import com.huazie.fleaframework.cache.NullCache;
+import com.huazie.fleaframework.cache.common.CacheEnum;
 import com.huazie.fleaframework.cache.memcached.config.MemCachedConfig;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
@@ -37,7 +37,7 @@ public class MemCachedFleaCache extends AbstractFleaCache {
     private final MemCachedClient memCachedClient;  // MemCached客户端
 
     /**
-     * <p> 初始化MemCached Flea缓存类 </p>
+     * 初始化MemCached Flea缓存类
      *
      * @param name            缓存数据主关键字
      * @param expiry          缓存数据有效期（单位：s）

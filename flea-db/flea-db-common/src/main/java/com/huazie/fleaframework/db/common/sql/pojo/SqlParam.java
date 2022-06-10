@@ -5,7 +5,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import java.io.Serializable;
 
 /**
- * <p> 自定义SQL模板参数 </p>
+ * 自定义SQL模板参数
  *
  * @author huazie
  * @version 1.0.0

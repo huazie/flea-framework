@@ -4,7 +4,7 @@ import com.huazie.fleaframework.auth.base.function.entity.FleaOperation;
 import com.huazie.fleaframework.db.jpa.service.interfaces.IAbstractFleaJPASV;
 
 /**
- * <p> Flea操作SV层接口定义 </p>
+ * Flea操作SV层接口定义
  *
  * @author huazie
  * @version 1.0.0

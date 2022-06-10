@@ -5,9 +5,9 @@ import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
-import com.huazie.fleaframework.tools.common.ToolsException;
 import com.huazie.fleaframework.db.common.DBSystemEnum;
 import com.huazie.fleaframework.tools.common.ToolsConstants;
+import com.huazie.fleaframework.tools.common.ToolsException;
 import com.huazie.fleaframework.tools.common.ToolsHelper;
 
 import javax.persistence.GenerationType;
@@ -182,6 +182,7 @@ public class FleaCodePanel extends JPanel implements ActionListener, ItemListene
 
         // 主键生成策略下拉框
         idGeneratorStrategyComboBox = new JComboBox<>();
+        idGeneratorStrategyComboBox.addItem(ToolsConstants.CodeConstants.NONE);
         idGeneratorStrategyComboBox.addItem(GenerationType.TABLE.name());
         idGeneratorStrategyComboBox.addItem(GenerationType.IDENTITY.name());
         idGeneratorStrategyComboBox.addItem(GenerationType.SEQUENCE.name());
@@ -215,6 +216,7 @@ public class FleaCodePanel extends JPanel implements ActionListener, ItemListene
         valueColumnNameTextField = new JTextField();
         showOneContentConfig(valueColumnNameLabel, "", valueColumnNameTextField, 0, true);
 
+        setGenerationTypeTableVisible(false);
     }
 
     private void initCodeConfig() {
@@ -463,7 +465,9 @@ public class FleaCodePanel extends JPanel implements ActionListener, ItemListene
                 if (ObjectUtils.isNotEmpty(dbSystemObj) && ObjectUtils.isNotEmpty(idGeneratorStrategyObj)) {
                     String dbSystemName = dbSystemObj.toString();
                     String idGeneratorStrategy = idGeneratorStrategyObj.toString();
-                    if (GenerationType.TABLE.name().equals(idGeneratorStrategy)) {
+                    if (ToolsConstants.CodeConstants.NONE.equals(idGeneratorStrategy)) {
+                        setGenerationTypeTableVisible(false);
+                    } else if (GenerationType.TABLE.name().equals(idGeneratorStrategy)) {
                         setGenerationTypeTableVisible(true);
                     } else if (GenerationType.IDENTITY.name().equals(idGeneratorStrategy)) {
                         if (DBSystemEnum.Oracle.getName().equals(dbSystemName)) {

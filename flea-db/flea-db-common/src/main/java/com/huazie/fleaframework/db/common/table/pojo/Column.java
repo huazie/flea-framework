@@ -5,7 +5,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import java.io.Serializable;
 
 /**
- * <p> 属性列对象 </p>
+ * 属性列对象
  *
  * @author huazie
  * @version 1.0.0

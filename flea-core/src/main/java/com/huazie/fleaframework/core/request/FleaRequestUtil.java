@@ -4,11 +4,11 @@ import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.common.util.ExceptionUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.core.common.FleaCoreCommonException;
+import com.huazie.fleaframework.core.filter.taskchain.FleaFilterTaskChainManager;
+import com.huazie.fleaframework.core.request.config.FleaRequestConfig;
 import com.huazie.fleaframework.core.request.config.FleaSession;
 import com.huazie.fleaframework.core.request.config.FleaUrl;
 import com.huazie.fleaframework.core.request.config.Property;
-import com.huazie.fleaframework.core.filter.taskchain.FleaFilterTaskChainManager;
-import com.huazie.fleaframework.core.request.config.FleaRequestConfig;
 import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * <p> Flea Request工具类 </p>
+ * Flea 请求工具类
  *
  * @author huazie
  * @version 1.0.0
@@ -28,7 +28,7 @@ public class FleaRequestUtil {
     }
 
     /**
-     * <p> 执行过滤器任务 </p>
+     * 执行过滤器任务
      *
      * @param fleaRequestContext Flea请求上下文
      * @throws CommonException 通用异常
@@ -39,7 +39,7 @@ public class FleaRequestUtil {
     }
 
     /**
-     * <p> 重定向到错误页面 </p>
+     * 重定向到错误页面
      *
      * @param fleaRequestContext Flea请求上下文
      * @param throwable          异常信息
@@ -55,7 +55,7 @@ public class FleaRequestUtil {
     }
 
     /**
-     * <p> 重定向到登录页面 </p>
+     * 重定向到登录页面
      *
      * @param fleaRequestContext Flea请求上下文
      * @throws CommonException 通用异常
@@ -66,7 +66,7 @@ public class FleaRequestUtil {
     }
 
     /**
-     * <p> 重定向至其他页面 </p>
+     * 重定向至其他页面
      *
      * @param fleaRequestContext Flea请求上下文
      * @param redirectUrlKey     重定向URL配置KEY
@@ -100,7 +100,7 @@ public class FleaRequestUtil {
     }
 
     /**
-     * <p> ajax请求重定向页面 </p>
+     * ajax 请求重定向页面
      *
      * @param response    HTTP响应对象
      * @param redirectUrl 重定向地址
@@ -112,9 +112,9 @@ public class FleaRequestUtil {
     }
 
     /**
-     * <p> 获取用户SESSION信息键 </p>
+     * 获取用户 SESSION 信息键
      *
-     * @return 用户SESSION信息键
+     * @return 用户 SESSION 信息键
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
@@ -123,9 +123,9 @@ public class FleaRequestUtil {
     }
 
     /**
-     * <p> 获取用户SESSION空闲保持时间（单位：s） </p>
+     * 获取用户 SESSION 空闲保持时间（单位：s）
      *
-     * @return 用户SESSION空闲保持时间
+     * @return 用户 SESSION 空闲保持时间
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
@@ -134,9 +134,9 @@ public class FleaRequestUtil {
     }
 
     /**
-     * <p> 获取FleaSession对象 </p>
+     * 获取 Flea Session 对象
      *
-     * @return FleaSession对象，如果对象为空，则抛出异常
+     * @return Flea Session 对象，如果对象为空，则抛出异常
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
@@ -148,7 +148,7 @@ public class FleaRequestUtil {
     }
 
     /**
-     * <p> 获取URL非法字符 </p>
+     * 获取URL非法字符
      *
      * @return URL非法字符
      * @throws CommonException 通用异常
@@ -159,7 +159,7 @@ public class FleaRequestUtil {
     }
 
     /**
-     * <p> 判断是否是 不需要校验的URL </p>
+     * 判断是否是 不需要校验的URL
      *
      * @param url 待校验的URL
      * @return true: 是 false: 不是
@@ -175,7 +175,7 @@ public class FleaRequestUtil {
     }
 
     /**
-     * <p> 判断是否是 需要校验的URL </p>
+     * 判断是否是 需要校验的URL
      *
      * @param url 待校验的URL
      * @return true: 是 false: 不是
@@ -191,7 +191,7 @@ public class FleaRequestUtil {
     }
 
     /**
-     * <p> 判断是否是业务URL </p>
+     * 判断是否是 业务URL
      *
      * @param url 待校验的URL
      * @return true: 是 false: 不是
@@ -207,7 +207,7 @@ public class FleaRequestUtil {
     }
 
     /**
-     * <p> 判断是否是页面跳转URL </p>
+     * 判断是否是 页面跳转URL
      *
      * @param url 待校验的URL
      * @return true: 是 false: 不是
@@ -223,7 +223,7 @@ public class FleaRequestUtil {
     }
 
     /**
-     * <p> 获取FleaUrl对象 </p>
+     * 获取 Flea Url 对象
      *
      * @return FleaUrl对象，如果对象为空，则抛出异常
      * @throws CommonException 通用异常
@@ -237,7 +237,7 @@ public class FleaRequestUtil {
     }
 
     /**
-     * <p> 是否是ajax请求 </p>
+     * 判断是否是 ajax 请求
      *
      * @param request HTTP请求对象
      * @return true: 是  false: 不是

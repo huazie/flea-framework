@@ -50,6 +50,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- 数据库JDBC连接相关 （MySQL的JDBC驱动）-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
 </project>

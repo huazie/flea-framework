@@ -12,7 +12,7 @@ import com.huazie.fleaframework.common.exception.CommonException;
 public interface ITableSplit {
 
     /**
-     * <p> 分表转换 </p>
+     * 分表转换
      *
      * @param tableSplitColumn 分表字段
      * @return 分表转换值

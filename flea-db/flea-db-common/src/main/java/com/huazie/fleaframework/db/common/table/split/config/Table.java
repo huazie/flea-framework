@@ -12,7 +12,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  */
 public class Table {
 
-    private String name;    // 分表对应的主表名
+    private String name;    // 分表对应的模板表名
 
     private String lib;     // 分表对应模板库名
 

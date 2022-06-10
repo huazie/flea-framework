@@ -71,7 +71,7 @@ public class FleaMenuTree extends FleaTree<FleaMenu> {
     }
 
     /**
-     * <p> 添加菜单树的根节点，菜单归属系统 </p>
+     * 添加菜单树的根节点，菜单归属系统
      *
      * @param systemName 归属系统名称
      * @since 1.0.0
@@ -90,7 +90,7 @@ public class FleaMenuTree extends FleaTree<FleaMenu> {
     }
 
     /**
-     * <p> 菜单树归属系统名称 </p>
+     * 菜单树归属系统名称
      *
      * @return 归属系统名称
      * @since 1.0.0
@@ -100,7 +100,7 @@ public class FleaMenuTree extends FleaTree<FleaMenu> {
     }
 
     /**
-     * <p> 获取指定菜单编码的叶子菜单 </p>
+     * 获取指定菜单编码的叶子菜单
      *
      * @param menuCode 菜单编码
      * @return 指定菜单编码的叶子菜单
@@ -123,7 +123,7 @@ public class FleaMenuTree extends FleaTree<FleaMenu> {
     }
 
     /**
-     * <p> 添加菜单到菜单树中 </p>
+     * 添加菜单到菜单树中
      *
      * @param fleaMenu 菜单
      * @since 1.0.0
@@ -157,7 +157,7 @@ public class FleaMenuTree extends FleaTree<FleaMenu> {
     }
 
     /**
-     * <p> 批量添加菜单到菜单树中 </p>
+     * 批量添加菜单到菜单树中
      *
      * @param fleaMenuList 菜单集合
      * @since 1.0.0
@@ -198,7 +198,7 @@ public class FleaMenuTree extends FleaTree<FleaMenu> {
     }
 
     /**
-     * <p> 从菜单集合中获取当前菜单对应的父菜单 </p>
+     * 从菜单集合中获取当前菜单对应的父菜单
      *
      * @param current      当前菜单
      * @param fleaMenuList 菜单列表

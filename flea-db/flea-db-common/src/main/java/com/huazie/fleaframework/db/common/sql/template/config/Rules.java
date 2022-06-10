@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <p> 校验规则集合 </p>
+ * 校验规则集合
  *
  * @author huazie
  * @version 1.0.0
@@ -19,7 +19,7 @@ public class Rules {
     private List<Rule> rules = new ArrayList<>();
 
     /**
-     * <p> 获取校验规则的List对象 </p>
+     * 获取校验规则的List对象
      *
      * @return 校验规则的List对象
      * @since 1.0.0
@@ -29,7 +29,7 @@ public class Rules {
     }
 
     /**
-     * <p> 获取校验规则的数组对象 </p>
+     * 获取校验规则的数组对象
      *
      * @return 校验规则的数组对象
      * @since 1.0.0
@@ -39,7 +39,7 @@ public class Rules {
     }
 
     /**
-     * <p> 获取校验规则的Map对象，便于根据规则id查找 </p>
+     * 获取校验规则的Map对象，便于根据规则id查找
      *
      * @return 校验规则的Map对象
      * @since 1.0.0
@@ -53,7 +53,7 @@ public class Rules {
     }
 
     /**
-     * <p> 添加一个校验规则 </p>
+     * 添加一个校验规则
      *
      * @param rule 校验规则对象
      * @since 1.0.0

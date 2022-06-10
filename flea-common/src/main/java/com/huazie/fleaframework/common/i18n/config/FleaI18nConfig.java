@@ -1,26 +1,37 @@
 package com.huazie.fleaframework.common.i18n.config;
 
+import com.huazie.fleaframework.common.CommonConstants;
+import com.huazie.fleaframework.common.FleaConfigManager;
+import com.huazie.fleaframework.common.config.ConfigItem;
 import com.huazie.fleaframework.common.config.ConfigItems;
+import com.huazie.fleaframework.common.i18n.pojo.FleaI18nData;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.common.util.ArrayUtils;
 import com.huazie.fleaframework.common.util.CollectionUtils;
-import com.huazie.fleaframework.common.util.MapUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
-import com.huazie.fleaframework.common.CommonConstants;
-import com.huazie.fleaframework.common.FleaConfigManager;
-import com.huazie.fleaframework.common.config.ConfigItem;
-import com.huazie.fleaframework.common.i18n.pojo.FleaI18nData;
 
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
- * Flea I18N 配置类
+ * Flea I18N 配置类，用于获取指定语言环境下的指定资源对应的国际化数据。
+ *
+ * <p> 它默认读取资源路径为 flea/i18n，资源文件前缀为 flea_i18n，当然
+ * 也可以在 flea-config.xml 中为指定资源文件配置路径和前缀，从而可以
+ * 实现读取任意位置的资源数据。
+ *
+ * <p> 可参考如下进行配置：
+ * <pre>
+ * {@code
+ *   <config-items key="flea-i18n-config" desc="Flea国际化相关配置">
+ *       <config-item key="error" desc="error国际化资源特殊配置，指定路径和文件前缀，逗号分隔">flea/i18n,flea_i18n</config-item>
+ *   </config-items>
+ * }
+ * </pre>
  *
  * @author huazie
  * @version 2.0.0
@@ -32,15 +43,15 @@ public class FleaI18nConfig {
 
     private static volatile FleaI18nConfig config;
 
-    private Map<String, String> resFilePath = new HashMap<>(); // 资源文件路径集
+    private ConcurrentMap<String, String> resFilePath = new ConcurrentHashMap<>(); // 资源文件路径集
 
-    private Map<String, ResourceBundle> resources = new HashMap<>(); // 资源集合
+    private ConcurrentMap<String, ResourceBundle> resources = new ConcurrentHashMap<>(); // 资源集
 
     /**
      * 只允许通过 getConfig() 获取 Flea I18N 配置类实例
      */
     private FleaI18nConfig() {
-        init(); // 初始化资源文件相关属性
+        init(); // 初始化资源文件相关配置
     }
 
     /**
@@ -67,35 +78,24 @@ public class FleaI18nConfig {
      */
     private void init() {
         ConfigItems fleaI18nItems = FleaConfigManager.getConfigItems(CommonConstants.FleaI18NConstants.FLEA_I18N_CONFIG_ITEMS_KEY);
-        if (ObjectUtils.isNotEmpty(fleaI18nItems)) {
-            // 获取资源名的相关配置
-            Map<String, ConfigItem> configItemMap = fleaI18nItems.toConfigItemMap();
-            if (MapUtils.isNotEmpty(configItemMap)) {
-                Set<String> configItemKeySet = configItemMap.keySet();
-                if (CollectionUtils.isNotEmpty(configItemKeySet)) {
-                    for (String configItemKey : configItemKeySet) {
-                        ConfigItem configItem = configItemMap.get(configItemKey);
-                        if (ObjectUtils.isNotEmpty(configItem)) {
-                            String configItemValue = configItem.getValue();
-                            if (ObjectUtils.isNotEmpty(configItemValue)) {
-                                String[] valueArr = StringUtils.split(configItemValue, CommonConstants.SymbolConstants.COMMA);
-                                if (ArrayUtils.isNotEmpty(valueArr) && CommonConstants.NumeralConstants.INT_TWO == valueArr.length) {
-                                    // 获取资源文件路径
-                                    String filePath = StringUtils.trim(valueArr[0]);
-                                    // 获取资源文件前缀
-                                    String fileNamePrefix = StringUtils.trim(valueArr[1]);
-                                    if (ObjectUtils.isNotEmpty(filePath) && ObjectUtils.isNotEmpty(fileNamePrefix)) {
-                                        String configResFilePath;
-                                        // 如果资源文件路径最后没有 "/"，自动添加
-                                        if (CommonConstants.SymbolConstants.SLASH.equals(StringUtils.subStrLast(filePath, 1))) {
-                                            configResFilePath = filePath + fileNamePrefix;
-                                        } else {
-                                            configResFilePath = filePath + CommonConstants.SymbolConstants.SLASH + fileNamePrefix;
-                                        }
-                                        resFilePath.put(configItemKey, configResFilePath);
-                                    }
-                                }
+        if (ObjectUtils.isNotEmpty(fleaI18nItems) && CollectionUtils.isNotEmpty(fleaI18nItems.getConfigItemList())) {
+            for (ConfigItem configItem : fleaI18nItems.getConfigItemList()) {
+                if (ObjectUtils.isNotEmpty(configItem) && StringUtils.isNotBlank(configItem.getKey()) && StringUtils.isNotBlank(configItem.getValue())) {
+                    String[] valueArr = StringUtils.split(configItem.getValue(), CommonConstants.SymbolConstants.COMMA);
+                    if (ArrayUtils.isNotEmpty(valueArr) && CommonConstants.NumeralConstants.INT_TWO == valueArr.length) {
+                        // 获取资源文件路径
+                        String filePath = StringUtils.trim(valueArr[0]);
+                        // 获取资源文件前缀
+                        String fileNamePrefix = StringUtils.trim(valueArr[1]);
+                        if (StringUtils.isNotBlank(filePath) && StringUtils.isNotBlank(fileNamePrefix)) {
+                            String configResFilePath;
+                            // 如果资源文件路径最后没有 "/"，自动添加
+                            if (CommonConstants.SymbolConstants.SLASH.equals(StringUtils.subStrLast(filePath, 1))) {
+                                configResFilePath = filePath + fileNamePrefix;
+                            } else {
+                                configResFilePath = filePath + CommonConstants.SymbolConstants.SLASH + fileNamePrefix;
                             }
+                            resFilePath.put(configItem.getKey(), configResFilePath);
                         }
                     }
                 }
@@ -146,15 +146,7 @@ public class FleaI18nConfig {
      * @since 1.0.0
      */
     public String getI18NDataValue(String key, String[] values, String resName, Locale locale) {
-        String value = getI18NDataValue(key, resName, locale);
-        if (ArrayUtils.isNotEmpty(values)) {
-            StringBuilder builder = new StringBuilder(value);
-            for (int i = 0; i < values.length; i++) {
-                StringUtils.replace(builder, CommonConstants.SymbolConstants.LEFT_CURLY_BRACE + i + CommonConstants.SymbolConstants.RIGHT_CURLY_BRACE, values[i]);
-            }
-            value = builder.toString();
-        }
-        return value;
+        return StringUtils.getRealValue(getI18NDataValue(key, resName, locale), values);
     }
 
     /**
@@ -169,8 +161,7 @@ public class FleaI18nConfig {
     public String getI18NDataValue(String key, String resName, Locale locale) {
         Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {
-            };
+            obj = new Object() {};
             LOGGER.debug1(obj, "Find the key     : {}", key);
             LOGGER.debug1(obj, "Find the resName : {}", resName);
             LOGGER.debug1(obj, "Find the locale  : {} , {}", locale == null ? Locale.getDefault() : locale, locale == null ? Locale.getDefault().getDisplayLanguage() : locale.getDisplayLanguage());
@@ -205,8 +196,7 @@ public class FleaI18nConfig {
 
         Object obj = null;
         if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {
-            };
+            obj = new Object() {};
             LOGGER.debug1(obj, "Find the resKey  : {}", key);
         }
 

@@ -3,9 +3,9 @@ package com.huazie.fleaframework.core.base.cfgdata.service.impl;
 import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.common.util.CollectionUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
-import com.huazie.fleaframework.core.base.cfgdata.service.interfaces.IFleaJerseyResourceSV;
 import com.huazie.fleaframework.core.base.cfgdata.dao.interfaces.IFleaJerseyResourceDAO;
 import com.huazie.fleaframework.core.base.cfgdata.entity.FleaJerseyResource;
+import com.huazie.fleaframework.core.base.cfgdata.service.interfaces.IFleaJerseyResourceSV;
 import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import com.huazie.fleaframework.db.jpa.service.impl.AbstractFleaJPASVImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * <p> Flea Jersey 资源SV实现类 </p>
+ * Flea Jersey 资源SV层实现类
  *
  * @author huazie
  * @version 1.0.0
@@ -37,9 +37,7 @@ public class FleaJerseyResourceSVImpl extends AbstractFleaJPASVImpl<FleaJerseyRe
         FleaJerseyResource resource = null;
         if (StringUtils.isNotBlank(resourceCode)) {
             List<FleaJerseyResource> resourceList = fleaJerseyResourceDAO.getResource(resourceCode);
-            if (CollectionUtils.isNotEmpty(resourceList)) {
-                resource = resourceList.get(0);
-            }
+            resource = CollectionUtils.getFirstElement(resourceList, FleaJerseyResource.class);
         }
         return resource;
     }

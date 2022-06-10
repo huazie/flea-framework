@@ -7,7 +7,7 @@ import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import java.util.List;
 
 /**
- * <p> Flea 配置数据DAO层接口 </p>
+ * Flea 配置数据DAO层接口
  *
  * @author huazie
  * @version 1.1.0
@@ -16,7 +16,7 @@ import java.util.List;
 public interface IFleaConfigDataDAO extends IAbstractFleaJPADAO<FleaConfigData> {
 
     /**
-     * <p> 获取配置数据集合 </p>
+     * 根据配置数据类型和配置数据编码，获取有效的配置数据集合。
      *
      * @param configType 配置数据类型
      * @param configCode 配置数据编码

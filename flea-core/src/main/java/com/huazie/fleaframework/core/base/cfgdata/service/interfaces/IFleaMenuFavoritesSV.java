@@ -8,7 +8,7 @@ import com.huazie.fleaframework.db.jpa.service.interfaces.IAbstractFleaJPASV;
 import java.util.List;
 
 /**
- * <p> Flea菜单收藏夹SV层接口定义 </p>
+ * Flea菜单收藏夹SV层接口定义
  *
  * @author huazie
  * @version 1.0.0
@@ -17,7 +17,7 @@ import java.util.List;
 public interface IFleaMenuFavoritesSV extends IAbstractFleaJPASV<FleaMenuFavorites> {
 
     /**
-     * <p> 查询有效的菜单收藏夹 </p>
+     * 根据操作账户编号和菜单编码（可为空），查询有效的菜单收藏夹。
      *
      * @param accountId 操作账户编号
      * @param menuCode  菜单编码
@@ -28,7 +28,7 @@ public interface IFleaMenuFavoritesSV extends IAbstractFleaJPASV<FleaMenuFavorit
     List<FleaMenuFavorites> queryValidFleaMenuFavorites(Long accountId, String menuCode) throws CommonException;
 
     /**
-     * <p> 保存菜单收藏夹 </p>
+     * 保存菜单收藏夹
      *
      * @param fleaMenuFavoritesPOJO Flea菜单收藏夹POJO类
      * @return 菜单收藏夹实体对象

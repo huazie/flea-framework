@@ -1,8 +1,8 @@
 package com.huazie.fleaframework.common.log4j.helpers;
 
-import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.FleaSessionManager;
 import com.huazie.fleaframework.common.IFleaUser;
+import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
 import org.apache.log4j.helpers.FormattingInfo;

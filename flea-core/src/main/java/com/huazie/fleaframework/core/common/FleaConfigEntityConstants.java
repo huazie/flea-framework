@@ -3,7 +3,7 @@ package com.huazie.fleaframework.core.common;
 import com.huazie.fleaframework.common.FleaEntityConstants;
 
 /**
- * <p> 实体类常量 </p>
+ * 实体类常量，多用于实体数据的JPA标准化查询。
  *
  * @author huazie
  * @version 1.0.0

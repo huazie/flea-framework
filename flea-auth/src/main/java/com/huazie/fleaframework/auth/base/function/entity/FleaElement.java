@@ -15,7 +15,7 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 /**
- * <p> Flea元素表对应的实体类 </p>
+ * Flea元素表对应的实体类
  *
  * @author huazie
  * @version 1.0.0

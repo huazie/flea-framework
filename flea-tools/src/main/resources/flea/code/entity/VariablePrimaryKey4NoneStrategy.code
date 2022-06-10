@@ -1,0 +1,3 @@
+    @Id
+    @Column(name = "%COLUMN_NAME%", unique = true, nullable = false)
+    private %VAR_TYPE% %VARIABLE%; // %COLUMN_DESC%

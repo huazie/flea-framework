@@ -7,6 +7,7 @@ import com.huazie.fleaframework.common.CommonConstants;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.common.util.ArrayUtils;
+import com.huazie.fleaframework.common.util.ExceptionUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.PropertiesUtil;
 import com.huazie.fleaframework.common.util.StringUtils;
@@ -105,9 +106,9 @@ public class MemCachedConfig {
     }
 
     /**
-     * <p> 读取Memcached缓存配置类实例 </p>
+     * 读取 MemCached 缓存配置类实例
      *
-     * @return Memcached缓存配置类实例
+     * @return MemCached 缓存配置类实例
      * @since 1.0.0
      */
     public static MemCachedConfig getConfig() {
@@ -129,7 +130,7 @@ public class MemCachedConfig {
         // 获取缓存所属系统名
         String systemName = PropertiesUtil.getStringValue(prop, CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_SYSTEM_NAME);
         if (StringUtils.isBlank(systemName)) {
-            throw new FleaCacheConfigException("缓存归属系统名未配置，请检查");
+            ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "缓存归属系统名未配置，请检查");
         }
         this.systemName = systemName;
     }
@@ -142,11 +143,11 @@ public class MemCachedConfig {
         // 获取MemCached服务器地址
         String allServer = PropertiesUtil.getStringValue(prop, CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_SERVER);
         if (StringUtils.isBlank(allServer)) {
-            throw new FleaCacheConfigException("The configuration attribute [" + CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_SERVER + "] is not exist");
+            ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "The configuration attribute [" + CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_SERVER + "] is not exist");
         }
         String[] serverArr = StringUtils.split(allServer, CommonConstants.SymbolConstants.COMMA);
         if (ArrayUtils.isEmpty(serverArr)) {
-            throw new FleaCacheConfigException("The value of configuration attribute [" + CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_SERVER + "] is empty");
+            ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "The value of configuration attribute [" + CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_SERVER + "] is empty");
         }
         this.servers = serverArr;
     }

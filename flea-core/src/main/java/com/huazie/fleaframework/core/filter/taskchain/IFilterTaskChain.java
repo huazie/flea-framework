@@ -4,7 +4,7 @@ import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.core.request.FleaRequestContext;
 
 /**
- * <p> 过滤器任务链接口 </p>
+ * 过滤器任务链接口，定义了执行过滤器任务的API。
  *
  * @author huazie
  * @version 1.0.0
@@ -13,7 +13,7 @@ import com.huazie.fleaframework.core.request.FleaRequestContext;
 public interface IFilterTaskChain {
 
     /**
-     * <p> 执行过滤器任务 </p>
+     * 执行过滤器任务
      *
      * @param fleaRequestContext Flea请求上下文
      * @throws CommonException 通用异常

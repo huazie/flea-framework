@@ -4,7 +4,7 @@ import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.common.i18n.FleaI18nResEnum;
 
 /**
- * <p> 分表实现异常类 </p>
+ * 分表实现异常类
  *
  * @author huazie
  * @version 1.0.0

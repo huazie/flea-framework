@@ -24,7 +24,7 @@ public class CacheFiles {
     }
 
     /**
-     * <p> 添加一个缓存定义配置文件 </p>
+     * 添加一个缓存定义配置文件
      *
      * @param cacheFile 缓存定义配置文件
      * @since 1.0.0
@@ -34,7 +34,7 @@ public class CacheFiles {
     }
 
     /**
-     * <p> 根据缓存数据键Key从其他缓存文件配置中获取指定的Flea缓存 </p>
+     * 根据缓存数据键Key从其他缓存文件配置中获取指定的Flea缓存
      *
      * @param key 缓存数据键
      * @return Flea缓存

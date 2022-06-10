@@ -2,6 +2,7 @@ package com.huazie.fleaframework.cache.redis.config;
 
 import com.huazie.fleaframework.cache.common.CacheConstants;
 import com.huazie.fleaframework.cache.exceptions.FleaCacheConfigException;
+import com.huazie.fleaframework.common.util.ExceptionUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.PropertiesUtil;
 import com.huazie.fleaframework.common.util.StringUtils;
@@ -50,7 +51,7 @@ public class RedisCommonConfig {
         // 获取缓存所属系统名
         String systemName = PropertiesUtil.getStringValue(prop, CacheConstants.RedisConfigConstants.REDIS_CONFIG_SYSTEM_NAME);
         if (StringUtils.isBlank(systemName)) {
-            throw new FleaCacheConfigException("缓存归属系统名未配置，请检查");
+            ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "缓存归属系统名未配置，请检查");
         }
         this.systemName = systemName;
     }

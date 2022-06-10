@@ -40,10 +40,10 @@ public class FleaMergeManager extends MergeManager {
             registeredObject = registerObjectForMergeCloneIntoWorkingCopy(rmiClone, shouldForceCascade());
         }
 
-        //adding isAlreadyMerged/recoredMerge check to prevent the uow clone from being merged into twice from the same tree
-        //bug 404171
+        // adding isAlreadyMerged/recoredMerge check to prevent the uow clone from being merged into twice from the same tree
+        // bug 404171
         if ((registeredObject == rmiClone || isAlreadyMerged(registeredObject, this.session)) && !shouldForceCascade()) {
-            //need to find better better fix.  prevents merging into itself.
+            // need to find better better fix.  prevents merging into itself.
             return registeredObject;
         }
         recordMerge(registeredObject, registeredObject, this.session);
@@ -150,7 +150,7 @@ public class FleaMergeManager extends MergeManager {
         Object object = unitOfWork.readObject(clone);
         if (object == null) {
             checkNewObjectLockVersion(clone, primaryKey, descriptor, unitOfWork);
-            //bug6180972: avoid internal register's existence check and be sure to put the new object in the mergedNewObjects collection
+            // bug6180972: avoid internal register's existence check and be sure to put the new object in the mergedNewObjects collection
             object = unitOfWork.cloneAndRegisterNewObject(clone, shouldForceCascade);
             this.mergedNewObjects.put(object, object);
         }

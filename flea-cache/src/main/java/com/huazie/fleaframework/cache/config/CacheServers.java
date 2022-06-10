@@ -1,13 +1,10 @@
 package com.huazie.fleaframework.cache.config;
 
-import com.huazie.fleaframework.common.util.MapUtils;
-import com.huazie.fleaframework.common.util.ObjectUtils;
+import com.huazie.fleaframework.common.config.ConfigListMap;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 缓存服务器集，对应【flea-cache-config.xml】中
@@ -17,7 +14,7 @@ import java.util.Map;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class CacheServers {
+public class CacheServers extends ConfigListMap<CacheServer> {
 
     private List<CacheServer> cacheServerList = new ArrayList<>(); // 缓存服务器集中的各个缓存服务器
 
@@ -33,6 +30,12 @@ public class CacheServers {
      */
     public void addCacheServer(CacheServer cacheServer) {
         cacheServerList.add(cacheServer);
+        addConfig(cacheServer);
+    }
+
+    @Override
+    protected String getConfigKey(CacheServer cacheServer) {
+        return cacheServer.getGroup();
     }
 
     /**
@@ -43,38 +46,7 @@ public class CacheServers {
      * @since 1.0.0
      */
     public List<CacheServer> getCacheServersByGroup(String group) {
-        List<CacheServer> cacheServers = null;
-        Map<String, List<CacheServer>> cacheServerMap = toCacheServerMap();
-        if (MapUtils.isNotEmpty(cacheServerMap)) {
-            cacheServers = cacheServerMap.get(group);
-        }
-        return cacheServers;
-    }
-
-    /**
-     * 获取指定缓存服务器列表中的缓存服务器的Map，
-     * 便于根据各缓存服务器的服务器归属组group查找
-     *
-     * @return 缓存服务器的Map
-     * @since 1.0.0
-     */
-    private Map<String, List<CacheServer>> toCacheServerMap() {
-        Map<String, List<CacheServer>> cacheServerMap = new HashMap<>();
-        for (CacheServer cacheServer : cacheServerList) {
-            if (ObjectUtils.isNotEmpty(cacheServer)) {
-                String group = cacheServer.getGroup();
-                List<CacheServer> cServerList;
-                if (cacheServerMap.containsKey(group)) {
-                    cServerList = cacheServerMap.get(group);
-                    cServerList.add(cacheServer);
-                } else {
-                    cServerList = new ArrayList<>();
-                    cServerList.add(cacheServer);
-                    cacheServerMap.put(group, cServerList);
-                }
-            }
-        }
-        return cacheServerMap;
+        return getConfigList(group);
     }
 
     @Override

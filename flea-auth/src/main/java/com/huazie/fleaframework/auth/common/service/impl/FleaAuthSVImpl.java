@@ -1,14 +1,5 @@
 package com.huazie.fleaframework.auth.common.service.impl;
 
-import com.huazie.fleaframework.auth.base.user.entity.FleaAccount;
-import com.huazie.fleaframework.auth.base.user.entity.FleaAccountAttr;
-import com.huazie.fleaframework.auth.base.user.entity.FleaRealNameInfo;
-import com.huazie.fleaframework.auth.base.user.entity.FleaUser;
-import com.huazie.fleaframework.auth.base.user.entity.FleaUserAttr;
-import com.huazie.fleaframework.auth.base.user.entity.FleaUserGroupRel;
-import com.huazie.fleaframework.auth.base.user.entity.FleaUserRel;
-import com.huazie.fleaframework.auth.common.exception.FleaAuthCommonException;
-import com.huazie.fleaframework.auth.common.service.interfaces.IFleaAuthSV;
 import com.huazie.fleaframework.auth.base.function.entity.FleaFunctionAttr;
 import com.huazie.fleaframework.auth.base.function.entity.FleaMenu;
 import com.huazie.fleaframework.auth.base.function.service.interfaces.IFleaFunctionAttrSV;
@@ -21,6 +12,13 @@ import com.huazie.fleaframework.auth.base.role.entity.FleaRoleGroupRel;
 import com.huazie.fleaframework.auth.base.role.entity.FleaRoleRel;
 import com.huazie.fleaframework.auth.base.role.service.interfaces.IFleaRoleGroupRelSV;
 import com.huazie.fleaframework.auth.base.role.service.interfaces.IFleaRoleRelSV;
+import com.huazie.fleaframework.auth.base.user.entity.FleaAccount;
+import com.huazie.fleaframework.auth.base.user.entity.FleaAccountAttr;
+import com.huazie.fleaframework.auth.base.user.entity.FleaRealNameInfo;
+import com.huazie.fleaframework.auth.base.user.entity.FleaUser;
+import com.huazie.fleaframework.auth.base.user.entity.FleaUserAttr;
+import com.huazie.fleaframework.auth.base.user.entity.FleaUserGroupRel;
+import com.huazie.fleaframework.auth.base.user.entity.FleaUserRel;
 import com.huazie.fleaframework.auth.base.user.service.interfaces.IFleaAccountAttrSV;
 import com.huazie.fleaframework.auth.base.user.service.interfaces.IFleaAccountSV;
 import com.huazie.fleaframework.auth.base.user.service.interfaces.IFleaRealNameInfoSV;
@@ -32,7 +30,9 @@ import com.huazie.fleaframework.auth.common.AuthRelTypeEnum;
 import com.huazie.fleaframework.auth.common.FleaAuthConstants;
 import com.huazie.fleaframework.auth.common.FleaAuthEntityConstants;
 import com.huazie.fleaframework.auth.common.FunctionTypeEnum;
+import com.huazie.fleaframework.auth.common.exception.FleaAuthCommonException;
 import com.huazie.fleaframework.auth.common.pojo.user.FleaUserModuleData;
+import com.huazie.fleaframework.auth.common.service.interfaces.IFleaAuthSV;
 import com.huazie.fleaframework.common.CommonConstants;
 import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.common.util.ArrayUtils;
@@ -42,14 +42,13 @@ import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p> Flea 授权服务实现类 </p>
+ * Flea 授权服务实现类，对外提供可缓存的授权数据查询API。
  *
  * @author huazie
  * @version 1.0.0
@@ -163,7 +162,6 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
     }
 
     @Override
-    @Cacheable(value = "fleaauthmenu", key = "#accountId + '_' + #systemAccountId")
     public List<FleaMenu> queryAllAccessibleMenus(Long accountId, Long systemAccountId) throws CommonException {
 
         // 校验操作账户编号
@@ -253,7 +251,7 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
     }
 
     /**
-     * <p> 处理用户组关联信息 </p>
+     * 处理用户组关联信息
      *
      * @param roleIdList       角色编号列表
      * @param userGroupRelList 用户组关联信息
@@ -281,7 +279,7 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
     }
 
     /**
-     * <p> 处理用户关联信息 </p>
+     * 处理用户关联信息
      *
      * @param roleIdList  角色编号列表
      * @param userRelList 用户关联信息
@@ -308,7 +306,7 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
     }
 
     /**
-     * <p> 处理角色组关联信息 </p>
+     * 处理角色组关联信息
      *
      * @param roleGroupId 角色组编号
      * @param roleIdList  角色编号列表
@@ -328,7 +326,7 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
     }
 
     /**
-     * <p> 处理角色关联信息 </p>
+     * 处理角色关联信息
      *
      * @param privilegeIdList 权限编号列表
      * @param roleRelList     角色关联信息
@@ -355,7 +353,7 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
     }
 
     /**
-     * <p> 处理权限组关联信息 </p>
+     * 处理权限组关联信息
      *
      * @param privilegeGroupId 权限组编号
      * @param privilegeIdList  权权限编号列表
@@ -375,7 +373,7 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
     }
 
     /**
-     * <p> 处理权限关联信息 </p>
+     * 处理权限关联信息
      *
      * @param relIdList        关联ID列表
      * @param privilegeRelList 权限关联信息
@@ -392,7 +390,7 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
     }
 
     /**
-     * <p> 处理功能扩展属性信息 </p>
+     * 处理功能扩展属性信息
      *
      * @param functionIdList   功能编号列表
      * @param functionAttrList 功能参数列表
@@ -412,7 +410,7 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
     }
 
     /**
-     * <p> 添加多个关联信息 </p>
+     * 添加多个关联信息
      *
      * @param relIdStr  关联编号字符串【逗号分隔】
      * @param relIdList 关联编号列表
@@ -428,7 +426,7 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
     }
 
     /**
-     * <p> 添加关联信息 </p>
+     * 添加关联信息
      *
      * @param relId     关联编号
      * @param relIdList 关联编号列表
@@ -441,7 +439,6 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
     }
 
     @Override
-    @Cacheable(value = "fleaauthuser", key = "'accountId_' + #accountId")
     public FleaUserModuleData getFleaUserModuleData(Long accountId) throws CommonException {
 
         FleaUserModuleData fleaUserModuleData = new FleaUserModuleData();

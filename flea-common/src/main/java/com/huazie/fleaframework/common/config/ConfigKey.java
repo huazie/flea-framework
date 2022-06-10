@@ -3,7 +3,7 @@ package com.huazie.fleaframework.common.config;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
- * <p> 配置Key </p>
+ * 配置键
  *
  * @author huazie
  * @version 1.0.0

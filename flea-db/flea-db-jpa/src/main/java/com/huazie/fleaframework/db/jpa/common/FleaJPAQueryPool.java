@@ -1,5 +1,6 @@
 package com.huazie.fleaframework.db.jpa.common;
 
+import com.huazie.fleaframework.common.CommonConstants;
 import com.huazie.fleaframework.common.pool.FleaObjectPool;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import org.apache.commons.pool2.PooledObject;
@@ -8,10 +9,15 @@ import org.apache.commons.pool2.impl.DefaultPooledObject;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 
 /**
- * <p> Flea JPA查询对象池 </p>
- * <pre>使用:
- *  // 获取Flea JPA查询对象池实例 （使用默认连接池名"default"即可）
+ * Flea JPA查询对象池，用于获取Flea JPA查询对象。
+ *
+ * <pre>使用参考如下：
+ *  // 获取Flea JPA查询对象池实例 （默认连接池名"default"）
  *  FleaJPAQueryPool pool = FleaObjectPoolFactory.getFleaObjectPool(FleaJPAQuery.class, FleaJPAQueryPool.class);
+ *  或者：
+ *  // 获取Flea JPA查询对象池 （指定连接池名）
+ *  FleaJPAQueryPool pool = FleaObjectPoolFactory.getFleaObjectPool(poolName, FleaJPAQuery.class, FleaJPAQueryPool.class);
+ *
  *  // 获取Flea JPA查询对象实例
  *  FleaJPAQuery query = pool.getFleaObject();
  * </pre>
@@ -25,28 +31,28 @@ public class FleaJPAQueryPool extends FleaObjectPool<FleaJPAQuery> {
     private String poolName;
 
     /**
-     * <p> Flea JPA查询对象池构造方法 </p>
+     * Flea JPA查询对象池构造方法【默认连接池】
      *
      * @param poolConfig 对象池配置
      * @since 1.0.0
      */
     public FleaJPAQueryPool(GenericObjectPoolConfig poolConfig) {
-        super(poolConfig, new FleaJPAQueryFactory());
+        this(CommonConstants.FleaPoolConstants.DEFAULT_POOL_NAME, poolConfig);
     }
 
     /**
-     * <p> Flea JPA查询对象池构造方法 </p>
+     * Flea JPA查询对象池构造方法【指定连接池】
      *
      * @param poolConfig 对象池配置
      * @since 1.0.0
      */
     public FleaJPAQueryPool(String poolName, GenericObjectPoolConfig poolConfig) {
-        this(poolConfig);
+        super(poolConfig, new FleaJPAQueryFactory());
         this.poolName = poolName;
     }
 
     /**
-     * <p> 获取Flea JPA查询对象 </p>
+     * 获取Flea JPA查询对象
      *
      * @return Flea JPA查询对象
      * @since 1.0.0
@@ -67,7 +73,7 @@ public class FleaJPAQueryPool extends FleaObjectPool<FleaJPAQuery> {
     }
 
     /**
-     * <p> 获取对象池名 </p>
+     * 获取对象池名
      *
      * @return 对象池名
      * @since 1.0.0
@@ -77,7 +83,8 @@ public class FleaJPAQueryPool extends FleaObjectPool<FleaJPAQuery> {
     }
 
     /**
-     * <p> 设置对象池名 </p>
+     * 设置对象池名
+     *
      * @param poolName 对象池名
      * @since 1.0.0
      */
@@ -86,7 +93,7 @@ public class FleaJPAQueryPool extends FleaObjectPool<FleaJPAQuery> {
     }
 
     /**
-     * <p> Flea JPA查询对象池化工厂类 </p>
+     * Flea JPA查询对象池化工厂类
      *
      * @author huazie
      * @version 1.0.0

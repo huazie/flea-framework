@@ -60,7 +60,7 @@ public class LoginLogAuthTest {
             FleaLoginLog fleaLoginLog = new FleaLoginLog();
             fleaLoginLog.setCreateDate(DateUtils.getCurrentTime());
 
-            fleaLoginLog = fleaLoginLogSV.queryNew(1L, fleaLoginLog);
+            fleaLoginLog = fleaLoginLogSV.query(1L, fleaLoginLog);
 
             LOGGER.debug("FleaLoginLog = {}", fleaLoginLog);
 
@@ -92,7 +92,7 @@ public class LoginLogAuthTest {
             FleaLoginLog fleaLoginLog = new FleaLoginLog();
             fleaLoginLog.setCreateDate(DateUtils.getCurrentTime());
 
-            fleaLoginLog = fleaLoginLogSV.queryNew(1L, fleaLoginLog);
+            fleaLoginLog = fleaLoginLogSV.query(1L, fleaLoginLog);
 
             LOGGER.debug("FleaLoginLog = {}", fleaLoginLog);
 
@@ -119,7 +119,7 @@ public class LoginLogAuthTest {
             FleaLoginLog fleaLoginLog = new FleaLoginLog();
             fleaLoginLog.setCreateDate(DateUtils.getCurrentTime());
 
-            fleaLoginLogSV.removeNew(1L, fleaLoginLog);
+            fleaLoginLogSV.remove(1L, fleaLoginLog);
 
         } catch (Exception e) {
             LOGGER.error("Exception:", e);

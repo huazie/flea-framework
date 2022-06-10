@@ -5,12 +5,12 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 /**
- * <p> Flea配置数据 </p>
+ * Flea配置数据，可在【flea-config.xml】文件中查看
+ * {@code <flea-config> </flea-config>} 节点。
  *
  * @author huazie
  * @version 1.0.0

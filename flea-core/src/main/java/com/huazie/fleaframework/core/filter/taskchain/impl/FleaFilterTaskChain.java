@@ -5,17 +5,18 @@ import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.common.util.CollectionUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.ReflectUtils;
+import com.huazie.fleaframework.core.filter.task.IFilterTask;
+import com.huazie.fleaframework.core.filter.taskchain.IFilterTaskChain;
 import com.huazie.fleaframework.core.request.FleaRequestContext;
 import com.huazie.fleaframework.core.request.config.FilterTask;
 import com.huazie.fleaframework.core.request.config.FleaRequestConfig;
-import com.huazie.fleaframework.core.filter.task.IFilterTask;
-import com.huazie.fleaframework.core.filter.taskchain.IFilterTaskChain;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p> Flea过滤器任务链 </p>
+ * Flea过滤器任务链，从配置文件 <b>flea-request-filter.xml</b>
+ * 中获取过滤器任务链，然后调用统一的API执行过滤器任务。
  *
  * @author huazie
  * @version 1.0.0
@@ -32,7 +33,7 @@ public class FleaFilterTaskChain implements IFilterTaskChain {
     }
 
     /**
-     * <p> 初始化过滤器任务链 </p>
+     * 初始化过滤器任务链
      *
      * @since 1.0.0
      */
@@ -41,7 +42,7 @@ public class FleaFilterTaskChain implements IFilterTaskChain {
     }
 
     /**
-     * <p> 过滤器链配置集合 转化成对应过滤器链实现类集合 </p>
+     * 过滤器链配置集合 转化成对应过滤器链实现类集合
      *
      * @param filterTasks 过滤器链配置
      * @return 过滤器链实现类集合
@@ -64,7 +65,7 @@ public class FleaFilterTaskChain implements IFilterTaskChain {
     }
 
     /**
-     * <p> 执行过滤器任务链 </p>
+     * 执行过滤器任务链
      *
      * @param fleaRequestContext Flea请求上下文
      * @throws CommonException 通用异常
@@ -80,7 +81,7 @@ public class FleaFilterTaskChain implements IFilterTaskChain {
     }
 
     /**
-     * <p> 获取当前过滤器任务链中处理的过滤器任务位置 </p>
+     * 获取当前过滤器任务链中处理的过滤器任务位置
      *
      * @return 返回当前过滤器任务链中处理的过滤器任务位置
      * @since 1.0.0
@@ -94,7 +95,7 @@ public class FleaFilterTaskChain implements IFilterTaskChain {
     }
 
     /**
-     * <p> 设置当前过滤器任务链中处理的过滤器任务位置 </p>
+     * 设置当前过滤器任务链中处理的过滤器任务位置
      *
      * @param currentPosition 过滤器任务位置
      * @since 1.0.0
@@ -104,7 +105,7 @@ public class FleaFilterTaskChain implements IFilterTaskChain {
     }
 
     /**
-     * <p> 过滤器任务链执行完毕，当前线程重置过滤器任务执行位置 </p>
+     * 过滤器任务链执行完毕，当前线程重置过滤器任务执行位置
      *
      * @since 1.0.0
      */

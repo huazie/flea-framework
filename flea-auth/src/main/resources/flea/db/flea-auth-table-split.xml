@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flea-table-split>
+
+	<tables>
+
+		<table name="flea_login_log" exp="(FLEA_TABLE_NAME)_(CREATE_DATE)" desc="Flea登录日志表分表规则">
+			<splits>
+				<split key="YYYY_MM" column="create_date" />
+			</splits>
+		</table>
+
+		<table name="flea_function_attr" exp="(FLEA_TABLE_NAME)_(FUNCTION_TYPE)" desc="Flea功能扩展属性表分表规则">
+			<splits>
+				<split key="COLUMN" column="function_type" />
+			</splits>
+		</table>
+
+	</tables>
+
+</flea-table-split>

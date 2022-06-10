@@ -1,12 +1,12 @@
 package com.huazie.fleaframework.auth.base.privilege.service.interfaces;
 
-import com.huazie.fleaframework.auth.common.pojo.privilege.FleaPrivilegePOJO;
 import com.huazie.fleaframework.auth.base.privilege.entity.FleaPrivilege;
+import com.huazie.fleaframework.auth.common.pojo.privilege.FleaPrivilegePOJO;
 import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.db.jpa.service.interfaces.IAbstractFleaJPASV;
 
 /**
- * <p> Flea权限SV层接口定义 </p>
+ * Flea权限SV层接口定义
  *
  * @author huazie
  * @version 1.0.0
@@ -15,7 +15,7 @@ import com.huazie.fleaframework.db.jpa.service.interfaces.IAbstractFleaJPASV;
 public interface IFleaPrivilegeSV extends IAbstractFleaJPASV<FleaPrivilege> {
 
     /**
-     * <p> 保存Flea权限 </p>
+     * 保存Flea权限
      *
      * @param fleaPrivilegePOJO Flea权限POJO类对象
      * @return Flea权限实体对象

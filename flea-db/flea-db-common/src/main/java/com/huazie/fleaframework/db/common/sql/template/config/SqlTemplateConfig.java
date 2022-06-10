@@ -1,8 +1,5 @@
 package com.huazie.fleaframework.db.common.sql.template.config;
 
-import com.huazie.fleaframework.common.exception.CommonException;
-import com.huazie.fleaframework.common.slf4j.FleaLogger;
-import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.common.util.MapUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.db.common.DBXmlDigesterHelper;
@@ -10,7 +7,7 @@ import com.huazie.fleaframework.db.common.DBXmlDigesterHelper;
 import java.util.Map;
 
 /**
- * <p> SQL模板配置工具类 </p>
+ * SQL模板配置工具类
  *
  * @author huazie
  * @version 1.0.0
@@ -18,21 +15,19 @@ import java.util.Map;
  */
 public class SqlTemplateConfig {
 
-    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(SqlTemplateConfig.class);
-
     private static volatile SqlTemplateConfig config;
 
     private Sql sql;
 
     /**
-     * 只允许通过getConfig() 获取SQL模板配置类对象
+     * 只允许通过 getConfig() 获取SQL模板配置类对象
      */
-    private SqlTemplateConfig() throws CommonException {
+    private SqlTemplateConfig() {
         this.sql = DBXmlDigesterHelper.getInstance().getSqlTemplate();
     }
 
     /**
-     * <p> 获取Sql模板配置类对象 </p>
+     * 获取Sql模板配置类对象
      *
      * @return SQL模板配置类对象
      */
@@ -40,11 +35,7 @@ public class SqlTemplateConfig {
         if (ObjectUtils.isEmpty(config)) {
             synchronized (SqlTemplateConfig.class) {
                 if (ObjectUtils.isEmpty(config)) {
-                    try {
-                        config = new SqlTemplateConfig();
-                    } catch (Exception e) {
-                        LOGGER.error("Fail to init flea-sql-template.xml ：", e);
-                    }
+                    config = new SqlTemplateConfig();
                 }
             }
         }
@@ -52,7 +43,7 @@ public class SqlTemplateConfig {
     }
 
     /**
-     * <p> 根据校验规则编号，获取指定校验规则配置信息 </p>
+     * 根据校验规则编号，获取指定校验规则配置信息
      *
      * @param ruleId 校验规则编号
      * @return 校验规则对象配置信息
@@ -74,7 +65,7 @@ public class SqlTemplateConfig {
     }
 
     /**
-     * <p> 根据SQL模板编号，获取指定的SQL模板配置信息 </p>
+     * 根据SQL模板编号，获取指定的SQL模板配置信息
      *
      * @param templateId SQL模板编号
      * @return SQL模板配置信息
@@ -96,7 +87,7 @@ public class SqlTemplateConfig {
     }
 
     /**
-     * <p> 根据SQL模板参数编号，获取指定的SQL模板参数配置信息 </p>
+     * 根据SQL模板参数编号，获取指定的SQL模板参数配置信息
      *
      * @param paramId SQL模板参数编号
      * @return SQL模板参数配置信息
@@ -118,8 +109,8 @@ public class SqlTemplateConfig {
     }
 
     /**
-     * <p> 根据关系编号，获取指定的关系配置信息 </p>
-     * <p> SQL模板和模板参数关联关系（简称：关系）</p>
+     * 根据关系编号，获取指定的关系配置信息
+     * SQL模板和模板参数关联关系（简称：关系）
      *
      * @param relationId 关系编号
      * @return 关系配置信息

@@ -17,6 +17,7 @@ import com.huazie.fleaframework.cache.config.FleaCache;
 import com.huazie.fleaframework.cache.exceptions.FleaCacheConfigException;
 import com.huazie.fleaframework.cache.exceptions.FleaCacheException;
 import com.huazie.fleaframework.common.CommonConstants;
+import com.huazie.fleaframework.common.util.ExceptionUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
 import redis.clients.jedis.JedisPoolConfig;
@@ -108,7 +109,7 @@ public class CacheConfigUtils {
         // 获取缓存初始化配置项集之缓存所属系统名配置项
         CacheItem cacheItem = CacheConfigUtils.getCacheItem(CacheConstants.FleaCacheConfigConstants.FLEA_CACHE_INIT, CacheConstants.FleaCacheConfigConstants.SYSTEM_NAME);
         if (ObjectUtils.isEmpty(cacheItem)) {
-            throw new FleaCacheConfigException("无法获取缓存系统名，请检查flea-cache-config.xml配置【<cache-item key=" + CacheConstants.FleaCacheConfigConstants.SYSTEM_NAME + " >】\"");
+            ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "无法获取缓存系统名，请检查flea-cache-config.xml配置【<cache-item key=" + CacheConstants.FleaCacheConfigConstants.SYSTEM_NAME + " >】\"");
         }
         return cacheItem.getValue();
     }
@@ -203,25 +204,25 @@ public class CacheConfigUtils {
         // Redis客户端Jedis连接池最大连接数
         CacheParam poolMaxTotal = CacheConfigUtils.getCacheParam(CacheConstants.RedisConfigConstants.REDIS_CONFIG_POOL_MAXTOTAL);
         if (ObjectUtils.isEmpty(poolMaxTotal) || StringUtils.isBlank(poolMaxTotal.getValue())) {
-            throw new FleaCacheException("请检查flea-cache-config.xml配置，【<cache-param key=" + CacheConstants.RedisConfigConstants.REDIS_CONFIG_POOL_MAXTOTAL + " ></cache-param>】未配置或配置值为空");
+            ExceptionUtils.throwFleaException(FleaCacheException.class, "请检查flea-cache-config.xml配置，【<cache-param key=" + CacheConstants.RedisConfigConstants.REDIS_CONFIG_POOL_MAXTOTAL + " ></cache-param>】未配置或配置值为空");
         }
         poolConfig.setMaxTotal(Integer.parseInt(poolMaxTotal.getValue()));
         // Redis客户端Jedis连接池最大空闲连接数
         CacheParam poolMaxIdle = CacheConfigUtils.getCacheParam(CacheConstants.RedisConfigConstants.REDIS_CONFIG_POOL_MAXIDLE);
         if (ObjectUtils.isEmpty(poolMaxIdle) || StringUtils.isBlank(poolMaxIdle.getValue())) {
-            throw new FleaCacheException("请检查flea-cache-config.xml配置，【<cache-param key=" + CacheConstants.RedisConfigConstants.REDIS_CONFIG_POOL_MAXIDLE + " ></cache-param>】未配置或配置值为空");
+            ExceptionUtils.throwFleaException(FleaCacheException.class, "请检查flea-cache-config.xml配置，【<cache-param key=" + CacheConstants.RedisConfigConstants.REDIS_CONFIG_POOL_MAXIDLE + " ></cache-param>】未配置或配置值为空");
         }
         poolConfig.setMaxIdle(Integer.parseInt(poolMaxIdle.getValue()));
         // Redis客户端Jedis连接池最小空闲连接数
         CacheParam poolMinIdle = CacheConfigUtils.getCacheParam(CacheConstants.RedisConfigConstants.REDIS_CONFIG_POOL_MINIDLE);
         if (ObjectUtils.isEmpty(poolMinIdle) || StringUtils.isBlank(poolMinIdle.getValue())) {
-            throw new FleaCacheException("请检查flea-cache-config.xml配置，【<cache-param key=" + CacheConstants.RedisConfigConstants.REDIS_CONFIG_POOL_MINIDLE + " ></cache-param>】未配置或配置值为空");
+            ExceptionUtils.throwFleaException(FleaCacheException.class, "请检查flea-cache-config.xml配置，【<cache-param key=" + CacheConstants.RedisConfigConstants.REDIS_CONFIG_POOL_MINIDLE + " ></cache-param>】未配置或配置值为空");
         }
         poolConfig.setMinIdle(Integer.parseInt(poolMinIdle.getValue()));
         // Redis客户端Jedis连接池获取连接时的最大等待毫秒数
         CacheParam poolMaxWaitMillis = CacheConfigUtils.getCacheParam(CacheConstants.RedisConfigConstants.REDIS_CONFIG_POOL_MAXWAITMILLIS);
         if (ObjectUtils.isEmpty(poolMaxWaitMillis) || StringUtils.isBlank(poolMaxWaitMillis.getValue())) {
-            throw new FleaCacheException("请检查flea-cache-config.xml配置，【<cache-param key=" + CacheConstants.RedisConfigConstants.REDIS_CONFIG_POOL_MAXWAITMILLIS + " ></cache-param>】未配置或配置值为空");
+            ExceptionUtils.throwFleaException(FleaCacheException.class, "请检查flea-cache-config.xml配置，【<cache-param key=" + CacheConstants.RedisConfigConstants.REDIS_CONFIG_POOL_MAXWAITMILLIS + " ></cache-param>】未配置或配置值为空");
         }
         poolConfig.setMaxWaitMillis(Integer.parseInt(poolMaxWaitMillis.getValue()));
         return poolConfig;

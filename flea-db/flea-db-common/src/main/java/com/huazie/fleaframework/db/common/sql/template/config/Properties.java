@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <p> 属性集合 </p>
+ * 属性集合
  *
  * @author huazie
  * @version 1.0.0
@@ -19,7 +19,7 @@ public class Properties {
     private List<Property> properties = new ArrayList<>();
 
     /**
-     * <p> 获取属性的List对象 </p>
+     * 获取属性的List对象
      *
      * @return 属性的List对象
      * @since 1.0.0
@@ -29,7 +29,7 @@ public class Properties {
     }
 
     /**
-     * <p> 获取属性的数组对象 </p>
+     * 获取属性的数组对象
      *
      * @return 属性的数组对象
      * @since 1.0.0
@@ -39,7 +39,7 @@ public class Properties {
     }
 
     /**
-     * <p> 获取属性的Map对象，便于根据属性的key查找 </p>
+     * 获取属性的Map对象，便于根据属性的key查找
      *
      * @return 删除模板的Map对象
      * @since 1.0.0
@@ -53,7 +53,7 @@ public class Properties {
     }
 
     /**
-     * <p> 添加一个属性 </p>
+     * 添加一个属性
      *
      * @param property 属性对象
      * @since 1.0.0

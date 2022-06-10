@@ -1,15 +1,16 @@
 package com.huazie.fleaframework.common.i18n;
 
-import com.huazie.fleaframework.common.i18n.config.FleaI18nConfig;
 import com.huazie.fleaframework.common.FleaFrameManager;
+import com.huazie.fleaframework.common.i18n.config.FleaI18nConfig;
 
 import java.util.Locale;
 
 /**
- * Flea I18N 工具类
+ * Flea I18N 工具类, 用于获取本地国际化资源数据。
  *
  * @author huazie
  * @version 1.0.0
+ * @see FleaI18nConfig
  * @since 1.0.0
  */
 public class FleaI18nHelper {
@@ -45,7 +46,9 @@ public class FleaI18nHelper {
     }
 
     /**
-     * I18N资源数据获取
+     * I18N资源数据获取。实际在调用该方法之前，可以通过
+     * FleaFrameManager.getManager().setLocale(Locale)
+     * 设置当前线程的国际化标识。
      *
      * @param key     资源数据编码
      * @param resName 资源文件名
@@ -57,7 +60,9 @@ public class FleaI18nHelper {
     }
 
     /**
-     * I18N资源数据获取
+     * I18N资源数据获取。实际在调用该方法之前，可以通过
+     * FleaFrameManager.getManager().setLocale(Locale)
+     * 设置当前线程的国际化标识。
      *
      * @param key     资源数据编码
      * @param values  待替换字符串数组

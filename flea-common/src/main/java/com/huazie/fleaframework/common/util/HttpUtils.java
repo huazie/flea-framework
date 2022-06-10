@@ -1,9 +1,8 @@
 package com.huazie.fleaframework.common.util;
 
+import com.huazie.fleaframework.common.CommonConstants;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
-import com.huazie.fleaframework.common.CommonConstants;
-import com.huazie.fleaframework.common.util.json.FastJsonUtils;
 import com.huazie.fleaframework.common.util.json.GsonUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +15,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 /**
- * <p> Http工具类 </p>
+ * Http工具类
  *
  * @author huazie
  * @version 1.0.0
@@ -26,20 +25,16 @@ public class HttpUtils {
 
     private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(HttpUtils.class);
 
-    private static final String TAOBAO_IP_URL = "http://ip.taobao.com/service/getIpInfo.php?ip=";
-
-    private static final String SINA_IP_URL = "http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js&ip=";
-
     private HttpUtils() {
     }
 
     /**
      * 获取Http请求的客户端IP地址;
      * <p> X-Forwarded-For: 简称XFF头，它代表客户端，也就是HTTP的请求端真实的IP，
-     * 只有在通过了HTTP代理或者负载均衡服务器时才会添加该项 </p>
+     * 只有在通过了HTTP代理或者负载均衡服务器时才会添加该项
      *
      * @param request Http请求对象
-     * @return ip地址
+     * @return IP地址
      * @since 1.0.0
      */
     public static String getIp(HttpServletRequest request) {
@@ -90,7 +85,8 @@ public class HttpUtils {
     public static String getAddressByTaoBao(String ip) {
         StringBuilder sb = new StringBuilder();
         try {
-            String urlStr = TAOBAO_IP_URL + ip;
+            String ipUrl = URLHelper.getTaobaoIPURL();
+            String urlStr = ipUrl + ip;
             String retJson = get(urlStr);
 
             Map<String, Object> map = GsonUtils.toMap(retJson);
@@ -134,49 +130,7 @@ public class HttpUtils {
     }
 
     /**
-     * <p> 通过Sina的接口获取ip所在地理地址 </p>
-     *
-     * @param ip ip地址
-     * @return 较为精确的地理地址
-     * @since 1.0.0
-     */
-    public static String getAddressBySina(String ip) {
-        StringBuilder sb = new StringBuilder();
-        try {
-            String urlStr = SINA_IP_URL + ip;
-            String retJson = get(urlStr);
-
-            Map<String, Object> map = FastJsonUtils.toMap(retJson);
-
-            if (ObjectUtils.isEmpty(map)) {
-                return "";
-            }
-
-            Object obj = null;
-            if (LOGGER.isDebugEnabled()) {
-                obj = new Object() {};
-                LOGGER.debug1(obj, "Map={}", map);
-            }
-
-            sb.append(map.get(CommonConstants.IPAddressConstants.COUNTRY))
-                    .append(map.get(CommonConstants.IPAddressConstants.PROVINCE)).append("\u7701")
-                    .append(map.get(CommonConstants.IPAddressConstants.CITY));
-
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug1(obj, "Address={}", sb);
-            }
-
-        } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {},"Exception=", e);
-            }
-        }
-
-        return sb.toString();
-    }
-
-    /**
-     * <p> get请求 </p>
+     * Http Get请求
      *
      * @param urlStr url地址
      * @return get请求返回报文

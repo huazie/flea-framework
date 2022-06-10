@@ -3,7 +3,8 @@ package com.huazie.fleaframework.core.request.config;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
- * <p> 属性 </p>
+ * 属性定义，在配置文件 <b>flea-request.xml</b>
+ * 中查看 {@code <property> } 节点。
  *
  * @author huazie
  * @version 1.0.0

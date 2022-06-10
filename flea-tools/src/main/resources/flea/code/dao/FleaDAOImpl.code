@@ -6,7 +6,7 @@ import %CODE_PACKAGE%.entity.%ENTITY_CLASS_NAME%;
 import org.springframework.stereotype.Repository;
 
 /**
- * <p> %TABLE_DESC%DAO层实现类 </p>
+ * %TABLE_DESC%DAO层实现类
  *
  * @author %AUTHOR%
  * @version %VERSION%

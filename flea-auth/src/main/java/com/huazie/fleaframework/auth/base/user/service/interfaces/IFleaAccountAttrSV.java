@@ -8,7 +8,7 @@ import com.huazie.fleaframework.db.jpa.service.interfaces.IAbstractFleaJPASV;
 import java.util.List;
 
 /**
- * <p> Flea账户属性SV层接口定义 </p>
+ * Flea账户属性SV层接口定义
  *
  * @author huazie
  * @version 1.0.0
@@ -17,7 +17,7 @@ import java.util.List;
 public interface IFleaAccountAttrSV extends IAbstractFleaJPASV<FleaAccountAttr> {
 
     /**
-     * <p> 新增Flea账户属性 </p>
+     * 新增Flea账户属性
      *
      * @param fleaAccountAttrPOJO Flea账户属性POJO类
      * @return Flea账户属性实体类
@@ -27,7 +27,7 @@ public interface IFleaAccountAttrSV extends IAbstractFleaJPASV<FleaAccountAttr> 
     FleaAccountAttr saveFleaAccountAttr(FleaAccountAttrPOJO fleaAccountAttrPOJO) throws CommonException;
 
     /**
-     * <p> 批量新增Flea账户属性 </p>
+     * 批量新增Flea账户属性
      *
      * @param fleaAccountAttrPOJOList Flea账户属性POJO类List集合
      * @return Flea账户属性实体类List集合
@@ -37,7 +37,7 @@ public interface IFleaAccountAttrSV extends IAbstractFleaJPASV<FleaAccountAttr> 
     List<FleaAccountAttr> saveFleaAccountAttrs(List<FleaAccountAttrPOJO> fleaAccountAttrPOJOList) throws CommonException;
 
     /**
-     * <p> 根据账户编号获取账户扩展属性信息（属性状态 1 正常，未失效）</p>
+     * 根据账户编号获取账户扩展属性信息（属性状态 1 正常，未失效）</p>
      *
      * @param accountId 账户编号
      * @return 账户扩展属性信息

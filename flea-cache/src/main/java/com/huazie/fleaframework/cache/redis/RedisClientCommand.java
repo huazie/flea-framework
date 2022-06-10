@@ -3,6 +3,7 @@ package com.huazie.fleaframework.cache.redis;
 import com.huazie.fleaframework.cache.exceptions.FleaCacheMaxAttemptsException;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
+import com.huazie.fleaframework.common.util.ExceptionUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import redis.clients.jedis.ShardedJedis;
 import redis.clients.jedis.ShardedJedisPool;
@@ -54,7 +55,7 @@ public abstract class RedisClientCommand<T> {
      */
     private T runWithRetries(int attempts) {
         if (attempts <= 0) {
-            throw new FleaCacheMaxAttemptsException("No more attempts left.");
+            ExceptionUtils.throwFleaException(FleaCacheMaxAttemptsException.class, "No more attempts left.");
         }
         ShardedJedis connection = null;
         try {

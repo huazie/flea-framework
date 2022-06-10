@@ -39,6 +39,7 @@ public interface ToolsConstants {
         String DB_SYSTEM_NAME = "DB_SYSTEM_NAME";
         String DB_NAME = "DB_NAME";
 
+        String NONE = "NONE";
         String ID_GENERATOR_STRATEGY = "ID_GENERATOR_STRATEGY";
         String ID_GENERATOR_TABLE = "ID_GENERATOR_TABLE";
         String PK_COLUMN_NAME = "PK_COLUMN_NAME";

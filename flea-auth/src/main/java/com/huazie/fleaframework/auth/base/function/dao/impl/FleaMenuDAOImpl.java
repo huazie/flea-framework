@@ -1,9 +1,9 @@
 package com.huazie.fleaframework.auth.base.function.dao.impl;
 
+import com.huazie.fleaframework.auth.base.FleaAuthDAOImpl;
 import com.huazie.fleaframework.auth.base.function.dao.interfaces.IFleaMenuDAO;
 import com.huazie.fleaframework.auth.base.function.entity.FleaMenu;
 import com.huazie.fleaframework.auth.common.FleaAuthEntityConstants;
-import com.huazie.fleaframework.auth.base.FleaAuthDAOImpl;
 import com.huazie.fleaframework.common.EntityStateEnum;
 import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.common.util.DateUtils;
@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * <p> Flea菜单DAO层实现类 </p>
+ * Flea菜单DAO层实现类
  *
  * @author huazie
  * @version 1.0.0

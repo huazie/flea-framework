@@ -10,12 +10,7 @@ public class HttpUtilsTest {
 
     @Test
     public void getAddressByTaoBao() {
-        HttpUtils.getAddressByTaoBao("183.232.231.174");
-    }
-
-    @Test
-    public void getAddressBySina() {
-        HttpUtils.getAddressBySina("183.232.231.174");
+        HttpUtils.getAddressByTaoBao("60.176.205.72");
     }
 
     @Test

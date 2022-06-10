@@ -1,8 +1,8 @@
 package com.huazie.fleaframework.common.util;
 
+import com.huazie.fleaframework.common.PinyinEnum;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
-import com.huazie.fleaframework.common.PinyinEnum;
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;

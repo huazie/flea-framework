@@ -1,16 +1,16 @@
 package com.huazie.fleaframework.common.util;
 
-import com.huazie.fleaframework.common.slf4j.FleaLogger;
-import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.common.CommonConstants;
 import com.huazie.fleaframework.common.DateFormatEnum;
 import com.huazie.fleaframework.common.FleaConfigManager;
+import com.huazie.fleaframework.common.slf4j.FleaLogger;
+import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * <p> 日期工具类 </p>
+ * 日期工具类
  *
  * @author huazie
  * @version 1.0.0
@@ -26,7 +26,7 @@ public class DateUtils {
     }
 
     /**
-     * <p> 获取当前系统时间 </p>
+     * 获取当前系统时间
      *
      * @return 当前系统时间
      * @since 1.0.0
@@ -36,7 +36,7 @@ public class DateUtils {
     }
 
     /**
-     * <p> 获取配置的失效时间 </p>
+     * 获取配置的失效时间
      *
      * @return 失效时间
      * @since 1.0.0
@@ -44,7 +44,7 @@ public class DateUtils {
     public static Date getExpiryTimeForever() {
         // 获取失效时间(永久)配置
         String expiryTimeForever = FleaConfigManager.getConfigItemValue(
-                CommonConstants.FleaFrameInitConstants.FLEA_FRAME_INIT,
+                CommonConstants.FleaFrameInitConstants.FLEA_FRAMEWORK_INIT,
                 CommonConstants.FleaFrameInitConstants.EXPIRY_TIME_FOREVER);
 
         if (StringUtils.isBlank(expiryTimeForever)) {
@@ -61,9 +61,10 @@ public class DateUtils {
     }
 
     /**
-     * <p> 将日期转换成指定格式的字符串 </p>
-     * <p> 当<code>date</code>为<code>null</code>,默认格式化当前系统时间 </p>
-     * <p> 当<code>dateFormatStr</code>为空字符串或null，默认格式化类型<code>DateFormatEnum.DATE_FORMAT_DEFAULT</code> </p>
+     * 将日期转换成指定格式的字符串。
+     * <p> 当<code>date</code>为 <code>null</code>, 默认格式化当前系统时间；
+     * <p> 当<code>dateFormatStr</code>为空字符串或null，默认格式化类型
+     * <code>DateFormatEnum.DATE_FORMAT_DEFAULT</code>。
      *
      * @param date          日期对象
      * @param dateFormatStr 日期格式化类型字符串
@@ -88,9 +89,10 @@ public class DateUtils {
     }
 
     /**
-     * <p> 将日期转换成指定格式的字符串 </p>
-     * <p> 当<code>date</code>为<code>null</code>,默认格式化当前系统时间 </p>
-     * <p> 当<code>dateFormatEnum</code>为<code>null</code>，默认日期格式化类型<code>DateFormatEnum.getDefaultEnum() </p>
+     * 将日期转换成指定格式的字符串。
+     * <p> 当<code>date</code>为 <code>null</code>, 默认格式化当前系统时间；
+     * <p> 当<code>dateFormatEnum</code>为 <code>null</code>，默认日期格式化类型
+     * <code>DateFormatEnum.getDefaultEnum()。
      *
      * @param date           日期对象
      * @param dateFormatEnum 日期格式化类型
@@ -105,8 +107,8 @@ public class DateUtils {
     }
 
     /**
-     * <p> 将日期转换成指定格式的字符串 </p>
-     * <p> 当<code>date</code>为<code>null</code>,默认格式化当前系统时间 </p>
+     * 将日期转换成指定格式的字符串。
+     * <p> 当<code>date</code>为 <code>null</code>,默认格式化当前系统时间。
      *
      * @param date 日期对象
      * @return 格式化后的日期字符串
@@ -117,8 +119,9 @@ public class DateUtils {
     }
 
     /**
-     * <p> 将日期字符串转换为日期对象 </p>
-     * <p> 当<code>dateFormatStr</code>为空字符串或null，默认日期格式化类型<code>DateFormatEnum.DATE_FORMAT_DEFAULT</code> </p>
+     * 将日期字符串转换为日期对象。
+     * <p> 当<code>dateFormatStr</code> 为空字符串或null，
+     * 默认日期格式化类型<code>DateFormatEnum.DATE_FORMAT_DEFAULT</code>。
      *
      * @param dateStr       日期字符串
      * @param dateFormatStr 日期格式化类型字符串
@@ -139,8 +142,9 @@ public class DateUtils {
     }
 
     /**
-     * <p> 将日期字符串转换为日期对象 </p>
-     * <p> 当<code>dateFormatEnum</code>为<code>null</code>，默认日期格式化类型<code>DateFormatEnum.getDefaultEnum()</code> </p>
+     * 将日期字符串转换为日期对象。
+     * <p> 当<code>dateFormatEnum</code> 为<code>null</code>，
+     * 默认日期格式化类型<code>DateFormatEnum.getDefaultEnum()</code>。
      *
      * @param dateStr        日期对象
      * @param dateFormatEnum 日期格式化类型
@@ -155,7 +159,7 @@ public class DateUtils {
     }
 
     /**
-     * <p> 将日期字符串转换为日期对象 <p>
+     * 将日期字符串转换为日期对象
      *
      * @param dateStr 日期字符串
      * @return 转换后的日期对象

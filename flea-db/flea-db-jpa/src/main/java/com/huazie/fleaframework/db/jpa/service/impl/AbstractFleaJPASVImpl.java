@@ -1,15 +1,20 @@
 package com.huazie.fleaframework.db.jpa.service.impl;
 
 import com.huazie.fleaframework.common.exception.CommonException;
-import com.huazie.fleaframework.db.jpa.service.interfaces.IAbstractFleaJPASV;
 import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
+import com.huazie.fleaframework.db.jpa.service.interfaces.IAbstractFleaJPASV;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 /**
- * <p> 抽象Flea JPA SV层实现类 </p>
+ * 抽象Flea JPA SV层实现类，该类实现了基本的增删改查的数据操作功能，
+ * 子类可以自行拓展其他功能。
+ *
+ * <p> 该类定义了抽象方法 <code> getDAO </code>，由子类实现该方法，
+ * 实际的增删改查的数据操作，都是由DAO层子类实现；当然这些代码都可以
+ * 使用 <b> flea-tools </b> 中的工具自动生成。
  *
  * @author huazie
  * @version 1.0.0
@@ -33,13 +38,13 @@ public abstract class AbstractFleaJPASVImpl<T> implements IAbstractFleaJPASV<T> 
     }
 
     @Override
-    public T queryNew(long entityId, T entity) throws CommonException {
-        return getDAO().queryNew(entityId, entity);
+    public T query(long entityId, T entity) throws CommonException {
+        return getDAO().query(entityId, entity);
     }
 
     @Override
-    public T queryNew(String entityId, T entity) throws CommonException {
-        return getDAO().queryNew(entityId, entity);
+    public T query(String entityId, T entity) throws CommonException {
+        return getDAO().query(entityId, entity);
     }
 
     @Override
@@ -159,13 +164,13 @@ public abstract class AbstractFleaJPASVImpl<T> implements IAbstractFleaJPASV<T> 
     }
 
     @Override
-    public boolean removeNew(long entityId, T entity) throws CommonException {
-        return getDAO().removeNew(entityId, entity);
+    public boolean remove(long entityId, T entity) throws CommonException {
+        return getDAO().remove(entityId, entity);
     }
 
     @Override
-    public boolean removeNew(String entityId, T entity) throws CommonException {
-        return getDAO().removeNew(entityId, entity);
+    public boolean remove(String entityId, T entity) throws CommonException {
+        return getDAO().remove(entityId, entity);
     }
 
     @Override
@@ -189,8 +194,8 @@ public abstract class AbstractFleaJPASVImpl<T> implements IAbstractFleaJPASV<T> 
     }
 
     @Override
-    public List<T> query(String relationId, T entity) throws CommonException {
-        return getDAO().query(relationId, entity);
+    public List<T> queryAll(String relationId, T entity) throws CommonException {
+        return getDAO().queryAll(relationId, entity);
     }
 
     @Override

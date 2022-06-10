@@ -1,12 +1,9 @@
 package com.huazie.fleaframework.db.common.sql.template;
 
-import com.huazie.fleaframework.db.common.sql.template.impl.DeleteSqlTemplate;
-import com.huazie.fleaframework.db.common.sql.template.impl.InsertSqlTemplate;
-import com.huazie.fleaframework.db.common.sql.template.impl.SelectSqlTemplate;
-import com.huazie.fleaframework.db.common.sql.template.impl.UpdateSqlTemplate;
+import com.huazie.fleaframework.common.strategy.FleaStrategyFacade;
 
 /**
- * <p> SQL模板工厂类 </p>
+ * SQL模板工厂类
  *
  * @author huazie
  * @version 1.0.0
@@ -18,7 +15,7 @@ public class SqlTemplateFactory {
     }
 
     /**
-     * <p> 新建SQL模板 </p>
+     * 新建SQL模板
      *
      * @param relationId       关系编号
      * @param entity           实体对象实例
@@ -28,19 +25,8 @@ public class SqlTemplateFactory {
      * @since 1.0.0
      */
     public static <T> SqlTemplate<T> newSqlTemplate(String relationId, T entity, TemplateTypeEnum templateTypeEnum) {
-        SqlTemplate<T> sqlTemplate;
-        if (TemplateTypeEnum.INSERT.getKey().equals(templateTypeEnum.getKey())) {
-            sqlTemplate = new InsertSqlTemplate<>(relationId, entity);
-        } else if (TemplateTypeEnum.SELECT.getKey().equals(templateTypeEnum.getKey())) {
-            sqlTemplate = new SelectSqlTemplate<>(relationId, entity);
-        } else if (TemplateTypeEnum.UPDATE.getKey().equals(templateTypeEnum.getKey())) {
-            sqlTemplate = new UpdateSqlTemplate<>(relationId, entity);
-        } else if (TemplateTypeEnum.DELETE.getKey().equals(templateTypeEnum.getKey())) {
-            sqlTemplate = new DeleteSqlTemplate<>(relationId, entity);
-        } else {
-            throw new RuntimeException("未知异常");
-        }
-        return sqlTemplate;
+        SqlTemplateStrategyContext<T> strategyContext = new SqlTemplateStrategyContext<>(relationId, entity);
+        return FleaStrategyFacade.invoke(templateTypeEnum.getKey(), strategyContext);
     }
 
 }

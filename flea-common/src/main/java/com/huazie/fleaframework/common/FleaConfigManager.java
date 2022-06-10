@@ -1,9 +1,9 @@
 package com.huazie.fleaframework.common;
 
+import com.huazie.fleaframework.common.config.ConfigItem;
 import com.huazie.fleaframework.common.config.ConfigItems;
 import com.huazie.fleaframework.common.config.FleaConfig;
 import com.huazie.fleaframework.common.util.ObjectUtils;
-import com.huazie.fleaframework.common.config.ConfigItem;
 
 /**
  * <p> Flea Config Manager </p>

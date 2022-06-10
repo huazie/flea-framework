@@ -1,10 +1,10 @@
 package com.huazie.fleaframework.auth.base.user.dao.impl;
 
+import com.huazie.fleaframework.auth.base.FleaAuthDAOImpl;
 import com.huazie.fleaframework.auth.base.user.dao.interfaces.IFleaLoginLogDAO;
+import com.huazie.fleaframework.auth.base.user.entity.FleaLoginLog;
 import com.huazie.fleaframework.auth.common.FleaAuthConstants;
 import com.huazie.fleaframework.auth.common.FleaAuthEntityConstants;
-import com.huazie.fleaframework.auth.base.FleaAuthDAOImpl;
-import com.huazie.fleaframework.auth.base.user.entity.FleaLoginLog;
 import com.huazie.fleaframework.common.FleaSessionManager;
 import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.common.util.CollectionUtils;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * <p> Flea登录日志DAO层实现类 </p>
+ * Flea登录日志DAO层实现类
  *
  * @author huazie
  * @version 1.0.0
@@ -31,11 +31,10 @@ public class FleaLoginLogDAOImpl extends FleaAuthDAOImpl<FleaLoginLog> implement
         FleaLoginLog fleaLoginLogEntity = new FleaLoginLog();
         fleaLoginLogEntity.setAccountId(accountId); // 账户编号
         fleaLoginLogEntity.setSystemAccountId(FleaSessionManager.getSystemAccountId()); // 系统账户编号
-        fleaLoginLogEntity.setLoginState(FleaAuthConstants.UserConstants.LOGIN_STATE_1); // 登录中
+        fleaLoginLogEntity.setLoginState(FleaAuthConstants.UserModuleConstants.LOGIN_STATE_1); // 登录中
         fleaLoginLogEntity.setCreateDate(DateUtils.getCurrentTime());
 
-        List<FleaLoginLog> fleaLoginLogList = getQuery(null)
-                .initQueryEntity(fleaLoginLogEntity)
+        List<FleaLoginLog> fleaLoginLogList = getQuery(null).initQueryEntity(fleaLoginLogEntity)
                 .equal(FleaAuthEntityConstants.UserEntityConstants.E_ACCOUNT_ID)
                 .equal(FleaAuthEntityConstants.UserEntityConstants.E_SYSTEM_ACCOUNT_ID)
                 .equal(FleaAuthEntityConstants.UserEntityConstants.E_LOGIN_STATE)

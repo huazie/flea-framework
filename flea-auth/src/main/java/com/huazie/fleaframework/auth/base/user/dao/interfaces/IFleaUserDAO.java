@@ -5,7 +5,7 @@ import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 
 /**
- * <p> Flea用户DAO层接口 </p>
+ * Flea用户DAO层接口
  *
  * @author huazie
  * @version 1.0.0
@@ -14,7 +14,7 @@ import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 public interface IFleaUserDAO extends IAbstractFleaJPADAO<FleaUser> {
 
     /**
-     * <p> 根据用户编号获取用户信息（用户状态 1 正常，未失效）</p>
+     * 根据用户编号获取用户信息（用户状态 1 正常，未失效）</p>
      *
      * @param userId 用户编号
      * @return 用户信息

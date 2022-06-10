@@ -10,7 +10,7 @@ import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import java.io.Closeable;
 
 /**
- * <p> Flea Object Pool </p>
+ * Flea Object Pool
  *
  * @author huazie
  * @version 1.0.0

@@ -5,7 +5,7 @@ import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 
 /**
- * <p> Flea登录日志DAO层接口 </p>
+ * Flea登录日志DAO层接口
  *
  * @author huazie
  * @version 1.0.0
@@ -14,7 +14,7 @@ import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 public interface IFleaLoginLogDAO extends IAbstractFleaJPADAO<FleaLoginLog> {
 
     /**
-     * <p> 查询当月用户最近一次的登录日志 </p>
+     * 查询当月用户最近一次的登录日志
      *
      * @param accountId 账户编号
      * @return 当月用户最近一次的登录日志
