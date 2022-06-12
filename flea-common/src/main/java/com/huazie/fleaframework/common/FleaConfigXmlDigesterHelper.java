@@ -11,7 +11,7 @@ import com.huazie.fleaframework.common.util.xml.XmlDigesterHelper;
 import org.apache.commons.digester.Digester;
 
 /**
- * <p> Flea Config XML解析类 </p>
+ * Flea Config XML解析类
  *
  * @author huazie
  * @version 1.0.0
@@ -28,13 +28,13 @@ public class FleaConfigXmlDigesterHelper {
     private static FleaConfig fleaConfig;
 
     /**
-     * <p> 只允许通过getInstance()获取 XML解析类 </p>
+     * 只允许通过getInstance()获取 XML解析类
      */
     private FleaConfigXmlDigesterHelper() {
     }
 
     /**
-     * <p> 获取XML工具类 </p>
+     * 获取XML工具类
      *
      * @return XML解析工具类对象
      * @since 1.0.0
@@ -51,7 +51,7 @@ public class FleaConfigXmlDigesterHelper {
     }
 
     /**
-     * <p> 获取Flea配置数据 </p>
+     * 获取Flea配置数据
      *
      * @return Flea配置数据
      * @since 1.0.0
@@ -92,7 +92,7 @@ public class FleaConfigXmlDigesterHelper {
     }
 
     /**
-     * <p> 解析flea-config.xml的Digester对象 </p>
+     * 解析flea-config.xml的Digester对象
      *
      * @return Digester对象
      * @since 1.0.0

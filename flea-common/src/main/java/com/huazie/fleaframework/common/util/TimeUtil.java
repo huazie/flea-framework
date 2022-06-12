@@ -3,7 +3,7 @@ package com.huazie.fleaframework.common.util;
 import java.sql.Timestamp;
 
 /**
- * <p> 时间工具类 </p>
+ * 时间工具类
  *
  * @author huazie
  * @version 1.0.0
@@ -15,7 +15,7 @@ public class TimeUtil {
     }
 
     /**
-     * <p> 获取系统当前时间戳 </p>
+     * 获取系统当前时间戳
      *
      * @return 系统当前时间戳
      * @since 1.0.0
@@ -25,7 +25,7 @@ public class TimeUtil {
     }
 
     /**
-     * <p> 获取系统当前时间戳（long类型） </p>
+     * 获取系统当前时间戳（long类型）
      *
      * @return 系统当前时间戳（long类型）
      * @since 1.0.0

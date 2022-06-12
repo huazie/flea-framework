@@ -23,7 +23,7 @@ public abstract class FleaObjectPool<T> implements Closeable {
     protected GenericObjectPool<T> fleaObjectPool; // 内部Flea对象池对象
 
     /**
-     * <p> 外部可调用initFleaObjectPool方法初始化 </p>
+     * 外部可调用initFleaObjectPool方法初始化
      */
     public FleaObjectPool() {
     }
@@ -38,7 +38,7 @@ public abstract class FleaObjectPool<T> implements Closeable {
     }
 
     /**
-     * <p> 是否对象池实例已经关闭 </p>
+     * 是否对象池实例已经关闭
      *
      * @return <code>true</code> : 对象池实例已关闭
      */
@@ -47,7 +47,7 @@ public abstract class FleaObjectPool<T> implements Closeable {
     }
 
     /**
-     * <p> 初始化对象池 </p>
+     * 初始化对象池
      *
      * @param poolConfig 对象池配置
      * @param factory    池化对象工厂类
@@ -61,7 +61,7 @@ public abstract class FleaObjectPool<T> implements Closeable {
     }
 
     /**
-     * <p> 从对象池中获取一个对象实例 </p>
+     * 从对象池中获取一个对象实例
      *
      * @return 池化的对象实例
      * @since 1.0.0
@@ -79,7 +79,7 @@ public abstract class FleaObjectPool<T> implements Closeable {
     }
 
     /**
-     * <p> 将对象实例归还给对象池 </p>
+     * 将对象实例归还给对象池
      *
      * @param object 对象实例
      * @since 1.0.0
@@ -98,7 +98,7 @@ public abstract class FleaObjectPool<T> implements Closeable {
     }
 
     /**
-     * <p> 将对象实例归还给对象池 </p>
+     * 将对象实例归还给对象池
      *
      * @param object 对象实例
      * @since 1.0.0
@@ -110,7 +110,7 @@ public abstract class FleaObjectPool<T> implements Closeable {
     }
 
     /**
-     * <p> 关闭对象池 </p>
+     * 关闭对象池
      *
      * @since 1.0.0
      */
@@ -127,7 +127,7 @@ public abstract class FleaObjectPool<T> implements Closeable {
     }
 
     /**
-     * <p> 获取当前外部在用的实例数目（即从对象池中已借出未归还的实例数目） </p>
+     * 获取当前外部在用的实例数目（即从对象池中已借出未归还的实例数目）
      *
      * @return 当前外部在用的实例数目；如果对象池没有创建或已关闭，返回 -1。
      * @since 1.0.0
@@ -137,7 +137,7 @@ public abstract class FleaObjectPool<T> implements Closeable {
     }
 
     /**
-     * <p> 获取对象池中空闲的实例数目 </p>
+     * 获取对象池中空闲的实例数目
      *
      * @return 对象池中空闲的实例数目；如果对象池没有创建或已关闭，返回 -1。
      * @since 1.0.0
@@ -147,7 +147,7 @@ public abstract class FleaObjectPool<T> implements Closeable {
     }
 
     /**
-     * <p> 获取对象池中当前阻塞等待的线程数的估计值 </p>
+     * 获取对象池中当前阻塞等待的线程数的估计值
      *
      * @return 等待的线程数；如果对象池没有创建或已关闭，返回 -1。
      * @since 1.0.0
@@ -157,7 +157,7 @@ public abstract class FleaObjectPool<T> implements Closeable {
     }
 
     /**
-     * <p> 返回线程从对象池中获取对象所花费的平均等待时间 </p>
+     * 返回线程从对象池中获取对象所花费的平均等待时间
      *
      * @return 平均等待时间（单位：ms）；如果对象池没有创建或已关闭，返回 -1。
      * @since 1.0.0
@@ -167,7 +167,7 @@ public abstract class FleaObjectPool<T> implements Closeable {
     }
 
     /**
-     * <p> 返回线程从对象池中获取对象所花费的最大等待时间 </p>
+     * 返回线程从对象池中获取对象所花费的最大等待时间
      *
      * @return 最大等待时间（单位：ms）；如果对象池没有创建或已关闭，返回 -1。
      * @since 1.0.0
@@ -177,7 +177,7 @@ public abstract class FleaObjectPool<T> implements Closeable {
     }
 
     /**
-     * <p> 对象池是否是未创建或已关闭 </p>
+     * 对象池是否是未创建或已关闭
      *
      * @return <code>true</code>, 对象池没有创建或已关闭
      */
@@ -186,7 +186,7 @@ public abstract class FleaObjectPool<T> implements Closeable {
     }
 
     /**
-     * <p> 添加空闲对象 </p>
+     * 添加空闲对象
      *
      * @param count 添加数目
      * @since 1.0.0

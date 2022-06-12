@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.common;
 
 /**
- * <p> Flea 实体类通用常量接口 </p>
+ * Flea 实体类通用常量接口
  *
  * @author huazie
  * @version 1.0.0
@@ -10,37 +10,47 @@ package com.huazie.fleaframework.common;
 public interface FleaEntityConstants {
 
     /**
-     * <p> 创建日期 </p>
+     * 创建日期 
      */
     String E_CREATE_DATE = "createDate";
 
     /**
-     * <p> 修改日期 </p>
+     * 修改日期 
      */
     String E_DONE_DATE = "doneDate";
 
     /**
-     * <p> 生效日期 </p>
+     * 生效日期 
      */
     String E_EFFECTIVE_DATE = "effectiveDate";
 
     /**
-     * <p> 失效日期 </p>
+     * 失效日期 
      */
     String E_EXPIRY_DATE = "expiryDate";
 
     /**
-     * <p> 状态 </p>
+     * 组编号
+     */
+    String E_GROUP_ID = "groupId";
+
+    /**
+     * 状态 
      */
     String E_STATE = "state";
 
     /**
-     * <p> 属性码 </p>
+     * 属性编号
+     */
+    String E_ATTR_ID = "attrId";
+
+    /**
+     * 属性码 
      */
     String E_ATTR_CODE = "attrCode";
 
     /**
-     * <p> 属性值 </p>
+     * 属性值 
      */
     String E_ATTR_VALUE = "attrValue";
 

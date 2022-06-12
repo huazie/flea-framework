@@ -5,7 +5,7 @@ import com.huazie.fleaframework.common.exception.CommonException;
 import java.util.Map;
 
 /**
- * <p> Map集合处理工具类 </p>
+ * Map集合处理工具类
  *
  * @author huazie
  * @version 1.0.0
@@ -17,7 +17,7 @@ public class MapUtils {
     }
 
     /**
-     * <p> 判断Map集合是否空（Map集合为null 或 无数据） </p>
+     * 判断Map集合是否空（Map集合为null 或 无数据）
      *
      * @param map Map集合
      * @return true : Map集合为空; false : Map集合非空
@@ -28,7 +28,7 @@ public class MapUtils {
     }
 
     /**
-     * <p> 判断Map集合是否非空（Map集合存在数据） </p>
+     * 判断Map集合是否非空（Map集合存在数据）
      *
      * @param map Map集合
      * @return true : Map集合非空; false : Map集合为空
@@ -39,7 +39,7 @@ public class MapUtils {
     }
 
     /**
-     * <p> 校验map集合对象，如果空，则抛出异常 </p>
+     * 校验map集合对象，如果空，则抛出异常
      *
      * @param map            Map集合
      * @param exceptionClazz 通用异常子类类对象
@@ -54,7 +54,7 @@ public class MapUtils {
     }
 
     /**
-     * <p> 校验map集合对象，如果非空，则抛出异常 </p>
+     * 校验map集合对象，如果非空，则抛出异常
      *
      * @param map            Map集合
      * @param exceptionClazz 通用异常子类类对象

@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.common.pool;
 
 /**
- * <p> Flea对象池构建者 </p>
+ * Flea对象池构建者
  *
  * @author huazie
  * @version 1.0.0
@@ -10,7 +10,7 @@ package com.huazie.fleaframework.common.pool;
 public interface IFleaObjectPoolBuilder {
 
     /**
-     * <p> 构建Flea对象池 </p>
+     * 构建Flea对象池
      *
      * @param poolName 对象池名
      * @return Flea对象池实例

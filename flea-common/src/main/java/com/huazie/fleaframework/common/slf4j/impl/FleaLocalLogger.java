@@ -456,7 +456,7 @@ public class FleaLocalLogger implements FleaLogger {
     }
 
     /**
-     * <p> 内部建造者类 </p>
+     * 内部建造者类
      *
      * @author huazie
      * @since 1.0.0
@@ -466,7 +466,7 @@ public class FleaLocalLogger implements FleaLogger {
         private Class<?> loggerClass; // 日志打印类
 
         /**
-         * <p> 带参数的构造器 </p>
+         * 带参数的构造器
          *
          * @param loggerClass 日志打印类
          * @since 1.0.0
@@ -476,7 +476,7 @@ public class FleaLocalLogger implements FleaLogger {
         }
 
         /**
-         * <p> 构建Flea Logger本地实现类 </p>
+         * 构建Flea Logger本地实现类
          *
          * @return Redis客户端
          * @since 1.0.0

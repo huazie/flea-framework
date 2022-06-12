@@ -5,7 +5,7 @@ import org.apache.log4j.PatternLayout;
 import org.apache.log4j.helpers.PatternParser;
 
 /**
- * <p> Flea Pattern Layout </p>
+ * Flea Pattern Layout
  *
  * @author huazie
  * @version 1.0.0

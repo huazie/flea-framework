@@ -23,7 +23,7 @@ public class ExceptionUtils {
      * @param message        错误描述
      * @since 1.2.0
      */
-    public static void throwFleaException(Class<? extends FleaException> exceptionClazz, String message) throws FleaException {
+    public static void throwFleaException(Class<? extends FleaException> exceptionClazz, String message) {
         Object exceptionInstance = ReflectUtils.newInstance(exceptionClazz, message);
         if (ObjectUtils.isNotEmpty(exceptionInstance)) {
             throw exceptionClazz.cast(exceptionInstance);
@@ -37,7 +37,7 @@ public class ExceptionUtils {
      * @param cause          捕获的异常对象
      * @since 1.2.0
      */
-    public static void throwFleaException(Class<? extends FleaException> exceptionClazz, Throwable cause) throws FleaException {
+    public static void throwFleaException(Class<? extends FleaException> exceptionClazz, Throwable cause) {
         Object exceptionInstance = ReflectUtils.newInstance(exceptionClazz, new Object[]{cause}, new Class<?>[]{Throwable.class});
         if (ObjectUtils.isNotEmpty(exceptionInstance)) {
             throw exceptionClazz.cast(exceptionInstance);
@@ -52,7 +52,7 @@ public class ExceptionUtils {
      * @param cause          捕获的异常对象
      * @since 1.2.0
      */
-    public static void throwFleaException(Class<? extends FleaException> exceptionClazz, String message, Throwable cause) throws FleaException {
+    public static void throwFleaException(Class<? extends FleaException> exceptionClazz, String message, Throwable cause) {
         Class[] paramTypes = new Class[]{String.class, Throwable.class};
         Object exceptionInstance = ReflectUtils.newInstance(exceptionClazz, new Object[]{message, cause}, paramTypes);
         if (ObjectUtils.isNotEmpty(exceptionInstance)) {
@@ -106,7 +106,7 @@ public class ExceptionUtils {
     }
 
     /**
-     * <p> 抛出指定国际化的通用异常 </p>
+     * 抛出指定国际化的通用异常
      *
      * @param exceptionClazz 异常类Class对象
      * @param params         参数列表（可能包含国际化资源数据关键字、异常类、替换参数）
@@ -153,7 +153,7 @@ public class ExceptionUtils {
     }
 
     /**
-     * <p> 抛出指定国际化的通用异常【不替换参数】</p>
+     * 抛出指定国际化的通用异常【不替换参数】
      *
      * @param exceptionClazz 异常类Class对象
      * @param i18nKey        国际化资源数据关键字
@@ -168,7 +168,7 @@ public class ExceptionUtils {
     }
 
     /**
-     * <p> 抛出指定国际化的通用异常【带替换参数】</p>
+     * 抛出指定国际化的通用异常【带替换参数】
      *
      * @param exceptionClazz 异常类Class对象
      * @param i18nKey        国际化资源数据关键字
@@ -184,7 +184,7 @@ public class ExceptionUtils {
     }
 
     /**
-     * <p> 抛出指定国际化的通用异常【不带替换参数】</p>
+     * 抛出指定国际化的通用异常【不带替换参数】
      *
      * @param exceptionClazz 异常类Class对象
      * @param i18nKey        国际化资源数据关键字
@@ -200,7 +200,7 @@ public class ExceptionUtils {
     }
 
     /**
-     * <p> 抛出指定国际化的通用异常【带替换参数】</p>
+     * 抛出指定国际化的通用异常【带替换参数】
      *
      * @param exceptionClazz 异常类Class对象
      * @param i18nKey        国际化资源数据关键字

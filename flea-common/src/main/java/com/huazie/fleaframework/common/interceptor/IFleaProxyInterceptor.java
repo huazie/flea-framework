@@ -21,7 +21,7 @@ import java.lang.reflect.Method;
 public interface IFleaProxyInterceptor {
 
     /**
-     * <p> 前置处理 </p>
+     * 前置处理
      *
      * @param proxyObject 实际代理的对象
      * @param method      与在代理实例上调用的接口方法相对应的Method实例
@@ -31,7 +31,7 @@ public interface IFleaProxyInterceptor {
     void beforeHandle(Object proxyObject, Method method, Object[] args) throws Exception;
 
     /**
-     * <p> 后置处理 </p>
+     * 后置处理
      *
      * @param proxyObject  实际代理的对象
      * @param method       与在代理实例上调用的接口方法相对应的Method实例

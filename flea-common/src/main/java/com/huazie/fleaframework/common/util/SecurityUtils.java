@@ -13,7 +13,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * <p> 加密解密工具类 </p>
+ * 加密解密工具类
  *
  * @author huazie
  * @version 1.0.0
@@ -27,7 +27,7 @@ public class SecurityUtils {
     }
 
     /**
-     * <p> 进行MD5加密, 单向 </p>
+     * 进行MD5加密, 单向
      *
      * @param info 待加密的信息
      * @return 加密后的信息
@@ -38,7 +38,7 @@ public class SecurityUtils {
     }
 
     /**
-     * <p> 进行SHA加密 </p>
+     * 进行SHA加密
      *
      * @param info 待加密的信息
      * @return 加密后的信息
@@ -49,7 +49,7 @@ public class SecurityUtils {
     }
 
     /**
-     * <p> 信息加密 </p>
+     * 信息加密
      *
      * @param algorithm 加密算法枚举
      * @param info      待加密的信息
@@ -85,7 +85,7 @@ public class SecurityUtils {
     }
 
     /**
-     * <p> 得到AES加密的密钥 </p>
+     * 得到AES加密的密钥
      *
      * @param src 密钥原始串
      * @return AES加密密钥
@@ -96,7 +96,7 @@ public class SecurityUtils {
     }
 
     /**
-     * <p> 得到DES加密的密钥 </p>
+     * 得到DES加密的密钥
      *
      * @param src 密钥原始串
      * @return DES加密密钥
@@ -107,7 +107,7 @@ public class SecurityUtils {
     }
 
     /**
-     * <p> 根据一定的算法得到相应的密钥 </p>
+     * 根据一定的算法得到相应的密钥
      *
      * @param algorithm 加密算法枚举
      * @param src       密钥原始串
@@ -137,7 +137,7 @@ public class SecurityUtils {
     }
 
     /**
-     * <p> 创建一个AES的密钥 </p>
+     * 创建一个AES的密钥
      *
      * @return AES密钥
      * @since 1.0.0
@@ -147,7 +147,7 @@ public class SecurityUtils {
     }
 
     /**
-     * <p> 创建一个DES的密钥 </p>
+     * 创建一个DES的密钥
      *
      * @return DES密钥
      * @since 1.0.0
@@ -157,7 +157,7 @@ public class SecurityUtils {
     }
 
     /**
-     * <p> 创建密匙 </p>
+     * 创建密匙
      *
      * @param algorithm 加密算法,可用 AES, DES
      * @return 密钥
@@ -190,7 +190,7 @@ public class SecurityUtils {
     }
 
     /**
-     * <p>根据相应的加密算法、密钥、源信息进行加密，返回加密后的文件</p>
+     * 根据相应的加密算法、密钥、源信息进行加密，返回加密后的文件
      *
      * @param algorithm 加密算法:DES,AES
      * @param key       密钥
@@ -229,7 +229,7 @@ public class SecurityUtils {
     }
 
     /**
-     * <p> 根据相应的加密算法、指定的密钥、原始信息进行加密，返回加密后的文件 </p>
+     * 根据相应的加密算法、指定的密钥、原始信息进行加密，返回加密后的文件
      *
      * @param algorithm 加密算法:DES,AES
      * @param key       这个key可以由用户自己指定 注意AES的长度为16位,DES的长度为8位
@@ -254,7 +254,7 @@ public class SecurityUtils {
     }
 
     /**
-     * <p>根据相应的解密算法、密钥和需要解密的文本进行解密，返回解密后的信息</p>
+     * 根据相应的解密算法、密钥和需要解密的文本进行解密，返回解密后的信息
      *
      * @param algorithm 加密算法:DES,AES
      * @param key       密钥
@@ -291,7 +291,7 @@ public class SecurityUtils {
     }
 
     /**
-     * <p> 根据相应的解密算法、指定的密钥和需要解密的文本进行解密，返回解密后的文本内容 </p>
+     * 根据相应的解密算法、指定的密钥和需要解密的文本进行解密，返回解密后的文本内容
      *
      * @param algorithm 加密算法:DES,AES
      * @param key       这个key可以由用户自己指定(注意AES的长度为16位,DES的长度为8位)
@@ -316,7 +316,7 @@ public class SecurityUtils {
     }
 
     /**
-     * <p> 采用DES随机生成的密钥进行加密 </p>
+     * 采用DES随机生成的密钥进行加密
      *
      * @param key  密钥对象
      * @param info 待加密的信息
@@ -328,7 +328,7 @@ public class SecurityUtils {
     }
 
     /**
-     * <p> 采用DES指定密钥的方式进行加密 </p>
+     * 采用DES指定密钥的方式进行加密
      *
      * @param key  密钥对象
      * @param info 待加密的信息
@@ -340,7 +340,7 @@ public class SecurityUtils {
     }
 
     /**
-     * <p> 采用DES随机生成密钥的方式进行解密，密钥需要与加密的生成的密钥一样 </p>
+     * 采用DES随机生成密钥的方式进行解密，密钥需要与加密的生成的密钥一样
      *
      * @param key  密钥对象
      * @param info 待解密密的信息
@@ -352,7 +352,7 @@ public class SecurityUtils {
     }
 
     /**
-     * <p> 采用DES用户指定密钥的方式进行解密，密钥需要与加密时指定的密钥一样 </p>
+     * 采用DES用户指定密钥的方式进行解密，密钥需要与加密时指定的密钥一样
      *
      * @param key  密钥
      * @param info 待解密密的信息
@@ -364,7 +364,7 @@ public class SecurityUtils {
     }
 
     /**
-     * <p> 采用AES随机生成的密钥进行加密 </p>
+     * 采用AES随机生成的密钥进行加密
      *
      * @param key  密钥对象
      * @param info 待加密的信息
@@ -376,7 +376,7 @@ public class SecurityUtils {
     }
 
     /**
-     * <p> 采用AES指定密钥的方式进行加密 </p>
+     * 采用AES指定密钥的方式进行加密
      *
      * @param key  密钥
      * @param info 待加密的信息
@@ -388,7 +388,7 @@ public class SecurityUtils {
     }
 
     /**
-     * <p> 采用AES随机生成密钥的方式进行解密，密钥需要与加密的生成的密钥一样 </p>
+     * 采用AES随机生成密钥的方式进行解密，密钥需要与加密的生成的密钥一样
      *
      * @param key  密钥对象
      * @param info 待解密密的信息
@@ -400,7 +400,7 @@ public class SecurityUtils {
     }
 
     /**
-     * <p> 采用AES用户指定密钥的方式进行解密，密钥需要与加密时指定的密钥一样 </p>
+     * 采用AES用户指定密钥的方式进行解密，密钥需要与加密时指定的密钥一样
      *
      * @param key  密钥
      * @param info 待解密密的信息
