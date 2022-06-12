@@ -7,7 +7,7 @@ import com.huazie.fleaframework.common.util.ObjectUtils;
 import org.junit.Test;
 
 /**
- * <p>  </p>
+ *
  *
  * @author huazie
  * @version 1.0.0

@@ -12,7 +12,7 @@ import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 /**
- * <p> 数据处理工具类 </p>
+ * 数据处理工具类
  *
  * @author huazie
  * @version 1.0.0
@@ -26,7 +26,7 @@ public class DataHandleUtils {
     }
 
     /**
-     * <p> 十六进制字符串转化为字节数组 </p>
+     * 十六进制字符串转化为字节数组
      *
      * @param hex 十六进制字符串
      * @return 字节数组
@@ -58,7 +58,7 @@ public class DataHandleUtils {
     }
 
     /**
-     * <p> 将字节数组转化为十六进制字符串 </p>
+     * 将字节数组转化为十六进制字符串
      *
      * @param bytes 字节数组
      * @return 十六进制字符串
@@ -80,7 +80,7 @@ public class DataHandleUtils {
     }
 
     /**
-     * <p> 数据压缩(gzip) </p>
+     * 数据压缩(gzip)
      *
      * @param originalStr 原始字符串
      * @return 压缩后的字符串（Base64编码了）
@@ -121,7 +121,7 @@ public class DataHandleUtils {
     }
 
     /**
-     * <p> 数据解压(gzip)</p>
+     * 数据解压(gzip)
      *
      * @param compressedStr 压缩后的字符串
      * @return 原始字符串
@@ -159,7 +159,7 @@ public class DataHandleUtils {
     }
 
     /**
-     * <p> 数据压缩(zip) </p>
+     * 数据压缩(zip)
      *
      * @param originalStr 原始字符串
      * @return 压缩后的字符串（Base64编码）
@@ -202,7 +202,7 @@ public class DataHandleUtils {
     }
 
     /**
-     * <p> 数据解压(zip) </p>
+     * 数据解压(zip)
      *
      * @param compressedStr 压缩后的字符串(Base64编码)
      * @return 原始字符串

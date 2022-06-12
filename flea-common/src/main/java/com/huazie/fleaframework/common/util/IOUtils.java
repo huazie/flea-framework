@@ -17,7 +17,7 @@ import java.io.InputStream;
 import java.net.URL;
 
 /**
- * <p> JAVA输入和输出处理工具类 </p>
+ * JAVA输入和输出处理工具类
  *
  * @author huazie
  * @version 1.0.0
@@ -31,7 +31,7 @@ public class IOUtils {
     }
 
     /**
-     * <p> 根据文件路径获取文件输入流对象 </p>
+     * 根据文件路径获取文件输入流对象
      *
      * @param path 文件路径
      * @return 指定path文件的输入流对象
@@ -42,7 +42,7 @@ public class IOUtils {
     }
 
     /**
-     * <p> 将输入流转换为字符串 </p>
+     * 将输入流转换为字符串
      *
      * @param inputStream 输入流对象
      * @return 字符串
@@ -65,7 +65,7 @@ public class IOUtils {
     }
 
     /**
-     * <p> 将文件对象转换成字符串 </p>
+     * 将文件对象转换成字符串
      *
      * @param file 文件对象
      * @return 字符串
@@ -84,7 +84,7 @@ public class IOUtils {
     }
 
     /**
-     * <p> 将字符串转成文件对象 </p>
+     * 将字符串转成文件对象
      *
      * @param input 字符串
      * @return 文件对象
@@ -103,7 +103,7 @@ public class IOUtils {
     }
 
     /**
-     * <p> 将输入流转成文件对象 </p>
+     * 将输入流转成文件对象
      *
      * @param inputStream 文件输入流
      * @param filePath    文件路径
@@ -124,7 +124,7 @@ public class IOUtils {
     }
 
     /**
-     * <p> 将字符串转换为输入流 </p>
+     * 将字符串转换为输入流
      *
      * @param input 字符串
      * @return 输入流对象
@@ -141,7 +141,7 @@ public class IOUtils {
     }
 
     /**
-     * <p> 将输入流转换为 字节数组 </p>
+     * 将输入流转换为 字节数组
      *
      * @param inputStream 输入流对象
      * @return 字节数组
@@ -169,7 +169,7 @@ public class IOUtils {
     }
 
     /**
-     * <p> 获取文件内容 </p>
+     * 获取文件内容
      *
      * @param resourceName 文件路径
      * @return 文件内容
@@ -202,7 +202,7 @@ public class IOUtils {
     }
 
     /**
-     * <p> 将文件内容写入指定文件 </p>
+     * 将文件内容写入指定文件
      *
      * @param content  文件内容
      * @param filePath 文件路径

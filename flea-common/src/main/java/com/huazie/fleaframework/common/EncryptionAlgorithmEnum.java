@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.common;
 
 /**
- * <p> 加密算法枚举 </p>
+ * 加密算法枚举
  *
  * @author huazie
  * @version 1.0.0

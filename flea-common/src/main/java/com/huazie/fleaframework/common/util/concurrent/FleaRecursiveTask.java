@@ -6,7 +6,7 @@ import com.huazie.fleaframework.common.IFleaUser;
 import java.util.concurrent.RecursiveTask;
 
 /**
- * <p> Flea RecursiveTask </p>
+ * Flea RecursiveTask
  *
  * @author huazie
  * @version 1.0.0
@@ -19,7 +19,7 @@ public abstract class FleaRecursiveTask<V> extends RecursiveTask<V> {
     private IFleaUser fleaUser; // Flea用户信息
 
     /**
-     * <p> 带参数的构造方法 </p>
+     * 带参数的构造方法
      *
      * @param fleaUser Flea用户信息
      * @since 1.0.0
@@ -37,7 +37,7 @@ public abstract class FleaRecursiveTask<V> extends RecursiveTask<V> {
     }
 
     /**
-     * <p> 子类实现该方法，完成具体的计算工作 </p>
+     * 子类实现该方法，完成具体的计算工作
      *
      * @return 计算结果
      * @since 1.0.0

@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.common.pojo;
 
 /**
- * <p> Flea备注POJO类 </p>
+ * Flea备注POJO类
  *
  * @author huazie
  * @version 1.0.0

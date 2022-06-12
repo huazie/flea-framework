@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 import java.util.Properties;
 
 /**
- * <p> 读取后缀为properties的配置文件 </p>
+ * 读取后缀为properties的配置文件
  *
  * @author huazie
  * @version 1.0.0
@@ -23,7 +23,7 @@ public class PropertiesUtil {
     }
 
     /**
-     * <p> 获取指定配置文件对象 </p>
+     * 获取指定配置文件对象
      *
      * @param path 配置文件路径
      * @return 指定path的配置文件对象
@@ -45,7 +45,7 @@ public class PropertiesUtil {
     }
 
     /**
-     * <p> 根据键，获取对应的值 </p>
+     * 根据键，获取对应的值
      *
      * @param prop 配置对象
      * @param key  指定KEY值
@@ -61,7 +61,7 @@ public class PropertiesUtil {
     }
 
     /**
-     * <p> 根据键，获取对应的字符串值 </p>
+     * 根据键，获取对应的字符串值
      *
      * @param prop 配置对象
      * @param key  指定KEY值
@@ -77,7 +77,7 @@ public class PropertiesUtil {
     }
 
     /**
-     * <p> 根据键，获取对应的Integer值 </p>
+     * 根据键，获取对应的Integer值
      *
      * @param prop 配置对象
      * @param key  指定KEY值
@@ -94,7 +94,7 @@ public class PropertiesUtil {
     }
 
     /**
-     * <p> 根据键，获取对应的Long值 </p>
+     * 根据键，获取对应的Long值
      *
      * @param prop 配置对象
      * @param key  指定KEY值
@@ -111,7 +111,7 @@ public class PropertiesUtil {
     }
 
     /**
-     * <p> 根据键，获取对应的Boolean值 </p>
+     * 根据键，获取对应的Boolean值
      *
      * @param prop 配置对象
      * @param key  指定KEY值

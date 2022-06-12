@@ -4,7 +4,7 @@ import com.huazie.fleaframework.common.CommonConstants;
 import com.huazie.fleaframework.common.exception.CommonException;
 
 /**
- * <p> 数字相关工具类 </p>
+ * 数字相关工具类
  *
  * @author huazie
  * @version 1.0.0
@@ -16,7 +16,7 @@ public class NumberUtils {
     }
 
     /**
-     * <p> 对象值转数字值 </p>
+     * 对象值转数字值
      *
      * @param value 对象值
      * @return 数字值
@@ -43,7 +43,7 @@ public class NumberUtils {
     }
 
     /**
-     * <p> 判断value是否是正数 </p>
+     * 判断value是否是正数
      *
      * @param value 数字对象值
      * @return true：正数 ； false：非正数
@@ -79,7 +79,7 @@ public class NumberUtils {
     }
 
     /**
-     * <p> 是否是正数 </p>
+     * 是否是正数
      *
      * @param value int类型的值
      * @return true：正数 ；false：非正数
@@ -94,8 +94,8 @@ public class NumberUtils {
     }
 
     /**
-     * <p> 校验是否是非正数（即小于等于0）
-     * 如果是，则抛出对应的异常；如果不是，则校验通过</p>
+     * 校验是否是非正数（即小于等于0）
+     * 如果是，则抛出对应的异常；如果不是，则校验通过
      *
      * @param value          数字对象值
      * @param exceptionClazz 通用异常子类类对象

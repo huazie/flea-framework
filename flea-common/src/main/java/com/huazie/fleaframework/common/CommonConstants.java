@@ -14,7 +14,7 @@ public interface CommonConstants {
     }
 
     /**
-     * <p> 方法常量 </p>
+     * 方法常量
      *
      * @since 1.0.0
      */
@@ -24,7 +24,7 @@ public interface CommonConstants {
     }
 
     /**
-     * <p> 数字常量 </p>
+     * 数字常量
      *
      * @since 1.0.0
      */
@@ -38,81 +38,81 @@ public interface CommonConstants {
          */
         long MINUS_TWO = -2L;
         /**
-         * <p> 整数 0 , long类型 </p>
+         * 整数 0 , long类型
          */
         long ZERO = 0L;
         /**
-         * <p> 整数 0 , int类型 </p>
+         * 整数 0 , int类型
          */
         int INT_ZERO = 0;
         /**
-         * <p> 整数 1 , int类型 </p>
+         * 整数 1 , int类型
          */
         int INT_ONE = 1;
         /**
-         * <p> 整数 2 , int类型 </p>
+         * 整数 2 , int类型
          */
         int INT_TWO = 2;
         /**
-         * <p> 整数 3 , int类型 </p>
+         * 整数 3 , int类型
          */
         int INT_THREE = 3;
     }
 
     /**
-     * <p> 符号常量 </p>
+     * 符号常量
      *
      * @since 1.0.0
      */
     interface SymbolConstants {
         /**
-         * <p> 左花括号 </p>
+         * 左花括号
          */
         String LEFT_CURLY_BRACE = "{";
         /**
-         * <p> 右花括号 </p>
+         * 右花括号
          */
         String RIGHT_CURLY_BRACE = "}";
         /**
-         * <p> 竖线 </p>
+         * 竖线
          */
         String VERTICAL_LINE = "|";
         /**
-         * <p> 下划线 </p>
+         * 下划线
          */
         String UNDERLINE = "_";
         /**
-         * <p> 连号 </p>
+         * 连号
          */
         String HYPHEN = "-";
         /**
-         * <p> 点号 </p>
+         * 点号
          */
         String DOT = ".";
         /**
-         * <p> 斜杠 </p>
+         * 斜杠
          */
         String SLASH = "/";
         /**
-         * <p> 逗号 </p>
+         * 逗号
          */
         String COMMA = ",";
         /**
-         * <p> 冒号 </p>
+         * 冒号
          */
         String COLON = ":";
         /**
-         * <p> 星号 </p>
+         * 星号
          */
         String ASTERISK = "*";
         /**
-         * <p> 百分号 </p>
+         * 百分号
          */
         String PERCENT = "%";
     }
 
     /**
-     * <p> Flea I18N 常量 </p>
+     * Flea I18N 常量
      *
      * @since 1.0.0
      */
@@ -123,85 +123,95 @@ public interface CommonConstants {
     }
 
     /**
-     * <p> IP地址常量 </p>
+     * IP地址常量
      *
      * @since 1.0.0
      */
     interface IPAddressConstants {
         /**
-         * <p> 国家 </p>
+         * 国家
          */
         String COUNTRY = "country";
         /**
-         * <p> 地区 </p>
+         * 地区
          */
         String REGION = "region";
         /**
-         * <p> 省份 </p>
+         * 省份
          */
         String PROVINCE = "province";
         /**
-         * <p> 城市 </p>
+         * 城市
          */
         String CITY = "city";
         /**
-         * <p> 互联网服务提供商 </p>
+         * 互联网服务提供商
          */
         String ISP = "isp";
     }
 
     /**
-     * <p> Flea Config 常量 </p>
+     * Flea Config 常量
      *
      * @since 1.0.0
      */
     interface FleaConfigConstants {
         /**
-         * <p> Flea Config 默认文件路径 </p>
+         * Flea Config 默认文件路径
          */
         String FLEA_CONFIG_FILE_NAME = "flea/flea-config.xml";
         /**
-         * <p> Flea Config 系统环境变量 </p>
+         * Flea Config 系统环境变量
          */
         String FLEA_CONFIG_FILE_SYSTEM_KEY = "fleaframe.flea.config.filename";
         /**
-         * <p> Flea URL 配置 </p>
+         * Flea URL 配置
          */
         String FLEA_URL_CONFIG = "flea-url-config";
         /**
-         * <p> 淘宝IP地址信息查询URL </p>
+         * 淘宝IP地址信息查询URL
          */
         String TAOBAO_IP_URL = "taobao_ip_url";
     }
 
     /**
-     * <p> Flea池常量 </p>
+     * Flea池常量
      */
     interface FleaPoolConstants {
         /**
-         * <p> 默认池名 </p>
+         * 默认池名
          */
         String DEFAULT_POOL_NAME = "default";
         /**
-         * <p> Flea对象池配置 </p>
+         * Flea对象池配置
          */
         String FLEA_OBJECT_POOL = "flea-object-pool";
     }
 
     /**
-     * <p> Flea Frame 初始化常量 </p>
+     * Flea Frame 初始化常量
      *
      * @since 1.0.0
      */
     interface FleaFrameInitConstants {
         /**
-         * <p> Flea Framework 初始化配置 </p>
+         * Flea Framework 初始化配置
          */
         String FLEA_FRAMEWORK_INIT = "flea-framework-init";
 
         /**
-         * <p> 失效时间(永久) </p>
+         * 系统账户编号
          */
-        String EXPIRY_TIME_FOREVER = "expiry_time_forever";
+        String CONFIG_ITEM_SYSTEM_ACCOUNT_ID = "system_account_id";
+
+        /**
+         * 系统账户密码
+         */
+        String CONFIG_ITEM_SYSTEM_ACCOUNT_PWD = "system_account_pwd";
+
+        /**
+         * 失效时间(永久)
+         */
+        String CONFIG_ITEM_EXPIRY_TIME_FOREVER = "expiry_time_forever";
     }
 }

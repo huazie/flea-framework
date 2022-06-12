@@ -29,7 +29,7 @@ public class HttpUtils {
     }
 
     /**
-     * 获取Http请求的客户端IP地址;
+     * 获取 Http请求的客户端IP地址;
      * <p> X-Forwarded-For: 简称XFF头，它代表客户端，也就是HTTP的请求端真实的IP，
      * 只有在通过了HTTP代理或者负载均衡服务器时才会添加该项
      *
@@ -75,7 +75,7 @@ public class HttpUtils {
     }
 
     /**
-     * <p> 通过TaoBao的接口获取ip所在地理地址 </p>
+     * 通过TaoBao的接口获取ip所在地理地址
      *
      * @param ip ip地址
      * @return 较为精确的地理地址

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p> 日志工具类 </p>
+ * 日志工具类
  *
  * @author huazie
  * @version 1.0.0
@@ -22,7 +22,7 @@ public class LoggerUtils {
     }
 
     /**
-     * <p> 清理日志上下文数据 </p>
+     * 清理日志上下文数据
      *
      * @since 1.0.0
      */
@@ -42,7 +42,7 @@ public class LoggerUtils {
     }
 
     /**
-     * <p> 添加当前日志打印的所在类的方法相关信息至日志上下文MDC中 </p>
+     * 添加当前日志打印的所在类的方法相关信息至日志上下文MDC中
      *
      * @param elements 当前线程的堆栈元素
      * @param obj      Object对象实例, obj = new Object() {}
@@ -63,7 +63,7 @@ public class LoggerUtils {
     }
 
     /**
-     * <p> 添加当前日志打印的所在类的方法相关信息至日志上下文MDC中 </p>
+     * 添加当前日志打印的所在类的方法相关信息至日志上下文MDC中
      *
      * @param elements 当前线程的堆栈元素
      * @param position 堆栈元素指定的位置
@@ -79,7 +79,7 @@ public class LoggerUtils {
     }
 
     /**
-     * <p> 获取调用方基础类的立即封闭方法的对象的相关信息，并设置到日志上下文MDC中 </p>
+     * 获取调用方基础类的立即封闭方法的对象的相关信息，并设置到日志上下文MDC中
      *
      * @param method 调用方基础类的立即封闭方法的对象
      * @since 1.0.0
@@ -93,7 +93,7 @@ public class LoggerUtils {
     }
 
     /**
-     * <p> 处理指定堆栈元素，从中获取堆栈元素所属类相关信息，并设置到日志上下文MDC中 </p>
+     * 处理指定堆栈元素，从中获取堆栈元素所属类相关信息，并设置到日志上下文MDC中
      *
      * @param element 堆栈元素
      */
@@ -111,7 +111,7 @@ public class LoggerUtils {
     }
 
     /**
-     * <p> 输出日志事件的发生位置 </p>
+     * 输出日志事件的发生位置
      *
      * @since 1.0.0
      */
@@ -124,7 +124,7 @@ public class LoggerUtils {
     }
 
     /**
-     * <p> 获取参数类型全名字符串数组 </p>
+     * 获取参数类型全名字符串数组
      *
      * @param types 参数类型Class对象
      * @return 参数类型全名字符串数组

@@ -10,7 +10,7 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 
 /**
- * <p> 反射工具类 </p>
+ * 反射工具类
  *
  * @author huazie
  * @version 1.0.0
@@ -24,7 +24,7 @@ public class ReflectUtils {
     }
 
     /**
-     * <p> 获取类Class </p>
+     * 获取类Class
      *
      * @param className 类全名字符串
      * @return 类Class
@@ -36,14 +36,15 @@ public class ReflectUtils {
             clazz = Class.forName(className);
         } catch (ClassNotFoundException e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "Exception : \n", e);
+                LOGGER.error1(new Object() {
+                }, "Exception : \n", e);
             }
         }
         return clazz;
     }
 
     /**
-     * <p> 获取类实例化后的对象 </p>
+     * 获取类实例化后的对象
      *
      * @param className 类全名
      * @return 类实例化后的对象
@@ -56,14 +57,15 @@ public class ReflectUtils {
             obj = clazz.newInstance();
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "Exception : \n", e);
+                LOGGER.error1(new Object() {
+                }, "Exception : \n", e);
             }
         }
         return obj;
     }
 
     /**
-     * <p> 获取类实例化后的对象 </p>
+     * 获取类实例化后的对象
      *
      * @param clazz 类对象
      * @return 类实例化后的对象
@@ -78,7 +80,7 @@ public class ReflectUtils {
     }
 
     /**
-     * <p> 获取类实例化后的对象 </p>
+     * 获取类实例化后的对象
      *
      * @param className 类名
      * @param params    构造方法参数
@@ -99,14 +101,15 @@ public class ReflectUtils {
             }
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "当前类反射出错，Class={}, Exception={}", className, e);
+                LOGGER.error1(new Object() {
+                }, "当前类反射出错，Class={}, Exception={}", className, e);
             }
         }
         return obj;
     }
 
     /**
-     * <p> 获取类实例化后的对象 </p>
+     * 获取类实例化后的对象
      *
      * @param clazz  类对象
      * @param params 构造方法参数
@@ -122,7 +125,7 @@ public class ReflectUtils {
     }
 
     /**
-     * <p> 获取类实例化后的对象 </p>
+     * 获取类实例化后的对象
      *
      * @param className  类名
      * @param params     构造方法参数
@@ -140,14 +143,15 @@ public class ReflectUtils {
             }
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "当前类反射出错，Class={}, Exception={}", className, e);
+                LOGGER.error1(new Object() {
+                }, "当前类反射出错，Class={}, Exception={}", className, e);
             }
         }
         return obj;
     }
 
     /**
-     * <p> 获取类实例化后的对象 </p>
+     * 获取类实例化后的对象
      *
      * @param clazz      类对象
      * @param params     构造方法参数
@@ -181,13 +185,14 @@ public class ReflectUtils {
             field.set(obj, value);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "设置对象指定属性【" + name + "】对应的值出错，Exception=", e);
+                LOGGER.error1(new Object() {
+                }, "设置对象指定属性【" + name + "】对应的值出错，Exception=", e);
             }
         }
     }
 
     /**
-     * <p> 获取对象指定属性的值 </p>
+     * 获取对象指定属性的值
      *
      * @param obj      待取值对象
      * @param attrName 对象的一个属性
@@ -201,14 +206,15 @@ public class ReflectUtils {
             value = method.invoke(obj);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "获取对象指定属性【" + attrName + "】对应的值出错，Exception=", e);
+                LOGGER.error1(new Object() {
+                }, "获取对象指定属性【" + attrName + "】对应的值出错，Exception=", e);
             }
         }
         return value;
     }
 
     /**
-     * <p> 获取对象<code>obj</code>中指定<code>attrName</code>属性的get方法 </p>
+     * 获取对象<code>obj</code>中指定<code>attrName</code>属性的get方法
      *
      * @param obj      指定对象
      * @param attrName 指定属性变量名
@@ -222,10 +228,33 @@ public class ReflectUtils {
             method = obj.getClass().getMethod(getter);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "获取对象指定属性【" + attrName + "】对应get方法出错，Exception=", e);
+                LOGGER.error1(new Object() {
+                }, "获取对象指定属性【" + attrName + "】对应get方法出错，Exception=", e);
             }
         }
         return method;
+    }
+
+    /**
+     * 反射调用指定对象的指定方法并返回
+     *
+     * @param method 指定方法
+     * @param obj    指定对象
+     * @param args   参数列表
+     * @return 指定对象的指定方法调用后的返回值
+     * @since 2.0.0
+     */
+    public static Object invoke(Method method, Object obj, Object[] args) {
+        Object result = null;
+        try {
+            result = method.invoke(obj, args);
+        } catch (Exception e) {
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error1(new Object() {
+                }, "反射调用对象指定方法【" + method.getName() + "】、指定参数列表【" + Arrays.toString(method.getParameterTypes()) + "】出错，Exception = ", e);
+            }
+        }
+        return result;
     }
 
     /**
@@ -236,6 +265,7 @@ public class ReflectUtils {
      * @param args       参数列表
      * @param types      参数Class类型列表
      * @return 指定对象的指定方法调用后的返回值
+     * @since 1.0.0
      */
     public static Object invoke(Object obj, String methodName, Object[] args, Class<?>[] types) {
         Object result = null;
@@ -244,7 +274,8 @@ public class ReflectUtils {
             result = method.invoke(obj, args);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "反射调用对象指定方法【" + methodName + "】、指定参数列表【" + Arrays.toString(types) + "】出错，Exception = ", e);
+                LOGGER.error1(new Object() {
+                }, "反射调用对象指定方法【" + methodName + "】、指定参数列表【" + Arrays.toString(types) + "】出错，Exception = ", e);
             }
         }
         return result;
@@ -267,7 +298,8 @@ public class ReflectUtils {
             outputObj = method.invoke(obj, inputObj);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "反射调用对象指定方法【" + methodName + "】出错，Exception = ", e);
+                LOGGER.error1(new Object() {
+                }, "反射调用对象指定方法【" + methodName + "】出错，Exception = ", e);
             }
         }
         return outputObj;

@@ -6,7 +6,7 @@ import com.huazie.fleaframework.common.config.FleaConfig;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 
 /**
- * <p> Flea Config Manager </p>
+ * Flea Config Manager
  *
  * @author huazie
  * @version 1.0.0
@@ -18,7 +18,7 @@ public class FleaConfigManager {
     }
 
     /**
-     * <p> 获取配置项列表 </p>
+     * 获取配置项列表
      *
      * @param itemsKey 配置项列表键
      * @return 配置项列表
@@ -30,7 +30,7 @@ public class FleaConfigManager {
     }
 
     /**
-     * <p> 获取配置项 (需要先获取配置项列表)</p>
+     * 获取配置项 (需要先获取配置项列表)
      *
      * @param itemKey     配置项键
      * @param configItems 配置项列表
@@ -46,7 +46,7 @@ public class FleaConfigManager {
     }
 
     /**
-     * <p> 获取配置项 </p>
+     * 获取配置项
      *
      * @param itemsKey 配置项列表键
      * @param itemKey  配置项键
@@ -58,7 +58,7 @@ public class FleaConfigManager {
     }
 
     /**
-     * <p> 获取配置项值 (需要先获取配置项列表)</p>
+     * 获取配置项值 (需要先获取配置项列表)
      *
      * @param itemKey     配置项键
      * @param configItems 配置项列表
@@ -70,7 +70,7 @@ public class FleaConfigManager {
     }
 
     /**
-     * <p> 获取配置项值 </p>
+     * 获取配置项值
      *
      * @param itemsKey 配置项列表键
      * @param itemKey  配置项键
@@ -82,7 +82,7 @@ public class FleaConfigManager {
     }
 
     /**
-     * <p> 获取配置项值 </p>
+     * 获取配置项值
      *
      * @param item 配置项
      * @return 配置项值

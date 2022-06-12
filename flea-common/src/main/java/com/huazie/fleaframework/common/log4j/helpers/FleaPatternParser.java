@@ -12,7 +12,7 @@ import org.apache.log4j.spi.LocationInfo;
 import org.apache.log4j.spi.LoggingEvent;
 
 /**
- * <p> Flea Pattern Parser </p>
+ * Flea Pattern Parser
  *
  * @author huazie
  * @version 1.0.0
@@ -75,7 +75,7 @@ public class FleaPatternParser extends PatternParser {
     }
 
     /**
-     * <p> 自定义用户Session模式转换类 </p>
+     * 自定义用户Session模式转换类
      *
      * @author huazie
      * @version 1.0.0
@@ -101,7 +101,7 @@ public class FleaPatternParser extends PatternParser {
     }
 
     /**
-     * <p> 自定义MDC日志上下文模式转换类 </p>
+     * 自定义MDC日志上下文模式转换类
      *
      * @author huazie
      * @version 1.0.0
@@ -160,7 +160,7 @@ public class FleaPatternParser extends PatternParser {
         }
 
         /**
-         * <p> 兼容log4j </p>
+         * 兼容log4j
          *
          * @param event 日志事件
          * @return 不同的日志信息

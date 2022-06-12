@@ -3,7 +3,7 @@ package com.huazie.fleaframework.common.util;
 import java.util.regex.Pattern;
 
 /**
- * <p> 模式匹配工具类 </p>
+ * 模式匹配工具类
  *
  * @author huazie
  * @version 1.0.0
@@ -15,7 +15,7 @@ public class PatternMatcherUtils {
     }
 
     /**
-     * <p> 正则匹配 </p>
+     * 正则匹配
      *
      * @param regex 正则表达式
      * @param input 匹配对象

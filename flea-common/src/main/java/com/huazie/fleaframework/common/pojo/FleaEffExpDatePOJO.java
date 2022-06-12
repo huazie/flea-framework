@@ -3,7 +3,7 @@ package com.huazie.fleaframework.common.pojo;
 import java.util.Date;
 
 /**
- * <p> Flea生失效时间POJO类 </p>
+ * Flea生失效时间POJO类
  *
  * @author huazie
  * @version 1.0.0

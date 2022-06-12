@@ -14,7 +14,7 @@ import com.huazie.fleaframework.common.slf4j.FleaLogger;
 public class FleaLoggerProxy {
 
     /**
-     * <p> 获取代理的Flea日志类 </p>
+     * 获取代理的Flea日志类
      *
      * @return 代理的Flea日志类
      * @since 1.0.0

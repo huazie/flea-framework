@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * <p> 字符串相关的工具类 </p>
+ * 字符串相关的工具类
  *
  * @author huazie
  * @version 1.0.0
@@ -20,7 +20,7 @@ public class StringUtils {
     }
 
     /**
-     * <p> 判断字符串是否为空 </p>
+     * 判断字符串是否为空
      *
      * @param value 待检查字符串
      * @return 如果为空或null或空白字符，返回true; 否则返回false
@@ -39,7 +39,7 @@ public class StringUtils {
     }
 
     /**
-     * <p> 判断字符串是否不为空 </p>
+     * 判断字符串是否不为空
      *
      * @param value 待检查字符串
      * @return 如果不为空且不是空白字符，返回true; 否则返回false
@@ -50,7 +50,7 @@ public class StringUtils {
     }
 
     /**
-     * <p> 校验value字符串对象，如果空，则抛出异常 </p>
+     * 校验value字符串对象，如果空，则抛出异常
      *
      * @param value          字符串对象
      * @param exceptionClazz 通用异常子类类对象
@@ -65,7 +65,7 @@ public class StringUtils {
     }
 
     /**
-     * <p> 校验value字符串对象，如果非空，则抛出异常 </p>
+     * 校验value字符串对象，如果非空，则抛出异常
      *
      * @param value          字符串对象
      * @param exceptionClazz 通用异常子类类对象
@@ -80,7 +80,7 @@ public class StringUtils {
     }
 
     /**
-     * <p> 将对象值转换为字符串 </p>
+     * 将对象值转换为字符串
      *
      * @param value 指定对象
      * @return 对象值对应的字符串
@@ -91,7 +91,7 @@ public class StringUtils {
     }
 
     /**
-     * <p> 将str字符串两边空格去掉 </p>
+     * 将str字符串两边空格去掉
      *
      * @param value 待处理的字符串
      * @return 去除两边空格的字符串
@@ -105,7 +105,7 @@ public class StringUtils {
     }
 
     /**
-     * <p> 清除字符串内容 </p>
+     * 清除字符串内容
      *
      * @param value {@code StringBuilder}对象
      * @since 1.0.0
@@ -117,7 +117,7 @@ public class StringUtils {
     }
 
     /**
-     * <p> 首字母转小写 </p>
+     * 首字母转小写
      *
      * @param value 待处理的字符串
      * @return 首字母转小写的字符串
@@ -141,7 +141,7 @@ public class StringUtils {
     }
 
     /**
-     * <p> 首字母转大写 </p>
+     * 首字母转大写
      *
      * @param value 待处理的字符串
      * @return 首字母转大写的字符串
@@ -165,7 +165,7 @@ public class StringUtils {
     }
 
     /**
-     * <p> 首字母转大写，其余字母转小写 </p>
+     * 首字母转大写，其余字母转小写
      *
      * @param value 待处理字符串
      * @return 首字母转大写，其余字母转小写的字符串
@@ -180,7 +180,7 @@ public class StringUtils {
     }
 
     /**
-     * <p> 截取字符串 value中字符串start 和 字符串 end 之间的字符串 </p>
+     * 截取字符串 value中字符串start 和 字符串 end 之间的字符串
      *
      * @param value 待截取的字符串
      * @param start 待截取的字符串中开始处字符串
@@ -201,8 +201,8 @@ public class StringUtils {
     }
 
     /**
-     * <p> 获取字符串value的后length位字符串 </p>
-     * <p>（注意：length若大于value的长度，则返回原字符串value的拷贝值） </p>
+     * 获取字符串value的后length位字符串
+     * <p>（注意：length若大于value的长度，则返回原字符串value的拷贝值）
      *
      * @param value  待截取的字符串
      * @param length 待截取的长度
@@ -214,8 +214,8 @@ public class StringUtils {
     }
 
     /**
-     * <p>获取字符串value的前length位字符串</p>
-     * <p>（注意：length若大于字符串value的长度，则返回原字符串value的拷贝值）</p>
+     * 获取字符串value的前length位字符串
+     * <p>（注意：length若大于字符串value的长度，则返回原字符串value的拷贝值）
      *
      * @param value  待截取的字符串
      * @param length 待截取的长度
@@ -227,7 +227,7 @@ public class StringUtils {
     }
 
     /**
-     * <p> 从头部或从尾部截取字符串 </p>
+     * 从头部或从尾部截取字符串
      *
      * @param value    待截取的字符串
      * @param length   待截取的长度
@@ -251,8 +251,8 @@ public class StringUtils {
     }
 
     /**
-     * <p> 字符串连接函数 </p>
-     * <p>（注意：支持多个字符串之间的连接）</p>
+     * 字符串连接函数
+     * <p>（注意：支持多个字符串之间的连接）
      *
      * @param value  待连接字符串
      * @param others 其他字符串数组
@@ -269,7 +269,7 @@ public class StringUtils {
     }
 
     /**
-     * <p> 使用占位符连接字符串数组中的元素 </p>
+     * 使用占位符连接字符串数组中的元素
      *
      * @param values      字符串数组
      * @param placeholder 占位符
@@ -292,8 +292,8 @@ public class StringUtils {
     }
 
     /**
-     * <p> 拼接对象数组objs中每个对象的属性attrName对应的值 </p>
-     * <p>（拼接方式： before + value1 + after + before + value2）</p>
+     * 拼接对象数组objs中每个对象的属性attrName对应的值
+     * <p>（拼接方式： before + value1 + after + before + value2）
      *
      * @param objs     待拼接的对象数组
      * @param attrName 对象数组中每个对象的一个属性名attrName
@@ -320,8 +320,8 @@ public class StringUtils {
     }
 
     /**
-     * <p> 拼接对象数组objs中每个对象的属性attrName对应的值 </p>
-     * <p>（拼接方式： before + value1 + after + after1 + before + value2 + after）</p>
+     * 拼接对象数组objs中每个对象的属性attrName对应的值
+     * <p>（拼接方式： before + value1 + after + after1 + before + value2 + after）
      *
      * @param objs     待拼接的对象数组
      * @param attrName 对象数组中每个对象的一个属性名attrName
@@ -349,8 +349,8 @@ public class StringUtils {
     }
 
     /**
-     * <p>判断是否满足模糊查询/p>
-     * <p>（中文模糊比较，简拼，全拼比较）</p>
+     * 判断是否满足模糊查询
+     * <p>（中文模糊比较，简拼，全拼比较）
      *
      * @param matchedValue  待匹配字符串
      * @param searchedValue 搜索字符串
@@ -374,7 +374,7 @@ public class StringUtils {
     }
 
     /**
-     * <p> 在strBuilder字符串中，用字符串value替换占位符placeholder </p>
+     * 在strBuilder字符串中，用字符串value替换占位符placeholder
      *
      * @param strBuilder  待替换字符串
      * @param placeholder 占位符
@@ -392,7 +392,7 @@ public class StringUtils {
     }
 
     /**
-     * <p> 分割字符串 </p>
+     * 分割字符串
      *
      * @param value       待分割字符串
      * @param placeholder 占位符
@@ -407,7 +407,7 @@ public class StringUtils {
     }
 
     /**
-     * <p> 分割字符串数组，生成键值对Map </p>
+     * 分割字符串数组，生成键值对Map
      *
      * @param values      待分割字符串数组
      * @param placeholder 占位符
@@ -431,7 +431,7 @@ public class StringUtils {
     }
 
     /**
-     * <p> 分割字符串 </p>
+     * 分割字符串
      *
      * @param value        待分割字符串
      * @param placeholders 多个占位符

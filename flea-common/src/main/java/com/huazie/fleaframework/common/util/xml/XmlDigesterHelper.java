@@ -9,7 +9,7 @@ import org.apache.commons.digester.Digester;
 import java.io.InputStream;
 
 /**
- * <p> Xml Digester 解析工具类</p>
+ * Xml Digester 解析工具类
  *
  * @author huazie
  * @version 1.0.0
@@ -20,7 +20,7 @@ public class XmlDigesterHelper {
     private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(XmlDigesterHelper.class);
 
     /**
-     * <p> Xml文件解析 </p>
+     * Xml文件解析
      *
      * @param filePath Xml文件路径
      * @param digester Digester对象
@@ -49,7 +49,7 @@ public class XmlDigesterHelper {
     }
 
     /**
-     * <p> Xml文件解析 </p>
+     * Xml文件解析
      *
      * @param input    Xml文件输入流
      * @param digester Digester对象

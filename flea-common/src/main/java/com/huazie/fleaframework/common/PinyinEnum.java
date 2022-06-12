@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.common;
 
 /**
- * <p>拼音相关枚举</p>
+ * 拼音相关枚举
  *
  * @author huazie
  * @version 1.0.0
@@ -10,19 +10,19 @@ package com.huazie.fleaframework.common;
 public enum PinyinEnum {
 
     /**
-     * <p>大写</p>
+     * 大写
      */
     UPPER_CASE(0, "大写"),
     /**
-     * <p>小写</p>
+     * 小写
      */
     LOWER_CASE(1, "小写"),
     /**
-     * <p>简拼</p>
+     * 简拼
      */
     JIAN_PIN(2, "简拼"),
     /**
-     * <p>全拼</p>
+     * 全拼
      */
     QUAN_PIN(3, "全拼");
 
