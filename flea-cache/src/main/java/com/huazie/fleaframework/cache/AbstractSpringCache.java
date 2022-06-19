@@ -54,6 +54,9 @@ public abstract class AbstractSpringCache implements Cache, IFleaCache {
             if (cacheValue instanceof NullCache) {
                 cacheValue = null;
             }
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug1(new Object() {}, "VALUE = {}", cacheValue);
+            }
             wrapper = new SimpleValueWrapper(cacheValue);
         }
         return wrapper;

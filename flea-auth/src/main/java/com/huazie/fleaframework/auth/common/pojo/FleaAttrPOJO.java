@@ -6,7 +6,7 @@ import com.huazie.fleaframework.common.pojo.FleaEffExpDatePOJO;
  * Flea属性POJO类
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 public class FleaAttrPOJO extends FleaEffExpDatePOJO {

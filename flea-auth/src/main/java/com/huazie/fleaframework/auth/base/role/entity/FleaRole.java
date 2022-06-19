@@ -1,6 +1,10 @@
 package com.huazie.fleaframework.auth.base.role.entity;
 
+import com.huazie.fleaframework.common.CommonConstants;
+import com.huazie.fleaframework.common.EntityStateEnum;
 import com.huazie.fleaframework.common.FleaEntity;
+import com.huazie.fleaframework.common.util.DateUtils;
+import com.huazie.fleaframework.common.util.ObjectUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import javax.persistence.Column;
@@ -18,7 +22,7 @@ import java.util.Date;
  * Flea角色表对应的实体类
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 @Entity
@@ -68,6 +72,35 @@ public class FleaRole extends FleaEntity {
 
     @Column(name = "remarks")
     private String remarks; // 备注信息
+
+    /**
+     * 无参数构造方法
+     *
+     * @since 2.0.0
+     */
+    public FleaRole() {
+    }
+
+    /**
+     * 带参数构造方法
+     *
+     * @param roleName 角色名称
+     * @param roleDesc 角色描述
+     * @param groupId  角色组编号
+     * @param remarks  备注
+     * @since 2.0.0
+     */
+    public FleaRole(String roleName, String roleDesc, Long groupId, String remarks) {
+        this.roleName = roleName;
+        this.roleDesc = roleDesc;
+        if (ObjectUtils.isEmpty(groupId)) {
+            groupId = CommonConstants.NumeralConstants.MINUS_ONE;
+        }
+        this.groupId = groupId;
+        this.roleState = EntityStateEnum.IN_USE.getState();
+        this.createDate = DateUtils.getCurrentTime();
+        this.remarks = remarks;
+    }
 
     public Long getRoleId() {
         return roleId;

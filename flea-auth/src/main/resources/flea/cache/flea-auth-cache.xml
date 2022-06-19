@@ -4,9 +4,17 @@
 
     <caches>
 
-        <cache key="fleaauthmenu" type="fleaAuth" expiry="86400" desc="Flea权限菜单数据缓存" />
+        <cache key="fleaauthuser" type="fleaAuth" expiry="86400" desc="Flea授权用户数据缓存" />
 
-        <cache key="fleaauthuser" type="fleaAuth" expiry="86400" desc="Flea权限用户数据缓存" />
+        <cache key="fleaauthaccount" type="fleaAuth" expiry="86400" desc="Flea授权账户数据缓存" />
+
+        <cache key="fleaauthmenu" type="fleaAuth" expiry="86400" desc="Flea授权菜单数据缓存" />
+
+        <cache key="fleaauthoperation" type="fleaAuth" expiry="86400" desc="Flea授权操作数据缓存" />
+
+        <cache key="fleaauthelement" type="fleaAuth" expiry="86400" desc="Flea授权元素数据缓存" />
+
+        <cache key="fleaauthresource" type="fleaAuth" expiry="86400" desc="Flea授权资源数据缓存" />
 
     </caches>
 

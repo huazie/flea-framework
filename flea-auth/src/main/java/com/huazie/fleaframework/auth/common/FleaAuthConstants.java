@@ -35,10 +35,6 @@ public interface FleaAuthConstants {
      */
     interface UserModuleConstants {
 
-        Integer LOGIN_STATE_1 = 1; // 登录中
-
-        Integer LOGIN_STATE_2 = 2; // 已退出
-
         String USER_ID = "USER_ID";
 
         String USER_NAME = "USER_NAME";
@@ -85,6 +81,9 @@ public interface FleaAuthConstants {
      */
     interface PrivilegeModuleConstants {
 
+        int MAIN = 1; // 主权限组
+
+        int NOT_MAIN = 0; // 非主权限组
     }
 
     /**

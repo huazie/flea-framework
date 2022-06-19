@@ -16,11 +16,11 @@ import java.util.List;
 public interface IFleaUserRelDAO extends IAbstractFleaJPADAO<FleaUserRel> {
 
     /**
-     * 获取指定用户编号【userId】关联的指定授权关联类型【authRelType】的用户组关联信息
+     * 根据用户编号、授权关联类型，查询用户组关联数据
      *
-     * @param userId 用户编号
+     * @param userId      用户编号
      * @param authRelType 授权关联类型
-     * @return 用户关联信息
+     * @return 用户关联数据
      * @throws CommonException 通用异常
      * @since 1.0.0
      */

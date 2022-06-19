@@ -7,7 +7,7 @@ import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import java.util.List;
 
 /**
- * Flea用户属性DAO层接口
+ * Flea用户扩展属性DAO层接口
  *
  * @author huazie
  * @version 1.0.0

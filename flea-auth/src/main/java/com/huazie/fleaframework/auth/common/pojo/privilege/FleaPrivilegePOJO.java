@@ -1,24 +1,22 @@
 package com.huazie.fleaframework.auth.common.pojo.privilege;
 
-import com.huazie.fleaframework.common.pojo.FleaRemarksPOJO;
+import com.huazie.fleaframework.auth.common.pojo.FleaGroupIdPOJO;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
  * Flea权限POJO类
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
-public class FleaPrivilegePOJO extends FleaRemarksPOJO {
+public class FleaPrivilegePOJO extends FleaGroupIdPOJO {
 
-    private static final long serialVersionUID = -1348702196946202298L;
+    private static final long serialVersionUID = -6114666591531013387L;
 
     private String privilegeName; // 权限名称
 
     private String privilegeDesc; // 权限描述
-
-    private Long groupId; // 权限组编号
 
     public String getPrivilegeName() {
         return privilegeName;
@@ -34,14 +32,6 @@ public class FleaPrivilegePOJO extends FleaRemarksPOJO {
 
     public void setPrivilegeDesc(String privilegeDesc) {
         this.privilegeDesc = privilegeDesc;
-    }
-
-    public Long getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(Long groupId) {
-        this.groupId = groupId;
     }
 
     @Override

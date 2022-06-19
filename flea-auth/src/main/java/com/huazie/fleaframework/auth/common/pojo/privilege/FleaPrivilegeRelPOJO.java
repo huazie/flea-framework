@@ -7,7 +7,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * Flea权限关联POJO类
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 public class FleaPrivilegeRelPOJO extends FleaAuthRelPOJO {
