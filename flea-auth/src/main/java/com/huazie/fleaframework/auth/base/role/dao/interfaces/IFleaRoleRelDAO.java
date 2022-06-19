@@ -16,11 +16,11 @@ import java.util.List;
 public interface IFleaRoleRelDAO extends IAbstractFleaJPADAO<FleaRoleRel> {
 
     /**
-     * 获取指定角色编号【roleId】关联的指定授权关联类型【authRelType】的角色关联信息
+     * 根据角色编号和授权关联类型，查询角色关联数据
      *
      * @param roleId 角色编号
      * @param authRelType 授权关联类型
-     * @return 角色关联信息
+     * @return 角色关联数据
      * @throws CommonException 通用异常
      * @since 1.0.0
      */

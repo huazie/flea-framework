@@ -1,6 +1,9 @@
 package com.huazie.fleaframework.auth.base.user.entity;
 
+import com.huazie.fleaframework.common.EntityStateEnum;
 import com.huazie.fleaframework.common.FleaEntity;
+import com.huazie.fleaframework.common.util.DateUtils;
+import com.huazie.fleaframework.common.util.ObjectUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import javax.persistence.Column;
@@ -79,6 +82,44 @@ public class FleaRealNameInfo extends FleaEntity {
 
     @Column(name = "remarks")
     private String remarks; // 备注信息
+
+    /**
+     * 无参数构造方法
+     *
+     * @since 2.0.0
+     */
+    public FleaRealNameInfo() {
+    }
+
+    /**
+     * 带参数构造方法
+     *
+     * @param certType      证件类型
+     * @param certCode      证件号码
+     * @param certName      证件名称
+     * @param certAddress   证件地址
+     * @param effectiveDate 生效时间
+     * @param expiryDate    失效时间
+     * @param remarks       备注信息
+     * @since 2.0.0
+     */
+    public FleaRealNameInfo(Integer certType, String certCode, String certName, String certAddress, Date effectiveDate, Date expiryDate, String remarks) {
+        this.certType = certType;
+        this.certCode = certCode;
+        this.certName = certName;
+        this.certAddress = certAddress;
+        this.realNameState = EntityStateEnum.IN_USE.getState();
+        this.createDate = DateUtils.getCurrentTime();
+        if (ObjectUtils.isEmpty(effectiveDate)) {
+            effectiveDate = DateUtils.getCurrentTime();
+        }
+        this.effectiveDate = effectiveDate;
+        if (ObjectUtils.isEmpty(expiryDate)) {
+            expiryDate = DateUtils.getExpiryTimeForever();
+        }
+        this.expiryDate = expiryDate;
+        this.remarks = remarks;
+    }
 
     public Long getRealNameId() {
         return realNameId;

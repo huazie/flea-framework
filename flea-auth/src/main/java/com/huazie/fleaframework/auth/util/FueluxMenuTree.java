@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Fuelux 菜单树 {@code FueluxMenuTree}
+ * Fuelux 菜单树，是ACE前端框架中的fuelux tree的数据模型。
  *
  * <p> 其中父节点，子节点的图标采用 Font Awesome。
  *

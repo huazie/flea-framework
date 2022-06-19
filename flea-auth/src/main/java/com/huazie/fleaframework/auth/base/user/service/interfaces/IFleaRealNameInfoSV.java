@@ -1,6 +1,7 @@
 package com.huazie.fleaframework.auth.base.user.service.interfaces;
 
 import com.huazie.fleaframework.auth.base.user.entity.FleaRealNameInfo;
+import com.huazie.fleaframework.auth.common.pojo.user.FleaRealNameInfoPOJO;
 import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.db.jpa.service.interfaces.IAbstractFleaJPASV;
 
@@ -22,4 +23,14 @@ public interface IFleaRealNameInfoSV extends IAbstractFleaJPASV<FleaRealNameInfo
      * @since 1.0.0
      */
     FleaRealNameInfo queryValidRealNameInfo(Long realNameId) throws CommonException;
+
+    /**
+     * 保存Flea实名信息
+     *
+     * @param fleaRealNameInfoPOJO Flea实名信息POJO对象
+     * @return Flea实名信息实体类
+     * @throws CommonException 通用异常
+     * @since 2.0.0
+     */
+    FleaRealNameInfo saveRealNameInfo(FleaRealNameInfoPOJO fleaRealNameInfoPOJO) throws CommonException;
 }

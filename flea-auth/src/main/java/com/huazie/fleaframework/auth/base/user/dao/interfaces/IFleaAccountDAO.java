@@ -14,7 +14,17 @@ import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 public interface IFleaAccountDAO extends IAbstractFleaJPADAO<FleaAccount> {
 
     /**
-     * 根据账号和密码查询账户信息
+     * 根据账户编号，查询有效的账户信息 （账户状态 1 正常）</p>
+     *
+     * @param accountId 账户编号
+     * @return 账户信息
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    FleaAccount queryValidAccount(Long accountId) throws CommonException;
+
+    /**
+     * 根据账号和密码，查询账户信息（账户状态 1 正常）
      *
      * @param accountCode 账号
      * @param accountPwd  密码
@@ -22,10 +32,10 @@ public interface IFleaAccountDAO extends IAbstractFleaJPADAO<FleaAccount> {
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    FleaAccount queryAccount(String accountCode, String accountPwd) throws CommonException;
+    FleaAccount queryValidAccount(String accountCode, String accountPwd) throws CommonException;
 
     /**
-     * 根据账号查询有效的账户信息（账户状态 1 正常 和 3 待审批, 未失效）
+     * 根据账号，查询有效的账户信息（账户状态 1 正常 和 3 待审批）
      *
      * @param accountCode 账号
      * @return 账户信息
@@ -34,13 +44,4 @@ public interface IFleaAccountDAO extends IAbstractFleaJPADAO<FleaAccount> {
      */
     FleaAccount queryValidAccount(String accountCode) throws CommonException;
 
-    /**
-     * 根据账户编号查询有效的账户信息 （账户状态 1 正常，未失效）</p>
-     *
-     * @param accountId 账户编号
-     * @return 账户信息
-     * @throws CommonException 通用异常
-     * @since 1.0.0
-     */
-    FleaAccount queryValidAccount(Long accountId) throws CommonException;
 }

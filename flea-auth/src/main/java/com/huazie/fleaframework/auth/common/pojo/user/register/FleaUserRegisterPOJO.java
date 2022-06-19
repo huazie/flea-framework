@@ -38,9 +38,9 @@ public class FleaUserRegisterPOJO extends FleaUserLoginPOJO {
 
     private String remarks; // 备注
 
-    private List<FleaUserAttrPOJO> userAttrList; // Flea用户属性POJO类List集合
+    private List<FleaUserAttrPOJO> userAttrList; // Flea用户扩展属性POJO类List集合
 
-    private List<FleaAccountAttrPOJO> accountAttrList; // Flea账户属性POJO类List集合
+    private List<FleaAccountAttrPOJO> accountAttrList; // Flea账户扩展属性POJO类List集合
 
     public Long getSystemId() {
         return systemId;
@@ -123,7 +123,7 @@ public class FleaUserRegisterPOJO extends FleaUserLoginPOJO {
     }
 
     /**
-     * Flea用户属性POJO类设置用户编号
+     * Flea用户扩展属性POJO类设置用户编号
      *
      * @param userId 用户编号
      * @since 1.0.0
@@ -147,7 +147,7 @@ public class FleaUserRegisterPOJO extends FleaUserLoginPOJO {
     }
 
     /**
-     * Flea用户属性POJO类设置用户编号
+     * Flea用户扩展属性POJO类设置用户编号
      *
      * @param accountId 用户编号
      * @since 1.0.0
@@ -173,6 +173,7 @@ public class FleaUserRegisterPOJO extends FleaUserLoginPOJO {
         fleaUserPOJO.setUserId(systemId);
         fleaUserPOJO.setGroupId(groupId);
         if (StringUtils.isBlank(userName)) {
+            // 用户昵称为空，使用账号代替
             userName = getAccountCode();
         }
         fleaUserPOJO.setUserName(userName);

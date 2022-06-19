@@ -30,9 +30,9 @@ public class FleaAuthManager {
      * 初始化用户信息
      *
      * @param accountId              操作账户编号
-     * @param operatorUserModuleData 操作用户模块信息
+     * @param operatorUserModuleData 操作用户模块数据
      * @param systemAccountId        系统账户编号
-     * @param systemUserModuleData   系统用户模块信息
+     * @param systemUserModuleData   系统用户模块数据
      * @param otherAttrs             其他属性信息
      * @param fleaObjectFactory      用户信息对象工厂类
      * @return 用户信息接口
@@ -45,14 +45,14 @@ public class FleaAuthManager {
             fleaUser.setAccountId(accountId);
         }
 
-        // 处理操作用户模块信息
+        // 处理操作用户模块数据
         initOperationUserData(fleaUser, operatorUserModuleData);
 
         if (ObjectUtils.isNotEmpty(systemAccountId)) {
             fleaUser.setSystemAccountId(systemAccountId);
         }
 
-        // 处理系统用户模块信息
+        // 处理系统用户模块数据
         initSystemUserData(fleaUser, systemUserModuleData);
 
         // 添加其他属性信息
@@ -64,7 +64,7 @@ public class FleaAuthManager {
     }
 
     /**
-     * 初始化操作用户模块信息
+     * 初始化操作用户模块数据
      *
      * @param fleaUser     用户信息接口
      * @param operatorUser 操作用户模块信息
@@ -101,14 +101,14 @@ public class FleaAuthManager {
             fleaUser.set(FleaAuthConstants.UserModuleConstants.USER_PHONE, userPhone);
         }
 
-        // 添加操作用户属性信息
+        // 添加操作用户扩展属性信息
         fleaUser.addAll(operatorUser.toUserAttrMap(FleaAuthConstants.UserModuleConstants.USER_ATTR));
 
         FleaAccount account = operatorUser.getFleaAccount();
         // 操作账号
         fleaUser.set(FleaAuthConstants.UserModuleConstants.ACCOUNT_CODE, account.getAccountCode());
 
-        // 添加操作账户属性信息
+        // 添加操作账户扩展属性信息
         fleaUser.addAll(operatorUser.toAccountAttrMap(FleaAuthConstants.UserModuleConstants.ACCOUNT_ATTR));
     }
 
@@ -123,13 +123,13 @@ public class FleaAuthManager {
         FleaUser sysUser = systemUser.getFleaUser();
         // 系统用户名
         fleaUser.set(FleaAuthConstants.UserModuleConstants.SYSTEM_USER_NAME, sysUser.getUserName());
-        // 添加系统用户属性信息
+        // 添加系统用户扩展属性信息
         fleaUser.addAll(systemUser.toUserAttrMap(FleaAuthConstants.UserModuleConstants.SYSTEM_USER_ATTR));
 
         FleaAccount sysAccount = systemUser.getFleaAccount();
         // 系统账号
         fleaUser.set(FleaAuthConstants.UserModuleConstants.SYSTEM_ACCOUNT_CODE, sysAccount.getAccountCode());
-        // 添加系统账户属性信息
+        // 添加系统账户扩展属性信息
         fleaUser.addAll(systemUser.toAccountAttrMap(FleaAuthConstants.UserModuleConstants.SYSTEM_ACCOUNT_ATTR));
     }
 

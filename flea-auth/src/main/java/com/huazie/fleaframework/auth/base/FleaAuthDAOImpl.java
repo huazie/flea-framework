@@ -12,7 +12,7 @@ import java.util.List;
  * FleaAuth数据源DAO层父类
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 public class FleaAuthDAOImpl<T> extends AbstractFleaJPADAOImpl<T> {

@@ -16,11 +16,11 @@ import java.util.List;
 public interface IFleaPrivilegeGroupRelDAO extends IAbstractFleaJPADAO<FleaPrivilegeGroupRel> {
 
     /**
-     * 获取指定权限组编号【privilegeGroupId】关联的指定授权关联类型【authRelType】的权限组关联信息
+     * 根据权限组编号、授权关联类型，查询权限组关联数据
      *
      * @param privilegeGroupId 权限组编号
      * @param authRelType      授权关联类型
-     * @return 权限组关联信息
+     * @return 权限组关联数据
      * @throws CommonException 通用异常
      * @since 1.0.0
      */

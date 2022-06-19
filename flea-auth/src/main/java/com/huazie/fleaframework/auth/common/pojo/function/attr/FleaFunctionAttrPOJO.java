@@ -12,11 +12,21 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  */
 public class FleaFunctionAttrPOJO extends FleaAttrPOJO {
 
-    private static final long serialVersionUID = -4226411832423104577L;
+    private static final long serialVersionUID = -2198373443495464732L;
+
+    private Long attrId; // 属性编号【修改功能属性时填写】
 
     private Long functionId; // 功能编号
 
     private String functionType; // 功能类型
+
+    public Long getAttrId() {
+        return attrId;
+    }
+
+    public void setAttrId(Long attrId) {
+        this.attrId = attrId;
+    }
 
     public Long getFunctionId() {
         return functionId;
