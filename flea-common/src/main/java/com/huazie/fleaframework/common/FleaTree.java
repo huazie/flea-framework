@@ -78,7 +78,7 @@ public class FleaTree<T> implements Serializable {
     }
 
     /**
-     * <p> 返回树节点的总数 </p>
+     * 返回树节点的总数
      *
      * @return 树节点的总数
      */
@@ -87,7 +87,7 @@ public class FleaTree<T> implements Serializable {
     }
 
     /**
-     * <p> 添加根节点 </p>
+     * 添加根节点
      */
     public void addRootTreeNote(T element) {
 
@@ -102,7 +102,7 @@ public class FleaTree<T> implements Serializable {
     }
 
     /**
-     * <p> 添加树节点 </p>
+     * 添加树节点
      *
      * @param current 现节点元素
      * @param id      现节点编号
@@ -141,7 +141,7 @@ public class FleaTree<T> implements Serializable {
     }
 
     /**
-     * <p> 递归添加树节点 </p>
+     * 递归添加树节点
      *
      * @param subNotes 子节点链表
      * @param current  现节点元素
@@ -182,7 +182,7 @@ public class FleaTree<T> implements Serializable {
     }
 
     /**
-     * <p> 添加临时树节点 </p>
+     * 添加临时树节点
      *
      * @param current 现节点元素
      * @param id      现节点编号
@@ -199,7 +199,7 @@ public class FleaTree<T> implements Serializable {
     }
 
     /**
-     * <p> 去除临时树节点 </p>
+     * 去除临时树节点
      *
      * @param id     现节点编号
      * @param height 现节点高度
@@ -219,7 +219,7 @@ public class FleaTree<T> implements Serializable {
     }
 
     /**
-     * <p> 处理临时树节点 </p>
+     * 处理临时树节点
      *
      * @param mTreeNode 树节点
      * @since 1.0.0
@@ -250,7 +250,7 @@ public class FleaTree<T> implements Serializable {
     }
 
     /**
-     * <p> 添加子节点 </p>
+     * 添加子节点
      *
      * @param current 现节点元素
      * @param id      现节点编号
@@ -264,7 +264,7 @@ public class FleaTree<T> implements Serializable {
     }
 
     /**
-     * <p> 添加子节点 </p>
+     * 添加子节点
      *
      * @param current 现节点元素
      * @param id      现节点编号
@@ -283,9 +283,8 @@ public class FleaTree<T> implements Serializable {
     }
 
     /**
-     * <p> 处理叶子节点集合 </p>
-     * <p> 叶子节点集合中存在节点是 当前待添加节点的父节点，
-     * 说明该节点有子节点，则需要从叶子节点集合中剔除 </p>
+     * 处理叶子节点集合，如果叶子节点集合中存在节点是当前待添加节点的父节点，
+     * 说明该节点有子节点，则需要从叶子节点集合中剔除
      *
      * @param parent 当前待添加节点的父节点
      * @since 1.0.0
@@ -310,7 +309,7 @@ public class FleaTree<T> implements Serializable {
     }
 
     /**
-     * <p> 获取根节点元素 </p>
+     * 获取根节点元素
      *
      * @return 根节点元素
      * @since 1.0.0
@@ -320,7 +319,7 @@ public class FleaTree<T> implements Serializable {
     }
 
     /**
-     * <p> 获取指定编号的树叶子节点元素 </p>
+     * 获取指定编号的树叶子节点元素
      *
      * @param id 节点编号
      * @return 指定编号的树叶子节点元素
@@ -342,7 +341,7 @@ public class FleaTree<T> implements Serializable {
     }
 
     /**
-     * <p> 获取所有的树叶子节点元素 </p>
+     * 获取所有的树叶子节点元素
      *
      * @return 树叶子节点元素集合
      * @since 1.0.0
@@ -361,7 +360,7 @@ public class FleaTree<T> implements Serializable {
     }
 
     /**
-     * <p> 判断是否Flea树中是否有节点（包括根节点） </p>
+     * 判断是否Flea树中是否有节点（包括根节点）
      *
      * @return true: 没有 false: 有
      * @since 1.0.0
@@ -409,7 +408,7 @@ public class FleaTree<T> implements Serializable {
     }
 
     /**
-     * <p> 树形结构展示，默认显示数节点的元素 </p>
+     * 树形结构展示，默认显示数节点的元素
      *
      * @param element 元素
      * @return 数节点的元素
@@ -419,7 +418,7 @@ public class FleaTree<T> implements Serializable {
     }
 
     /**
-     * <p> 以{@code List<Map<String, Object>>}形式返回 所有的树节点信息 </p>
+     * 以{@code List<Map<String, Object>>}形式返回 所有的树节点信息
      *
      * @param isContains 是否包含根节点 【true: 包含 false: 不包含】
      * @return 树的节点信息
@@ -437,7 +436,7 @@ public class FleaTree<T> implements Serializable {
     }
 
     /**
-     * <p> 以List<Map<String, Object>>形式, 递归返回所有【不包含根节点】的树节点信息 </p>
+     * 以List<Map<String, Object>>形式, 递归返回所有【不包含根节点】的树节点信息
      *
      * @param subNotes 树节点的子节点信息
      * @return 树的节点信息
@@ -469,8 +468,8 @@ public class FleaTree<T> implements Serializable {
     }
 
     /**
-     * <p> 以{@code Map<String, Object>}形式返回某个树节点信息 </p>
-     * <p> 子类可以重写该方法，实现返回自定义的树节点元素 </p>
+     * 以{@code Map<String, Object>}形式返回某个树节点信息。
+     * <p> 子类可以重写该方法，实现返回自定义的树节点元素。
      *
      * @param element  现节点元素
      * @param id       现节点编号
@@ -494,8 +493,8 @@ public class FleaTree<T> implements Serializable {
     }
 
     /**
-     * <p> 获取现节点对应的子节点列表的{@code Map}键 </p>
-     * <p> 子类可以重写该方法，实现返回自定义的现节点对应的子节点列表的{@code Map}键 </p>
+     * 获取现节点对应的子节点列表的{@code Map}键
+     * <p> 子类可以重写该方法，实现返回自定义的现节点对应的子节点列表的{@code Map}键
      *
      * @return 现节点对应的子节点列表的{@code Map}键
      * @since 1.0.0
@@ -505,8 +504,7 @@ public class FleaTree<T> implements Serializable {
     }
 
     /**
-     * <p> 重新处理树节点信息 </p>
-     * <p> 子类可以重写该方法，实现更细粒度的树节点元素展示  </p>
+     * 重新处理树节点信息。子类可以重写该方法，实现更细粒度的树节点元素展示
      *
      * @param treeNodeMap 以{@code Map<String, Object>}形式返回某个树节点信息
      */
@@ -533,7 +531,7 @@ public class FleaTree<T> implements Serializable {
         }
 
         /**
-         * <p> 添加子节点 </p>
+         * 添加子节点
          *
          * @param subNote 子节点
          * @since 1.0.0
@@ -575,7 +573,7 @@ public class FleaTree<T> implements Serializable {
         }
 
         /**
-         * <p> 使用Flea树中正确的比较器方法，比较两个树节点元素 </p>
+         * 使用Flea树中正确的比较器方法，比较两个树节点元素
          */
         @SuppressWarnings({"unchecked"})
         final int compare(T t1, T t2, Comparator<? super T> comparator) {

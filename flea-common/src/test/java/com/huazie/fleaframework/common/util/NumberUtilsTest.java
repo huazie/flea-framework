@@ -7,7 +7,7 @@ import org.junit.Test;
 import java.text.NumberFormat;
 
 /**
- * <p> 数字相关工具测试类 </p>
+ * 数字相关工具测试类
  *
  * @author huazie
  * @version 1.0.0

@@ -4,7 +4,7 @@ import com.huazie.fleaframework.common.FleaCommonConfig;
 import com.huazie.fleaframework.common.util.StringUtils;
 
 /**
- * <p> 请求配置 </p>
+ * 请求配置类，为构建不同请求对象提供数据支撑。
  *
  * @author huazie
  * @version 1.0.0
@@ -13,7 +13,7 @@ import com.huazie.fleaframework.common.util.StringUtils;
 public class RequestConfig extends FleaCommonConfig {
 
     /**
-     * <p> 添加 客户端编码 配置 </p>
+     * 添加 客户端编码 配置
      *
      * @param clientCode 客户端编码
      * @since 1.0.0
@@ -25,7 +25,7 @@ public class RequestConfig extends FleaCommonConfig {
     }
 
     /**
-     * <p> 获取 客户端编码 配置</p>
+     * 获取 客户端编码 配置</p>
      *
      * @return 客户端编码
      * @since 1.0.0
@@ -35,7 +35,7 @@ public class RequestConfig extends FleaCommonConfig {
     }
 
     /**
-     * <p> 添加 资源地址 配置 </p>
+     * 添加 资源地址 配置
      *
      * @param resourceUrl 资源地址
      * @since 1.0.0
@@ -47,7 +47,7 @@ public class RequestConfig extends FleaCommonConfig {
     }
 
     /**
-     * <p> 获取 资源地址 配置 </p>
+     * 获取 资源地址 配置
      *
      * @return 资源地址
      * @since 1.0.0
@@ -57,7 +57,7 @@ public class RequestConfig extends FleaCommonConfig {
     }
 
     /**
-     * <p> 添加 资源编码 配置 </p>
+     * 添加 资源编码 配置
      *
      * @param resourceCode 资源编码
      * @since 1.0.0
@@ -69,7 +69,7 @@ public class RequestConfig extends FleaCommonConfig {
     }
 
     /**
-     * <p> 获取 资源编码 配置 </p>
+     * 获取 资源编码 配置
      *
      * @return 资源编码
      * @since 1.0.0
@@ -79,7 +79,7 @@ public class RequestConfig extends FleaCommonConfig {
     }
 
     /**
-     * <p> 添加 服务编码 配置 </p>
+     * 添加 服务编码 配置
      *
      * @param serviceCode 服务编码
      * @since 1.0.0
@@ -91,7 +91,7 @@ public class RequestConfig extends FleaCommonConfig {
     }
 
     /**
-     * <p> 获取 服务编码 配置 </p>
+     * 获取 服务编码 配置
      *
      * @return 服务编码
      * @since 1.0.0
@@ -101,7 +101,7 @@ public class RequestConfig extends FleaCommonConfig {
     }
 
     /**
-     * <p> 添加 请求方式 配置</p>
+     * 添加 请求方式 配置</p>
      *
      * @param requestMode 请求方式
      * @since 1.0.0
@@ -113,7 +113,7 @@ public class RequestConfig extends FleaCommonConfig {
     }
 
     /**
-     * <p> 获取 请求方式 配置</p>
+     * 获取 请求方式 配置</p>
      *
      * @return 请求方式
      * @since 1.0.0
@@ -123,7 +123,7 @@ public class RequestConfig extends FleaCommonConfig {
     }
 
     /**
-     * <p> 添加 媒体类型 配置 </p>
+     * 添加 媒体类型 配置
      *
      * @param mediaType 媒体类型字符串
      * @since 1.0.0
@@ -135,7 +135,7 @@ public class RequestConfig extends FleaCommonConfig {
     }
 
     /**
-     * <p> 获取 媒体类型 配置 </p>
+     * 获取 媒体类型 配置
      *
      * @return 媒体类型
      * @since 1.0.0
@@ -145,7 +145,7 @@ public class RequestConfig extends FleaCommonConfig {
     }
 
     /**
-     * <p> 添加 业务入参实例对象 配置 </p>
+     * 添加 业务入参实例对象 配置
      *
      * @param input 业务入参实例对象
      * @since 1.0.0
@@ -155,7 +155,7 @@ public class RequestConfig extends FleaCommonConfig {
     }
 
     /**
-     * <p> 获取 业务入参实例对象 配置 </p>
+     * 获取 业务入参实例对象 配置
      *
      * @return 业务入参实例对象
      * @since 1.0.0
@@ -165,7 +165,7 @@ public class RequestConfig extends FleaCommonConfig {
     }
 
     /**
-     * <p> 添加 客户端业务入参 配置</p>
+     * 添加 客户端业务入参 配置</p>
      *
      * @param clientInput 客户端业务入参
      * @since 1.0.0
@@ -175,7 +175,7 @@ public class RequestConfig extends FleaCommonConfig {
     }
 
     /**
-     * <p> 获取 客户端业务入参 配置</p>
+     * 获取 客户端业务入参 配置</p>
      *
      * @return 客户端业务入参
      * @since 1.0.0
@@ -185,7 +185,7 @@ public class RequestConfig extends FleaCommonConfig {
     }
 
     /**
-     * <p> 添加 客户端业务出参 配置</p>
+     * 添加 客户端业务出参 配置</p>
      *
      * @param clientOutput 客户端业务出参
      * @since 1.0.0
@@ -195,7 +195,7 @@ public class RequestConfig extends FleaCommonConfig {
     }
 
     /**
-     * <p> 获取 客户端业务出参 配置</p>
+     * 获取 客户端业务出参 配置</p>
      *
      * @return 客户端业务出参
      * @since 1.0.0

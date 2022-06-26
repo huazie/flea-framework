@@ -17,7 +17,7 @@
     <!-- 缓存参数集 -->
     <cache-params>
         <!-- 通用缓存参数 -->
-        <cache-param key="fleacore.nullCacheExpiry" desc="空缓存数据有效期（单位：s）">10</cache-param>
+        <cache-param key="fleacore.nullCacheExpiry" desc="空缓存数据有效期（单位：s）">300</cache-param>
         <!-- Redis 缓存参数 -->
         <cache-param key="redis.connectionTimeout" desc="Redis客户端socket连接超时时间（单位：ms）">2000</cache-param>
         <cache-param key="redis.soTimeout" desc="Redis客户端socket读写超时时间（单位：ms）">2000</cache-param>

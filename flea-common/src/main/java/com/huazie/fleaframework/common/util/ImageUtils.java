@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.Random;
 
 /**
- * <p> 图像处理公共类 </p>
+ * 图像处理公共类
  *
  * @author huazie
  * @version 1.0.0
@@ -20,7 +20,7 @@ public class ImageUtils {
     }
 
     /**
-     * <p> 图像字节流输出对象 </p>
+     * 图像字节流输出对象
      *
      * @param code   生成的校验码
      * @param width  该校验码图片的宽度

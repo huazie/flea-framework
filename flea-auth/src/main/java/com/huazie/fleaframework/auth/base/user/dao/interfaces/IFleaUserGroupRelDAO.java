@@ -16,13 +16,14 @@ import java.util.List;
 public interface IFleaUserGroupRelDAO extends IAbstractFleaJPADAO<FleaUserGroupRel> {
 
     /**
-     * 获取指定用户组编号【userGroupId】关联的指定授权关联类型【authRelType】的用户组关联信息
+     * 根据用户组编号、关联编号和授权关联类型，查询用户组关联数据
      *
      * @param userGroupId 用户组编号
+     * @param relId       关联编号
      * @param authRelType 授权关联类型
-     * @return 用户组关联信息
+     * @return 用户组关联数据
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    List<FleaUserGroupRel> getUserGroupRelList(Long userGroupId, String authRelType) throws CommonException;
+    List<FleaUserGroupRel> getUserGroupRelList(Long userGroupId, Long relId, String authRelType) throws CommonException;
 }

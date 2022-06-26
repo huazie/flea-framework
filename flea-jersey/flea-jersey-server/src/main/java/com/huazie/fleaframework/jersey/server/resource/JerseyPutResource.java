@@ -9,7 +9,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 /**
- * <p> Jersey PUT资源接口 </p>
+ * Jersey PUT 资源接口，只包含 PUT 资源API。
  *
  * @author huazie
  * @version 1.0.0
@@ -18,7 +18,7 @@ import javax.ws.rs.core.MediaType;
 public interface JerseyPutResource {
 
     /**
-     * <p> 处理PUT资源数据 </p>
+     * PUT 资源API，用于处理 PUT 资源数据。
      *
      * @param request 请求对象
      * @return 响应对象

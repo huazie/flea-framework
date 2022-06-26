@@ -9,7 +9,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 /**
- * <p> Jersey DELETE资源接口 </p>
+ * Jersey DELETE 资源接口，只包含 DELETE 资源API。
  *
  * @author huazie
  * @version 1.0.0
@@ -18,7 +18,7 @@ import javax.ws.rs.core.MediaType;
 public interface JerseyDeleteResource {
 
     /**
-     * <p> 处理DELETE资源数据 </p>
+     * DELETE 资源API，用于处理 DELETE 资源数据。
      *
      * @param requestData 请求数据字符串
      * @return 响应对象

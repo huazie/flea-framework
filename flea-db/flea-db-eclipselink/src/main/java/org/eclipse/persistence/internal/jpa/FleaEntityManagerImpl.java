@@ -14,6 +14,7 @@ import org.eclipse.persistence.internal.sessions.CommitManager;
 import org.eclipse.persistence.internal.sessions.FleaCommitManager;
 import org.eclipse.persistence.internal.sessions.FleaUnitOfWork;
 import org.eclipse.persistence.internal.sessions.RepeatableWriteUnitOfWork;
+import org.eclipse.persistence.jpa.JpaEntityManagerFactory;
 import org.eclipse.persistence.logging.SessionLog;
 import org.eclipse.persistence.sessions.broker.SessionBroker;
 import org.eclipse.persistence.sessions.server.ServerSession;
@@ -57,7 +58,7 @@ public final class FleaEntityManagerImpl extends EntityManagerImpl {
      * @since 1.2.0
      */
     private FleaEntityManagerImpl(EntityManager entityManager) {
-        super(entityManager.getEntityManagerFactory().unwrap(EntityManagerFactoryImpl.class).unwrap(), entityManager.getProperties(), null);
+        super(entityManager.getEntityManagerFactory().unwrap(JpaEntityManagerFactory.class).unwrap(), entityManager.getProperties(), null);
     }
 
     /**

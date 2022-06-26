@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * <p> Flea Jersey 响应对象 </p>
+ * Flea Jersey 响应对象
  *
  * @author huazie
  * @version 1.0.0

@@ -11,6 +11,7 @@ import com.huazie.ffs.pojo.upload.output.OutputUploadAuthInfo;
 import com.huazie.fleaframework.common.DateFormatEnum;
 import com.huazie.fleaframework.common.FleaFrameManager;
 import com.huazie.fleaframework.common.IFleaUser;
+import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.common.util.DateUtils;
@@ -19,7 +20,7 @@ import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.RandomCode;
 import com.huazie.fleaframework.common.util.json.GsonUtils;
 import com.huazie.fleaframework.common.util.xml.JABXUtils;
-import com.huazie.fleaframework.jersey.client.core.FleaJerseyClient;
+import com.huazie.fleaframework.jersey.client.bean.FleaJerseyClient;
 import com.huazie.fleaframework.jersey.client.request.RequestModeEnum;
 import com.huazie.fleaframework.jersey.client.response.Response;
 import com.huazie.fleaframework.jersey.common.FleaJerseyConstants;
@@ -46,12 +47,11 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 /**
- * <p>  </p>
- *
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0
@@ -65,8 +65,8 @@ public class JerseyTest {
     @Before
     public void init() {
         IFleaUser fleaUser = new FleaUserImpl();
-        fleaUser.setAccountId(10000001L);
-        fleaUser.set("ACCOUNT_CODE", "huazie");
+        fleaUser.setAccountId(10001L);
+        fleaUser.set("ACCOUNT_CODE", "2352553988@qq.com");
         FleaFrameManager.getManager().setUserInfo(fleaUser);
         applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
         LOGGER.debug("ApplicationContext={}", applicationContext);
@@ -86,49 +86,12 @@ public class JerseyTest {
     }
 
     @Test
-    public void testUploadAuth() {
-        try {
-            String clientCode = "FLEA_CLIENT_UPLOAD_AUTH";
-
-            InputUploadAuthInfo uploadAuthInfo = new InputUploadAuthInfo();
-            uploadAuthInfo.setFileName("美丽的风景.png");
-
-            FleaJerseyClient client = applicationContext.getBean(FleaJerseyClient.class);
-
-            Response<OutputUploadAuthInfo> response = client.invoke(clientCode, uploadAuthInfo, OutputUploadAuthInfo.class);
-
-            LOGGER.debug("result = {}", response);
-        } catch (Exception e) {
-            LOGGER.debug("Exception = ", e);
-        }
-    }
-
-    @Test
-    public void testDownloadAuth() {
-        try {
-            String clientCode = "FLEA_CLIENT_DOWNLOAD_AUTH";
-
-            InputDownloadAuthInfo downloadAuthInfo = new InputDownloadAuthInfo();
-            downloadAuthInfo.setFileId("123123123123123123123");
-
-            FleaJerseyClient client = applicationContext.getBean(FleaJerseyClient.class);
-
-            Response<OutputDownloadAuthInfo> response = client.invoke(clientCode, downloadAuthInfo, OutputDownloadAuthInfo.class);
-
-            LOGGER.debug("result = {}", response);
-        } catch (Exception e) {
-            LOGGER.error("Exception = ", e);
-        }
-    }
-
-    @Test
     public void testGetFleaRequest() {
         FleaJerseyRequest request = new FleaJerseyRequest();
         FleaJerseyRequestData requestData = new FleaJerseyRequestData();
 
         RequestPublicData publicData = new RequestPublicData();
         publicData.setSystemAccountId("1000");
-        publicData.setSystemAccountPassword("asd123");
         publicData.setResourceCode("upload");
         publicData.setServiceCode("FLEA_SERVICE_UPLOAD_AUTH");
 
@@ -159,7 +122,6 @@ public class JerseyTest {
 
         RequestPublicData publicData = new RequestPublicData();
         publicData.setSystemAccountId("1000");
-        publicData.setSystemAccountPassword("asd123");
         publicData.setAccountId("11000");
         publicData.setResourceCode("upload");
         publicData.setServiceCode("FLEA_SERVICE_FILE_UPLOAD");
@@ -202,27 +164,6 @@ public class JerseyTest {
     }
 
     @Test
-    public void testUploadFile() {
-        try {
-            String clientCode = "FLEA_CLIENT_FILE_UPLOAD";
-
-            InputFileUploadInfo input = new InputFileUploadInfo();
-            input.setToken(RandomCode.toUUID());
-
-            File file = new File("E:\\IMG.jpg");
-            FleaJerseyManager.getManager().addFileDataBodyPart(file);
-
-            FleaJerseyClient client = applicationContext.getBean(FleaJerseyClient.class);
-
-            Response<OutputFileUploadInfo> response = client.invoke(clientCode, input, OutputFileUploadInfo.class);
-
-            LOGGER.debug("result = {}", response);
-        } catch (Exception e) {
-            LOGGER.debug("Exception = ", e);
-        }
-    }
-
-    @Test
     public void testDownloadFileOrigin() throws Exception {
 
         FleaJerseyRequest request = new FleaJerseyRequest();
@@ -230,7 +171,6 @@ public class JerseyTest {
 
         RequestPublicData publicData = new RequestPublicData();
         publicData.setSystemAccountId("1000");
-        publicData.setSystemAccountPassword("asd123");
         publicData.setAccountId("11000");
         publicData.setResourceCode("download");
         publicData.setServiceCode("FLEA_SERVICE_FILE_DOWNLOAD");
@@ -286,36 +226,76 @@ public class JerseyTest {
     }
 
     @Test
-    public void testDownloadFile() {
-        try {
-            String clientCode = "FLEA_CLIENT_FILE_DOWNLOAD";
+    public void testUploadAuth() throws CommonException {
+        String clientCode = "FLEA_CLIENT_UPLOAD_AUTH";
 
-            InputFileDownloadInfo input = new InputFileDownloadInfo();
-            input.setToken(RandomCode.toUUID());
+        InputUploadAuthInfo uploadAuthInfo = new InputUploadAuthInfo();
+        uploadAuthInfo.setFileName("美丽的风景.png");
 
-            FleaJerseyClient client = applicationContext.getBean(FleaJerseyClient.class);
+        FleaJerseyClient client = applicationContext.getBean(FleaJerseyClient.class);
 
-            Response<OutputFileDownloadInfo> response = client.invoke(clientCode, input, OutputFileDownloadInfo.class);
+        Response<OutputUploadAuthInfo> response = client.invoke(clientCode, uploadAuthInfo, OutputUploadAuthInfo.class);
 
-            LOGGER.debug("result = {}", response);
+        LOGGER.debug("result = {}", response);
+    }
 
-            OutputFileDownloadInfo output = response.getOutput();
+    @Test
+    public void testDownloadAuth() throws CommonException {
+        String clientCode = "FLEA_CLIENT_DOWNLOAD_AUTH";
 
-            // 获取文件信息
-            FleaFileObject fileObject = FleaJerseyManager.getManager().getFileObject();
-            String fileName = fileObject.getFileName();
-            File downloadFile = fileObject.getFile();
+        InputDownloadAuthInfo downloadAuthInfo = new InputDownloadAuthInfo();
+        downloadAuthInfo.setFileId("123123123123123123123");
 
-            String uploadSystemAccountId = output.getUploadSystemAcctId();
-            String uploadAccountId = output.getUploadAcctId();
-            String uploadDate = output.getUploadDate();
+        FleaJerseyClient client = applicationContext.getBean(FleaJerseyClient.class);
 
-            if (downloadFile.exists()) {
-                IOUtils.toFile(new FileInputStream(downloadFile), "E:\\" + uploadDate + "_" + uploadSystemAccountId + "_" + uploadAccountId + "_" + fileName);
-            }
+        Response<OutputDownloadAuthInfo> response = client.invoke(clientCode, downloadAuthInfo, OutputDownloadAuthInfo.class);
 
-        } catch (Exception e) {
-            LOGGER.error("Exception = ", e);
+        LOGGER.debug("result = {}", response);
+    }
+
+    @Test
+    public void testUploadFile() throws CommonException {
+        String clientCode = "FLEA_CLIENT_FILE_UPLOAD";
+
+        InputFileUploadInfo input = new InputFileUploadInfo();
+        input.setToken(RandomCode.toUUID());
+
+        File file = new File("E:\\IMG.jpg");
+        FleaJerseyManager.getManager().addFileDataBodyPart(file);
+
+        FleaJerseyClient client = applicationContext.getBean(FleaJerseyClient.class);
+
+        Response<OutputFileUploadInfo> response = client.invoke(clientCode, input, OutputFileUploadInfo.class);
+
+        LOGGER.debug("result = {}", response);
+    }
+
+    @Test
+    public void testDownloadFile() throws FileNotFoundException, CommonException {
+        String clientCode = "FLEA_CLIENT_FILE_DOWNLOAD";
+
+        InputFileDownloadInfo input = new InputFileDownloadInfo();
+        input.setToken(RandomCode.toUUID());
+
+        FleaJerseyClient client = applicationContext.getBean(FleaJerseyClient.class);
+
+        Response<OutputFileDownloadInfo> response = client.invoke(clientCode, input, OutputFileDownloadInfo.class);
+
+        LOGGER.debug("result = {}", response);
+
+        OutputFileDownloadInfo output = response.getOutput();
+
+        // 获取文件信息
+        FleaFileObject fileObject = FleaJerseyManager.getManager().getFileObject();
+        String fileName = fileObject.getFileName();
+        File downloadFile = fileObject.getFile();
+
+        String uploadSystemAccountId = output.getUploadSystemAcctId();
+        String uploadAccountId = output.getUploadAcctId();
+        String uploadDate = output.getUploadDate();
+
+        if (downloadFile.exists()) {
+            IOUtils.toFile(new FileInputStream(downloadFile), "E:\\" + uploadDate + "_" + uploadSystemAccountId + "_" + uploadAccountId + "_" + fileName);
         }
     }
 }

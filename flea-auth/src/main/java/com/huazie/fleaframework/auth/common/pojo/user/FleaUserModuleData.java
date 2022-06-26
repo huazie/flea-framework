@@ -53,9 +53,9 @@ public class FleaUserModuleData implements Serializable {
     }
 
     /**
-     * 获取用户属性的Map集合，其中键为属性码，值为属性值。
+     * 获取用户扩展属性的Map集合，其中键为属性码，值为属性值。
      *
-     * @return 用户属性的Map集合
+     * @return 用户扩展属性的Map集合
      * @since 2.0.0
      */
     public Map<String, Object> toUserAttrMap() {
@@ -63,10 +63,10 @@ public class FleaUserModuleData implements Serializable {
     }
 
     /**
-     * 获取用户属性的Map集合，其中键为prefix + 下划线 + 属性码，值为属性值。
+     * 获取用户扩展属性的Map集合，其中键为prefix + 下划线 + 属性码，值为属性值。
      *
      * @param prefix 前缀标识
-     * @return 用户属性的Map集合
+     * @return 用户扩展属性的Map集合
      * @since 2.0.0
      */
     public Map<String, Object> toUserAttrMap(String prefix) {
@@ -82,10 +82,10 @@ public class FleaUserModuleData implements Serializable {
     }
 
     /**
-     * 获取指定属性码对应的用户属性值
+     * 获取指定属性码对应的用户扩展属性值
      *
      * @param attrCode 属性码
-     * @return 用户属性值
+     * @return 用户扩展属性值
      * @since 2.0.0
      */
     public Object getUserAttrValue(String attrCode) {
@@ -104,9 +104,9 @@ public class FleaUserModuleData implements Serializable {
     }
 
     /**
-     * 获取账户属性的Map集合，其中键为属性码，值为属性值。
+     * 获取账户扩展属性的Map集合，其中键为属性码，值为属性值。
      *
-     * @return 账户属性的Map集合
+     * @return 账户扩展属性的Map集合
      * @since 2.0.0
      */
     public Map<String, Object> toAccountAttrMap() {
@@ -114,10 +114,10 @@ public class FleaUserModuleData implements Serializable {
     }
 
     /**
-     * 获取账户属性的Map集合，其中键为prefix + 下划线 + 属性码，值为属性值。
+     * 获取账户扩展属性的Map集合，其中键为prefix + 下划线 + 属性码，值为属性值。
      *
      * @param prefix 前缀标识
-     * @return 账户属性的Map集合
+     * @return 账户扩展属性的Map集合
      * @since 2.0.0
      */
     public Map<String, Object> toAccountAttrMap(String prefix) {
@@ -133,10 +133,10 @@ public class FleaUserModuleData implements Serializable {
     }
 
     /**
-     * 获取指定属性码对应的账户属性值
+     * 获取指定属性码对应的账户扩展属性值
      *
      * @param attrCode 属性码
-     * @return 账户属性值
+     * @return 账户扩展属性值
      * @since 2.0.0
      */
     public Object getAccountAttrValue(String attrCode) {

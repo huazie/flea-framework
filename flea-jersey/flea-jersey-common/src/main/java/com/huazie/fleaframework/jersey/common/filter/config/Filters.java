@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p> 过滤器链配置对象 </p>
+ * 过滤器链配置对象
  *
  * @author huazie
  * @version 1.0.0
@@ -17,7 +17,7 @@ public class Filters {
     private List<Filter> filters = new ArrayList<>();
 
     /**
-     * <p> 获取过滤器链 </p>
+     * 获取过滤器链
      *
      * @return 过滤器链
      * @since 1.0.0
@@ -27,7 +27,7 @@ public class Filters {
     }
 
     /**
-     * <p> 获取过滤器链 </p>
+     * 获取过滤器链
      *
      * @return 过滤器链
      * @since 1.0.0
@@ -37,7 +37,7 @@ public class Filters {
     }
 
     /**
-     * <p> 添加一个过滤器配置对象 </p>
+     * 添加一个过滤器配置对象
      *
      * @param filter 过滤器配置对象
      * @since 1.0.0

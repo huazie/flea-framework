@@ -16,16 +16,25 @@ import java.util.List;
 public interface IFleaMenuDAO extends IAbstractFleaJPADAO<FleaMenu> {
 
     /**
-     * 获取有效的菜单信息
+     * 根据菜单编号，查询有效的Flea菜单数据
      *
      * @param menuId    菜单编号
+     * @return Flea菜单实体
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    FleaMenu queryValidMenu(Long menuId) throws CommonException;
+
+    /**
+     * 根据菜单编码、菜单名称、菜单等级和父菜单编号，查询有效的Flea菜单数据集
+     *
      * @param menuCode  菜单编码
      * @param menuName  菜单名称
      * @param menuLevel 菜单等级
      * @param parentId  父菜单编号
-     * @return 菜单信息列表
+     * @return Flea菜单数据集
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    List<FleaMenu> getValidMenu(Long menuId, String menuCode, String menuName, Integer menuLevel, Long parentId) throws CommonException;
+    List<FleaMenu> queryValidMenus(String menuCode, String menuName, Integer menuLevel, Long parentId) throws CommonException;
 }

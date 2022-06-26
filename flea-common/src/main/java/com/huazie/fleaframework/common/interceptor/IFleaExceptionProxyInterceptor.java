@@ -16,7 +16,7 @@ import java.lang.reflect.Method;
 public interface IFleaExceptionProxyInterceptor {
 
     /**
-     * <p> 异常处理 </p>
+     * 异常处理
      *
      * @param proxyObject 实际代理的对象
      * @param method      与在代理实例上调用的接口方法相对应的Method实例

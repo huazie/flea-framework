@@ -1,6 +1,7 @@
 package com.huazie.fleaframework.auth.base.role.service.interfaces;
 
 import com.huazie.fleaframework.auth.base.role.entity.FleaRoleGroupRel;
+import com.huazie.fleaframework.auth.common.pojo.role.FleaRoleGroupRelPOJO;
 import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.db.jpa.service.interfaces.IAbstractFleaJPASV;
 
@@ -16,13 +17,23 @@ import java.util.List;
 public interface IFleaRoleGroupRelSV extends IAbstractFleaJPASV<FleaRoleGroupRel> {
 
     /**
-     * 获取指定角色组编号【roleGroupId】关联的指定授权关联类型【authRelType】的角色组关联信息
+     * 根据角色组编号、授权关联类型，查询角色组关联数据。
      *
      * @param roleGroupId 角色组编号
      * @param authRelType 授权关联类型
-     * @return 角色组关联信息
+     * @return 角色组关联数据
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
     List<FleaRoleGroupRel> getRoleGroupRelList(Long roleGroupId, String authRelType) throws CommonException;
+
+    /**
+     * 保存Flea角色组关联数据
+     *
+     * @param fleaRoleGroupRelPOJO Flea角色组关联POJO对象
+     * @return Flea角色组关联数据
+     * @throws CommonException 通用异常
+     * @since 2.0.0
+     */
+    FleaRoleGroupRel saveRoleGroupRel(FleaRoleGroupRelPOJO fleaRoleGroupRelPOJO) throws CommonException;
 }

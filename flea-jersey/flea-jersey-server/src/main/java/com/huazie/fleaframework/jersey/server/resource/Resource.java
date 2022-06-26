@@ -25,7 +25,8 @@ import javax.ws.rs.core.Request;
 import javax.ws.rs.core.UriInfo;
 
 /**
- * <p> Flea Jersey 资源父类 </p>
+ * Flea Jersey 接口资源父类，包含普通资源的公共处理逻辑，
+ * 上传资源的公共处理逻辑，下载资源的公共处理逻辑。
  *
  * @author huazie
  * @version 1.0.0
@@ -57,7 +58,7 @@ public abstract class Resource {
     protected ResourceInfo resourceInfo; // 资源信息
 
     /**
-     * <p> 处理资源数据 </p>
+     * 处理资源数据 
      *
      * @param fleaJerseyRequest 请求对象
      * @return 响应对象
@@ -69,7 +70,7 @@ public abstract class Resource {
     }
 
     /**
-     * <p> 处理资源数据 </p>
+     * 处理资源数据 
      *
      * @param requestData 请求数据字符串
      * @return 响应对象
@@ -81,7 +82,7 @@ public abstract class Resource {
     }
 
     /**
-     * <p> 处理文件上传资源数据 </p>
+     * 处理文件上传资源数据 
      *
      * @param formDataMultiPart 表单数据
      * @return 响应对象
@@ -111,7 +112,7 @@ public abstract class Resource {
     }
 
     /**
-     * <p> 处理文件下载资源数据 </p>
+     * 处理文件下载资源数据 
      *
      * @param requestData 请求数据字符串
      * @return Jersey响应对象
@@ -138,7 +139,7 @@ public abstract class Resource {
     }
 
     /**
-     * <p> 初始化上下文对象 </p>
+     * 初始化上下文对象 
      *
      * @since 1.0.0
      */

@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * <p> 请求业务数据 </p>
+ * 请求业务数据
  *
  * @author huazie
  * @version 1.0.0

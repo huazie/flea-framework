@@ -62,9 +62,6 @@ public abstract class AbstractFleaCache implements IFleaCache {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug1(obj, "VALUE = {}", value);
             }
-            if (value instanceof NullCache) {
-                value = null;
-            }
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error1(new Object() {}, "The action of getting [" + cache.getName() + "] cache occurs exception : ", e);
@@ -97,16 +94,17 @@ public abstract class AbstractFleaCache implements IFleaCache {
             obj = new Object() {};
             LOGGER.debug1(obj, "KEYS = {}", keySet);
         }
-        if (CollectionUtils.isNotEmpty(keySet)) {
-            for (String key : keySet) {
-                Object result = deleteNativeValue(getNativeKey(key));
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug1(obj, "Result = {}", result);
-                }
+
+        if (CollectionUtils.isEmpty(keySet)) return;
+
+        for (String key : keySet) {
+            Object result = deleteNativeValue(getNativeKey(key));
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug1(obj, "Result = {}", result);
             }
-            // 删除 记录当前Cache所有数据键关键字 的缓存
-            deleteCacheAllKey();
         }
+        // 删除 记录当前Cache所有数据键关键字 的缓存
+        deleteCacheAllKey();
     }
 
     @Override
@@ -153,29 +151,32 @@ public abstract class AbstractFleaCache implements IFleaCache {
      */
     private void deleteCacheKey(String key) {
         Set<String> keySet = getCacheKey();
-        if (CollectionUtils.isNotEmpty(keySet)) {
-            // 存在待删除的数据键关键字
-            if (keySet.contains(key)) {
-                Object obj = null;
-                if (LOGGER.isDebugEnabled()) {
-                    obj = new Object() {};
-                    LOGGER.debug1(obj, "Delete cache of recording all key, KEY = {}", key);
-                }
-                if (CommonConstants.NumeralConstants.INT_ONE == keySet.size()) {
-                    deleteCacheAllKey(); // 直接将记录当前Cache所有数据键关键字的缓存从缓存中清空
-                } else {
-                    // 将数据键关键字从Set集合中删除
-                    keySet.remove(key);
-                    // 重新覆盖当前Cache所有数据键关键字的缓存信息
-                    Object result = putNativeValue(getNativeCacheKey(name), keySet, CommonConstants.NumeralConstants.INT_ZERO);
-                    if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug1(obj, "Result = {}", result);
-                    }
-                }
+
+        if (CollectionUtils.isEmpty(keySet)) return;
+
+        // 存在待删除的数据键关键字
+        if (keySet.contains(key)) {
+            Object obj = null;
+            if (LOGGER.isDebugEnabled()) {
+                obj = new Object() {
+                };
+                LOGGER.debug1(obj, "Delete cache of recording all key, KEY = {}", key);
+            }
+            if (CommonConstants.NumeralConstants.INT_ONE == keySet.size()) {
+                deleteCacheAllKey(); // 直接将记录当前Cache所有数据键关键字的缓存从缓存中清空
             } else {
+                // 将数据键关键字从Set集合中删除
+                keySet.remove(key);
+                // 重新覆盖当前Cache所有数据键关键字的缓存信息
+                Object result = putNativeValue(getNativeCacheKey(name), keySet, CommonConstants.NumeralConstants.INT_ZERO);
                 if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug1(new Object() {}, "The CacheKey of [{}] is not exist", key);
+                    LOGGER.debug1(obj, "Result = {}", result);
                 }
+            }
+        } else {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug1(new Object() {
+                }, "The CacheKey of [{}] is not exist", key);
             }
         }
     }

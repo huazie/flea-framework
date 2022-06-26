@@ -31,6 +31,7 @@
 		<class>com.huazie.fleaframework.auth.base.function.entity.FleaElement</class>
 		<class>com.huazie.fleaframework.auth.base.function.entity.FleaMenu</class>
 		<class>com.huazie.fleaframework.auth.base.function.entity.FleaOperation</class>
+		<class>com.huazie.fleaframework.auth.base.function.entity.FleaResource</class>
 		<class>com.huazie.fleaframework.auth.base.function.entity.FleaFunctionAttr</class>
 
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>

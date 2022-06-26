@@ -22,7 +22,7 @@ public class ConfigItems extends ConfigKeyMap<ConfigItem> {
     }
 
     /**
-     * <p> 添加一个配置项 </p>
+     * 添加一个配置项
      *
      * @param configItem 配置项
      * @since 1.0.0
@@ -38,7 +38,7 @@ public class ConfigItems extends ConfigKeyMap<ConfigItem> {
     }
 
     /**
-     * <p> 根据Key获取指定的配置项 </p>
+     * 根据Key获取指定的配置项
      *
      * @param key 配置项键
      * @return 配置项

@@ -1,7 +1,8 @@
 package com.huazie.fleaframework.jersey.common.filter.config;
 
 /**
- * <p> flea-jersey-filter.xml 配置 {@code <service> </service>} 业务服务过滤器链节点 </p>
+ * 业务服务过滤器链，可从配置文件【flea-jersey-filter.xml】
+ * 中查看 {@code <service> </service>} 节点
  *
  * @author huazie
  * @version 1.0.0
@@ -9,7 +10,7 @@ package com.huazie.fleaframework.jersey.common.filter.config;
  */
 public class Service extends Filters {
     /**
-     * <p> 添加一个业务服务过滤器配置对象 </p>
+     * 添加一个业务服务过滤器配置对象
      *
      * @param filter 过滤器配置对象
      * @since 1.0.0

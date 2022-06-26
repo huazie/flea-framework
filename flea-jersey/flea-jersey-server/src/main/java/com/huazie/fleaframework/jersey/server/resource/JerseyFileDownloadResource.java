@@ -7,7 +7,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 /**
- * <p> Jersey 文件下载资源 </p>
+ * Jersey 文件下载资源接口，只包含文件下载资源API。
  *
  * @author huazie
  * @version 1.0.0
@@ -16,10 +16,10 @@ import javax.ws.rs.core.MediaType;
 public interface JerseyFileDownloadResource {
 
     /**
-     * <p> 处理文件下载资源数据 </p>
+     * 文件下载资源API，用于处理文件下载资源数据。
      *
      * @param requestData 请求数据字符串
-     * @return Jersey响应对象
+     * @return 支持媒体类型的表单数据
      * @since 1.0.0
      */
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})

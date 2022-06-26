@@ -220,11 +220,18 @@ public abstract class FleaLibTableSplitHandler implements IFleaJPASplitHandler {
         SplitLib splitLib = getSplitLibFromEntity(entity);
 
         // 分表场景 或 分表场景 或 当前线程存在自定义的Flea实体管理器实现, 直接获取
+        T t;
         if (isFleaEntityManagerImpl(entityManager, splitTable, splitLib)) {
-            return findInner(entityManager, primaryKey, entityClass, splitTable);
+            t = findInner(entityManager, primaryKey, entityClass, splitTable);
         } else {
-            return entityManager.find(entityClass, primaryKey);
+            t =  entityManager.find(entityClass, primaryKey);
         }
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug1(new Object() {}, entityClass.getSimpleName() + " = {}", t);
+        }
+
+        return t;
     }
 
     @Override

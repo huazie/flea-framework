@@ -5,7 +5,7 @@ import com.huazie.fleaframework.jersey.server.resource.JerseyDeleteResource;
 import com.huazie.fleaframework.jersey.server.resource.Resource;
 
 /**
- * <p> Flea Jersey Delete Resource </p>
+ * Flea Jersey DELETE 资源，只包含 DELETE 资源API。
  *
  * @author huazie
  * @version 1.0.0

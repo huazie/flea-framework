@@ -9,7 +9,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 
 /**
- * <p> Flea Jersey File Post Resource </p>
+ * Flea Jersey 文件 POST 资源，只包含文件 POST 资源API。
  *
  * @author huazie
  * @version 1.0.0

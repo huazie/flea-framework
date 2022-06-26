@@ -3,7 +3,7 @@ package com.huazie.fleaframework.common;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 
 /**
- * <p> Flea Session Manager </p>
+ * Flea Session Manager
  *
  * @author huazie
  * @version 1.0.0
@@ -15,7 +15,7 @@ public class FleaSessionManager {
     }
 
     /**
-     * <p> 获取当前线程的用户信息 </p>
+     * 获取当前线程的用户信息
      *
      * @return 当前线程的用户信息
      * @since 1.0.0
@@ -25,7 +25,7 @@ public class FleaSessionManager {
     }
 
     /**
-     * <p> 设置当前线程的用户信息 </p>
+     * 设置当前线程的用户信息
      *
      * @param fleaUser 用户信息
      * @since 1.0.0
@@ -35,7 +35,7 @@ public class FleaSessionManager {
     }
 
     /**
-     * <p> 获取当前操作账户编号 </p>
+     * 获取当前操作账户编号
      *
      * @return 当前操作账户编号
      * @since 1.0.0
@@ -53,7 +53,7 @@ public class FleaSessionManager {
     }
 
     /**
-     * <p> 获取当前操作账户编号 </p>
+     * 获取当前操作账户编号
      *
      * @return 当前操作账户编号
      * @since 1.0.0
@@ -71,7 +71,7 @@ public class FleaSessionManager {
     }
 
     /**
-     * <p> 获取当前系统账户编号 </p>
+     * 获取当前系统账户编号
      *
      * @return 当前系统账户编号
      * @since 1.0.0
@@ -89,7 +89,7 @@ public class FleaSessionManager {
     }
 
     /**
-     * <p> 获取用户其他信息 </p>
+     * 获取用户其他信息
      *
      * @param key   其他信息键
      * @param clazz 其他信息Class对象

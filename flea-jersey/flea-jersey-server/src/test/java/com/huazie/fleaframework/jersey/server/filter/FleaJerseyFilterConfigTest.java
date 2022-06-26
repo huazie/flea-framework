@@ -44,4 +44,8 @@ public class FleaJerseyFilterConfigTest {
         LOGGER.debug("error={}", FleaJerseyFilterConfig.getErrorFilters());
     }
 
+    @Test
+    public void testJerseyFilterConfigOfI18nError() {
+        LOGGER.debug("i18n-error-mapping={}", FleaJerseyFilterConfig.getI18nErrorMapping("ERROR-JERSEY-FILTER0000000003"));
+    }
 }

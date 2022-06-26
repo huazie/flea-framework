@@ -5,7 +5,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import java.io.Serializable;
 
 /**
- * <p> 定义公用的返回数据 </p>
+ * 定义公用的返回数据
  *
  * @author huazie
  * @version 1.0.0
@@ -22,7 +22,7 @@ public class OutputCommonData implements Serializable {
     }
 
     /**
-     * <p> 带参数的构造方法 </p>
+     * 带参数的构造方法
      *
      * @param retCode 返回码
      * @param retMess 返回信息

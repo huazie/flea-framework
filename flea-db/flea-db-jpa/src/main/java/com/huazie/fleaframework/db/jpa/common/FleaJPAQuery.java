@@ -1112,7 +1112,12 @@ public final class FleaJPAQuery implements Closeable {
      */
     public <T> List<T> getResultList() throws CommonException {
         try {
-            return (List<T>) createQuery(false).getResultList();
+            List<T> resultList = (List<T>) createQuery(false).getResultList();
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("ResultList = {}", resultList);
+                LOGGER.debug("Size = {}", null != resultList ? resultList.size() : 0);
+            }
+            return resultList;
         } finally {
             // 将Flea JPA查询对象重置，并归还给对象池
             close();
@@ -1136,7 +1141,12 @@ public final class FleaJPAQuery implements Closeable {
             query.setFirstResult(start);
             // 设置一次最大查询数量
             query.setMaxResults(max);
-            return (List<T>) query.getResultList();
+            List<T> resultList = (List<T>) query.getResultList();
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug1(new Object(){}, "ResultList = {}", resultList);
+                LOGGER.debug1(new Object(){}, "Size = {}", null != resultList ? resultList.size() : 0);
+            }
+            return resultList;
         } finally {
             // 将Flea JPA查询对象重置，并归还给对象池
             close();
@@ -1157,7 +1167,10 @@ public final class FleaJPAQuery implements Closeable {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug1(new Object() {}, "pageNum = {}, pageCount = {}", pageNum, pageCount);
         }
-        return getResultList((pageNum - 1) * pageCount, pageCount);
+        if (pageNum > 0 && pageCount > 0)
+            return getResultList((pageNum - 1) * pageCount, pageCount);
+        else
+            return getResultList();
     }
 
     /**
@@ -1170,7 +1183,12 @@ public final class FleaJPAQuery implements Closeable {
      */
     public <T> List<T> getSingleResultList() throws CommonException {
         try {
-            return (List<T>) createQuery(true).getResultList();
+            List<T> singleResultList = (List<T>) createQuery(true).getResultList();
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Single ResultList = {}", singleResultList);
+                LOGGER.debug("Size = {}", null != singleResultList ? singleResultList.size() : 0);
+            }
+            return singleResultList;
         } finally {
             // 将Flea JPA查询对象重置，并归还给对象池
             close();
@@ -1194,7 +1212,12 @@ public final class FleaJPAQuery implements Closeable {
             query.setFirstResult(start);
             // 设置一次最大查询数量
             query.setMaxResults(max);
-            return (List<T>) query.getResultList();
+            List<T> singleResultList = (List<T>) query.getResultList();
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug1(new Object(){}, "Single ResultList = {}", singleResultList);
+                LOGGER.debug1(new Object(){}, "Size = {}", null != singleResultList ? singleResultList.size() : 0);
+            }
+            return singleResultList;
         } finally {
             // 将Flea JPA查询对象重置，并归还给对象池
             close();
@@ -1217,9 +1240,13 @@ public final class FleaJPAQuery implements Closeable {
      * @see #sumAsDouble(String)
      * @since 1.0.0
      */
-    public Object getSingleResult() throws CommonException {
+    public <T> T getSingleResult() throws CommonException {
         try {
-            return createQuery(true).getSingleResult();
+            T result = (T) createQuery(true).getSingleResult();
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Single Result = {}", result);
+            }
+            return result;
         } finally {
             // 将Flea JPA查询对象重置，并归还给对象池
             close();

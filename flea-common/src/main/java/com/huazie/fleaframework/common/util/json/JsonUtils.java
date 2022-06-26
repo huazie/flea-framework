@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <p> Json 工具包 </p>
+ * Json 工具包
  *
  * @author huazie
  * @version 1.0.0
@@ -28,7 +28,7 @@ public class JsonUtils {
     }
 
     /**
-     * <p> 使用net.sf.json解析，获取String对象的List集合 </p>
+     * 使用net.sf.json解析，获取String对象的List集合
      *
      * @param json json字符串
      * @param key  json串的键
@@ -68,7 +68,7 @@ public class JsonUtils {
     }
 
     /**
-     * <p> 使用net.sf.json解析，获取Map对象的List集合 </p>
+     * 使用net.sf.json解析，获取Map对象的List集合
      *
      * @param json json字符串
      * @param key  json对象的键

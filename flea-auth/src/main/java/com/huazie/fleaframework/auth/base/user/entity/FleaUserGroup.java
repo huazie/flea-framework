@@ -1,6 +1,8 @@
 package com.huazie.fleaframework.auth.base.user.entity;
 
+import com.huazie.fleaframework.common.EntityStateEnum;
 import com.huazie.fleaframework.common.FleaEntity;
+import com.huazie.fleaframework.common.util.DateUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import javax.persistence.Column;
@@ -18,7 +20,7 @@ import java.util.Date;
  * Flea用户组表对应的实体类
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 @Entity
@@ -65,6 +67,30 @@ public class FleaUserGroup extends FleaEntity {
 
     @Column(name = "remarks")
     private String remarks; // 备注信息
+
+    /**
+     * 无参数构造方法
+     *
+     * @since 2.0.0
+     */
+    public FleaUserGroup() {
+    }
+
+    /**
+     * 带参数构造方法
+     *
+     * @param userGroupName 用户组名称
+     * @param userGroupDesc 用户组描述
+     * @param remarks       备注信息
+     * @since 2.0.0
+     */
+    public FleaUserGroup(String userGroupName, String userGroupDesc, String remarks) {
+        this.userGroupName = userGroupName;
+        this.userGroupDesc = userGroupDesc;
+        this.userGroupState = EntityStateEnum.IN_USE.getState();
+        this.createDate = DateUtils.getCurrentTime();
+        this.remarks = remarks;
+    }
 
     public Long getUserGroupId() {
         return userGroupId;

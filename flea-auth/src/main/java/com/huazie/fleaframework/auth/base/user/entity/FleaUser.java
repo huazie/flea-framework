@@ -123,7 +123,7 @@ public class FleaUser extends FleaEntity {
             userState = UserStateEnum.IN_AUDITING.getState();
         }
         this.userState = userState;
-        createDate = DateUtils.getCurrentTime();
+        this.createDate = DateUtils.getCurrentTime();
         if (ObjectUtils.isEmpty(effectiveDate)) {
             effectiveDate = DateUtils.getCurrentTime();
         }

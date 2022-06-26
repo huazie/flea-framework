@@ -6,7 +6,7 @@ import com.huazie.fleaframework.jersey.server.resource.JerseyResource;
 import com.huazie.fleaframework.jersey.server.resource.Resource;
 
 /**
- * <p> Flea Jersey资源（包含GET, POST, PUT, DELETE） </p>
+ * Flea Jersey资源抽象类，包含 GET, POST, PUT, DELETE 资源API。
  *
  * @author huazie
  * @version 1.0.0

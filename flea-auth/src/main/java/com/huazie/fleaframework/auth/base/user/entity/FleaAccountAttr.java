@@ -18,7 +18,7 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 /**
- * Flea账户属性表对应的实体类
+ * Flea账户扩展属性表对应的实体类
  *
  * @author huazie
  * @version 1.0.0

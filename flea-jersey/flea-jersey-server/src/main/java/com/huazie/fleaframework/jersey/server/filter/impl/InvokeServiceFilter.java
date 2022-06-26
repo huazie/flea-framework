@@ -21,7 +21,15 @@ import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 
 /**
- * <p> 服务调用过滤器 </p>
+ * 资源服务调用过滤器实现，它是Flea Jersey接口的核心逻辑。
+ *
+ * <p> 它首先从请求公共报文中获取资源编码【RESOURCE_CODE】 和
+ * 服务编码【SERVICE_CODE】，根据它俩获取相关资源服务配置数据，
+ * 其中包括资源服务接口、方法、出入参【由服务提供方约定】等。
+ *
+ * <p> 然后根据服务接口，从Web应用上下文中获取Spring注入的服务，
+ * 取请求业务报文JSON串转换为资源服务方法的入参对象，通过反射调用
+ * 对应的资源服务方法，获取业务返回报文，并添加至响应业务报文中。
  *
  * @author huazie
  * @version 1.0.0
@@ -39,8 +47,9 @@ public class InvokeServiceFilter implements IFleaJerseyFilter {
             LOGGER.debug1(obj, "Invoke Service, Start");
         }
 
-        // 获取请求公共报文
+        // 请求公共报文
         RequestPublicData requestPublicData = request.getRequestData().getPublicData();
+        // 请求业务报文
         RequestBusinessData requestBusinessData = request.getRequestData().getBusinessData();
 
         // 获取资源编码
@@ -68,9 +77,9 @@ public class InvokeServiceFilter implements IFleaJerseyFilter {
         String outputParam = resService.getServiceOutput();
 
         Class<?> serviceInterfacesClazz = ReflectUtils.forName(serviceInterfaces);
-        // 请检查服务端配置【service_code = {0} , resource_code = {1}】: 【{2} = {3}】非法
-        ObjectUtils.checkEmpty(serviceInterfacesClazz, FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000009", serviceCode,
-                resourceCode, "service_interfaces", serviceInterfaces);
+        // 请检查服务端配置【service_code = {0} , resource_code = {1}】:【{2} = {3}】非法
+        ObjectUtils.checkEmpty(serviceInterfacesClazz, FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000009",
+                serviceCode, resourceCode, "service_interfaces", serviceInterfaces);
 
         // 根据服务接口，从Web应用上下文中获取Spring注入的服务
         Object serviceObj = webApplicationContext.getBean(serviceInterfacesClazz);
@@ -80,9 +89,9 @@ public class InvokeServiceFilter implements IFleaJerseyFilter {
         }
 
         Class inputClazz = ReflectUtils.forName(inputParam);
-        // 请检查服务端配置【service_code = {0} , resource_code = {1}】: 【{2} = {3}】非法
-        ObjectUtils.checkEmpty(inputClazz, FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000009", serviceCode,
-                resourceCode, "service_input", inputParam);
+        // 请检查服务端配置【service_code = {0} , resource_code = {1}】:【{2} = {3}】非法
+        ObjectUtils.checkEmpty(inputClazz, FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000009",
+                serviceCode, resourceCode, "service_input", inputParam);
 
         String inputJson = requestBusinessData.getInput();
         Object inputObj = GsonUtils.toEntity(inputJson, inputClazz);
@@ -100,17 +109,17 @@ public class InvokeServiceFilter implements IFleaJerseyFilter {
             outputClazz = ReflectUtils.forName(outputParam);
         }
 
-        // 请检查服务端配置【service_code = {0} , resource_code = {1}】: 【{2} = {3}】非法
-        ObjectUtils.checkEmpty(outputClazz, FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000009", serviceCode,
-                resourceCode, "service_output", outputParam);
+        // 请检查服务端配置【service_code = {0} , resource_code = {1}】:【{2} = {3}】非法
+        ObjectUtils.checkEmpty(outputClazz, FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000009",
+                serviceCode, resourceCode, "service_output", outputParam);
 
         if (ObjectUtils.isNotEmpty(outputClazz) && !outputClazz.isInstance(outputObj)) {
             // 资源【{0}】下的服务【{1}】请求异常：配置的出参【{2}】与服务方法【{3}】出参【{4}】类型不一致
-            ExceptionUtils.throwCommonException(FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000010", resourceCode,
-                    serviceCode, outputParam, serviceMethod, outputObj.getClass().getName());
+            ExceptionUtils.throwCommonException(FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000010",
+                    resourceCode, serviceCode, outputParam, serviceMethod, outputObj.getClass().getName());
         }
 
-        // 获取响应业务报文
+        // 响应业务报文
         ResponseBusinessData responseBusinessData = response.getResponseData().getBusinessData();
 
         String outputJson = null;

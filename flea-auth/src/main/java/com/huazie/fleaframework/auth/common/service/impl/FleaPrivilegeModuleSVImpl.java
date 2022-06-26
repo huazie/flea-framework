@@ -5,25 +5,28 @@ import com.huazie.fleaframework.auth.base.privilege.entity.FleaPrivilegeGroup;
 import com.huazie.fleaframework.auth.base.privilege.service.interfaces.IFleaPrivilegeGroupRelSV;
 import com.huazie.fleaframework.auth.base.privilege.service.interfaces.IFleaPrivilegeGroupSV;
 import com.huazie.fleaframework.auth.base.privilege.service.interfaces.IFleaPrivilegeSV;
-import com.huazie.fleaframework.auth.common.AuthRelTypeEnum;
+import com.huazie.fleaframework.auth.common.pojo.FleaAuthRelExtPOJO;
+import com.huazie.fleaframework.auth.common.pojo.privilege.FleaPrivilegeGroupPOJO;
 import com.huazie.fleaframework.auth.common.pojo.privilege.FleaPrivilegeGroupRelPOJO;
+import com.huazie.fleaframework.auth.common.pojo.privilege.FleaPrivilegePOJO;
 import com.huazie.fleaframework.auth.common.service.interfaces.IFleaPrivilegeModuleSV;
+import com.huazie.fleaframework.auth.util.FleaAuthCheck;
+import com.huazie.fleaframework.auth.util.FleaAuthPOJOUtils;
 import com.huazie.fleaframework.common.exception.CommonException;
-import com.huazie.fleaframework.common.i18n.FleaI18nHelper;
 import com.huazie.fleaframework.common.util.DateUtils;
 import com.huazie.fleaframework.common.util.NumberUtils;
-import com.huazie.fleaframework.common.util.ObjectUtils;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import com.huazie.fleaframework.common.util.POJOUtils;
+import com.huazie.fleaframework.common.util.StringUtils;
+import com.huazie.fleaframework.db.jpa.transaction.FleaTransactional;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
 
 /**
  * Flea权限管理服务层
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 @Service("fleaPrivilegeModuleSV")
@@ -35,62 +38,110 @@ public class FleaPrivilegeModuleSVImpl implements IFleaPrivilegeModuleSV {
 
     private IFleaPrivilegeGroupRelSV fleaPrivilegeGroupRelSV; // 权限组关联服务
 
-    @Autowired
-    @Qualifier("fleaPrivilegeSV")
+    @Resource(name = "fleaPrivilegeSV")
     public void setFleaPrivilegeSV(IFleaPrivilegeSV fleaPrivilegeSV) {
         this.fleaPrivilegeSV = fleaPrivilegeSV;
     }
 
-    @Autowired
-    @Qualifier("fleaPrivilegeGroupSV")
+    @Resource(name = "fleaPrivilegeGroupSV")
     public void setFleaPrivilegeGroupSV(IFleaPrivilegeGroupSV fleaPrivilegeGroupSV) {
         this.fleaPrivilegeGroupSV = fleaPrivilegeGroupSV;
     }
 
-    @Autowired
-    @Qualifier("fleaPrivilegeGroupRelSV")
+    @Resource(name = "fleaPrivilegeGroupRelSV")
     public void setFleaPrivilegeGroupRelSV(IFleaPrivilegeGroupRelSV fleaPrivilegeGroupRelSV) {
         this.fleaPrivilegeGroupRelSV = fleaPrivilegeGroupRelSV;
     }
 
     @Override
-    @Transactional(value = "fleaAuthTransactionManager", rollbackFor = Exception.class)
-    public void addPrivilegeGroupRel(FleaPrivilegeGroupRelPOJO fleaPrivilegeGroupRelPOJO) throws CommonException {
-        if (ObjectUtils.isNotEmpty(fleaPrivilegeGroupRelPOJO)) {
-            // 权限组名称为空时，根据权限组编号查询获取
-            Long privilegeGroupId = fleaPrivilegeGroupRelPOJO.getPrivilegeGroupId();
-            String privilegeGroupName = fleaPrivilegeGroupRelPOJO.getPrivilegeGroupName();
-            if (StringUtils.isEmpty(privilegeGroupName) && NumberUtils.isPositiveNumber(privilegeGroupId)) {
-                FleaPrivilegeGroup fleaPrivilegeGroup = fleaPrivilegeGroupSV.query(privilegeGroupId);
-                if (ObjectUtils.isNotEmpty(fleaPrivilegeGroup)) {
-                    privilegeGroupName = fleaPrivilegeGroup.getPrivilegeGroupName();
-                    fleaPrivilegeGroupRelPOJO.setPrivilegeGroupName(privilegeGroupName);
-                }
-            }
-            // 权限名称为空时，根据权限编号查询获取
-            Long privilegeId = fleaPrivilegeGroupRelPOJO.getRelId();
-            String privilegeName = fleaPrivilegeGroupRelPOJO.getRelName();
-            if (NumberUtils.isPositiveNumber(privilegeId)) {
-                FleaPrivilege fleaPrivilege = fleaPrivilegeSV.query(privilegeId);
-                if (ObjectUtils.isNotEmpty(fleaPrivilege)) {
-                    privilegeName = fleaPrivilege.getPrivilegeName();
-                    fleaPrivilegeGroupRelPOJO.setRelName(privilegeName);
+    public Long addFleaPrivilege(FleaPrivilegePOJO fleaPrivilegePOJO) throws CommonException {
+        return this.fleaPrivilegeSV.savePrivilege(fleaPrivilegePOJO).getPrivilegeId();
+    }
 
-                    // 更新Flea权限中权限组编号
-                    fleaPrivilege.setGroupId(privilegeGroupId);
-                    fleaPrivilege.setDoneDate(DateUtils.getCurrentTime());
-                    fleaPrivilegeSV.update(fleaPrivilege);
-                }
-            }
-            // 权限组关联权限
-            fleaPrivilegeGroupRelPOJO.setRelType(AuthRelTypeEnum.PRIVILEGE_GROUP_REL_PRIVILEGE.getRelType());
-            // 添加备注信息
-            // 【{0}】权限组关联【{1}】权限
-            fleaPrivilegeGroupRelPOJO.setRemarks(FleaI18nHelper.i18nForAuth("AUTH-PRIVILEGE0000000005", new String[]{privilegeGroupName, privilegeName}));
+    @Override
+    public void modifyFleaPrivilege(Long privilegeId, FleaPrivilegePOJO fleaPrivilegePOJO) throws CommonException {
+        // 校验权限编号
+        FleaAuthCheck.checkPrivilegeId(privilegeId);
 
+        // 校验Flea权限POJO对象不能为空
+        FleaAuthCheck.checkEmpty(fleaPrivilegePOJO, FleaPrivilegePOJO.class.getSimpleName());
+
+        // 查询在用的权限数据
+        FleaPrivilege fleaPrivilege = this.fleaPrivilegeSV.queryPrivilegeInUse(privilegeId);
+        // 校验Flea权限是否存在
+        FleaAuthCheck.checkFleaPrivilegeExist(fleaPrivilege, StringUtils.valueOf(privilegeId));
+
+        // 将Flea权限POJO对象中非空的数据，复制到Flea权限数据中
+        POJOUtils.copyNotEmpty(fleaPrivilegePOJO, fleaPrivilege);
+
+        // 更新Flea权限数据
+        this.fleaPrivilegeSV.update(fleaPrivilege);
+    }
+
+    @Override
+    public Long addFleaPrivilegeGroup(FleaPrivilegeGroupPOJO fleaPrivilegeGroupPOJO) throws CommonException {
+        return this.fleaPrivilegeGroupSV.savePrivilegeGroup(fleaPrivilegeGroupPOJO).getPrivilegeGroupId();
+    }
+
+    @Override
+    public void modifyFleaPrivilegeGroup(Long privilegeGroupId, FleaPrivilegeGroupPOJO fleaPrivilegeGroupPOJO) throws CommonException {
+        // 校验权限组编号
+        FleaAuthCheck.checkPrivilegeGroupId(privilegeGroupId);
+
+        // 校验Flea权限组POJO对象不能为空
+        FleaAuthCheck.checkEmpty(fleaPrivilegeGroupPOJO, FleaPrivilegeGroupPOJO.class.getSimpleName());
+
+        // 查询在用的权限组数据
+        FleaPrivilegeGroup fleaPrivilegeGroup = this.fleaPrivilegeGroupSV.queryPrivilegeGroupInUse(privilegeGroupId);
+        // 校验Flea权限组是否存在
+        FleaAuthCheck.checkFleaPrivilegeGroupExist(fleaPrivilegeGroup, StringUtils.valueOf(privilegeGroupId));
+
+        // 将Flea权限组POJO对象中非空的数据，复制到Flea权限组数据中
+        POJOUtils.copyNotEmpty(fleaPrivilegeGroupPOJO, fleaPrivilegeGroup);
+
+        // 更新Flea权限组数据
+        this.fleaPrivilegeGroupSV.update(fleaPrivilegeGroup);
+    }
+
+    @Override
+    @FleaTransactional(value = "fleaAuthTransactionManager", unitName = "fleaauth")
+    public void privilegeGroupRelPrivilege(Long privilegeGroupId, Long privilegeId, FleaAuthRelExtPOJO fleaAuthRelExtPOJO) throws CommonException {
+        // 校验权限组编号
+        FleaAuthCheck.checkPrivilegeGroupId(privilegeGroupId);
+
+        // 校验权限编号
+        FleaAuthCheck.checkPrivilegeId(privilegeId);
+
+        // 查询在用的权限组数据
+        FleaPrivilegeGroup fleaPrivilegeGroup = this.fleaPrivilegeGroupSV.queryPrivilegeGroupInUse(privilegeGroupId);
+        // 校验Flea权限组是否存在
+        FleaAuthCheck.checkFleaPrivilegeGroupExist(fleaPrivilegeGroup, StringUtils.valueOf(privilegeGroupId));
+        // 权限组名称
+        String privilegeGroupName = fleaPrivilegeGroup.getPrivilegeGroupName();
+
+        // 查询在用的权限数据
+        FleaPrivilege fleaPrivilege = this.fleaPrivilegeSV.queryPrivilegeInUse(privilegeId);
+        // 校验Flea权限是否存在
+        FleaAuthCheck.checkFleaPrivilegeExist(fleaPrivilege, StringUtils.valueOf(privilegeId));
+        // 权限名称
+        String privilegeName = fleaPrivilege.getPrivilegeName();
+
+        // 权限组编号不为正数，说明权限第一次被权限组关联
+        if (!NumberUtils.isPositiveNumber(fleaPrivilege.getGroupId())) {
+            // 更新Flea权限数据中权限组编号
+            fleaPrivilege.setGroupId(privilegeGroupId);
+            fleaPrivilege.setDoneDate(DateUtils.getCurrentTime());
+            this.fleaPrivilegeSV.update(fleaPrivilege);
         }
+
+        // 新建权限组关联权限POJO对象
+        FleaPrivilegeGroupRelPOJO privilegeGroupRelPOJO = FleaAuthPOJOUtils.newPrivilegeGroupRelPrivilegePOJO(privilegeGroupId, privilegeGroupName, privilegeId, privilegeName);
+
+        // 复制授权关联扩展数据
+        POJOUtils.copyAll(fleaAuthRelExtPOJO, privilegeGroupRelPOJO);
+
         // 保存Flea权限组关联
-        fleaPrivilegeGroupRelSV.saveFleaPrivilegeGroupRel(fleaPrivilegeGroupRelPOJO);
+        this.fleaPrivilegeGroupRelSV.saveFleaPrivilegeGroupRel(privilegeGroupRelPOJO);
     }
 
 }

@@ -1,12 +1,13 @@
 package com.huazie.fleaframework.auth.base.privilege.service.impl;
 
 import com.huazie.fleaframework.auth.base.privilege.dao.interfaces.IFleaPrivilegeGroupRelDAO;
+import com.huazie.fleaframework.auth.base.privilege.entity.FleaPrivilege;
+import com.huazie.fleaframework.auth.base.privilege.entity.FleaPrivilegeGroup;
 import com.huazie.fleaframework.auth.base.privilege.entity.FleaPrivilegeGroupRel;
 import com.huazie.fleaframework.auth.base.privilege.service.interfaces.IFleaPrivilegeGroupRelSV;
-import com.huazie.fleaframework.auth.common.FleaAuthEntityConstants;
-import com.huazie.fleaframework.auth.common.exception.FleaAuthCommonException;
 import com.huazie.fleaframework.auth.common.pojo.privilege.FleaPrivilegeGroupRelPOJO;
 import com.huazie.fleaframework.auth.util.FleaAuthCheck;
+import com.huazie.fleaframework.auth.util.FleaAuthPOJOUtils;
 import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
@@ -21,7 +22,7 @@ import java.util.List;
  * Flea权限组关联（权限）SV层实现类
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 @Service("fleaPrivilegeGroupRelSV")
@@ -41,15 +42,24 @@ public class FleaPrivilegeGroupRelSVImpl extends AbstractFleaJPASVImpl<FleaPrivi
     }
 
     @Override
+    public void savePrivilegeGroup(FleaPrivilegeGroup fleaPrivilegeGroup, FleaPrivilege fleaPrivilege) throws CommonException {
+        FleaPrivilegeGroupRelPOJO privilegeGroupRelPOJO = FleaAuthPOJOUtils.newPrivilegeGroupRelPrivilegePOJO(fleaPrivilegeGroup, fleaPrivilege);
+        if (ObjectUtils.isNotEmpty(privilegeGroupRelPOJO)) {
+            // 保存Flea权限组关联
+            this.saveFleaPrivilegeGroupRel(privilegeGroupRelPOJO);
+        }
+    }
+
+    @Override
     public FleaPrivilegeGroupRel saveFleaPrivilegeGroupRel(FleaPrivilegeGroupRelPOJO fleaPrivilegeGroupRelPOJO) throws CommonException {
         FleaPrivilegeGroupRel fleaPrivilegeGroupRel = newFleaPrivilegeGroupRel(fleaPrivilegeGroupRelPOJO);
-        // 保存权限组关联
+        // 保存权限组关联数据
         this.save(fleaPrivilegeGroupRel);
         return fleaPrivilegeGroupRel;
     }
 
     /**
-     * 新建一个Flea权限关联实体类对象
+     * 新建Flea权限关联实体类对象
      *
      * @param fleaPrivilegeGroupRelPOJO Flea权限关联POJO类对象
      * @return Flea权限实体类对象
@@ -58,18 +68,10 @@ public class FleaPrivilegeGroupRelSVImpl extends AbstractFleaJPASVImpl<FleaPrivi
      */
     private FleaPrivilegeGroupRel newFleaPrivilegeGroupRel(FleaPrivilegeGroupRelPOJO fleaPrivilegeGroupRelPOJO) throws CommonException {
 
-        // 校验Flea权限关联POJO类对象是否为空
-        // ERROR-AUTH-COMMON0000000001 【{0}】不能为空
-        ObjectUtils.checkEmpty(fleaPrivilegeGroupRelPOJO, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", FleaPrivilegeGroupRelPOJO.class.getSimpleName());
-
-        // 校验权限组编号不能为空
-        Long privilegeGroupId = fleaPrivilegeGroupRelPOJO.getPrivilegeGroupId();
-        ObjectUtils.checkEmpty(privilegeGroupId, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", FleaAuthEntityConstants.PrivilegeEntityConstants.E_PRIVILEGE_GROUP_ID);
-
         // 校验权限关联POJO类对象
-        FleaAuthCheck.checkAuthRelPOJO(fleaPrivilegeGroupRelPOJO);
+        FleaAuthCheck.checkFleaPrivilegeGroupRelPOJO(fleaPrivilegeGroupRelPOJO);
 
-        return new FleaPrivilegeGroupRel(privilegeGroupId,
+        return new FleaPrivilegeGroupRel(fleaPrivilegeGroupRelPOJO.getPrivilegeGroupId(),
                 fleaPrivilegeGroupRelPOJO.getRelId(),
                 fleaPrivilegeGroupRelPOJO.getRelType(),
                 fleaPrivilegeGroupRelPOJO.getRemarks(),

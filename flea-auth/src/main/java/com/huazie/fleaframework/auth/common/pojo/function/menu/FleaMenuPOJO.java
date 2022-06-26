@@ -1,10 +1,7 @@
 package com.huazie.fleaframework.auth.common.pojo.function.menu;
 
-import com.huazie.fleaframework.auth.common.pojo.function.attr.FleaFunctionAttrPOJO;
-import com.huazie.fleaframework.common.pojo.FleaEffExpDatePOJO;
+import com.huazie.fleaframework.auth.common.pojo.function.attr.FleaFunctionOtherPOJO;
 import org.apache.commons.lang.builder.ToStringBuilder;
-
-import java.util.List;
 
 /**
  * Flea菜单POJO类
@@ -13,9 +10,9 @@ import java.util.List;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class FleaMenuPOJO extends FleaEffExpDatePOJO {
+public class FleaMenuPOJO extends FleaFunctionOtherPOJO {
 
-    private static final long serialVersionUID = 5990688871036682592L;
+    private static final long serialVersionUID = -2794815204329090571L;
 
     private String menuCode; // 菜单编码
 
@@ -30,8 +27,6 @@ public class FleaMenuPOJO extends FleaEffExpDatePOJO {
     private Integer menuLevel; // 菜单层级（1：一级菜单 2；二级菜单 3：三级菜单 4：四级菜单）
 
     private Long parentId; // 父菜单编号
-
-    private List<FleaFunctionAttrPOJO> functionAttrPOJOList; // 功能扩展属性
 
     public String getMenuCode() {
         return menuCode;
@@ -87,14 +82,6 @@ public class FleaMenuPOJO extends FleaEffExpDatePOJO {
 
     public void setParentId(Long parentId) {
         this.parentId = parentId;
-    }
-
-    public List<FleaFunctionAttrPOJO> getFunctionAttrPOJOList() {
-        return functionAttrPOJOList;
-    }
-
-    public void setFunctionAttrPOJOList(List<FleaFunctionAttrPOJO> functionAttrPOJOList) {
-        this.functionAttrPOJOList = functionAttrPOJOList;
     }
 
     @Override

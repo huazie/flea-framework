@@ -1,6 +1,9 @@
 package com.huazie.fleaframework.auth.base.privilege.entity;
 
+import com.huazie.fleaframework.common.EntityStateEnum;
 import com.huazie.fleaframework.common.FleaEntity;
+import com.huazie.fleaframework.common.util.DateUtils;
+import com.huazie.fleaframework.common.util.ObjectUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import javax.persistence.Column;
@@ -18,14 +21,14 @@ import java.util.Date;
  * Flea权限组表对应的实体类
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 @Entity
 @Table(name = "flea_privilege_group")
 public class FleaPrivilegeGroup extends FleaEntity {
 
-    private static final long serialVersionUID = 1321707330112250874L;
+    private static final long serialVersionUID = -3456074248744277322L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "FLEA_PRIVILEGE_GROUP_GENERATOR")
@@ -55,6 +58,12 @@ public class FleaPrivilegeGroup extends FleaEntity {
     @Column(name = "privilege_group_state", nullable = false)
     private Integer privilegeGroupState; // 权限组状态(0: 删除 1: 正常)
 
+    @Column(name = "is_main", nullable = false)
+    private Integer isMain; // 是否为主权限组（0：不是 1：是）
+
+    @Column(name = "function_type")
+    private String functionType; // 功能类型(菜单、操作、元素、资源)
+
     @Column(name = "create_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate; // 创建日期
@@ -82,9 +91,16 @@ public class FleaPrivilegeGroup extends FleaEntity {
      * @param remarks            备注信息
      * @since 1.0.0
      */
-    public FleaPrivilegeGroup(String privilegeGroupName, String privilegeGroupDesc, String remarks) {
+    public FleaPrivilegeGroup(String privilegeGroupName, String privilegeGroupDesc, Integer isMain, String functionType, String remarks) {
         this.privilegeGroupName = privilegeGroupName;
         this.privilegeGroupDesc = privilegeGroupDesc;
+        this.privilegeGroupState = EntityStateEnum.IN_USE.getState();
+        if (ObjectUtils.isEmpty(isMain)) {
+            isMain = 0; // 默认不是主角色组
+        }
+        this.isMain = isMain;
+        this.functionType = functionType;
+        this.createDate = DateUtils.getCurrentTime();
         this.remarks = remarks;
     }
 
@@ -118,6 +134,22 @@ public class FleaPrivilegeGroup extends FleaEntity {
 
     public void setPrivilegeGroupState(Integer privilegeGroupState) {
         this.privilegeGroupState = privilegeGroupState;
+    }
+
+    public Integer getIsMain() {
+        return isMain;
+    }
+
+    public void setIsMain(Integer isMain) {
+        this.isMain = isMain;
+    }
+
+    public String getFunctionType() {
+        return functionType;
+    }
+
+    public void setFunctionType(String functionType) {
+        this.functionType = functionType;
     }
 
     public Date getCreateDate() {

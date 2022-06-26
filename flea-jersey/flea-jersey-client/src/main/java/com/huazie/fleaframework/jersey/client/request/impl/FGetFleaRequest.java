@@ -17,7 +17,9 @@ import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import javax.ws.rs.client.WebTarget;
 
 /**
- * <p> 文件GET请求 </p>
+ * 文件 GET 请求，对外提供了执行文件下载请求的能力。
+ * <p> 注：服务端提供的资源入口方法需包含 GET 注解和
+ * Path 注解【如：<b>@Path("/fileDownload")</b>】。
  *
  * @author huazie
  * @version 1.0.0
@@ -28,7 +30,7 @@ public class FGetFleaRequest extends FleaRequest {
     private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FGetFleaRequest.class);
 
     /**
-     * <p> 不带参数的构造方法 </p>
+     * 默认的构造方法
      *
      * @since 1.0.0
      */
@@ -36,7 +38,7 @@ public class FGetFleaRequest extends FleaRequest {
     }
 
     /**
-     * <p> 带参数的构造方法 </p>
+     * 带请求配置参数的构造方法
      *
      * @param config 请求配置
      * @since 1.0.0
