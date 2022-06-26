@@ -10,7 +10,7 @@ import com.huazie.fleaframework.common.util.StringUtils;
 import java.lang.reflect.Method;
 
 /**
- * <p> Flea异步任务 </p>
+ * Flea异步任务
  *
  * @author huazie
  * @version 1.0.0
@@ -29,7 +29,7 @@ public class FleaAsyncTask extends FleaRunnable {
     private Object[] params; // 方法参数数组
 
     /**
-     * <p> 带参数的构造方法 </p>
+     * 带参数的构造方法
      *
      * @param fleaUser         Flea用户信息
      * @param asyncTaskExecObj 异步任务执行对象
@@ -69,7 +69,7 @@ public class FleaAsyncTask extends FleaRunnable {
     }
 
     /**
-     * <p> 参数校验 </p>
+     * 参数校验
      *
      * @return true: 校验通过，false: 校验不通过
      */

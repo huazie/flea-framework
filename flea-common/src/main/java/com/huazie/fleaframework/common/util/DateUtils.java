@@ -45,7 +45,7 @@ public class DateUtils {
         // 获取失效时间(永久)配置
         String expiryTimeForever = FleaConfigManager.getConfigItemValue(
                 CommonConstants.FleaFrameInitConstants.FLEA_FRAMEWORK_INIT,
-                CommonConstants.FleaFrameInitConstants.EXPIRY_TIME_FOREVER);
+                CommonConstants.FleaFrameInitConstants.CONFIG_ITEM_EXPIRY_TIME_FOREVER);
 
         if (StringUtils.isBlank(expiryTimeForever)) {
             expiryTimeForever = DEFAULT_EXPIRY_TIME_FOREVER; // 默认失效时间(永久)

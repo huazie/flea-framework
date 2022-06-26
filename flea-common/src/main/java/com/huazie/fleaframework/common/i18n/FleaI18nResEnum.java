@@ -21,7 +21,7 @@ public enum FleaI18nResEnum {
     private String resDesc;
 
     /**
-     * <p> 资源文件类型枚举构造方法 </p>
+     * 资源文件类型枚举构造方法
      *
      * @param resName 资源名
      * @param resDesc 资源描述

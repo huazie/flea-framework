@@ -3,13 +3,10 @@ package com.huazie.fleaframework.auth.base.user.service.impl;
 import com.huazie.fleaframework.auth.base.user.dao.interfaces.IFleaAccountAttrDAO;
 import com.huazie.fleaframework.auth.base.user.entity.FleaAccountAttr;
 import com.huazie.fleaframework.auth.base.user.service.interfaces.IFleaAccountAttrSV;
-import com.huazie.fleaframework.auth.common.FleaAuthEntityConstants;
-import com.huazie.fleaframework.auth.common.exception.FleaAuthCommonException;
 import com.huazie.fleaframework.auth.common.pojo.user.attr.FleaAccountAttrPOJO;
+import com.huazie.fleaframework.auth.util.FleaAuthCheck;
 import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.common.util.CollectionUtils;
-import com.huazie.fleaframework.common.util.ObjectUtils;
-import com.huazie.fleaframework.common.util.StringUtils;
 import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import com.huazie.fleaframework.db.jpa.service.impl.AbstractFleaJPASVImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Flea账户属性SV层实现类
+ * Flea账户扩展属性SV层实现类
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 @Service("fleaAccountAttrSV")
@@ -38,10 +35,15 @@ public class FleaAccountAttrSVImpl extends AbstractFleaJPASVImpl<FleaAccountAttr
     }
 
     @Override
+    public List<FleaAccountAttr> queryValidAccountAttrs(Long accountId) throws CommonException {
+        return fleaAccountAttrDao.queryValidAccountAttrs(accountId);
+    }
+
+    @Override
     public FleaAccountAttr saveFleaAccountAttr(FleaAccountAttrPOJO fleaAccountAttrPOJO) throws CommonException {
 
         FleaAccountAttr fleaAccountAttr = newFleaAccountAttr(fleaAccountAttrPOJO);
-        // 保存Flea账户扩展属性
+        // 保存Flea账户扩展属性信息
         fleaAccountAttrDao.save(fleaAccountAttr);
 
         return fleaAccountAttr;
@@ -54,9 +56,7 @@ public class FleaAccountAttrSVImpl extends AbstractFleaJPASVImpl<FleaAccountAttr
         if (CollectionUtils.isNotEmpty(fleaAccountAttrPOJOList)) {
             fleaAccountAttrList = new ArrayList<>();
             for (FleaAccountAttrPOJO fleaAccountAttrPOJO : fleaAccountAttrPOJOList) {
-                if (ObjectUtils.isNotEmpty(fleaAccountAttrPOJO)) {
-                    fleaAccountAttrList.add(newFleaAccountAttr(fleaAccountAttrPOJO));
-                }
+                fleaAccountAttrList.add(newFleaAccountAttr(fleaAccountAttrPOJO));
             }
         }
 
@@ -69,38 +69,24 @@ public class FleaAccountAttrSVImpl extends AbstractFleaJPASVImpl<FleaAccountAttr
     }
 
     /**
-     * 新建一个Flea账户扩展属性实体对象
+     * 新建Flea账户扩展属性信息
      *
      * @param fleaAccountAttrPOJO Flea账户扩展属性POJO类对象
-     * @return Flea账户扩展属性实体对象
+     * @return Flea账户扩展属性信息
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
     private FleaAccountAttr newFleaAccountAttr(FleaAccountAttrPOJO fleaAccountAttrPOJO) throws CommonException {
+        // 校验Flea账户扩展属性POJO对象
+        FleaAuthCheck.checkFleaAccountAttrPOJO(fleaAccountAttrPOJO);
 
-        // 校验Flea账户扩展属性POJO类对象是否为空
-        // ERROR-AUTH-COMMON0000000001 【{0}】不能为空
-        ObjectUtils.checkEmpty(fleaAccountAttrPOJO, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", FleaAccountAttrPOJO.class.getSimpleName());
-
-        // 校验账户编号是否为空
-        Long accountId = fleaAccountAttrPOJO.getAccountId();
-        ObjectUtils.checkEmpty(accountId, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", FleaAuthEntityConstants.UserEntityConstants.E_ACCOUNT_ID);
-
-        // 校验扩展属性码是否为空
-        String attrCode = fleaAccountAttrPOJO.getAttrCode();
-        StringUtils.checkBlank(attrCode, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", FleaAuthEntityConstants.E_ATTR_CODE);
-
-        return new FleaAccountAttr(accountId, attrCode,
+        return new FleaAccountAttr(fleaAccountAttrPOJO.getAccountId(),
+                fleaAccountAttrPOJO.getAttrCode(),
                 fleaAccountAttrPOJO.getAttrValue(),
                 fleaAccountAttrPOJO.getAttrDesc(),
                 fleaAccountAttrPOJO.getEffectiveDate(),
                 fleaAccountAttrPOJO.getExpiryDate(),
                 fleaAccountAttrPOJO.getRemarks());
-    }
-
-    @Override
-    public List<FleaAccountAttr> queryValidAccountAttrs(Long accountId) throws CommonException {
-        return fleaAccountAttrDao.queryValidAccountAttrs(accountId);
     }
 
     @Override

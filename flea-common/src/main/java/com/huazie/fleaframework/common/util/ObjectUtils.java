@@ -1,6 +1,7 @@
 package com.huazie.fleaframework.common.util;
 
 import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exception.FleaException;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 
@@ -11,7 +12,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 /**
- * <p> Object工具类 </p>
+ * Object工具类
  *
  * @author huazie
  * @version 1.0.0
@@ -25,7 +26,7 @@ public class ObjectUtils {
     }
 
     /**
-     * <p> 判断value是否为空 </p>
+     * 判断value是否为空
      *
      * @param value 校验的对象
      * @return 如果为空或null，返回true；否则返回false
@@ -39,7 +40,7 @@ public class ObjectUtils {
     }
 
     /**
-     * <p> 判断value是否为空 </p>
+     * 判断value是否为空
      *
      * @param value 校验的对象
      * @return 如果不为空或null，返回true；否则返回false
@@ -50,7 +51,7 @@ public class ObjectUtils {
     }
 
     /**
-     * <p> 将对象序列化为字节数组 </p>
+     * 将对象序列化为字节数组
      *
      * @param object 待序列化的对象
      * @return 字节数组
@@ -73,7 +74,7 @@ public class ObjectUtils {
     }
 
     /**
-     * <p> 将字节数组反序列化为对象 </p>
+     * 将字节数组反序列化为对象
      *
      * @param objectBytes 待反序列化的字节数组
      * @return 对象
@@ -88,14 +89,15 @@ public class ObjectUtils {
             return objectInputStream.readObject();
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "Exception occurs in the process of object deserialization : \n", e);
+                LOGGER.error1(new Object() {
+                }, "Exception occurs in the process of object deserialization : \n", e);
             }
         }
         return null;
     }
 
     /**
-     * <p> 校验obj对象，如果空，则抛出异常 </p>
+     * 校验obj对象，如果为空，则抛出异常
      *
      * @param obj            待校验对象
      * @param exceptionClazz 通用异常子类类对象
@@ -110,7 +112,21 @@ public class ObjectUtils {
     }
 
     /**
-     * <p> 校验obj对象，如果非空，则抛出异常 </p>
+     * 校验obj对象，如果为空，则抛出异常
+     *
+     * @param obj            待校验对象
+     * @param exceptionClazz Flea异常子类类对象
+     * @param message        提示信息
+     * @since 2.0.0
+     */
+    public static void checkEmpty(Object obj, Class<? extends FleaException> exceptionClazz, String message) {
+        if (isEmpty(obj)) {
+            ExceptionUtils.throwFleaException(exceptionClazz, message);
+        }
+    }
+
+    /**
+     * 校验obj对象，如果非空，则抛出异常
      *
      * @param obj            待校验对象
      * @param exceptionClazz 通用异常子类类对象
@@ -124,4 +140,17 @@ public class ObjectUtils {
         }
     }
 
+    /**
+     * 校验obj对象，如果非空，则抛出异常
+     *
+     * @param obj            待校验对象
+     * @param exceptionClazz Flea异常子类类对象
+     * @param message        提示信息
+     * @since 2.0.0
+     */
+    public static void checkNotEmpty(Object obj, Class<? extends FleaException> exceptionClazz, String message) {
+        if (isNotEmpty(obj)) {
+            ExceptionUtils.throwFleaException(exceptionClazz, message);
+        }
+    }
 }

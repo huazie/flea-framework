@@ -4,7 +4,7 @@ import com.huazie.fleaframework.common.FleaSessionManager;
 import com.huazie.fleaframework.common.IFleaUser;
 
 /**
- * <p> Flea Runnable </p>
+ * Flea Runnable
  *
  * @author huazie
  * @version 1.0.0
@@ -15,7 +15,7 @@ public abstract class FleaRunnable implements Runnable {
     private IFleaUser fleaUser; // Flea用户信息
 
     /**
-     * <p> 带参数的构造方法 </p>
+     * 带参数的构造方法
      *
      * @param fleaUser Flea用户信息
      * @since 1.0.0
@@ -32,7 +32,7 @@ public abstract class FleaRunnable implements Runnable {
     }
 
     /**
-     * <p> 子类实现该方法，完成具体的线程任务 </p>
+     * 子类实现该方法，完成具体的线程任务
      *
      * @since 1.0.0
      */

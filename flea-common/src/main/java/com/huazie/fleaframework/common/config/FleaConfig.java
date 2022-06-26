@@ -21,7 +21,7 @@ public class FleaConfig {
     private List<ConfigItems> configItemsList = new ArrayList<>();
 
     /**
-     * <p> 获取Flea配置数据 </p>
+     * 获取Flea配置数据
      *
      * @return Flea配置数据
      * @since 1.0.0
@@ -31,7 +31,7 @@ public class FleaConfig {
     }
 
     /**
-     * <p> 获取Flea配置数据 </p>
+     * 获取Flea配置数据
      *
      * @return Flea配置数据
      * @since 1.0.0
@@ -41,7 +41,7 @@ public class FleaConfig {
     }
 
     /**
-     * <p> 添加一个配置项列表 </p>
+     * 添加一个配置项列表
      *
      * @param configItems 配置项列表
      * @since 1.0.0
@@ -51,7 +51,7 @@ public class FleaConfig {
     }
 
     /**
-     * <p> 获取配置项列表的Map，便于根据各配置项列表key查找 </p>
+     * 获取配置项列表的Map，便于根据各配置项列表key查找
      *
      * @return 配置项列表的Map
      * @since 1.0.0
@@ -65,7 +65,7 @@ public class FleaConfig {
     }
 
     /**
-     * <p> 根据指定key，获取某个指定的配置项列表 </p>
+     * 根据指定key，获取某个指定的配置项列表
      *
      * @param key 指定配置项列表的key
      * @return 某个指定的配置项列表

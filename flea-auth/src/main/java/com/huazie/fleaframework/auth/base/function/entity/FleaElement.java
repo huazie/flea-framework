@@ -1,6 +1,9 @@
 package com.huazie.fleaframework.auth.base.function.entity;
 
+import com.huazie.fleaframework.common.EntityStateEnum;
 import com.huazie.fleaframework.common.FleaEntity;
+import com.huazie.fleaframework.common.util.DateUtils;
+import com.huazie.fleaframework.common.util.ObjectUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import javax.persistence.Column;
@@ -18,7 +21,7 @@ import java.util.Date;
  * Flea元素表对应的实体类
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 @Entity
@@ -72,8 +75,56 @@ public class FleaElement extends FleaEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date doneDate; // 修改日期
 
+    @Column(name = "effective_date", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date effectiveDate; // 生效日期
+
+    @Column(name = "expiry_date", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date expiryDate; // 失效日期
+
     @Column(name = "remarks")
     private String remarks; // 备注信息
+
+    /**
+     * 无参数构造方法
+     *
+     * @since 2.0.0
+     */
+    public FleaElement() {
+    }
+
+    /**
+     * 带参数构造方法
+     *
+     * @param elementCode    元素编码
+     * @param elementName    元素名称
+     * @param elementDesc    元素描述
+     * @param elementType    元素类型
+     * @param elementContent 元素内容
+     * @param effectiveDate  生效日期
+     * @param expiryDate     失效日期
+     * @param remarks        备注信息
+     * @since 2.0.0
+     */
+    public FleaElement(String elementCode, String elementName, String elementDesc, Integer elementType, String elementContent, Date effectiveDate, Date expiryDate, String remarks) {
+        this.elementCode = elementCode;
+        this.elementName = elementName;
+        this.elementDesc = elementDesc;
+        this.elementType = elementType;
+        this.elementContent = elementContent;
+        this.elementState = EntityStateEnum.IN_USE.getState();
+        this.createDate = DateUtils.getCurrentTime();
+        if (ObjectUtils.isEmpty(effectiveDate)) {
+            effectiveDate = createDate;
+        }
+        this.effectiveDate = effectiveDate;
+        if (ObjectUtils.isEmpty(expiryDate)) {
+            expiryDate = DateUtils.getExpiryTimeForever();
+        }
+        this.expiryDate = expiryDate;
+        this.remarks = remarks;
+    }
 
     public Long getElementId() {
         return elementId;
@@ -145,6 +196,22 @@ public class FleaElement extends FleaEntity {
 
     public void setDoneDate(Date doneDate) {
         this.doneDate = doneDate;
+    }
+
+    public Date getEffectiveDate() {
+        return effectiveDate;
+    }
+
+    public void setEffectiveDate(Date effectiveDate) {
+        this.effectiveDate = effectiveDate;
+    }
+
+    public Date getExpiryDate() {
+        return expiryDate;
+    }
+
+    public void setExpiryDate(Date expiryDate) {
+        this.expiryDate = expiryDate;
     }
 
     public String getRemarks() {

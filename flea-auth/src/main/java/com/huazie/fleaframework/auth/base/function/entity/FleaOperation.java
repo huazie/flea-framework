@@ -1,6 +1,9 @@
 package com.huazie.fleaframework.auth.base.function.entity;
 
+import com.huazie.fleaframework.common.EntityStateEnum;
 import com.huazie.fleaframework.common.FleaEntity;
+import com.huazie.fleaframework.common.util.DateUtils;
+import com.huazie.fleaframework.common.util.ObjectUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import javax.persistence.Column;
@@ -18,7 +21,7 @@ import java.util.Date;
  * Flea操作表对应的实体类
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 @Entity
@@ -66,8 +69,52 @@ public class FleaOperation extends FleaEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date doneDate; // 修改日期
 
+    @Column(name = "effective_date", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date effectiveDate; // 生效日期
+
+    @Column(name = "expiry_date", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date expiryDate; // 失效日期
+
     @Column(name = "remarks")
     private String remarks; // 备注信息
+
+    /**
+     * 无参数构造方法
+     *
+     * @since 2.0.0
+     */
+    public FleaOperation() {
+    }
+
+    /**
+     * 带参数构造方法
+     *
+     * @param operationCode 操作编码
+     * @param operationName 操作名称
+     * @param operationDesc 操作描述
+     * @param effectiveDate 生效日期
+     * @param expiryDate    失效日期
+     * @param remarks       备注信息
+     * @since 2.0.0
+     */
+    public FleaOperation(String operationCode, String operationName, String operationDesc, Date effectiveDate, Date expiryDate, String remarks) {
+        this.operationCode = operationCode;
+        this.operationName = operationName;
+        this.operationDesc = operationDesc;
+        this.operationState = EntityStateEnum.IN_USE.getState();
+        this.createDate = DateUtils.getCurrentTime();
+        if (ObjectUtils.isEmpty(effectiveDate)) {
+            effectiveDate = createDate;
+        }
+        this.effectiveDate = effectiveDate;
+        if (ObjectUtils.isEmpty(expiryDate)) {
+            expiryDate = DateUtils.getExpiryTimeForever();
+        }
+        this.expiryDate = expiryDate;
+        this.remarks = remarks;
+    }
 
     public Long getOperationId() {
         return operationId;
@@ -123,6 +170,22 @@ public class FleaOperation extends FleaEntity {
 
     public void setDoneDate(Date doneDate) {
         this.doneDate = doneDate;
+    }
+
+    public Date getEffectiveDate() {
+        return effectiveDate;
+    }
+
+    public void setEffectiveDate(Date effectiveDate) {
+        this.effectiveDate = effectiveDate;
+    }
+
+    public Date getExpiryDate() {
+        return expiryDate;
+    }
+
+    public void setExpiryDate(Date expiryDate) {
+        this.expiryDate = expiryDate;
     }
 
     public String getRemarks() {

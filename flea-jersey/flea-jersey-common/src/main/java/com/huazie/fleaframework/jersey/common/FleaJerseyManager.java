@@ -17,7 +17,7 @@ import javax.ws.rs.core.MediaType;
 import java.io.File;
 
 /**
- * <p> Flea Jersey 管理类 </p>
+ * Flea Jersey 管理类
  *
  * @author huazie
  * @version 1.0.0
@@ -30,13 +30,13 @@ public class FleaJerseyManager {
     private static ThreadLocal<FleaJerseyContext> sContext = new ThreadLocal<>(); // Flea Jersey 上下文
 
     /**
-     * <p> 构造器私有，只能通过getManager()获取实例 </p>
+     * 构造器私有，只能通过getManager()获取实例
      */
     private FleaJerseyManager() {
     }
 
     /**
-     * <p> 获取一个Flea Jersey管理类实例 </p>
+     * 获取一个Flea Jersey管理类实例
      *
      * @return Flea Jersey 管理类
      * @since 1.0.0
@@ -53,7 +53,7 @@ public class FleaJerseyManager {
     }
 
     /**
-     * <p> 设置Flea Jersey上下文对象 </p>
+     * 设置Flea Jersey上下文对象
      *
      * @param context Flea Jersey上下文对象
      * @since 1.0.0
@@ -65,7 +65,7 @@ public class FleaJerseyManager {
     }
 
     /**
-     * <p> 获取Flea Jersey上下文对象 </p>
+     * 获取Flea Jersey上下文对象
      *
      * @return 当前线程下的Flea Jersey上下文对象
      * @since 1.0.0
@@ -80,7 +80,7 @@ public class FleaJerseyManager {
     }
 
     /**
-     * <p> 获取文件上下文 </p>
+     * 获取文件上下文
      *
      * @return 文件上下文对象
      * @since 1.0.0
@@ -100,7 +100,7 @@ public class FleaJerseyManager {
     }
 
     /**
-     * <p> 获取Flea文件对象 </p>
+     * 获取Flea文件对象
      *
      * @return Flea文件对象
      * @throws CommonException 通用异常
@@ -118,7 +118,7 @@ public class FleaJerseyManager {
     }
 
     /**
-     * <p> 获取文件表单信息 </p>
+     * 获取文件表单信息
      *
      * @return 文件表单数据
      * @throws CommonException 通用异常
@@ -129,7 +129,7 @@ public class FleaJerseyManager {
     }
 
     /**
-     * <p> 获取表单数据信息 </p>
+     * 获取表单数据信息
      *
      * @param formDataKey 表单数据键
      * @return 表单数据
@@ -160,7 +160,7 @@ public class FleaJerseyManager {
     }
 
     /**
-     * <p> 添加文件表单信息 </p>
+     * 添加文件表单信息
      *
      * @param file 文件对象
      * @throws CommonException 通用异常
@@ -171,7 +171,7 @@ public class FleaJerseyManager {
     }
 
     /**
-     * <p> 添加字符数据表单信息 </p>
+     * 添加字符数据表单信息
      *
      * @param formDataStr 表单数据字符串
      * @param formDataKey 表单数据键
@@ -183,7 +183,7 @@ public class FleaJerseyManager {
     }
 
     /**
-     * <p> 添加通用表单信息 </p>
+     * 添加通用表单信息
      *
      * @param formDataObj 表单数据对象
      * @param formDataKey 表单数据键

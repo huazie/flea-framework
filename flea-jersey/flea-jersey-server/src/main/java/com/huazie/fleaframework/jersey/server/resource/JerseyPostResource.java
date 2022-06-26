@@ -9,7 +9,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 /**
- * <p> Jersey POST资源接口 </p>
+ * Jersey POST 资源接口，只包含 POST 资源API。
  *
  * @author huazie
  * @version 1.0.0
@@ -18,7 +18,7 @@ import javax.ws.rs.core.MediaType;
 public interface JerseyPostResource {
 
     /**
-     * <p> 处理POST资源数据 </p>
+     * POST 资源API，用于处理 POST 资源数据。
      *
      * @param request 请求对象
      * @return 响应对象

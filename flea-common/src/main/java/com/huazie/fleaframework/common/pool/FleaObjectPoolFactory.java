@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
- * <p> Flea对象池工厂 </p>
+ * Flea对象池工厂
  *
  * @author huazie
  * @version 1.0.0
@@ -29,7 +29,7 @@ public class FleaObjectPoolFactory {
     }
 
     /**
-     * <p> 默认Flea对象池（指定对象Class） </p>
+     * 默认Flea对象池（指定对象Class）
      *
      * @param objClazz     对象Class
      * @param objPoolClazz 对象池Class
@@ -41,7 +41,7 @@ public class FleaObjectPoolFactory {
     }
 
     /**
-     * <p> 指定对象池名的Flea对象池（指定对象Class）</p>
+     * 指定对象池名的Flea对象池（指定对象Class）
      *
      * @param poolName     对象池名
      * @param objClazz     对象Class
@@ -74,7 +74,7 @@ public class FleaObjectPoolFactory {
     }
 
     /**
-     * <p> 初始化Flea对象池创建 </p>
+     * 初始化Flea对象池创建
      *
      * @param poolName 对象池名
      * @param objClazz 指定对象Class

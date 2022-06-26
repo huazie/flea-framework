@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.jersey.client.request;
 
 /**
- * <p> 请求配置枚举 </p>
+ * 请求配置枚举，定义各请求对象需要的数据键。
  *
  * @author huazie
  * @version 1.0.0

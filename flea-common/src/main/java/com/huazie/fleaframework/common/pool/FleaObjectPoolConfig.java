@@ -3,7 +3,7 @@ package com.huazie.fleaframework.common.pool;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 
 /**
- * <p> Flea对象池配置 </p>
+ * Flea对象池配置
  *
  * @author huazie
  * @version 1.0.0
@@ -12,7 +12,7 @@ import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 public class FleaObjectPoolConfig extends GenericObjectPoolConfig {
 
     /**
-     * <p> 无参构造方法，初始化部分默认配置 </p>
+     * 无参构造方法，初始化部分默认配置
      *
      * @since 1.0.0
      */

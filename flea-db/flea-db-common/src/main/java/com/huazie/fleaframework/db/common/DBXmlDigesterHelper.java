@@ -103,20 +103,18 @@ public class DBXmlDigesterHelper {
             if (CollectionUtils.isNotEmpty(importList)) {
                 LibFiles libFiles = new LibFiles();
                 for (Import mImport : importList) {
-                    if (ObjectUtils.isNotEmpty(mImport)) {
-                        String resource = mImport.getResource();
-                        // 解析其他分库配置文件
-                        FleaLibSplit other = XmlDigesterHelper.parse(resource, digester, FleaLibSplit.class);
-                        if (ObjectUtils.isNotEmpty(other)) {
-                            LibFile libFile = new LibFile();
-                            libFile.setLocation(resource);
-                            Libs otherLibs = other.getLibs();
-                            if (ObjectUtils.isNotEmpty(otherLibs)) {
-                                libFile.setLibList(otherLibs.getLibList());
-                            }
-                            libFiles.addLibFile(libFile);
-                        }
+                    if (ObjectUtils.isEmpty(mImport)) continue;
+                    String resource = mImport.getResource();
+                    // 解析其他分库配置文件
+                    FleaLibSplit other = XmlDigesterHelper.parse(resource, digester, FleaLibSplit.class);
+                    if (ObjectUtils.isEmpty(other)) continue;
+                    LibFile libFile = new LibFile();
+                    libFile.setLocation(resource);
+                    Libs otherLibs = other.getLibs();
+                    if (ObjectUtils.isNotEmpty(otherLibs)) {
+                        libFile.setLibList(otherLibs.getLibList());
                     }
+                    libFiles.addLibFile(libFile);
                 }
                 fleaLibSplit.setLibFiles(libFiles);
             }
@@ -203,20 +201,18 @@ public class DBXmlDigesterHelper {
             if (CollectionUtils.isNotEmpty(importList)) {
                 TableFiles tableFiles = new TableFiles();
                 for (Import mImport : importList) {
-                    if (ObjectUtils.isNotEmpty(mImport)) {
-                        String resource = mImport.getResource();
-                        // 解析其他分表配置文件
-                        FleaTableSplit other = XmlDigesterHelper.parse(resource, digester, FleaTableSplit.class);
-                        if (ObjectUtils.isNotEmpty(other)) {
-                            TableFile tableFile = new TableFile();
-                            tableFile.setLocation(resource);
-                            Tables otherTables = other.getTables();
-                            if (ObjectUtils.isNotEmpty(otherTables)) {
-                                tableFile.setTableList(otherTables.getTableList());
-                            }
-                            tableFiles.addTableFile(tableFile);
-                        }
+                    if (ObjectUtils.isEmpty(mImport)) continue;
+                    String resource = mImport.getResource();
+                    // 解析其他分表配置文件
+                    FleaTableSplit other = XmlDigesterHelper.parse(resource, digester, FleaTableSplit.class);
+                    if (ObjectUtils.isEmpty(other)) continue;
+                    TableFile tableFile = new TableFile();
+                    tableFile.setLocation(resource);
+                    Tables otherTables = other.getTables();
+                    if (ObjectUtils.isNotEmpty(otherTables)) {
+                        tableFile.setTableList(otherTables.getTableList());
                     }
+                    tableFiles.addTableFile(tableFile);
                 }
                 fleaTableSplit.setTableFiles(tableFiles);
             }

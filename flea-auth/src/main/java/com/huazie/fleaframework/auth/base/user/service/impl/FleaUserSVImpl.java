@@ -3,13 +3,11 @@ package com.huazie.fleaframework.auth.base.user.service.impl;
 import com.huazie.fleaframework.auth.base.user.dao.interfaces.IFleaUserDAO;
 import com.huazie.fleaframework.auth.base.user.entity.FleaUser;
 import com.huazie.fleaframework.auth.base.user.service.interfaces.IFleaUserSV;
-import com.huazie.fleaframework.auth.common.FleaAuthEntityConstants;
-import com.huazie.fleaframework.auth.common.exception.FleaAuthCommonException;
 import com.huazie.fleaframework.auth.common.pojo.user.FleaUserPOJO;
+import com.huazie.fleaframework.auth.util.FleaAuthCheck;
 import com.huazie.fleaframework.common.CommonConstants;
 import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.common.util.ObjectUtils;
-import com.huazie.fleaframework.common.util.StringUtils;
 import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import com.huazie.fleaframework.db.jpa.service.impl.AbstractFleaJPASVImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +18,7 @@ import org.springframework.stereotype.Service;
  * Flea用户SV层实现类
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 @Service("fleaUserSV")
@@ -35,6 +33,11 @@ public class FleaUserSVImpl extends AbstractFleaJPASVImpl<FleaUser> implements I
     }
 
     @Override
+    public FleaUser queryValidUser(Long userId) throws CommonException {
+        return fleaUserDao.queryValidUser(userId);
+    }
+
+    @Override
     public FleaUser saveFleaUser(FleaUserPOJO fleaUserPOJO) throws CommonException {
 
         FleaUser fleaUser = newFleaUser(fleaUserPOJO);
@@ -45,14 +48,14 @@ public class FleaUserSVImpl extends AbstractFleaJPASVImpl<FleaUser> implements I
             fleaUser.setUserId(userId);
         }
 
-        // 保存Flea用户
+        // 保存Flea用户信息
         fleaUserDao.save(fleaUser);
 
         return fleaUser;
     }
 
     /**
-     * 新建一个Flea用户
+     * 新建一个Flea用户信息
      *
      * @param fleaUserPOJO Flea用户POJO类实例
      * @return Flea用户实体类实例
@@ -60,26 +63,15 @@ public class FleaUserSVImpl extends AbstractFleaJPASVImpl<FleaUser> implements I
      * @since 1.0.0
      */
     private FleaUser newFleaUser(FleaUserPOJO fleaUserPOJO) throws CommonException {
+        // 校验Flea用户POJO对象
+        FleaAuthCheck.checkFleaUserPOJO(fleaUserPOJO);
 
-        // 校验Flea用户POJO类对象是否为空
-        // ERROR-AUTH-COMMON0000000001 【{0}】不能为空
-        ObjectUtils.checkEmpty(fleaUserPOJO, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", FleaUserPOJO.class.getSimpleName());
-
-        // 校验用户昵称是否为空
-        String userName = fleaUserPOJO.getUserName();
-        StringUtils.checkBlank(userName, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", FleaAuthEntityConstants.UserEntityConstants.E_USER_NAME);
-
-        return new FleaUser(userName,
+        return new FleaUser(fleaUserPOJO.getUserName(),
                 fleaUserPOJO.getGroupId(),
                 fleaUserPOJO.getUserState(),
                 fleaUserPOJO.getEffectiveDate(),
                 fleaUserPOJO.getExpiryDate(),
                 fleaUserPOJO.getRemarks());
-    }
-
-    @Override
-    public FleaUser queryValidUser(Long userId) throws CommonException {
-        return fleaUserDao.queryValidUser(userId);
     }
 
     @Override

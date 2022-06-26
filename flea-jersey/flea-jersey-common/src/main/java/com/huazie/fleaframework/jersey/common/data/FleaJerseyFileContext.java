@@ -3,7 +3,7 @@ package com.huazie.fleaframework.jersey.common.data;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 
 /**
- * <p> Flea Jersey文件相关上下文 </p>
+ * Flea Jersey文件相关上下文
  *
  * @author huazie
  * @version 1.0.0

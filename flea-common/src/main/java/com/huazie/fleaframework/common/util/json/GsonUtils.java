@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <p> Gson 工具包 </p>
+ * Gson 工具包
  *
  * @author huazie
  * @version 1.0.0
@@ -23,7 +23,7 @@ public class GsonUtils {
     }
 
     /**
-     * <p> 使用Gson进行解析 ,并获取T对象 </p>
+     * 使用Gson进行解析 ,并获取T对象
      *
      * @param json  json字符串
      * @param clazz T类的Class对象
@@ -53,7 +53,7 @@ public class GsonUtils {
     }
 
     /**
-     * <p> 使用Gson进行解析 , 并获取T对象的List集合 </p>
+     * 使用Gson进行解析 , 并获取T对象的List集合
      *
      * @param json  json字符串
      * @param clazz 实体类的Class对象
@@ -82,7 +82,7 @@ public class GsonUtils {
     }
 
     /**
-     * <p> 使用Gson进行解析 ，并获取Map对象 </p>
+     * 使用Gson进行解析 ，并获取Map对象
      *
      * @param json json字符串
      * @return Map对象
@@ -109,7 +109,7 @@ public class GsonUtils {
     }
 
     /**
-     * <p> 使用Gson进行解析 ,并获取Map对象的List集合 </p>
+     * 使用Gson进行解析 ,并获取Map对象的List集合
      *
      * @param json json字符串
      * @return Map对象的List集合
@@ -137,7 +137,7 @@ public class GsonUtils {
     }
 
     /**
-     * <p> 将对象转换成json字符串 </p>
+     * 将对象转换成json字符串
      *
      * @param object 待转换对象
      * @return json字符串

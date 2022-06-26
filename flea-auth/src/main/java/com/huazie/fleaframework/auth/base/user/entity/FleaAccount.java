@@ -107,7 +107,7 @@ public class FleaAccount extends FleaEntity {
             accountState = UserStateEnum.IN_AUDITING.getState();
         }
         this.accountState = accountState;
-        createDate = DateUtils.getCurrentTime();
+        this.createDate = DateUtils.getCurrentTime();
         if (ObjectUtils.isEmpty(effectiveDate)) {
             effectiveDate = createDate;
         }

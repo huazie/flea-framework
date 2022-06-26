@@ -12,7 +12,7 @@ import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 
 /**
- * <p> Java Architecture for XML Binding（JAXB） 工具类 </p>
+ * Java Architecture for XML Binding（JAXB） 工具类
  *
  * @author huazie
  * @version 1.0.0
@@ -26,7 +26,7 @@ public class JABXUtils {
     }
 
     /**
-     * <p> 将带有JAXB注解的pojo类转换为XML字符串 </p>
+     * 将带有JAXB注解的pojo类转换为XML字符串
      *
      * @param t   pojo类对象
      * @param <T> pojo类的类型
@@ -50,7 +50,7 @@ public class JABXUtils {
     }
 
     /**
-     * <p> 将XML字符串转换成对应的pojo类 </p>
+     * 将XML字符串转换成对应的pojo类
      *
      * @param xml   XML字符串
      * @param clazz pojo类的Clazz类型

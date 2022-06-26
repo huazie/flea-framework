@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.common;
 
 /**
- * <p> 实体状态枚举 </p>
+ * 实体状态枚举
  *
  * @author huazie
  * @version 1.0.0

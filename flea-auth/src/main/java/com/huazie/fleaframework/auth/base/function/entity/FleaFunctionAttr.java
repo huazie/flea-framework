@@ -53,7 +53,7 @@ public class FleaFunctionAttr extends FleaEntity {
     private Long functionId; // 功能编号
 
     @Column(name = "function_type", nullable = false)
-    private String functionType; // 功能类型(菜单、操作、元素) 
+    private String functionType; // 功能类型(菜单、操作、元素、资源)
 
     @Column(name = "attr_code", nullable = false)
     private String attrCode; // 属性码

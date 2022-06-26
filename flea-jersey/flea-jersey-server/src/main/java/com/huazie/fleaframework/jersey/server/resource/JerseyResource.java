@@ -13,7 +13,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 /**
- * <p> Jersey资源接口 (GET, POST, PUT, DELETE) </p>
+ * Jersey资源接口，包含了 GET, POST, PUT, DELETE 资源API。
  *
  * @author huazie
  * @version 1.0.0
@@ -22,7 +22,7 @@ import javax.ws.rs.core.MediaType;
 public interface JerseyResource {
 
     /**
-     * <p> 处理GET资源数据 </p>
+     * GET 资源API，用于处理 GET 资源数据。
      *
      * @param requestData 请求XMl字符串
      * @return 响应对象
@@ -34,7 +34,7 @@ public interface JerseyResource {
     FleaJerseyResponse doGetResource(@QueryParam("REQUEST") String requestData);
 
     /**
-     * <p> 处理POST资源数据 </p>
+     * POST 资源API，用于处理 POST 资源数据。
      *
      * @param request 请求对象
      * @return 响应对象
@@ -46,7 +46,7 @@ public interface JerseyResource {
     FleaJerseyResponse doPostResource(FleaJerseyRequest request);
 
     /**
-     * <p> 处理PUT资源数据 </p>
+     * PUT 资源API，用于处理 PUT 资源数据。
      *
      * @param request 请求对象
      * @return 响应对象
@@ -58,7 +58,7 @@ public interface JerseyResource {
     FleaJerseyResponse doPutResource(FleaJerseyRequest request);
 
     /**
-     * <p> 处理DELETE资源数据 </p>
+     * DELETE 资源API，用于处理 DELETE 资源数据。
      *
      * @param requestData 请求XMl字符串
      * @return 响应对象

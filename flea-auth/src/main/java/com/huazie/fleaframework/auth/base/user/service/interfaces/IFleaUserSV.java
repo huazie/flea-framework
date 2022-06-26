@@ -15,16 +15,6 @@ import com.huazie.fleaframework.db.jpa.service.interfaces.IAbstractFleaJPASV;
 public interface IFleaUserSV extends IAbstractFleaJPASV<FleaUser> {
 
     /**
-     * 新建一个Flea用户
-     *
-     * @param fleaUserPOJO Flea用户POJO类实例
-     * @return Flea用户对象
-     * @throws CommonException 通用异常
-     * @since 1.0.0
-     */
-    FleaUser saveFleaUser(FleaUserPOJO fleaUserPOJO) throws CommonException;
-
-    /**
      * 根据用户编号获取用户信息（用户状态 1 正常，未失效）</p>
      *
      * @param userId 用户编号
@@ -33,4 +23,14 @@ public interface IFleaUserSV extends IAbstractFleaJPASV<FleaUser> {
      * @since 1.0.0
      */
     FleaUser queryValidUser(Long userId) throws CommonException;
+
+    /**
+     * 保存Flea用户信息
+     *
+     * @param fleaUserPOJO Flea用户POJO类实例
+     * @return Flea用户信息
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    FleaUser saveFleaUser(FleaUserPOJO fleaUserPOJO) throws CommonException;
 }

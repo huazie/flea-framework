@@ -12,18 +12,23 @@
 |  flea_user_rel       		|  用户关联（角色，角色组）           |
 |  flea_user_group          |  用户组                          |
 |  flea_user_group_rel      |  用户组关联（角色，角色组）         |
-|  flea_role                |  角色                            |
+|  flea_role                |  角色                             |
 |  flea_role_rel            |  角色关联（角色， 权限， 权限组）   |
 |  flea_role_group          |  角色组（不参与授权）              |
 |  flea_role_group_rel      |  角色组关联（角色）                |
-|  flea_privilege           |  权限                            |
+|  flea_privilege           |  权限                             |
 |  flea_privilege_rel      	|  权限关联（菜单， 操作， 元素）     |
-|  flea_privilege_group     |  权限组                          |			
-|  flea_privilege_group_rel |  权限组关联 (权限)                |
-|  flea_menu                |  菜单                            |
-|  flea_operation           |  操作                            |
-|  flea_element             |  元素 (页面)                      |
-|  flea_function_attr       |  功能扩展属性                     |
+|  flea_privilege_group     |  权限组                            |			
+|  flea_privilege_group_rel |  权限组关联 (权限)                 |
+|  flea_menu                |  菜单                              |
+|  flea_operation           |  操作                              |
+|  flea_element             |  元素                              |
+|  flea_resource            |  资源                              |
+|  flea_function_attr       |  功能扩展属性【模板表】             |
+|  flea_function_attr_menu  |  菜单扩展属性【功能类型分表】        |
+|  flea_function_attr_operation  |  操作扩展属性【功能类型分表】   |
+|  flea_function_attr_element    |  元素扩展属性【功能类型分表】   |
+|  flea_function_attr_resource   |  资源扩展属性【功能类型分表】   |
    
 ***
 

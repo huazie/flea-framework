@@ -3,13 +3,11 @@ package com.huazie.fleaframework.auth.base.user.service.impl;
 import com.huazie.fleaframework.auth.base.user.dao.interfaces.IFleaUserAttrDAO;
 import com.huazie.fleaframework.auth.base.user.entity.FleaUserAttr;
 import com.huazie.fleaframework.auth.base.user.service.interfaces.IFleaUserAttrSV;
-import com.huazie.fleaframework.auth.common.FleaAuthEntityConstants;
-import com.huazie.fleaframework.auth.common.exception.FleaAuthCommonException;
 import com.huazie.fleaframework.auth.common.pojo.user.attr.FleaUserAttrPOJO;
+import com.huazie.fleaframework.auth.util.FleaAuthCheck;
 import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.common.util.CollectionUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
-import com.huazie.fleaframework.common.util.StringUtils;
 import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import com.huazie.fleaframework.db.jpa.service.impl.AbstractFleaJPASVImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +21,7 @@ import java.util.List;
  * Flea用户扩展属性SV层实现类
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 @Service("fleaUserAttrSV")
@@ -38,10 +36,15 @@ public class FleaUserAttrSVImpl extends AbstractFleaJPASVImpl<FleaUserAttr> impl
     }
 
     @Override
+    public List<FleaUserAttr> queryValidUserAttrs(Long userId) throws CommonException {
+        return fleaUserAttrDao.queryValidUserAttrs(userId);
+    }
+
+    @Override
     public FleaUserAttr saveFleaUserAttr(FleaUserAttrPOJO fleaUserAttrPOJO) throws CommonException {
 
         FleaUserAttr fleaUserAttr = newFleaUserAttr(fleaUserAttrPOJO);
-        // 保存Flea用户扩展属性
+        // 保存Flea用户扩展属性信息
         fleaUserAttrDao.save(fleaUserAttr);
 
         return fleaUserAttr;
@@ -69,38 +72,24 @@ public class FleaUserAttrSVImpl extends AbstractFleaJPASVImpl<FleaUserAttr> impl
     }
 
     /**
-     * 新建一个Flea用户扩展属性实体对象
+     * 新建一个Flea用户扩展属性信息
      *
      * @param fleaUserAttrPOJO Flea用户扩展属性POJO类对象
-     * @return Flea用户扩展属性实体对象
+     * @return Flea用户扩展属性信息
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
     private FleaUserAttr newFleaUserAttr(FleaUserAttrPOJO fleaUserAttrPOJO) throws CommonException {
+        // 校验Flea用户扩展属性POJO对象
+        FleaAuthCheck.checkFleaUserAttrPOJO(fleaUserAttrPOJO);
 
-        // 校验Flea用户扩展属性POJO类对象是否为空
-        // ERROR-AUTH-COMMON0000000001 【{0}】不能为空
-        ObjectUtils.checkEmpty(fleaUserAttrPOJO, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", FleaUserAttrPOJO.class.getSimpleName());
-
-        // 校验用户编号是否为空
-        Long userId = fleaUserAttrPOJO.getUserId();
-        ObjectUtils.checkEmpty(userId, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", FleaAuthEntityConstants.UserEntityConstants.E_USER_ID);
-
-        // 校验扩展属性码是否为空
-        String attrCode = fleaUserAttrPOJO.getAttrCode();
-        StringUtils.checkBlank(attrCode, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000001", FleaAuthEntityConstants.E_ATTR_CODE);
-
-        return new FleaUserAttr(userId, attrCode,
+        return new FleaUserAttr(fleaUserAttrPOJO.getUserId(),
+                fleaUserAttrPOJO.getAttrCode(),
                 fleaUserAttrPOJO.getAttrValue(),
                 fleaUserAttrPOJO.getAttrDesc(),
                 fleaUserAttrPOJO.getEffectiveDate(),
                 fleaUserAttrPOJO.getExpiryDate(),
                 fleaUserAttrPOJO.getRemarks());
-    }
-
-    @Override
-    public List<FleaUserAttr> queryValidUserAttrs(Long userId) throws CommonException {
-        return fleaUserAttrDao.queryValidUserAttrs(userId);
     }
 
     @Override

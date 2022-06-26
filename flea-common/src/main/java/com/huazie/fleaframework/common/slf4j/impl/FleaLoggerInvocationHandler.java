@@ -31,7 +31,7 @@ public class FleaLoggerInvocationHandler extends FleaProxyHandler {
     }
 
     /**
-     * <p> 带参数的构造方法 </p>
+     * 带参数的构造方法
      *
      * @param proxyObject 代理对象
      * @since 1.0.0

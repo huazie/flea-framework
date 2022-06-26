@@ -7,16 +7,20 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * Flea权限组POJO类
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 public class FleaPrivilegeGroupPOJO extends FleaRemarksPOJO {
 
-    private static final long serialVersionUID = -1348702196946202298L;
+    private static final long serialVersionUID = 1289507232052910718L;
 
     private String privilegeGroupName; // 权限组名称
 
     private String privilegeGroupDesc; // 权限描述
+
+    private Integer isMain; // 是否为主权限组（0：不是 1：是）
+
+    private String functionType; // 功能类型(菜单、操作、元素、资源)
 
     public String getPrivilegeGroupName() {
         return privilegeGroupName;
@@ -32,6 +36,22 @@ public class FleaPrivilegeGroupPOJO extends FleaRemarksPOJO {
 
     public void setPrivilegeGroupDesc(String privilegeGroupDesc) {
         this.privilegeGroupDesc = privilegeGroupDesc;
+    }
+
+    public Integer getIsMain() {
+        return isMain;
+    }
+
+    public void setIsMain(Integer isMain) {
+        this.isMain = isMain;
+    }
+
+    public String getFunctionType() {
+        return functionType;
+    }
+
+    public void setFunctionType(String functionType) {
+        this.functionType = functionType;
     }
 
     @Override

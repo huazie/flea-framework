@@ -8,7 +8,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 /**
- * <p> Jersey 文件上传资源 </p>
+ * Jersey 文件上传资源接口，只包含文件上传资源API。
  *
  * @author huazie
  * @version 1.0.0
@@ -17,10 +17,10 @@ import javax.ws.rs.core.MediaType;
 public interface JerseyFileUploadResource {
 
     /**
-     * <p> 处理文件上传POST资源数据 </p>
+     * 文件上传资源API，用于处理文件上传资源数据。
      *
      * @param formDataMultiPart 表单数据
-     * @return 响应对象
+     * @return Flea Jersey 响应对象
      * @since 1.0.0
      */
     @Consumes(MediaType.MULTIPART_FORM_DATA)

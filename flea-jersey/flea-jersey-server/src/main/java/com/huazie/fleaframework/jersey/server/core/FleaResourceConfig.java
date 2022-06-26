@@ -12,7 +12,14 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.List;
 
 /**
- * <p> REST应用入口类 </p>
+ * Flea 资源配置类，作为 Jersey 应用的资源入口，用于配置 Web 应用程序。
+ *
+ * <p> 该类初始化时，从 Flea Jersey 资源表中，获取定义的所有资源包名；
+ * 并将所有资源包都添加到扫描组件中，以待被递归扫描（包括所有嵌套包）。
+ *
+ * <p> 另外每个接入 Flea Jersey 的应用，都需创建 Flea 资源配置的子类，
+ * 作为其发布的资源的入口；并在该类上标记注解 {@code ApplicationPath}，
+ * 其值为该应用对外发布的资源的相对访问路径。
  *
  * @author huazie
  * @version 1.0.0
@@ -23,7 +30,7 @@ public abstract class FleaResourceConfig extends ResourceConfig {
     private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaResourceConfig.class);
 
     /**
-     * <p> 无参构造方法 </p>
+     * 无参构造方法，用于初始化待扫描的资源包
      *
      * @since 1.0.0
      */
@@ -32,7 +39,7 @@ public abstract class FleaResourceConfig extends ResourceConfig {
     }
 
     /**
-     * <p> 资源包扫描初始化 </p>
+     * 初始化待扫描的资源包
      *
      * @since 1.0.0
      */

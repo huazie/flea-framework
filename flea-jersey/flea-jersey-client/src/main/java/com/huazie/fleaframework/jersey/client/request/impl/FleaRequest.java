@@ -10,12 +10,12 @@ import com.huazie.fleaframework.common.util.ReflectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
 import com.huazie.fleaframework.common.util.json.GsonUtils;
 import com.huazie.fleaframework.common.util.xml.JABXUtils;
-import com.huazie.fleaframework.jersey.client.core.FleaJerseyClientConfig;
 import com.huazie.fleaframework.jersey.client.request.Request;
 import com.huazie.fleaframework.jersey.client.request.RequestConfig;
 import com.huazie.fleaframework.jersey.client.request.RequestConfigEnum;
 import com.huazie.fleaframework.jersey.client.request.RequestModeEnum;
 import com.huazie.fleaframework.jersey.client.response.Response;
+import com.huazie.fleaframework.jersey.common.FleaJerseyConfig;
 import com.huazie.fleaframework.jersey.common.data.FleaJerseyRequest;
 import com.huazie.fleaframework.jersey.common.data.FleaJerseyRequestData;
 import com.huazie.fleaframework.jersey.common.data.FleaJerseyResponse;
@@ -35,7 +35,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 /**
- * <p> Flea 抽象请求 </p>
+ * Flea 抽象请求，封装了公共的 Flea Jersey 请求处理的能力。
  *
  * @author huazie
  * @version 1.0.0
@@ -50,16 +50,16 @@ public abstract class FleaRequest implements Request {
     RequestModeEnum modeEnum; // 请求方式
 
     /**
-     * <p> 不带参数的构造方法 </p>
+     * 默认的构造方法
      *
      * @since 1.0.0
      */
     FleaRequest() {
-        init();
+        init(); // 子类实现该方法，用于自定义的初始化内容
     }
 
     /**
-     * <p> 带请求配置参数的构造的方法 </p>
+     * 带请求配置参数的构造的方法
      *
      * @param config 请求配置
      * @since 1.0.0
@@ -112,25 +112,26 @@ public abstract class FleaRequest implements Request {
         String clientInput = config.getClientInput();
         Class inputClazz = ReflectUtils.forName(clientInput);
         // 请检查客户端配置【client_code = {0}】: 【{1} = {2}】非法
-        ObjectUtils.checkEmpty(inputClazz, FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000010", clientCode,
-                RequestConfigEnum.CLIENT_INPUT.getKey(), clientInput);
+        ObjectUtils.checkEmpty(inputClazz, FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000010",
+                clientCode, RequestConfigEnum.CLIENT_INPUT.getKey(), clientInput);
 
         if (!inputClazz.isInstance(input)) {
             // 请检查客户端配置【client_code = {0}】：配置的入参【client_input = {1}】类型和实际传入的入参【{2}】类型不一致
-            ExceptionUtils.throwCommonException(FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000004", clientCode,
-                    clientInput, input.getClass().getName());
+            ExceptionUtils.throwCommonException(FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000004",
+                    clientCode, clientInput, input.getClass().getName());
         }
 
         // 业务出参
         String clientOutput = config.getClientOutput();
         Class mClazz = ReflectUtils.forName(clientOutput);
         // 请检查客户端配置【client_code = {0}】: 【{1} = {2}】非法
-        ObjectUtils.checkEmpty(mClazz, FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000010", clientCode,
-                RequestConfigEnum.CLIENT_OUTPUT.getKey(), clientOutput);
+        ObjectUtils.checkEmpty(mClazz, FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000010",
+                clientCode, RequestConfigEnum.CLIENT_OUTPUT.getKey(), clientOutput);
 
         if (!mClazz.equals(clazz)) {
             // 请检查客户端配置【client_code = {0}】：配置的出参【client_output = {1}】类型和实际需要返回的出参【{2}】类型不一致
-            ExceptionUtils.throwCommonException(FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000007", clientCode, clientOutput, clazz.getName());
+            ExceptionUtils.throwCommonException(FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000007",
+                    clientCode, clientOutput, clazz.getName());
         }
 
         // 客户端注册MultiPartFeature组件，用于支持 multipart/form-data 媒体类型
@@ -184,7 +185,7 @@ public abstract class FleaRequest implements Request {
     }
 
     /**
-     * <p> 从请求配置中获取媒体类型 </p>
+     * 从请求配置中获取媒体类型
      *
      * @return 媒体类型
      * @throws CommonException 通用异常
@@ -212,7 +213,7 @@ public abstract class FleaRequest implements Request {
     }
 
     /**
-     * <p> 将请求报文 转换为 XML字符串 </p>
+     * 将请求报文 转换为 XML字符串
      *
      * @param request 请求报文对象
      * @return 请求XML字符串
@@ -236,14 +237,14 @@ public abstract class FleaRequest implements Request {
     }
 
     /**
-     * <p> 请求方式初始化 </p>
+     * 请求方式初始化，由子类实现，用于自定义初始化逻辑
      *
      * @since 1.0.0
      */
     protected abstract void init();
 
     /**
-     * <p> 实际请求处理 </p>
+     * 实际请求处理，由子类实现具体的请求操作
      *
      * @param target  WebTarget对象
      * @param request Flea Jersey请求对象
@@ -267,7 +268,7 @@ public abstract class FleaRequest implements Request {
     }
 
     /**
-     * <p> 创建FleaJerseyRequest对象 </p>
+     * 创建FleaJerseyRequest对象
      *
      * @param resourceCode 资源编码
      * @param serviceCode  服务编码
@@ -289,7 +290,7 @@ public abstract class FleaRequest implements Request {
     }
 
     /**
-     * <p> 创建请求公共报文 </p>
+     * 创建请求公共报文
      *
      * @param resourceCode 资源编码
      * @param serviceCode  服务编码
@@ -299,9 +300,7 @@ public abstract class FleaRequest implements Request {
     private static RequestPublicData createRequestPublicData(String resourceCode, String serviceCode) {
         RequestPublicData publicData = new RequestPublicData();
         // 当前客户端的系统账户编号
-        publicData.setSystemAccountId(FleaJerseyClientConfig.getSystemAccountId(String.class));
-        // 当前客户端的系统账户密码
-        publicData.setSystemAccountPassword(FleaJerseyClientConfig.getSystemAccountPwd());
+        publicData.setSystemAccountId(FleaJerseyConfig.getSystemAccountId(String.class));
         // 当前操作的账户编号
         publicData.setAccountId(StringUtils.valueOf(FleaSessionManager.getAccountId()));
         publicData.setResourceCode(resourceCode);
@@ -310,7 +309,7 @@ public abstract class FleaRequest implements Request {
     }
 
     /**
-     * <p> 创建请求业务报文 </p>
+     * 创建请求业务报文
      *
      * @param input 业务入参
      * @return 请求业务报文

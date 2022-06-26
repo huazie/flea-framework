@@ -11,7 +11,8 @@ public enum FunctionTypeEnum {
 
     MENU("MENU", "菜单"),
     OPERATION("OPERATION", "操作"),
-    ELEMENT("ELEMENT", "元素");
+    ELEMENT("ELEMENT", "元素"),
+    RESOURCE("RESOURCE", "资源");
 
     private String type;
 

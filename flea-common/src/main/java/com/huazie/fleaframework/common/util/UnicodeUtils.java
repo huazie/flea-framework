@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.common.util;
 
 /**
- * <p> Unicode工具类 </p>
+ * Unicode工具类
  *
  * @author huazie
  * @version 1.0.0
@@ -16,7 +16,7 @@ public class UnicodeUtils {
     }
 
     /**
-     * <p> 本地字符串转换为Unicode字符串 </p>
+     * 本地字符串转换为Unicode字符串
      *
      * @param nativeStr 本地字符串
      * @return Unicode字符串
@@ -44,7 +44,7 @@ public class UnicodeUtils {
     }
 
     /**
-     * <p> Unicode字符串转换为本地字符串 </p>
+     * Unicode字符串转换为本地字符串
      *
      * @param unicodeStr unicode字符串
      * @return 本地字符串
@@ -67,7 +67,7 @@ public class UnicodeUtils {
     }
 
     /**
-     * <p> 本地文件转成Unicode文件 </p>
+     * 本地文件转成Unicode文件
      *
      * @param exePath 可执行文件路径（native2ascii.exe）
      * @param nativeFilePath  本地文件路径
@@ -80,7 +80,7 @@ public class UnicodeUtils {
     }
 
     /**
-     * <p> Unicode文件转成本地文件 </p>
+     * Unicode文件转成本地文件
      *
      * @param exePath 可执行文件路径（native2ascii.exe）
      * @param nativeFilePath  本地文件路径

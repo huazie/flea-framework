@@ -20,7 +20,7 @@ import java.util.Date;
  * Flea权限组关联（权限）表对应的实体类
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 @Entity

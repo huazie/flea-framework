@@ -15,14 +15,14 @@ import com.huazie.fleaframework.db.jpa.service.interfaces.IAbstractFleaJPASV;
 public interface IFleaAccountSV extends IAbstractFleaJPASV<FleaAccount> {
 
     /**
-     * 新建一个Flea账户
+     * 根据账户编号查询有效的账户信息 （账户状态 1 正常，未失效）</p>
      *
-     * @param fleaAccountPOJO Flea账户POJO类实例
-     * @return Flea账户对象
+     * @param accountId 账户编号
+     * @return 账户信息
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    FleaAccount saveFleaAccount(FleaAccountPOJO fleaAccountPOJO) throws CommonException;
+    FleaAccount queryValidAccount(Long accountId) throws CommonException;
 
     /**
      * 根据账号和密码查询账户信息
@@ -46,16 +46,6 @@ public interface IFleaAccountSV extends IAbstractFleaJPASV<FleaAccount> {
     FleaAccount queryValidAccount(String accountCode) throws CommonException;
 
     /**
-     * 根据账户编号查询有效的账户信息 （账户状态 1 正常，未失效）</p>
-     *
-     * @param accountId 账户编号
-     * @return 账户信息
-     * @throws CommonException 通用异常
-     * @since 1.0.0
-     */
-    FleaAccount queryValidAccount(Long accountId) throws CommonException;
-
-    /**
      * 账户密码加密
      *
      * @param originalAccountPwd 原始账户密码
@@ -63,5 +53,15 @@ public interface IFleaAccountSV extends IAbstractFleaJPASV<FleaAccount> {
      * @since 1.0.0
      */
     String encrypt(String originalAccountPwd);
+
+    /**
+     * 新建一个Flea账户
+     *
+     * @param fleaAccountPOJO Flea账户POJO类实例
+     * @return Flea账户对象
+     * @throws CommonException 通用异常
+     * @since 1.0.0
+     */
+    FleaAccount saveFleaAccount(FleaAccountPOJO fleaAccountPOJO) throws CommonException;
 
 }

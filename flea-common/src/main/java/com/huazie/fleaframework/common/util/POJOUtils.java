@@ -1,11 +1,18 @@
 package com.huazie.fleaframework.common.util;
 
+import org.springframework.beans.BeanUtils;
+
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * <p> POJO工具类 </p>
+ * POJO工具类
  *
  * @author huazie
- * @version 1.0.0
- * @since 1.0.0
+ * @version 2.0.0
+ * @since 2.0.0
  */
 public class POJOUtils {
 
@@ -13,20 +20,41 @@ public class POJOUtils {
     }
 
     /**
-     * <p> 将POJO类数据拷贝到实体类中 </p>
+     * 将源对象所有数据拷贝到目标对象中
      *
-     * @param pojo   POJO类
-     * @param entity 实体类
-     * @since 1.0.0
+     * @param source 源对象
+     * @param target 目标对象
+     * @since 2.0.0
      */
-    public static void copyPOJOToEntity(Object pojo, Object entity) {
-        if (ObjectUtils.isEmpty(pojo) || ObjectUtils.isEmpty(entity)) {
-            return;
+    public static void copyAll(Object source, Object target) {
+        if (ObjectUtils.isEmpty(source) || ObjectUtils.isEmpty(target)) return;
+        BeanUtils.copyProperties(source, target);
+    }
+
+    /**
+     * 将源对象非空的数据拷贝到目标对象中
+     *
+     * @param source 源对象
+     * @param target 目标对象
+     * @since 2.0.0
+     */
+    public static void copyNotEmpty(Object source, Object target) {
+        if (ObjectUtils.isEmpty(source) || ObjectUtils.isEmpty(target)) return;
+        PropertyDescriptor[] sourcePds = BeanUtils.getPropertyDescriptors(source.getClass());
+        List<String> ignoreProperties = null;
+        for (PropertyDescriptor sourcePd : sourcePds) {
+            Method readMethod = sourcePd.getReadMethod();
+            if (ObjectUtils.isEmpty(ReflectUtils.invoke(readMethod, source, null))) {
+                if (ObjectUtils.isEmpty(ignoreProperties)) {
+                    ignoreProperties = new ArrayList<>();
+                }
+                ignoreProperties.add(sourcePd.getName());
+            }
         }
-
-        // 获取POJO类的变量
-        
-
+        if (ObjectUtils.isEmpty(ignoreProperties))
+            BeanUtils.copyProperties(source, target);
+        else
+            BeanUtils.copyProperties(source, target, ignoreProperties.toArray(new String[0]));
     }
 
 }

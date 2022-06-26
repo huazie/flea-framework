@@ -4,7 +4,7 @@ package com.huazie.fleaframework.auth.common;
  * 授权关联类型枚举
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 public enum AuthRelTypeEnum {
@@ -13,6 +13,7 @@ public enum AuthRelTypeEnum {
     PRIVILEGE_REL_MENU("PRIVILEGE_REL_MENU", "权限关联菜单"),
     PRIVILEGE_REL_OPERATION("PRIVILEGE_REL_OPERATION", "权限关联操作"),
     PRIVILEGE_REL_ELEMENT("PRIVILEGE_REL_ELEMENT", "权限关联元素"),
+    PRIVILEGE_REL_RESOURCE("PRIVILEGE_REL_RESOURCE", "权限关联资源"),
 
     // 权限组关联类型
     PRIVILEGE_GROUP_REL_PRIVILEGE("PRIVILEGE_GROUP_REL_PRIVILEGE", "权限组关联权限"),
@@ -31,7 +32,8 @@ public enum AuthRelTypeEnum {
 
     // 用户组关联类型
     USER_GROUP_REL_ROLE("USER_GROUP_REL_ROLE", "用户组关联角色"),
-    USER_GROUP_REL_ROLE_GROUP("USER_GROUP_REL_ROLE_GROUP", "用户组关联角色组");
+    USER_GROUP_REL_ROLE_GROUP("USER_GROUP_REL_ROLE_GROUP", "用户组关联角色组"),
+    USER_GROUP_REL_USER("USER_GROUP_REL_USER", "用户组关联用户");
 
     private String relType; // 关联类型
 

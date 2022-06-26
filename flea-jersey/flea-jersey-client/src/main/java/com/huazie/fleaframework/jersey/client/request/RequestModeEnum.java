@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.jersey.client.request;
 
 /**
- * <p> 请求方式枚举 </p>
+ * 请求方式枚举，每一类请求方式对应一种 Flea Jersey 请求。
  *
  * @author huazie
  * @version 1.0.0

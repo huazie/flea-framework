@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * <p> 响应公共数据 </p>
+ * 响应公共数据
  *
  * @author huazie
  * @version 1.0.0
@@ -26,7 +26,7 @@ public final class ResponsePublicData {
     private String resultMess; // 返回信息
 
     /**
-     * <p> 默认构造函数，初始化响应成功的公共数据 </p>
+     * 默认构造函数，初始化响应成功的公共数据
      *
      * @since 1.0.0
      */
@@ -52,7 +52,7 @@ public final class ResponsePublicData {
     }
 
     /**
-     * <p> 资源服务请求是否成功 </p>
+     * 资源服务请求是否成功
      *
      * @return true ：成功, false : 失败
      * @since 1.0.0

@@ -1,6 +1,6 @@
 package com.huazie.fleaframework.auth.base.user.entity;
 
-import com.huazie.fleaframework.common.EntityStateEnum;
+import com.huazie.fleaframework.auth.common.LoginStateEnum;
 import com.huazie.fleaframework.common.FleaEntity;
 import com.huazie.fleaframework.common.FleaSessionManager;
 import com.huazie.fleaframework.common.util.DateUtils;
@@ -111,7 +111,7 @@ public class FleaLoginLog extends FleaEntity {
         this.loginIp4 = loginIp4;
         this.loginIp6 = loginIp6;
         this.loginArea = loginArea;
-        this.loginState = EntityStateEnum.IN_USE.getState();
+        this.loginState = LoginStateEnum.LOGINING.getState();
         this.loginTime = DateUtils.getCurrentTime();
         this.createDate = DateUtils.getCurrentTime();
         this.remarks = remarks;

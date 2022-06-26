@@ -3,7 +3,7 @@ package com.huazie.fleaframework.common.util;
 import com.huazie.fleaframework.common.exception.CommonException;
 
 /**
- * <p>数组操作工具类</p>
+ * 数组操作工具类
  *
  * @author huazie
  * @version 1.0.0
@@ -15,7 +15,7 @@ public class ArrayUtils {
     }
 
     /**
-     * <p>检查对象数组是否为空</p>
+     * 检查对象数组是否为空
      *
      * @param values 对象数组
      * @return 如果对象数组是空，返回true
@@ -26,7 +26,7 @@ public class ArrayUtils {
     }
 
     /**
-     * <p>检查long数组是否为空</p>
+     * 检查long数组是否为空
      *
      * @param values long数组
      * @return 如果long数组是空，返回true
@@ -37,7 +37,7 @@ public class ArrayUtils {
     }
 
     /**
-     * <p>检查int数组是否为空</p>
+     * 检查int数组是否为空
      *
      * @param values int数组
      * @return 如果int数组是空，返回true
@@ -48,7 +48,7 @@ public class ArrayUtils {
     }
 
     /**
-     * <p>检查short数组是否为空</p>
+     * 检查short数组是否为空
      *
      * @param values short数组
      * @return 如果short数组是空，返回true
@@ -59,7 +59,7 @@ public class ArrayUtils {
     }
 
     /**
-     * <p>检查byte数组是否为空</p>
+     * 检查byte数组是否为空
      *
      * @param values byte数组
      * @return 如果byte数组是空，返回true
@@ -70,7 +70,7 @@ public class ArrayUtils {
     }
 
     /**
-     * <p>检查double数组是否为空</p>
+     * 检查double数组是否为空
      *
      * @param values double数组
      * @return 如果double数组是空，返回true
@@ -81,7 +81,7 @@ public class ArrayUtils {
     }
 
     /**
-     * <p>检查float数组是否为空</p>
+     * 检查float数组是否为空
      *
      * @param values float数组
      * @return 如果float数组是空，返回true
@@ -92,7 +92,7 @@ public class ArrayUtils {
     }
 
     /**
-     * <p>检查boolean数组是否为空</p>
+     * 检查boolean数组是否为空
      *
      * @param values boolean数组
      * @return 如果boolean数组是空，返回true
@@ -103,7 +103,7 @@ public class ArrayUtils {
     }
 
     /**
-     * <p>检查char数组是否为空</p>
+     * 检查char数组是否为空
      *
      * @param values char数组
      * @return 如果char数组是空，返回true
@@ -114,7 +114,7 @@ public class ArrayUtils {
     }
 
     /**
-     * <p>检查对象数组是否不为空</p>
+     * 检查对象数组是否不为空
      *
      * @param values 对象数组
      * @return 如果对象数组不为空，返回true
@@ -125,7 +125,7 @@ public class ArrayUtils {
     }
 
     /**
-     * <p>检查long数组是否不为空</p>
+     * 检查long数组是否不为空
      *
      * @param values long数组
      * @return 如果long数组不为空，返回true
@@ -136,7 +136,7 @@ public class ArrayUtils {
     }
 
     /**
-     * <p>检查int数组是否不为空</p>
+     * 检查int数组是否不为空
      *
      * @param values int数组
      * @return 如果int数组不为空，返回true
@@ -147,7 +147,7 @@ public class ArrayUtils {
     }
 
     /**
-     * <p>检查short数组是否不为空</p>
+     * 检查short数组是否不为空
      *
      * @param values short数组
      * @return 如果short数组不为空，返回true
@@ -158,7 +158,7 @@ public class ArrayUtils {
     }
 
     /**
-     * <p>检查byte数组是否不为空</p>
+     * 检查byte数组是否不为空
      *
      * @param values byte数组
      * @return 如果byte数组不为空，返回true
@@ -169,7 +169,7 @@ public class ArrayUtils {
     }
 
     /**
-     * <p>检查double数组是否不为空</p>
+     * 检查double数组是否不为空
      *
      * @param values double数组
      * @return 如果double数组不为空，返回true
@@ -180,7 +180,7 @@ public class ArrayUtils {
     }
 
     /**
-     * <p>检查float数组是否不为空</p>
+     * 检查float数组是否不为空
      *
      * @param values float数组
      * @return 如果float数组不为空，返回true
@@ -191,7 +191,7 @@ public class ArrayUtils {
     }
 
     /**
-     * <p>检查boolean数组是否不为空</p>
+     * 检查boolean数组是否不为空
      *
      * @param values boolean数组
      * @return 如果boolean数组不为空，返回true
@@ -202,7 +202,7 @@ public class ArrayUtils {
     }
 
     /**
-     * <p>检查char数组是否不为空</p>
+     * 检查char数组是否不为空
      *
      * @param values char数组
      * @return 如果char数组不为空，返回true
@@ -213,7 +213,7 @@ public class ArrayUtils {
     }
 
     /**
-     * <p> 判断两个数组长度是否相等 </p>
+     * 判断两个数组长度是否相等
      *
      * @param valueArr1 数组1
      * @param valueArr2 数组2
@@ -229,7 +229,7 @@ public class ArrayUtils {
     }
 
     /**
-     * <p> 校验map集合对象，如果空，则抛出异常 </p>
+     * 校验map集合对象，如果空，则抛出异常
      *
      * @param values         对象数组
      * @param exceptionClazz 通用异常子类类对象
@@ -244,7 +244,7 @@ public class ArrayUtils {
     }
 
     /**
-     * <p> 校验map集合对象，如果非空，则抛出异常 </p>
+     * 校验map集合对象，如果非空，则抛出异常
      *
      * @param values         对象数组
      * @param exceptionClazz 通用异常子类类对象

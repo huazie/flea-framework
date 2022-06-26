@@ -9,7 +9,7 @@ import java.util.Random;
 import java.util.UUID;
 
 /**
- * <p> 随机码生成公共类 </p>
+ * 随机码生成公共类
  *
  * @author huazie
  * @version 1.0.0
@@ -34,7 +34,7 @@ public class RandomCode {
     }
 
     /**
-     * <p> 产生随机的数字，位数由len控制,以字符串形式返回 </p>
+     * 产生随机的数字，位数由len控制,以字符串形式返回
      *
      * @param len 随机数字长度
      * @return 指定长度的随机数字
@@ -53,7 +53,7 @@ public class RandomCode {
     }
 
     /**
-     * <p> 产生随机的小写字母，位数由len控制。以连续的字符串形式返回 </p>
+     * 产生随机的小写字母，位数由len控制。以连续的字符串形式返回
      *
      * @param len 随机字母长度
      * @return 指定定长度的字母字符串
@@ -64,7 +64,7 @@ public class RandomCode {
     }
 
     /**
-     * <p> 产生随机的大写字母，位数由len控制。以连续的字符串形式返回 </p>
+     * 产生随机的大写字母，位数由len控制。以连续的字符串形式返回
      *
      * @param len 随机字母长度
      * @return 指定长度的字母字符串
@@ -75,7 +75,7 @@ public class RandomCode {
     }
 
     /**
-     * <p> 产生随机的大小写字母，位数由len控制。以连续的字符串形式返回 </p>
+     * 产生随机的大小写字母，位数由len控制。以连续的字符串形式返回
      *
      * @param len 随机字母长度
      * @return 指定长度的字母字符串
@@ -86,7 +86,7 @@ public class RandomCode {
     }
 
     /**
-     * <p> 产生随机的大写字母，位数由len控制。以连续的字符串形式返回 </p>
+     * 产生随机的大写字母，位数由len控制。以连续的字符串形式返回
      *
      * @param len   随机字母长度
      * @param pEnum 大小写标识
@@ -117,7 +117,7 @@ public class RandomCode {
     }
 
     /**
-     * <p> 随机取单个大小写字母 </p>
+     * 随机取单个大小写字母
      *
      * @return 单个字母
      * @since 1.0.0
@@ -132,7 +132,7 @@ public class RandomCode {
     }
 
     /**
-     * <p> 单个大写字母 </p>
+     * 单个大写字母
      *
      * @return 单个大写字母
      * @since 1.0.0
@@ -142,7 +142,7 @@ public class RandomCode {
     }
 
     /**
-     * <p> 单个小写字母 </p>
+     * 单个小写字母
      *
      * @return 单个小写字母
      * @since 1.0.0
@@ -152,7 +152,7 @@ public class RandomCode {
     }
 
     /**
-     * <p> 生成UUID值 </p>
+     * 生成UUID值
      *
      * @return 去除"-"的UUID值
      * @since 1.0.0

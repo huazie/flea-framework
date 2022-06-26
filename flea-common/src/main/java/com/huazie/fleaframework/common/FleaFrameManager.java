@@ -6,7 +6,7 @@ import com.huazie.fleaframework.common.util.StringUtils;
 import java.util.Locale;
 
 /**
- * <p> Flea Frame Manager </p>
+ * Flea Frame Manager
  *
  * @author huazie
  * @version 1.0.0
@@ -26,7 +26,7 @@ public class FleaFrameManager {
     }
 
     /**
-     * <p> 获取一个Flea Frame管理类实例 </p>
+     * 获取一个Flea Frame管理类实例
      *
      * @return Flea Frame 管理类
      * @since 1.0.0
@@ -43,7 +43,7 @@ public class FleaFrameManager {
     }
 
     /**
-     * <p>获取当前线程的国际化区域标识</p>
+     * 获取当前线程的国际化区域标识
      *
      * @return 当前线程设置的国际化区域标识
      * @since 1.0.0
@@ -57,7 +57,7 @@ public class FleaFrameManager {
     }
 
     /**
-     * <p>设置当前线程的国际化标识</p>
+     * 设置当前线程的国际化标识
      *
      * @param locale 国际化区域标识
      * @since 1.0.0
@@ -70,7 +70,7 @@ public class FleaFrameManager {
     }
 
     /**
-     * <p> 获取当前线程中使用JDBC连接的数据库配置键 </p>
+     * 获取当前线程中使用JDBC连接的数据库配置键
      *
      * @return 当前线程中使用JDBC连接的数据库配置键
      * @since 1.0.0
@@ -80,7 +80,7 @@ public class FleaFrameManager {
     }
 
     /**
-     * <p> 设置当前线程中使用JDBC连接的数据库配置键 </p>
+     * 设置当前线程中使用JDBC连接的数据库配置键
      *
      * @param dbSysName 数据库系统名
      * @param dbName    数据库名
@@ -93,7 +93,7 @@ public class FleaFrameManager {
     }
 
     /**
-     * <p> 获取当前线程的用户信息 </p>
+     * 获取当前线程的用户信息
      *
      * @return 用户信息
      */
@@ -102,7 +102,7 @@ public class FleaFrameManager {
     }
 
     /**
-     * <p> 设置当前线程的用户信息 </p>
+     * 设置当前线程的用户信息
      *
      * @param fleaUser 用户信息
      * @since 1.0.0

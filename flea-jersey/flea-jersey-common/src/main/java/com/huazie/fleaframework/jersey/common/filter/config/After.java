@@ -1,7 +1,8 @@
 package com.huazie.fleaframework.jersey.common.filter.config;
 
 /**
- * <p> flea-jersey-filter.xml 配置 {@code <after> </after>} 后置过滤器链节点 </p>
+ * 后置过滤器链，可从配置文件【flea-jersey-filter.xml】
+ * 中查看 {@code <after> </after>} 节点
  *
  * @author huazie
  * @version 1.0.0
@@ -9,7 +10,7 @@ package com.huazie.fleaframework.jersey.common.filter.config;
  */
 public class After extends Filters {
     /**
-     * <p> 添加一个后置过滤器配置对象 </p>
+     * 添加一个后置过滤器配置对象
      *
      * @param filter 过滤器配置对象
      * @since 1.0.0

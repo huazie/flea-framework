@@ -136,7 +136,7 @@ public class FleaI18nConfig {
     }
 
     /**
-     * <p> 通过国际化数据的key，获取当前系统指定资源的国际化资源数据 </p>
+     * 通过国际化数据的key，获取当前系统指定资源的国际化资源数据
      *
      * @param key     国际化资源KEY
      * @param values  国际化资源数据替换内容
@@ -150,7 +150,7 @@ public class FleaI18nConfig {
     }
 
     /**
-     * <p> 通过国际化数据的key，获取当前系统指定资源的国际化资源数据 </p>
+     * 通过国际化数据的key，获取当前系统指定资源的国际化资源数据
      *
      * @param key     国际化资源KEY
      * @param resName 资源名
@@ -183,7 +183,7 @@ public class FleaI18nConfig {
     }
 
     /**
-     * <p> 根据资源名和国际化标识获取指定国际化配置ResourceBundle对象 </p>
+     * 根据资源名和国际化标识获取指定国际化配置ResourceBundle对象
      *
      * @param resName 资源名
      * @param locale  国际化标识
@@ -239,8 +239,8 @@ public class FleaI18nConfig {
     }
 
     /**
-     * <p> 获取国际化资源文件KEY </p>
-     * <p> 如果资源名不为空，则资源名作为key，同时如果国际化标识不为空，则取资源名+下划线+国际化语言作为key；
+     * 获取国际化资源文件KEY。如果资源名不为空，则资源名作为key，
+     * 同时如果国际化标识不为空，则取资源名+下划线+国际化语言作为key；
      *
      * @param resName 资源名
      * @param locale  国际化标识
@@ -259,7 +259,7 @@ public class FleaI18nConfig {
     }
 
     /**
-     * <p> 根据资源名，获取资源文件路径 </p>
+     * 根据资源名，获取资源文件路径
      *
      * @param resName 资源名
      * @return 资源文件路径

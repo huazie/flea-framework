@@ -47,11 +47,16 @@ public abstract class AbstractSpringCache implements Cache, IFleaCache {
 
     @Override
     public ValueWrapper get(Object key) {
-        if (ObjectUtils.isEmpty(key))
-            return null;
+        if (ObjectUtils.isEmpty(key)) return null;
         ValueWrapper wrapper = null;
         Object cacheValue = get(key.toString());
         if (ObjectUtils.isNotEmpty(cacheValue)) {
+            if (cacheValue instanceof NullCache) {
+                cacheValue = null;
+            }
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug1(new Object() {}, "VALUE = {}", cacheValue);
+            }
             wrapper = new SimpleValueWrapper(cacheValue);
         }
         return wrapper;
@@ -59,8 +64,7 @@ public abstract class AbstractSpringCache implements Cache, IFleaCache {
 
     @Override
     public <T> T get(Object key, Class<T> type) {
-        if (ObjectUtils.isEmpty(key) || ObjectUtils.isEmpty(type))
-            return null;
+        if (ObjectUtils.isEmpty(key) || ObjectUtils.isEmpty(type)) return null;
         Object cacheValue = get(key.toString());
         if (!type.isInstance(cacheValue)) {
             if (LOGGER.isDebugEnabled()) {
@@ -78,8 +82,7 @@ public abstract class AbstractSpringCache implements Cache, IFleaCache {
 
     @Override
     public Object get(String key) {
-        if (StringUtils.isBlank(key))
-            return null;
+        if (StringUtils.isBlank(key)) return null;
         Object obj = null;
         if (LOGGER.isDebugEnabled()) {
             obj = new Object() {};
@@ -94,15 +97,13 @@ public abstract class AbstractSpringCache implements Cache, IFleaCache {
 
     @Override
     public void put(Object key, Object value) {
-        if (ObjectUtils.isEmpty(key))
-            return;
+        if (ObjectUtils.isEmpty(key)) return;
         put(key.toString(), value);
     }
 
     @Override
     public ValueWrapper putIfAbsent(Object key, Object value) {
-        if (ObjectUtils.isEmpty(key))
-            return null;
+        if (ObjectUtils.isEmpty(key)) return null;
         ValueWrapper wrapper = null;
         Object cacheValue = get(key.toString());
         if (ObjectUtils.isEmpty(cacheValue)) {
@@ -125,8 +126,7 @@ public abstract class AbstractSpringCache implements Cache, IFleaCache {
 
     @Override
     public void evict(Object key) {
-        if (ObjectUtils.isEmpty(key))
-            return;
+        if (ObjectUtils.isEmpty(key)) return;
         delete(key.toString());
     }
 
