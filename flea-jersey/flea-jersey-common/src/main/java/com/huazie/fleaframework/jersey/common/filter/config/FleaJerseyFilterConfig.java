@@ -7,7 +7,7 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * <p> Flea Jersey Filter 配置类 </p>
+ * Flea Jersey Filter 配置类
  *
  * @author huazie
  * @version 1.0.0
@@ -16,7 +16,7 @@ import java.util.List;
 public class FleaJerseyFilterConfig {
 
     /**
-     * <p> 获取前置过滤器链 </p>
+     * 获取前置过滤器链
      *
      * @return 前置过滤器链
      * @since 1.0.0
@@ -26,7 +26,7 @@ public class FleaJerseyFilterConfig {
     }
 
     /**
-     * <p> 获取业务服务过滤器链 </p>
+     * 获取业务服务过滤器链
      *
      * @return 业务服务过滤器链
      * @since 1.0.0
@@ -36,7 +36,7 @@ public class FleaJerseyFilterConfig {
     }
 
     /**
-     * <p> 获取后置过滤器链 </p>
+     * 获取后置过滤器链
      *
      * @return 后置过滤器链
      * @since 1.0.0
@@ -46,7 +46,7 @@ public class FleaJerseyFilterConfig {
     }
 
     /**
-     * <p> 获取异常过滤器链 </p>
+     * 获取异常过滤器链
      *
      * @return 异常过滤器链
      * @since 1.0.0
@@ -60,7 +60,7 @@ public class FleaJerseyFilterConfig {
     }
 
     /**
-     * <p> 重新排序 filters， 依据 Filter 中的 order 值 </p>
+     * 重新排序 filters， 依据 Filter 中的 order 值
      *
      * @param filters 过滤器链
      * @since 1.0.0
@@ -76,4 +76,18 @@ public class FleaJerseyFilterConfig {
         return filters;
     }
 
+    /**
+     * 根据国际码，获取国际码和错误码映射配置对象
+     *
+     * @param i18nCode 国际码
+     * @return 国际码和错误码映射配置对象
+     * @since 2.0.0
+     */
+    public static I18nErrorMapping getI18nErrorMapping(String i18nCode) {
+        return getFilterI18nError().getI18nErrorMapping(i18nCode);
+    }
+
+    private static FilterI18nError getFilterI18nError() {
+        return JerseyXmlDigesterHelper.getInstance().getJersey().getFilterI18nError();
+    }
 }

@@ -3,7 +3,8 @@ package com.huazie.fleaframework.jersey.common.filter.config;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
- * <p> flea-jersey-filter.xml 配置 {@code <filter> </filter>} 过滤器节点 </p>
+ * 过滤器实现，可从配置文件【flea-jersey-filter.xml】
+ * 中查看 {@code <filter> </filter>} 节点
  *
  * @author huazie
  * @version 1.0.0

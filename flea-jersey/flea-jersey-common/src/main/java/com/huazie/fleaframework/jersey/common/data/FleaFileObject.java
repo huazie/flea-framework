@@ -3,7 +3,7 @@ package com.huazie.fleaframework.jersey.common.data;
 import java.io.File;
 
 /**
- * <p> Flea文件对象 </p>
+ * Flea文件对象
  *
  * @author huazie
  * @version 1.0.0

@@ -10,10 +10,12 @@ import com.huazie.fleaframework.common.util.StringUtils;
 import com.huazie.fleaframework.jersey.common.exception.FleaJerseyClientException;
 
 /**
- * <p> Flea Jersey请求工厂 </p>
+ * Flea Jersey 请求工厂类，采用单例模式，提供构建
+ * Flea Jersey 请求的能力。
  *
  * @author huazie
  * @version 1.0.0
+ * @see RequestModeEnum
  * @since 1.0.0
  */
 public class RequestFactory {
@@ -26,7 +28,7 @@ public class RequestFactory {
     }
 
     /**
-     * <p> 获取请求工厂实例 </p>
+     * 获取请求工厂实例
      *
      * @return 请求工厂实例
      * @since 1.0.0
@@ -43,7 +45,7 @@ public class RequestFactory {
     }
 
     /**
-     * <p> 构建一个Flea请求 </p>
+     * 根据请求配置，构建一个 Flea 请求
      *
      * @param config 请求配置
      * @return Flea请求

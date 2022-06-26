@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * <p> 请求公共数据 </p>
+ * 请求公共数据
  *
  * @author huazie
  * @version 1.0.0
@@ -20,9 +20,6 @@ public final class RequestPublicData {
 
     @XmlElement(name = "SYSTEM_ACCOUNT_ID")
     private String systemAccountId; // 系统账户编号
-
-    @XmlElement(name = "SYSTEM_ACCOUNT_PWD")
-    private String systemAccountPassword; // 系统账户密码
 
     @XmlElement(name = "ACCOUNT_ID")
     private String accountId; // 账户编号
@@ -39,14 +36,6 @@ public final class RequestPublicData {
 
     public void setSystemAccountId(String systemAccountId) {
         this.systemAccountId = systemAccountId;
-    }
-
-    public String getSystemAccountPassword() {
-        return systemAccountPassword;
-    }
-
-    public void setSystemAccountPassword(String systemAccountPassword) {
-        this.systemAccountPassword = systemAccountPassword;
     }
 
     public String getAccountId() {

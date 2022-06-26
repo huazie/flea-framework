@@ -2,12 +2,12 @@
 
 <jersey>
 
-    <filterchain>
+    <filter-chain>
 
         <!-- 前置过滤器链 -->
         <before>
             <filter clazz="com.huazie.fleaframework.jersey.server.filter.impl.DataPreCheckFilter" order="1" desc="数据预校验过滤器"/>
-            <filter clazz="com.huazie.fleaframework.jersey.server.filter.impl.SystemAuthCheckFilter" order="2" desc="系统授权校验过滤器"/>
+            <filter clazz="com.huazie.fleaframework.jersey.server.filter.impl.AuthCheckFilter" order="2" desc="系统授权校验过滤器"/>
         </before>
 
         <!-- 业务服务过滤器链 -->
@@ -25,6 +25,21 @@
             <filter clazz="com.huazie.fleaframework.jersey.server.filter.impl.ErrorFilter" order="1" desc="异常过滤器"/>
         </error>
 
-    </filterchain>
+    </filter-chain>
+
+    <filter-i18n-error>
+        <i18n-error-mapping i18nCode="ERROR-JERSEY-FILTER0000000003" errorCode="100000">请求报文不能为空</i18n-error-mapping>
+        <i18n-error-mapping i18nCode="ERROR-JERSEY-FILTER0000000004" errorCode="100001">请求公共报文不能为空</i18n-error-mapping>
+        <i18n-error-mapping i18nCode="ERROR-JERSEY-FILTER0000000005" errorCode="100002">请求业务报文不能为空</i18n-error-mapping>
+        <i18n-error-mapping i18nCode="ERROR-JERSEY-FILTER0000000006" errorCode="100003">请求公共报文入参【{0}】不能为空</i18n-error-mapping>
+        <i18n-error-mapping i18nCode="ERROR-JERSEY-FILTER0000000008" errorCode="100004">未能找到指定资源服务配置数据【service_code = {0} ，resource_code = {1}】</i18n-error-mapping>
+        <i18n-error-mapping i18nCode="ERROR-JERSEY-FILTER0000000009" errorCode="100005">请检查服务端配置【service_code = {0} ，resource_code = {1}】：【{2} = {3}】非法</i18n-error-mapping>
+        <i18n-error-mapping i18nCode="ERROR-JERSEY-FILTER0000000010" errorCode="100006">资源【{0}】下的服务【{1}】请求异常：配置的出参【{2}】与服务方法【{3}】出参【{4}】类型不一致</i18n-error-mapping>
+        <i18n-error-mapping i18nCode="ERROR-AUTH-COMMON0000000007" errorCode="100007">用户【user_id = {0}】不存在或已失效！</i18n-error-mapping>
+        <i18n-error-mapping i18nCode="ERROR-AUTH-COMMON0000000008" errorCode="100008">账户【account_id = {0}】不存在或已失效！</i18n-error-mapping>
+        <i18n-error-mapping i18nCode="ERROR-AUTH-COMMON0000000021" errorCode="100009">资源【resource_code = {0}】不存在或已失效！</i18n-error-mapping>
+        <i18n-error-mapping i18nCode="ERROR-AUTH-COMMON0000000022" errorCode="100010">账户【account_id = {0}】没有权限调用归属于系统【system_account_id = {1}】的资源【{2}】</i18n-error-mapping>
+        <i18n-error-mapping i18nCode="ERROR-AUTH-COMMON0000000023" errorCode="100011">当前资源【{0}】不属于指定系统【system_account_id = {1}】，请确认！</i18n-error-mapping>
+    </filter-i18n-error>
 
 </jersey>

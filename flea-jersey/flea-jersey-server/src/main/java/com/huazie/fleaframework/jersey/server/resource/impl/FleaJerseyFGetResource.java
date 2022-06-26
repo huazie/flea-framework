@@ -9,7 +9,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 
 /**
- * <p> Flea Jersey File Get Resource </p>
+ * Flea Jersey 文件 GET 资源，只包含文件 GET 资源API。
  *
  * @author huazie
  * @version 1.0.0

@@ -5,10 +5,14 @@ import com.huazie.fleaframework.jersey.common.data.FleaJerseyRequest;
 import com.huazie.fleaframework.jersey.common.data.FleaJerseyResponse;
 
 /**
- * <p> 过滤器链管理类 </p>
+ * Flea Jersey 接口过滤器链管理类，采用单例模式，其私有构造方法中
+ * 接收一个Flea Jersey 接口过滤器链的实例对象。
+ *
+ * <p> 它对外提供 {@code doFilter} 重载方法，用于执行过滤器。
  *
  * @author huazie
  * @version 1.0.0
+ * @see FleaJerseyFilterChain
  * @since 1.0.0
  */
 public class FleaJerseyFilterChainManager {
@@ -22,7 +26,7 @@ public class FleaJerseyFilterChainManager {
     }
 
     /**
-     * <p> 获取过滤器链管理类 </p>
+     * 获取过滤器链管理类
      *
      * @return 过滤器链管理类对象
      * @since 1.0.0
@@ -39,7 +43,7 @@ public class FleaJerseyFilterChainManager {
     }
 
     /**
-     * <p> 执行过滤器 </p>
+     * 执行过滤器
      *
      * @param request 请求对象
      * @return 响应对象
@@ -50,7 +54,7 @@ public class FleaJerseyFilterChainManager {
     }
 
     /**
-     * <p> 执行过滤器 </p>
+     * 执行过滤器
      *
      * @param requestData 请求数据字符串
      * @return 响应对象
