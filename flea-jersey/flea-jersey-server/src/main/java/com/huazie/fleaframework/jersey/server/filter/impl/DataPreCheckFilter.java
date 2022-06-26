@@ -18,7 +18,7 @@ import com.huazie.fleaframework.jersey.common.exception.FleaJerseyFilterExceptio
 import com.huazie.fleaframework.jersey.server.filter.IFleaJerseyFilter;
 
 /**
- * <p> 数据预校验过滤器 </p>
+ * 数据预校验过滤器，它主要用于初始化响应报文 和 校验请求报文。
  *
  * @author huazie
  * @version 1.0.0
@@ -70,10 +70,6 @@ public class DataPreCheckFilter implements IFleaJerseyFilter {
         // 请求公共报文入参【{0}】不能为空
         StringUtils.checkBlank(systemAccountId, FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000006", RequestPublicDataConstants.SYSTEM_ACCOUNT_ID);
 
-        String systemAccountPwd = requestPublicData.getSystemAccountPassword();
-        // 请求公共报文入参【{0}】不能为空
-        StringUtils.checkBlank(systemAccountPwd, FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000006", RequestPublicDataConstants.SYSTEM_ACCOUNT_PWD);
-
         String accountId = requestPublicData.getAccountId();
         // 请求公共报文入参【{0}】不能为空
         StringUtils.checkBlank(accountId, FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000006", RequestPublicDataConstants.ACCOUNT_ID);
@@ -86,10 +82,6 @@ public class DataPreCheckFilter implements IFleaJerseyFilter {
         // 请求公共报文入参【{0}】不能为空
         StringUtils.checkBlank(serviceCode, FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000006", RequestPublicDataConstants.SERVICE_CODE);
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj, "RequestPublicData = {}", requestPublicData);
-        }
-
         RequestBusinessData requestBusinessData = requestData.getBusinessData();
         // 请求业务报文不能为空
         ObjectUtils.checkEmpty(requestBusinessData, FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000005");
@@ -99,10 +91,8 @@ public class DataPreCheckFilter implements IFleaJerseyFilter {
         StringUtils.checkBlank(input, FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000005");
 
         if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug1(obj, "RequestPublicData = {}", requestPublicData);
             LOGGER.debug1(obj, "RequestBusinessData = {}", requestBusinessData);
-        }
-
-        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug1(obj, "Data PreCheck, End");
         }
     }

@@ -11,7 +11,7 @@ import javax.ws.rs.core.Request;
 import javax.ws.rs.core.UriInfo;
 
 /**
- * <p> Flea Jersey 上下文 </p>
+ * Flea Jersey 上下文
  *
  * @author huazie
  * @version 1.0.0

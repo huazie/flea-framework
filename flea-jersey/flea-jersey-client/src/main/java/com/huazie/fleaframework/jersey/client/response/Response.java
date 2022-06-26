@@ -5,7 +5,7 @@ import com.huazie.fleaframework.jersey.common.FleaJerseyConstants;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
- * <p> 响应结果，封装Flea Jersey资源服务请求响应数据 </p>
+ * 响应结果，封装 Flea Jersey 资源服务请求响应数据
  *
  * @author huazie
  * @version 1.0.0

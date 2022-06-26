@@ -5,7 +5,7 @@ import com.huazie.fleaframework.jersey.common.data.FleaJerseyResponse;
 import com.huazie.fleaframework.jersey.server.resource.JerseyPutResource;
 
 /**
- * <p> Flea Jersey Put Resource </p>
+ * Flea Jersey PUT 资源，包含 通用 PUT 资源API，文件上传 PUT 资源API。
  *
  * @author huazie
  * @version 1.0.0

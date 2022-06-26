@@ -4,7 +4,7 @@ import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.common.i18n.FleaI18nResEnum;
 
 /**
- * <p> Flea Jersey 通用异常处理类 </p>
+ * Flea Jersey 通用异常处理类
  *
  * @author huazie
  * @version 1.0.0
