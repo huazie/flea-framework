@@ -22,7 +22,7 @@ public class CacheConstants {
         /**
          * Flea Cache 系统环境变量
          */
-        String FLEA_CACHE_FILE_SYSTEM_KEY = "fleaframe.flea.cache.filename";
+        String FLEA_CACHE_FILE_SYSTEM_KEY = "fleaframework.flea.cache.filename";
         /**
          * Flea Cache Config 默认文件路径
          */
@@ -30,7 +30,7 @@ public class CacheConstants {
         /**
          * Flea Cache Config 系统环境变量
          */
-        String FLEA_CACHE_CONFIG_FILE_SYSTEM_KEY = "fleaframe.cache.fleacache.config.filename";
+        String FLEA_CACHE_CONFIG_FILE_SYSTEM_KEY = "fleaframework.cache.fleacache.config.filename";
         /**
          * Flea缓存建造者配置项集
          */
@@ -66,7 +66,7 @@ public class CacheConstants {
         /**
          * MemCached 配置文件系统环境变量
          */
-        String MEMCACHED_CONFIG_FILE_SYSTEM_KEY = "fleaframe.cache.memcached.config.filename";
+        String MEMCACHED_CONFIG_FILE_SYSTEM_KEY = "fleaframework.cache.memcached.config.filename";
         /**
          * MemCached 缓存所属系统名
          */
