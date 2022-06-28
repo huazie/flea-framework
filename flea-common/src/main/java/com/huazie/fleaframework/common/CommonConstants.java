@@ -163,7 +163,7 @@ public interface CommonConstants {
         /**
          * Flea Config 系统环境变量
          */
-        String FLEA_CONFIG_FILE_SYSTEM_KEY = "fleaframe.flea.config.filename";
+        String FLEA_CONFIG_FILE_SYSTEM_KEY = "fleaframework.flea.config.filename";
         /**
          * Flea URL 配置
          */

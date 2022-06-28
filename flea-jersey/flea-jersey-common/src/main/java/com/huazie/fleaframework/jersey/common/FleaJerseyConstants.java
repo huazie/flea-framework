@@ -22,15 +22,7 @@ public interface FleaJerseyConstants {
         /**
          * Jersey 过滤器链配置文件系统属性键
          */
-        String JERSEY_FILTER_FILE_SYSTEM_KEY = "fleaframe.jersey.filter.filename";
-        /**
-         * Jersey 过滤器资源编码
-         */
-        String RESOURCE_CODE_FILTER = "jersey-filter-resource";
-        /**
-         * Jersey 过滤器服务编码
-         */
-        String SERVICE_CODE_FILTER = "jersey-filter-service";
+        String JERSEY_FILTER_FILE_SYSTEM_KEY = "fleaframework.jersey.filter.filename";
         /**
          * Jersey Filter 国际码前缀
          */

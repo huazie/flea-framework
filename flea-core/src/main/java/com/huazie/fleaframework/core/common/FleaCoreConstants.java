@@ -22,7 +22,7 @@ public interface FleaCoreConstants {
         /**
          * <p> Flea Request 系统环境变量 </p>
          */
-        String FLEA_REQUEST_FILE_SYSTEM_KEY = "fleaframe.request.flea.request.filename";
+        String FLEA_REQUEST_FILE_SYSTEM_KEY = "fleaframework.request.flea.request.filename";
         /**
          * <p> Flea Request Filter 默认文件路径 </p>
          */
@@ -30,7 +30,7 @@ public interface FleaCoreConstants {
         /**
          * <p> Flea Request Filter 系统环境变量 </p>
          */
-        String FLEA_REQUEST_FILTER_FILE_SYSTEM_KEY = "fleaframe.request.flea.request.filter.filename";
+        String FLEA_REQUEST_FILTER_FILE_SYSTEM_KEY = "fleaframework.request.flea.request.filter.filename";
 
     }
 
