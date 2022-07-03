@@ -1,7 +1,7 @@
 package org.eclipse.persistence.internal.sessions;
 
 import com.huazie.fleaframework.common.util.ObjectUtils;
-import com.huazie.fleaframework.db.eclipselink.util.EclipseLinkUtils;
+import com.huazie.fleaframework.db.eclipselink.util.ClassDescriptorUtils;
 import org.eclipse.persistence.descriptors.ClassDescriptor;
 import org.eclipse.persistence.queries.DeleteObjectQuery;
 import org.eclipse.persistence.queries.InsertObjectQuery;
@@ -70,7 +70,7 @@ public class FleaCommitManager extends CommitManager {
         for (Object objectToDelete : objects) {
             if (ObjectUtils.isNotEmpty(objectToDelete) && objectToDelete.getClass() == theClass) {
                 // 获取分表对应的实体类的持久化信息描述符
-                descriptor = EclipseLinkUtils.getSplitDescriptor(descriptor, session, objectToDelete);
+                descriptor = ClassDescriptorUtils.getSplitDescriptor(descriptor, session, objectToDelete);
                 break;
             }
         }

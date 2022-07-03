@@ -41,7 +41,7 @@ public class XmlDigesterHelper {
             config = parse(input, digester, clazz);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "Exception = \n", e);
+                LOGGER.error1(new Object() {}, "File Parsing Exception : \n", e);
             }
         }
 
