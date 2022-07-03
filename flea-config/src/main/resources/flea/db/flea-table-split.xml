@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <flea-table-split>
     <tables>
-        <!-- 定义分表配置
+        <!-- 分表配置
             name : 分表对应的模板表名
-            lib  : 分表对应模板库名
+            lib  : 分表对应的模板库名
             exp  : 分表名表达式 (FLEA_TABLE_NAME)_(列名大写)_(列名大写)
         -->
         <table name="flea_file_info" lib="fleafs" exp="(FLEA_TABLE_NAME)_(FILE_ID)" desc="Flea文件信息表分表规则">
             <splits>
-                <!-- 定义分表转换实现
+                <!-- 分表转换实现配置
                     key    : 分表转换类型关键字【可查看 TableSplitEnum】
                     column : 分表属性列字段名
                     seq    : 分库序列键【若不为空，值需对应flea-lib-split.xml中<split seq="SEQ" />】

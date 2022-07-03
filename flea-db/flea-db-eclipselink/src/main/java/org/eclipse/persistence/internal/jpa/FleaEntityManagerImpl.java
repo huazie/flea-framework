@@ -2,7 +2,7 @@ package org.eclipse.persistence.internal.jpa;
 
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.db.common.table.pojo.SplitTable;
-import com.huazie.fleaframework.db.eclipselink.util.EclipseLinkUtils;
+import com.huazie.fleaframework.db.eclipselink.util.ClassDescriptorUtils;
 import com.huazie.fleaframework.db.jpa.persistence.FleaEntityManager;
 import org.eclipse.persistence.config.EntityManagerProperties;
 import org.eclipse.persistence.descriptors.ClassDescriptor;
@@ -139,7 +139,7 @@ public final class FleaEntityManagerImpl extends EntityManagerImpl {
                 descriptor = session.getDescriptor(entityClass);
             }
             // 获取分表对应的实体类的持久化信息描述符
-            descriptor = EclipseLinkUtils.getSplitDescriptor(descriptor, session, splitTable);
+            descriptor = ClassDescriptorUtils.getSplitDescriptor(descriptor, session, splitTable);
             // 复用实体管理器实现类的内部方法
             return (T) findInternal(descriptor, session, primaryKey, lockMode, properties);
         } catch (LockTimeoutException e) {
@@ -167,7 +167,7 @@ public final class FleaEntityManagerImpl extends EntityManagerImpl {
             throw new IllegalArgumentException(ExceptionLocalization.buildMessage("unknown_bean_class", new Object[]{entityClass}));
         }
         // 获取分表对应的实体类的持久化信息描述符
-        descriptor = EclipseLinkUtils.getSplitDescriptor(descriptor, session, splitTable);
+        descriptor = ClassDescriptorUtils.getSplitDescriptor(descriptor, session, splitTable);
 
         Number nextValue;
         if (ObjectUtils.isNotEmpty(splitTable) && splitTable.isExistSplitTablePkColumn()) {
