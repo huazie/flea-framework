@@ -59,7 +59,7 @@ public class FleaAuthSVImplTest {
 
     @Test
     public void checkResourceAuth() throws CommonException {
-        Long accountId = 1000L;
+        Long accountId = 1000L; // Flea Framework
 
         Long systemAccountId = 1002L; // Flea文件服务器
 

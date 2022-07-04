@@ -80,4 +80,11 @@ public class FleaPrivilegeGroupSVImplTest {
         fleaPrivilegeGroupSV.savePrivilegeGroup(fleaPrivilegeGroupPOJO);
     }
 
+    @Test
+    public void savePrivilegeGroupForFleaFSResource() throws CommonException {
+        int isMain = FleaAuthConstants.PrivilegeModuleConstants.NOT_MAIN;
+        FleaPrivilegeGroupPOJO fleaPrivilegeGroupPOJO = FleaAuthPOJOUtils.newFleaPrivilegeGroupPOJOForResource("FleaFS资源调用", "", isMain, "该权限组包含了【FleaFS资源调用】相关的权限，FleaFS后续新增资源调用权限也需要关联该权限组");
+        fleaPrivilegeGroupSV.savePrivilegeGroup(fleaPrivilegeGroupPOJO);
+    }
+
 }

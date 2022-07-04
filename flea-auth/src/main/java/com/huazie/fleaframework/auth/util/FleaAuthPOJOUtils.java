@@ -471,7 +471,7 @@ public class FleaAuthPOJOUtils {
             String privilegeGroupName = fleaPrivilegeGroup.getPrivilegeGroupName();
             Long privilegeId = fleaPrivilege.getPrivilegeId();
             String privilegeName = fleaPrivilege.getPrivilegeName();
-            fleaPrivilegeGroupRelPOJO = FleaAuthPOJOUtils.newPrivilegeGroupRelPrivilegePOJO(privilegeGroupId, privilegeGroupName, privilegeId, privilegeName);
+            fleaPrivilegeGroupRelPOJO = newPrivilegeGroupRelPrivilegePOJO(privilegeGroupId, privilegeGroupName, privilegeId, privilegeName);
         }
         return fleaPrivilegeGroupRelPOJO;
     }
