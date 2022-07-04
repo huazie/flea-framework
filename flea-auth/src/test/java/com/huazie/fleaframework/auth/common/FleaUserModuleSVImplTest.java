@@ -1,5 +1,7 @@
 package com.huazie.fleaframework.auth.common;
 
+import com.huazie.fleaframework.auth.base.user.AddUserGroup;
+import com.huazie.fleaframework.auth.base.user.AddUserGroupRelUser;
 import com.huazie.fleaframework.auth.common.pojo.user.FleaUserGroupPOJO;
 import com.huazie.fleaframework.auth.common.pojo.user.login.FleaUserLoginPOJO;
 import com.huazie.fleaframework.auth.common.pojo.user.register.FleaUserRegisterPOJO;
@@ -128,11 +130,8 @@ public class FleaUserModuleSVImplTest {
 
     @Test
     public void addUserGroup() throws CommonException {
-        FleaUserGroupPOJO fleaUserGroupPOJO = new FleaUserGroupPOJO();
-        fleaUserGroupPOJO.setUserGroupName("操作用户");
-        fleaUserGroupPOJO.setUserGroupDesc("实际的操作用户归属的用户组");
-        fleaUserGroupPOJO.setRemarks("该用户组与实际的操作用户相关");
-        fleaUserModuleSV.addUserGroup(fleaUserGroupPOJO);
+        AddUserGroup userGroupAdd = new AddUserGroup(fleaUserModuleSV);
+        userGroupAdd.addUserGroup();
     }
 
     @Test
@@ -160,9 +159,10 @@ public class FleaUserModuleSVImplTest {
     }
 
     @Test
-    public void userGroupRelRole() throws CommonException { // TODO
-        Long userGroupId = 1000L;
-        Long roleId = 1000L;
+    public void userGroupRelRole() throws CommonException {
+        Long userGroupId = 1002L;
+        Long roleId = 1018L;
+        // 用户组【FleaFS授权用户】绑定【FleaFS接入员】角色
         fleaUserModuleSV.userGroupRelRole(userGroupId, roleId, null);
     }
 
@@ -174,43 +174,9 @@ public class FleaUserModuleSVImplTest {
     }
 
     @Test
-    public void userGroupRelUserForFleaFramework() throws CommonException {
-        // 用户组【系统用户】关联用户【Flea框架】
-        Long userGroupId = 1000L;
-        Long userId = 1000L;
-        fleaUserModuleSV.userGroupRelUser(userGroupId, userId, null);
-    }
-
-    @Test
-    public void userGroupRelUserForFleaMgmt() throws CommonException {
-        // 用户组【系统用户】关联用户【Flea管家】
-        Long userGroupId = 1000L;
-        Long userId = 1001L;
-        fleaUserModuleSV.userGroupRelUser(userGroupId, userId, null);
-    }
-
-    @Test
-    public void userGroupRelUserForFleaFS() throws CommonException {
-        // 用户组【系统用户】关联用户【Flea文件服务器】
-        Long userGroupId = 1000L;
-        Long userId = 1002L;
-        fleaUserModuleSV.userGroupRelUser(userGroupId, userId, null);
-    }
-
-    @Test
-    public void userGroupRelUserForHuazie() throws CommonException {
-        // 用户组【操作用户】关联用户【Huazie】
-        Long userGroupId = 1001L;
-        Long userId = 10000L;
-        fleaUserModuleSV.userGroupRelUser(userGroupId, userId, null);
-    }
-
-    @Test
-    public void userGroupRelUserForLGH() throws CommonException {
-        // 用户组【操作用户】关联用户【LGH】
-        Long userGroupId = 1001L;
-        Long userId = 10001L;
-        fleaUserModuleSV.userGroupRelUser(userGroupId, userId, null);
+    public void userGroupRelUser() throws CommonException {
+        AddUserGroupRelUser userGroupRelUserAdd = new AddUserGroupRelUser(fleaUserModuleSV);
+        userGroupRelUserAdd.addUserGroupRelUser();
     }
 
     @Test

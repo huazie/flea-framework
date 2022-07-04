@@ -72,7 +72,23 @@ public class FleaPrivilegeModuleSVImplTest {
     public void privilegeGroupRelPrivilege() throws CommonException {
         Long privilegeGroupId = 1000L;
         Long privilegeId = 1000L;
-        // 【菜单访问】权限组关联【访问《控制台》菜单】权限
+        //【菜单访问】权限组关联【访问《控制台》菜单】权限
+        fleaPrivilegeModuleSV.privilegeGroupRelPrivilege(privilegeGroupId, privilegeId, null);
+    }
+
+    @Test
+    public void privilegeGroupRelPrivilege4FleaFSUpload() throws CommonException {
+        Long privilegeGroupId = 1004L;
+        Long privilegeId = 1042L;
+        //【FleaFS资源调用】权限组关联【调用《上传资源》资源】权限
+        fleaPrivilegeModuleSV.privilegeGroupRelPrivilege(privilegeGroupId, privilegeId, null);
+    }
+
+    @Test
+    public void privilegeGroupRelPrivilege4FleaFSDownload() throws CommonException {
+        Long privilegeGroupId = 1004L;
+        Long privilegeId = 1043L;
+        //【FleaFS资源调用】权限组关联【调用《下载资源》资源】权限
         fleaPrivilegeModuleSV.privilegeGroupRelPrivilege(privilegeGroupId, privilegeId, null);
     }
 }
