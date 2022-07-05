@@ -1,5 +1,6 @@
 package com.huazie.fleaframework.jersey.common.filter.config;
 
+import com.huazie.fleaframework.jersey.common.FleaJerseyConstants.JerseyFilterConstants;
 import com.huazie.fleaframework.jersey.common.JerseyXmlDigesterHelper;
 
 import java.util.Collections;
@@ -14,6 +15,16 @@ import java.util.List;
  * @since 1.0.0
  */
 public class FleaJerseyFilterConfig {
+
+    /**
+     * 设置 Jersey 过滤器链配置文件 路径
+     *
+     * @param path Jersey过滤器配置文件路径
+     * @since 2.0.0
+     */
+    public static void setFilePath(String path) {
+        System.setProperty(JerseyFilterConstants.JERSEY_FILTER_FILE_SYSTEM_KEY, path);
+    }
 
     /**
      * 获取前置过滤器链
@@ -55,6 +66,12 @@ public class FleaJerseyFilterConfig {
         return sort(getFilterChain().getError().getFilters());
     }
 
+    /**
+     * 获取过滤器链配置
+     *
+     * @return 过滤器链配置
+     * @since 1.0.0
+     */
     private static FilterChain getFilterChain() {
         return JerseyXmlDigesterHelper.getInstance().getJersey().getFilterChain();
     }
@@ -70,7 +87,7 @@ public class FleaJerseyFilterConfig {
             @Override
             public int compare(Filter o1, Filter o2) {
                 // 按照 order 升序
-                return o1.getOrder() - o2.getOrder();
+                return Float.compare(o1.getOrder(), o2.getOrder());
             }
         });
         return filters;
@@ -87,6 +104,12 @@ public class FleaJerseyFilterConfig {
         return getFilterI18nError().getI18nErrorMapping(i18nCode);
     }
 
+    /**
+     * 获取过滤器国际码和错误码配置
+     *
+     * @return 过滤器国际码和错误码配置
+     * @since 2.0.0
+     */
     private static FilterI18nError getFilterI18nError() {
         return JerseyXmlDigesterHelper.getInstance().getJersey().getFilterI18nError();
     }

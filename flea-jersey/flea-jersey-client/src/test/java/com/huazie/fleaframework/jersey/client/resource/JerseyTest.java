@@ -9,7 +9,7 @@ import com.huazie.ffs.pojo.upload.input.InputUploadAuthInfo;
 import com.huazie.ffs.pojo.upload.output.OutputFileUploadInfo;
 import com.huazie.ffs.pojo.upload.output.OutputUploadAuthInfo;
 import com.huazie.fleaframework.common.DateFormatEnum;
-import com.huazie.fleaframework.common.FleaFrameManager;
+import com.huazie.fleaframework.common.FleaSessionManager;
 import com.huazie.fleaframework.common.IFleaUser;
 import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
@@ -65,9 +65,9 @@ public class JerseyTest {
     @Before
     public void init() {
         IFleaUser fleaUser = new FleaUserImpl();
-        fleaUser.setAccountId(10001L);
-        fleaUser.set("ACCOUNT_CODE", "2352553988@qq.com");
-        FleaFrameManager.getManager().setUserInfo(fleaUser);
+        fleaUser.setAccountId(10000L);
+        fleaUser.set("ACCOUNT_CODE", "13218010892");
+        FleaSessionManager.setUserInfo(fleaUser);
         applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
         LOGGER.debug("ApplicationContext={}", applicationContext);
     }

@@ -7,7 +7,7 @@
         <!-- 前置过滤器链 -->
         <before>
             <filter clazz="com.huazie.fleaframework.jersey.server.filter.impl.DataPreCheckFilter" order="1" desc="数据预校验过滤器"/>
-            <filter clazz="com.huazie.fleaframework.jersey.server.filter.impl.AuthCheckFilter" order="2" desc="系统授权校验过滤器"/>
+            <filter clazz="com.huazie.fleaframework.jersey.server.filter.impl.AuthCheckFilter" order="2" desc="授权校验过滤器"/>
         </before>
 
         <!-- 业务服务过滤器链 -->
