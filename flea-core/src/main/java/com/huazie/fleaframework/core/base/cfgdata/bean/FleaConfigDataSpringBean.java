@@ -150,8 +150,8 @@ public class FleaConfigDataSpringBean {
     /**
      * 获取资源服务
      *
-     * @param serviceCode  服务编码
      * @param resourceCode 资源编码
+     * @param serviceCode  服务编码
      * @return 资源服务
      * @throws CommonException 通用异常
      * @since 1.0.0

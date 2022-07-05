@@ -14,7 +14,7 @@ public class Filter {
 
     private String clazz; // 过滤器实现类全路径
 
-    private int order;    // 过滤器执行顺序
+    private float order;    // 过滤器执行顺序
 
     private String desc;  // 过滤器定义描述
 
@@ -26,11 +26,11 @@ public class Filter {
         this.clazz = clazz;
     }
 
-    public int getOrder() {
-        return this.order;
+    public float getOrder() {
+        return order;
     }
 
-    public void setOrder(int order) {
+    public void setOrder(float order) {
         this.order = order;
     }
 
