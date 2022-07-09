@@ -26,6 +26,7 @@ public class FleaJPAQueryPoolConfig extends FleaObjectPoolConfig {
      */
     private FleaJPAQueryPoolConfig() {
         super();
+        initConfig();
     }
 
     /**
@@ -39,7 +40,6 @@ public class FleaJPAQueryPoolConfig extends FleaObjectPoolConfig {
             synchronized (FleaJPAQueryPoolConfig.class) {
                 if (ObjectUtils.isEmpty(config)) {
                     config = new FleaJPAQueryPoolConfig();
-                    initConfig();
                 }
             }
         }
@@ -51,28 +51,28 @@ public class FleaJPAQueryPoolConfig extends FleaObjectPoolConfig {
      *
      * @since 1.0.0
      */
-    private static void initConfig() {
+    private void initConfig() {
         // 从flea-config.xml配置中获取对象池配置信息
         ConfigItems configItems = FleaConfigManager.getConfigItems(JPAQueryPoolConfigConstants.FLEA_JPA_QUERY);
         // Flea JPA查询对象池最大连接数
         ConfigItem maxTotalConfigItem = FleaConfigManager.getConfigItem(JPAQueryPoolConfigConstants.JPA_QUERY_POOL_MAXTOTAL, configItems);
         if (ObjectUtils.isNotEmpty(maxTotalConfigItem)) {
-            config.setMaxTotal(Integer.parseInt(maxTotalConfigItem.getValue()));
+            this.setMaxTotal(Integer.parseInt(maxTotalConfigItem.getValue()));
         }
         // Flea JPA查询对象池最大空闲连接数
         ConfigItem maxIdleConfigItem = FleaConfigManager.getConfigItem(JPAQueryPoolConfigConstants.JPA_QUERY_POOL_MAXIDLE, configItems);
         if (ObjectUtils.isNotEmpty(maxIdleConfigItem)) {
-            config.setMaxIdle(Integer.parseInt(maxIdleConfigItem.getValue()));
+            this.setMaxIdle(Integer.parseInt(maxIdleConfigItem.getValue()));
         }
         // Flea JPA查询对象池最小空闲连接数
         ConfigItem minIdleConfigItem = FleaConfigManager.getConfigItem(JPAQueryPoolConfigConstants.JPA_QUERY_POOL_MINIDLE, configItems);
         if (ObjectUtils.isNotEmpty(minIdleConfigItem)) {
-            config.setMinIdle(Integer.parseInt(minIdleConfigItem.getValue()));
+            this.setMinIdle(Integer.parseInt(minIdleConfigItem.getValue()));
         }
         // Flea JPA查询对象池获取连接时的最大等待毫秒数
         ConfigItem maxWaitMillisConfigItem = FleaConfigManager.getConfigItem(JPAQueryPoolConfigConstants.JPA_QUERY_POOL_MAXWAITMILLIS, configItems);
         if (ObjectUtils.isNotEmpty(maxWaitMillisConfigItem)) {
-            config.setMaxWaitMillis(Integer.parseInt(maxWaitMillisConfigItem.getValue()));
+            this.setMaxWaitMillis(Integer.parseInt(maxWaitMillisConfigItem.getValue()));
         }
     }
 }

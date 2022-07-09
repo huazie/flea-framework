@@ -85,8 +85,6 @@ public class EclipseLinkLibTableSplitHandler extends FleaLibTableSplitHandler {
             return entity;
         }
 
-        UnitOfWork unitOfWork = entityManager.unwrap(UnitOfWork.class);
-        Object result = unitOfWork.registerObject(entity);
-        return (T) result;
+        return (T) entityManager.unwrap(UnitOfWork.class).registerObject(entity);
     }
 }
