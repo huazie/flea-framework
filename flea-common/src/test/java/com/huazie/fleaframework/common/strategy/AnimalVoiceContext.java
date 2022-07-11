@@ -13,6 +13,16 @@ import java.util.Map;
  */
 public class AnimalVoiceContext extends FleaStrategyContext<String, String> {
 
+    private static Map<String, IFleaStrategy<String, String>> fleaStrategyMap;
+
+    static {
+        fleaStrategyMap = new HashMap<>();
+        fleaStrategyMap.put("dog", new DogVoiceStrategy());
+        fleaStrategyMap.put("cat", new CatVoiceStrategy());
+        fleaStrategyMap.put("duck", new DuckVoiceStrategy());
+        fleaStrategyMap = Collections.unmodifiableMap(fleaStrategyMap);
+    }
+
     public AnimalVoiceContext() {
     }
 
@@ -22,11 +32,7 @@ public class AnimalVoiceContext extends FleaStrategyContext<String, String> {
 
     @Override
     protected Map<String, IFleaStrategy<String, String>> init() {
-        Map<String, IFleaStrategy<String, String>> fleaStrategyMap = new HashMap<>();
-        fleaStrategyMap.put("dog", new DogVoiceStrategy());
-        fleaStrategyMap.put("cat", new CatVoiceStrategy());
-        fleaStrategyMap.put("duck", new DuckVoiceStrategy());
-        return Collections.unmodifiableMap(fleaStrategyMap);
+        return fleaStrategyMap;
     }
 
 }
