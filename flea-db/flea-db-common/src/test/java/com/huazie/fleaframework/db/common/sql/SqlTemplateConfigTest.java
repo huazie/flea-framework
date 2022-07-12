@@ -3,7 +3,10 @@ package com.huazie.fleaframework.db.common.sql;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.common.util.PatternMatcherUtils;
+import com.huazie.fleaframework.db.common.sql.template.SqlTemplate;
 import com.huazie.fleaframework.db.common.sql.template.SqlTemplateEnum;
+import com.huazie.fleaframework.db.common.sql.template.SqlTemplateFactory;
+import com.huazie.fleaframework.db.common.sql.template.TemplateTypeEnum;
 import com.huazie.fleaframework.db.common.sql.template.config.Property;
 import com.huazie.fleaframework.db.common.sql.template.config.Rule;
 import com.huazie.fleaframework.db.common.sql.template.config.SqlTemplateConfig;
@@ -154,4 +157,16 @@ public class SqlTemplateConfigTest {
         LOGGER.debug("RESULT = {}", PatternMatcherUtils.matches(regExp, input, Pattern.CASE_INSENSITIVE));
     }
 
+    @Test
+    public void testSqlTemplateStrategy() {
+
+        SqlTemplate<Object> insert = SqlTemplateFactory.newSqlTemplate("insert", new Object(), TemplateTypeEnum.INSERT);
+
+        SqlTemplate<Object> insert1 = SqlTemplateFactory.newSqlTemplate("insert", new Object(), TemplateTypeEnum.INSERT);
+
+        LOGGER.debug("SqlTemplate = {}", insert);
+
+        LOGGER.debug("SqlTemplate = {}", insert1);
+
+    }
 }

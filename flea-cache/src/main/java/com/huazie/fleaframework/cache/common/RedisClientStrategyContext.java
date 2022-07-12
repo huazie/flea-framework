@@ -19,6 +19,15 @@ import java.util.Map;
  */
 public class RedisClientStrategyContext extends FleaStrategyContext<RedisClient, String> {
 
+    private static Map<String, IFleaStrategy<RedisClient, String>> fleaStrategyMap;
+
+    static {
+        fleaStrategyMap = new HashMap<>();
+        fleaStrategyMap.put(CacheModeEnum.SHARDED.name(), new RedisShardedClientStrategy());
+        fleaStrategyMap.put(CacheModeEnum.CLUSTER.name(), new RedisClusterClientStrategy());
+        fleaStrategyMap = Collections.unmodifiableMap(fleaStrategyMap);
+    }
+
     public RedisClientStrategyContext() {
         super();
     }
@@ -29,9 +38,6 @@ public class RedisClientStrategyContext extends FleaStrategyContext<RedisClient,
 
     @Override
     protected Map<String, IFleaStrategy<RedisClient, String>> init() {
-        Map<String, IFleaStrategy<RedisClient, String>> fleaStrategyMap = new HashMap<>();
-        fleaStrategyMap.put(CacheModeEnum.SHARDED.name(), new RedisShardedClientStrategy());
-        fleaStrategyMap.put(CacheModeEnum.CLUSTER.name(), new RedisClusterClientStrategy());
-        return Collections.unmodifiableMap(fleaStrategyMap);
+        return fleaStrategyMap;
     }
 }
