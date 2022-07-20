@@ -6,7 +6,7 @@ import org.jvnet.substance.border.StandardBorderPainter;
 import javax.swing.*;
 
 /**
- * <p> 启动类 </p>
+ * Flea Tools 启动类
  *
  * @author huazie
  * @version 1.0.0
@@ -21,7 +21,7 @@ public class StartMain {
             JDialog.setDefaultLookAndFeelDecorated(true);
             SubstanceLookAndFeel.setCurrentBorderPainter(new StandardBorderPainter());
 
-            FleaFrameTools tools = new FleaFrameTools();
+            FleaTools tools = new FleaTools();
             tools.setVisible(true);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "系统不支持", "警告", JOptionPane.ERROR_MESSAGE);
