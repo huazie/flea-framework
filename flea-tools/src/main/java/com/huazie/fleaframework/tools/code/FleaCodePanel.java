@@ -17,12 +17,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * <p> 数据操作和业务逻辑层实现 </p>
+ * 数据操作和业务逻辑层实现
  *
  * @author huazie
  * @version 1.0.0
@@ -57,6 +58,8 @@ public class FleaCodePanel extends JPanel implements ActionListener, ItemListene
     private JTextField authorTextField; // 作者
 
     private JTextField versionTextField; // 版本
+
+    private JCheckBox lombokEntityCheckBox; // 实体类使用Lombok
 
     private JTextField rootPathTextField; // 根目录
 
@@ -231,7 +234,15 @@ public class FleaCodePanel extends JPanel implements ActionListener, ItemListene
         // 版本文本域
         versionTextField = new JTextField();
         // 版本
-        showOneContentConfig(null, "COMMON_CODE_00008", versionTextField, 4, true);
+        showOneContentConfig(null, "COMMON_CODE_00008", versionTextField, 4, false);
+
+        // 实体类使用Lombok
+        lombokEntityCheckBox = new JCheckBox(FleaI18nHelper.i18nForCommon("COMMON_CODE_00026"));
+        lombokEntityCheckBox.setMnemonic(KeyEvent.VK_C);
+        lombokEntityCheckBox.setSelected(true);
+        configGridBagConstraints.gridwidth = GridBagConstraints.REMAINDER;
+        configGridBagLayout.setConstraints(lombokEntityCheckBox, configGridBagConstraints);
+        configPanel.add(lombokEntityCheckBox);
 
         // 根目录文本域
         rootPathTextField = new JTextField();
@@ -655,6 +666,10 @@ public class FleaCodePanel extends JPanel implements ActionListener, ItemListene
         // 大佬，请您先输入{0}内容哦~
         StringUtils.checkBlank(version, ToolsException.class, "COMMON_I18N_00013", FleaI18nHelper.i18nForCommon("COMMON_CODE_00008"));
         param.put(ToolsConstants.CodeConstants.VERSION, version);
+
+        // 是否选中 "实体类使用Lombok"
+        boolean isSelected = lombokEntityCheckBox.isSelected();
+        param.put(ToolsConstants.CodeConstants.IS_SELECTED_LOMBOK, isSelected);
 
         // 获取根目录
         String rootPath = rootPathTextField.getText();

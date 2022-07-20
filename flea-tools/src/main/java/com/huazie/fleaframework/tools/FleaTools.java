@@ -16,13 +16,13 @@ import java.awt.event.ItemListener;
 import java.util.Objects;
 
 /**
- * <p> Flea Frame Tools </p>
+ * Flea Tools
  *
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0
  */
-public class FleaFrameTools extends JFrame implements ActionListener, ChangeListener, ItemListener {
+public class FleaTools extends JFrame implements ActionListener, ChangeListener, ItemListener {
 
     // 菜单栏
     private JMenuBar mBar = new JMenuBar();
@@ -38,13 +38,13 @@ public class FleaFrameTools extends JFrame implements ActionListener, ChangeList
 
     private JComboBox<String> mComboBox = new JComboBox<>();
 
-    private JButton mTabbedPanePreBtn = new JButton(new ImageIcon(Objects.requireNonNull(FleaFrameTools.class.getClassLoader().getResource("flea/image/tabbedPane_pre.png"))));
-    private JButton mTabbedPaneNextBtn = new JButton(new ImageIcon(Objects.requireNonNull(FleaFrameTools.class.getClassLoader().getResource("flea/image/tabbedPane_next.png"))));
+    private JButton mTabbedPanePreBtn = new JButton(new ImageIcon(Objects.requireNonNull(FleaTools.class.getClassLoader().getResource("flea/image/tabbedPane_pre.png"))));
+    private JButton mTabbedPaneNextBtn = new JButton(new ImageIcon(Objects.requireNonNull(FleaTools.class.getClassLoader().getResource("flea/image/tabbedPane_next.png"))));
 
     private JTabbedPane mTabbedPane = new JTabbedPane(SwingConstants.LEFT); // 选项卡
 
-    FleaFrameTools() {
-        super("Flea Frame Tools");
+    FleaTools() {
+        super("Flea Tools");
         init();
     }
 
@@ -60,7 +60,7 @@ public class FleaFrameTools extends JFrame implements ActionListener, ChangeList
         setLayout(new BorderLayout());
 
         // 修改左上角图标
-        setIconImage(Toolkit.getDefaultToolkit().createImage(FleaFrameTools.class.getClassLoader().getResource("flea/image/fleaframetools.png")));
+        setIconImage(Toolkit.getDefaultToolkit().createImage(FleaTools.class.getClassLoader().getResource("flea/image/fleatools.png")));
 
         initMenuBar(); // 初始化菜单栏
 
@@ -161,7 +161,7 @@ public class FleaFrameTools extends JFrame implements ActionListener, ChangeList
         if (e.getSource() == mExitMenuItem) {
             System.exit(0);
         } else if (e.getSource() == mAboutMenuItem) {
-            JOptionPane.showMessageDialog(this, "Frame框架工具集\n\n版本号:   1.1.0\n\n", "关于", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Flea框架工具集\n\n版本号:   1.1.0\n\n", "关于", JOptionPane.INFORMATION_MESSAGE);
         } else if (e.getSource() == mTabbedPanePreBtn) {
             int i = mTabbedPane.getSelectedIndex();
             if (i == 0) {

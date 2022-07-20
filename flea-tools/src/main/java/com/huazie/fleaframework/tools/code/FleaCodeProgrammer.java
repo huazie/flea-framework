@@ -3,6 +3,7 @@ package com.huazie.fleaframework.tools.code;
 import com.huazie.fleaframework.tools.code.impl.FleaDaoImplBuilder;
 import com.huazie.fleaframework.tools.code.impl.FleaDaoInterfacesBuilder;
 import com.huazie.fleaframework.tools.code.impl.FleaEntityBuilder;
+import com.huazie.fleaframework.tools.code.impl.FleaEntityWithLombokBuilder;
 import com.huazie.fleaframework.tools.code.impl.FleaPersistenceUnitDaoImplBuilder;
 import com.huazie.fleaframework.tools.code.impl.FleaSVImplBuilder;
 import com.huazie.fleaframework.tools.code.impl.FleaSVInterfacesBuilder;
@@ -32,7 +33,11 @@ public class FleaCodeProgrammer {
         codeBuilder.build(param);
 
         // 编写实体类
-        codeBuilder = new FleaEntityBuilder();
+        if (FleaCodeHelper.isEntityClassWithLombok(param)) {
+            codeBuilder = new FleaEntityWithLombokBuilder();
+        } else {
+            codeBuilder = new FleaEntityBuilder();
+        }
         codeBuilder.build(param);
 
         // 编写 DAO层接口
@@ -64,7 +69,11 @@ public class FleaCodeProgrammer {
         codeBuilder.destroy(param);
 
         // 销毁实体类
-        codeBuilder = new FleaEntityBuilder();
+        if (FleaCodeHelper.isEntityClassWithLombok(param)) {
+            codeBuilder = new FleaEntityWithLombokBuilder();
+        } else {
+            codeBuilder = new FleaEntityBuilder();
+        }
         codeBuilder.destroy(param);
 
         // 销毁 DAO层接口

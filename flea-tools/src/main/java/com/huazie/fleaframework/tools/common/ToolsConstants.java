@@ -12,6 +12,7 @@ public interface ToolsConstants {
     interface CodeConstants {
         String AUTHOR = "AUTHOR";
         String VERSION = "VERSION";
+        String IS_SELECTED_LOMBOK = "IS_SELECTED_LOMBOK";
         String ROOT_PACKAGE = "ROOT_PACKAGE";
         String CODE_PACKAGE = "CODE_PACKAGE";
         String FLEA_PERSISTENCE_UNIT_NAME = "FLEA_PERSISTENCE_UNIT_NAME";

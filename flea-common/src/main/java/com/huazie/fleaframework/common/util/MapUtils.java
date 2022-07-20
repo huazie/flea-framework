@@ -11,7 +11,7 @@ import java.util.Map;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class MapUtils {
+public class MapUtils extends org.apache.commons.collections.MapUtils {
 
     private MapUtils() {
     }

@@ -4,6 +4,7 @@ import com.huazie.fleaframework.common.CommonConstants;
 import com.huazie.fleaframework.common.util.CollectionUtils;
 import com.huazie.fleaframework.common.util.MapUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
+import com.huazie.fleaframework.tools.common.ToolsConstants;
 
 import java.util.Map;
 import java.util.Set;
@@ -16,6 +17,9 @@ import java.util.Set;
  * @since 1.0.0
  */
 public class FleaCodeHelper {
+
+    private FleaCodeHelper() {
+    }
 
     /**
      * <p> 代码模板内容替换 </p>
@@ -43,6 +47,16 @@ public class FleaCodeHelper {
         }
 
         return realContent;
+    }
+
+    /**
+     * 是否选中 "实体类使用Lombok"
+     *
+     * @param param 参数
+     * @return true：选中 false：未选中
+     */
+    public static boolean isEntityClassWithLombok(Map<String, Object> param) {
+        return MapUtils.getBooleanValue(param, ToolsConstants.CodeConstants.IS_SELECTED_LOMBOK);
     }
 
 }
