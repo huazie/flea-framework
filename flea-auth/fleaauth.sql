@@ -70,7 +70,7 @@ CREATE TABLE `flea_account_attr` (
 DROP TABLE IF EXISTS `flea_element`;
 CREATE TABLE `flea_element` (
   `element_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '元素编号',
-  `element_code` varchar(50) NOT NULL COMMENT '元素编码',
+  `element_code` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '元素编码',
   `element_name` varchar(50) NOT NULL COMMENT '元素名称',
   `element_desc` varchar(255) DEFAULT NULL COMMENT '元素描述',
   `element_type` tinyint(4) NOT NULL COMMENT '元素类型',
@@ -325,7 +325,7 @@ CREATE TABLE `flea_login_log_202205` (
 DROP TABLE IF EXISTS `flea_menu`;
 CREATE TABLE `flea_menu` (
   `menu_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '菜单编号',
-  `menu_code` varchar(50) NOT NULL COMMENT '菜单编码',
+  `menu_code` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '菜单编码',
   `menu_name` varchar(50) NOT NULL COMMENT '菜单名称',
   `menu_icon` varchar(30) NOT NULL COMMENT '菜单FontAwesome小图标',
   `menu_sort` tinyint(4) NOT NULL COMMENT '菜单展示顺序(同一个父菜单下)',
@@ -354,7 +354,7 @@ CREATE TABLE `flea_menu` (
 DROP TABLE IF EXISTS `flea_operation`;
 CREATE TABLE `flea_operation` (
   `operation_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '操作编号',
-  `operation_code` varchar(50) NOT NULL COMMENT '操作编码',
+  `operation_code` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '操作编码',
   `operation_name` varchar(50) NOT NULL COMMENT '操作名称',
   `operation_desc` varchar(255) DEFAULT NULL COMMENT '操作描述',
   `operation_state` tinyint(4) NOT NULL COMMENT '操作状态(0: 删除 1: 正常)',
@@ -503,7 +503,7 @@ CREATE TABLE `flea_real_name_info` (
 DROP TABLE IF EXISTS `flea_resource`;
 CREATE TABLE `flea_resource` (
   `resource_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '资源编号',
-  `resource_code` varchar(50) NOT NULL COMMENT '资源编码',
+  `resource_code` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '资源编码',
   `resource_name` varchar(50) NOT NULL COMMENT '资源名称',
   `resource_desc` varchar(255) DEFAULT NULL COMMENT '资源描述',
   `resource_state` tinyint(4) NOT NULL COMMENT '资源状态(0: 删除 1: 正常)',

@@ -36,8 +36,7 @@ public class ReflectUtils {
             clazz = Class.forName(className);
         } catch (ClassNotFoundException e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {
-                }, "Exception : \n", e);
+                LOGGER.error1(new Object() {}, "Exception : \n", e);
             }
         }
         return clazz;
@@ -57,8 +56,7 @@ public class ReflectUtils {
             obj = clazz.newInstance();
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {
-                }, "Exception : \n", e);
+                LOGGER.error1(new Object() {}, "Exception : \n", e);
             }
         }
         return obj;
@@ -101,8 +99,7 @@ public class ReflectUtils {
             }
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {
-                }, "当前类反射出错，Class={}, Exception={}", className, e);
+                LOGGER.error1(new Object() {}, "当前类反射出错，Class={}, Exception={}", className, e);
             }
         }
         return obj;
@@ -143,8 +140,7 @@ public class ReflectUtils {
             }
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {
-                }, "当前类反射出错，Class={}, Exception={}", className, e);
+                LOGGER.error1(new Object() {}, "当前类反射出错，Class={}, Exception={}", className, e);
             }
         }
         return obj;
@@ -183,10 +179,13 @@ public class ReflectUtils {
             field.setAccessible(true);
             // 设置对应成员变量的值
             field.set(obj, value);
+        } catch (NoSuchFieldException ex) {
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error1(new Object() {}, "当前对象[{}]无【{}】字段，跳过处理！", obj.getClass().getSimpleName(), ex.getMessage());
+            }
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {
-                }, "设置对象指定属性【" + name + "】对应的值出错，Exception=", e);
+                LOGGER.error1(new Object() {}, "设置对象指定属性【" + name + "】对应的值出错，Exception=", e);
             }
         }
     }
@@ -206,8 +205,7 @@ public class ReflectUtils {
             value = method.invoke(obj);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {
-                }, "获取对象指定属性【" + attrName + "】对应的值出错，Exception=", e);
+                LOGGER.error1(new Object() {}, "获取对象指定属性【" + attrName + "】对应的值出错，Exception=", e);
             }
         }
         return value;
@@ -228,8 +226,7 @@ public class ReflectUtils {
             method = obj.getClass().getMethod(getter);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {
-                }, "获取对象指定属性【" + attrName + "】对应get方法出错，Exception=", e);
+                LOGGER.error1(new Object() {}, "获取对象指定属性【" + attrName + "】对应get方法出错，Exception=", e);
             }
         }
         return method;
@@ -250,8 +247,7 @@ public class ReflectUtils {
             result = method.invoke(obj, args);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {
-                }, "反射调用对象指定方法【" + method.getName() + "】、指定参数列表【" + Arrays.toString(method.getParameterTypes()) + "】出错，Exception = ", e);
+                LOGGER.error1(new Object() {}, "反射调用对象指定方法【" + method.getName() + "】、指定参数列表【" + Arrays.toString(method.getParameterTypes()) + "】出错，Exception = ", e);
             }
         }
         return result;
@@ -274,8 +270,7 @@ public class ReflectUtils {
             result = method.invoke(obj, args);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {
-                }, "反射调用对象指定方法【" + methodName + "】、指定参数列表【" + Arrays.toString(types) + "】出错，Exception = ", e);
+                LOGGER.error1(new Object() {}, "反射调用对象指定方法【" + methodName + "】、指定参数列表【" + Arrays.toString(types) + "】出错，Exception = ", e);
             }
         }
         return result;
@@ -298,8 +293,7 @@ public class ReflectUtils {
             outputObj = method.invoke(obj, inputObj);
         } catch (Exception e) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {
-                }, "反射调用对象指定方法【" + methodName + "】出错，Exception = ", e);
+                LOGGER.error1(new Object() {}, "反射调用对象指定方法【" + methodName + "】出错，Exception = ", e);
             }
         }
         return outputObj;
