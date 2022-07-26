@@ -12,8 +12,9 @@ import com.huazie.fleaframework.jersey.client.request.RequestConfig;
 import com.huazie.fleaframework.jersey.client.request.RequestFactory;
 import com.huazie.fleaframework.jersey.client.response.Response;
 import com.huazie.fleaframework.jersey.common.exception.FleaJerseyClientException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 
 /**
  * Flea Jersey 客户端，对外提供统一的Jersey接口客户端调用API。
@@ -29,7 +30,7 @@ public class FleaJerseyClient {
 
     private FleaConfigDataSpringBean springBean;
 
-    @Autowired
+    @Resource
     public void setSpringBean(FleaConfigDataSpringBean springBean) {
         this.springBean = springBean;
     }

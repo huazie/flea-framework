@@ -24,6 +24,9 @@ public interface FleaAuthConstants {
         // 正在使用中的系统
         String ATTR_CODE_SYSTEM_IN_USE = "SYSTEM_IN_USE";
 
+        // 操作类型
+        String ATTR_CODE_OPERATION_TYPE = "OPERATION_TYPE";
+
         // 用户关联的实名编号
         String ATTR_CODE_REAL_NAME_ID = "REAL_NAME_ID";
     }

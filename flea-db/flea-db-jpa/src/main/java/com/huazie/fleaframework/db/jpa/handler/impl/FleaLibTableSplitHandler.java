@@ -1,10 +1,13 @@
 package com.huazie.fleaframework.db.jpa.handler.impl;
 
 import com.huazie.fleaframework.common.FleaEntity;
+import com.huazie.fleaframework.common.FleaEntityConstants;
 import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
+import com.huazie.fleaframework.common.util.DateUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
+import com.huazie.fleaframework.common.util.ReflectUtils;
 import com.huazie.fleaframework.db.common.DBConstants;
 import com.huazie.fleaframework.db.common.lib.pojo.SplitLib;
 import com.huazie.fleaframework.db.common.table.pojo.SplitTable;
@@ -229,6 +232,9 @@ public abstract class FleaLibTableSplitHandler implements IFleaJPASplitHandler {
     public <T> T merge(EntityManager entityManager, T entity) {
         SplitTable splitTable = getSplitTableFromEntity(entity);
         SplitLib splitLib = getSplitLibFromEntity(entity);
+
+        // 如果存在done_date字段，则默认设置为当前时间
+        ReflectUtils.setValue(entity, FleaEntityConstants.E_DONE_DATE, DateUtils.getCurrentTime());
 
         // 分表场景 或 分表场景 或 当前线程存在自定义的Flea实体管理器实现, 直接获取
         if (isFleaEntityManagerImpl(entityManager, splitTable, splitLib)) {
