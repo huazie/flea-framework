@@ -55,8 +55,67 @@ public class FleaCodeHelper {
      * @param param 参数
      * @return true：选中 false：未选中
      */
-    public static boolean isEntityClassWithLombok(Map<String, Object> param) {
+    public static boolean isEntityClassWithLombokSelected(Map<String, Object> param) {
         return MapUtils.getBooleanValue(param, ToolsConstants.CodeConstants.IS_SELECTED_LOMBOK);
     }
 
+    /**
+     * 是否选中 "DAO层实现类"
+     *
+     * @param param 参数
+     * @return true：选中 false：未选中
+     */
+    public static boolean isDAOImplSelected(Map<String, Object> param) {
+        return MapUtils.getBooleanValue(param, ToolsConstants.CodeConstants.IS_SELECTED_DAO_IMPL);
+    }
+
+    /**
+     * 是否选中 "DAO层接口类"
+     *
+     * @param param 参数
+     * @return true：选中 false：未选中
+     */
+    public static boolean isDAOInterfaceSelected(Map<String, Object> param) {
+        return MapUtils.getBooleanValue(param, ToolsConstants.CodeConstants.IS_SELECTED_DAO_INTERFACE);
+    }
+
+    /**
+     * 是否选中 "实体类"
+     *
+     * @param param 参数
+     * @return true：选中 false：未选中
+     */
+    public static boolean isEntitySelected(Map<String, Object> param) {
+        return MapUtils.getBooleanValue(param, ToolsConstants.CodeConstants.IS_SELECTED_ENTITY);
+    }
+
+    /**
+     * 是否选中 "SV层实现类"
+     *
+     * @param param 参数
+     * @return true：选中 false：未选中
+     */
+    public static boolean isSVImplSelected(Map<String, Object> param) {
+        return MapUtils.getBooleanValue(param, ToolsConstants.CodeConstants.IS_SELECTED_SV_IMPL);
+    }
+
+    /**
+     * 是否选中 "SV层接口类"
+     *
+     * @param param 参数
+     * @return true：选中 false：未选中
+     */
+    public static boolean isSVInterfaceSelected(Map<String, Object> param) {
+        return MapUtils.getBooleanValue(param, ToolsConstants.CodeConstants.IS_SELECTED_SV_INTERFACE);
+    }
+
+    /**
+     * 是否选中 "使用自定义事物注解"
+     *
+     * @param param 参数
+     * @return true：选中 false：未选中
+     */
+    public static boolean isCustomTransactionalSelected(Map<String, Object> param) {
+        return MapUtils.getBooleanValue(param, ToolsConstants.CodeConstants.IS_SELECTED_CUSTOM_TRANSACTIONAL);
+    }
 }

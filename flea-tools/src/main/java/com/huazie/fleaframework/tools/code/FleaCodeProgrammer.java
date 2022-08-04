@@ -7,6 +7,7 @@ import com.huazie.fleaframework.tools.code.impl.FleaEntityWithLombokBuilder;
 import com.huazie.fleaframework.tools.code.impl.FleaPersistenceUnitDaoImplBuilder;
 import com.huazie.fleaframework.tools.code.impl.FleaSVImplBuilder;
 import com.huazie.fleaframework.tools.code.impl.FleaSVInterfacesBuilder;
+import com.huazie.fleaframework.tools.code.impl.FleaSplitPersistenceUnitDaoImplBuilder;
 import com.huazie.fleaframework.tools.code.interfaces.IFleaCodeBuilder;
 
 import java.util.Map;
@@ -29,32 +30,47 @@ public class FleaCodeProgrammer {
     public static void code(Map<String, Object> param) {
 
         // 编写持久化单元DAO层实现类
-        IFleaCodeBuilder codeBuilder = new FleaPersistenceUnitDaoImplBuilder();
-        codeBuilder.build(param);
-
-        // 编写实体类
-        if (FleaCodeHelper.isEntityClassWithLombok(param)) {
-            codeBuilder = new FleaEntityWithLombokBuilder();
+        IFleaCodeBuilder codeBuilder;
+        if (FleaCodeHelper.isCustomTransactionalSelected(param)) {
+            codeBuilder = new FleaSplitPersistenceUnitDaoImplBuilder();
         } else {
-            codeBuilder = new FleaEntityBuilder();
+            codeBuilder = new FleaPersistenceUnitDaoImplBuilder();
         }
         codeBuilder.build(param);
 
+        // 编写实体类
+        if (FleaCodeHelper.isEntitySelected(param)) {
+            if (FleaCodeHelper.isEntityClassWithLombokSelected(param)) {
+                codeBuilder = new FleaEntityWithLombokBuilder();
+            } else {
+                codeBuilder = new FleaEntityBuilder();
+            }
+            codeBuilder.build(param);
+        }
+
         // 编写 DAO层接口
-        codeBuilder = new FleaDaoInterfacesBuilder();
-        codeBuilder.build(param);
+        if (FleaCodeHelper.isDAOInterfaceSelected(param)) {
+            codeBuilder = new FleaDaoInterfacesBuilder();
+            codeBuilder.build(param);
+        }
 
         // 编写 DAO层实现
-        codeBuilder = new FleaDaoImplBuilder();
-        codeBuilder.build(param);
+        if (FleaCodeHelper.isDAOImplSelected(param)) {
+            codeBuilder = new FleaDaoImplBuilder();
+            codeBuilder.build(param);
+        }
 
         // 编写 SV层接口
-        codeBuilder = new FleaSVInterfacesBuilder();
-        codeBuilder.build(param);
+        if (FleaCodeHelper.isSVInterfaceSelected(param)) {
+            codeBuilder = new FleaSVInterfacesBuilder();
+            codeBuilder.build(param);
+        }
 
         // 编写 SV层实现
-        codeBuilder = new FleaSVImplBuilder();
-        codeBuilder.build(param);
+        if (FleaCodeHelper.isSVImplSelected(param)) {
+            codeBuilder = new FleaSVImplBuilder();
+            codeBuilder.build(param);
+        }
     }
 
     /**
@@ -65,32 +81,47 @@ public class FleaCodeProgrammer {
      */
     public static void clean(Map<String, Object> param) {
         // 销毁持久化单元DAO层实现类 (只销毁新增持久化单元，利用现有持久化单元的不销毁 )
-        IFleaCodeBuilder codeBuilder = new FleaPersistenceUnitDaoImplBuilder();
-        codeBuilder.destroy(param);
-
-        // 销毁实体类
-        if (FleaCodeHelper.isEntityClassWithLombok(param)) {
-            codeBuilder = new FleaEntityWithLombokBuilder();
+        IFleaCodeBuilder codeBuilder;
+        if (FleaCodeHelper.isCustomTransactionalSelected(param)) {
+            codeBuilder = new FleaSplitPersistenceUnitDaoImplBuilder();
         } else {
-            codeBuilder = new FleaEntityBuilder();
+            codeBuilder = new FleaPersistenceUnitDaoImplBuilder();
         }
         codeBuilder.destroy(param);
 
+        // 销毁实体类
+        if (FleaCodeHelper.isEntitySelected(param)) {
+            if (FleaCodeHelper.isEntityClassWithLombokSelected(param)) {
+                codeBuilder = new FleaEntityWithLombokBuilder();
+            } else {
+                codeBuilder = new FleaEntityBuilder();
+            }
+            codeBuilder.destroy(param);
+        }
+
         // 销毁 DAO层接口
-        codeBuilder = new FleaDaoInterfacesBuilder();
-        codeBuilder.destroy(param);
+        if (FleaCodeHelper.isDAOInterfaceSelected(param)) {
+            codeBuilder = new FleaDaoInterfacesBuilder();
+            codeBuilder.destroy(param);
+        }
 
         // 销毁 DAO层实现
-        codeBuilder = new FleaDaoImplBuilder();
-        codeBuilder.destroy(param);
+        if (FleaCodeHelper.isDAOImplSelected(param)) {
+            codeBuilder = new FleaDaoImplBuilder();
+            codeBuilder.destroy(param);
+        }
 
         // 销毁 SV层接口
-        codeBuilder = new FleaSVInterfacesBuilder();
-        codeBuilder.destroy(param);
+        if (FleaCodeHelper.isSVInterfaceSelected(param)) {
+            codeBuilder = new FleaSVInterfacesBuilder();
+            codeBuilder.destroy(param);
+        }
 
         // 销毁 SV层实现
-        codeBuilder = new FleaSVImplBuilder();
-        codeBuilder.destroy(param);
+        if (FleaCodeHelper.isSVImplSelected(param)) {
+            codeBuilder = new FleaSVImplBuilder();
+            codeBuilder.destroy(param);
+        }
     }
 
 }
