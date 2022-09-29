@@ -1,15 +1,12 @@
 package com.huazie.fleaframework.jersey.common;
 
-import com.huazie.fleaframework.common.exception.CommonException;
-import com.huazie.fleaframework.common.exception.FleaException;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
-import com.huazie.fleaframework.common.util.ExceptionUtils;
-import com.huazie.fleaframework.common.util.IOUtils;
+import com.huazie.fleaframework.common.util.CollectionUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
+import com.huazie.fleaframework.common.util.xml.Import;
 import com.huazie.fleaframework.common.util.xml.XmlDigesterHelper;
-import com.huazie.fleaframework.jersey.common.exception.FleaJerseyFilterException;
 import com.huazie.fleaframework.jersey.common.filter.config.After;
 import com.huazie.fleaframework.jersey.common.filter.config.Before;
 import com.huazie.fleaframework.jersey.common.filter.config.Error;
@@ -20,8 +17,6 @@ import com.huazie.fleaframework.jersey.common.filter.config.I18nErrorMapping;
 import com.huazie.fleaframework.jersey.common.filter.config.Jersey;
 import com.huazie.fleaframework.jersey.common.filter.config.Service;
 import org.apache.commons.digester.Digester;
-
-import java.io.InputStream;
 
 /**
  * XML解析类（涉及flea-jersey-filter.xml jersey过滤器链）
@@ -38,7 +33,7 @@ public class JerseyXmlDigesterHelper {
 
     private final Object jerseyFilterInitLock = new Object();
 
-    private static Jersey jersey;
+    private Jersey jersey;
 
     /**
      * 只允许通过getInstance()获取 XML解析类
@@ -73,25 +68,20 @@ public class JerseyXmlDigesterHelper {
         if (ObjectUtils.isEmpty(jersey)) {
             synchronized (jerseyFilterInitLock) {
                 if (ObjectUtils.isEmpty(jersey)) {
-                    try {
-                        jersey = newJerseyFilter();
-                    } catch (CommonException e) {
-                        ExceptionUtils.throwFleaException(FleaException.class, e);
-                    }
+                    jersey = newJerseyFilter();
                 }
             }
         }
         return jersey;
     }
 
-    private Jersey newJerseyFilter() throws CommonException {
-        Jersey obj = null;
+    private Jersey newJerseyFilter() {
 
         String fileName = FleaJerseyConstants.JerseyFilterConstants.JSERSY_FILTER_FILE_PATH;
         if (StringUtils.isNotBlank(System.getProperty(FleaJerseyConstants.JerseyFilterConstants.JERSEY_FILTER_FILE_SYSTEM_KEY))) {
             fileName = StringUtils.trim(System.getProperty(FleaJerseyConstants.JerseyFilterConstants.JERSEY_FILTER_FILE_SYSTEM_KEY));
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("JerseyXmlDigesterHelper##newJerseyFilter Use the specified flea-jersey-filter.xml : " + fileName);
+                LOGGER.debug("Use the specified flea-jersey-filter.xml : " + fileName);
             }
         }
 
@@ -100,23 +90,39 @@ public class JerseyXmlDigesterHelper {
             LOGGER.debug("Start to parse the flea-jersey-filter.xml");
         }
 
-        try (InputStream input = IOUtils.getInputStreamFromClassPath(fileName)) {
+        Digester digester = newFleaJerseyFilterFileDigester();
+        Jersey jersey = XmlDigesterHelper.parse(fileName, digester, Jersey.class);
 
-            // 该路径下【0】找不到指定配置文件
-            ObjectUtils.checkEmpty(input, FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000001", fileName);
+        if (ObjectUtils.isNotEmpty(jersey) && CollectionUtils.isNotEmpty(jersey.getImportList())) {
+            Import mImport = jersey.getImportList().get(0); // 导入的flea-Jersey接口过滤器配置文件只有一个
+            if (ObjectUtils.isNotEmpty(mImport)) {
+                String resource = mImport.getResource();
+                Jersey other = XmlDigesterHelper.parse(resource, digester, Jersey.class);
+                if (ObjectUtils.isNotEmpty(other)) {
+                    FilterChain filterChain = jersey.getFilterChain();
+                    FilterChain otherFilterChain = other.getFilterChain();
+                    // 合并前置过滤器
+                    filterChain.getBefore().addFilters(otherFilterChain.getBefore().getFilters());
+                    // 合并业务服务过滤器
+                    filterChain.getService().addFilters(otherFilterChain.getService().getFilters());
+                    // 合并后置过滤器
+                    filterChain.getAfter().addFilters(otherFilterChain.getAfter().getFilters());
+                    // 合并错误过滤器
+                    filterChain.getError().addFilters(otherFilterChain.getError().getFilters());
 
-            obj = XmlDigesterHelper.parse(input, newFleaJerseyFilterFileDigester(), Jersey.class);
-
-        } catch (Exception e) {
-            // XML转化异常：
-            ExceptionUtils.throwCommonException(FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000002", e);
+                    FilterI18nError filterI18nError = jersey.getFilterI18nError();
+                    FilterI18nError otherFilterI18NError = other.getFilterI18nError();
+                    // 合并过滤器国际码错误码映射配置
+                    filterI18nError.addI18nErrorMappings(otherFilterI18NError.getI18nErrorMappingList());
+                }
+            }
         }
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("End to parse the flea-jersey-filter.xml");
         }
 
-        return obj;
+        return jersey;
     }
 
     /**
@@ -188,6 +194,11 @@ public class JerseyXmlDigesterHelper {
         
         digester.addSetNext("jersey/filter-i18n-error", "setFilterI18nError", FilterI18nError.class.getName());
         digester.addSetNext("jersey/filter-i18n-error/i18n-error-mapping", "addI18nErrorMapping", I18nErrorMapping.class.getName());
+
+        // flea jersey 接口过滤器配置文件资源导入
+        digester.addObjectCreate("jersey/import", Import.class.getName());
+        digester.addSetProperties("jersey/import");
+        digester.addSetNext("jersey/import", "addImport", Import.class.getName());
 
         return digester;
     }

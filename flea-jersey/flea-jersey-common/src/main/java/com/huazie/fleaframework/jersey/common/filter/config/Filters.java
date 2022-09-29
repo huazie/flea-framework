@@ -23,7 +23,7 @@ public class Filters {
      * @since 1.0.0
      */
     public List<Filter> getFilters() {
-        return filters;
+        return this.filters;
     }
 
     /**
@@ -33,7 +33,17 @@ public class Filters {
      * @since 1.0.0
      */
     public Filter[] toFiltersArray() {
-        return filters.toArray(new Filter[0]);
+        return this.filters.toArray(new Filter[0]);
+    }
+
+    /**
+     * 添加多个过滤器配置对象
+     *
+     * @param filters 过滤器配置对象集
+     * @since 2.0.0
+     */
+    public void addFilters(List<Filter> filters) {
+        this.filters.addAll(filters);
     }
 
     /**
@@ -43,7 +53,7 @@ public class Filters {
      * @since 1.0.0
      */
     public void addFilter(Filter filter) {
-        filters.add(filter);
+        this.filters.add(filter);
     }
 
     @Override

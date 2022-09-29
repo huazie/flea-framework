@@ -1,6 +1,6 @@
 package org.eclipse.persistence.internal.sessions;
 
-import com.huazie.fleaframework.db.eclipselink.util.EclipseLinkUtils;
+import com.huazie.fleaframework.db.eclipselink.util.ClassDescriptorUtils;
 import org.eclipse.persistence.config.ReferenceMode;
 import org.eclipse.persistence.descriptors.ClassDescriptor;
 
@@ -31,7 +31,7 @@ public class FleaUnitOfWork extends RepeatableWriteUnitOfWork {
     public ClassDescriptor getDescriptor(Object domainObject) {
         ClassDescriptor descriptor = super.getDescriptor(domainObject);
         // 获取分表对应的实体类的持久化信息描述符
-        descriptor = EclipseLinkUtils.getSplitDescriptor(descriptor, this, domainObject);
+        descriptor = ClassDescriptorUtils.getSplitDescriptor(descriptor, this, domainObject);
         return descriptor;
     }
 

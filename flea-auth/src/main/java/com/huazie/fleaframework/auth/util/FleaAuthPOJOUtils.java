@@ -471,7 +471,7 @@ public class FleaAuthPOJOUtils {
             String privilegeGroupName = fleaPrivilegeGroup.getPrivilegeGroupName();
             Long privilegeId = fleaPrivilege.getPrivilegeId();
             String privilegeName = fleaPrivilege.getPrivilegeName();
-            fleaPrivilegeGroupRelPOJO = FleaAuthPOJOUtils.newPrivilegeGroupRelPrivilegePOJO(privilegeGroupId, privilegeGroupName, privilegeId, privilegeName);
+            fleaPrivilegeGroupRelPOJO = newPrivilegeGroupRelPrivilegePOJO(privilegeGroupId, privilegeGroupName, privilegeId, privilegeName);
         }
         return fleaPrivilegeGroupRelPOJO;
     }
@@ -644,6 +644,7 @@ public class FleaAuthPOJOUtils {
      * @param attrCode  属性码
      * @param attrValue 属性值
      * @param attrDesc  属性描述
+     * @param remarks   备注
      * @return 功能扩展属性POJO对象
      * @since 2.0.0
      */
@@ -652,12 +653,15 @@ public class FleaAuthPOJOUtils {
         fleaFunctionAttrPOJO.setAttrCode(attrCode);
         fleaFunctionAttrPOJO.setAttrValue(attrValue);
         fleaFunctionAttrPOJO.setAttrDesc(attrDesc);
+        if (StringUtils.isBlank(remarks)) {
+            remarks = FleaI18nHelper.i18nForAuth("AUTH-FUNCTION0000000003", new String[]{attrDesc});
+        }
         fleaFunctionAttrPOJO.setRemarks(remarks);
         return fleaFunctionAttrPOJO;
     }
 
     /**
-     * 新增功能扩展属性【归属系统】
+     * 新建功能扩展属性【归属系统】
      *
      * @param systemId   系统编号
      * @param systemName 系统名称
@@ -672,5 +676,18 @@ public class FleaAuthPOJOUtils {
         // 【{0}】正在使用中
         String remarks = FleaI18nHelper.i18nForAuth("AUTH-FUNCTION0000000002", values);
         return newFleaFunctionAttrPOJO(attrCode, systemId, attrDesc, remarks);
+    }
+
+    /**
+     * 新建功能扩展属性【操作类型】
+     *
+     * @param attrValue 属性值
+     * @param attrDesc  属性描述
+     * @return 功能扩展属性【操作类型】
+     * @since 2.0.0
+     */
+    public static FleaFunctionAttrPOJO newOperationTypeAttr(String attrValue, String attrDesc) {
+        String attrCode = FleaAuthConstants.AttrCodeConstants.ATTR_CODE_OPERATION_TYPE;
+        return newFleaFunctionAttrPOJO(attrCode, attrValue, attrDesc, null);
     }
 }

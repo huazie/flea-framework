@@ -17,12 +17,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * <p> 数据操作和业务逻辑层实现 </p>
+ * 数据操作和业务逻辑层实现
  *
  * @author huazie
  * @version 1.0.0
@@ -58,17 +59,33 @@ public class FleaCodePanel extends JPanel implements ActionListener, ItemListene
 
     private JTextField versionTextField; // 版本
 
+    private JCheckBox lombokEntityCheckBox; // 实体类使用Lombok
+
     private JTextField rootPathTextField; // 根目录
 
     private JButton rootPathSelectButton; // 根目录选择按钮
 
     private JTextField codePackageTextField; // 包名
 
+    private JCheckBox allCheckBox; // 全选
+
+    private JCheckBox daoImplCheckBox; // DAO层实现类
+
+    private JCheckBox daoInterfaceCheckBox; // DAO层接口类
+
+    private JCheckBox entityCheckBox; // 实体类
+
+    private JCheckBox svImplCheckBox; // SV层实现类
+
+    private JCheckBox svInterfaceCheckBox; // SV层接口类
+
     private JRadioButton newRadioButton; // 新建持久化单元DAO层实现 单选按钮
 
     private JRadioButton oldRadioButton; // 现有持久化单元DAO层实现 单选按钮
 
     private ButtonGroup btnGroup; // 单选按钮组
+
+    private JCheckBox customTransactionalCheckBox; // 自定义事物
 
     private JTextField puDaoPackageTextField; // 持久化单元DAO层实现包名
 
@@ -231,7 +248,13 @@ public class FleaCodePanel extends JPanel implements ActionListener, ItemListene
         // 版本文本域
         versionTextField = new JTextField();
         // 版本
-        showOneContentConfig(null, "COMMON_CODE_00008", versionTextField, 4, true);
+        showOneContentConfig(null, "COMMON_CODE_00008", versionTextField, 4, false);
+
+        // 实体类使用Lombok
+        lombokEntityCheckBox = newCheckBox(FleaI18nHelper.i18nForCommon("COMMON_CODE_00026"));
+        configGridBagConstraints.gridwidth = GridBagConstraints.REMAINDER;
+        configGridBagLayout.setConstraints(lombokEntityCheckBox, configGridBagConstraints);
+        configPanel.add(lombokEntityCheckBox);
 
         // 根目录文本域
         rootPathTextField = new JTextField();
@@ -249,6 +272,34 @@ public class FleaCodePanel extends JPanel implements ActionListener, ItemListene
         codePackageTextField = new JTextField();
         // 包名
         showOneContentConfig(null, "COMMON_CODE_00010", codePackageTextField, 0, true);
+
+        GridLayout  codeGeneratingLayout = new GridLayout(1,6);
+        JPanel codeGeneratingPanel = new JPanel(codeGeneratingLayout);
+
+        allCheckBox = newCheckBox(FleaI18nHelper.i18nForCommon("COMMON_CODE_00027"));
+        allCheckBox.addActionListener(this);
+        daoImplCheckBox = newCheckBox(FleaI18nHelper.i18nForCommon("COMMON_CODE_00028"));
+        daoInterfaceCheckBox = newCheckBox(FleaI18nHelper.i18nForCommon("COMMON_CODE_00029"));
+        entityCheckBox = newCheckBox(FleaI18nHelper.i18nForCommon("COMMON_CODE_00030"));
+        svImplCheckBox = newCheckBox(FleaI18nHelper.i18nForCommon("COMMON_CODE_00031"));
+        svInterfaceCheckBox = newCheckBox(FleaI18nHelper.i18nForCommon("COMMON_CODE_00032"));
+
+        codeGeneratingPanel.add(allCheckBox);
+        codeGeneratingPanel.add(daoImplCheckBox);
+        codeGeneratingPanel.add(daoInterfaceCheckBox);
+        codeGeneratingPanel.add(entityCheckBox);
+        codeGeneratingPanel.add(svImplCheckBox);
+        codeGeneratingPanel.add(svInterfaceCheckBox);
+
+        showOneContentConfig(null, "COMMON_CODE_00033", codeGeneratingPanel, 0, true);
+
+    }
+
+    private JCheckBox newCheckBox(String text) {
+        JCheckBox checkBox = new JCheckBox(text);
+        checkBox.setMnemonic(KeyEvent.VK_C);
+        checkBox.setSelected(true);
+        return checkBox;
     }
 
     private void initPersistenceUnitConfig() {
@@ -269,15 +320,24 @@ public class FleaCodePanel extends JPanel implements ActionListener, ItemListene
         btnGroup.add(newRadioButton);
         btnGroup.add(oldRadioButton);
 
+        // 使用自定义事物注解
+        customTransactionalCheckBox = newCheckBox(FleaI18nHelper.i18nForCommon("COMMON_CODE_00034"));
+        customTransactionalCheckBox.setSelected(false); // 默认补选中
+        // 分库或分表场景，请勾选！
+        customTransactionalCheckBox.setToolTipText(FleaI18nHelper.i18nForCommon("COMMON_CODE_00035"));
+
         configGridBagConstraints.gridwidth = 1;
         configGridBagLayout.setConstraints(puDaoClassLabel, configGridBagConstraints);
         configPanel.add(puDaoClassLabel);
-        configGridBagConstraints.gridwidth = 3;
+        configGridBagConstraints.gridwidth = 2;
         configGridBagLayout.setConstraints(newRadioButton, configGridBagConstraints);
         configPanel.add(newRadioButton);
-        configGridBagConstraints.gridwidth = 3;
+        configGridBagConstraints.gridwidth = 2;
         configGridBagLayout.setConstraints(oldRadioButton, configGridBagConstraints);
         configPanel.add(oldRadioButton);
+        configGridBagConstraints.gridwidth = 2;
+        configGridBagLayout.setConstraints(customTransactionalCheckBox, configGridBagConstraints);
+        configPanel.add(customTransactionalCheckBox);
         configGridBagConstraints.gridwidth = GridBagConstraints.REMAINDER; // end row
         JLabel radioLabel = new JLabel(" ");
         configGridBagLayout.setConstraints(radioLabel, configGridBagConstraints);
@@ -399,14 +459,15 @@ public class FleaCodePanel extends JPanel implements ActionListener, ItemListene
         destroyButton.addActionListener(this);
         buttonPanel.add(destroyButton);
 
-        resetButton = new JButton(FleaI18nHelper.i18nForCommon("COMMON_I18N_00007"));
-        resetButton.addActionListener(this);
-        buttonPanel.add(resetButton);
-
         // 导入按钮
         importButton = new JButton(FleaI18nHelper.i18nForCommon("COMMON_CODE_00019"));
         importButton.addActionListener(this);
         buttonPanel.add(importButton);
+
+        // 重置按钮
+        resetButton = new JButton(FleaI18nHelper.i18nForCommon("COMMON_I18N_00007"));
+        resetButton.addActionListener(this);
+        buttonPanel.add(resetButton);
 
         configGridBagConstraints.weightx = 0.0;
         configGridBagConstraints.gridwidth = GridBagConstraints.REMAINDER; // end row
@@ -443,6 +504,12 @@ public class FleaCodePanel extends JPanel implements ActionListener, ItemListene
                 selectFile();
             } else if (importButton == source) {
                 importConfig();
+            } else if (allCheckBox == source) {
+                if (allCheckBox.isSelected()) {
+                    setCodeGeneratingCheckBoxSelected(true);
+                } else {
+                    setCodeGeneratingCheckBoxSelected(false);
+                }
             }
         } catch (Exception e1) {
             if (LOGGER.isErrorEnabled()) {
@@ -491,6 +558,14 @@ public class FleaCodePanel extends JPanel implements ActionListener, ItemListene
             ToolsHelper.showTips(FleaI18nHelper.i18nForCommon("COMMON_I18N_00010"), e1.getMessage(), JOptionPane.ERROR_MESSAGE);
             idGeneratorStrategyComboBox.setSelectedIndex(0); // 重新选择TABLE
         }
+    }
+
+    private void setCodeGeneratingCheckBoxSelected(boolean isSelected) {
+        daoImplCheckBox.setSelected(isSelected);
+        daoInterfaceCheckBox.setSelected(isSelected);
+        entityCheckBox.setSelected(isSelected);
+        svImplCheckBox.setSelected(isSelected);
+        svInterfaceCheckBox.setSelected(isSelected);
     }
 
     private void setGenerationTypeTableVisible(boolean isShow) {
@@ -656,6 +731,10 @@ public class FleaCodePanel extends JPanel implements ActionListener, ItemListene
         StringUtils.checkBlank(version, ToolsException.class, "COMMON_I18N_00013", FleaI18nHelper.i18nForCommon("COMMON_CODE_00008"));
         param.put(ToolsConstants.CodeConstants.VERSION, version);
 
+        // 是否选中 "实体类使用Lombok"
+        boolean isSelected = lombokEntityCheckBox.isSelected();
+        param.put(ToolsConstants.CodeConstants.IS_SELECTED_LOMBOK, isSelected);
+
         // 获取根目录
         String rootPath = rootPathTextField.getText();
         // 大佬，请您先输入{0}内容哦~
@@ -667,6 +746,18 @@ public class FleaCodePanel extends JPanel implements ActionListener, ItemListene
         // 大佬，请您先输入{0}内容哦~
         StringUtils.checkBlank(codePackage, ToolsException.class, "COMMON_I18N_00013", FleaI18nHelper.i18nForCommon("COMMON_CODE_00010"));
         param.put(ToolsConstants.CodeConstants.CODE_PACKAGE, codePackage);
+
+        // 待生成代码类
+        boolean isSelectedDaoImpl = daoImplCheckBox.isSelected();
+        param.put(ToolsConstants.CodeConstants.IS_SELECTED_DAO_IMPL, isSelectedDaoImpl);
+        boolean isSelectedDaoInterface = daoInterfaceCheckBox.isSelected();
+        param.put(ToolsConstants.CodeConstants.IS_SELECTED_DAO_INTERFACE, isSelectedDaoInterface);
+        boolean isSelectedEntity = entityCheckBox.isSelected();
+        param.put(ToolsConstants.CodeConstants.IS_SELECTED_ENTITY, isSelectedEntity);
+        boolean isSelectedSVImpl = svImplCheckBox.isSelected();
+        param.put(ToolsConstants.CodeConstants.IS_SELECTED_SV_IMPL, isSelectedSVImpl);
+        boolean isSelectedSVInterface = svInterfaceCheckBox.isSelected();
+        param.put(ToolsConstants.CodeConstants.IS_SELECTED_SV_INTERFACE, isSelectedSVInterface);
 
         // 4. 持久化单元配置
         String puDaoClassPackage = puDaoPackageTextField.getText();
@@ -694,6 +785,10 @@ public class FleaCodePanel extends JPanel implements ActionListener, ItemListene
             StringUtils.checkBlank(fleaPersistenceUnitDaoClassName, ToolsException.class, "COMMON_I18N_00013", FleaI18nHelper.i18nForCommon("COMMON_CODE_00016"));
             param.put(ToolsConstants.CodeConstants.FLEA_PERSISTENCE_UNIT_DAO_CLASS_NAME, fleaPersistenceUnitDaoClassName);
         }
+
+        // 是否使用自定义事物注解
+        boolean isUseFleaTransactional = customTransactionalCheckBox.isSelected();
+        param.put(ToolsConstants.CodeConstants.IS_SELECTED_CUSTOM_TRANSACTIONAL, isUseFleaTransactional);
 
         return param;
     }

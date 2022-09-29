@@ -5,6 +5,7 @@ import com.huazie.fleaframework.auth.base.function.entity.FleaMenu;
 import com.huazie.fleaframework.auth.base.function.entity.FleaOperation;
 import com.huazie.fleaframework.auth.base.function.entity.FleaResource;
 import com.huazie.fleaframework.auth.common.pojo.function.attr.FleaFunctionAttrPOJO;
+import com.huazie.fleaframework.auth.common.pojo.function.attr.FleaFunctionOtherPOJO;
 import com.huazie.fleaframework.auth.common.pojo.function.element.FleaElementPOJO;
 import com.huazie.fleaframework.auth.common.pojo.function.menu.FleaMenuPOJO;
 import com.huazie.fleaframework.auth.common.pojo.function.operation.FleaOperationPOJO;
@@ -141,6 +142,15 @@ public interface IFleaFunctionModuleSV {
      * @since 2.0.0
      */
     void modifyFleaResource(Long resourceId, FleaResourcePOJO fleaResourcePOJO) throws CommonException;
+
+    /**
+     * 添加Flea功能属性集
+     *
+     * @param fleaFunctionOtherPOJO 功能其他数据POJO类，含Flea功能属性集
+     * @throws CommonException 通用异常
+     * @since 2.0.0
+     */
+    void addFleaFunctionAttr(FleaFunctionOtherPOJO fleaFunctionOtherPOJO) throws CommonException;
 
     /**
      * 修改功能扩展属性

@@ -22,8 +22,9 @@ public class FleaStrategyTest {
         context.setContext("Tom");
         LOGGER.debug(FleaStrategyFacade.invoke("cat", context));
 
-        context.setContext("Donald");
-        LOGGER.debug(FleaStrategyFacade.invoke("duck", context));
+        AnimalVoiceContext context1 = new AnimalVoiceContext();
+        context1.setContext("Donald");
+        LOGGER.debug(FleaStrategyFacade.invoke("duck", context1));
 
     }
 }

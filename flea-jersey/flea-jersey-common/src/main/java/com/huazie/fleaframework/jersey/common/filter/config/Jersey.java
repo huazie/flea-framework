@@ -1,5 +1,7 @@
 package com.huazie.fleaframework.jersey.common.filter.config;
 
+import com.huazie.fleaframework.common.util.ObjectUtils;
+import com.huazie.fleaframework.common.util.xml.ImportList;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
@@ -10,13 +12,15 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class Jersey {
+public class Jersey extends ImportList {
 
     private FilterChain filterChain; // 过滤器链对象
 
     private FilterI18nError filterI18nError; // 过滤器国际码和错误码配置对象
 
     public FilterChain getFilterChain() {
+        if (ObjectUtils.isEmpty(filterChain))
+            filterChain = new FilterChain();
         return filterChain;
     }
 
@@ -25,6 +29,8 @@ public class Jersey {
     }
 
     public FilterI18nError getFilterI18nError() {
+        if (ObjectUtils.isEmpty(filterI18nError))
+            filterI18nError = new FilterI18nError();
         return filterI18nError;
     }
 

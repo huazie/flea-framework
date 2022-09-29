@@ -38,7 +38,7 @@ public class DBConstants {
         /**
          * SQL模板文件系统属性键
          */
-        String SQL_TEMPLATE_FILE_SYSTEM_KEY = "fleaframe.db.sql.template.filename";
+        String SQL_TEMPLATE_FILE_SYSTEM_KEY = "fleaframework.db.sql.template.filename";
     }
 
     /**
@@ -64,7 +64,7 @@ public class DBConstants {
         /**
          * 分表配置文件系统属性键
          */
-        String LIB_SPLIT_FILE_SYSTEM_KEY = "fleaframe.db.lib.split.filename";
+        String LIB_SPLIT_FILE_SYSTEM_KEY = "fleaframework.db.lib.split.filename";
 
         /**
          * 分表配置文件路径
@@ -73,7 +73,7 @@ public class DBConstants {
         /**
          * 分表配置文件系统属性键
          */
-        String TABLE_SPLIT_FILE_SYSTEM_KEY = "fleaframe.db.table.split.filename";
+        String TABLE_SPLIT_FILE_SYSTEM_KEY = "fleaframework.db.table.split.filename";
     }
 
     /**

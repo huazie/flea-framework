@@ -557,6 +557,18 @@ public class FleaAuthCheck {
     }
 
     /**
+     * 校验功能类型，如果为空，则抛出响应的异常
+     *
+     * @param functionType 功能类型
+     * @throws CommonException 通用异常
+     * @since 2.0.0
+     */
+    public static void checkFunctionType(String functionType) throws CommonException {
+        // 校验功能类型不能为空
+        checkBlank(functionType, FleaAuthEntityConstants.FunctionEntityConstants.E_FUNCTION_TYPE);
+    }
+
+    /**
      * 校验属性编号，如果为空或者不是正数，则抛出相应的异常。
      *
      * @param attrId 属性编号
@@ -701,7 +713,7 @@ public class FleaAuthCheck {
         checkFleaAttrPOJO(fleaFunctionAttrPOJO, FleaFunctionAttrPOJO.class.getSimpleName());
 
         // 校验功能类型不能为空
-        checkBlank(fleaFunctionAttrPOJO.getFunctionType(), FleaAuthEntityConstants.FunctionEntityConstants.E_FUNCTION_TYPE);
+        checkFunctionType(fleaFunctionAttrPOJO.getFunctionType());
     }
 
     /**

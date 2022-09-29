@@ -337,7 +337,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
      */
     private Query createNativeQuery(String relationId, T entity, boolean isSingle) throws CommonException {
         // 构建并执行 SELECT SQL模板
-        ITemplate<T> selectSqlTemplate = SqlTemplateFactory.newSqlTemplate(relationId, entity, TemplateTypeEnum.SELECT);
+        ITemplate<Object> selectSqlTemplate = SqlTemplateFactory.newSqlTemplate(relationId, entity, TemplateTypeEnum.SELECT);
         selectSqlTemplate.initialize();
         String nativeSql = selectSqlTemplate.toNativeSql();
         List<SqlParam> nativeParam = selectSqlTemplate.toNativeParams();
@@ -383,7 +383,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
      * @throws CommonException 通用异常
      * @since 1.0.0
      */
-    private int save(ITemplate<T> sqlTemplate, T entity) throws CommonException {
+    private int save(ITemplate<Object> sqlTemplate, T entity) throws CommonException {
         sqlTemplate.initialize();
         String nativeSql = sqlTemplate.toNativeSql();
         List<SqlParam> nativeParam = sqlTemplate.toNativeParams();

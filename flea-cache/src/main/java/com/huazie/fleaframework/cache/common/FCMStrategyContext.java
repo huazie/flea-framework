@@ -22,13 +22,19 @@ import java.util.Map;
  */
 public class FCMStrategyContext extends FleaStrategyContext<AbstractFleaCacheManager, FleaCommonConfig> {
 
-    @Override
-    public Map<String, IFleaStrategy<AbstractFleaCacheManager, FleaCommonConfig>> init() {
-        Map<String, IFleaStrategy<AbstractFleaCacheManager, FleaCommonConfig>> fleaStrategyMap = new HashMap<>();
+    private static Map<String, IFleaStrategy<AbstractFleaCacheManager, FleaCommonConfig>> fleaStrategyMap;
+
+    static {
+        fleaStrategyMap = new HashMap<>();
         fleaStrategyMap.put(CacheEnum.MemCached.getName(), new MemCachedFCMStrategy());
         fleaStrategyMap.put(CacheEnum.RedisSharded.getName(), new RedisShardedFCMStrategy());
         fleaStrategyMap.put(CacheEnum.RedisCluster.getName(), new RedisClusterFCMStrategy());
         fleaStrategyMap.put(CacheEnum.FleaCore.getName(), new CoreFCMStrategy());
-        return Collections.unmodifiableMap(fleaStrategyMap);
+        fleaStrategyMap = Collections.unmodifiableMap(fleaStrategyMap);
+    }
+
+    @Override
+    public Map<String, IFleaStrategy<AbstractFleaCacheManager, FleaCommonConfig>> init() {
+        return fleaStrategyMap;
     }
 }

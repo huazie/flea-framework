@@ -27,13 +27,13 @@ public class FleaAuthDAOImpl<T> extends AbstractFleaJPADAOImpl<T> {
     }
 
     @Override
-    @FleaTransactional("fleaAuthTransactionManager")
+    @FleaTransactional(value = "fleaAuthTransactionManager", unitName = "fleaauth")
     public boolean remove(long entityId) throws CommonException {
         return super.remove(entityId);
     }
 
     @Override
-    @FleaTransactional("fleaAuthTransactionManager")
+    @FleaTransactional(value = "fleaAuthTransactionManager", unitName = "fleaauth")
     public boolean remove(String entityId) throws CommonException {
         return super.remove(entityId);
     }
