@@ -4,6 +4,8 @@ import com.huazie.fleaframework.auth.common.service.interfaces.IFleaRoleModuleSV
 import com.huazie.fleaframework.common.exception.CommonException;
 
 /**
+ * 添加角色关联权限组
+ *
  * @author huazie
  * @version 2.0.0
  * @since 2.0.0
@@ -22,6 +24,8 @@ public class AddFleaRoleRel {
         superManagerRoleRelPrivilegeGroupForOperation();
         superManagerRoleRelPrivilegeGroupForElement();
         superManagerRoleRelPrivilegeGroupForResource();
+
+        fleaFSUserRoleRelFleaFSResourceInvokePrivilegeGroup();
     }
 
     // 【超级管理员】角色绑定【菜单访问】权限组
@@ -49,6 +53,13 @@ public class AddFleaRoleRel {
     private void superManagerRoleRelPrivilegeGroupForResource() throws CommonException {
         Long roleId = 1000L;
         Long privilegeGroupId = 1003L;
+        fleaRoleModuleSV.roleRelPrivilegeGroup(roleId, privilegeGroupId, null);
+    }
+
+    // 【FleaFS接入员】角色绑定【FleaFS资源调用】权限组
+    private void fleaFSUserRoleRelFleaFSResourceInvokePrivilegeGroup() throws CommonException {
+        Long roleId = 1018L;
+        Long privilegeGroupId = 1004L;
         fleaRoleModuleSV.roleRelPrivilegeGroup(roleId, privilegeGroupId, null);
     }
 }

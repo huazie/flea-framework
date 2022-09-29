@@ -19,31 +19,26 @@ public class FCMStrategyTest {
     private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FCMStrategyTest.class);
 
     @Test
-    public void testCoreFCMStrategy() {
+    public void testFCMStrategy() {
         String name = CacheEnum.FleaCore.getName();
-        AbstractFleaCacheManager manager = FleaStrategyFacade.invoke(name, new FCMStrategyContext());
-        LOGGER.debug("FleaCacheManager = {}", manager);
-    }
+        FCMStrategyContext context = new FCMStrategyContext();
+        AbstractFleaCacheManager manager = FleaStrategyFacade.invoke(name, context);
+        LOGGER.debug("CoreFleaCacheManager = {}", manager);
 
-    @Test
-    public void testMemCachedFCMStrategy() {
         String name1 = CacheEnum.MemCached.getName();
-        AbstractFleaCacheManager manager1 = FleaStrategyFacade.invoke(name1, new FCMStrategyContext());
-        LOGGER.debug("FleaCacheManager = {}", manager1);
-    }
+        FCMStrategyContext context1 = new FCMStrategyContext();
+        AbstractFleaCacheManager manager1 = FleaStrategyFacade.invoke(name1, context1);
+        LOGGER.debug("MemCachedFleaCacheManager = {}", manager1);
 
-    @Test
-    public void testRedisShardedFCMStrategy() {
         String name2 = CacheEnum.RedisSharded.getName();
-        AbstractFleaCacheManager manager2 = FleaStrategyFacade.invoke(name2, new FCMStrategyContext());
-        LOGGER.debug("FleaCacheManager = {}", manager2);
-    }
+        FCMStrategyContext context2 = new FCMStrategyContext();
+        AbstractFleaCacheManager manager2 = FleaStrategyFacade.invoke(name2, context2);
+        LOGGER.debug("RedisShardedFleaCacheManager = {}", manager2);
 
-    @Test
-    public void testRedisClusterFCMStrategy() {
         String name3 = CacheEnum.RedisCluster.getName();
-        AbstractFleaCacheManager manager3 = FleaStrategyFacade.invoke(name3, new FCMStrategyContext());
-        LOGGER.debug("FleaCacheManager = {}", manager3);
+        FCMStrategyContext contex3 = new FCMStrategyContext();
+        AbstractFleaCacheManager manager3 = FleaStrategyFacade.invoke(name3, contex3);
+        LOGGER.debug("RedisClusterFleaCacheManager = {}", manager3);
     }
 
     @Test

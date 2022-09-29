@@ -229,7 +229,7 @@ public abstract class AbstractFleaJPASVImpl<T> implements IAbstractFleaJPASV<T> 
     }
 
     /**
-     * <p> 获取DAO层实现 </p>
+     * 获取DAO层实现
      *
      * @return 抽象DAO层实现
      * @since 1.0.0

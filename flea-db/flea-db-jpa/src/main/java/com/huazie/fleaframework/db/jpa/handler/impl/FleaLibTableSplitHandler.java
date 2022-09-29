@@ -1,10 +1,13 @@
 package com.huazie.fleaframework.db.jpa.handler.impl;
 
 import com.huazie.fleaframework.common.FleaEntity;
+import com.huazie.fleaframework.common.FleaEntityConstants;
 import com.huazie.fleaframework.common.exception.CommonException;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
+import com.huazie.fleaframework.common.util.DateUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
+import com.huazie.fleaframework.common.util.ReflectUtils;
 import com.huazie.fleaframework.db.common.DBConstants;
 import com.huazie.fleaframework.db.common.lib.pojo.SplitLib;
 import com.huazie.fleaframework.db.common.table.pojo.SplitTable;
@@ -64,8 +67,26 @@ public abstract class FleaLibTableSplitHandler implements IFleaJPASplitHandler {
             }
             splitLib = FleaSplitUtils.getSplitLib(libName, FleaLibUtil.getSplitLibSeqValues());
         }
-        // 分库 或 分表场景，重新初始化Flea JPA查询对象
-        handleInner(query, splitLib, splitTable);
+
+        // 分库场景，重新获取对应分库下的实体管理类
+        EntityManager splitEntityManager = handleInner(splitLib);
+
+        EntityManager entityManager;
+        if (ObjectUtils.isEmpty(splitEntityManager)) {
+            entityManager = query.getEntityManager();
+        } else {
+            entityManager = splitEntityManager;
+        }
+
+        // 分表场景 或 分表场景 或 当前线程存在自定义的Flea实体管理器实现, 直接获取
+        if (isFleaEntityManagerImpl(entityManager, splitTable, splitLib)) {
+            splitEntityManager = getFleaEntityMangerImpl(entityManager);
+        }
+
+        if (ObjectUtils.isNotEmpty(splitEntityManager)) {
+            // 重新初始化Flea JPA查询对象
+            query.init(splitEntityManager, query.getSourceClazz(), query.getResultClazz());
+        }
     }
 
     @Override
@@ -119,51 +140,6 @@ public abstract class FleaLibTableSplitHandler implements IFleaJPASplitHandler {
             return entityManager;
         }
 
-        // 分库场景，重新初始化实体管理类
-        return handleInner(entityManager, splitLib);
-    }
-
-    /**
-     * 分库 或 分表 场景，重新初始化Flea JPA查询对象
-     *
-     * @param query      Flea JPA 查询对象
-     * @param splitLib   分库对象
-     * @param splitTable 分表对象
-     * @throws CommonException 通用异常
-     * @since 1.1.0
-     */
-    private void handleInner(FleaJPAQuery query, SplitLib splitLib, SplitTable splitTable) throws CommonException {
-        // 分库场景，重新获取对应分库下的实体管理类
-        EntityManager splitEntityManager = handleInner(splitLib);
-
-        EntityManager entityManager;
-        if (ObjectUtils.isEmpty(splitEntityManager)) {
-            entityManager = query.getEntityManager();
-        } else {
-            entityManager = splitEntityManager;
-        }
-
-        // 分表场景 或 分表场景 或 当前线程存在自定义的Flea实体管理器实现, 直接获取
-        if (isFleaEntityManagerImpl(entityManager, splitTable, splitLib)) {
-            splitEntityManager = getFleaEntityMangerImpl(entityManager);
-        }
-
-        if (ObjectUtils.isNotEmpty(splitEntityManager)) {
-            // 重新初始化Flea JPA查询对象
-            query.init(splitEntityManager, query.getSourceClazz(), query.getResultClazz());
-        }
-    }
-
-    /**
-     * 分库场景，重新初始化实体管理类
-     *
-     * @param entityManager 实体管理类对象
-     * @param splitLib      分库对象
-     * @return 实体管理类
-     * @throws CommonException 通用异常
-     * @since 1.1.0
-     */
-    private EntityManager handleInner(EntityManager entityManager, SplitLib splitLib) throws CommonException {
         // 分库场景，重新获取对应分库下的实体管理类
         EntityManager splitEntityManager = handleInner(splitLib);
         if (ObjectUtils.isNotEmpty(splitEntityManager)) {
@@ -256,6 +232,9 @@ public abstract class FleaLibTableSplitHandler implements IFleaJPASplitHandler {
     public <T> T merge(EntityManager entityManager, T entity) {
         SplitTable splitTable = getSplitTableFromEntity(entity);
         SplitLib splitLib = getSplitLibFromEntity(entity);
+
+        // 如果存在done_date字段，则默认设置为当前时间
+        ReflectUtils.setValue(entity, FleaEntityConstants.E_DONE_DATE, DateUtils.getCurrentTime());
 
         // 分表场景 或 分表场景 或 当前线程存在自定义的Flea实体管理器实现, 直接获取
         if (isFleaEntityManagerImpl(entityManager, splitTable, splitLib)) {

@@ -17,8 +17,11 @@ import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 
 /**
- * 授权校验过滤器，主要用于系统账户授权校验，操作账户授权校验，
- * 资源授权校验等。
+ * 授权校验过滤器，主要用于系统账户授权校验、操作账户授权校验、
+ * 系统账户的资源授权校验 和 操作账户的资源授权校验。
+ *
+ * <p> 上述授权校验如果出现异常，直接抛出异常，由异常过滤器处理并返回；
+ * 如果授权校验通过，则使用Flea授权管理器，初始化操作用户相关的信息。
  *
  * @author huazie
  * @version 1.0.0
@@ -33,7 +36,7 @@ public class AuthCheckFilter implements IFleaJerseyFilter {
         Object obj = null;
         if (LOGGER.isDebugEnabled()) {
             obj = new Object() {};
-            LOGGER.debug1(obj, "System Auth Check, Start");
+            LOGGER.debug1(obj, "Auth Check, Start");
         }
 
         RequestPublicData requestPublicData = request.getRequestData().getPublicData();
@@ -78,7 +81,7 @@ public class AuthCheckFilter implements IFleaJerseyFilter {
         FleaAuthManager.initUserInfo(aId, operationUser, sysId, systemUser, null, new FleaUserImplObjectFactory());
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj,"System Auth Check, End");
+            LOGGER.debug1(obj,"Auth Check, End");
         }
     }
 

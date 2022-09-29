@@ -18,6 +18,7 @@ import com.huazie.fleaframework.auth.base.privilege.service.interfaces.IFleaPriv
 import com.huazie.fleaframework.auth.base.privilege.service.interfaces.IFleaPrivilegeSV;
 import com.huazie.fleaframework.auth.common.FunctionTypeEnum;
 import com.huazie.fleaframework.auth.common.pojo.function.attr.FleaFunctionAttrPOJO;
+import com.huazie.fleaframework.auth.common.pojo.function.attr.FleaFunctionOtherPOJO;
 import com.huazie.fleaframework.auth.common.pojo.function.element.FleaElementPOJO;
 import com.huazie.fleaframework.auth.common.pojo.function.menu.FleaMenuPOJO;
 import com.huazie.fleaframework.auth.common.pojo.function.operation.FleaOperationPOJO;
@@ -137,7 +138,7 @@ public class FleaFunctionModuleSVImpl implements IFleaFunctionModuleSV {
         fleaMenuPOJO.setFunctionIdAndType(menuId, FunctionTypeEnum.MENU.getType());
 
         // 保存菜单扩展属性信息
-        this.fleaFunctionAttrSV.saveFunctionAttrs(fleaMenuPOJO.getFunctionAttrPOJOList());
+        addFleaFunctionAttr(fleaMenuPOJO);
 
         // 菜单名称
         String menuName = fleaMenu.getMenuName();
@@ -209,7 +210,7 @@ public class FleaFunctionModuleSVImpl implements IFleaFunctionModuleSV {
         fleaOperationPOJO.setFunctionIdAndType(operationId, FunctionTypeEnum.OPERATION.getType());
 
         // 保存操作扩展属性信息
-        this.fleaFunctionAttrSV.saveFunctionAttrs(fleaOperationPOJO.getFunctionAttrPOJOList());
+        addFleaFunctionAttr(fleaOperationPOJO);
 
         // 操作名称
         String operationName = fleaOperation.getOperationName();
@@ -281,7 +282,7 @@ public class FleaFunctionModuleSVImpl implements IFleaFunctionModuleSV {
         fleaElementPOJO.setFunctionIdAndType(elementId, FunctionTypeEnum.ELEMENT.getType());
 
         // 保存元素扩展属性信息
-        this.fleaFunctionAttrSV.saveFunctionAttrs(fleaElementPOJO.getFunctionAttrPOJOList());
+        addFleaFunctionAttr(fleaElementPOJO);
 
         // 元素名称
         String elementName = fleaElement.getElementName();
@@ -353,7 +354,7 @@ public class FleaFunctionModuleSVImpl implements IFleaFunctionModuleSV {
         fleaResourcePOJO.setFunctionIdAndType(resourceId, FunctionTypeEnum.RESOURCE.getType());
 
         // 保存资源扩展属性信息
-        this.fleaFunctionAttrSV.saveFunctionAttrs(fleaResourcePOJO.getFunctionAttrPOJOList());
+        addFleaFunctionAttr(fleaResourcePOJO);
 
         // 资源名称
         String resourceName = fleaResource.getResourceName();
@@ -400,6 +401,27 @@ public class FleaFunctionModuleSVImpl implements IFleaFunctionModuleSV {
     }
 
     @Override
+    @FleaTransactional(value = "fleaAuthTransactionManager", unitName = "fleaauth")
+    public void addFleaFunctionAttr(FleaFunctionOtherPOJO fleaFunctionOtherPOJO) throws CommonException {
+        if (ObjectUtils.isEmpty(fleaFunctionOtherPOJO)) return;
+
+        List<FleaFunctionAttrPOJO> fleaFunctionAttrPOJOList = fleaFunctionOtherPOJO.getFunctionAttrPOJOList();
+        if (CollectionUtils.isEmpty(fleaFunctionAttrPOJOList)) return;
+
+        for (FleaFunctionAttrPOJO fleaFunctionAttrPOJO : fleaFunctionAttrPOJOList) {
+            // 校验功能扩展属性POJO对象
+            FleaAuthCheck.checkFleaFunctionAttrPOJO(fleaFunctionAttrPOJO);
+
+            // 校验功能编号
+            FleaAuthCheck.checkFunctionId(fleaFunctionAttrPOJO.getFunctionId());
+        }
+
+        // 保存功能扩展属性信息
+        this.fleaFunctionAttrSV.saveFunctionAttrs(fleaFunctionAttrPOJOList);
+    }
+
+    @Override
+    @FleaTransactional(value = "fleaAuthTransactionManager", unitName = "fleaauth")
     public void modifyFleaFunctionAttr(FleaFunctionAttrPOJO fleaFunctionAttrPOJO) throws CommonException {
         // 校验功能扩展属性POJO对象
         FleaAuthCheck.checkFleaFunctionAttrPOJO(fleaFunctionAttrPOJO);

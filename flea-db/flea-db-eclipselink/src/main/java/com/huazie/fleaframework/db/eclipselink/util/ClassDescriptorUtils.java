@@ -28,17 +28,17 @@ import java.util.Map;
 import java.util.Vector;
 
 /**
- * Eclipse Link 操作相关工具类
+ * 实体类持久化信息描述符工具类
  *
  * @author huazie
  * @version 1.2.0
  * @since 1.2.0
  */
-public class EclipseLinkUtils {
+public class ClassDescriptorUtils {
 
-    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(EclipseLinkUtils.class);
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(ClassDescriptorUtils.class);
 
-    private EclipseLinkUtils() {
+    private ClassDescriptorUtils() {
     }
 
     /**

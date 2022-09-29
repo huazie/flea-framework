@@ -1,6 +1,7 @@
 package com.huazie.fleaframework.jersey.common.filter.config;
 
 import com.huazie.fleaframework.common.config.ConfigMap;
+import com.huazie.fleaframework.common.util.CollectionUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.util.ArrayList;
@@ -20,6 +21,20 @@ public class FilterI18nError extends ConfigMap<I18nErrorMapping> {
 
     public List<I18nErrorMapping> getI18nErrorMappingList() {
         return i18nErrorMappingList;
+    }
+
+    /**
+     * 添加多个国际码和错误码映射配置项
+     *
+     * @param i18nErrorMappings 国际码和错误码映射配置项集
+     * @since 2.0.0
+     */
+    public void addI18nErrorMappings(List<I18nErrorMapping> i18nErrorMappings) {
+        if (CollectionUtils.isNotEmpty(i18nErrorMappings)) {
+            for (I18nErrorMapping i18nErrorMapping : i18nErrorMappings) {
+                addI18nErrorMapping(i18nErrorMapping);
+            }
+        }
     }
 
     /**

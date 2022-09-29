@@ -1,9 +1,12 @@
 package com.huazie.fleaframework.auth.common;
 
 import com.huazie.fleaframework.auth.base.function.menu.AddFleaMenu;
+import com.huazie.fleaframework.auth.base.function.operation.FleaFSFileOperation;
+import com.huazie.fleaframework.auth.base.function.operation.FleaFSFileOperationAttr;
 import com.huazie.fleaframework.auth.base.function.resource.FleaFSResource;
 import com.huazie.fleaframework.auth.common.pojo.function.attr.FleaFunctionAttrPOJO;
 import com.huazie.fleaframework.auth.common.pojo.function.menu.FleaMenuPOJO;
+import com.huazie.fleaframework.auth.common.pojo.function.operation.FleaOperationPOJO;
 import com.huazie.fleaframework.auth.common.pojo.function.resource.FleaResourcePOJO;
 import com.huazie.fleaframework.auth.common.service.interfaces.IFleaFunctionModuleSV;
 import com.huazie.fleaframework.common.exception.CommonException;
@@ -53,16 +56,24 @@ public class FleaFunctionModuleSVImplTest {
     }
 
     @Test
-    public void queryValidOperations() throws CommonException { // TODO
+    public void queryValidOperations() throws CommonException {
         fleaFunctionModuleSV.queryValidOperations(null);
     }
 
     @Test
-    public void addFleaOperation() { // TODO
+    public void addFleaOperation() throws CommonException {
+        FleaFSFileOperation fleaFSFileOperation = new FleaFSFileOperation(fleaFunctionModuleSV);
+        fleaFSFileOperation.addFleaOperation();
     }
 
     @Test
-    public void modifyFleaOperation() { // TODO
+    public void modifyFleaOperation() throws CommonException {
+        FleaOperationPOJO fleaOperationPOJO = new FleaOperationPOJO();
+        fleaOperationPOJO.setOperationCode("VERSION");
+        fleaOperationPOJO.setOperationName("版本管理");
+        fleaOperationPOJO.setOperationDesc("该操作用于定义文件版本管理功能");
+        fleaOperationPOJO.setRemarks("该操作用于定义文件版本管理功能");
+        fleaFunctionModuleSV.modifyFleaOperation(1005L, fleaOperationPOJO);
     }
 
     @Test
@@ -97,6 +108,12 @@ public class FleaFunctionModuleSVImplTest {
         fleaResourcePOJO.setResourceDesc("该资源用于提供上传鉴权，文件上传等服务");
         fleaResourcePOJO.setRemarks("该资源用于提供上传鉴权，文件上传等服务");
         fleaFunctionModuleSV.modifyFleaResource(1000L, fleaResourcePOJO);
+    }
+
+    @Test
+    public void addFleaFunctionAttr() throws CommonException {
+        FleaFSFileOperationAttr fleaFSFileOperationAttr = new FleaFSFileOperationAttr(fleaFunctionModuleSV);
+        fleaFSFileOperationAttr.addFleaOperationAttr();
     }
 
     @Test

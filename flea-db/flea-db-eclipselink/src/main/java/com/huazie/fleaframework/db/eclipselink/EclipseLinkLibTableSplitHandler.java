@@ -2,7 +2,7 @@ package com.huazie.fleaframework.db.eclipselink;
 
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.db.common.table.pojo.SplitTable;
-import com.huazie.fleaframework.db.eclipselink.util.EclipseLinkUtils;
+import com.huazie.fleaframework.db.eclipselink.util.ClassDescriptorUtils;
 import com.huazie.fleaframework.db.jpa.common.FleaJPAQuery;
 import com.huazie.fleaframework.db.jpa.handler.impl.FleaLibTableSplitHandler;
 import org.eclipse.persistence.descriptors.ClassDescriptor;
@@ -33,7 +33,7 @@ public class EclipseLinkLibTableSplitHandler extends FleaLibTableSplitHandler {
         ClassDescriptor classDescriptor = ((EntityTypeImpl) entityType).getDescriptor();
         // 分表场景，这里的entityManager已经重新设置为 FleaEntityManagerImpl
         AbstractSession abstractSession = ((FleaEntityManagerImpl) query.getEntityManager()).getDatabaseSession();
-        classDescriptor = EclipseLinkUtils.getSplitDescriptor(classDescriptor, abstractSession, splitTable);
+        classDescriptor = ClassDescriptorUtils.getSplitDescriptor(classDescriptor, abstractSession, splitTable);
         // 获取内部DatabaseQuery对象
         ReadAllQuery readAllQuery = typedQuery.unwrap(ReadAllQuery.class);
         // 重新设置实体类的描述符信息
@@ -85,8 +85,6 @@ public class EclipseLinkLibTableSplitHandler extends FleaLibTableSplitHandler {
             return entity;
         }
 
-        UnitOfWork unitOfWork = entityManager.unwrap(UnitOfWork.class);
-        Object result = unitOfWork.registerObject(entity);
-        return (T) result;
+        return (T) entityManager.unwrap(UnitOfWork.class).registerObject(entity);
     }
 }

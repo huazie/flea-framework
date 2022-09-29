@@ -41,6 +41,8 @@ public class AddFleaRole {
         addThreeFleaCustomerRole();
         addFourFleaCustomerRole();
         addFiveFleaCustomerRole();
+
+        addFleaFSUserRole();
     }
 
     // 添加【超级管理员】角色
@@ -202,6 +204,15 @@ public class AddFleaRole {
         fleaRolePOJO.setRoleName("皇冠客");
         fleaRolePOJO.setRoleDesc("五星等级的跳客角色");
         fleaRolePOJO.setRemarks("皇冠客拥有五星等级的权限，跳客角色中最高权限拥有者");
+        fleaRoleModuleSV.addFleaRole(fleaRolePOJO);
+    }
+
+    // 添加【FleaFS接入员】
+    private void addFleaFSUserRole() throws CommonException {
+        FleaRolePOJO fleaRolePOJO = new FleaRolePOJO();
+        fleaRolePOJO.setRoleName("FleaFS接入员");
+        fleaRolePOJO.setRoleDesc("用于接入Flea文件服务器的角色");
+        fleaRolePOJO.setRemarks("FleaFS接入员，拥有调用Flea文件服务器提供的资源的权限");
         fleaRoleModuleSV.addFleaRole(fleaRolePOJO);
     }
 }

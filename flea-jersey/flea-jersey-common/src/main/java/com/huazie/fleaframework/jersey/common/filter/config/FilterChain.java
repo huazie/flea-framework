@@ -1,5 +1,6 @@
 package com.huazie.fleaframework.jersey.common.filter.config;
 
+import com.huazie.fleaframework.common.util.ObjectUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
@@ -21,6 +22,8 @@ public class FilterChain {
     private Error error;
 
     public Before getBefore() {
+        if (ObjectUtils.isEmpty(before))
+            before = new Before();
         return before;
     }
 
@@ -29,6 +32,8 @@ public class FilterChain {
     }
 
     public Service getService() {
+        if (ObjectUtils.isEmpty(service))
+            service = new Service();
         return service;
     }
 
@@ -37,6 +42,8 @@ public class FilterChain {
     }
 
     public After getAfter() {
+        if (ObjectUtils.isEmpty(after))
+            after = new After();
         return after;
     }
 
@@ -45,6 +52,8 @@ public class FilterChain {
     }
 
     public Error getError() {
+        if (ObjectUtils.isEmpty(error))
+            error = new Error();
         return error;
     }
 
