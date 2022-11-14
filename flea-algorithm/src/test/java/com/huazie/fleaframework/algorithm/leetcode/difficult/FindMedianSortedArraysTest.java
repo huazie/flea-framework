@@ -1,5 +1,6 @@
 package com.huazie.fleaframework.algorithm.leetcode.difficult;
 
+import com.huazie.fleaframework.algorithm.leetcode.difficult.d4.FindMedianSortedArrays;
 import org.junit.Test;
 
 public class FindMedianSortedArraysTest {

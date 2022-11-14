@@ -1,5 +1,6 @@
 package com.huazie.fleaframework.algorithm.leetcode.simple;
 
+import com.huazie.fleaframework.algorithm.leetcode.simple.s1.TwoSum;
 import org.junit.Test;
 
 import java.util.Arrays;
