@@ -108,6 +108,20 @@
                 <version>${project.version}</version>
             </dependency>
 
+            <!-- FLEA JOB-->
+            <dependency>
+                <groupId>com.huazie.fleaframework</groupId>
+                <artifactId>flea-job</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- FLEA MSG-->
+            <dependency>
+                <groupId>com.huazie.fleaframework</groupId>
+                <artifactId>flea-msg</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
