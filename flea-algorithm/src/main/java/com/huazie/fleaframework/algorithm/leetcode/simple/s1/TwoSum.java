@@ -1,4 +1,4 @@
-package com.huazie.fleaframework.algorithm.leetcode.simple;
+package com.huazie.fleaframework.algorithm.leetcode.simple.s1;
 
 /**
  * 两数之和

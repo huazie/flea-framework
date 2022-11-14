@@ -1,4 +1,4 @@
-package com.huazie.fleaframework.algorithm.leetcode.medium;
+package com.huazie.fleaframework.algorithm.leetcode.medium.m3;
 
 import java.util.HashSet;
 import java.util.Set;
