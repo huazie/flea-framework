@@ -34,6 +34,7 @@
         <spring.version>4.3.29.RELEASE</spring.version>
         <struts2.version>2.3.20</struts2.version>
         <jersey.version>2.9</jersey.version>
+        <activemq.version>5.17.1</activemq.version>
         <maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
         <maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
         <versions-maven-plugin.version>2.8.1</versions-maven-plugin.version>
@@ -347,6 +348,14 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+            <!-- https://www.pangugle.com/lib/maven/view/org.apache.activemq/apache-activemq.html -->
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>activemq-client</artifactId>
+                <version>${activemq.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
