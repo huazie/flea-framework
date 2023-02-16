@@ -47,7 +47,8 @@
             <groupId>com.huazie.ffs</groupId>
             <artifactId>fleafs-pojo</artifactId>
             <version>1.0.0</version>
-            <scope>test</scope>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/fleafs-pojo-1.0.0.jar</systemPath>
         </dependency>
 
         <!-- 数据库JDBC连接相关 （MySQL的JDBC驱动）-->
