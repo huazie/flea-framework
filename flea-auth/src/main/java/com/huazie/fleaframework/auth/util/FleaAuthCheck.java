@@ -15,7 +15,7 @@ import com.huazie.fleaframework.auth.base.user.entity.FleaUser;
 import com.huazie.fleaframework.auth.base.user.entity.FleaUserAttr;
 import com.huazie.fleaframework.auth.base.user.entity.FleaUserGroup;
 import com.huazie.fleaframework.auth.common.FleaAuthEntityConstants;
-import com.huazie.fleaframework.auth.common.exception.FleaAuthCommonException;
+import com.huazie.fleaframework.auth.common.exceptions.FleaAuthCommonException;
 import com.huazie.fleaframework.auth.common.pojo.FleaAttrPOJO;
 import com.huazie.fleaframework.auth.common.pojo.FleaAuthRelPOJO;
 import com.huazie.fleaframework.auth.common.pojo.function.attr.FleaFunctionAttrPOJO;

@@ -11,7 +11,7 @@ import com.huazie.fleaframework.jersey.client.request.Request;
 import com.huazie.fleaframework.jersey.client.request.RequestConfig;
 import com.huazie.fleaframework.jersey.client.request.RequestFactory;
 import com.huazie.fleaframework.jersey.client.response.Response;
-import com.huazie.fleaframework.jersey.common.exception.FleaJerseyClientException;
+import com.huazie.fleaframework.jersey.common.exceptions.FleaJerseyClientException;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;

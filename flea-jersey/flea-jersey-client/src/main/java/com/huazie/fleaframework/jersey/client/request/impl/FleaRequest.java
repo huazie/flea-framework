@@ -24,7 +24,7 @@ import com.huazie.fleaframework.jersey.common.data.RequestBusinessData;
 import com.huazie.fleaframework.jersey.common.data.RequestPublicData;
 import com.huazie.fleaframework.jersey.common.data.ResponseBusinessData;
 import com.huazie.fleaframework.jersey.common.data.ResponsePublicData;
-import com.huazie.fleaframework.jersey.common.exception.FleaJerseyClientException;
+import com.huazie.fleaframework.jersey.common.exceptions.FleaJerseyClientException;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 
 import javax.ws.rs.client.ClientBuilder;

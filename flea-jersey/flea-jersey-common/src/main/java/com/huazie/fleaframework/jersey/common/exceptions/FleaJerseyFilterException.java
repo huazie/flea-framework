@@ -1,4 +1,4 @@
-package com.huazie.fleaframework.jersey.common.exception;
+package com.huazie.fleaframework.jersey.common.exceptions;
 
 /**
  * Flea Jersey 服务端过滤器异常处理类

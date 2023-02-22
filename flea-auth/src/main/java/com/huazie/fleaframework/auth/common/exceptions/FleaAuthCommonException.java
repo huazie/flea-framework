@@ -1,4 +1,4 @@
-package com.huazie.fleaframework.auth.common.exception;
+package com.huazie.fleaframework.auth.common.exceptions;
 
 import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.i18n.FleaI18nResEnum;

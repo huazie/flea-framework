@@ -15,7 +15,7 @@ import com.huazie.fleaframework.jersey.common.data.FleaJerseyResponse;
 import com.huazie.fleaframework.jersey.common.data.RequestBusinessData;
 import com.huazie.fleaframework.jersey.common.data.RequestPublicData;
 import com.huazie.fleaframework.jersey.common.data.ResponseBusinessData;
-import com.huazie.fleaframework.jersey.common.exception.FleaJerseyFilterException;
+import com.huazie.fleaframework.jersey.common.exceptions.FleaJerseyFilterException;
 import com.huazie.fleaframework.jersey.server.filter.IFleaJerseyFilter;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
