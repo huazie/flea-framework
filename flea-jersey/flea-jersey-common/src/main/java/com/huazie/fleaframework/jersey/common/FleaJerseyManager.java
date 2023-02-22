@@ -7,7 +7,7 @@ import com.huazie.fleaframework.common.util.StringUtils;
 import com.huazie.fleaframework.jersey.common.data.FleaFileObject;
 import com.huazie.fleaframework.jersey.common.data.FleaJerseyContext;
 import com.huazie.fleaframework.jersey.common.data.FleaJerseyFileContext;
-import com.huazie.fleaframework.jersey.common.exception.FleaJerseyCommonException;
+import com.huazie.fleaframework.jersey.common.exceptions.FleaJerseyCommonException;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;

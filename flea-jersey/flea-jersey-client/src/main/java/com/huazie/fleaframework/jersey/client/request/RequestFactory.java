@@ -7,7 +7,7 @@ import com.huazie.fleaframework.common.util.ExceptionUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.ReflectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
-import com.huazie.fleaframework.jersey.common.exception.FleaJerseyClientException;
+import com.huazie.fleaframework.jersey.common.exceptions.FleaJerseyClientException;
 
 /**
  * Flea Jersey 请求工厂类，采用单例模式，提供构建
