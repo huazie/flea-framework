@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.auth.base.user;
 
 import com.huazie.fleaframework.auth.base.user.service.interfaces.IFleaAccountSV;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;

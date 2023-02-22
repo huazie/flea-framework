@@ -2,7 +2,7 @@ package com.huazie.fleaframework.db.common.sql.template;
 
 import com.huazie.fleaframework.common.CommonConstants;
 import com.huazie.fleaframework.common.FleaEntity;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.util.ArrayUtils;
 import com.huazie.fleaframework.common.util.ExceptionUtils;
 import com.huazie.fleaframework.common.util.MapUtils;
@@ -10,7 +10,7 @@ import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.PatternMatcherUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
 import com.huazie.fleaframework.db.common.DBConstants.SQLConstants;
-import com.huazie.fleaframework.db.common.exception.SqlTemplateException;
+import com.huazie.fleaframework.db.common.exceptions.SqlTemplateException;
 import com.huazie.fleaframework.db.common.sql.pojo.SqlParam;
 import com.huazie.fleaframework.db.common.sql.template.config.Param;
 import com.huazie.fleaframework.db.common.sql.template.config.Property;

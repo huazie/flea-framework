@@ -1,8 +1,8 @@
 package com.huazie.fleaframework.common.util;
 
 import com.huazie.fleaframework.common.CommonConstants;
-import com.huazie.fleaframework.common.exception.CommonException;
-import com.huazie.fleaframework.common.exception.FleaException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
+import com.huazie.fleaframework.common.exceptions.FleaException;
 
 /**
  * 异常工具类，封装了自定义异常抛出的通用逻辑

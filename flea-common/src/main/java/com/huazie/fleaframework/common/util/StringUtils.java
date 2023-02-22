@@ -2,7 +2,7 @@ package com.huazie.fleaframework.common.util;
 
 import com.huazie.fleaframework.common.CommonConstants;
 import com.huazie.fleaframework.common.PinyinEnum;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 
 import java.util.HashMap;
 import java.util.Map;

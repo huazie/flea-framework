@@ -2,7 +2,7 @@ package com.huazie.fleaframework.auth.base.user.concurrency;
 
 import com.huazie.fleaframework.auth.base.user.entity.FleaLoginLog;
 import com.huazie.fleaframework.auth.base.user.service.interfaces.IFleaLoginLogSV;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.common.util.DateUtils;

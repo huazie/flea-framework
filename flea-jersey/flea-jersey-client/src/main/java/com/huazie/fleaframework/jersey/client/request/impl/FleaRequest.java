@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.jersey.client.request.impl;
 
 import com.huazie.fleaframework.common.FleaSessionManager;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.common.util.ExceptionUtils;
@@ -24,7 +24,7 @@ import com.huazie.fleaframework.jersey.common.data.RequestBusinessData;
 import com.huazie.fleaframework.jersey.common.data.RequestPublicData;
 import com.huazie.fleaframework.jersey.common.data.ResponseBusinessData;
 import com.huazie.fleaframework.jersey.common.data.ResponsePublicData;
-import com.huazie.fleaframework.jersey.common.exception.FleaJerseyClientException;
+import com.huazie.fleaframework.jersey.common.exceptions.FleaJerseyClientException;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 
 import javax.ws.rs.client.ClientBuilder;

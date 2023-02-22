@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.db.common.table.split.impl;
 
 import com.huazie.fleaframework.common.CommonConstants;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 
 /**
  * 表字段分表实现，以小写返回

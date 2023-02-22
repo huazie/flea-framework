@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.auth;
 
 import com.huazie.fleaframework.auth.base.user.entity.FleaLoginLog;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.pool.FleaObjectPoolFactory;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;

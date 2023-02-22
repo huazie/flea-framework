@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.db.common.table.split.impl;
 
 import com.huazie.fleaframework.common.DateFormatEnum;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 
 /**
  * 按年月分表实现

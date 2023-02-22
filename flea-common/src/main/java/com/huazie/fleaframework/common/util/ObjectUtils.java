@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.common.util;
 
-import com.huazie.fleaframework.common.exception.CommonException;
-import com.huazie.fleaframework.common.exception.FleaException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
+import com.huazie.fleaframework.common.exceptions.FleaException;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 

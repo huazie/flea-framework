@@ -9,7 +9,7 @@ import com.huazie.fleaframework.auth.common.pojo.function.menu.FleaMenuPOJO;
 import com.huazie.fleaframework.auth.common.pojo.function.operation.FleaOperationPOJO;
 import com.huazie.fleaframework.auth.common.pojo.function.resource.FleaResourcePOJO;
 import com.huazie.fleaframework.auth.common.service.interfaces.IFleaFunctionModuleSV;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.util.CollectionUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;

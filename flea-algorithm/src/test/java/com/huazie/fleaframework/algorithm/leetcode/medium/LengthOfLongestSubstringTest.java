@@ -1,5 +1,6 @@
 package com.huazie.fleaframework.algorithm.leetcode.medium;
 
+import com.huazie.fleaframework.algorithm.leetcode.medium.m3.LengthOfLongestSubstring;
 import org.junit.Test;
 
 public class LengthOfLongestSubstringTest {

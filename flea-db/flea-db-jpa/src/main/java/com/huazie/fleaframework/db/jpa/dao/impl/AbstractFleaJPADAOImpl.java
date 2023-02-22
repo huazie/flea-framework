@@ -1,8 +1,8 @@
 package com.huazie.fleaframework.db.jpa.dao.impl;
 
 import com.huazie.fleaframework.common.FleaEntity;
-import com.huazie.fleaframework.common.exception.CommonException;
-import com.huazie.fleaframework.common.exception.FleaException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
+import com.huazie.fleaframework.common.exceptions.FleaException;
 import com.huazie.fleaframework.common.pool.FleaObjectPoolFactory;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
@@ -12,7 +12,7 @@ import com.huazie.fleaframework.common.util.NumberUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
 import com.huazie.fleaframework.db.common.DBConstants;
-import com.huazie.fleaframework.db.common.exception.DaoException;
+import com.huazie.fleaframework.db.common.exceptions.DaoException;
 import com.huazie.fleaframework.db.common.sql.pojo.SqlParam;
 import com.huazie.fleaframework.db.common.sql.template.ITemplate;
 import com.huazie.fleaframework.db.common.sql.template.SqlTemplateFactory;

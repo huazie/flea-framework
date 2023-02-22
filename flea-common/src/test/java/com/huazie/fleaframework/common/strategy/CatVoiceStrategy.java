@@ -1,6 +1,6 @@
 package com.huazie.fleaframework.common.strategy;
 
-import com.huazie.fleaframework.common.exception.FleaStrategyException;
+import com.huazie.fleaframework.common.exceptions.FleaStrategyException;
 
 /**
  * 猫喊叫声策略

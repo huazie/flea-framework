@@ -5,7 +5,7 @@ import com.huazie.fleaframework.auth.base.user.entity.FleaUserAttr;
 import com.huazie.fleaframework.auth.base.user.service.interfaces.IFleaUserAttrSV;
 import com.huazie.fleaframework.auth.common.pojo.user.attr.FleaUserAttrPOJO;
 import com.huazie.fleaframework.auth.util.FleaAuthCheck;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.util.CollectionUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;

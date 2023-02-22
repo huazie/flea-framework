@@ -4,7 +4,7 @@ import com.huazie.fleaframework.auth.base.function.entity.FleaMenu;
 import com.huazie.fleaframework.auth.common.service.interfaces.IFleaAuthSV;
 import com.huazie.fleaframework.auth.common.service.interfaces.IFleaFunctionModuleSV;
 import com.huazie.fleaframework.common.FleaTree;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import org.junit.Test;

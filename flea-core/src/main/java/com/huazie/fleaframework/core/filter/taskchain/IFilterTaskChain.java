@@ -1,6 +1,6 @@
 package com.huazie.fleaframework.core.filter.taskchain;
 
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.core.request.FleaRequestContext;
 
 /**

@@ -1,6 +1,6 @@
 package com.huazie.fleaframework.jersey.client.bean;
 
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.common.util.ObjectUtils;
@@ -11,7 +11,7 @@ import com.huazie.fleaframework.jersey.client.request.Request;
 import com.huazie.fleaframework.jersey.client.request.RequestConfig;
 import com.huazie.fleaframework.jersey.client.request.RequestFactory;
 import com.huazie.fleaframework.jersey.client.response.Response;
-import com.huazie.fleaframework.jersey.common.exception.FleaJerseyClientException;
+import com.huazie.fleaframework.jersey.common.exceptions.FleaJerseyClientException;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;

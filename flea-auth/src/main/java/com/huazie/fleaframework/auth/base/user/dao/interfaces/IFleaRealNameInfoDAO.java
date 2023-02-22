@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.auth.base.user.dao.interfaces;
 
 import com.huazie.fleaframework.auth.base.user.entity.FleaRealNameInfo;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 
 /**

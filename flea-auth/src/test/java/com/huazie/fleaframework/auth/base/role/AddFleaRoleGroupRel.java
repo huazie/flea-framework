@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.auth.base.role;
 
 import com.huazie.fleaframework.auth.common.service.interfaces.IFleaRoleModuleSV;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 
 /**
  * 添加Flea角色组关联角色数据

@@ -1,13 +1,13 @@
 package com.huazie.fleaframework.db.jpa.persistence;
 
 import com.huazie.fleaframework.common.FleaApplicationContext;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.common.util.ArrayUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
-import com.huazie.fleaframework.db.common.exception.DaoException;
+import com.huazie.fleaframework.db.common.exceptions.DaoException;
 import com.huazie.fleaframework.db.common.table.pojo.SplitTable;
 import com.huazie.fleaframework.db.common.util.EntityUtils;
 import com.huazie.fleaframework.db.jpa.FleaJPASplitHelper;

@@ -2,11 +2,11 @@ package com.huazie.fleaframework.db.common.table.split.impl;
 
 import com.huazie.fleaframework.common.CommonConstants;
 import com.huazie.fleaframework.common.DateFormatEnum;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.util.DateUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
-import com.huazie.fleaframework.db.common.exception.TableSplitException;
+import com.huazie.fleaframework.db.common.exceptions.TableSplitException;
 import com.huazie.fleaframework.db.common.table.split.ITableSplit;
 
 import java.util.Date;

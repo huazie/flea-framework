@@ -1,6 +1,6 @@
 package com.huazie.fleaframework.db.common.sql.template.strategy;
 
-import com.huazie.fleaframework.common.exception.FleaStrategyException;
+import com.huazie.fleaframework.common.exceptions.FleaStrategyException;
 import com.huazie.fleaframework.common.strategy.IFleaStrategy;
 import com.huazie.fleaframework.db.common.sql.pojo.SqlTemplatePOJO;
 import com.huazie.fleaframework.db.common.sql.template.SqlTemplate;

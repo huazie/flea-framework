@@ -5,7 +5,7 @@ import com.huazie.fleaframework.auth.base.user.dao.interfaces.IFleaAccountDAO;
 import com.huazie.fleaframework.auth.base.user.entity.FleaAccount;
 import com.huazie.fleaframework.auth.common.FleaAuthEntityConstants;
 import com.huazie.fleaframework.auth.common.UserStateEnum;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.util.CollectionUtils;
 import com.huazie.fleaframework.common.util.DateUtils;
 import com.huazie.fleaframework.db.jpa.common.FleaJPAQuery;
