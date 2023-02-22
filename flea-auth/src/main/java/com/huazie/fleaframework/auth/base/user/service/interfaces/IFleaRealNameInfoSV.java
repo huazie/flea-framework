@@ -2,7 +2,7 @@ package com.huazie.fleaframework.auth.base.user.service.interfaces;
 
 import com.huazie.fleaframework.auth.base.user.entity.FleaRealNameInfo;
 import com.huazie.fleaframework.auth.common.pojo.user.FleaRealNameInfoPOJO;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.db.jpa.service.interfaces.IAbstractFleaJPASV;
 
 /**

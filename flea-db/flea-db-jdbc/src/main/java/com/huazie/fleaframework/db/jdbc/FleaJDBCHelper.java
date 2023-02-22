@@ -7,7 +7,7 @@ import com.huazie.fleaframework.common.util.ArrayUtils;
 import com.huazie.fleaframework.common.util.CollectionUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
-import com.huazie.fleaframework.db.common.exception.DaoException;
+import com.huazie.fleaframework.db.common.exceptions.DaoException;
 import com.huazie.fleaframework.db.common.sql.pojo.SqlParam;
 import com.huazie.fleaframework.db.common.sql.template.ITemplate;
 import com.huazie.fleaframework.db.common.sql.template.SqlTemplateFactory;

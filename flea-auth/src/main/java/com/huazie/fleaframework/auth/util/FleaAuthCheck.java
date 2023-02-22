@@ -41,7 +41,7 @@ import com.huazie.fleaframework.auth.common.pojo.user.FleaUserRelPOJO;
 import com.huazie.fleaframework.auth.common.pojo.user.attr.FleaAccountAttrPOJO;
 import com.huazie.fleaframework.auth.common.pojo.user.attr.FleaUserAttrPOJO;
 import com.huazie.fleaframework.auth.common.pojo.user.login.FleaLoginLogPOJO;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.util.ExceptionUtils;
 import com.huazie.fleaframework.common.util.NumberUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;

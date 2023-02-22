@@ -1,6 +1,6 @@
 package com.huazie.fleaframework.db.common.util;
 
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.common.util.ArrayUtils;
@@ -10,8 +10,8 @@ import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.ReflectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
 import com.huazie.fleaframework.db.common.DBConstants;
-import com.huazie.fleaframework.db.common.exception.LibSplitException;
-import com.huazie.fleaframework.db.common.exception.TableSplitException;
+import com.huazie.fleaframework.db.common.exceptions.LibSplitException;
+import com.huazie.fleaframework.db.common.exceptions.TableSplitException;
 import com.huazie.fleaframework.db.common.lib.pojo.SplitLib;
 import com.huazie.fleaframework.db.common.lib.split.ILibSplit;
 import com.huazie.fleaframework.db.common.lib.split.LibSplitEnum;

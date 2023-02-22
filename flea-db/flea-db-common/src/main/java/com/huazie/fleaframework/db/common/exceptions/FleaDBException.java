@@ -1,6 +1,6 @@
-package com.huazie.fleaframework.db.common.exception;
+package com.huazie.fleaframework.db.common.exceptions;
 
-import com.huazie.fleaframework.common.exception.FleaException;
+import com.huazie.fleaframework.common.exceptions.FleaException;
 
 /**
  * Flea DB异常

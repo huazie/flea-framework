@@ -1,6 +1,6 @@
 package com.huazie.fleaframework.db.common.sql.template;
 
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.db.common.sql.pojo.SqlParam;
 import com.huazie.fleaframework.db.common.sql.template.config.Rule;
 import com.huazie.fleaframework.db.common.sql.template.config.Template;

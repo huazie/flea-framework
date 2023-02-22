@@ -18,7 +18,7 @@ import com.huazie.fleaframework.auth.common.pojo.role.FleaRoleRelPOJO;
 import com.huazie.fleaframework.auth.common.service.interfaces.IFleaRoleModuleSV;
 import com.huazie.fleaframework.auth.util.FleaAuthCheck;
 import com.huazie.fleaframework.auth.util.FleaAuthPOJOUtils;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.util.DateUtils;
 import com.huazie.fleaframework.common.util.NumberUtils;
 import com.huazie.fleaframework.common.util.POJOUtils;

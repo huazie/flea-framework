@@ -1,6 +1,6 @@
 package com.huazie.fleaframework.cache.exceptions;
 
-import com.huazie.fleaframework.common.exception.FleaException;
+import com.huazie.fleaframework.common.exceptions.FleaException;
 
 /**
  * Flea缓存异常

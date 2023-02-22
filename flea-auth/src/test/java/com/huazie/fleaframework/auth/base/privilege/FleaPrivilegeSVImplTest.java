@@ -6,7 +6,7 @@ import com.huazie.fleaframework.auth.base.privilege.service.interfaces.IFleaPriv
 import com.huazie.fleaframework.auth.common.FunctionTypeEnum;
 import com.huazie.fleaframework.auth.common.pojo.privilege.FleaPrivilegePOJO;
 import com.huazie.fleaframework.auth.util.FleaAuthPOJOUtils;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;

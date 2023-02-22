@@ -2,7 +2,7 @@ package com.huazie.fleaframework.auth.base.user;
 
 import com.huazie.fleaframework.auth.common.pojo.user.FleaUserGroupPOJO;
 import com.huazie.fleaframework.auth.common.service.interfaces.IFleaUserModuleSV;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 
 /**
  * 添加Flea用户组

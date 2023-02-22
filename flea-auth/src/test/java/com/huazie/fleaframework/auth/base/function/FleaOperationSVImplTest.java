@@ -2,7 +2,7 @@ package com.huazie.fleaframework.auth.base.function;
 
 import com.huazie.fleaframework.auth.base.function.service.interfaces.IFleaOperationSV;
 import com.huazie.fleaframework.auth.common.pojo.function.operation.FleaOperationPOJO;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;

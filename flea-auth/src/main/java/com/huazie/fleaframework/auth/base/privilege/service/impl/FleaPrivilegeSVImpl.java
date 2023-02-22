@@ -5,7 +5,7 @@ import com.huazie.fleaframework.auth.base.privilege.entity.FleaPrivilege;
 import com.huazie.fleaframework.auth.base.privilege.service.interfaces.IFleaPrivilegeSV;
 import com.huazie.fleaframework.auth.common.pojo.privilege.FleaPrivilegePOJO;
 import com.huazie.fleaframework.auth.util.FleaAuthCheck;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import com.huazie.fleaframework.db.jpa.service.impl.AbstractFleaJPASVImpl;
 import org.springframework.beans.factory.annotation.Autowired;

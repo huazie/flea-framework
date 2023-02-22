@@ -3,7 +3,7 @@ package com.huazie.fleaframework.auth.base.user;
 import com.huazie.fleaframework.auth.base.user.service.interfaces.IFleaAccountAttrSV;
 import com.huazie.fleaframework.auth.common.pojo.user.attr.FleaAccountAttrPOJO;
 import com.huazie.fleaframework.auth.util.FleaAuthPOJOUtils;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.util.CollectionUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;

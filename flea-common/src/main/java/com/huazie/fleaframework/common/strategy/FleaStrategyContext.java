@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.common.strategy;
 
-import com.huazie.fleaframework.common.exception.FleaStrategyException;
-import com.huazie.fleaframework.common.exception.FleaStrategyNotFoundException;
+import com.huazie.fleaframework.common.exceptions.FleaStrategyException;
+import com.huazie.fleaframework.common.exceptions.FleaStrategyNotFoundException;
 import com.huazie.fleaframework.common.util.ExceptionUtils;
 import com.huazie.fleaframework.common.util.MapUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;

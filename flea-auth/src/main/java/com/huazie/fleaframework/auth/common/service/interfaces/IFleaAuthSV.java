@@ -2,7 +2,7 @@ package com.huazie.fleaframework.auth.common.service.interfaces;
 
 import com.huazie.fleaframework.auth.base.function.entity.FleaMenu;
 import com.huazie.fleaframework.auth.common.pojo.user.FleaUserModuleData;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 
 import java.util.List;
 
