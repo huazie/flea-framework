@@ -1,6 +1,6 @@
 package com.huazie.fleaframework.common.proxy;
 
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.interceptor.IFleaExceptionProxyInterceptor;
 import com.huazie.fleaframework.common.interceptor.IFleaProxyInterceptor;
 import com.huazie.fleaframework.common.util.CollectionUtils;

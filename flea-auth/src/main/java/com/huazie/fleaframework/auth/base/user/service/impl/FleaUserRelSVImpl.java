@@ -5,7 +5,7 @@ import com.huazie.fleaframework.auth.base.user.entity.FleaUserRel;
 import com.huazie.fleaframework.auth.base.user.service.interfaces.IFleaUserRelSV;
 import com.huazie.fleaframework.auth.common.pojo.user.FleaUserRelPOJO;
 import com.huazie.fleaframework.auth.util.FleaAuthCheck;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import com.huazie.fleaframework.db.jpa.service.impl.AbstractFleaJPASVImpl;
 import org.springframework.beans.factory.annotation.Autowired;

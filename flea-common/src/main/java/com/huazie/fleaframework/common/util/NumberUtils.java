@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.common.util;
 
 import com.huazie.fleaframework.common.CommonConstants;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 
 /**
  * 数字相关工具类

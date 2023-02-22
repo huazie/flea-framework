@@ -10,7 +10,7 @@ import com.huazie.fleaframework.auth.common.pojo.function.element.FleaElementPOJ
 import com.huazie.fleaframework.auth.common.pojo.function.menu.FleaMenuPOJO;
 import com.huazie.fleaframework.auth.common.pojo.function.operation.FleaOperationPOJO;
 import com.huazie.fleaframework.auth.common.pojo.function.resource.FleaResourcePOJO;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 
 import java.util.List;
 

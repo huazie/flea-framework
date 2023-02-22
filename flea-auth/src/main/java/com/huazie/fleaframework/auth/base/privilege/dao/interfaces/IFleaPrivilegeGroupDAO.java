@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.auth.base.privilege.dao.interfaces;
 
 import com.huazie.fleaframework.auth.base.privilege.entity.FleaPrivilegeGroup;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 
 import java.util.List;

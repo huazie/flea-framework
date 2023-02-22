@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.common.util;
 
-import com.huazie.fleaframework.common.exception.FleaException;
-import com.huazie.fleaframework.common.exception.MethodSignatureNotFoundException;
+import com.huazie.fleaframework.common.exceptions.FleaException;
+import com.huazie.fleaframework.common.exceptions.MethodSignatureNotFoundException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.reflect.MethodSignature;

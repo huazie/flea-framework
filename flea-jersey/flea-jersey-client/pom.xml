@@ -42,20 +42,16 @@
             <version>${project.parent.version}</version>
         </dependency>
 
-        <!-- FleaFS 出入参pojo -->
-        <dependency>
-            <groupId>com.huazie.ffs</groupId>
-            <artifactId>fleafs-pojo</artifactId>
-            <version>1.0.0</version>
-            <scope>system</scope>
-            <systemPath>${pom.basedir}/lib/fleafs-pojo-1.0.0.jar</systemPath>
-        </dependency>
-
         <!-- 数据库JDBC连接相关 （MySQL的JDBC驱动）-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
 
     </dependencies>

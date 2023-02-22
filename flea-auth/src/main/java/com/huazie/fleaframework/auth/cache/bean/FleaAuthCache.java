@@ -3,7 +3,7 @@ package com.huazie.fleaframework.auth.cache.bean;
 import com.huazie.fleaframework.auth.base.function.entity.FleaMenu;
 import com.huazie.fleaframework.auth.common.pojo.user.FleaUserModuleData;
 import com.huazie.fleaframework.auth.common.service.interfaces.IFleaAuthSV;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 

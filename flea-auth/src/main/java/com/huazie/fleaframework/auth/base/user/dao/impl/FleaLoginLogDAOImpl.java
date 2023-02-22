@@ -6,7 +6,7 @@ import com.huazie.fleaframework.auth.base.user.entity.FleaLoginLog;
 import com.huazie.fleaframework.auth.common.FleaAuthEntityConstants.UserEntityConstants;
 import com.huazie.fleaframework.auth.common.LoginStateEnum;
 import com.huazie.fleaframework.common.FleaSessionManager;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.util.CollectionUtils;
 import com.huazie.fleaframework.common.util.DateUtils;
 import com.huazie.fleaframework.db.common.DBConstants;

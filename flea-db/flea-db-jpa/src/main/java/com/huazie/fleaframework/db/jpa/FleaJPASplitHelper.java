@@ -9,7 +9,7 @@ import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.ReflectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
 import com.huazie.fleaframework.db.common.DBConstants;
-import com.huazie.fleaframework.db.common.exception.FleaDBException;
+import com.huazie.fleaframework.db.common.exceptions.FleaDBException;
 import com.huazie.fleaframework.db.jpa.handler.IFleaJPASplitHandler;
 
 /**

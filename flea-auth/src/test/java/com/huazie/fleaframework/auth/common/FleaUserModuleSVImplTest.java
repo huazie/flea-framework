@@ -7,7 +7,7 @@ import com.huazie.fleaframework.auth.common.pojo.user.login.FleaUserLoginPOJO;
 import com.huazie.fleaframework.auth.common.pojo.user.register.FleaUserRegisterPOJO;
 import com.huazie.fleaframework.auth.common.service.interfaces.IFleaUserModuleSV;
 import com.huazie.fleaframework.auth.util.FleaAuthPOJOUtils;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.util.CollectionUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;

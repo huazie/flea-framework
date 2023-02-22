@@ -1,6 +1,6 @@
 package com.huazie.fleaframework.db.common.table.split;
 
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 
 /**
  * 分表转换接口定义

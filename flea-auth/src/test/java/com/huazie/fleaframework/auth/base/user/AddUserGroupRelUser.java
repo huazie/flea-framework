@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.auth.base.user;
 
 import com.huazie.fleaframework.auth.common.service.interfaces.IFleaUserModuleSV;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 
 /**
  * 添加用户组关联用户

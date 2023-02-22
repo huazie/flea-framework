@@ -4,7 +4,7 @@ import com.huazie.fleaframework.auth.common.pojo.function.attr.FleaFunctionAttrP
 import com.huazie.fleaframework.auth.common.pojo.function.operation.FleaOperationPOJO;
 import com.huazie.fleaframework.auth.common.service.interfaces.IFleaFunctionModuleSV;
 import com.huazie.fleaframework.auth.util.FleaAuthPOJOUtils;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.util.CollectionUtils;
 
 import java.util.List;

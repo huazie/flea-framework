@@ -1,4 +1,4 @@
-package com.huazie.fleaframework.common.exception;
+package com.huazie.fleaframework.common.exceptions;
 
 /**
  * Flea策略异常

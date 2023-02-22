@@ -1,6 +1,6 @@
 package com.huazie.fleaframework.common.strategy;
 
-import com.huazie.fleaframework.common.exception.FleaStrategyException;
+import com.huazie.fleaframework.common.exceptions.FleaStrategyException;
 
 /**
  * Flea策略上下文接口，定义统一的策略上下文调用方法。

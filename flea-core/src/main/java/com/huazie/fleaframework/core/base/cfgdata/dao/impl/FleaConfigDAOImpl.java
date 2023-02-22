@@ -1,6 +1,6 @@
 package com.huazie.fleaframework.core.base.cfgdata.dao.impl;
 
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.db.jpa.dao.impl.AbstractFleaJPADAOImpl;
 import org.springframework.transaction.annotation.Transactional;
 

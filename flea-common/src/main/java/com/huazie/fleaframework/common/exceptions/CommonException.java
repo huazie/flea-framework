@@ -1,4 +1,4 @@
-package com.huazie.fleaframework.common.exception;
+package com.huazie.fleaframework.common.exceptions;
 
 import com.huazie.fleaframework.common.FleaFrameManager;
 import com.huazie.fleaframework.common.i18n.FleaI18nHelper;

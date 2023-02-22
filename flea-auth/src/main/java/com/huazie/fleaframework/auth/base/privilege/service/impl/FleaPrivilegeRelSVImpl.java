@@ -6,7 +6,7 @@ import com.huazie.fleaframework.auth.base.privilege.service.interfaces.IFleaPriv
 import com.huazie.fleaframework.auth.common.AuthRelTypeEnum;
 import com.huazie.fleaframework.auth.common.pojo.privilege.FleaPrivilegeRelPOJO;
 import com.huazie.fleaframework.auth.util.FleaAuthCheck;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.util.CollectionUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;

@@ -1,4 +1,4 @@
-package com.huazie.fleaframework.common.exception;
+package com.huazie.fleaframework.common.exceptions;
 
 /**
  * 连接点方法签名未找到异常，当这个连接点的签名不是方法签名时会出现。

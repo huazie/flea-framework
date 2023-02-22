@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.jersey.common;
 
 import com.huazie.fleaframework.common.FleaFrameManager;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
 import com.huazie.fleaframework.jersey.common.data.FleaFileObject;

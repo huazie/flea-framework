@@ -1,6 +1,6 @@
 package com.huazie.fleaframework.jersey.server.filter;
 
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.jersey.common.data.FleaJerseyRequest;
 import com.huazie.fleaframework.jersey.common.data.FleaJerseyResponse;
 
