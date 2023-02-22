@@ -5,7 +5,7 @@ import com.huazie.fleaframework.auth.base.user.dao.interfaces.IFleaUserRelDAO;
 import com.huazie.fleaframework.auth.base.user.entity.FleaUserRel;
 import com.huazie.fleaframework.auth.common.FleaAuthEntityConstants;
 import com.huazie.fleaframework.common.EntityStateEnum;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

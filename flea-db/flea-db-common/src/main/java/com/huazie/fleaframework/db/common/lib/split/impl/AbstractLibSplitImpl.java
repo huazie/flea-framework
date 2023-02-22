@@ -1,10 +1,10 @@
 package com.huazie.fleaframework.db.common.lib.split.impl;
 
 import com.huazie.fleaframework.common.CommonConstants;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.util.ExceptionUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
-import com.huazie.fleaframework.db.common.exception.LibSplitException;
+import com.huazie.fleaframework.db.common.exceptions.LibSplitException;
 import com.huazie.fleaframework.db.common.lib.split.ILibSplit;
 
 /**

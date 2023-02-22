@@ -6,7 +6,7 @@ import com.huazie.fleaframework.auth.base.user.service.interfaces.IFleaLoginLogS
 import com.huazie.fleaframework.auth.common.LoginStateEnum;
 import com.huazie.fleaframework.auth.common.pojo.user.login.FleaLoginLogPOJO;
 import com.huazie.fleaframework.auth.util.FleaAuthCheck;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.i18n.FleaI18nHelper;
 import com.huazie.fleaframework.common.util.DateUtils;
 import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;

@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.auth.base.user.service.impl;
 
 import com.huazie.fleaframework.auth.base.user.entity.FleaAccount;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 

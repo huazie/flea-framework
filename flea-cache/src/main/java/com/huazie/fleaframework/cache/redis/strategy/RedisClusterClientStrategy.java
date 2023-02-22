@@ -3,7 +3,7 @@ package com.huazie.fleaframework.cache.redis.strategy;
 import com.huazie.fleaframework.cache.redis.RedisClient;
 import com.huazie.fleaframework.cache.redis.impl.FleaRedisClusterClient;
 import com.huazie.fleaframework.common.CommonConstants;
-import com.huazie.fleaframework.common.exception.FleaStrategyException;
+import com.huazie.fleaframework.common.exceptions.FleaStrategyException;
 import com.huazie.fleaframework.common.strategy.IFleaStrategy;
 
 /**

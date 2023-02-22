@@ -6,7 +6,7 @@ import com.huazie.fleaframework.auth.common.pojo.user.FleaUserGroupPOJO;
 import com.huazie.fleaframework.auth.common.pojo.user.login.FleaUserLoginPOJO;
 import com.huazie.fleaframework.auth.common.pojo.user.register.FleaUserRegisterPOJO;
 import com.huazie.fleaframework.common.IFleaUser;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.object.FleaObjectFactory;
 
 import javax.servlet.http.HttpServletRequest;

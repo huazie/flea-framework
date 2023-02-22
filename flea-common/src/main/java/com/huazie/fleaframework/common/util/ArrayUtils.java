@@ -1,6 +1,6 @@
 package com.huazie.fleaframework.common.util;
 
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 
 /**
  * 数组操作工具类

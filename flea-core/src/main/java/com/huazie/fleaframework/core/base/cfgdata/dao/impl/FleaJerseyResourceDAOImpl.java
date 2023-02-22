@@ -2,7 +2,7 @@ package com.huazie.fleaframework.core.base.cfgdata.dao.impl;
 
 import com.huazie.fleaframework.common.CommonConstants;
 import com.huazie.fleaframework.common.EntityStateEnum;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.util.ArrayUtils;
 import com.huazie.fleaframework.common.util.CollectionUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;

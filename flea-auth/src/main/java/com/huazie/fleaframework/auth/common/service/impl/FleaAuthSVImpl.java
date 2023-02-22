@@ -35,7 +35,7 @@ import com.huazie.fleaframework.auth.common.FunctionTypeEnum;
 import com.huazie.fleaframework.auth.common.pojo.user.FleaUserModuleData;
 import com.huazie.fleaframework.auth.common.service.interfaces.IFleaAuthSV;
 import com.huazie.fleaframework.auth.util.FleaAuthCheck;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.util.CollectionUtils;
 import com.huazie.fleaframework.common.util.NumberUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;

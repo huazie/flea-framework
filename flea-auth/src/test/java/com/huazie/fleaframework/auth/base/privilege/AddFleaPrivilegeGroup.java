@@ -4,7 +4,7 @@ import com.huazie.fleaframework.auth.common.FleaAuthConstants;
 import com.huazie.fleaframework.auth.common.pojo.privilege.FleaPrivilegeGroupPOJO;
 import com.huazie.fleaframework.auth.common.service.interfaces.IFleaPrivilegeModuleSV;
 import com.huazie.fleaframework.auth.util.FleaAuthPOJOUtils;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 
 /**
  * 添加Flea权限组数据

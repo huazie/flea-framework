@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.core.base.cfgdata.dao.impl;
 
 import com.huazie.fleaframework.common.EntityStateEnum;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.core.base.cfgdata.dao.interfaces.IFleaConfigDataDAO;
 import com.huazie.fleaframework.core.base.cfgdata.entity.FleaConfigData;
 import com.huazie.fleaframework.core.common.FleaConfigEntityConstants;

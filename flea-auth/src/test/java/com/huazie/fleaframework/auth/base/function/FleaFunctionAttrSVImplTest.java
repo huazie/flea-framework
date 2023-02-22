@@ -5,7 +5,7 @@ import com.huazie.fleaframework.auth.common.FleaAuthConstants;
 import com.huazie.fleaframework.auth.common.FunctionTypeEnum;
 import com.huazie.fleaframework.auth.common.pojo.function.attr.FleaFunctionAttrPOJO;
 import com.huazie.fleaframework.auth.util.FleaAuthPOJOUtils;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;

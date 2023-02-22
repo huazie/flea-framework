@@ -9,7 +9,7 @@ import com.huazie.fleaframework.common.util.ArrayUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
 import com.huazie.fleaframework.db.common.DBConstants.DBConfigConstants;
-import com.huazie.fleaframework.db.common.exception.DaoException;
+import com.huazie.fleaframework.db.common.exceptions.DaoException;
 import com.huazie.fleaframework.db.jdbc.pojo.FleaDBUnit;
 
 import java.sql.Connection;

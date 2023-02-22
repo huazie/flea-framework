@@ -1,6 +1,6 @@
 package com.huazie.fleaframework.core.filter;
 
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.core.request.FleaRequestContext;
 import com.huazie.fleaframework.core.request.FleaRequestUtil;

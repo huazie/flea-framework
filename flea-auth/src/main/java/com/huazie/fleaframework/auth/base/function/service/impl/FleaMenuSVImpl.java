@@ -5,7 +5,7 @@ import com.huazie.fleaframework.auth.base.function.entity.FleaMenu;
 import com.huazie.fleaframework.auth.base.function.service.interfaces.IFleaMenuSV;
 import com.huazie.fleaframework.auth.common.pojo.function.menu.FleaMenuPOJO;
 import com.huazie.fleaframework.auth.util.FleaAuthCheck;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.util.CollectionUtils;
 import com.huazie.fleaframework.common.util.NumberUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;

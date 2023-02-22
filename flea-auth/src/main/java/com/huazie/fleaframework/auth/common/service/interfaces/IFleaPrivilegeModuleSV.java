@@ -3,7 +3,7 @@ package com.huazie.fleaframework.auth.common.service.interfaces;
 import com.huazie.fleaframework.auth.common.pojo.FleaAuthRelExtPOJO;
 import com.huazie.fleaframework.auth.common.pojo.privilege.FleaPrivilegeGroupPOJO;
 import com.huazie.fleaframework.auth.common.pojo.privilege.FleaPrivilegePOJO;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 
 /**
  * Flea权限管理服务层接口

@@ -1,6 +1,6 @@
 package com.huazie.fleaframework.core.base.cfgdata.dao.interfaces;
 
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.core.base.cfgdata.entity.FleaJerseyI18nErrorMapping;
 import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 

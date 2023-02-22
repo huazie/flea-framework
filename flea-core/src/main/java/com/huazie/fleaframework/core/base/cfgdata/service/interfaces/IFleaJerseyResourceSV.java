@@ -1,6 +1,6 @@
 package com.huazie.fleaframework.core.base.cfgdata.service.interfaces;
 
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.core.base.cfgdata.entity.FleaJerseyResource;
 import com.huazie.fleaframework.db.jpa.service.interfaces.IAbstractFleaJPASV;
 

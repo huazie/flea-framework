@@ -9,7 +9,7 @@ import com.huazie.fleaframework.common.util.StringUtils;
 import com.huazie.fleaframework.common.util.xml.JABXUtils;
 import com.huazie.fleaframework.jersey.common.data.FleaJerseyRequest;
 import com.huazie.fleaframework.jersey.common.data.FleaJerseyResponse;
-import com.huazie.fleaframework.jersey.common.exception.FleaJerseyFilterException;
+import com.huazie.fleaframework.jersey.common.exceptions.FleaJerseyFilterException;
 import com.huazie.fleaframework.jersey.common.filter.config.Filter;
 import com.huazie.fleaframework.jersey.common.filter.config.FleaJerseyFilterConfig;
 

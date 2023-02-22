@@ -1,6 +1,6 @@
 package com.huazie.fleaframework.db.common.util;
 
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.util.ArrayUtils;
 import com.huazie.fleaframework.common.util.CollectionUtils;
 import com.huazie.fleaframework.common.util.ExceptionUtils;
@@ -10,7 +10,7 @@ import com.huazie.fleaframework.common.util.ReflectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
 import com.huazie.fleaframework.db.common.FleaTable;
 import com.huazie.fleaframework.db.common.FleaTableGenerator;
-import com.huazie.fleaframework.db.common.exception.DaoException;
+import com.huazie.fleaframework.db.common.exceptions.DaoException;
 import com.huazie.fleaframework.db.common.sql.template.config.Param;
 import com.huazie.fleaframework.db.common.sql.template.config.Relation;
 import com.huazie.fleaframework.db.common.sql.template.config.Template;

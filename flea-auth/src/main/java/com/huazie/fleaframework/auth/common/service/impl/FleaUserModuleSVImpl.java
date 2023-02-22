@@ -30,7 +30,7 @@ import com.huazie.fleaframework.auth.util.FleaAuthCheck;
 import com.huazie.fleaframework.auth.util.FleaAuthManager;
 import com.huazie.fleaframework.auth.util.FleaAuthPOJOUtils;
 import com.huazie.fleaframework.common.IFleaUser;
-import com.huazie.fleaframework.common.exception.CommonException;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.object.FleaObjectFactory;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
