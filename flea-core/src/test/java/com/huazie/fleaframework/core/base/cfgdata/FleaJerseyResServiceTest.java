@@ -1,39 +1,38 @@
 package com.huazie.fleaframework.core.base.cfgdata;
 
 import com.huazie.fleaframework.common.EntityStateEnum;
-import com.huazie.fleaframework.common.slf4j.FleaLogger;
-import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.util.DateUtils;
 import com.huazie.fleaframework.core.base.cfgdata.bean.FleaConfigDataSpringBean;
 import com.huazie.fleaframework.core.base.cfgdata.entity.FleaJerseyResService;
 import com.huazie.fleaframework.core.base.cfgdata.service.interfaces.IFleaJerseyResServiceSV;
-import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
- * <p>  </p>
+ * FleaJersey资源服务单元测试类
  *
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"classpath:applicationContext.xml"})
 public class FleaJerseyResServiceTest {
 
-    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaJerseyResServiceTest.class);
+    @Autowired
+    @Qualifier("resServiceSV")
+    private IFleaJerseyResServiceSV fleaJerseyResServiceSV;
 
-    private ApplicationContext applicationContext;
-
-    @Before
-    public void init() {
-        applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
-        LOGGER.debug("ApplicationContext={}", applicationContext);
-    }
+    @Autowired
+    private FleaConfigDataSpringBean bean;
 
     @Test
-    public void testInsertUploadAuth() {
-        IFleaJerseyResServiceSV fleaJerseyResServiceSV = (IFleaJerseyResServiceSV) applicationContext.getBean("resServiceSV");
+    public void testInsertUploadAuth() throws CommonException {
         FleaJerseyResService resService = new FleaJerseyResService();
         resService.setServiceCode("FLEA_SERVICE_UPLOAD_AUTH");
         resService.setResourceCode("upload");
@@ -44,16 +43,11 @@ public class FleaJerseyResServiceTest {
         resService.setServiceOutput("com.huazie.ffs.pojo.upload.output.OutputUploadAuthInfo");
         resService.setState(EntityStateEnum.IN_USE.getState());
         resService.setCreateDate(DateUtils.getCurrentTime());
-        try {
-            fleaJerseyResServiceSV.save(resService);
-        } catch (Exception e) {
-            LOGGER.error("Exception:", e);
-        }
+        fleaJerseyResServiceSV.save(resService);
     }
 
     @Test
-    public void testInsertFileUpload() {
-        IFleaJerseyResServiceSV fleaJerseyResServiceSV = (IFleaJerseyResServiceSV) applicationContext.getBean("resServiceSV");
+    public void testInsertFileUpload() throws CommonException {
         FleaJerseyResService resService = new FleaJerseyResService();
         resService.setServiceCode("FLEA_SERVICE_FILE_UPLOAD");
         resService.setResourceCode("upload");
@@ -64,16 +58,11 @@ public class FleaJerseyResServiceTest {
         resService.setServiceOutput("com.huazie.ffs.pojo.upload.output.OutputFileUploadInfo");
         resService.setState(EntityStateEnum.IN_USE.getState());
         resService.setCreateDate(DateUtils.getCurrentTime());
-        try {
-            fleaJerseyResServiceSV.save(resService);
-        } catch (Exception e) {
-            LOGGER.error("Exception:", e);
-        }
+        fleaJerseyResServiceSV.save(resService);
     }
 
     @Test
-    public void testInsertFileDownload() {
-        IFleaJerseyResServiceSV fleaJerseyResServiceSV = (IFleaJerseyResServiceSV) applicationContext.getBean("resServiceSV");
+    public void testInsertFileDownload() throws CommonException {
         FleaJerseyResService resService = new FleaJerseyResService();
         resService.setServiceCode("FLEA_SERVICE_FILE_DOWNLOAD");
         resService.setResourceCode("download");
@@ -84,16 +73,11 @@ public class FleaJerseyResServiceTest {
         resService.setServiceOutput("com.huazie.ffs.pojo.download.output.OutputFileDownloadInfo");
         resService.setState(EntityStateEnum.IN_USE.getState());
         resService.setCreateDate(DateUtils.getCurrentTime());
-        try {
-            fleaJerseyResServiceSV.save(resService);
-        } catch (Exception e) {
-            LOGGER.error("Exception:", e);
-        }
+        fleaJerseyResServiceSV.save(resService);
     }
 
     @Test
-    public void testInsertDownloadAuth() {
-        IFleaJerseyResServiceSV fleaJerseyResServiceSV = (IFleaJerseyResServiceSV) applicationContext.getBean("resServiceSV");
+    public void testInsertDownloadAuth() throws CommonException {
         FleaJerseyResService resService = new FleaJerseyResService();
         resService.setServiceCode("FLEA_SERVICE_DOWNLOAD_AUTH");
         resService.setResourceCode("download");
@@ -104,21 +88,12 @@ public class FleaJerseyResServiceTest {
         resService.setServiceOutput("com.huazie.ffs.pojo.download.output.OutputDownloadAuthInfo");
         resService.setState(EntityStateEnum.IN_USE.getState());
         resService.setCreateDate(DateUtils.getCurrentTime());
-        try {
-            fleaJerseyResServiceSV.save(resService);
-        } catch (Exception e) {
-            LOGGER.error("Exception:", e);
-        }
+        fleaJerseyResServiceSV.save(resService);
     }
 
     @Test
-    public void testFleaConfigDataSpringBean() {
-        FleaConfigDataSpringBean bean = (FleaConfigDataSpringBean) applicationContext.getBean("fleaConfigDataSpringBean");
-        try {
-            bean.getResService("FLEA_SERVICE_FILE_DOWNLOAD", "download");
-        } catch (Exception e) {
-            LOGGER.error("Exception:", e);
-        }
+    public void testFleaConfigDataSpringBean() throws CommonException {
+        bean.getResService("download", "FLEA_SERVICE_FILE_DOWNLOAD");
     }
 
 }

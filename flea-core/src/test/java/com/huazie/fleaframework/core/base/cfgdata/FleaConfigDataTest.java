@@ -6,10 +6,9 @@ import com.huazie.fleaframework.cache.AbstractSpringCache;
 import com.huazie.fleaframework.cache.AbstractSpringCacheManager;
 import com.huazie.fleaframework.cache.common.CacheEnum;
 import com.huazie.fleaframework.cache.common.FleaCacheManagerFactory;
-import com.huazie.fleaframework.cache.memcached.manager.MemCachedSpringCacheManager;
-import com.huazie.fleaframework.cache.redis.manager.RedisShardedSpringCacheManager;
 import com.huazie.fleaframework.common.EntityStateEnum;
 import com.huazie.fleaframework.common.FleaFrameManager;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.core.base.cfgdata.bean.FleaConfigDataSpringBean;
@@ -19,54 +18,60 @@ import com.huazie.fleaframework.db.common.DBSystemEnum;
 import com.huazie.fleaframework.db.jdbc.FleaJDBCHelper;
 import com.huazie.fleaframework.db.jdbc.config.FleaJDBCConfig;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * 配置数据单元测试类
+ *
+ * @author huazie
+ * @version 2.0.0
+ * @since 2.0.0
+ */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"classpath:applicationContext.xml"})
 public class FleaConfigDataTest {
 
     private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaConfigDataTest.class);
 
-    private ApplicationContext applicationContext;
+    @Autowired
+    @Qualifier("fleaConfigDataSV")
+    private IFleaConfigDataSV sv;
 
-    @Before
-    public void init() {
-        applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
-        LOGGER.debug("ApplicationContext={}", applicationContext);
-    }
+    @Autowired
+    @Qualifier("memCachedSpringCacheManager")
+    private AbstractSpringCacheManager memCachedSpringCacheManager;
+
+    @Autowired
+    @Qualifier("redisShardedSpringCacheManager")
+    private AbstractSpringCacheManager redisShardedSpringCacheManager;
+
+    @Autowired
+    private FleaConfigDataSpringBean bean;
 
     @Test
-    public void getConfigDataById() throws Exception {
-        IFleaConfigDataSV sv = (IFleaConfigDataSV) applicationContext.getBean("fleaConfigDataSV");
-
+    public void getConfigDataById() throws CommonException {
         FleaConfigData fleaConfigData = sv.query(1L);
         LOGGER.debug("FleaConfigData = {}", fleaConfigData);
     }
 
     @Test
-    public void getConfigDatas() {
-        IFleaConfigDataSV sv = (IFleaConfigDataSV) applicationContext.getBean("fleaConfigDataSV");
-        try {
-            sv.getConfigDatas("huazie", "");
-        } catch (Exception e) {
-            LOGGER.error("Exception:", e);
-        }
+    public void getConfigDatas() throws CommonException {
+        sv.getConfigDatas("huazie", "");
     }
 
     @Test
-    public void getConfigData() {
-        IFleaConfigDataSV sv = (IFleaConfigDataSV) applicationContext.getBean("fleaConfigDataSV");
-        try {
-            sv.getConfigData("huazie", "huazie");
-        } catch (Exception e) {
-            LOGGER.error("Exception:", e);
-        }
+    public void getConfigData() throws CommonException {
+        sv.getConfigData("huazie", "huazie");
     }
 
     @Test
@@ -98,14 +103,12 @@ public class FleaConfigDataTest {
             AbstractFleaCache cache = manager.getCache("fleajerseyresclient");
             LOGGER.debug("Cache={}", cache);
 
-//            cache.delete("FLEA_CLIENT_FILE_DOWNLOAD");
-//            cache.clear();
             //#### 复杂配置参数
             Set<String> cacheKey = cache.getCacheKey();
             LOGGER.debug("CacheKey = {}", cacheKey);
 //            cache.get("FLEA_CLIENT_UPLOAD_AUTH");
 //            cache.get("FLEAER_CERT_TYPE_1");
-//            cache.delete("FLEA_RES_STATE");
+//            cache.delete("FLEA_CLIENT_UPLOAD_AUTH");
 
 //            cache.clear();
             LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
@@ -117,10 +120,9 @@ public class FleaConfigDataTest {
     @Test
     public void testMemCachedSpringCache() {
         try {
-            AbstractSpringCacheManager manager = (MemCachedSpringCacheManager) applicationContext.getBean("memCachedSpringCacheManager");
-            LOGGER.debug("MemCachedCacheManager={}", manager);
+            LOGGER.debug("MemCachedCacheManager={}", memCachedSpringCacheManager);
 
-            AbstractSpringCache cache = manager.getCache("fleaconfigdata");
+            AbstractSpringCache cache = memCachedSpringCacheManager.getCache("fleaconfigdata");
             LOGGER.debug("Cache={}", cache);
 
             Set<String> cacheKey = cache.getCacheKey();
@@ -159,10 +161,9 @@ public class FleaConfigDataTest {
     public void testRedisShardedSpringCache() {
         try {
             // 分片模式下Spring缓存管理类
-            AbstractSpringCacheManager manager = (RedisShardedSpringCacheManager) applicationContext.getBean("redisShardedSpringCacheManager");
-            LOGGER.debug("RedisCacheManager={}", manager);
+            LOGGER.debug("RedisCacheManager={}", redisShardedSpringCacheManager);
 
-            AbstractSpringCache cache = manager.getCache("fleaconfigdata");
+            AbstractSpringCache cache = redisShardedSpringCacheManager.getCache("fleaconfigdata");
             LOGGER.debug("Cache={}", cache);
 
             Set<String> cacheKey = cache.getCacheKey();
@@ -194,41 +195,30 @@ public class FleaConfigDataTest {
     }
 
     @Test
-    public void testFleaJPAQuery() {
+    public void testFleaJPAQuery() throws CommonException {
         FleaFrameManager.getManager().setLocale(Locale.US);
-        IFleaConfigDataSV sv = (IFleaConfigDataSV) applicationContext.getBean("fleaConfigDataSV");
-        try {
-            FleaConfigData fleaConfigData = sv.query(2L);
-            LOGGER.debug("row = {}", fleaConfigData);
-            List<FleaConfigData> list = sv.queryAll();
-            LOGGER.debug("list = {}", list);
-            long count = sv.queryCount();
-            LOGGER.debug("count = {}", count);
-        } catch (Exception e) {
-            LOGGER.error("Exception:", e);
-        }
+        FleaConfigData fleaConfigData = sv.query(1L);
+        LOGGER.debug("row = {}", fleaConfigData);
+        List<FleaConfigData> list = sv.queryAll();
+        LOGGER.debug("list = {}", list);
+        long count = sv.queryCount();
+        LOGGER.debug("count = {}", count);
     }
 
     @Test
-    public void testFleaJPASqlTemplateQuery() {
+    public void testFleaJPASqlTemplateQuery() throws CommonException {
         FleaFrameManager.getManager().setLocale(Locale.US);
-        IFleaConfigDataSV sv = (IFleaConfigDataSV) applicationContext.getBean("fleaConfigDataSV");
         FleaConfigData fleaConfigData = new FleaConfigData();
         fleaConfigData.setConfigType("huazie");
         fleaConfigData.setConfigCode("huazie");
-        try {
-            List<FleaConfigData> list = sv.queryAll("select", fleaConfigData);
-            LOGGER.debug("list={}", list);
-            LOGGER.debug("count={}", list.size());
-        } catch (Exception e) {
-            LOGGER.error("Exception:", e);
-        }
+        List<FleaConfigData> list = sv.queryAll("select", fleaConfigData);
+        LOGGER.debug("list={}", list);
+        LOGGER.debug("count={}", list.size());
     }
 
     @Test
-    public void testFleaJPASqlTemplateInsert() {
+    public void testFleaJPASqlTemplateInsert() throws CommonException {
         FleaFrameManager.getManager().setLocale(Locale.US);
-        IFleaConfigDataSV sv = (IFleaConfigDataSV) applicationContext.getBean("fleaConfigDataSV");
         FleaConfigData fleaConfigData = new FleaConfigData();
         fleaConfigData.setConfigId(1L);
         fleaConfigData.setConfigType("huazie");
@@ -238,43 +228,29 @@ public class FleaConfigDataTest {
         fleaConfigData.setConfigState(EntityStateEnum.IN_USE.getState());
         fleaConfigData.setData1("hello world");
 
-        try {
-            int ret = sv.insert("insert", fleaConfigData);
-            LOGGER.debug("ret = {}", ret);
-        } catch (Exception e) {
-            LOGGER.error("Exception:", e);
-        }
+        int ret = sv.insert("insert", fleaConfigData);
+        LOGGER.debug("ret = {}", ret);
     }
 
     @Test
-    public void testFleaJPASqlTemplateUpdate() {
+    public void testFleaJPASqlTemplateUpdate() throws CommonException {
         FleaFrameManager.getManager().setLocale(Locale.US);
-        IFleaConfigDataSV sv = (IFleaConfigDataSV) applicationContext.getBean("fleaConfigDataSV");
         FleaConfigData fleaConfigData = new FleaConfigData();
         fleaConfigData.setConfigId(1L);
         fleaConfigData.setConfigType("huazie1");
         fleaConfigData.setConfigCode("huazie1");
-        try {
-            int ret = sv.update("update", fleaConfigData);
-            LOGGER.debug("ret = {}", ret);
-        } catch (Exception e) {
-            LOGGER.error("Exception:", e);
-        }
+        int ret = sv.update("update", fleaConfigData);
+        LOGGER.debug("ret = {}", ret);
     }
 
     @Test
-    public void testFleaJPASqlTemplateDelete() {
+    public void testFleaJPASqlTemplateDelete() throws CommonException {
         FleaFrameManager.getManager().setLocale(Locale.US);
-        IFleaConfigDataSV sv = (IFleaConfigDataSV) applicationContext.getBean("fleaConfigDataSV");
         FleaConfigData fleaConfigData = new FleaConfigData();
         fleaConfigData.setConfigId(1L);
         fleaConfigData.setConfigState(EntityStateEnum.IN_USE.getState());
-        try {
-            int ret = sv.delete("delete", fleaConfigData);
-            LOGGER.debug("ret = {}", ret);
-        } catch (Exception e) {
-            LOGGER.error("Exception:", e);
-        }
+        int ret = sv.delete("delete", fleaConfigData);
+        LOGGER.debug("ret = {}", ret);
     }
 
     @Test
@@ -347,22 +323,12 @@ public class FleaConfigDataTest {
     }
 
     @Test
-    public void testFleaConfigDatas() {
-        FleaConfigDataSpringBean bean = (FleaConfigDataSpringBean) applicationContext.getBean("fleaConfigDataSpringBean");
-        try {
-            bean.getConfigDatas("huazie", "huazie");
-        } catch (Exception e) {
-            LOGGER.error("Exception:", e);
-        }
+    public void testFleaConfigDatas() throws CommonException {
+        bean.getConfigDatas("huazie", "huazie");
     }
 
     @Test
-    public void testFleaConfigData() {
-        FleaConfigDataSpringBean bean = (FleaConfigDataSpringBean) applicationContext.getBean("fleaConfigDataSpringBean");
-        try {
-            bean.getConfigData("huazie", "huazie");
-        } catch (Exception e) {
-            LOGGER.error("Exception:", e);
-        }
+    public void testFleaConfigData() throws CommonException {
+        bean.getConfigData("huazie", "huazie");
     }
 }
