@@ -1,47 +1,41 @@
 package com.huazie.fleaframework.core.base.cfgdata;
 
-import com.huazie.fleaframework.common.slf4j.FleaLogger;
-import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.core.base.cfgdata.bean.FleaConfigDataSpringBean;
 import com.huazie.fleaframework.core.common.pojo.FleaJerseyResServiceLogPOJO;
-import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+/**
+ * FleaJersey资源服务日志单元测试类
+ *
+ * @author huazie
+ * @version 2.0.0
+ * @since 2.0.0
+ */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"classpath:applicationContext.xml"})
 public class FleaJerseyResServiceLogTest {
 
-    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaJerseyResServiceLogTest.class);
-
-    private ApplicationContext applicationContext;
-
-    @Before
-    public void init() {
-        applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
-        LOGGER.debug("ApplicationContext={}", applicationContext);
-    }
+    @Autowired
+    private FleaConfigDataSpringBean bean;
 
     @Test
-    public void testSaveResServiceLog() {
+    public void testSaveResServiceLog() throws CommonException {
+        FleaJerseyResServiceLogPOJO resServiceLogPOJO = new FleaJerseyResServiceLogPOJO();
+        resServiceLogPOJO.setResourceCode("upload");
+        resServiceLogPOJO.setServiceCode("FLEA_SERVICE_UPLOAD_AUTH");
+        resServiceLogPOJO.setInput("XXXX");
+        resServiceLogPOJO.setOutput("XXXX");
+        resServiceLogPOJO.setResultCode("0");
+        resServiceLogPOJO.setResultMess("success");
+        resServiceLogPOJO.setAccountId(10000L);
+        resServiceLogPOJO.setSystemAccountId(1000L);
+        resServiceLogPOJO.setRemarks("测试");
 
-        FleaConfigDataSpringBean bean = (FleaConfigDataSpringBean) applicationContext.getBean("fleaConfigDataSpringBean");
-
-        try {
-            FleaJerseyResServiceLogPOJO resServiceLogPOJO = new FleaJerseyResServiceLogPOJO();
-            resServiceLogPOJO.setResourceCode("upload");
-            resServiceLogPOJO.setServiceCode("FLEA_SERVICE_UPLOAD_AUTH");
-            resServiceLogPOJO.setInput("XXXX");
-            resServiceLogPOJO.setOutput("XXXX");
-            resServiceLogPOJO.setResultCode("0");
-            resServiceLogPOJO.setResultMess("success");
-            resServiceLogPOJO.setAccountId(10000L);
-            resServiceLogPOJO.setSystemAccountId(1000L);
-            resServiceLogPOJO.setRemarks("测试");
-
-            bean.saveResServiceLog(resServiceLogPOJO);
-        } catch (Exception e) {
-            LOGGER.error("Exception:", e);
-        }
-
+        bean.saveResServiceLog(resServiceLogPOJO);
     }
 }
