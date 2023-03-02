@@ -42,11 +42,9 @@ public class FleaUserAttrSVImpl extends AbstractFleaJPASVImpl<FleaUserAttr> impl
 
     @Override
     public FleaUserAttr saveFleaUserAttr(FleaUserAttrPOJO fleaUserAttrPOJO) throws CommonException {
-
         FleaUserAttr fleaUserAttr = newFleaUserAttr(fleaUserAttrPOJO);
         // 保存Flea用户扩展属性信息
         fleaUserAttrDao.save(fleaUserAttr);
-
         return fleaUserAttr;
     }
 
