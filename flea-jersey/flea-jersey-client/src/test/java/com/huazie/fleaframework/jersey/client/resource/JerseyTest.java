@@ -38,8 +38,10 @@ import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.media.multipart.file.FileDataBodyPart;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -56,11 +58,14 @@ import java.nio.charset.StandardCharsets;
  * @version 1.0.0
  * @since 1.0.0
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"classpath:applicationContext.xml"})
 public class JerseyTest {
 
     private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(JerseyTest.class);
 
-    private ApplicationContext applicationContext;
+    @Autowired
+    private FleaJerseyClient client;
 
     @Before
     public void init() {
@@ -68,8 +73,6 @@ public class JerseyTest {
         fleaUser.setAccountId(10000L);
         fleaUser.set("ACCOUNT_CODE", "13218010892");
         FleaSessionManager.setUserInfo(fleaUser);
-        applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
-        LOGGER.debug("ApplicationContext={}", applicationContext);
     }
 
     @Test
@@ -232,8 +235,6 @@ public class JerseyTest {
         InputUploadAuthInfo uploadAuthInfo = new InputUploadAuthInfo();
         uploadAuthInfo.setFileName("美丽的风景.png");
 
-        FleaJerseyClient client = applicationContext.getBean(FleaJerseyClient.class);
-
         Response<OutputUploadAuthInfo> response = client.invoke(clientCode, uploadAuthInfo, OutputUploadAuthInfo.class);
 
         LOGGER.debug("result = {}", response);
@@ -245,8 +246,6 @@ public class JerseyTest {
 
         InputDownloadAuthInfo downloadAuthInfo = new InputDownloadAuthInfo();
         downloadAuthInfo.setFileId("123123123123123123123");
-
-        FleaJerseyClient client = applicationContext.getBean(FleaJerseyClient.class);
 
         Response<OutputDownloadAuthInfo> response = client.invoke(clientCode, downloadAuthInfo, OutputDownloadAuthInfo.class);
 
@@ -263,8 +262,6 @@ public class JerseyTest {
         File file = new File("E:\\IMG.jpg");
         FleaJerseyManager.getManager().addFileDataBodyPart(file);
 
-        FleaJerseyClient client = applicationContext.getBean(FleaJerseyClient.class);
-
         Response<OutputFileUploadInfo> response = client.invoke(clientCode, input, OutputFileUploadInfo.class);
 
         LOGGER.debug("result = {}", response);
@@ -276,8 +273,6 @@ public class JerseyTest {
 
         InputFileDownloadInfo input = new InputFileDownloadInfo();
         input.setToken(RandomCode.toUUID());
-
-        FleaJerseyClient client = applicationContext.getBean(FleaJerseyClient.class);
 
         Response<OutputFileDownloadInfo> response = client.invoke(clientCode, input, OutputFileDownloadInfo.class);
 

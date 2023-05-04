@@ -1,39 +1,42 @@
 package com.huazie.fleaframework.core.base.cfgdata;
 
 import com.huazie.fleaframework.common.EntityStateEnum;
+import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.common.util.DateUtils;
 import com.huazie.fleaframework.core.base.cfgdata.bean.FleaConfigDataSpringBean;
 import com.huazie.fleaframework.core.base.cfgdata.entity.FleaJerseyI18nErrorMapping;
 import com.huazie.fleaframework.core.base.cfgdata.service.interfaces.IFleaJerseyI18nErrorMappingSV;
-import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
- * <p>  </p>
+ * FleaJersey国际码和错误码映射单元测试类
  *
  * @author huazie
  * @version 1.0.0
  * @since 1.0.0
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"classpath:applicationContext.xml"})
 public class FleaJerseyI18NErrorMappingTest {
 
     private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaJerseyI18NErrorMappingTest.class);
 
-    private ApplicationContext applicationContext;
+    @Autowired
+    @Qualifier("i18nErrorMappingSV")
+    private IFleaJerseyI18nErrorMappingSV fleaJerseyI18nErrorMappingSV;
 
-    @Before
-    public void init() {
-        applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
-        LOGGER.debug("ApplicationContext={}", applicationContext);
-    }
+    @Autowired
+    private FleaConfigDataSpringBean bean;
 
     @Test
-    public void testInsertMappingOne() {
-        IFleaJerseyI18nErrorMappingSV fleaJerseyI18nErrorMappingSV = (IFleaJerseyI18nErrorMappingSV) applicationContext.getBean("i18nErrorMappingSV");
+    public void testInsertMappingOne() throws CommonException {
         FleaJerseyI18nErrorMapping mapping = new FleaJerseyI18nErrorMapping();
         mapping.setResourceCode("jersey-filter-resource");
         mapping.setServiceCode("jersey-filter-service");
@@ -42,16 +45,11 @@ public class FleaJerseyI18NErrorMappingTest {
         mapping.setReturnMess("请求报文不能为空");
         mapping.setState(EntityStateEnum.IN_USE.getState());
         mapping.setCreateDate(DateUtils.getCurrentTime());
-        try {
-            fleaJerseyI18nErrorMappingSV.save(mapping);
-        } catch (Exception e) {
-            LOGGER.error("Exception:", e);
-        }
+        fleaJerseyI18nErrorMappingSV.save(mapping);
     }
 
     @Test
-    public void testInsertMappingTwo() {
-        IFleaJerseyI18nErrorMappingSV fleaJerseyI18nErrorMappingSV = (IFleaJerseyI18nErrorMappingSV) applicationContext.getBean("i18nErrorMappingSV");
+    public void testInsertMappingTwo() throws CommonException {
         FleaJerseyI18nErrorMapping mapping = new FleaJerseyI18nErrorMapping();
         mapping.setResourceCode("jersey-filter-resource");
         mapping.setServiceCode("jersey-filter-service");
@@ -60,16 +58,11 @@ public class FleaJerseyI18NErrorMappingTest {
         mapping.setReturnMess("请求公共报文不能为空");
         mapping.setState(EntityStateEnum.IN_USE.getState());
         mapping.setCreateDate(DateUtils.getCurrentTime());
-        try {
-            fleaJerseyI18nErrorMappingSV.save(mapping);
-        } catch (Exception e) {
-            LOGGER.error("Exception:", e);
-        }
+        fleaJerseyI18nErrorMappingSV.save(mapping);
     }
 
     @Test
-    public void testInsertMappingThree() {
-        IFleaJerseyI18nErrorMappingSV fleaJerseyI18nErrorMappingSV = (IFleaJerseyI18nErrorMappingSV) applicationContext.getBean("i18nErrorMappingSV");
+    public void testInsertMappingThree() throws CommonException {
         FleaJerseyI18nErrorMapping mapping = new FleaJerseyI18nErrorMapping();
         mapping.setResourceCode("jersey-filter-resource");
         mapping.setServiceCode("jersey-filter-service");
@@ -78,16 +71,11 @@ public class FleaJerseyI18NErrorMappingTest {
         mapping.setReturnMess("请求业务报文不能为空");
         mapping.setState(EntityStateEnum.IN_USE.getState());
         mapping.setCreateDate(DateUtils.getCurrentTime());
-        try {
-            fleaJerseyI18nErrorMappingSV.save(mapping);
-        } catch (Exception e) {
-            LOGGER.error("Exception:", e);
-        }
+        fleaJerseyI18nErrorMappingSV.save(mapping);
     }
 
     @Test
-    public void testInsertMappingFour() {
-        IFleaJerseyI18nErrorMappingSV fleaJerseyI18nErrorMappingSV = (IFleaJerseyI18nErrorMappingSV) applicationContext.getBean("i18nErrorMappingSV");
+    public void testInsertMappingFour() throws CommonException {
         FleaJerseyI18nErrorMapping mapping = new FleaJerseyI18nErrorMapping();
         mapping.setResourceCode("jersey-filter-resource");
         mapping.setServiceCode("jersey-filter-service");
@@ -96,16 +84,11 @@ public class FleaJerseyI18NErrorMappingTest {
         mapping.setReturnMess("请求公共报文入参【{0}】不能为空");
         mapping.setState(EntityStateEnum.IN_USE.getState());
         mapping.setCreateDate(DateUtils.getCurrentTime());
-        try {
-            fleaJerseyI18nErrorMappingSV.save(mapping);
-        } catch (Exception e) {
-            LOGGER.error("Exception:", e);
-        }
+        fleaJerseyI18nErrorMappingSV.save(mapping);
     }
 
     @Test
-    public void testInsertMappingFive() {
-        IFleaJerseyI18nErrorMappingSV fleaJerseyI18nErrorMappingSV = (IFleaJerseyI18nErrorMappingSV) applicationContext.getBean("i18nErrorMappingSV");
+    public void testInsertMappingFive() throws CommonException {
         FleaJerseyI18nErrorMapping mapping = new FleaJerseyI18nErrorMapping();
         mapping.setResourceCode("jersey-filter-resource");
         mapping.setServiceCode("jersey-filter-service");
@@ -114,16 +97,11 @@ public class FleaJerseyI18NErrorMappingTest {
         mapping.setReturnMess("未能找到指定资源服务配置数据【service_code = {0} , resource_code = {1}】");
         mapping.setState(EntityStateEnum.IN_USE.getState());
         mapping.setCreateDate(DateUtils.getCurrentTime());
-        try {
-            fleaJerseyI18nErrorMappingSV.save(mapping);
-        } catch (Exception e) {
-            LOGGER.error("Exception:", e);
-        }
+        fleaJerseyI18nErrorMappingSV.save(mapping);
     }
 
     @Test
-    public void testInsertMappingSix() {
-        IFleaJerseyI18nErrorMappingSV fleaJerseyI18nErrorMappingSV = (IFleaJerseyI18nErrorMappingSV) applicationContext.getBean("i18nErrorMappingSV");
+    public void testInsertMappingSix() throws CommonException {
         FleaJerseyI18nErrorMapping mapping = new FleaJerseyI18nErrorMapping();
         mapping.setResourceCode("jersey-filter-resource");
         mapping.setServiceCode("jersey-filter-service");
@@ -132,16 +110,11 @@ public class FleaJerseyI18NErrorMappingTest {
         mapping.setReturnMess("资源【{0}】下的服务【{1}】请求异常：配置的出参【{2}】与服务方法【{3}】出参【{4}】类型不一致");
         mapping.setState(EntityStateEnum.IN_USE.getState());
         mapping.setCreateDate(DateUtils.getCurrentTime());
-        try {
-            fleaJerseyI18nErrorMappingSV.save(mapping);
-        } catch (Exception e) {
-            LOGGER.error("Exception:", e);
-        }
+        fleaJerseyI18nErrorMappingSV.save(mapping);
     }
 
     @Test
-    public void testInsertMappingSeven() {
-        IFleaJerseyI18nErrorMappingSV fleaJerseyI18nErrorMappingSV = (IFleaJerseyI18nErrorMappingSV) applicationContext.getBean("i18nErrorMappingSV");
+    public void testInsertMappingSeven() throws CommonException {
         FleaJerseyI18nErrorMapping mapping = new FleaJerseyI18nErrorMapping();
         mapping.setResourceCode("FLEA_SERVICE_DOWNLOAD_AUTH");
         mapping.setServiceCode("download");
@@ -150,43 +123,22 @@ public class FleaJerseyI18NErrorMappingTest {
         mapping.setReturnMess("入参【{0}】不能为空");
         mapping.setState(EntityStateEnum.IN_USE.getState());
         mapping.setCreateDate(DateUtils.getCurrentTime());
-        try {
-            fleaJerseyI18nErrorMappingSV.save(mapping);
-        } catch (Exception e) {
-            LOGGER.error("Exception:", e);
-        }
+        fleaJerseyI18nErrorMappingSV.save(mapping);
     }
 
     @Test
-    public void testGetMappings() {
-        IFleaJerseyI18nErrorMappingSV fleaJerseyI18nErrorMappingSV = (IFleaJerseyI18nErrorMappingSV) applicationContext.getBean("i18nErrorMappingSV");
-
-        try {
-            fleaJerseyI18nErrorMappingSV.getMappings("jersey-filter-resource", "jersey-filter-service");
-        } catch (Exception e) {
-            LOGGER.error("Exception:", e);
-        }
+    public void testGetMappings() throws CommonException {
+        fleaJerseyI18nErrorMappingSV.getMappings("jersey-filter-resource", "jersey-filter-service");
     }
 
     @Test
-    public void testGetMapping() {
-        IFleaJerseyI18nErrorMappingSV fleaJerseyI18nErrorMappingSV = (IFleaJerseyI18nErrorMappingSV) applicationContext.getBean("i18nErrorMappingSV");
-
-        try {
-            fleaJerseyI18nErrorMappingSV.getMapping("jersey-filter-resource", "jersey-filter-service", "ERROR-JERSEY-FILTER0000000005");
-        } catch (Exception e) {
-            LOGGER.error("Exception:", e);
-        }
+    public void testGetMapping() throws CommonException {
+        fleaJerseyI18nErrorMappingSV.getMapping("jersey-filter-resource", "jersey-filter-service", "ERROR-JERSEY-FILTER0000000005");
     }
 
     @Test
-    public void testFleaConfigDataSpringBean() {
-        FleaConfigDataSpringBean bean = (FleaConfigDataSpringBean) applicationContext.getBean("fleaConfigDataSpringBean");
-        try {
-            bean.getMapping("jersey-filter-resource", "jersey-filter-service", "ERROR-JERSEY-FILTER0000000003");
-        } catch (Exception e) {
-            LOGGER.error("Exception:", e);
-        }
+    public void testFleaConfigDataSpringBean() throws CommonException {
+        bean.getMapping("jersey-filter-resource", "jersey-filter-service", "ERROR-JERSEY-FILTER0000000003");
     }
 
 }

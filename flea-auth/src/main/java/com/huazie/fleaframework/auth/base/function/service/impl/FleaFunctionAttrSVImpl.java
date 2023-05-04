@@ -59,8 +59,7 @@ public class FleaFunctionAttrSVImpl extends AbstractFleaJPASVImpl<FleaFunctionAt
 
     @Override
     public boolean isExistSystemRelFunction(Long functionId, String functionType, Long systemAccountId) throws CommonException {
-        List<FleaFunctionAttr> fleaFunctionAttrList = this.querySystemRelFunctionAttrs(functionId, functionType, systemAccountId);
-        return CollectionUtils.isNotEmpty(fleaFunctionAttrList);
+        return CollectionUtils.isNotEmpty(this.querySystemRelFunctionAttrs(functionId, functionType, systemAccountId));
     }
 
     @Override
@@ -69,7 +68,7 @@ public class FleaFunctionAttrSVImpl extends AbstractFleaJPASVImpl<FleaFunctionAt
         List<FleaFunctionAttr> fleaFunctionAttrList = this.fleaFunctionAttrDao.queryValidFunctionAttrs(null, functionType,
                 FleaAuthConstants.AttrCodeConstants.ATTR_CODE_SYSTEM_IN_USE, StringUtils.valueOf(systemAccountId), true);
         List<Long> functionIdList = new ArrayList<>();
-        if (CollectionUtils.isNotEmpty(functionIdList)) {
+        if (CollectionUtils.isNotEmpty(fleaFunctionAttrList)) {
             for (FleaFunctionAttr fleaFunctionAttr : fleaFunctionAttrList) {
                 if (ObjectUtils.isEmpty(fleaFunctionAttr)) continue;
                 functionIdList.add(fleaFunctionAttr.getFunctionId());

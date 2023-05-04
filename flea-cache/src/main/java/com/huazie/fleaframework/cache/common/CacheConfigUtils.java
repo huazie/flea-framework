@@ -53,12 +53,13 @@ public class CacheConfigUtils {
             if (ObjectUtils.isNotEmpty(caches)) {
                 // 从主缓存文件中获取
                 cache = caches.getFleaCache(key);
-                if (ObjectUtils.isEmpty(cache)) {
-                    // 从其他引入的缓存文件中获取
-                    CacheFiles cacheFiles = fleaCache.getCacheFiles();
-                    if (ObjectUtils.isNotEmpty(cacheFiles)) {
-                        cache = cacheFiles.getFleaCache(key);
-                    }
+            }
+            // 主缓存文件中没有取到
+            if (ObjectUtils.isEmpty(cache)) {
+                // 从其他引入的缓存文件中获取
+                CacheFiles cacheFiles = fleaCache.getCacheFiles();
+                if (ObjectUtils.isNotEmpty(cacheFiles)) {
+                    cache = cacheFiles.getFleaCache(key);
                 }
             }
         }

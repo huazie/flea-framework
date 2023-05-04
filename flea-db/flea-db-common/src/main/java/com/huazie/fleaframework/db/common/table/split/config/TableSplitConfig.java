@@ -52,12 +52,13 @@ public class TableSplitConfig {
             if (ObjectUtils.isNotEmpty(tables)) {
                 // 从主分表配置文件中获取指定模板表名的分表配置
                 table = tables.getFleaTable(name);
-                if (ObjectUtils.isEmpty(table)) {
-                    // 从其他配置文件中获取指定模板表名的分表配置
-                    TableFiles tableFiles = fleaTableSplit.getTableFiles();
-                    if (ObjectUtils.isNotEmpty(tableFiles)) {
-                        table = tableFiles.getFleaTable(name);
-                    }
+            }
+            // 主分表配置文件中未取到
+            if (ObjectUtils.isEmpty(table)) {
+                // 从其他配置文件中获取指定模板表名的分表配置
+                TableFiles tableFiles = fleaTableSplit.getTableFiles();
+                if (ObjectUtils.isNotEmpty(tableFiles)) {
+                    table = tableFiles.getFleaTable(name);
                 }
             }
         }
