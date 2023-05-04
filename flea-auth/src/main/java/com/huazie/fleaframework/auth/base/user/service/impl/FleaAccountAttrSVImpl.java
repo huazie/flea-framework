@@ -41,11 +41,9 @@ public class FleaAccountAttrSVImpl extends AbstractFleaJPASVImpl<FleaAccountAttr
 
     @Override
     public FleaAccountAttr saveFleaAccountAttr(FleaAccountAttrPOJO fleaAccountAttrPOJO) throws CommonException {
-
         FleaAccountAttr fleaAccountAttr = newFleaAccountAttr(fleaAccountAttrPOJO);
         // 保存Flea账户扩展属性信息
         fleaAccountAttrDao.save(fleaAccountAttr);
-
         return fleaAccountAttr;
     }
 

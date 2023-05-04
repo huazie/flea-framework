@@ -9,7 +9,6 @@ import com.huazie.fleaframework.auth.common.pojo.privilege.FleaPrivilegeGroupRel
 import com.huazie.fleaframework.auth.util.FleaAuthCheck;
 import com.huazie.fleaframework.auth.util.FleaAuthPOJOUtils;
 import com.huazie.fleaframework.common.exceptions.CommonException;
-import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import com.huazie.fleaframework.db.jpa.service.impl.AbstractFleaJPASVImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,11 +42,7 @@ public class FleaPrivilegeGroupRelSVImpl extends AbstractFleaJPASVImpl<FleaPrivi
 
     @Override
     public void savePrivilegeGroup(FleaPrivilegeGroup fleaPrivilegeGroup, FleaPrivilege fleaPrivilege) throws CommonException {
-        FleaPrivilegeGroupRelPOJO privilegeGroupRelPOJO = FleaAuthPOJOUtils.newPrivilegeGroupRelPrivilegePOJO(fleaPrivilegeGroup, fleaPrivilege);
-        if (ObjectUtils.isNotEmpty(privilegeGroupRelPOJO)) {
-            // 保存Flea权限组关联
-            this.saveFleaPrivilegeGroupRel(privilegeGroupRelPOJO);
-        }
+        this.saveFleaPrivilegeGroupRel(FleaAuthPOJOUtils.newPrivilegeGroupRelPrivilegePOJO(fleaPrivilegeGroup, fleaPrivilege));
     }
 
     @Override

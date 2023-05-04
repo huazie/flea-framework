@@ -52,12 +52,13 @@ public class LibSplitConfig {
             // 从主分库配置文件中获取指定模板库名的分库配置
             if (ObjectUtils.isNotEmpty(libs)) {
                 lib = libs.getFleaLib(name);
-                if (ObjectUtils.isEmpty(lib)) {
-                    LibFiles libFiles = fleaLibSplit.getLibFiles();
-                    if (ObjectUtils.isNotEmpty(libFiles)) {
-                        // 从其他分库配置文件中获取指定模板库名的分库配置
-                        lib = libFiles.getFleaLib(name);
-                    }
+            }
+            // 主分库配置文件中未取到
+            if (ObjectUtils.isEmpty(lib)) {
+                LibFiles libFiles = fleaLibSplit.getLibFiles();
+                if (ObjectUtils.isNotEmpty(libFiles)) {
+                    // 从其他分库配置文件中获取指定模板库名的分库配置
+                    lib = libFiles.getFleaLib(name);
                 }
             }
         }

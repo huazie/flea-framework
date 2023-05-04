@@ -42,6 +42,12 @@
             <version>${project.parent.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
         <!-- 数据库JDBC连接相关 （MySQL的JDBC驱动）-->
         <dependency>
             <groupId>mysql</groupId>
