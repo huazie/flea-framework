@@ -8,7 +8,6 @@ import com.huazie.fleaframework.auth.common.pojo.user.register.FleaUserRegisterP
 import com.huazie.fleaframework.auth.common.service.interfaces.IFleaUserModuleSV;
 import com.huazie.fleaframework.auth.util.FleaAuthPOJOUtils;
 import com.huazie.fleaframework.common.exceptions.CommonException;
-import com.huazie.fleaframework.common.util.CollectionUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -63,12 +62,6 @@ public class FleaUserModuleSVImplTest {
         fleaUserRegisterPOJO.setAccountPwd(accountPwd);
         fleaUserRegisterPOJO.setState(UserStateEnum.IN_USE.getState());
 
-        // 添加用户扩展属性
-        fleaUserRegisterPOJO.setUserAttrList(CollectionUtils.newArrayList(FleaAuthPOJOUtils.newOperatorUserAttr()));
-
-        // 添加账户扩展属性
-        fleaUserRegisterPOJO.setAccountAttrList(CollectionUtils.newArrayList(FleaAuthPOJOUtils.newOperatorAccountAttr()));
-
         fleaUserRegisterPOJO.setRemarks("用户自己注册时新增数据");
 
         fleaUserModuleSV.register(fleaUserRegisterPOJO);
@@ -116,12 +109,6 @@ public class FleaUserModuleSVImplTest {
         fleaUserRegisterPOJO.setAccountCode(accountCode);
         fleaUserRegisterPOJO.setAccountPwd(accountPwd);
         fleaUserRegisterPOJO.setState(UserStateEnum.IN_USE.getState());
-
-        // 添加用户扩展属性
-        fleaUserRegisterPOJO.setUserAttrList(CollectionUtils.newArrayList(FleaAuthPOJOUtils.newSystemUserAttr()));
-
-        // 添加账户扩展属性
-        fleaUserRegisterPOJO.setAccountAttrList(CollectionUtils.newArrayList(FleaAuthPOJOUtils.newSystemAccountAttr()));
 
         fleaUserRegisterPOJO.setRemarks(remarks);
 
