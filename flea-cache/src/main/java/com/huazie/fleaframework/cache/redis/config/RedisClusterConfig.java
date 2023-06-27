@@ -62,6 +62,8 @@ public class RedisClusterConfig extends RedisCommonConfig {
 
     private RedisClusterConfig() {
         try {
+            // Redis集群配置开关（1：开启 0：关闭），如果不配置也默认开启
+            setSwitchFlag(prop, RedisConfigConstants.REDIS_CLUSTER_CONFIG_SWITCH);
             // 缓存归属系统
             setSystemName(prop);
             // 空缓存数据有效期

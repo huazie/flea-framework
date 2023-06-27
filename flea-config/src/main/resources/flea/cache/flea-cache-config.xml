@@ -19,6 +19,7 @@
         <!-- 通用缓存参数 -->
         <cache-param key="fleacore.nullCacheExpiry" desc="空缓存数据有效期（单位：s）">300</cache-param>
         <!-- Redis 缓存参数 -->
+        <cache-param key="redis.switch" desc="Redis分片配置开关（1：开启 0：关闭），如果不配置也默认开启">0</cache-param>
         <cache-param key="redis.connectionTimeout" desc="Redis客户端socket连接超时时间（单位：ms）">2000</cache-param>
         <cache-param key="redis.soTimeout" desc="Redis客户端socket读写超时时间（单位：ms）">2000</cache-param>
         <cache-param key="redis.hashingAlg" desc="Redis分布式hash算法(1:MURMUR_HASH,2:MD5)">1</cache-param>
@@ -29,11 +30,13 @@
         <cache-param key="redis.maxAttempts" desc="Redis客户端操作最大尝试次数【包含第一次操作】">5</cache-param>
 
         <!-- Redis Cluster 缓存参数-->
+        <cache-param key="redis.cluster.switch" desc="Redis集群配置开关（1：开启 0：关闭），如果不配置也默认开启">0</cache-param>
         <cache-param key="redis.cluster.connectionTimeout" desc="Redis客户端socket连接超时时间（单位：ms）">2000</cache-param>
         <cache-param key="redis.cluster.soTimeout" desc="Redis客户端socket读写超时时间（单位：ms）">2000</cache-param>
         <cache-param key="redis.cluster.password" desc="Redis集群服务节点登录密码（集群各节点配置同一个）">huazie123</cache-param>
 
         <!-- MemCached缓存参数 -->
+        <cache-param key="memcached.switch" desc="MemCached配置开关（1：开启 0：关闭），如果不配置也默认开启">0</cache-param>
         <cache-param key="memcached.initConn" desc="初始化时对每个服务器建立的连接数目">20</cache-param>
         <cache-param key="memcached.minConn" desc="每个服务器建立最小的连接数">20</cache-param>
         <cache-param key="memcached.maxConn" desc="每个服务器建立最大的连接数">500</cache-param>

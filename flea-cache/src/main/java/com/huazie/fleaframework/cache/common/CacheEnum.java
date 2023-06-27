@@ -11,6 +11,7 @@ package com.huazie.fleaframework.cache.common;
  * @since 1.0.0
  */
 public enum CacheEnum {
+    EmptyCache("EmptyCache", "空缓存实现"),
     /**
      * 一个高性能的分布式内存对象缓存系统。
      */
