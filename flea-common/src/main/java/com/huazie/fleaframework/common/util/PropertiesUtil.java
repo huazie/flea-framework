@@ -88,7 +88,7 @@ public class PropertiesUtil {
         Integer value = null;
         String val = getStringValue(prop, key);
         if (StringUtils.isNotBlank(val)) {
-            value = Integer.valueOf(val);
+            value = Integer.valueOf(val.trim());
         }
         return value;
     }
@@ -105,7 +105,7 @@ public class PropertiesUtil {
         Long value = null;
         String val = getStringValue(prop, key);
         if (StringUtils.isNotBlank(val)) {
-            value = Long.valueOf(val);
+            value = Long.valueOf(val.trim());
         }
         return value;
     }
@@ -122,7 +122,7 @@ public class PropertiesUtil {
         Boolean value = null;
         String val = getStringValue(prop, key);
         if (StringUtils.isNotBlank(val)) {
-            value = Boolean.valueOf(val);
+            value = Boolean.valueOf(val.trim());
         }
         return value;
     }

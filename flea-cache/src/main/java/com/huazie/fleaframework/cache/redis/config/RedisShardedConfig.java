@@ -58,6 +58,8 @@ public class RedisShardedConfig extends RedisCommonConfig {
 
     private RedisShardedConfig() {
         try {
+            // Redis分片配置开关（1：开启 0：关闭），如果不配置也默认开启
+            setSwitchFlag(prop, RedisConfigConstants.REDIS_CONFIG_SWITCH);
             // 缓存归属系统
             setSystemName(prop);
             // Jedis分布式服务器信息
