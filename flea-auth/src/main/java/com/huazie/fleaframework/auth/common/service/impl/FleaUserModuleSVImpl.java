@@ -34,6 +34,7 @@ import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.object.FleaObjectFactory;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
+import com.huazie.fleaframework.common.util.CollectionUtils;
 import com.huazie.fleaframework.common.util.DateUtils;
 import com.huazie.fleaframework.common.util.HttpUtils;
 import com.huazie.fleaframework.common.util.NumberUtils;
@@ -199,6 +200,22 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
         // 校验密码是否为空
         String accountPwd = fleaUserRegisterPOJO.getAccountPwd();
         FleaAuthCheck.checkAccountPwd(accountPwd);
+
+        // 如果没有设置过用户名，则根据账号来设置
+        fleaUserRegisterPOJO.setUserNameByAccountCode();
+
+        // 添加区分用户和账户类型的扩展属性，系统（操作）用户 和 系统（操作）账户
+        if (fleaUserRegisterPOJO.isSystemRegister()) {
+            // 添加系统用户的用户扩展属性
+            fleaUserRegisterPOJO.addUserAttrList(CollectionUtils.newArrayList(FleaAuthPOJOUtils.newSystemUserAttr()));
+            // 添加系统账户的账户扩展属性
+            fleaUserRegisterPOJO.addAccountAttrList(CollectionUtils.newArrayList(FleaAuthPOJOUtils.newSystemAccountAttr()));
+        } else {
+            // 添加操作用户的用户扩展属性
+            fleaUserRegisterPOJO.addUserAttrList(CollectionUtils.newArrayList(FleaAuthPOJOUtils.newOperatorUserAttr()));
+            // 添加操作账户的账户扩展属性
+            fleaUserRegisterPOJO.addAccountAttrList(CollectionUtils.newArrayList(FleaAuthPOJOUtils.newOperatorAccountAttr()));
+        }
 
         // 新建Flea用户
         FleaUser fleaUser = this.fleaUserSV.saveFleaUser(fleaUserRegisterPOJO.newFleaUserPOJO());

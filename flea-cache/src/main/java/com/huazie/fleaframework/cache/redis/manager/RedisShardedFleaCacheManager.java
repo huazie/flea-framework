@@ -3,6 +3,7 @@ package com.huazie.fleaframework.cache.redis.manager;
 import com.huazie.fleaframework.cache.AbstractFleaCache;
 import com.huazie.fleaframework.cache.AbstractFleaCacheManager;
 import com.huazie.fleaframework.cache.common.CacheModeEnum;
+import com.huazie.fleaframework.cache.common.EmptyFleaCache;
 import com.huazie.fleaframework.cache.redis.RedisClient;
 import com.huazie.fleaframework.cache.redis.RedisClientFactory;
 import com.huazie.fleaframework.cache.redis.RedisShardedPool;
@@ -34,6 +35,7 @@ public class RedisShardedFleaCacheManager extends AbstractFleaCacheManager {
      * @since 1.0.0
      */
     public RedisShardedFleaCacheManager() {
+        if (!RedisShardedConfig.getConfig().isSwitchOpen()) return;
         // 初始化默认连接池
         RedisShardedPool.getInstance().initialize();
         // 获取分片模式下默认连接池的Redis客户端
@@ -43,7 +45,10 @@ public class RedisShardedFleaCacheManager extends AbstractFleaCacheManager {
     @Override
     protected AbstractFleaCache newCache(String name, int expiry) {
         int nullCacheExpiry = RedisShardedConfig.getConfig().getNullCacheExpiry();
-        return new RedisFleaCache(name, expiry, nullCacheExpiry, CacheModeEnum.SHARDED, redisClient);
+        if (RedisShardedConfig.getConfig().isSwitchOpen())
+            return new RedisFleaCache(name, expiry, nullCacheExpiry, CacheModeEnum.SHARDED, redisClient);
+        else
+            return new EmptyFleaCache(name, expiry, nullCacheExpiry);
     }
 
 }

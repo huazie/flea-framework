@@ -5,6 +5,7 @@ import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -86,5 +87,8 @@ public class FueluxMenuTree extends FleaMenuTree {
         Map<String, Object> childrenMap = new HashMap<>();
         childrenMap.put("children", subNodeMapList);
         treeNodeMap.put(getMapKeyForSubNotes(), childrenMap);
+        if (subNodeMapList instanceof List) {
+            treeNodeMap.put("count", ((List) subNodeMapList).size());
+        }
     }
 }

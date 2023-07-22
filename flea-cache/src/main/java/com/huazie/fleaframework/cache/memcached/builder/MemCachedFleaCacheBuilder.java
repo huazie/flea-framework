@@ -3,6 +3,8 @@ package com.huazie.fleaframework.cache.memcached.builder;
 import com.huazie.fleaframework.cache.AbstractFleaCache;
 import com.huazie.fleaframework.cache.IFleaCacheBuilder;
 import com.huazie.fleaframework.cache.common.CacheConfigUtils;
+import com.huazie.fleaframework.cache.common.CacheConstants;
+import com.huazie.fleaframework.cache.common.EmptyFleaCache;
 import com.huazie.fleaframework.cache.config.CacheServer;
 import com.huazie.fleaframework.cache.exceptions.FleaCacheConfigException;
 import com.huazie.fleaframework.cache.memcached.MemCachedPool;
@@ -43,19 +45,27 @@ public class MemCachedFleaCacheBuilder implements IFleaCacheBuilder {
         int expiry = CacheConfigUtils.getExpiry(name);
         // 获取空缓存数据有效期（单位：s）
         int nullCacheExpiry = CacheConfigUtils.getNullCacheExpiry();
-        // 获取MemCached服务器所在组名
-        String group = cacheServerList.get(0).getGroup();
-        // 通过组名来获取 MemCached客户端类
-        MemCachedClient memCachedClient = new MemCachedClient(group);
-        // 获取MemCachedPool，并初始化连接池
-        MemCachedPool.getInstance(group).initialize(cacheServerList);
-        // 创建一个MemCached Flea缓存类
-        AbstractFleaCache fleaCache = new MemCachedFleaCache(name, expiry, nullCacheExpiry, memCachedClient);
+        // 获取 MemCached配置开关（1：开启 0：关闭），如果不配置也默认开启
+        boolean isSwitchOpen = CacheConfigUtils.isSwitchOpen(CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_SWITCH);
 
-        if (LOGGER.isDebugEnabled()) {
-            Object obj = new Object() {};
-            LOGGER.debug1(obj, "Pool Name = {}", MemCachedPool.getInstance(group).getPoolName());
-            LOGGER.debug1(obj, "Pool = {}", MemCachedPool.getInstance(group).getSockIOPool());
+        AbstractFleaCache fleaCache;
+        if (isSwitchOpen) { // 开关启用，按实际缓存处理
+            // 获取MemCached服务器所在组名
+            String group = cacheServerList.get(0).getGroup();
+            // 通过组名来获取 MemCached客户端类
+            MemCachedClient memCachedClient = new MemCachedClient(group);
+            // 获取MemCachedPool，并初始化连接池
+            MemCachedPool.getInstance(group).initialize(cacheServerList);
+            // 创建一个MemCached Flea缓存类
+            fleaCache = new MemCachedFleaCache(name, expiry, nullCacheExpiry, memCachedClient);
+
+            if (LOGGER.isDebugEnabled()) {
+                Object obj = new Object() {};
+                LOGGER.debug1(obj, "Pool Name = {}", MemCachedPool.getInstance(group).getPoolName());
+                LOGGER.debug1(obj, "Pool = {}", MemCachedPool.getInstance(group).getSockIOPool());
+            }
+        } else { // 开关关闭，默认返回空缓存实现
+            fleaCache = new EmptyFleaCache(name, expiry, nullCacheExpiry);
         }
 
         return fleaCache;

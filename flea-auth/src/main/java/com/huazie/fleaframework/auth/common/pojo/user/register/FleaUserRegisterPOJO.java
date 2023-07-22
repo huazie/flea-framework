@@ -5,13 +5,18 @@ import com.huazie.fleaframework.auth.common.pojo.user.FleaUserPOJO;
 import com.huazie.fleaframework.auth.common.pojo.user.attr.FleaAccountAttrPOJO;
 import com.huazie.fleaframework.auth.common.pojo.user.attr.FleaUserAttrPOJO;
 import com.huazie.fleaframework.auth.common.pojo.user.login.FleaUserLoginPOJO;
+import com.huazie.fleaframework.common.RegExpEnum;
 import com.huazie.fleaframework.common.util.CollectionUtils;
+import com.huazie.fleaframework.common.util.NumberUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
+import com.huazie.fleaframework.common.util.PatternMatcherUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Flea用户注册信息POJO类
@@ -58,6 +63,36 @@ public class FleaUserRegisterPOJO extends FleaUserLoginPOJO {
         this.userName = userName;
     }
 
+    /**
+     * 根据账号，生成用户名
+     *
+     * @return 用户名
+     * @since 2.0.0
+     */
+    public String getUserNameByAccountCode() {
+        String accountCode = this.getAccountCode();
+        // 如果账号是手机号码
+        if (PatternMatcherUtils.matches(RegExpEnum.PHONE.getExp(), accountCode, Pattern.CASE_INSENSITIVE)) {
+            return "P" + StringUtils.subStrLast(accountCode, 4);
+        }
+        // 如果账号是邮箱
+        if (PatternMatcherUtils.matches(RegExpEnum.EMAIL.getExp(), accountCode, Pattern.CASE_INSENSITIVE)) {
+            return "E" + StringUtils.subStrBefore(accountCode, accountCode.indexOf('@'));
+        }
+        // 其他场景依然使用账号作为用户名
+        return accountCode;
+    }
+
+    /**
+     * 如果没有设置用户名，则根据账号来设置
+     *
+     * @since 2.0.0
+     */
+    public void setUserNameByAccountCode() {
+        if (ObjectUtils.isEmpty(this.userName))
+            this.userName = getUserNameByAccountCode();
+    }
+
     public Long getGroupId() {
         return groupId;
     }
@@ -97,6 +132,12 @@ public class FleaUserRegisterPOJO extends FleaUserLoginPOJO {
     public void setRemarks(String remarks) {
         this.remarks = remarks;
         // Flea用户扩展属性POJO添加备注
+        setRemarks4UserAttr(this.userAttrList, remarks);
+        // Flea账户扩展属性POJO添加备注
+        setRemarks4AccountAttr(this.accountAttrList, remarks);
+    }
+
+    private void setRemarks4UserAttr(List<FleaUserAttrPOJO> userAttrList, String remarks) {
         if (CollectionUtils.isNotEmpty(userAttrList)) {
             for (FleaUserAttrPOJO fleaUserAttrInfo : userAttrList) {
                 if (ObjectUtils.isNotEmpty(fleaUserAttrInfo)) {
@@ -104,7 +145,9 @@ public class FleaUserRegisterPOJO extends FleaUserLoginPOJO {
                 }
             }
         }
-        // Flea账户扩展属性POJO添加备注
+    }
+
+    private void setRemarks4AccountAttr(List<FleaAccountAttrPOJO> accountAttrList, String remarks) {
         if (CollectionUtils.isNotEmpty(accountAttrList)) {
             for (FleaAccountAttrPOJO fleaAccountAttrInfo : accountAttrList) {
                 if (ObjectUtils.isNotEmpty(fleaAccountAttrInfo)) {
@@ -120,6 +163,21 @@ public class FleaUserRegisterPOJO extends FleaUserLoginPOJO {
 
     public void setUserAttrList(List<FleaUserAttrPOJO> userAttrList) {
         this.userAttrList = userAttrList;
+    }
+
+    /**
+     * 添加其他用户属性信息
+     *
+     * @param otherUserAttrList 其他用户属性信息集合
+     * @since 2.0.0
+     */
+    public void addUserAttrList(List<FleaUserAttrPOJO> otherUserAttrList) {
+        if (ObjectUtils.isEmpty(this.userAttrList))
+            this.userAttrList = new ArrayList<>();
+        this.userAttrList.addAll(otherUserAttrList);
+        if (StringUtils.isNotBlank(this.remarks))
+            // Flea用户扩展属性POJO添加备注
+            setRemarks4UserAttr(this.userAttrList, this.remarks);
     }
 
     /**
@@ -144,6 +202,21 @@ public class FleaUserRegisterPOJO extends FleaUserLoginPOJO {
 
     public void setAccountAttrList(List<FleaAccountAttrPOJO> accountAttrList) {
         this.accountAttrList = accountAttrList;
+    }
+
+    /**
+     * 添加其他的账户属性信息
+     *
+     * @param otherAccountAttrList 其他账户属性信息集合
+     * @since 2.0.0
+     */
+    public void addAccountAttrList(List<FleaAccountAttrPOJO> otherAccountAttrList) {
+        if (ObjectUtils.isEmpty(this.accountAttrList))
+            this.accountAttrList = new ArrayList<>();
+        this.accountAttrList.addAll(otherAccountAttrList);
+        if (StringUtils.isNotBlank(this.remarks))
+            // Flea账户扩展属性POJO添加备注
+            setRemarks4AccountAttr(this.accountAttrList, this.remarks);
     }
 
     /**
@@ -202,6 +275,16 @@ public class FleaUserRegisterPOJO extends FleaUserLoginPOJO {
         fleaAccountPOJO.setExpiryDate(expiryDate);
         fleaAccountPOJO.setRemarks(remarks);
         return fleaAccountPOJO;
+    }
+
+    /**
+     * 判断是否是系统注册
+     *
+     * @return systemId 不空且大于0，返回 true；否则返回 false。
+     * @since 2.0.0
+     */
+    public boolean isSystemRegister() {
+        return NumberUtils.isPositiveNumber(this.systemId);
     }
 
     @Override

@@ -68,6 +68,10 @@ public class CacheConstants {
          */
         String MEMCACHED_CONFIG_FILE_SYSTEM_KEY = "fleaframework.cache.memcached.config.filename";
         /**
+         * MemCached 配置开关（1：开启 0：关闭）
+         */
+        String MEMCACHED_CONFIG_SWITCH = "memcached.switch";
+        /**
          * MemCached 缓存所属系统名
          */
         String MEMCACHED_CONFIG_SYSTEM_NAME = "memcached.systemName";
@@ -139,6 +143,14 @@ public class CacheConstants {
          * Redis 集群配置文件系统环境变量
          */
         String REDIS_CLUSTER_CONFIG_FILE_SYSTEM_KEY = "fleacache.redis.cluster.config.filename";
+        /**
+         * Redis 分片配置开关（1：开启 0：关闭）
+         */
+        String REDIS_CONFIG_SWITCH = "redis.switch";
+        /**
+         * Redis 集群配置开关（1：开启 0：关闭）
+         */
+        String REDIS_CLUSTER_CONFIG_SWITCH = "redis.cluster.switch";
         /**
          * Redis 缓存所属系统名
          */

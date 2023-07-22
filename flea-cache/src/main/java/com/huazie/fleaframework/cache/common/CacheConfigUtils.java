@@ -158,6 +158,22 @@ public class CacheConfigUtils {
     }
 
     /**
+     * 判断指定的缓存配置开关是否开启
+     *
+     * @param key 缓存配置开关参数键
+     * @return true：开启 ，false：关闭
+     * @since 2.0.0
+     */
+    public static boolean isSwitchOpen(String key) {
+        boolean isSwitchOpen = true;
+        CacheParam cacheParam = getCacheParam(key);
+        if (ObjectUtils.isNotEmpty(cacheParam) && "0".equals(StringUtils.trim(cacheParam.getValue()))) {
+            isSwitchOpen = false;
+        }
+        return isSwitchOpen;
+    }
+
+    /**
      * 获取Redis客户端操作最大尝试次数【包含第一次操作】
      *
      * @return Redis客户端操作最大尝试次数【包含第一次操作】

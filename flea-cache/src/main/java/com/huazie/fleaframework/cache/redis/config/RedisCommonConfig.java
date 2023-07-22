@@ -22,6 +22,8 @@ import java.util.Properties;
  */
 public class RedisCommonConfig {
 
+    private int switchFlag = 0; // Redis （分片或集群）配置开关（1：开启 0：关闭）
+
     private String systemName; // 缓存所属系统名
 
     private int maxAttempts; // Redis客户端操作最大尝试次数【包含第一次操作】
@@ -29,6 +31,32 @@ public class RedisCommonConfig {
     private int nullCacheExpiry; // 空缓存数据有效期（单位：s）
 
     private JedisPoolConfig jedisPoolConfig; // Jedis连接配置信息
+
+    /**
+     * 判断 Redis（分片或集群）配置开关是否开启
+     *
+     * @return true：开启 false：关闭
+     * @since 2.0.0
+     */
+    public boolean isSwitchOpen() {
+        return switchFlag == 1;
+    }
+
+    /**
+     * 设置 Redis（分片或集群）配置开关
+     *
+     * @param prop Redis（分片或集群）配置
+     * @param key  开关的配置键
+     * @since 2.0.0
+     */
+    void setSwitchFlag(Properties prop, String key) {
+        // 获取配置开关（1：开启 0：关闭）
+        Integer switchFlag = PropertiesUtil.getIntegerValue(prop, key);
+        if (ObjectUtils.isEmpty(switchFlag)) {
+            switchFlag = 1; // 如果不配置，也默认开启
+        }
+        this.switchFlag = switchFlag;
+    }
 
     /**
      * 获取缓存归属系统名
