@@ -3,6 +3,7 @@ package com.huazie.fleaframework.cache.redis.manager;
 import com.huazie.fleaframework.cache.AbstractSpringCache;
 import com.huazie.fleaframework.cache.AbstractSpringCacheManager;
 import com.huazie.fleaframework.cache.common.CacheModeEnum;
+import com.huazie.fleaframework.cache.common.EmptyFleaCache;
 import com.huazie.fleaframework.cache.redis.RedisClient;
 import com.huazie.fleaframework.cache.redis.RedisClientFactory;
 import com.huazie.fleaframework.cache.redis.RedisClusterPool;
@@ -35,6 +36,7 @@ public class RedisClusterSpringCacheManager extends AbstractSpringCacheManager {
      * @since 1.1.0
      */
     public RedisClusterSpringCacheManager() {
+        if (!RedisClusterConfig.getConfig().isSwitchOpen()) return;
         // 初始化默认连接池
         RedisClusterPool.getInstance().initialize();
         // 获取集群模式下默认连接池的Redis客户端
@@ -44,7 +46,10 @@ public class RedisClusterSpringCacheManager extends AbstractSpringCacheManager {
     @Override
     protected AbstractSpringCache newCache(String name, int expiry) {
         int nullCacheExpiry = RedisClusterConfig.getConfig().getNullCacheExpiry();
-        return new RedisSpringCache(name, expiry, nullCacheExpiry, CacheModeEnum.CLUSTER, redisClient);
+        if (RedisClusterConfig.getConfig().isSwitchOpen())
+            return new RedisSpringCache(name, expiry, nullCacheExpiry, CacheModeEnum.CLUSTER, redisClient);
+        else
+            return new RedisSpringCache(name, new EmptyFleaCache(name, expiry, nullCacheExpiry));
     }
 
 }

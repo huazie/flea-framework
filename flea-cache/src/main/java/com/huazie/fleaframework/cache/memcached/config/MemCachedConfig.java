@@ -33,6 +33,8 @@ public class MemCachedConfig {
 
     private static Properties prop;
 
+    private int switchFlag; // Memcached配置开关（1：开启 0：关闭）
+
     private String systemName; // 缓存所属系统名
 
     private String[] servers; // MemCached 服务器地址信息
@@ -74,6 +76,8 @@ public class MemCachedConfig {
 
     private MemCachedConfig() {
         try {
+            // MemCached 配置开关（1：启动 0：关闭）
+            setSwitchFlag();
             // 缓存归属系统
             setSystemName();
             // MemCached 服务器地址信息
@@ -120,6 +124,24 @@ public class MemCachedConfig {
             }
         }
         return config;
+    }
+
+    /**
+     * 判断 Memcached配置开关 是否开启
+     *
+     * @return true：开启 false：关闭
+     * @since 2.0.0
+     */
+    public boolean isSwitchOpen() {
+        return switchFlag == 1;
+    }
+
+    private void setSwitchFlag() {
+        Integer switchFlag = PropertiesUtil.getIntegerValue(prop, CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_SWITCH);
+        if (ObjectUtils.isEmpty(switchFlag)) {
+            switchFlag = 1; // 如果不配置，也默认开启
+        }
+        this.switchFlag = switchFlag;
     }
 
     public String getSystemName() {

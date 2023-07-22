@@ -2,6 +2,7 @@ package com.huazie.fleaframework.cache.memcached.manager;
 
 import com.huazie.fleaframework.cache.AbstractSpringCache;
 import com.huazie.fleaframework.cache.AbstractSpringCacheManager;
+import com.huazie.fleaframework.cache.common.EmptyFleaCache;
 import com.huazie.fleaframework.cache.memcached.MemCachedPool;
 import com.huazie.fleaframework.cache.memcached.config.MemCachedConfig;
 import com.huazie.fleaframework.cache.memcached.impl.MemCachedSpringCache;
@@ -32,8 +33,7 @@ public class MemCachedSpringCacheManager extends AbstractSpringCacheManager {
      * @since 1.0.0
      */
     public MemCachedSpringCacheManager() {
-        memCachedClient = new MemCachedClient();
-        initPool();
+        this(new MemCachedClient());
     }
 
     /**
@@ -42,6 +42,7 @@ public class MemCachedSpringCacheManager extends AbstractSpringCacheManager {
      * @param memCachedClient MemCached客户端
      */
     public MemCachedSpringCacheManager(MemCachedClient memCachedClient) {
+        if (!MemCachedConfig.getConfig().isSwitchOpen()) return;
         this.memCachedClient = memCachedClient;
         initPool();
     }
@@ -58,7 +59,10 @@ public class MemCachedSpringCacheManager extends AbstractSpringCacheManager {
     @Override
     protected AbstractSpringCache newCache(String name, int expiry) {
         int nullCacheExpiry = MemCachedConfig.getConfig().getNullCacheExpiry();
-        return new MemCachedSpringCache(name, expiry, nullCacheExpiry, memCachedClient);
+        if (MemCachedConfig.getConfig().isSwitchOpen())
+            return new MemCachedSpringCache(name, expiry, nullCacheExpiry, memCachedClient);
+        else
+            return new MemCachedSpringCache(name, new EmptyFleaCache(name, expiry, nullCacheExpiry));
     }
 
 }
