@@ -59,6 +59,12 @@
             <artifactId>commons-lang</artifactId>
         </dependency>
 
+        <!--  使用注解所需jar -->
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
+        </dependency>
+
         <!-- 扩展java.io.InputStream和Reader -->
         <dependency>
             <groupId>commons-io</groupId>
