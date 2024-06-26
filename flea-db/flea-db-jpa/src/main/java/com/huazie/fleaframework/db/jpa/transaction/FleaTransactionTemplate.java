@@ -19,15 +19,15 @@ import javax.persistence.EntityManager;
 import java.lang.reflect.UndeclaredThrowableException;
 
 /**
- * Flea事物模板，简化程序化事务划分和事务异常处理的模板类。
+ * Flea事务模板，简化程序化事务划分和事务异常处理的模板类。
  *
- * <p> 核心方法是 {@link #execute}, 参数是实现事物回调接口
+ * <p> 核心方法是 {@link #execute}, 参数是实现事务回调接口
  * 的事务代码。此模板收敛了处理事务生命周期和可能的异常的逻辑，
- * 因此事物回调接口的实现和调用代码都不需要显式处理事务。
+ * 因此事务回调接口的实现和调用代码都不需要显式处理事务。
  *
  * @author huazie
  * @version 2.0.0
- * @see TransactionCallback 事物回调接口
+ * @see TransactionCallback 事务回调接口
  * @since 1.2.0
  */
 @SuppressWarnings("serial")
@@ -53,7 +53,7 @@ public class FleaTransactionTemplate extends DefaultTransactionDefinition implem
     /**
      * 使用给定的事务管理器构造一个新的 FleaTransactionTemplate。
      *
-     * @param transactionManager 事物管理器
+     * @param transactionManager 事务管理器
      * @param entityManager      实体管理器
      * @since 1.2.0
      */
@@ -66,7 +66,7 @@ public class FleaTransactionTemplate extends DefaultTransactionDefinition implem
      * 使用给定的事务管理器构造一个新的 TransactionTemplate，
      * 从给定的事务定义中获取其默认设置。
      *
-     * @param transactionManager    事物管理器
+     * @param transactionManager    事务管理器
      * @param entityManager         实体管理器
      * @param transactionDefinition 事务定义
      * @since 1.2.0
@@ -78,9 +78,9 @@ public class FleaTransactionTemplate extends DefaultTransactionDefinition implem
     }
 
     /**
-     * Flea事物模板设置事物管理器
+     * Flea事务模板设置事务管理器
      *
-     * @param transactionManager 待设置的事物管理器
+     * @param transactionManager 待设置的事务管理器
      * @since 1.2.0
      */
     public void setTransactionManager(PlatformTransactionManager transactionManager) {
@@ -88,9 +88,9 @@ public class FleaTransactionTemplate extends DefaultTransactionDefinition implem
     }
 
     /**
-     * 获取事物管理器
+     * 获取事务管理器
      *
-     * @return 事物管理器
+     * @return 事务管理器
      * @since 1.2.0
      */
     public PlatformTransactionManager getTransactionManager() {
@@ -98,7 +98,7 @@ public class FleaTransactionTemplate extends DefaultTransactionDefinition implem
     }
 
     /**
-     * Flea事物模板设置实体管理器
+     * Flea事务模板设置实体管理器
      *
      * @param entityManager 待设置的实体管理器
      * @since 1.2.0
@@ -129,7 +129,7 @@ public class FleaTransactionTemplate extends DefaultTransactionDefinition implem
         if (this.transactionManager instanceof CallbackPreferringPlatformTransactionManager) {
             return ((CallbackPreferringPlatformTransactionManager) this.transactionManager).execute(this, action);
         } else {
-            // 开启Flea自定义事物
+            // 开启Flea自定义事务
             TransactionStatus status = FleaJPASplitHelper.getHandler().getTransaction(this, transactionManager, entityManager);
             T result;
             try {
@@ -152,7 +152,7 @@ public class FleaTransactionTemplate extends DefaultTransactionDefinition implem
     /**
      * 执行回滚，正确处理回滚异常。
      *
-     * @param status 事物对象
+     * @param status 事务对象
      * @param ex     抛出的应用程序异常或错误
      * @throws TransactionException 发生回滚错误时
      * @since 1.2.0

@@ -13,9 +13,9 @@ public class SplitLib {
 
     private String splitLibName; // 分库名
 
-    private String transactionName; // 模板事物名
+    private String transactionName; // 模板事务名
 
-    private String splitLibTxName; // 分库事物名
+    private String splitLibTxName; // 分库事务名
 
     private boolean isExistSplitLib; // 是否存在分库 【true：存在 false：不存在】
 

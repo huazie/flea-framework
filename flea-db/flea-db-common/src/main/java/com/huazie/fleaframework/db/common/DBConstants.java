@@ -50,7 +50,7 @@ public class DBConstants {
         String KEY = "key";     // 分表后缀类型枚举key变量名
 
         String FLEA_LIB_NAME = "FLEA_LIB_NAME"; // 分库表达式库名替换变量
-        String FLEA_TRANSACTION_NAME = "FLEA_TRANSACTION_NAME"; // 分库事物表达式模板事物名替换变量
+        String FLEA_TRANSACTION_NAME = "FLEA_TRANSACTION_NAME"; // 分库事务表达式模板事务名替换变量
         String FLEA_TABLE_NAME = "FLEA_TABLE_NAME"; // 分表表达式表名替换变量
 
         String SPLIT_TABLE = "SPLIT_TABLE"; // 分表信息

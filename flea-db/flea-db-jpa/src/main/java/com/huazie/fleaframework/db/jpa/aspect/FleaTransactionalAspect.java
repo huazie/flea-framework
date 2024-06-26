@@ -33,21 +33,21 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 /**
- * Flea自定义事物切面，拦截由自定义事物注解标记的Spring注入的方法，
- * 实现在方法调用之前开启事物，调用成功后提交事物，出现异常回滚事务。
+ * Flea自定义事务切面，拦截由自定义事务注解标记的Spring注入的方法，
+ * 实现在方法调用之前开启事务，调用成功后提交事务，出现异常回滚事务。
  *
- * <p> Flea自定义事物注解主要标记在两类方法上：
+ * <p> Flea自定义事务注解主要标记在两类方法上：
  *
  * <p> 一类方法是，AbstractFleaJPADAOImpl 的子类的增删改方法；
- * 这些方法一般在某某数据源DAO层实现类中，注解中需要指定事物名。
+ * 这些方法一般在某某数据源DAO层实现类中，注解中需要指定事务名。
  *
  * <p> 另一类方法是，除了上一类方法的其他方法；需要特别注意的是，
- * 自定义事物注解上不仅需要指定事物名、而且还需要指定持久化单元名；
+ * 自定义事务注解上不仅需要指定事务名、而且还需要指定持久化单元名；
  * 如果存在分库的场景，在调用之前，需要设置当前线程下的分库序列值。
  * <pre>举例如下：
  *   // 设置当前线程下的分库序列值
  *   FleaLibUtil.setSplitLibSeqValue("SEQ", "123123123");
- *   // 调用自定义事物注解标记的方法
+ *   // 调用自定义事务注解标记的方法
  * </pre>
  *
  * @author huazie
@@ -66,11 +66,11 @@ public class FleaTransactionalAspect {
     public Object invokeWithinTransaction(final ProceedingJoinPoint joinPoint) throws CommonException, FleaException, NoSuchMethodException {
         // 获取当前连接点上的方法
         Method method = FleaAspectUtils.getTargetMethod(joinPoint);
-        // 获取当前连接点方法上的自定义Flea事物注解上对应的事物名称
+        // 获取当前连接点方法上的自定义Flea事务注解上对应的事务名称
         String transactionName = FleaEntityManager.getTransactionName(method);
         // 获取连接点方法签名上的参数列表
         Object[] args = joinPoint.getArgs();
-        // 获取标记Flea事物注解的目标对象
+        // 获取标记Flea事务注解的目标对象
         Object tObj = joinPoint.getTarget();
 
         // 获取最后一个参数【实体对象】
@@ -81,7 +81,7 @@ public class FleaTransactionalAspect {
 
         EntityManager entityManager;
 
-        // 标记Flea事物注解的目标对象 为 AbstractFleaJPADAOImpl 的子类
+        // 标记Flea事务注解的目标对象 为 AbstractFleaJPADAOImpl 的子类
         if (ObjectUtils.isNotEmpty(fleaEntity) && tObj instanceof AbstractFleaJPADAOImpl) {
             // 获取实体管理器
             entityManager = (EntityManager) ReflectUtils.invoke(tObj, METHOD_NAME_GET_ENTITY_MANAGER, fleaEntity, Object.class);
@@ -97,7 +97,7 @@ public class FleaTransactionalAspect {
                 transactionName = splitLib.getSplitLibTxName();
             }
         } else {
-            // 获取当前连接点方法上的自定义Flea事物注解上对应的持久化单元名
+            // 获取当前连接点方法上的自定义Flea事务注解上对应的持久化单元名
             String unitName = FleaEntityManager.getUnitName(method);
             // 获取分库对象
             SplitLib splitLib = FleaSplitUtils.getSplitLib(unitName, FleaLibUtil.getSplitLibSeqValues());
@@ -109,11 +109,11 @@ public class FleaTransactionalAspect {
             entityManager = FleaEntityManager.getEntityManager(unitName, transactionName);
         }
 
-        // 根据事物名，获取配置的事物管理者
+        // 根据事务名，获取配置的事务管理者
         PlatformTransactionManager transactionManager = (PlatformTransactionManager) FleaApplicationContext.getBean(transactionName);
-        // 事物名【{0}】非法，请检查！
+        // 事务名【{0}】非法，请检查！
         ObjectUtils.checkEmpty(transactionManager, DaoException.class, "ERROR-DB-DAO0000000015", transactionName);
-        // 新建事物模板对象，用于处理事务生命周期和可能的异常
+        // 新建事务模板对象，用于处理事务生命周期和可能的异常
         FleaTransactionTemplate transactionTemplate = new FleaTransactionTemplate(transactionManager, entityManager);
         return transactionTemplate.execute(new TransactionCallback<Object>() {
             @Override
@@ -131,7 +131,7 @@ public class FleaTransactionalAspect {
     /**
      * 从最后一个参数中获取 Flea实体对象
      *
-     * @param args 标记Flea事物注解的目标对象的目标方法的参数列表
+     * @param args 标记Flea事务注解的目标对象的目标方法的参数列表
      * @return Flea实体对象
      * @since 2.0.0
      */

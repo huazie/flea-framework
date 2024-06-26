@@ -110,7 +110,7 @@ public class FleaCodeHelper {
     }
 
     /**
-     * 是否选中 "使用自定义事物注解"
+     * 是否选中 "使用自定义事务注解"
      *
      * @param param 参数
      * @return true：选中 false：未选中

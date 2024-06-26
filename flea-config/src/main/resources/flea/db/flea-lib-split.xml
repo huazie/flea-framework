@@ -7,9 +7,9 @@
             exp  : 分库名表达式 (模板库名)(分库序列键)
         -->
         <lib name="fleafs" count="4" exp="(FLEA_LIB_NAME)(SEQ)" desc="flea文件服务器核心库分库规则">
-            <!-- 分库事物配置
-                name : 模板事物名
-                exp  : 分库事物名表达式 (模板事物名)(分库序列键)
+            <!-- 分库事务配置
+                name : 模板事务名
+                exp  : 分库事务名表达式 (模板事务名)(分库序列键)
             -->
             <transaction name="fleaFSTransactionManager" exp="(FLEA_TRANSACTION_NAME)(SEQ)"/>
             <splits>
