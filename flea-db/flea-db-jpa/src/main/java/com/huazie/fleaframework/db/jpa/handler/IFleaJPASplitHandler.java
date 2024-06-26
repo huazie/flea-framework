@@ -51,11 +51,11 @@ public interface IFleaJPASplitHandler {
     EntityManager handle(EntityManager entityManager, Object entity, boolean flag) throws CommonException;
 
     /**
-     * 分表场景下，取事物管理器中的实体管理器工厂类，并将其作为键，
+     * 分表场景下，取事务管理器中的实体管理器工厂类，并将其作为键，
      * 绑定实体管理器对应的包装类资源到当前线程。以支持JPA的增删改操作。
      *
-     * @param definition         事物属性
-     * @param transactionManager 事物管理器
+     * @param definition         事务属性
+     * @param transactionManager 事务管理器
      * @param entityManager      持久化接口对象实例
      * @since 1.2.0
      */

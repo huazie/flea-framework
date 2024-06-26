@@ -3,7 +3,7 @@ package com.huazie.fleaframework.db.common.lib.split.config;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
- * 分库事物配置定义，参考 flea-lib-split.xml中 {@code <transaction />}
+ * 分库事务配置定义，参考 flea-lib-split.xml中 {@code <transaction />}
  *
  * @author huazie
  * @version 1.1.0
@@ -11,9 +11,9 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  */
 public class Transaction {
 
-    private String name; // 模板事物名
+    private String name; // 模板事务名
 
-    private String exp; // 分库事物名表达式
+    private String exp; // 分库事务名表达式
 
     public String getName() {
         return name;

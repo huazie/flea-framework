@@ -85,7 +85,7 @@ public class FleaCodePanel extends JPanel implements ActionListener, ItemListene
 
     private ButtonGroup btnGroup; // 单选按钮组
 
-    private JCheckBox customTransactionalCheckBox; // 自定义事物
+    private JCheckBox customTransactionalCheckBox; // 自定义事务
 
     private JTextField puDaoPackageTextField; // 持久化单元DAO层实现包名
 
@@ -320,7 +320,7 @@ public class FleaCodePanel extends JPanel implements ActionListener, ItemListene
         btnGroup.add(newRadioButton);
         btnGroup.add(oldRadioButton);
 
-        // 使用自定义事物注解
+        // 使用自定义事务注解
         customTransactionalCheckBox = newCheckBox(FleaI18nHelper.i18nForCommon("COMMON_CODE_00034"));
         customTransactionalCheckBox.setSelected(false); // 默认补选中
         // 分库或分表场景，请勾选！
@@ -786,7 +786,7 @@ public class FleaCodePanel extends JPanel implements ActionListener, ItemListene
             param.put(ToolsConstants.CodeConstants.FLEA_PERSISTENCE_UNIT_DAO_CLASS_NAME, fleaPersistenceUnitDaoClassName);
         }
 
-        // 是否使用自定义事物注解
+        // 是否使用自定义事务注解
         boolean isUseFleaTransactional = customTransactionalCheckBox.isSelected();
         param.put(ToolsConstants.CodeConstants.IS_SELECTED_CUSTOM_TRANSACTIONAL, isUseFleaTransactional);
 

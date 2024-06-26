@@ -31,7 +31,7 @@ import java.util.concurrent.ConcurrentMap;
 
 /**
  * Flea 实体管理器工具类，提供了获取持久化上下文交互的实体管理器接口、
- * 持久化单元名、事物名、分表信息、各持久化上下文交互接口的静态方法。
+ * 持久化单元名、事务名、分表信息、各持久化上下文交互接口的静态方法。
  *
  * @author huazie
  * @version 2.0.0
@@ -52,7 +52,7 @@ public class FleaEntityManager {
      * 获取指定场景下的实体管理类
      *
      * @param unitName        持久化单元名（通常对应着库名）
-     * @param transactionName 事物名（对应配置的事物管理者）
+     * @param transactionName 事务名（对应配置的事务管理者）
      * @return 实体管理类
      * @throws CommonException 通用异常
      * @since 1.1.0
@@ -68,9 +68,9 @@ public class FleaEntityManager {
         if (!entityManagerMap.containsKey(unitName)) {
             synchronized (entityManagerMap) {
                 if (!entityManagerMap.containsKey(unitName)) {
-                    // 根据事物名，获取配置的事物管理者
+                    // 根据事务名，获取配置的事务管理者
                     JpaTransactionManager manger = (JpaTransactionManager) FleaApplicationContext.getBean(transactionName);
-                    // 事物名【{0}】非法，请检查！
+                    // 事务名【{0}】非法，请检查！
                     ObjectUtils.checkEmpty(manger, DaoException.class, "ERROR-DB-DAO0000000015", transactionName);
                     // 获取实体管理者工厂类
                     EntityManagerFactory entityManagerFactory = manger.getEntityManagerFactory();
@@ -115,12 +115,12 @@ public class FleaEntityManager {
     }
 
     /**
-     * 从指定类的第一个成员方法上，获取事物名。在 <b> flea-db </b> 模块中，
+     * 从指定类的第一个成员方法上，获取事务名。在 <b> flea-db </b> 模块中，
      * 该名称一般定义在 {@code AbstractFleaJPADAOImpl} 的子类的成员方法上，
      * 由注解 {@code Transactional}或{@code FleaTransactional} 进行标识。
      *
      * @param daoImplClazz 抽象Flea JPA DAO层实现类
-     * @return 事物名
+     * @return 事务名
      * @since 1.1.0
      */
     public static String getTransactionName(Class<?> daoImplClazz) {
@@ -145,12 +145,12 @@ public class FleaEntityManager {
     }
 
     /**
-     * 从指定类的成员方法上，获取事物名。在 <b> flea-db </b> 模块中，
+     * 从指定类的成员方法上，获取事务名。在 <b> flea-db </b> 模块中，
      * 该名称一般定义在 {@code AbstractFleaJPADAOImpl} 的子类的成员方法上，
      * 由注解 {@code Transactional}或{@code FleaTransactional} 进行标识。
      *
      * @param method 类的成员方法
-     * @return 事物名
+     * @return 事务名
      * @since 1.2.0
      */
     public static String getTransactionName(Method method) {
@@ -170,7 +170,7 @@ public class FleaEntityManager {
 
     /**
      * 从指定类的成员方法上，获取持久化单元名。在 <b> flea-db </b> 模块中，
-     * 该名称定义在注解{@code FleaTransactional} 中，用于启动自定的事物。
+     * 该名称定义在注解{@code FleaTransactional} 中，用于启动自定的事务。
      *
      * @param method 类的成员方法
      * @return 持久化单元名

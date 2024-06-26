@@ -169,7 +169,7 @@ public abstract class FleaLibTableSplitHandler implements IFleaJPASplitHandler {
 
     @Override
     public TransactionStatus getTransaction(TransactionDefinition definition, PlatformTransactionManager transactionManager, EntityManager entityManager) {
-        // JPA事物管理器
+        // JPA事务管理器
         JpaTransactionManager jpaTransactionManager = (JpaTransactionManager) transactionManager;
         Object obj = TransactionSynchronizationManager.getResource(jpaTransactionManager.getEntityManagerFactory());
         if (ObjectUtils.isEmpty(obj)) {
@@ -180,7 +180,7 @@ public abstract class FleaLibTableSplitHandler implements IFleaJPASplitHandler {
             // 将实体管理器工厂类的实体管理器包装类资源绑定到当前线程
             TransactionSynchronizationManager.bindResource(jpaTransactionManager.getEntityManagerFactory(), entityManagerHolder);
         }
-        // 获取事物状态对象，并开启事物
+        // 获取事务状态对象，并开启事务
         return jpaTransactionManager.getTransaction(definition);
     }
 

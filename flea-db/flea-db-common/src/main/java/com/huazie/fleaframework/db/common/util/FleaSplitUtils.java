@@ -250,19 +250,19 @@ public class FleaSplitUtils {
                 StringUtils.replace(libNameBuilder, LIB_NAME_PLACEHOLDER, libName);
 
                 Transaction tx = lib.getTransaction();
-                // 请检查分库配置信息（分库事物配置【transaction】不能为空）
+                // 请检查分库配置信息（分库事务配置【transaction】不能为空）
                 ObjectUtils.checkEmpty(tx, LibSplitException.class, "ERROR-DB-LSP0000000008");
 
                 String txName = tx.getName();
-                // 请检查分库配置信息（模板事物名【name】不能为空）
+                // 请检查分库配置信息（模板事务名【name】不能为空）
                 StringUtils.checkBlank(txName, LibSplitException.class, "ERROR-DB-LSP0000000009");
 
                 String txExp = tx.getExp();
-                // 请检查分库配置信息（分库事物名表达式【exp】不能为空）
+                // 请检查分库配置信息（分库事务名表达式【exp】不能为空）
                 StringUtils.checkBlank(txExp, LibSplitException.class, "ERROR-DB-LSP0000000010");
 
                 StringBuilder txNameBuilder = new StringBuilder(txExp);
-                // 替换 分库事物名表达式中 (FLEA_TRANSACTION_NAME) 内容
+                // 替换 分库事务名表达式中 (FLEA_TRANSACTION_NAME) 内容
                 StringUtils.replace(txNameBuilder, TRANSACTION_NAME_PLACEHOLDER, txName);
 
                 List<Split> splitList = lib.getSplits().getSplitList();
@@ -319,14 +319,14 @@ public class FleaSplitUtils {
                             seq + DBConstants.SQLConstants.SQL_RIGHT_ROUND_BRACKETS;
                     // 分库名表达式替换分库序列键
                     StringUtils.replace(libNameBuilder, seqPlaceholder, splitLibSeq);
-                    // 分库事物名表达式替换分库序列键
+                    // 分库事务名表达式替换分库序列键
                     StringUtils.replace(txNameBuilder, seqPlaceholder, splitLibSeq);
                 }
                 // 设置分库名
                 splitLib.setSplitLibName(libNameBuilder.toString());
                 // 设置模板库名
                 splitLib.setTransactionName(txName);
-                // 设置分库事物名
+                // 设置分库事务名
                 splitLib.setSplitLibTxName(txNameBuilder.toString());
                 // 存在分库
                 splitLib.setExistSplitLib(true);

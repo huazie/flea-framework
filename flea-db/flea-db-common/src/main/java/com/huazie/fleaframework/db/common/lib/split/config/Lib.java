@@ -21,7 +21,7 @@ public class Lib {
 
     private String desc;    // 分库规则描述
 
-    private Transaction transaction; // 分库事物配置
+    private Transaction transaction; // 分库事务配置
 
     private Splits splits;  // 分表后缀配置列表
 
