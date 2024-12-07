@@ -42,6 +42,8 @@ public class RedisClientFactory {
 
     private static final ConcurrentMap<String, RedisClient> redisClients = new ConcurrentHashMap<>();
 
+    private static final Object redisClientLock = new Object();
+
     private RedisClientFactory() {
     }
 
@@ -88,10 +90,10 @@ public class RedisClientFactory {
     public static RedisClient getInstance(String poolName, CacheModeEnum mode) {
         String key = StringUtils.strCat(poolName, CommonConstants.SymbolConstants.UNDERLINE, StringUtils.valueOf(mode.getMode()));
         if (!redisClients.containsKey(key)) {
-            synchronized (redisClients) {
+            synchronized (redisClientLock) {
                 if (!redisClients.containsKey(key)) {
                     RedisClientStrategyContext context = new RedisClientStrategyContext(poolName);
-                    redisClients.putIfAbsent(key, FleaStrategyFacade.invoke(mode.name(), context));
+                    redisClients.put(key, FleaStrategyFacade.invoke(mode.name(), context));
                 }
             }
         }
