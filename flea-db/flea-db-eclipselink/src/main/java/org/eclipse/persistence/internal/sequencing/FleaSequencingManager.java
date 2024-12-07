@@ -22,6 +22,8 @@ public final class FleaSequencingManager extends SequencingManager {
 
     private static final ConcurrentMap<String, FleaSequencingManager> fleaSequencingManagerMap = new ConcurrentHashMap<>();
 
+    private static final Object fleaSequencingManagerMapLock = new Object();
+
     /**
      * Flea序列管理器构造
      *
@@ -43,7 +45,7 @@ public final class FleaSequencingManager extends SequencingManager {
      */
     public static FleaSequencingManager getFleaSequencingManager(String sequenceName, Sequencing sequencing, ClassDescriptor descriptor) {
         if (!fleaSequencingManagerMap.containsKey(sequenceName)) {
-            synchronized (fleaSequencingManagerMap) {
+            synchronized (fleaSequencingManagerMapLock) {
                 if (!fleaSequencingManagerMap.containsKey(sequenceName)) {
                     fleaSequencingManagerMap.put(sequenceName, new FleaSequencingManager(sequencing, descriptor));
                 }
