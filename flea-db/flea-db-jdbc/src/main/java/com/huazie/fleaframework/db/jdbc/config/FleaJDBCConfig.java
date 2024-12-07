@@ -35,6 +35,8 @@ public class FleaJDBCConfig {
 
     private static final ConcurrentMap<String, FleaDBUnit> fleaDBUnits = new ConcurrentHashMap<>();
 
+    private static final Object fleaDBUnitsLock = new Object();
+
     private FleaJDBCConfig() {
     }
 
@@ -85,7 +87,7 @@ public class FleaJDBCConfig {
         String dbConfigKey = FleaFrameManager.getManager().getDBConfigKey();
 
         if (!fleaDBUnits.containsKey(dbConfigKey)) {
-            synchronized (fleaDBUnits) {
+            synchronized (fleaDBUnitsLock) {
                 if (!fleaDBUnits.containsKey(dbConfigKey)) {
                     fleaDBUnits.put(dbConfigKey, getFleaDBUnit(dbConfigKey));
                 }
