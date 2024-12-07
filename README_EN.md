@@ -20,22 +20,26 @@ Flea Framework, named Flea, which originates from the flea market graduation pro
 
 ## Documentation
 
-#### flea-auth
+### flea-auth
 
-https://blog.csdn.net/u012855229/category_9489031.html
+https://blog.huazie.com/diversity/blog/?path=/categories/%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6-Flea/flea-auth/
 
-#### flea-cache
+### flea-cache
 
-https://blog.csdn.net/u012855229/category_9332381.html
+https://blog.huazie.com/diversity/blog/?path=/categories/%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6-Flea/flea-cache/
 
-#### flea-common
+### flea-db
 
-https://blog.csdn.net/u012855229/category_11310138.html
+https://blog.huazie.com/diversity/blog/?path=/categories/%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6-Flea/flea-db/
 
-#### flea-db
+### flea-common
 
-https://blog.csdn.net/u012855229/category_9332372.html
+https://blog.huazie.com/diversity/blog/?path=/categories/%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6-Flea/flea-common/
 
-#### flea-jersey
+### flea-jersey
 
-https://blog.csdn.net/u012855229/category_9534096.html
+https://blog.huazie.com/diversity/blog/?path=/categories/%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6-Flea/flea-jersey/
+
+### flea-msg
+
+https://blog.huazie.com/diversity/blog/?path=/categories/%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6-Flea/flea-msg/
