@@ -25,6 +25,8 @@ public class FleaObjectPoolFactory {
 
     private static final ConcurrentMap<String, FleaObjectPool> fleaObjectPools = new ConcurrentHashMap<>();
 
+    private static final Object objectPoolLock = new Object();
+
     private FleaObjectPoolFactory() {
     }
 
@@ -58,7 +60,7 @@ public class FleaObjectPoolFactory {
             LOGGER.debug1(new Object() {}, "Pool Name Key = {}", poolNameKey);
         }
         if (!fleaObjectPools.containsKey(poolNameKey)) {
-            synchronized (fleaObjectPools) {
+            synchronized (objectPoolLock) {
                 if (!fleaObjectPools.containsKey(poolNameKey)) {
                     fleaObjectPools.put(poolNameKey, build(poolName, objClazz));
                 }

@@ -45,6 +45,8 @@ public class RedisClusterPool {
 
     private static final ConcurrentMap<String, RedisClusterPool> redisClusterPools = new ConcurrentHashMap<>();
 
+    private static final Object redisClusterPoolLock = new Object();
+
     private String poolName; // 连接池名
 
     private JedisCluster jedisCluster; // Jedis集群实例
@@ -72,10 +74,10 @@ public class RedisClusterPool {
      */
     public static RedisClusterPool getInstance(String poolName) {
         if (!redisClusterPools.containsKey(poolName)) {
-            synchronized (redisClusterPools) {
+            synchronized (redisClusterPoolLock) {
                 if (!redisClusterPools.containsKey(poolName)) {
                     RedisClusterPool redisClusterPool = new RedisClusterPool(poolName);
-                    redisClusterPools.putIfAbsent(poolName, redisClusterPool);
+                    redisClusterPools.put(poolName, redisClusterPool);
                 }
             }
         }
