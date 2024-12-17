@@ -33,8 +33,6 @@ public class OpenAIConfig {
         this.baseUrl = baseUrl;
     }
 
-
-
     public String getModelId() {
         return modelId;
     }
