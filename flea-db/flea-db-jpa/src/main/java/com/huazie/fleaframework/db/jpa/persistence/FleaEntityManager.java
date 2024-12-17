@@ -43,8 +43,6 @@ public class FleaEntityManager {
 
     private static final ConcurrentMap<String, EntityManager> entityManagerMap = new ConcurrentHashMap<>();
 
-    private static final Object entityManagerMapLock = new Object();
-
     private static final ThreadLocal<Map<Object, Object>> resources = new NamedThreadLocal<>("EntityManager resources");
 
     private FleaEntityManager() {
@@ -68,7 +66,7 @@ public class FleaEntityManager {
         StringUtils.checkBlank(transactionName, DaoException.class, "ERROR-DB-DAO0000000002", "transactionName");
 
         if (!entityManagerMap.containsKey(unitName)) {
-            synchronized (entityManagerMapLock) {
+            synchronized (entityManagerMap) {
                 if (!entityManagerMap.containsKey(unitName)) {
                     // 根据事务名，获取配置的事务管理者
                     JpaTransactionManager manger = (JpaTransactionManager) FleaApplicationContext.getBean(transactionName);

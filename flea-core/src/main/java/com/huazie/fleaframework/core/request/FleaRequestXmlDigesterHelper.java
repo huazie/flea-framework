@@ -32,8 +32,8 @@ public class FleaRequestXmlDigesterHelper {
 
     private static volatile FleaRequestXmlDigesterHelper xmlDigester;
 
-    private static final Object fleaRequestInitLock = new Object();
-    private static final Object fleaRequestFilterInitLock = new Object();
+    private final Object fleaRequestInitLock = new Object();
+    private final Object fleaRequestFilterInitLock = new Object();
 
     private static FleaRequest fleaRequest;
     private static FleaRequestFilter fleaRequestFilter;

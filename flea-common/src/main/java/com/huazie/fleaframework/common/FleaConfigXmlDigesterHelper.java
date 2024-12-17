@@ -23,7 +23,7 @@ public class FleaConfigXmlDigesterHelper {
 
     private static volatile FleaConfigXmlDigesterHelper xmlDigester;
 
-    private static final Object fleaConfigInitLock = new Object();
+    private final Object fleaConfigInitLock = new Object();
 
     private static FleaConfig fleaConfig;
 

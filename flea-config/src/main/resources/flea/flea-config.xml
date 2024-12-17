@@ -40,10 +40,10 @@
     </config-items>
 
     <config-items key="mysql-fleaauth" desc="JDBC数据库配置【key=数据库系统-数据库或数据库用户】">
-        <config-item key="driver" desc="mysql数据库驱动名">com.mysql.jdbc.Driver</config-item>
-        <config-item key="url" desc="mysql数据库连接地址">jdbc:mysql://localhost:3306/fleaauth?useUnicode=true&amp;characterEncoding=UTF-8</config-item>
+        <config-item key="driver" desc="mysql数据库驱动名">com.mysql.cj.jdbc.Driver</config-item>
+        <config-item key="url" desc="mysql数据库连接地址">jdbc:mysql://localhost:3306/fleaauth?characterEncoding=UTF-8&amp;serverTimezone=GMT%2B8</config-item>
         <config-item key="user" desc="mysql数据库登录用户名">root</config-item>
-        <config-item key="password" desc="mysql数据库登录密码">root</config-item>
+        <config-item key="password" desc="mysql数据库登录密码">123456</config-item>
     </config-items>
 
     <config-items key="mysql-fleamarket" desc="JDBC数据库配置【key=数据库系统-数据库或数据库用户】">

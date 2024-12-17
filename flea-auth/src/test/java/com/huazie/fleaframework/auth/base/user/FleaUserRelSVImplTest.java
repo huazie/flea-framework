@@ -1,16 +1,22 @@
 package com.huazie.fleaframework.auth.base.user;
 
+import com.huazie.fleaframework.auth.base.user.entity.FleaUserRel;
 import com.huazie.fleaframework.auth.base.user.service.interfaces.IFleaUserRelSV;
 import com.huazie.fleaframework.auth.common.AuthRelTypeEnum;
 import com.huazie.fleaframework.auth.common.pojo.user.FleaUserRelPOJO;
 import com.huazie.fleaframework.auth.util.FleaAuthPOJOUtils;
 import com.huazie.fleaframework.common.exceptions.CommonException;
+import com.huazie.fleaframework.common.slf4j.FleaLogger;
+import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
+import com.huazie.fleaframework.db.jpa.common.FleaJPAQuery;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
+import java.util.List;
+
 
 /**
  * 已验证
@@ -23,12 +29,15 @@ import javax.annotation.Resource;
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
 public class FleaUserRelSVImplTest {
 
+    private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(FleaJPAQuery.class);
     @Resource(name = "fleaUserRelSV")
     private IFleaUserRelSV fleaUserRelSV;
 
+
     @Test
     public void getUserRelList() throws CommonException {
-        fleaUserRelSV.getUserRelList(10000L, AuthRelTypeEnum.USER_REL_ROLE.getRelType());
+        List<FleaUserRel> userRelList = fleaUserRelSV.getUserRelList(10000L, AuthRelTypeEnum.USER_REL_ROLE.getRelType());
+        LOGGER.debug1(userRelList,"---------------------------");
     }
 
     @Test

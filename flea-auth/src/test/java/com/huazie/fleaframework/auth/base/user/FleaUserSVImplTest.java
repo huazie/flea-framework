@@ -1,5 +1,6 @@
 package com.huazie.fleaframework.auth.base.user;
 
+import com.huazie.fleaframework.auth.base.user.entity.FleaUser;
 import com.huazie.fleaframework.auth.base.user.service.interfaces.IFleaUserSV;
 import com.huazie.fleaframework.auth.common.UserStateEnum;
 import com.huazie.fleaframework.auth.common.pojo.user.register.FleaUserRegisterPOJO;
@@ -27,7 +28,8 @@ public class FleaUserSVImplTest {
 
     @Test
     public void queryValidUser() throws CommonException {
-        fleaUserSV.queryValidUser(10000L);
+        FleaUser fleaUser = fleaUserSV.queryValidUser(10000L);
+        System.out.println(fleaUser.toString());
     }
 
     @Test

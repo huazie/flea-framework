@@ -31,7 +31,7 @@ public class JerseyXmlDigesterHelper {
 
     private static volatile JerseyXmlDigesterHelper xmlDigester;
 
-    private static final Object jerseyFilterInitLock = new Object();
+    private final Object jerseyFilterInitLock = new Object();
 
     private Jersey jersey;
 
