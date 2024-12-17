@@ -18,6 +18,8 @@ public class BaiLianAIConfig {
     @Value("${flea.ai.aliyun.model-id:qwen1.5-110b-chat}")
     private String modelId;
 
+
+
     public String getApiKey() {
         return apiKey;
     }
