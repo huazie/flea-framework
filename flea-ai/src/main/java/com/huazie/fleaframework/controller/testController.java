@@ -16,4 +16,10 @@ public class testController {
         String s = baiLianAIModelCore.generateText(prompt);
         return s;
     }
+
+    @GetMapping("/img")
+    public String testimg(@RequestParam(value = "message", defaultValue = "一只坐着的橘黄色的猫，表情愉悦，活泼可爱，逼真准确") String prompt){
+        String s = baiLianAIModelCore.generateImage(prompt);
+        return s;
+    }
 }

@@ -13,13 +13,28 @@ public class BaiLianCom {
         }
     }
 
+    public static class input{
+        String prompt;
+
+        public input(String prompt) {
+            this.prompt = prompt;
+        }
+    }
+
     public static class RequestBody {
         String model;
         BaiLianCom.Message[] messages;
 
         Boolean stream;
 
-        public RequestBody(String model, BaiLianCom.Message[] messages,Boolean stream) {
+        BaiLianCom.input input;
+
+        public RequestBody(String model, BaiLianCom.input input) {
+            this.model = model;
+            this.input = input;
+        }
+
+        public RequestBody(String model, BaiLianCom.Message[] messages, Boolean stream) {
             this.model = model;
             this.messages = messages;
             this.stream = stream;
