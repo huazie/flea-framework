@@ -44,6 +44,7 @@ public class BaiLianAIModelCore implements AIModelCore {
                     },
                     false//流式输出
             );
+
             // 将请求体转换为 JSON
             Gson gson = new Gson();
             String jsonInputString = gson.toJson(requestBody);
