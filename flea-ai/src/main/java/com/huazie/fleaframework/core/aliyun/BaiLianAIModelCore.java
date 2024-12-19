@@ -12,12 +12,6 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 
@@ -35,8 +29,9 @@ public class BaiLianAIModelCore implements AIModelCore {
 
     @Override
     public String generateText(String prompt) {
-        String url = baiLianAIConfig.getBaseUrl();
+        String url = "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions";
         String model = baiLianAIConfig.getModelId();
+        String apiKey = baiLianAIConfig.getApiKey();
 
         String respon = null;
 
@@ -53,57 +48,36 @@ public class BaiLianAIModelCore implements AIModelCore {
             Gson gson = new Gson();
             String jsonInputString = gson.toJson(requestBody);
 
-            // 创建 URL 对象
-            URL url2 = new URL(url);
-            HttpURLConnection httpURLConnection = (HttpURLConnection) url2.openConnection();
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization", "Bearer " + apiKey);
+            headers.setContentType(MediaType.APPLICATION_JSON);
 
-            // 设置请求方法为 POST
-            httpURLConnection.setRequestMethod("POST");
-            httpURLConnection.setRequestProperty("Content-Type", "application/json; utf-8");
-            httpURLConnection.setRequestProperty("Accept", "application/json");
+            // 创建HTTP请求
+            HttpEntity<String> requestEntity = new HttpEntity<>(jsonInputString, headers);
 
-            // 若没有配置环境变量，请用百炼API Key将下行替换为：String apiKey = "sk-xxx";
-            String apiKey = baiLianAIConfig.getApiKey();
-            String auth = "Bearer " + apiKey;
-            httpURLConnection.setRequestProperty("Authorization", auth);
+            // 发送POST请求
+            ResponseEntity<String> response = restTemplate.exchange(
+                    url,
+                    HttpMethod.POST,
+                    requestEntity,
+                    String.class
+            );
 
-            // 启用输入输出流
-            httpURLConnection.setDoOutput(true);
-
-            // 写入请求体
-            try (OutputStream os = httpURLConnection.getOutputStream()) {
-                byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
-                os.write(input, 0, input.length);
+            // 处理响应
+            if (response.getStatusCode() != HttpStatus.OK) {
+                throw new RuntimeException("API调用失败: Response StatusCode: " + response.getStatusCode());
             }
-
-            // 获取响应码
-            int responseCode = httpURLConnection.getResponseCode();
-            System.out.println("Response Code: " + responseCode);
-            if (responseCode != 200) {
-                // 处理错误响应
-                throw new RuntimeException("API调用失败: Response Code: " + responseCode);
-            }
-
-            // 读取响应体
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream(), StandardCharsets.UTF_8))) {
-                StringBuilder response = new StringBuilder();
-                String responseLine;
-                while ((responseLine = br.readLine()) != null) {
-                    response.append(responseLine.trim());
-                }
-                System.out.println("Response Body: " + response);
-                respon = response.toString();
-            }
-            JSONObject jsonObject = new JSONObject(respon);
+            JSONObject jsonObject = new JSONObject(response.getBody());
             JSONArray choicesArray = jsonObject.getJSONArray("choices");
             JSONObject firstChoice = choicesArray.getJSONObject(0);
             JSONObject messageObject = firstChoice.getJSONObject("message");
             respon = messageObject.getString("content");
             System.out.println(respon);
+            return respon;
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
-        return respon;
     }
 
 
