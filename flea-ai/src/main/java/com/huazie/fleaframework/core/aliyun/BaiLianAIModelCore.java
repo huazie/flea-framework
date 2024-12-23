@@ -1,7 +1,9 @@
 package com.huazie.fleaframework.core.aliyun;
 
 import com.google.gson.Gson;
-import com.huazie.fleaframework.common.BaiLianCom;
+import com.huazie.fleaframework.common.BaiLianRequest;
+import com.huazie.fleaframework.common.OpenAiApi;
+import com.huazie.fleaframework.common.util.json.FastJsonUtils;
 import com.huazie.fleaframework.config.aliyun.BaiLianAIConfig;
 import com.huazie.fleaframework.core.AIModelCore;
 import io.micrometer.common.util.StringUtils;
@@ -11,8 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Flux;
 
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 
 @Component
@@ -27,23 +33,28 @@ public class BaiLianAIModelCore implements AIModelCore {
         this.restTemplate = restTemplate;
     }
 
+
+    //非流式输出
     @Override
     public String generateText(String prompt) {
         String url = "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions";
         String model = baiLianAIConfig.getModelId();
         String apiKey = baiLianAIConfig.getApiKey();
 
-        String respon = null;
+
+        String respon;
 
         try {
             // 创建请求体
-            BaiLianCom.RequestBody requestBody = new BaiLianCom.RequestBody(
+            BaiLianRequest.RequestBody requestBody = new BaiLianRequest.RequestBody(
                     model,
-                    new BaiLianCom.Message[]{
-                            new BaiLianCom.Message("user", prompt)
+                    new BaiLianRequest.Message[]{
+                            new BaiLianRequest.Message("user", prompt)
                     },
-                    false//流式输出
+                    false//非流式输出
             );
+
+            //非流式输出
 
             // 将请求体转换为 JSON
             Gson gson = new Gson();
@@ -52,7 +63,6 @@ public class BaiLianAIModelCore implements AIModelCore {
             HttpHeaders headers = new HttpHeaders();
             headers.set("Authorization", "Bearer " + apiKey);
             headers.setContentType(MediaType.APPLICATION_JSON);
-
             // 创建HTTP请求
             HttpEntity<String> requestEntity = new HttpEntity<>(jsonInputString, headers);
 
@@ -63,10 +73,13 @@ public class BaiLianAIModelCore implements AIModelCore {
                     requestEntity,
                     String.class
             );
-
             // 处理响应
             if (response.getStatusCode() != HttpStatus.OK) {
                 throw new RuntimeException("API调用失败: Response StatusCode: " + response.getStatusCode());
+            }
+
+            if (StringUtils.isEmpty(response.getBody())) {
+                throw new Exception("body is null");
             }
             JSONObject jsonObject = new JSONObject(response.getBody());
             JSONArray choicesArray = jsonObject.getJSONArray("choices");
@@ -75,6 +88,53 @@ public class BaiLianAIModelCore implements AIModelCore {
             respon = messageObject.getString("content");
             System.out.println(respon);
             return respon;
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //流式输出
+    @Override
+    public Flux<String> genetateText4Stream(String prompt) {
+        String model = baiLianAIConfig.getModelId();
+        String apiKey = baiLianAIConfig.getApiKey();
+
+        final Predicate<String> SSE_DONE_PREDICATE = "[DONE]"::equals;//(content -> "[DONE]".equals(content);)
+
+        try {
+            // 创建请求体
+            BaiLianRequest.RequestBody requestBody = new BaiLianRequest.RequestBody(
+                    model,
+                    new BaiLianRequest.Message[]{
+                            new BaiLianRequest.Message("user", prompt)
+                    },
+                    true//流式输出
+            );
+            WebClient webClient = WebClient.create("https://dashscope.aliyuncs.com");
+            return webClient.post()
+                    .uri("/compatible-mode/v1/chat/completions") // 请求的 URI 路径
+                    .header("Content-Type", "application/json;charset=utf-8")  // 设置请求头
+                    .header("Authorization", apiKey) // 替换为实际的 API key
+                    .bodyValue(requestBody)
+                    .retrieve()
+                    .bodyToFlux(String.class)  // 获取原始的事件流字符串
+                    .takeUntil(SSE_DONE_PREDICATE)
+                    .filter(SSE_DONE_PREDICATE.negate())
+                    .map(content -> {
+                        System.out.println("Received content: " + content); // 打印 content 以进行调试
+                        OpenAiApi.ChatResponse chatResponse = FastJsonUtils.toEntity(content, OpenAiApi.ChatResponse.class);
+                        return chatResponse.getChoices()
+                                .stream()
+                                .map(choice -> choice.getDelta().getContent())  // 获取 delta.content
+                                .filter(deltaContent -> deltaContent != null)  // 过滤掉 null 值
+                                .collect(Collectors.toList());
+                    })
+                    .flatMap(Flux::fromIterable);
+            //.subscribe(System.out::println);
+
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -91,9 +151,9 @@ public class BaiLianAIModelCore implements AIModelCore {
         try {
             // 构建请求体
 
-            BaiLianCom.RequestBody requestBody = new BaiLianCom.RequestBody(
+            BaiLianRequest.RequestBody requestBody = new BaiLianRequest.RequestBody(
                     model,
-                    new BaiLianCom.input(prompt)
+                    new BaiLianRequest.input(prompt)
             );
 
             // 将请求体转换为 JSON

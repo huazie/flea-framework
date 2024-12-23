@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import reactor.core.publisher.Flux;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +22,11 @@ public class OpenAIModelCore implements AIModelCore {
     public OpenAIModelCore(OpenAIConfig openAIConfig, RestTemplate restTemplate) {
         this.openAIConfig = openAIConfig;
         this.restTemplate = restTemplate;
+    }
+
+    @Override
+    public Flux<String> genetateText4Stream(String prompt) {
+        return null;
     }
 
     @Override
