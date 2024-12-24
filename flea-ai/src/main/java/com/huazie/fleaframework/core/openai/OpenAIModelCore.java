@@ -1,5 +1,6 @@
 package com.huazie.fleaframework.core.openai;
 
+import com.huazie.fleaframework.common.OpenAiApi.ChatRequest;
 import com.huazie.fleaframework.config.openai.OpenAIConfig;
 import com.huazie.fleaframework.core.AIModelCore;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +26,12 @@ public class OpenAIModelCore implements AIModelCore {
     }
 
     @Override
-    public Flux<String> genetateText4Stream(String prompt) {
+    public Flux<String> genetateText4Stream(ChatRequest chatRequest) {
         return null;
     }
 
     @Override
-    public String generateText(String prompt) {
+    public String generateText(ChatRequest chatRequest) {
         String url = openAIConfig.getBaseUrl() + "/v1/completions";
 
         // 使用安全的JSON序列化方法
@@ -42,7 +43,7 @@ public class OpenAIModelCore implements AIModelCore {
             // 创建请求体
             Map<String, String> payload = new HashMap<>();
             payload.put("model", openAIConfig.getModelId());
-            payload.put("prompt", prompt);
+            //payload.put("prompt", prompt);
 
             HttpEntity<Map<String, String>> requestEntity = new HttpEntity<>(payload, headers);
 

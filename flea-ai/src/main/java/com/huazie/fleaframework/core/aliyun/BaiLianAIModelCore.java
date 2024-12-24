@@ -3,6 +3,7 @@ package com.huazie.fleaframework.core.aliyun;
 import com.google.gson.Gson;
 import com.huazie.fleaframework.common.BaiLianRequest;
 import com.huazie.fleaframework.common.OpenAiApi;
+import com.huazie.fleaframework.common.OpenAiApi.ChatRequest;
 import com.huazie.fleaframework.common.util.json.FastJsonUtils;
 import com.huazie.fleaframework.config.aliyun.BaiLianAIConfig;
 import com.huazie.fleaframework.core.AIModelCore;
@@ -36,29 +37,22 @@ public class BaiLianAIModelCore implements AIModelCore {
 
     //非流式输出
     @Override
-    public String generateText(String prompt) {
+    public String generateText(ChatRequest chatRequest) {
         String url = "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions";
         String model = baiLianAIConfig.getModelId();
         String apiKey = baiLianAIConfig.getApiKey();
 
 
-        String respon;
-
         try {
-            // 创建请求体
-            BaiLianRequest.RequestBody requestBody = new BaiLianRequest.RequestBody(
-                    model,
-                    new BaiLianRequest.Message[]{
-                            new BaiLianRequest.Message("user", prompt)
-                    },
-                    false//非流式输出
-            );
-
-            //非流式输出
+            String respon;
+            ChatRequest chatRequestNew = chatRequest;
+            if (StringUtils.isEmpty(chatRequest.getModel())) {
+                chatRequestNew = chatRequestNew.convertBuilder().model(model).build();
+            }
 
             // 将请求体转换为 JSON
             Gson gson = new Gson();
-            String jsonInputString = gson.toJson(requestBody);
+            String jsonInputString = gson.toJson(chatRequestNew);
 
             HttpHeaders headers = new HttpHeaders();
             headers.set("Authorization", "Bearer " + apiKey);
@@ -98,27 +92,35 @@ public class BaiLianAIModelCore implements AIModelCore {
 
     //流式输出
     @Override
-    public Flux<String> genetateText4Stream(String prompt) {
+    public Flux<String> genetateText4Stream(ChatRequest chatRequest) {
         String model = baiLianAIConfig.getModelId();
         String apiKey = baiLianAIConfig.getApiKey();
 
         final Predicate<String> SSE_DONE_PREDICATE = "[DONE]"::equals;//(content -> "[DONE]".equals(content);)
 
         try {
-            // 创建请求体
-            BaiLianRequest.RequestBody requestBody = new BaiLianRequest.RequestBody(
-                    model,
-                    new BaiLianRequest.Message[]{
-                            new BaiLianRequest.Message("user", prompt)
-                    },
-                    true//流式输出
-            );
+//            // 创建请求体
+//            BaiLianRequest.RequestBody requestBody = new BaiLianRequest.RequestBody(
+//                    model,
+//                    new BaiLianRequest.Message[]{
+//                            new BaiLianRequest.Message("user", prompt)
+//                    },
+//                    true//流式输出
+//            );
+
+            ChatRequest chatRequestNew = chatRequest;
+            if (StringUtils.isEmpty(chatRequest.getModel())) {
+                chatRequestNew = chatRequestNew.convertBuilder().model(model).build();
+            }
+            if (chatRequest.getStream() != null && !chatRequest.getStream()) {
+                chatRequestNew = chatRequestNew.convertBuilder().stream(true).build();
+            }
             WebClient webClient = WebClient.create("https://dashscope.aliyuncs.com");
             return webClient.post()
                     .uri("/compatible-mode/v1/chat/completions") // 请求的 URI 路径
-                    .header("Content-Type", "application/json;charset=utf-8")  // 设置请求头
+                    .header("Content-Type", "application/json")  // 设置请求头
                     .header("Authorization", apiKey) // 替换为实际的 API key
-                    .bodyValue(requestBody)
+                    .bodyValue(chatRequestNew)
                     .retrieve()
                     .bodyToFlux(String.class)  // 获取原始的事件流字符串
                     .takeUntil(SSE_DONE_PREDICATE)
