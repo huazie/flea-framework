@@ -5,3 +5,4 @@ flea:
   ai:
     aliyun:
        api-key:
+       model-id: qwen-long

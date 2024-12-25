@@ -17,6 +17,8 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -27,6 +29,8 @@ public class BaiLianAIModelCore implements AIModelCore {
 
     private final BaiLianAIConfig baiLianAIConfig;
     private final RestTemplate restTemplate;
+
+    static List<ChatRequest.Message> historyMessage = new ArrayList<>();
 
     @Autowired
     public BaiLianAIModelCore(BaiLianAIConfig baiLianAIConfig, RestTemplate restTemplate) {
@@ -81,6 +85,10 @@ public class BaiLianAIModelCore implements AIModelCore {
             JSONObject messageObject = firstChoice.getJSONObject("message");
             respon = messageObject.getString("content");
             System.out.println(respon);
+
+            ChatRequest.Message.Builder respmessageBuilder = FastJsonUtils.toEntity(messageObject.toString(), ChatRequest.Message.Builder.class);
+            ChatRequest.Message respmessage = respmessageBuilder.build();
+            historyMessage.add(respmessage);
             return respon;
 
 
@@ -99,14 +107,6 @@ public class BaiLianAIModelCore implements AIModelCore {
         final Predicate<String> SSE_DONE_PREDICATE = "[DONE]"::equals;//(content -> "[DONE]".equals(content);)
 
         try {
-//            // 创建请求体
-//            BaiLianRequest.RequestBody requestBody = new BaiLianRequest.RequestBody(
-//                    model,
-//                    new BaiLianRequest.Message[]{
-//                            new BaiLianRequest.Message("user", prompt)
-//                    },
-//                    true//流式输出
-//            );
 
             ChatRequest chatRequestNew = chatRequest;
             if (StringUtils.isEmpty(chatRequest.getModel())) {
@@ -126,11 +126,12 @@ public class BaiLianAIModelCore implements AIModelCore {
                     .takeUntil(SSE_DONE_PREDICATE)
                     .filter(SSE_DONE_PREDICATE.negate())
                     .map(content -> {
-                        System.out.println("Received content: " + content); // 打印 content 以进行调试
+                        //System.out.println("Received content: " + content); // 打印 content 以进行调试
                         OpenAiApi.ChatResponse chatResponse = FastJsonUtils.toEntity(content, OpenAiApi.ChatResponse.class);
+
                         return chatResponse.getChoices()
                                 .stream()
-                                .map(choice -> choice.getDelta().getContent())  // 获取 delta.content
+                                .map(choice -> choice.getDelta().getContent())
                                 .filter(deltaContent -> deltaContent != null)  // 过滤掉 null 值
                                 .collect(Collectors.toList());
                     })
@@ -141,6 +142,40 @@ public class BaiLianAIModelCore implements AIModelCore {
             e.printStackTrace();
             return null;
         }
+    }
+
+
+    //上下文对话(非流式)
+    public String generateTextContext(ChatRequest chatRequest, String prompt) {
+
+        ChatRequest.Message userMessage = new ChatRequest.Message.Builder("user", prompt).build();
+        historyMessage.add(userMessage);
+        ChatRequest chatRequestNew = chatRequest.convertBuilder().messages(historyMessage).build();
+        return generateText(chatRequestNew);
+    }
+
+    //上下文对话(流式)
+    public Flux<String> generateText4StreamContext(ChatRequest chatRequest, String prompt) {
+
+        if (chatRequest.getStream() != null && !chatRequest.getStream()) {
+            chatRequest = chatRequest.convertBuilder().stream(true).build();
+        }
+        ChatRequest.Message userMessage = new ChatRequest.Message.Builder("user", prompt).build();
+        historyMessage.add(userMessage);
+        ChatRequest chatRequestNew = chatRequest.convertBuilder().messages(historyMessage).build();
+        Flux<String> flux = genetateText4Stream(chatRequestNew);
+        flux.reduce("", (a, b) -> a + b)
+                .subscribe(content -> {         //subscribe() 方法会异步地订阅 Mono<String> 并在数据可用时通过回调函数处理。
+                    ChatRequest.Message assistantMessage = new ChatRequest.Message.Builder("assistant", content).build();
+                    historyMessage.add(assistantMessage);
+                    for (ChatRequest.Message message : historyMessage) {
+                        System.out.println(message.getRole() + ": " + message.getContent());
+                    }
+                });
+        //String content = flux.reduce("", (a, b) -> a + b).toFuture().join();
+        //String content = flux.reduce("", (a, b) -> a + b).block();
+
+        return flux;
     }
 
 
