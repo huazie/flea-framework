@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -83,12 +84,34 @@ public class testController {
         return baiLianAIModelCore.genetateText4Stream(chatRequest);
     }
 
+    //指定前缀输出
+    @GetMapping(value = "/test5", produces = "text/sse;charset=utf-8")
+    public Flux<String> test5(@RequestParam(value = "message", defaultValue = "Hi") String prompt) {
+        ChatRequest.Message message = new ChatRequest.Message.Builder("user", prompt).build();
+        ChatRequest.Message partialMessage = new ChatRequest.Message.Builder("assistant", "噶棍",true).build();
+        List<ChatRequest.Message> list = new ArrayList<>();
+        list.add(message);
+        list.add(partialMessage);
+        ChatRequest chatRequest = new ChatRequest.Builder().messages(list).build();
+        Flux<String> partial = Flux.just("噶棍");
+        return partial.concatWith(baiLianAIModelCore.genetateText4Stream(chatRequest));
+    }
+
+    //指定结构化输出（跟普通的没什么区别）
+    @GetMapping(value = "/test6", produces = "text/sse;charset=utf-8")
+    public Flux<String> test6(@RequestParam(value = "message", defaultValue = "Hi") String prompt) {
+        Map<String,Object> map = new HashMap<>();
+        map.put("type","json_object");
+        ChatRequest.Message message = new ChatRequest.Message.Builder("user", prompt).build();
+        ChatRequest chatRequest = new ChatRequest.Builder().message(message).responseFormat(map).build();
+        return baiLianAIModelCore.genetateText4Stream(chatRequest);
+    }
+
 
     //文本转图像（简易）
     @GetMapping("/img")
     public String testimg(@RequestParam(value = "message", defaultValue = "一只坐着的橘黄色的猫，表情愉悦，活泼可爱，逼真准确") String prompt) {
-        String s = baiLianAIModelCore.generateImage(prompt);
-        return s;
+        return baiLianAIModelCore.generateImage(prompt);
     }
 
 

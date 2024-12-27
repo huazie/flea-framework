@@ -263,21 +263,30 @@ public class OpenAiApi {
              */
             private String role;
 
+            private Boolean partial;
+
             // Private constructor
             private Message(Builder builder) {
                 this.content = builder.content;
                 this.role = builder.role;
+                this.partial = builder.partial;
             }
 
             // Static inner Builder class
             public static class Builder {
                 private String content;
                 private String role;
+                private Boolean partial;
 
                 // Builder constructor with required fields
                 public Builder(String role, String content) {
                     this.role = role;
                     this.content = content;
+                }
+                public Builder(String role, String content,Boolean partial) {
+                    this.role = role;
+                    this.content = content;
+                    this.partial = partial;
                 }
 
                 // Method to build the final Message object
@@ -294,12 +303,16 @@ public class OpenAiApi {
             public String getRole() {
                 return role;
             }
+            public Boolean getPartial() {
+                return partial;
+            }
 
             @Override
             public String toString() {
                 return "Message{" +
                         "content='" + content + '\'' +
                         ", role='" + role + '\'' +
+                        ", partial='" + partial + '\'' +
                         '}';
             }
         }
