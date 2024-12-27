@@ -7,6 +7,7 @@ import com.huazie.fleaframework.common.OpenAiApi.ChatRequest;
 import com.huazie.fleaframework.common.util.json.FastJsonUtils;
 import com.huazie.fleaframework.config.aliyun.BaiLianAIConfig;
 import com.huazie.fleaframework.core.AIModelCore;
+import com.huazie.fleaframework.util.FunctionUtil;
 import io.micrometer.common.util.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -17,9 +18,10 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 
+import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -79,10 +81,20 @@ public class BaiLianAIModelCore implements AIModelCore {
             if (StringUtils.isEmpty(response.getBody())) {
                 throw new Exception("body is null");
             }
+            System.out.println(response.getBody());
             JSONObject jsonObject = new JSONObject(response.getBody());
             JSONArray choicesArray = jsonObject.getJSONArray("choices");
             JSONObject firstChoice = choicesArray.getJSONObject(0);
             JSONObject messageObject = firstChoice.getJSONObject("message");
+            //工具调用
+            JSONArray toolCalls = messageObject.optJSONArray("tool_calls");
+            if (toolCalls != null && !toolCalls.isEmpty()) {
+                JSONObject functionJsonObj = toolCalls.getJSONObject(0).optJSONObject("function");
+                if (functionJsonObj != null && !functionJsonObj.isEmpty()) {
+                    OpenAiApi.ChatResponse.Function function = FastJsonUtils.toEntity(functionJsonObj.toString(), OpenAiApi.ChatResponse.Function.class);
+                    return executeTool(function);
+                }
+            }
             respon = messageObject.getString("content");
             System.out.println(respon);
 
@@ -105,6 +117,7 @@ public class BaiLianAIModelCore implements AIModelCore {
         String apiKey = baiLianAIConfig.getApiKey();
 
         final Predicate<String> SSE_DONE_PREDICATE = "[DONE]"::equals;//(content -> "[DONE]".equals(content);)
+        AtomicBoolean functionCall = new AtomicBoolean(false);
 
         try {
 
@@ -115,18 +128,77 @@ public class BaiLianAIModelCore implements AIModelCore {
             if (chatRequest.getStream() != null && !chatRequest.getStream()) {
                 chatRequestNew = chatRequestNew.convertBuilder().stream(true).build();
             }
+            System.out.println(FastJsonUtils.toJsonString(chatRequestNew));
             WebClient webClient = WebClient.create("https://dashscope.aliyuncs.com");
-            return webClient.post()
+            Flux<String> fluxResponse = webClient.post()
                     .uri("/compatible-mode/v1/chat/completions") // 请求的 URI 路径
-                    .header("Content-Type", "application/json")  // 设置请求头
+                    .header("Content-Type", "application/json;charset=utf-8")  // 设置请求头
                     .header("Authorization", apiKey) // 替换为实际的 API key
                     .bodyValue(chatRequestNew)
                     .retrieve()
-                    .bodyToFlux(String.class)  // 获取原始的事件流字符串
-                    .takeUntil(SSE_DONE_PREDICATE)
-                    .filter(SSE_DONE_PREDICATE.negate())
+                    .bodyToFlux(String.class)
+                    .takeUntil(SSE_DONE_PREDICATE)//从流中读取数据直到 SSE_DONE_PREDICATE 条件满足
+                    .filter(SSE_DONE_PREDICATE.negate());//过滤;
+
+
+            List<String> respList = fluxResponse.collect(Collectors.toList()).block();
+
+            //判读function-call
+            StringBuilder nameNew = new StringBuilder();
+            StringBuilder argumentsNew = new StringBuilder();
+            for (int i = 0; i < respList.size(); i++) {
+                System.out.println("=======================\n" + respList.get(i) + "\n=======================");
+                String resp = respList.get(i);
+                OpenAiApi.ChatResponse chatResponse = FastJsonUtils.toEntity(resp, OpenAiApi.ChatResponse.class);
+                OpenAiApi.ChatResponse.Choice choice = chatResponse.getChoices().get(0);
+                OpenAiApi.ChatResponse.Delta delta = choice.getDelta();
+                String detalStr = FastJsonUtils.toJsonString(delta);
+                JSONObject deltaJsonObj = new JSONObject(detalStr);
+                if (deltaJsonObj.has("toolCalls")) {
+                    functionCall.set(true);
+                    for (OpenAiApi.ChatResponse.ToolCall toolCall : delta.getToolCalls()) {
+                        JSONObject toolcallJsonObj = new JSONObject(FastJsonUtils.toJsonString(toolCall));
+                        if (toolcallJsonObj.has("function")) {
+                            OpenAiApi.ChatResponse.Function function = toolCall.getFunction();
+                            if (function != null) {
+                                String name = function.getName();
+                                String arguments = function.getArguments();
+                                if (StringUtils.isNotEmpty(name)) {
+                                    nameNew.append(name);
+                                }
+                                if (StringUtils.isNotEmpty(arguments)) {
+                                    argumentsNew.append(arguments);
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+
+
+            if (functionCall.get()) {
+                OpenAiApi.ChatResponse.Function function1 = new OpenAiApi.ChatResponse.Function();
+                function1.setName(nameNew.toString());
+                function1.setArguments(argumentsNew.toString());
+                String str = executeTool(function1);
+                return Flux.<String>create(sink -> {
+                            for (int i = 0; i < str.length(); ) {
+                                int codePoint = str.codePointAt(i);
+                                String character = new String(Character.toChars(codePoint));
+                                sink.next(character);
+                                i += Character.charCount(codePoint);
+                            }
+                            sink.complete();
+                        })
+                        // 使用 delayElements 模拟延迟
+                        .delayElements(Duration.ofMillis(200));
+            }
+
+
+            return fluxResponse  // 获取原始的事件流字符串
                     .map(content -> {
-                        //System.out.println("Received content: " + content); // 打印 content 以进行调试
+                        System.out.println("Received content: " + content); // 打印 content 以进行调试
                         OpenAiApi.ChatResponse chatResponse = FastJsonUtils.toEntity(content, OpenAiApi.ChatResponse.class);
 
                         return chatResponse.getChoices()
@@ -168,14 +240,36 @@ public class BaiLianAIModelCore implements AIModelCore {
                 .subscribe(content -> {         //subscribe() 方法会异步地订阅 Mono<String> 并在数据可用时通过回调函数处理。
                     ChatRequest.Message assistantMessage = new ChatRequest.Message.Builder("assistant", content).build();
                     historyMessage.add(assistantMessage);
-                    for (ChatRequest.Message message : historyMessage) {
-                        System.out.println(message.getRole() + ": " + message.getContent());
-                    }
+//                    for (ChatRequest.Message message : historyMessage) {
+//                        System.out.println(message.getRole() + ": " + message.getContent());
+//                    }
                 });
         //String content = flux.reduce("", (a, b) -> a + b).toFuture().join();
         //String content = flux.reduce("", (a, b) -> a + b).block();
 
         return flux;
+    }
+
+    /**
+     * @Description: 调用functiontools
+     * @Param: [functionJsonObj]
+     * @return: java.lang.String
+     * @Author: LC
+     * @Date: 2024/12/26
+     */
+    public String executeTool(OpenAiApi.ChatResponse.Function function) {
+        String functionName = function.getName();
+        String argumentsStr = function.getArguments();
+
+        if (functionName.equals("get_current_time")) {
+            return FunctionUtil.getCurrentTime();
+        } else if (StringUtils.isNotEmpty(argumentsStr) && functionName.equals("get_current_weather")) {
+            JSONObject arguments = new JSONObject(argumentsStr);
+            String location = arguments.getString("location");
+            return FunctionUtil.getCurrentWeather(location);
+        } else {
+            return "未知工具调用，无法回答！";
+        }
     }
 
 

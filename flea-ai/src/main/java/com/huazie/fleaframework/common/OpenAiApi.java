@@ -83,7 +83,7 @@ public class OpenAiApi {
         /**
          * 模型可以调用的一组工具列表。
          */
-        private List<String> tools;
+        private List<FunctionTool> tools;
 
         /**
          * 一种替代温度采样的方法，称为核采样，其中模型考虑具有 top_p 概率质量的标记的结果。
@@ -150,7 +150,7 @@ public class OpenAiApi {
             private Boolean stream = false;//默认false
             private Long temperature;
             private Map<String, Object> toolChoice;
-            private List<String> tools;
+            private List<FunctionTool> tools;
             private Long topP;
             private String user;
 
@@ -230,7 +230,7 @@ public class OpenAiApi {
                 return this;
             }
 
-            public Builder tools(List<String> tools) {
+            public Builder tools(List<FunctionTool> tools) {
                 this.tools = tools;
                 return this;
             }
@@ -294,6 +294,113 @@ public class OpenAiApi {
             public String getRole() {
                 return role;
             }
+
+            @Override
+            public String toString() {
+                return "Message{" +
+                        "content='" + content + '\'' +
+                        ", role='" + role + '\'' +
+                        '}';
+            }
+        }
+
+
+        public static class FunctionTool {
+            private Type type;
+            private Function function;
+
+            private FunctionTool(FunctionTool.Builder builder) {
+                this.type = builder.type;
+                this.function = builder.function;
+            }
+
+            public static class Builder {
+                private Type type;
+                private Function function;
+
+                public Builder(Function function) {
+                    this.function = function;//type是单一常量
+                    this.type = Type.function;
+                }
+
+                public FunctionTool build() {
+                    return new FunctionTool(this);
+                }
+            }
+
+            public Type getType() {
+                return type;
+            }
+
+            public Function getFunction() {
+                return function;
+            }
+
+            @Override
+            public String toString() {
+                return "FunctionTool{" +
+                        "type=" + type +
+                        ", function=" + function +
+                        '}';
+            }
+        }
+
+
+        public static enum Type {
+            function;
+
+            private Type() {
+            }
+
+        }
+
+        public static class Function {
+            private String description;
+            private String name;
+            private Map<String, Object> parameters;
+
+            private Function(Function.Builder builder) {
+                this.description = builder.description;
+                this.name = builder.name;
+                this.parameters = builder.parameters;
+            }
+
+            public static class Builder {
+                private String description;
+                private String name;
+                private Map<String, Object> parameters;
+
+                public Builder(String description, String name, Map<String, Object> parameters) {
+                    this.description = description;
+                    this.name = name;
+                    this.parameters = parameters;
+                }
+
+                public Function build() {
+                    return new Function(this);
+                }
+            }
+
+            public String getDescription() {
+                return description;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public Map<String, Object> getParameters() {
+                return parameters;
+            }
+
+            @Override
+            public String toString() {
+                return "Function{" +
+                        "description='" + description + '\'' +
+                        ", name='" + name + '\'' +
+                        ", parameters=" + parameters +
+                        '}';
+            }
         }
 
 
@@ -350,7 +457,7 @@ public class OpenAiApi {
             return toolChoice;
         }
 
-        public List<String> getTools() {
+        public List<FunctionTool> getTools() {
             return tools;
         }
 
@@ -360,6 +467,29 @@ public class OpenAiApi {
 
         public String getUser() {
             return user;
+        }
+
+
+        @Override
+        public String toString() {
+            return "ChatRequest{" +
+                    "frequencyPenalty=" + frequencyPenalty +
+                    ", logitBias=" + logitBias +
+                    ", maxTokens=" + maxTokens +
+                    ", messages=" + messages +
+                    ", model='" + model + '\'' +
+                    ", n=" + n +
+                    ", presencePenalty=" + presencePenalty +
+                    ", responseFormat=" + responseFormat +
+                    ", seen=" + seen +
+                    ", stop='" + stop + '\'' +
+                    ", stream=" + stream +
+                    ", temperature=" + temperature +
+                    ", toolChoice=" + toolChoice +
+                    ", tools=" + tools +
+                    ", topP=" + topP +
+                    ", user='" + user + '\'' +
+                    '}';
         }
     }
 

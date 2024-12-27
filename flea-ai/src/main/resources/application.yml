@@ -5,4 +5,4 @@ flea:
   ai:
     aliyun:
        api-key:
-       model-id: qwen-long
+       model-id: qwen-plus-0919
