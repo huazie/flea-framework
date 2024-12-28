@@ -27,6 +27,9 @@ public class RedisSentinelPool {
 
     private static final ConcurrentMap<String, RedisSentinelPool> redisPools = new ConcurrentHashMap<>();
 
+    private static final Object redisSentinelPoolLock = new Object();
+
+
     private String poolName; // 连接池名
 
     private JedisSentinelPool jedisSentinelPool; // 分布式Jedis连接池
@@ -54,10 +57,10 @@ public class RedisSentinelPool {
      */
     public static RedisSentinelPool getInstance(String poolName) {
         if (!redisPools.containsKey(poolName)) {
-            synchronized (redisPools) {
+            synchronized (redisSentinelPoolLock) {
                 if (!redisPools.containsKey(poolName)) {
                     RedisSentinelPool redisSentinelPool = new RedisSentinelPool(poolName);
-                    redisPools.putIfAbsent(poolName, redisSentinelPool);
+                    redisPools.put(poolName, redisSentinelPool);
                 }
             }
         }

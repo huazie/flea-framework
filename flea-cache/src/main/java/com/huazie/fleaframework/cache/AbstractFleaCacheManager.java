@@ -29,6 +29,8 @@ public abstract class AbstractFleaCacheManager {
 
     private static final ConcurrentMap<String, AbstractFleaCache> cacheMap = new ConcurrentHashMap<>();
 
+    private static final Object cacheMapLock = new Object();
+
     private Map<String, Integer> configMap = new HashMap<>();   // 各缓存的时间Map
 
     /**
@@ -50,7 +52,7 @@ public abstract class AbstractFleaCacheManager {
      */
     public AbstractFleaCache getCache(String name) {
         if (!cacheMap.containsKey(name)) {
-            synchronized (cacheMap) {
+            synchronized (cacheMapLock) {
                 if (!cacheMap.containsKey(name)) {
                     Integer expiry = configMap.get(name);
                     if (ObjectUtils.isEmpty(expiry)) {
