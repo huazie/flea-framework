@@ -26,6 +26,17 @@ public class CacheUtils {
     }
 
     /**
+     * 根据指定缓存模式枚举，判断是否是哨兵模式
+     *
+     * @param cacheMode 缓存模式枚举
+     * @return true：哨兵模式  false：非哨兵模式
+     * @since 1.1.0
+     */
+    public static boolean isSentinelMode(CacheModeEnum cacheMode) {
+        return CacheModeEnum.SENTINEL.getMode() == cacheMode.getMode();
+    }
+
+    /**
      * 从服务器地址字符串创建HostAndPort实例，
      * 该字符串必须是( host + ":" + port ) 格式。
      *
