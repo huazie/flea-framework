@@ -12,6 +12,7 @@ import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.JedisPoolConfig;
+import redis.clients.jedis.JedisSentinelPool;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -117,6 +118,34 @@ public class FleaCacheTest {
         // jedis.set("huazie", "hello world");
 
         LOGGER.debug("get huazie = {}", jedis.get("huazie"));
+    }
+
+    @Test
+    public void testJedisSentinel() {
+        // 哨兵的集合
+        Set<String> sentinels = new HashSet<>();
+        sentinels.add("127.0.0.1:36379"); // 替换为你的哨兵地址和端口
+        sentinels.add("127.0.0.1:36380"); // 可以添加多个哨兵
+        sentinels.add("127.0.0.1:36381"); // 可以添加多个哨兵
+
+        // 哨兵的主节点名称
+        String masterName = "mymaster"; // 替换为你的哨兵配置中的主节点名称
+
+        // 创建哨兵池
+        JedisPoolConfig poolConfig = new JedisPoolConfig();
+        JedisSentinelPool sentinelPool = new JedisSentinelPool(masterName, sentinels, poolConfig);
+
+        try (Jedis jedis = sentinelPool.getResource()) {
+            // 连接到主节点后，执行一些 Redis 操作
+            jedis.set("foo", "bar");
+            String value = jedis.get("foo");
+            System.out.println("The value of 'foo' is: " + value);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭哨兵池
+            sentinelPool.close();
+        }
     }
 
     @Test
