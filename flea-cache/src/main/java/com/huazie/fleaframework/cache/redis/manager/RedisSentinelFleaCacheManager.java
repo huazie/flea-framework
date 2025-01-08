@@ -21,9 +21,9 @@ import com.huazie.fleaframework.cache.redis.impl.RedisFleaCache;
  * 它里面包含了 读、写、删除 和 清空 缓存的基本操作。
  *
  * @author huazie
- * @version 1.1.0
+ * @version 2.0.0
  * @see RedisFleaCache
- * @since 1.1.0
+ * @since 2.0.0
  */
 public class RedisSentinelFleaCacheManager extends AbstractFleaCacheManager {
 
@@ -32,12 +32,21 @@ public class RedisSentinelFleaCacheManager extends AbstractFleaCacheManager {
     /**
      * 默认构造方法，初始化哨兵模式下默认连接池的Redis客户端
      *
-     * @since 1.1.0
+     * @since 2.0.0
      */
     public RedisSentinelFleaCacheManager() {
+        this(0);
+    }
+
+    /**
+     * 初始化哨兵模式下默认连接池的Redis客户端，指定Redis数据库索引
+     *
+     * @since 2.0.0
+     */
+    public RedisSentinelFleaCacheManager(int database) {
         if (!RedisSentinelConfig.getConfig().isSwitchOpen()) return;
         // 初始化默认连接池
-        RedisSentinelPool.getInstance().initialize();
+        RedisSentinelPool.getInstance().initialize(database);
         // 获取哨兵模式下默认连接池的Redis客户端
         redisClient = RedisClientFactory.getInstance(CacheModeEnum.SENTINEL);
     }

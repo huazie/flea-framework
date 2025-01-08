@@ -268,7 +268,7 @@ public class CacheConstants {
         /**
          * Redis 哨兵模式，主节点（master）所使用的数据库索引（0-15）
          */
-        String REDIS_SENTINEL_CONFIG_DATABASE = "redis.sentinel.dataBase";
+        String REDIS_SENTINEL_CONFIG_DATABASE = "redis.sentinel.database";
     }
 
 }

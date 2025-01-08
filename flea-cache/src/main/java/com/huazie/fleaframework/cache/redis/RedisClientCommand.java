@@ -5,36 +5,38 @@ import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.common.util.ExceptionUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
-import redis.clients.jedis.ShardedJedis;
-import redis.clients.jedis.ShardedJedisPool;
 import redis.clients.jedis.exceptions.JedisConnectionException;
+import redis.clients.jedis.util.Pool;
+
+import java.io.Closeable;
+import java.io.IOException;
 
 /**
- * Redis客户端命令行，封装了使用ShardedJedis操作Redis缓存的公共逻辑，
+ * Redis客户端命令行，封装了使用Jedis操作Redis缓存的公共逻辑，
  * 如果出现异常可以重试{@code maxAttempts} 次。
  *
  * <p> 抽象方法 {@code execute}，由子类或匿名类实现。在实际调用前，
- * 需要从分布式Jedis连接池中获取分布式Jedis对象；调用结束后，
- * 关闭分布式Jedis对象，归还给分布式Jedis连接池。
+ * 需要从Jedis连接池中获取Jedis对象；调用结束后，
+ * 关闭Jedis对象，归还给Jedis连接池。
  *
  * @author huazie
- * @version 1.1.0
+ * @version 2.0.0
  * @since 1.1.0
  */
-public abstract class RedisClientCommand<T> {
+public abstract class RedisClientCommand<T, P extends Pool<M>, M> {
 
     private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(RedisClientCommand.class);
 
-    private final ShardedJedisPool shardedJedisPool; // 分布式Jedis连接池
+    private final P pool; // Jedis连接池
 
     private final int maxAttempts; // Redis客户端操作最大尝试次数【包含第一次操作】
 
-    public RedisClientCommand(ShardedJedisPool shardedJedisPool, int maxAttempts) {
-        this.shardedJedisPool = shardedJedisPool;
+    public RedisClientCommand(P pool, int maxAttempts) {
+        this.pool = pool;
         this.maxAttempts = maxAttempts;
     }
 
-    public abstract T execute(ShardedJedis connection);
+    public abstract T execute(M connection);
 
     /**
      * 执行分布式Jedis操作
@@ -57,13 +59,13 @@ public abstract class RedisClientCommand<T> {
         if (attempts <= 0) {
             ExceptionUtils.throwFleaException(FleaCacheMaxAttemptsException.class, "No more attempts left.");
         }
-        ShardedJedis connection = null;
+        M connection = null;
         try {
-            connection = shardedJedisPool.getResource();
+            connection = pool.getResource();
             Object obj = null;
             if (LOGGER.isDebugEnabled()) {
                 obj = new Object() {};
-                LOGGER.debug1(obj, "Get ShardedJedis = {}", connection);
+                LOGGER.debug1(obj, "Get Jedis = {}", connection);
             }
             T result = execute(connection);
             if (LOGGER.isDebugEnabled()) {
@@ -87,17 +89,23 @@ public abstract class RedisClientCommand<T> {
     }
 
     /**
-     * 释放指定分布式Jedis的连接，将分布式Jedis对象归还给分布式Jedis连接池
+     * 释放指定Jedis的连接，将Jedis对象归还给Jedis连接池
      *
-     * @param connection 分布式Jedis实例
+     * @param connection Jedis实例
      * @since 1.0.0
      */
-    private void releaseConnection(ShardedJedis connection) {
+    private void releaseConnection(M connection) {
         if (ObjectUtils.isNotEmpty(connection)) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug1(new Object() {}, "Close ShardedJedis");
+                LOGGER.debug1(new Object() {}, "Close Jedis");
             }
-            connection.close();
+            try {
+                ((Closeable)connection).close();
+            } catch (IOException e) {
+                if (LOGGER.isErrorEnabled()) {
+                    LOGGER.error1(new Object() {}, "Jedis close occurs Exception:", e);
+                }
+            }
         }
     }
 }

@@ -1,6 +1,10 @@
 package com.huazie.fleaframework.cache.redis.impl;
 
-import com.huazie.fleaframework.cache.redis.*;
+import com.huazie.fleaframework.cache.common.CacheConfigUtils;
+import com.huazie.fleaframework.cache.redis.FleaRedisClient;
+import com.huazie.fleaframework.cache.redis.RedisClient;
+import com.huazie.fleaframework.cache.redis.RedisClientCommand;
+import com.huazie.fleaframework.cache.redis.RedisSentinelPool;
 import com.huazie.fleaframework.cache.redis.config.RedisSentinelConfig;
 import com.huazie.fleaframework.common.CommonConstants;
 import com.huazie.fleaframework.common.util.ObjectUtils;
@@ -10,7 +14,8 @@ import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.JedisSentinelPool;
-
+import redis.clients.jedis.ShardedJedis;
+import redis.clients.jedis.ShardedJedisPool;
 import redis.clients.jedis.params.SetParams;
 import redis.clients.jedis.util.JedisClusterCRC16;
 import redis.clients.jedis.util.SafeEncoder;
@@ -22,32 +27,32 @@ import java.util.Set;
 /**
  * Flea哨兵模式Redis客户端实现，封装了Flea框架操作Redis缓存的基本操作。
  *
- * <p> 它内部具体操作Redis哨兵缓存的功能，由Jedis哨兵实例对象完成，
+ * <p> 它内部具体操作Redis缓存的功能，由Jedis哨兵连接池获取Jedis实例对象完成，
  * 包含读、写、删除Redis缓存的基本操作方法。
  *
  * <p> 哨兵模式下，单个缓存接入场景，可通过如下方式使用：
  * <pre>
- * RedisClient redisClient = new FleaRedisClusterClient.Builder().build();
+ * RedisClient redisClient = new FleaRedisSentinelClient.Builder().build();
  * // 执行读，写，删除等基本操作
  * redisClient.set("key", "value"); </pre>
  *
  * <p> 哨兵模式下，整合缓存接入场景，可通过如下方式使用：
  * <pre>
- * RedisClient redisClient = new FleaRedisClusterClient.Builder(poolName).build();
+ * RedisClient redisClient = new FleaRedisSentinelClient.Builder(poolName).build();
  * // 执行读，写，删除等基本操作
  * redisClient.set("key", "value"); </pre>
  *
  * <p> 当然每次都新建Redis客户端显然不可取，我们可通过Redis客户端工厂获取Redis客户端。
  * <p> 哨兵模式下，单个缓存接入场景，可通过如下方式使用：
  * <pre>
- * RedisClient redisClient = RedisClientFactory.getInstance(CacheModeEnum.CLUSTER);</pre>
+ * RedisClient redisClient = RedisClientFactory.getInstance(CacheModeEnum.SENTINEL);</pre>
  * <p> 哨兵模式下，整合缓存接入场景，可通过如下方式使用：
  * <pre>
- * RedisClient redisClient = RedisClientFactory.getInstance(poolName, CacheModeEnum.CLUSTER); </pre>
+ * RedisClient redisClient = RedisClientFactory.getInstance(poolName, CacheModeEnum.SENTINEL); </pre>
  *
  * @author huazie
- * @version 1.1.0
- * @since 1.1.0
+ * @version 2.0.0
+ * @since 2.0.0
  */
 public class FleaRedisSentinelClient extends FleaRedisClient {
 
@@ -58,7 +63,7 @@ public class FleaRedisSentinelClient extends FleaRedisClient {
     /**
      * Redis哨兵客户端构造方法 (默认)
      *
-     * @since 1.1.0
+     * @since 2.0.0
      */
     private FleaRedisSentinelClient() {
         this(CommonConstants.FleaPoolConstants.DEFAULT_POOL_NAME);
@@ -68,7 +73,7 @@ public class FleaRedisSentinelClient extends FleaRedisClient {
      * Redis哨兵客户端构造方法（指定连接池名）
      *
      * @param poolName 连接池名
-     * @since 1.1.0
+     * @since 2.0.0
      */
     private FleaRedisSentinelClient(String poolName) {
         super(poolName);
@@ -78,122 +83,153 @@ public class FleaRedisSentinelClient extends FleaRedisClient {
     /**
      * 初始化Jedis哨兵实例
      *
-     * @since 1.1.0
+     * @since 2.0.0
      */
     private void init() {
         if (CommonConstants.FleaPoolConstants.DEFAULT_POOL_NAME.equals(getPoolName())) {
             jedisSentinelPool = RedisSentinelPool.getInstance().getJedisSentinelPool();
+            maxAttempts = RedisSentinelConfig.getConfig().getMaxAttempts();
         } else {
             jedisSentinelPool = RedisSentinelPool.getInstance(getPoolName()).getJedisSentinelPool();
+            maxAttempts = CacheConfigUtils.getMaxAttempts();
         }
-
     }
 
     @Override
-    public String set(String key, Object value) {
-        if (value instanceof String)
-            return jedisSentinelPool.getResource().set(key, (String) value);
-        else
-            return jedisSentinelPool.getResource().set(SafeEncoder.encode(key), ObjectUtils.serialize(value));
+    public String set(final String key, final Object value) {
+        return new RedisClientCommand<String, JedisSentinelPool, Jedis>(this.jedisSentinelPool, this.maxAttempts) {
+            @Override
+            public String execute(Jedis connection) {
+                if (value instanceof String)
+                    return connection.set(key, (String) value);
+                else
+                    return connection.set(SafeEncoder.encode(key), ObjectUtils.serialize(value));
+            }
+        }.run();
     }
 
     @Override
-    public String set(byte[] key, byte[] value) {
-        return jedisSentinelPool.getResource().set(key, value);
+    public String set(final byte[] key, final byte[] value) {
+        return new RedisClientCommand<String, JedisSentinelPool, Jedis>(this.jedisSentinelPool, this.maxAttempts) {
+            @Override
+            public String execute(Jedis connection) {
+                return connection.set(key, value);
+            }
+        }.run();
     }
 
     @Override
     public String set(final String key, final Object value, final int expiry) {
-        if (value instanceof String)
-            return jedisSentinelPool.getResource().setex(key, expiry, (String) value);
-        else
-            return jedisSentinelPool.getResource().setex(SafeEncoder.encode(key), expiry, ObjectUtils.serialize(value));
+        return new RedisClientCommand<String, JedisSentinelPool, Jedis>(this.jedisSentinelPool, this.maxAttempts) {
+            @Override
+            public String execute(Jedis connection) {
+                if (value instanceof String)
+                    return connection.setex(key, expiry, (String) value);
+                else
+                    return connection.setex(SafeEncoder.encode(key), expiry, ObjectUtils.serialize(value));
+            }
+        }.run();
     }
 
     @Override
-    public String set(byte[] key, byte[] value, int expiry) {
-        return jedisSentinelPool.getResource().setex(key, expiry, value);
+    public String set(final byte[] key, final byte[] value, final int expiry) {
+        return new RedisClientCommand<String, JedisSentinelPool, Jedis>(this.jedisSentinelPool, this.maxAttempts) {
+            @Override
+            public String execute(Jedis connection) {
+                return connection.setex(key, expiry, value);
+            }
+        }.run();
     }
 
     @Override
-    public String set(String key, Object value, long expiry) {
-        if (value instanceof String)
-            return jedisSentinelPool.getResource().psetex(key, expiry, (String) value);
-        else
-            return jedisSentinelPool.getResource().psetex(SafeEncoder.encode(key), expiry, ObjectUtils.serialize(value));
+    public String set(final String key, final Object value, final long expiry) {
+        return new RedisClientCommand<String, JedisSentinelPool, Jedis>(this.jedisSentinelPool, this.maxAttempts) {
+            @Override
+            public String execute(Jedis connection) {
+                if (value instanceof String)
+                    return connection.psetex(key, expiry, (String) value);
+                else
+                    return connection.psetex(SafeEncoder.encode(key), expiry, ObjectUtils.serialize(value));
+            }
+        }.run();
     }
 
     @Override
-    public String set(byte[] key, byte[] value, long expiry) {
-        return jedisSentinelPool.getResource().psetex(key, expiry, value);
+    public String set(final byte[] key, final byte[] value, final long expiry) {
+        return new RedisClientCommand<String, JedisSentinelPool, Jedis>(this.jedisSentinelPool, this.maxAttempts) {
+            @Override
+            public String execute(Jedis connection) {
+                return connection.psetex(key, expiry, value);
+            }
+        }.run();
     }
 
     @Override
     public String set(final String key, final Object value, final SetParams params) {
-        if (value instanceof String)
-            return jedisSentinelPool.getResource().set(key, (String) value, params);
-        else
-            return jedisSentinelPool.getResource().set(SafeEncoder.encode(key), ObjectUtils.serialize(value), params);
+        return new RedisClientCommand<String, JedisSentinelPool, Jedis>(this.jedisSentinelPool, this.maxAttempts) {
+            @Override
+            public String execute(Jedis connection) {
+                if (value instanceof String)
+                    return connection.set(key, (String) value, params);
+                else
+                    return connection.set(SafeEncoder.encode(key), ObjectUtils.serialize(value), params);
+            }
+        }.run();
     }
 
     @Override
-    public String set(byte[] key, byte[] value, SetParams params) {
-        return jedisSentinelPool.getResource().set(key, value, params);
+    public String set(final byte[] key, final byte[] value, final SetParams params) {
+        return new RedisClientCommand<String, JedisSentinelPool, Jedis>(this.jedisSentinelPool, this.maxAttempts) {
+            @Override
+            public String execute(Jedis connection) {
+                return connection.set(key, value, params);
+            }
+        }.run();
     }
 
     @Override
-    public byte[] get(byte[] key) {
-        return jedisSentinelPool.getResource().get(key);
+    public byte[] get(final byte[] key) {
+        return new RedisClientCommand<byte[], JedisSentinelPool, Jedis>(this.jedisSentinelPool, this.maxAttempts) {
+            @Override
+            public byte[] execute(Jedis connection) {
+                return connection.get(key);
+            }
+        }.run();
     }
 
     @Override
     public Long del(final String key) {
-        return jedisSentinelPool.getResource().del(key);
+        return new RedisClientCommand<Long, JedisSentinelPool, Jedis>(this.jedisSentinelPool, this.maxAttempts) {
+            @Override
+            public Long execute(Jedis connection) {
+                return connection.del(key);
+            }
+        }.run();
     }
-
 
     /**
      * 获取客户端类
      *
      * @param key 缓存实际存储的键
      * @return 客户端类
-     * @since 1.1.0
+     * @since 2.0.0
      */
     @Override
     protected Client getClientByKey(Object key) {
-        RedisSentinelConfig redisSentinelConfig = RedisSentinelConfig.getConfig();
-        String masterName = redisSentinelConfig.getMasterName();
-        Jedis jedis = jedisSentinelPool.getResource();
-        List<String> masterAddr = jedis.sentinelGetMasterAddrByName(masterName);
-        String masterHost = masterAddr.get(0);
-        int masterPort = Integer.parseInt(masterAddr.get(1));
-
-        Set<HostAndPort> clusterNodes = new HashSet<>();
-        clusterNodes.add(new HostAndPort(masterHost, masterPort));
-
-        JedisCluster cluster = new JedisCluster(clusterNodes);
-
-        Client client = null;
-        if (ObjectUtils.isNotEmpty(key)) {
-            int slot = 0;
-            if (key instanceof String) {
-                slot = JedisClusterCRC16.getSlot(key.toString());
-            } else if (key instanceof byte[]) {
-                slot = JedisClusterCRC16.getSlot((byte[]) key);
+        return new RedisClientCommand<Client, JedisSentinelPool, Jedis>(this.jedisSentinelPool, this.maxAttempts) {
+            @Override
+            public Client execute(Jedis connection) {
+                return connection.getClient();
             }
-            // 根据槽位slot获取缓存键key所在的节点
-            client = cluster.getConnectionFromSlot(slot).getClient();
-        }
-        cluster.close();
-        return client;
+        }.run();
     }
 
     /**
      * 内部建造者类
      *
      * @author huazie
-     * @version 1.1.0
-     * @since 1.1.0
+     * @version 2.0.0
+     * @since 2.0.0
      */
     public static class Builder {
 
@@ -202,7 +238,7 @@ public class FleaRedisSentinelClient extends FleaRedisClient {
         /**
          * 默认构造器
          *
-         * @since 1.1.0
+         * @since 2.0.0
          */
         public Builder() {
         }
@@ -211,7 +247,7 @@ public class FleaRedisSentinelClient extends FleaRedisClient {
          * 指定连接池的构造器
          *
          * @param poolName 连接池名
-         * @since 1.1.0
+         * @since 2.0.0
          */
         public Builder(String poolName) {
             this.poolName = poolName;
@@ -221,7 +257,7 @@ public class FleaRedisSentinelClient extends FleaRedisClient {
          * 构建Redis集群客户端对象
          *
          * @return Redis集群客户端
-         * @since 1.1.0
+         * @since 2.0.0
          */
         public RedisClient build() {
             if (StringUtils.isBlank(poolName)) {

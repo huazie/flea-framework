@@ -57,4 +57,25 @@ public class FleaCacheManagerFactory {
         return managerMap.get(name);
     }
 
+    /**
+     * 获取Redis哨兵 Flea Cache管理类对象实例【指定Redis数据库索引】
+     *
+     * @param database Redis数据库索引
+     * @return Flea Cache管理类对象实例
+     * @since 2.0.0
+     */
+    public static AbstractFleaCacheManager getFleaCacheManager(int database) {
+        String name = CacheEnum.RedisSentinel.getName() + database;
+        if (!managerMap.containsKey(name)) {
+            synchronized (managerMapLock) {
+                if (!managerMap.containsKey(name)) {
+                    FleaCommonConfig config = new FleaCommonConfig();
+                    config.put(CacheConstants.RedisConfigConstants.REDIS_SENTINEL_CONFIG_DATABASE, database);
+                    managerMap.put(name, FleaStrategyFacade.invoke(CacheEnum.RedisSentinel.getName(), new FCMStrategyContext(config)));
+                }
+            }
+        }
+        return managerMap.get(name);
+    }
+
 }

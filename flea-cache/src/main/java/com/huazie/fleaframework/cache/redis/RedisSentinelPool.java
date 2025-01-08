@@ -2,7 +2,6 @@ package com.huazie.fleaframework.cache.redis;
 
 import com.huazie.fleaframework.cache.common.CacheConfigUtils;
 import com.huazie.fleaframework.cache.common.CacheConstants.RedisConfigConstants;
-
 import com.huazie.fleaframework.cache.config.CacheParam;
 import com.huazie.fleaframework.cache.config.CacheServer;
 import com.huazie.fleaframework.cache.exceptions.FleaCacheConfigException;
@@ -22,38 +21,55 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-
+/**
+ * Redis哨兵连接池，用于初始化Jedis哨兵连接池实例。
+ *
+ * <p> 针对单独缓存接入场景，采用默认连接池初始化的方式；<br/>
+ * 可参考如下：
+ * <pre>
+ *   // 初始化默认连接池
+ *   RedisSentinelPool.getInstance().initialize(); </pre>
+ *
+ * <p> 针对整合缓存接入场景，采用指定连接池初始化的方式；<br/>
+ * 可参考如下：
+ * <pre>
+ *   // 初始化指定连接池
+ *   RedisSentinelPool.getInstance(group).initialize(cacheServerList); </pre>
+ *
+ * @author huazie
+ * @version 2.0.0
+ * @since 2.0.0
+ */
 public class RedisSentinelPool {
 
     private static final ConcurrentMap<String, RedisSentinelPool> redisPools = new ConcurrentHashMap<>();
 
     private static final Object redisSentinelPoolLock = new Object();
 
-
     private String poolName; // 连接池名
 
-    private JedisSentinelPool jedisSentinelPool; // 分布式Jedis连接池
+    private JedisSentinelPool jedisSentinelPool; // Jedis哨兵连接池
 
     private RedisSentinelPool(String poolName) {
         this.poolName = poolName;
     }
 
     /**
-     * 获取Redis连接池实例 (默认连接池)
+     * 获取Redis哨兵连接池实例 (默认连接池)
      *
-     * @return Redis连接池实例对象
-     * @since 1.0.0
+     * @return Redis哨兵连接池实例对象
+     * @since 2.0.0
      */
     public static RedisSentinelPool getInstance() {
         return getInstance(CommonConstants.FleaPoolConstants.DEFAULT_POOL_NAME);
     }
 
     /**
-     * 获取Redis连接池实例 (指定连接池名)
+     * 获取Redis哨兵连接池实例 (指定连接池名)
      *
      * @param poolName 连接池名
-     * @return Redis连接池实例对象
-     * @since 1.0.0
+     * @return Redis哨兵连接池实例对象
+     * @since 2.0.0
      */
     public static RedisSentinelPool getInstance(String poolName) {
         if (!redisPools.containsKey(poolName)) {
@@ -70,32 +86,30 @@ public class RedisSentinelPool {
     /**
      * 默认初始化
      *
-     * @since 1.0.0
+     * @since 2.0.0
      */
-    public void initialize() {
+    public void initialize(int database) {
         if (!CommonConstants.FleaPoolConstants.DEFAULT_POOL_NAME.equals(poolName)) {
             ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "采用默认初始化，请使用RedisSentinelPool##getInstance()");
         }
         RedisSentinelConfig redisSentinelConfig = RedisSentinelConfig.getConfig();
-
+        // 1. 获取Redis主服务器节点名称
         String masterName = redisSentinelConfig.getMasterName();
-
+        // 2. 获取Redis哨兵节点的地址集合
         Set<String> sentinels = redisSentinelConfig.getSentinels();
-
-        int connectionTimeout = redisSentinelConfig.getConnectionTimeout();
-
-        int soTimeout = redisSentinelConfig.getSoTimeout();
-
+        // 3. 获取Redis主从服务器节点登录密码（各节点配置同一个）
         String password = redisSentinelConfig.getPassword();
-
-        int dataBase = redisSentinelConfig.getDataBase();
-
+        // 4. 获取Redis哨兵客户端socket连接超时时间（单位：ms）
+        int connectionTimeout = redisSentinelConfig.getConnectionTimeout();
+        // 5. 获取Redis哨兵客户端socket读写超时时间（单位：ms）
+        int soTimeout = redisSentinelConfig.getSoTimeout();
+        // 6. 获取Redis哨兵客户端当前连接的名称
         String clientName = redisSentinelConfig.getClientName();
 
         JedisPoolConfig poolConfig = redisSentinelConfig.getJedisPoolConfig();
 
         if (ObjectUtils.isEmpty(jedisSentinelPool)) {
-            jedisSentinelPool = new JedisSentinelPool(masterName, sentinels, poolConfig, connectionTimeout, soTimeout, password, dataBase, clientName);
+            jedisSentinelPool = new JedisSentinelPool(masterName, sentinels, poolConfig, connectionTimeout, soTimeout, password, database, clientName);
         }
     }
 
@@ -103,7 +117,7 @@ public class RedisSentinelPool {
      * 初始化 (非默认连接池)
      *
      * @param cacheServerList 缓存服务器集
-     * @since 1.0.0
+     * @since 2.0.0
      */
     public void initialize(List<CacheServer> cacheServerList) {
         if (CommonConstants.FleaPoolConstants.DEFAULT_POOL_NAME.equals(poolName)) {
@@ -180,21 +194,21 @@ public class RedisSentinelPool {
      * 获取当前连接池名
      *
      * @return 连接池名
-     * @since 1.0.0
+     * @since 2.0.0
      */
     public String getPoolName() {
         return poolName;
     }
 
     /**
-     * 分布式Jedis连接池
+     * Jedis哨兵连接池
      *
-     * @return 分布式Jedis连接池
-     * @since 1.0.0
+     * @return Jedis哨兵连接池
+     * @since 2.0.0
      */
     public JedisSentinelPool getJedisSentinelPool() {
         if (ObjectUtils.isEmpty(jedisSentinelPool)) {
-            ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "获取分布式Jedis连接池失败：请先调用initialize初始化");
+            ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "获取Jedis哨兵连接池失败：请先调用initialize初始化");
         }
         return jedisSentinelPool;
     }

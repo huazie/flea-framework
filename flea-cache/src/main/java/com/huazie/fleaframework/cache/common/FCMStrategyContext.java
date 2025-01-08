@@ -4,6 +4,7 @@ import com.huazie.fleaframework.cache.AbstractFleaCacheManager;
 import com.huazie.fleaframework.cache.core.strategy.CoreFCMStrategy;
 import com.huazie.fleaframework.cache.memcached.strategy.MemCachedFCMStrategy;
 import com.huazie.fleaframework.cache.redis.strategy.RedisClusterFCMStrategy;
+import com.huazie.fleaframework.cache.redis.strategy.RedisSentinelFCMStrategy;
 import com.huazie.fleaframework.cache.redis.strategy.RedisShardedFCMStrategy;
 import com.huazie.fleaframework.common.FleaCommonConfig;
 import com.huazie.fleaframework.common.strategy.FleaStrategyContext;
@@ -17,7 +18,7 @@ import java.util.Map;
  * Flea缓存管理者策略上下文
  *
  * @author huazie
- * @version 1.1.0
+ * @version 2.0.0
  * @since 1.1.0
  */
 public class FCMStrategyContext extends FleaStrategyContext<AbstractFleaCacheManager, FleaCommonConfig> {
@@ -29,9 +30,16 @@ public class FCMStrategyContext extends FleaStrategyContext<AbstractFleaCacheMan
         fleaStrategyMap.put(CacheEnum.MemCached.getName(), new MemCachedFCMStrategy());
         fleaStrategyMap.put(CacheEnum.RedisSharded.getName(), new RedisShardedFCMStrategy());
         fleaStrategyMap.put(CacheEnum.RedisCluster.getName(), new RedisClusterFCMStrategy());
+        fleaStrategyMap.put(CacheEnum.RedisSentinel.getName(), new RedisSentinelFCMStrategy());
         fleaStrategyMap.put(CacheEnum.FleaCore.getName(), new CoreFCMStrategy());
-
         fleaStrategyMap = Collections.unmodifiableMap(fleaStrategyMap);
+    }
+
+    public FCMStrategyContext() {
+    }
+
+    public FCMStrategyContext(FleaCommonConfig contextParam) {
+        super(contextParam);
     }
 
     @Override
