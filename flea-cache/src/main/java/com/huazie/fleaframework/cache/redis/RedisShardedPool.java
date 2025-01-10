@@ -114,10 +114,10 @@ public class RedisShardedPool {
             return;
         }
 
-        // 1. 获取Jedis连接池配置信息
+        // 获取Jedis连接池配置信息
         JedisPoolConfig poolConfig = CacheConfigUtils.getJedisPoolConfig();
 
-        // 2. 获取服务器配置信息
+        // 获取服务器配置信息
         // Redis客户端socket连接超时时间
         CacheParam connectionTimeoutParam = CacheConfigUtils.getCacheParam(RedisConfigConstants.REDIS_CONFIG_CONNECTIONTIMEOUT);
         if (ObjectUtils.isEmpty(connectionTimeoutParam) || StringUtils.isBlank(connectionTimeoutParam.getValue())) {
@@ -160,7 +160,7 @@ public class RedisShardedPool {
             }
         }
 
-        // 3. 获取Redis分布式hash算法
+        // 获取Redis分布式hash算法
         CacheParam hashingAlgParam = CacheConfigUtils.getCacheParam(RedisConfigConstants.REDIS_CONFIG_HASHINGALG);
         if (ObjectUtils.isEmpty(hashingAlgParam) || StringUtils.isBlank(hashingAlgParam.getValue())) {
             ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "请检查flea-cache-config.xml配置，【<cache-param key=" + RedisConfigConstants.REDIS_CONFIG_HASHINGALG + " ></cache-param>】未配置或配置值为空");

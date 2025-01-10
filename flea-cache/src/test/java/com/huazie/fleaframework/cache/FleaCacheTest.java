@@ -3,7 +3,9 @@ package com.huazie.fleaframework.cache;
 import com.huazie.fleaframework.cache.common.CacheEnum;
 import com.huazie.fleaframework.cache.common.FleaCacheManagerFactory;
 import com.huazie.fleaframework.cache.memcached.config.MemCachedConfig;
+import com.huazie.fleaframework.cache.redis.RedisSentinelPool;
 import com.huazie.fleaframework.cache.redis.config.RedisClusterConfig;
+import com.huazie.fleaframework.cache.redis.config.RedisSentinelConfig;
 import com.huazie.fleaframework.cache.redis.config.RedisShardedConfig;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
@@ -12,6 +14,7 @@ import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.JedisPoolConfig;
+import redis.clients.jedis.JedisSentinelPool;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -37,6 +40,8 @@ public class FleaCacheTest {
         LOGGER.debug("RedisShardedConfig={}", redisShardedConfig);
         RedisClusterConfig redisClusterConfig = RedisClusterConfig.getConfig();
         LOGGER.debug("RedisClusterConfig={}", redisClusterConfig);
+        RedisSentinelConfig redisSentinelConfig = RedisSentinelConfig.getConfig();
+        LOGGER.debug("RedisSentinelConfig={}", redisSentinelConfig);
     }
 
     @Test
@@ -120,6 +125,56 @@ public class FleaCacheTest {
     }
 
     @Test
+    public void testJedisSentinel() {
+        // 哨兵的集合
+        Set<String> sentinels = new HashSet<>();
+        sentinels.add("127.0.0.1:36379"); // 替换为你的哨兵地址和端口
+        sentinels.add("127.0.0.1:36380"); // 可以添加多个哨兵
+        sentinels.add("127.0.0.1:36381"); // 可以添加多个哨兵
+
+        // 哨兵的主节点名称
+        String masterName = "mymaster"; // 替换为你的哨兵配置中的主节点名称
+
+        // 创建哨兵池
+        JedisPoolConfig poolConfig = new JedisPoolConfig();
+        JedisSentinelPool sentinelPool = new JedisSentinelPool(masterName, sentinels, poolConfig);
+
+        try (Jedis jedis = sentinelPool.getResource()) {
+            // 连接到主节点后，执行一些 Redis 操作
+            jedis.set("author", "huazie");
+            String author = jedis.get("author");
+            System.out.println("Author = " + author);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭哨兵池
+            sentinelPool.close();
+        }
+    }
+
+    @Test
+    public void testJedisSentinelNew() {
+
+        RedisSentinelPool pool = RedisSentinelPool.getInstance();
+        // 初始化默认连接池
+        pool.initialize(0);
+
+        JedisSentinelPool sentinelPool = pool.getJedisSentinelPool();
+
+        try (Jedis jedis = sentinelPool.getResource()) {
+            // 连接到主节点后，执行一些 Redis 操作
+            jedis.set("author", "huazie");
+            String author = jedis.get("author");
+            System.out.println("Author = " + author);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭哨兵池
+            sentinelPool.close();
+        }
+    }
+
+    @Test
     public void testMemeCachedFleaCache() {
 
         try {
@@ -127,12 +182,12 @@ public class FleaCacheTest {
             AbstractFleaCache cache = manager.getCache("fleaconfigdata");
             LOGGER.debug("Cache={}", cache);
             //#### 1.  简单字符串
-//            cache.put("menu1", "huazie");
-//            cache.put("menu2", null);
-//            cache.get("menu1");
-//            cache.get("menu2");
-//            cache.delete("menu1");
-//            cache.delete("menu2");
+            cache.put("author", "huazie");
+            cache.put("other", null);
+//            cache.get("author");
+//            cache.get("other");
+//            cache.delete("author");
+//            cache.delete("other");
 //            cache.clear();
             cache.getCacheKey();
             LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
@@ -149,12 +204,12 @@ public class FleaCacheTest {
             AbstractFleaCache cache = manager.getCache("fleaconfigdata");
             LOGGER.debug("Cache={}", cache);
             //#### 1.  简单字符串
-            cache.put("menu1", "huazie");
-            cache.put("menu2", null);
-//            cache.get("menu1");
-//            cache.get("menu2");
-//            cache.delete("menu1");
-//            cache.delete("menu2");
+            cache.put("author", "huazie");
+            cache.put("other", null);
+//            cache.get("author");
+//            cache.get("other");
+//            cache.delete("author");
+//            cache.delete("other");
 //            cache.clear();
             cache.getCacheKey();
             LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
@@ -170,12 +225,12 @@ public class FleaCacheTest {
             AbstractFleaCache cache = manager.getCache("fleaconfigdata");
             LOGGER.debug("Cache={}", cache);
             //#### 1.  简单字符串
-//            cache.put("menu1", "huazie");
-//            cache.put("menu2", null);
-            cache.get("menu1");
-            cache.get("menu2");
-//            cache.delete("menu1");
-//            cache.delete("menu2");
+            cache.put("author", "huazie");
+            cache.put("other", null);
+//            cache.get("author");
+//            cache.get("other");
+//            cache.delete("author");
+//            cache.delete("other");
 //            cache.clear();
             cache.getCacheKey();
             LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
@@ -192,13 +247,13 @@ public class FleaCacheTest {
             AbstractFleaCache cache = manager.getCache("fleamenufavorites");
             LOGGER.debug("Cache={}", cache);
             //#### 1.  简单字符串
-//            cache.put("menu1", "huazie");
-//            cache.put("menu2", null);
-//            cache.get("menu1");
-//            cache.get("menu2");
-//            cache.delete("menu1");
-//            cache.delete("menu2");
-            cache.clear();
+            cache.put("author", "huazie");
+            cache.put("other", null);
+//            cache.get("author");
+//            cache.get("other");
+//            cache.delete("author");
+//            cache.delete("other");
+//            cache.clear();
             cache.getCacheKey();
             LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
         } catch (Exception e) {
@@ -213,17 +268,63 @@ public class FleaCacheTest {
             AbstractFleaCache cache = manager.getCache("fleamenufavorites");
             LOGGER.debug("Cache={}", cache);
             //#### 1.  简单字符串
-//            cache.put("menu1", "huazie");
-//            cache.put("menu2", null);
-//            cache.get("menu1");
-//            cache.get("menu2");
-//            cache.delete("menu1");
-//            cache.delete("menu2");
-            cache.clear();
+            cache.put("author", "huazie");
+            cache.put("other", null);
+//            cache.get("author");
+//            cache.get("other");
+//            cache.delete("author");
+//            cache.delete("other");
+//            cache.clear();
             cache.getCacheKey();
             LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
         } catch (Exception e) {
             LOGGER.error("Exception:", e);
         }
     }
+
+    @Test
+    public void testRedisSentinelFleaCache() {
+        try {
+            // 哨兵模式下Flea缓存管理类，复用原有获取方式
+//            AbstractFleaCacheManager manager = FleaCacheManagerFactory.getFleaCacheManager(CacheEnum.RedisSentinel.getName());
+            // 哨兵模式下Flea缓存管理类，指定数据库索引
+            AbstractFleaCacheManager manager = FleaCacheManagerFactory.getFleaCacheManager(0);
+            AbstractFleaCache cache = manager.getCache("fleajerseyresource");
+            LOGGER.debug("Cache={}", cache);
+            //#### 1.  简单字符串
+            cache.put("author", "huazie");
+            cache.put("other", null);
+//            cache.get("author");
+//            cache.get("other");
+//            cache.delete("author");
+//            cache.delete("other");
+//            cache.clear();
+            cache.getCacheKey();
+            LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
+        } catch (Exception e) {
+            LOGGER.error("Exception:", e);
+        }
+    }
+
+    @Test
+    public void testCoreFleaCacheForRedisSentinel() {
+        try {
+            AbstractFleaCacheManager manager = FleaCacheManagerFactory.getFleaCacheManager(CacheEnum.FleaCore.getName());
+            AbstractFleaCache cache = manager.getCache("fleajerseyresource");
+            LOGGER.debug("Cache={}", cache);
+            //#### 1.  简单字符串
+            cache.put("author", "huazie");
+            cache.put("other", null);
+//            cache.get("author");
+//            cache.get("other");
+//            cache.delete("author");
+//            cache.delete("other");
+//            cache.clear();
+            cache.getCacheKey();
+            LOGGER.debug(cache.getCacheName() + ">>>" + cache.getCacheDesc());
+        } catch (Exception e) {
+            LOGGER.error("Exception:", e);
+        }
+    }
+
 }

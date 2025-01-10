@@ -38,7 +38,7 @@ import java.util.concurrent.ConcurrentMap;
  *   RedisClusterPool.getInstance(group).initialize(cacheServerList); </pre>
  *
  * @author huazie
- * @version 1.1.0
+ * @version 2.0.0
  * @since 1.1.0
  */
 public class RedisClusterPool {
@@ -131,7 +131,9 @@ public class RedisClusterPool {
             return;
         }
 
-        // 1. 获取Redis集群服务节点Set集合
+        // Redis集群服务节点登录密码（集群各节点配置同一个）
+        String password = null;
+        // 获取Redis集群服务节点Set集合
         Set<HostAndPort> nodes = new HashSet<>();
         // 遍历缓存服务器集
         for (CacheServer cacheServer : cacheServerList) {
@@ -141,36 +143,41 @@ public class RedisClusterPool {
                     ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "请检查flea-cache-config.xml配置,【<cache-server group=" + poolName + " ></cache-server>】未配置缓存服务器");
                 }
                 nodes.add(CacheUtils.parseString(server));
+                if (StringUtils.isNotBlank(cacheServer.getPassword()) && StringUtils.isBlank(password)) {
+                    password = cacheServer.getPassword();
+                }
             }
         }
 
-        // 2. 获取Redis集群客户端socket连接超时时间（单位：ms）
+        // 获取Redis集群客户端socket连接超时时间（单位：ms）
         CacheParam connectionTimeoutParam = CacheConfigUtils.getCacheParam(RedisConfigConstants.REDIS_CLUSTER_CONFIG_CONNECTIONTIMEOUT);
         if (ObjectUtils.isEmpty(connectionTimeoutParam) || StringUtils.isBlank(connectionTimeoutParam.getValue())) {
             ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "请检查flea-cache-config.xml配置，【<cache-param key=" + RedisConfigConstants.REDIS_CLUSTER_CONFIG_CONNECTIONTIMEOUT + " ></cache-param>】未配置或配置值为空");
         }
         int connectionTimeout = Integer.parseInt(connectionTimeoutParam.getValue());
 
-        // 3. 获取Redis集群客户端socket读写超时时间（单位：ms）
+        // 获取Redis集群客户端socket读写超时时间（单位：ms）
         CacheParam soTimeoutParam = CacheConfigUtils.getCacheParam(RedisConfigConstants.REDIS_CLUSTER_CONFIG_SOTIMEOUT);
         if (ObjectUtils.isEmpty(soTimeoutParam) || StringUtils.isBlank(soTimeoutParam.getValue())) {
             ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "请检查flea-cache-config.xml配置，【<cache-param key=" + RedisConfigConstants.REDIS_CLUSTER_CONFIG_SOTIMEOUT + " ></cache-param>】未配置或配置值为空");
         }
         int soTimeout = Integer.parseInt(soTimeoutParam.getValue());
 
-        // 4. 获取Redis客户端操作最大尝试次数【包含第一次操作】
+        // 获取Redis客户端操作最大尝试次数【包含第一次操作】
         int maxAttempts = CacheConfigUtils.getMaxAttempts();
 
-        // 5. 获取Redis集群服务节点登录密码（集群各节点配置同一个）
-        CacheParam passwordParam = CacheConfigUtils.getCacheParam(RedisConfigConstants.REDIS_CLUSTER_CONFIG_PASSWORD);
-        if (ObjectUtils.isEmpty(passwordParam) || StringUtils.isBlank(passwordParam.getValue())) {
-            ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "请检查flea-cache-config.xml配置，【<cache-param key=" + RedisConfigConstants.REDIS_CLUSTER_CONFIG_PASSWORD + " ></cache-param>】未配置或配置值为空");
+        // 缓存服务器cache-server中没有配置，从缓存参数中获取默认的密码
+        if (StringUtils.isBlank(password)) {
+            CacheParam passwordParam = CacheConfigUtils.getCacheParam(RedisConfigConstants.REDIS_CLUSTER_CONFIG_PASSWORD);
+            if (ObjectUtils.isEmpty(passwordParam) || StringUtils.isBlank(passwordParam.getValue())) {
+                ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "请检查flea-cache-config.xml配置，【<cache-param key=" + RedisConfigConstants.REDIS_CLUSTER_CONFIG_PASSWORD + " ></cache-param>】未配置或配置值为空");
+            }
+            password = passwordParam.getValue();
         }
-        String password = passwordParam.getValue();
 
-        // 6. 获取Redis集群客户端当前连接的名称
+        // 获取Redis集群客户端当前连接的名称
         String clientName = CacheConfigUtils.getClientName(CacheConfigUtils.getSystemName());
-        // 7. 获取Jedis连接池配置信息
+        // 获取Jedis连接池配置信息
         JedisPoolConfig poolConfig = CacheConfigUtils.getJedisPoolConfig();
 
         if (ObjectUtils.isEmpty(jedisCluster)) {

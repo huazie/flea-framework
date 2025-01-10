@@ -94,7 +94,7 @@ public class FleaRedisShardedClient extends FleaRedisClient {
 
     @Override
     public String set(final String key, final Object value) {
-        return new RedisClientCommand<String>(this.shardedJedisPool, this.maxAttempts) {
+        return new RedisClientCommand<String, ShardedJedisPool, ShardedJedis>(this.shardedJedisPool, this.maxAttempts) {
             @Override
             public String execute(ShardedJedis connection) {
                 if (value instanceof String)
@@ -107,7 +107,7 @@ public class FleaRedisShardedClient extends FleaRedisClient {
 
     @Override
     public String set(final byte[] key, final byte[] value) {
-        return new RedisClientCommand<String>(this.shardedJedisPool, this.maxAttempts) {
+        return new RedisClientCommand<String, ShardedJedisPool, ShardedJedis>(this.shardedJedisPool, this.maxAttempts) {
             @Override
             public String execute(ShardedJedis connection) {
                 return connection.set(key, value);
@@ -117,7 +117,7 @@ public class FleaRedisShardedClient extends FleaRedisClient {
 
     @Override
     public String set(final String key, final Object value, final int expiry) {
-        return new RedisClientCommand<String>(this.shardedJedisPool, this.maxAttempts) {
+        return new RedisClientCommand<String, ShardedJedisPool, ShardedJedis>(this.shardedJedisPool, this.maxAttempts) {
             @Override
             public String execute(ShardedJedis connection) {
                 if (value instanceof String)
@@ -130,7 +130,7 @@ public class FleaRedisShardedClient extends FleaRedisClient {
 
     @Override
     public String set(final byte[] key, final byte[] value, final int expiry) {
-        return new RedisClientCommand<String>(this.shardedJedisPool, this.maxAttempts) {
+        return new RedisClientCommand<String, ShardedJedisPool, ShardedJedis>(this.shardedJedisPool, this.maxAttempts) {
             @Override
             public String execute(ShardedJedis connection) {
                 return connection.setex(key, expiry, value);
@@ -140,7 +140,7 @@ public class FleaRedisShardedClient extends FleaRedisClient {
 
     @Override
     public String set(final String key, final Object value, final long expiry) {
-        return new RedisClientCommand<String>(this.shardedJedisPool, this.maxAttempts) {
+        return new RedisClientCommand<String, ShardedJedisPool, ShardedJedis>(this.shardedJedisPool, this.maxAttempts) {
             @Override
             public String execute(ShardedJedis connection) {
                 if (value instanceof String)
@@ -153,7 +153,7 @@ public class FleaRedisShardedClient extends FleaRedisClient {
 
     @Override
     public String set(final byte[] key, final byte[] value, final long expiry) {
-        return new RedisClientCommand<String>(this.shardedJedisPool, this.maxAttempts) {
+        return new RedisClientCommand<String, ShardedJedisPool, ShardedJedis>(this.shardedJedisPool, this.maxAttempts) {
             @Override
             public String execute(ShardedJedis connection) {
                 return connection.psetex(key, expiry, value);
@@ -163,7 +163,7 @@ public class FleaRedisShardedClient extends FleaRedisClient {
 
     @Override
     public String set(final String key, final Object value, final SetParams params) {
-        return new RedisClientCommand<String>(this.shardedJedisPool, this.maxAttempts) {
+        return new RedisClientCommand<String, ShardedJedisPool, ShardedJedis>(this.shardedJedisPool, this.maxAttempts) {
             @Override
             public String execute(ShardedJedis connection) {
                 if (value instanceof String)
@@ -176,7 +176,7 @@ public class FleaRedisShardedClient extends FleaRedisClient {
 
     @Override
     public String set(final byte[] key, final byte[] value, final SetParams params) {
-        return new RedisClientCommand<String>(this.shardedJedisPool, this.maxAttempts) {
+        return new RedisClientCommand<String, ShardedJedisPool, ShardedJedis>(this.shardedJedisPool, this.maxAttempts) {
             @Override
             public String execute(ShardedJedis connection) {
                 return connection.set(key, value, params);
@@ -186,7 +186,7 @@ public class FleaRedisShardedClient extends FleaRedisClient {
 
     @Override
     public byte[] get(final byte[] key) {
-        return new RedisClientCommand<byte[]>(this.shardedJedisPool, this.maxAttempts) {
+        return new RedisClientCommand<byte[], ShardedJedisPool, ShardedJedis>(this.shardedJedisPool, this.maxAttempts) {
             @Override
             public byte[] execute(ShardedJedis connection) {
                 return connection.get(key);
@@ -196,7 +196,7 @@ public class FleaRedisShardedClient extends FleaRedisClient {
 
     @Override
     public Long del(final String key) {
-        return new RedisClientCommand<Long>(this.shardedJedisPool, this.maxAttempts) {
+        return new RedisClientCommand<Long, ShardedJedisPool, ShardedJedis>(this.shardedJedisPool, this.maxAttempts) {
             @Override
             public Long execute(ShardedJedis connection) {
                 return connection.del(key);
@@ -213,7 +213,7 @@ public class FleaRedisShardedClient extends FleaRedisClient {
      */
     @Override
     protected Client getClientByKey(final Object key) {
-        return new RedisClientCommand<Client>(this.shardedJedisPool, this.maxAttempts) {
+        return new RedisClientCommand<Client, ShardedJedisPool, ShardedJedis>(this.shardedJedisPool, this.maxAttempts) {
             @Override
             public Client execute(ShardedJedis connection) {
                 Client client = null;

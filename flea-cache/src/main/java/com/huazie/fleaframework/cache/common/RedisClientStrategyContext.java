@@ -2,6 +2,7 @@ package com.huazie.fleaframework.cache.common;
 
 import com.huazie.fleaframework.cache.redis.RedisClient;
 import com.huazie.fleaframework.cache.redis.strategy.RedisClusterClientStrategy;
+import com.huazie.fleaframework.cache.redis.strategy.RedisSentinelClientStrategy;
 import com.huazie.fleaframework.cache.redis.strategy.RedisShardedClientStrategy;
 import com.huazie.fleaframework.common.strategy.FleaStrategyContext;
 import com.huazie.fleaframework.common.strategy.IFleaStrategy;
@@ -25,6 +26,7 @@ public class RedisClientStrategyContext extends FleaStrategyContext<RedisClient,
         fleaStrategyMap = new HashMap<>();
         fleaStrategyMap.put(CacheModeEnum.SHARDED.name(), new RedisShardedClientStrategy());
         fleaStrategyMap.put(CacheModeEnum.CLUSTER.name(), new RedisClusterClientStrategy());
+        fleaStrategyMap.put(CacheModeEnum.SENTINEL.name(), new RedisSentinelClientStrategy());
         fleaStrategyMap = Collections.unmodifiableMap(fleaStrategyMap);
     }
 
