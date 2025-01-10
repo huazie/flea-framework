@@ -13,11 +13,12 @@
     <bean id="memCachedSpringCacheManager" class="com.huazie.fleaframework.cache.memcached.manager.MemCachedSpringCacheManager">
         <property name="configMap">
             <map>
-                <entry key="fleaconfigdata" value="86400"/>
-                <entry key="fleajerseyi18nerrormapping" value="86400"/>
-                <entry key="fleajerseyresservice" value="86400"/>
-                <entry key="fleajerseyresclient" value="86400"/>
-                <entry key="fleajerseyresource" value="86400"/>
+                <entry key="fleaauthuser" value="86400"/>
+                <entry key="fleaauthaccount" value="86400"/>
+                <entry key="fleaauthmenu" value="86400"/>
+                <entry key="fleaauthoperation" value="86400"/>
+                <entry key="fleaauthelement" value="86400"/>
+                <entry key="fleaauthresource" value="86400"/>
             </map>
         </property>
     </bean>
@@ -30,10 +31,6 @@
         <property name="configMap">
             <map>
                 <entry key="fleaconfigdata" value="86400"/>
-                <entry key="fleajerseyi18nerrormapping" value="86400"/>
-                <entry key="fleajerseyresservice" value="86400"/>
-                <entry key="fleajerseyresclient" value="86400"/>
-                <entry key="fleajerseyresource" value="86400"/>
             </map>
         </property>
     </bean>
@@ -50,6 +47,23 @@
         </property>
     </bean>
     -->
+
+    <!--
+        配置缓存管理 redisShardedSpringCacheManager
+        配置缓存时间 configMap (key缓存对象名称 value缓存过期时间)
+    -->
+    <bean id="redisSentinelSpringCacheManager" class="com.huazie.fleaframework.cache.redis.manager.RedisSentinelSpringCacheManager">
+        <!-- 使用带参数的构造函数实例化，指定Redis数据库索引 -->
+        <!--<constructor-arg index="0" value="0"/>-->
+        <property name="configMap">
+            <map>
+                <entry key="fleajerseyi18nerrormapping" value="86400"/>
+                <entry key="fleajerseyresservice" value="86400"/>
+                <entry key="fleajerseyresclient" value="86400"/>
+                <entry key="fleajerseyresource" value="86400"/>
+            </map>
+        </property>
+    </bean>
 
     <!-- 配置核心Flea缓存管理类 CoreSpringCacheManager -->
     <bean id="coreSpringCacheManager" class="com.huazie.fleaframework.cache.core.manager.CoreSpringCacheManager"/>

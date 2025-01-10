@@ -7,7 +7,7 @@ package com.huazie.fleaframework.cache.common;
  * 其中【{@code FleaCore}】是Flea框架为了整合各类缓存而抽象出来的一类缓存实现。
  *
  * @author huazie
- * @version 1.1.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 public enum CacheEnum {

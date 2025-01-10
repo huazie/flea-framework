@@ -128,13 +128,13 @@ public class RedisSentinelPool {
             return;
         }
 
-        CacheParam masternameParam = CacheConfigUtils.getCacheParam(RedisConfigConstants.REDIS_SENTINEL_CONFIG_MASTERNAME);
-        if (ObjectUtils.isEmpty(masternameParam) || StringUtils.isBlank(masternameParam.getValue())) {
-            ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "请检查flea-cache-config.xml配置，【<cache-param key=" + RedisConfigConstants.REDIS_SENTINEL_CONFIG_MASTERNAME + " ></cache-param>】未配置或配置值为空");
-        }
-        String masterName = masternameParam.getValue();
-
-        // 1. 获取Redis sb服务节点Set集合
+        // redis主服务器节点名称
+        String masterName = null;
+        // redis数据库索引，默认为0
+        int database = Protocol.DEFAULT_DATABASE;
+        // Redis主从服务器节点登录密码（各节点配置同一个）
+        String password = null;
+        // 获取Redis哨兵服务器节点Set集合
         Set<String> nodes = new HashSet<>();
         // 遍历缓存服务器集
         for (CacheServer cacheServer : cacheServerList) {
@@ -144,46 +144,49 @@ public class RedisSentinelPool {
                     ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "请检查flea-cache-config.xml配置,【<cache-server group=" + poolName + " ></cache-server>】未配置缓存服务器");
                 }
                 nodes.add(server);
+                if (StringUtils.isNotBlank(cacheServer.getMaster()) && StringUtils.isBlank(masterName)) {
+                    masterName = cacheServer.getMaster();
+                }
+                if (ObjectUtils.isNotEmpty(cacheServer.getDatabase())) {
+                    database = cacheServer.getDatabase();
+                }
+                if (StringUtils.isNotBlank(cacheServer.getPassword()) && StringUtils.isBlank(password)) {
+                    password = cacheServer.getPassword();
+                }
             }
         }
 
-        // 2. 获取Redis sb客户端socket连接超时时间（单位：ms）
+        if (StringUtils.isBlank(masterName)) {
+            ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "请检查flea-cache-config.xml配置,【<cache-server group=" + poolName + " ></cache-server>】未配置监听的主服务器节点名称【master】");
+        }
+
+        // 获取Redis哨兵客户端socket连接超时时间（单位：ms）
         CacheParam connectionTimeoutParam = CacheConfigUtils.getCacheParam(RedisConfigConstants.REDIS_SENTINEL_CONFIG_CONNECTIONTIMEOUT);
         if (ObjectUtils.isEmpty(connectionTimeoutParam) || StringUtils.isBlank(connectionTimeoutParam.getValue())) {
             ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "请检查flea-cache-config.xml配置，【<cache-param key=" + RedisConfigConstants.REDIS_SENTINEL_CONFIG_CONNECTIONTIMEOUT + " ></cache-param>】未配置或配置值为空");
         }
         int connectionTimeout = Integer.parseInt(connectionTimeoutParam.getValue());
 
-        // 3. 获取Redis sb客户端socket读写超时时间（单位：ms）
+        // 获取Redis哨兵客户端socket读写超时时间（单位：ms）
         CacheParam soTimeoutParam = CacheConfigUtils.getCacheParam(RedisConfigConstants.REDIS_SENTINEL_CONFIG_SOTIMEOUT);
         if (ObjectUtils.isEmpty(soTimeoutParam) || StringUtils.isBlank(soTimeoutParam.getValue())) {
             ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "请检查flea-cache-config.xml配置，【<cache-param key=" + RedisConfigConstants.REDIS_SENTINEL_CONFIG_SOTIMEOUT + " ></cache-param>】未配置或配置值为空");
         }
         int soTimeout = Integer.parseInt(soTimeoutParam.getValue());
 
-        // 4. 获取Redis客户端操作最大尝试次数【包含第一次操作】
-        int maxAttempts = CacheConfigUtils.getMaxAttempts();
-
-        // 5. 获取Redis sb服务节点登录密码（集群各节点配置同一个）
-        CacheParam passwordParam = CacheConfigUtils.getCacheParam(RedisConfigConstants.REDIS_SENTINEL_CONFIG_PASSWORD);
-        if (ObjectUtils.isEmpty(passwordParam) || StringUtils.isBlank(passwordParam.getValue())) {
-            ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "请检查flea-cache-config.xml配置，【<cache-param key=" + RedisConfigConstants.REDIS_SENTINEL_CONFIG_PASSWORD + " ></cache-param>】未配置或配置值为空");
+        // 缓存服务器cache-server中没有配置，从缓存参数中获取默认的密码
+        if (StringUtils.isBlank(password)) {
+            // 获取Redis哨兵服务节点登录密码（集群各节点配置同一个）
+            CacheParam passwordParam = CacheConfigUtils.getCacheParam(RedisConfigConstants.REDIS_SENTINEL_CONFIG_PASSWORD);
+            if (ObjectUtils.isNotEmpty(passwordParam))
+                password = passwordParam.getValue();
         }
-        String password = passwordParam.getValue();
 
-        // 6. 获取Redis sb客户端当前连接的名称
+        // 获取Redis哨兵客户端当前连接的名称
         String clientName = CacheConfigUtils.getClientName(CacheConfigUtils.getSystemName());
-        // 7. 获取Jedis连接池配置信息
+
+        // 获取Jedis连接池配置信息
         JedisPoolConfig poolConfig = CacheConfigUtils.getJedisPoolConfig();
-        //数据库索引
-        int database = Protocol.DEFAULT_DATABASE;
-        CacheParam dataBaseParam = CacheConfigUtils.getCacheParam(RedisConfigConstants.REDIS_SENTINEL_CONFIG_DATABASE);
-        if (!(ObjectUtils.isEmpty(dataBaseParam) || StringUtils.isBlank(dataBaseParam.getValue()))) {
-            database = Integer.parseInt(dataBaseParam.getValue());
-            if (database < 0 || database > 15) {
-                ExceptionUtils.throwFleaException(FleaCacheConfigException.class, "范围不对，应为0-15【" + RedisConfigConstants.REDIS_SENTINEL_CONFIG_DATABASE + "】");
-            }
-        }
 
         if (ObjectUtils.isEmpty(jedisSentinelPool)) {
             jedisSentinelPool = new JedisSentinelPool(masterName, nodes, poolConfig, connectionTimeout, soTimeout, password, database, clientName);

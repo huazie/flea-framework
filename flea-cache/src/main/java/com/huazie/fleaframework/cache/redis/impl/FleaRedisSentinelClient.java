@@ -10,19 +10,10 @@ import com.huazie.fleaframework.common.CommonConstants;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
 import redis.clients.jedis.Client;
-import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.JedisSentinelPool;
-import redis.clients.jedis.ShardedJedis;
-import redis.clients.jedis.ShardedJedisPool;
 import redis.clients.jedis.params.SetParams;
-import redis.clients.jedis.util.JedisClusterCRC16;
 import redis.clients.jedis.util.SafeEncoder;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Flea哨兵模式Redis客户端实现，封装了Flea框架操作Redis缓存的基本操作。
@@ -254,9 +245,9 @@ public class FleaRedisSentinelClient extends FleaRedisClient {
         }
 
         /**
-         * 构建Redis集群客户端对象
+         * 构建Redis哨兵客户端对象
          *
-         * @return Redis集群客户端
+         * @return Redis哨兵客户端
          * @since 2.0.0
          */
         public RedisClient build() {
