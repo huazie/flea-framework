@@ -26,6 +26,10 @@ public class SpringCacheTest {
     private AbstractSpringCacheManager redisClusterSpringCacheManager;
 
     @Autowired
+    @Qualifier("redisSentinelSpringCacheManager")
+    private AbstractSpringCacheManager redisSentinelSpringCacheManager;
+
+    @Autowired
     @Qualifier("coreSpringCacheManager")
     private AbstractSpringCacheManager coreSpringCacheManager;
 
@@ -54,6 +58,29 @@ public class SpringCacheTest {
     }
 
     @Test
+    public void testRedisSentinelSpringCache() {
+        try {
+            // 哨兵模式下Spring缓存管理类
+            AbstractSpringCache cache = redisSentinelSpringCacheManager.getCache("fleajerseyresource");
+            LOGGER.debug("Cache = {}", cache);
+
+            //#### 1.  简单字符串
+            cache.put("menu1", "huazie");
+            cache.put("menu2", null);
+//            cache.get("menu1");
+//            cache.get("menu2");
+//            cache.delete("menu1");
+//            cache.delete("menu2");
+//            cache.clear();
+            cache.getCacheKey();
+            AbstractFleaCache fleaCache = (AbstractFleaCache) cache.getNativeCache();
+            LOGGER.debug(fleaCache.getCacheName() + ">>>" + fleaCache.getCacheDesc());
+        } catch (Exception e) {
+            LOGGER.error("Exception:", e);
+        }
+    }
+
+    @Test
     public void testCoreSpringCacheForRedisCluster() {
         try {
             // 集群模式下Spring缓存管理类
@@ -70,6 +97,29 @@ public class SpringCacheTest {
 //            cache.delete("menu1");
 //            cache.delete("menu2");
 //            cache.clear();
+            AbstractFleaCache fleaCache = (AbstractFleaCache) cache.getNativeCache();
+            LOGGER.debug(fleaCache.getCacheName() + ">>>" + fleaCache.getCacheDesc());
+        } catch (Exception e) {
+            LOGGER.error("Exception:", e);
+        }
+    }
+
+    @Test
+    public void testCoreSpringCacheForRedisSentinel() {
+        try {
+            // 集群模式下Spring缓存管理类
+            AbstractSpringCache cache = coreSpringCacheManager.getCache("fleajerseyresource");
+            LOGGER.debug("Cache = {}", cache);
+
+            //#### 1.  简单字符串
+//            cache.put("menu1", "huazie");
+//            cache.put("menu2", null);
+//            cache.get("menu1");
+//            cache.get("menu2");
+            cache.delete("menu1");
+            cache.delete("menu2");
+//            cache.clear();
+            cache.getCacheKey();
             AbstractFleaCache fleaCache = (AbstractFleaCache) cache.getNativeCache();
             LOGGER.debug(fleaCache.getCacheName() + ">>>" + fleaCache.getCacheDesc());
         } catch (Exception e) {

@@ -38,7 +38,7 @@
     <!--
         配置缓存管理 redisClusterSpringCacheManager
         配置缓存时间 configMap (key缓存对象名称 value缓存过期时间)
-
+    -->
     <bean id="redisClusterSpringCacheManager" class="com.huazie.fleaframework.cache.redis.manager.RedisClusterSpringCacheManager">
         <property name="configMap">
             <map>
@@ -46,10 +46,9 @@
             </map>
         </property>
     </bean>
-    -->
 
     <!--
-        配置缓存管理 redisShardedSpringCacheManager
+        配置缓存管理 redisSentinelSpringCacheManager
         配置缓存时间 configMap (key缓存对象名称 value缓存过期时间)
     -->
     <bean id="redisSentinelSpringCacheManager" class="com.huazie.fleaframework.cache.redis.manager.RedisSentinelSpringCacheManager">

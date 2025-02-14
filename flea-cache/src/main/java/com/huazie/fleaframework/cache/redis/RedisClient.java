@@ -22,6 +22,14 @@ import redis.clients.jedis.params.SetParams;
  *   // 获取集群模式下默认连接池的Redis客户端
  *   RedisClient redisClient = RedisClientFactory.getInstance(CacheModeEnum.CLUSTER); </pre>
  *
+ * <p> 哨兵模式下，针对单独缓存接入场景，可以通过如下方式对外使用Redis客户端，
+ * 使用之前需要先初始化Redis连接池【默认default】：
+ * <pre>
+ *   // 初始化默认连接池
+ *   RedisSentinelPool.getInstance().initialize(database);
+ *   // 获取哨兵模式下默认连接池的Redis客户端
+ *   RedisClient redisClient = RedisClientFactory.getInstance(CacheModeEnum.SENTINEL); </pre>
+ *
  * <p> 分片模式下，针对整合缓存接入场景，可以通过如下方式对外使用Redis客户端，
  * 使用之前需要先初始化Redis连接池【指定缓存组名】：
  * <pre>
@@ -37,6 +45,14 @@ import redis.clients.jedis.params.SetParams;
  *   RedisClusterPool.getInstance(group).initialize(cacheServerList);
  *   // 获取集群模式下指定连接池【group】的Redis客户端
  *   RedisClient redisClient = RedisClientFactory.getInstance(group, CacheModeEnum.CLUSTER); </pre>
+ *
+ * <p> 哨兵模式下，针对整合缓存接入场景，可以通过如下方式对外使用Redis客户端，
+ * 使用之前需要先初始化Redis连接池【指定缓存组名】：
+ * <pre>
+ *   // 初始化指定缓存组名的连接池
+ *   RedisSentinelPool.getInstance(group).initialize(cacheServerList);
+ *   // 获取哨兵模式下指定连接池【group】的Redis客户端
+ *   RedisClient redisClient = RedisClientFactory.getInstance(group, CacheModeEnum.SENTINEL); </pre>
  *
  * @author huazie
  * @version 1.1.0
