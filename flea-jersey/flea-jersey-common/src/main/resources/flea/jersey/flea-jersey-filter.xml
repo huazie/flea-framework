@@ -40,6 +40,8 @@
         <i18n-error-mapping i18nCode="ERROR-AUTH-COMMON0000000021" errorCode="100009">资源【resource_code = {0}】不存在或已失效！</i18n-error-mapping>
         <i18n-error-mapping i18nCode="ERROR-AUTH-COMMON0000000022" errorCode="100010">账户【account_id = {0}】没有权限调用归属于系统【system_account_id = {1}】的资源【{2}】</i18n-error-mapping>
         <i18n-error-mapping i18nCode="ERROR-AUTH-COMMON0000000023" errorCode="100011">当前资源【{0}】不属于指定系统【system_account_id = {1}】，请确认！</i18n-error-mapping>
+        <i18n-error-mapping i18nCode="ERROR-JERSEY-COMMON0000000000" errorCode="100012">【{0}】获取失败，请检查！</i18n-error-mapping>
+        <i18n-error-mapping i18nCode="ERROR-JERSEY-COMMON0000000001" errorCode="100013">【{0}】不能为空，请检查！</i18n-error-mapping>
     </filter-i18n-error>
 
 </jersey>
