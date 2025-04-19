@@ -7,9 +7,7 @@ import com.huazie.fleaframework.cache.common.EmptyFleaCache;
 import com.huazie.fleaframework.cache.redis.RedisClient;
 import com.huazie.fleaframework.cache.redis.RedisClientFactory;
 import com.huazie.fleaframework.cache.redis.RedisSentinelPool;
-import com.huazie.fleaframework.cache.redis.RedisShardedPool;
 import com.huazie.fleaframework.cache.redis.config.RedisSentinelConfig;
-import com.huazie.fleaframework.cache.redis.config.RedisShardedConfig;
 import com.huazie.fleaframework.cache.redis.impl.RedisSpringCache;
 
 /**

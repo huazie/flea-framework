@@ -34,6 +34,8 @@ public class FleaCacheManagerFactory {
 
     private static final Object managerMapLock = new Object();
 
+    private static final Object managerMapLockNew = new Object();
+
     private static final IFleaStrategyContext<AbstractFleaCacheManager, FleaCommonConfig> fleaStrategy = new FCMStrategyContext();
 
     private FleaCacheManagerFactory() {
@@ -65,9 +67,12 @@ public class FleaCacheManagerFactory {
      * @since 2.0.0
      */
     public static AbstractFleaCacheManager getFleaCacheManager(int database) {
-        String name = CacheEnum.RedisSentinel.getName() + database;
+        String name = CacheEnum.RedisSentinel.getName();
+        if (database == 0)
+            return getFleaCacheManager(name);
+        name += database;
         if (!managerMap.containsKey(name)) {
-            synchronized (managerMapLock) {
+            synchronized (managerMapLockNew) {
                 if (!managerMap.containsKey(name)) {
                     FleaCommonConfig config = new FleaCommonConfig();
                     config.put(CacheConstants.RedisConfigConstants.REDIS_SENTINEL_CONFIG_DATABASE, database);

@@ -1,7 +1,9 @@
 package com.huazie.fleaframework.common.util.json;
 
+import com.huazie.fleaframework.common.exceptions.FleaException;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
+import com.huazie.fleaframework.common.util.ExceptionUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -60,6 +62,7 @@ public class JsonUtils {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error1(new Object() {}, "Json converted to List<String>, Exception = \n", e);
             }
+            ExceptionUtils.throwFleaException(FleaException.class, e);
         }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug1(obj, "Json converted to List<String>, List<String> = {}", list);
@@ -111,6 +114,7 @@ public class JsonUtils {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error1(new Object() {}, "Json converted to List<Map<String, Object>>, Exception = \n", e);
             }
+            ExceptionUtils.throwFleaException(FleaException.class, e);
         }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug1(obj, "Json converted to List<Map<String, Object>>, List<Map<String, Object>> = {}", list);

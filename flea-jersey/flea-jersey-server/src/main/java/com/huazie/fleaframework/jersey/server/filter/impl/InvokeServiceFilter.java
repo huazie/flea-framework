@@ -24,7 +24,7 @@ import org.springframework.web.context.WebApplicationContext;
  * 资源服务调用过滤器实现，它是Flea Jersey接口的核心逻辑。
  *
  * <p> 它首先从请求公共报文中获取资源编码【RESOURCE_CODE】 和
- * 服务编码【SERVICE_CODE】，根据它俩获取相关资源服务配置数据，
+ * 服务编码【SERVICE_CODE】，并根据它俩获取相关资源服务配置数据，
  * 其中包括资源服务接口、方法、出入参【由服务提供方约定】等。
  *
  * <p> 然后根据服务接口，从Web应用上下文中获取Spring注入的服务，

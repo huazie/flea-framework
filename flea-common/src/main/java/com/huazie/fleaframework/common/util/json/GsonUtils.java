@@ -2,8 +2,10 @@ package com.huazie.fleaframework.common.util.json;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.huazie.fleaframework.common.exceptions.FleaException;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
+import com.huazie.fleaframework.common.util.ExceptionUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -45,6 +47,7 @@ public class GsonUtils {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error1(new Object() {}, "Json converted to Entity, Exception = ", e);
             }
+            ExceptionUtils.throwFleaException(FleaException.class, e);
         }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug1(obj, "#G# Json converted to Entity, Entity = {}", t);
@@ -74,6 +77,7 @@ public class GsonUtils {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error1(new Object() {}, "#G# Json converted to EntityList, Exception = \n", e);
             }
+            ExceptionUtils.throwFleaException(FleaException.class, e);
         }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug1(obj, "#G# Json converted to EntityList, EntityList={}", entityList);
@@ -101,6 +105,7 @@ public class GsonUtils {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error1(new Object() {}, "#G# Json converted to Map, Exception = \n", e);
             }
+            ExceptionUtils.throwFleaException(FleaException.class, e);
         }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug1(obj, "#G# Json converted to Map, Map = {}", map);
@@ -129,6 +134,7 @@ public class GsonUtils {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error1(new Object() {}, "#G# Json converted to MapList, Exception = ", e);
             }
+            ExceptionUtils.throwFleaException(FleaException.class, e);
         }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug1(obj, "#G# Json converted to MapList, MapList={}", mapList);

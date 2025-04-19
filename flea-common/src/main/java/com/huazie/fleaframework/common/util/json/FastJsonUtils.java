@@ -2,8 +2,10 @@ package com.huazie.fleaframework.common.util.json;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import com.huazie.fleaframework.common.exceptions.FleaException;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
+import com.huazie.fleaframework.common.util.ExceptionUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -44,6 +46,7 @@ public class FastJsonUtils {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error1(new Object() {}, "#F# Json converted to Entity, Exception = ", e);
             }
+            ExceptionUtils.throwFleaException(FleaException.class, e);
         }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug1(obj, "#F# Json converted to Entity, Entity = {}", t);
@@ -73,6 +76,7 @@ public class FastJsonUtils {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error1(new Object() {}, "#F# Json converted to EntityList, Exception = ", e);
             }
+            ExceptionUtils.throwFleaException(FleaException.class, e);
         }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug1(obj, "#F# Json converted to EntityList, EntityList={}", entityList);
@@ -101,6 +105,7 @@ public class FastJsonUtils {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error1(new Object() {}, "#F# Json converted to Map, Exception = \n", e);
             }
+            ExceptionUtils.throwFleaException(FleaException.class, e);
         }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug1(obj, "#F# Json converted to Map, Map = {}", map);
@@ -128,6 +133,7 @@ public class FastJsonUtils {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error1(new Object() {}, "#F# Json converted to MapList, Exception = ", e);
             }
+            ExceptionUtils.throwFleaException(FleaException.class, e);
         }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug1(obj, "#F# Json converted to MapList, MapList={}", mapList);
