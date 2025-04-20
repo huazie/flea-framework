@@ -28,6 +28,16 @@ public class FleaUserImpl extends FleaCommonConfig implements IFleaUser {
     }
 
     @Override
+    public Long getSystemUserId() {
+        return get(FleaAuthConstants.UserModuleConstants.SYSTEM_USER_ID, Long.class);
+    }
+
+    @Override
+    public void setSystemUserId(Long systemUserId) {
+        put(FleaAuthConstants.UserModuleConstants.SYSTEM_USER_ID, systemUserId);
+    }
+
+    @Override
     public Long getAccountId() {
         return get(FleaJerseyConstants.RequestPublicDataConstants.ACCOUNT_ID, Long.class);
     }

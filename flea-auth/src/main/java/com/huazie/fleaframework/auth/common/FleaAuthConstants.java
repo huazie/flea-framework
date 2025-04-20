@@ -40,6 +40,8 @@ public interface FleaAuthConstants {
 
         String USER_ID = "USER_ID";
 
+        String SYSTEM_USER_ID = "SYSTEM_USER_ID";
+
         String USER_NAME = "USER_NAME";
 
         String SYSTEM_USER_NAME = "SYSTEM_USER_NAME";

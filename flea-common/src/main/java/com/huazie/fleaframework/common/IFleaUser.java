@@ -28,6 +28,22 @@ public interface IFleaUser {
     void setUserId(Long userId);
 
     /**
+     * 获取系统用户编号
+     *
+     * @return 用户编号
+     * @since 2.0.0
+     */
+    Long getSystemUserId();
+
+    /**
+     * 设置系统用户编号
+     *
+     * @param systemUserId 系统用户编号
+     * @since 2.0.0
+     */
+    void setSystemUserId(Long systemUserId);
+
+    /**
      * 获取账户编号
      *
      * @return 账户编号
