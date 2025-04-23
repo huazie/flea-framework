@@ -6,7 +6,7 @@ import java.util.Map;
  * Flea 用户信息接口
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 public interface IFleaUser {
@@ -26,6 +26,22 @@ public interface IFleaUser {
      * @since 1.0.0
      */
     void setUserId(Long userId);
+
+    /**
+     * 获取系统用户编号
+     *
+     * @return 用户编号
+     * @since 2.0.0
+     */
+    Long getSystemUserId();
+
+    /**
+     * 设置系统用户编号
+     *
+     * @param systemUserId 系统用户编号
+     * @since 2.0.0
+     */
+    void setSystemUserId(Long systemUserId);
 
     /**
      * 获取账户编号

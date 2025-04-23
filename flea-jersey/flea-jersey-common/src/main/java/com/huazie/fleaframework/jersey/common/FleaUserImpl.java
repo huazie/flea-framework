@@ -10,7 +10,7 @@ import java.util.Map;
  * 用户信息实现
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 public class FleaUserImpl extends FleaCommonConfig implements IFleaUser {
@@ -25,6 +25,16 @@ public class FleaUserImpl extends FleaCommonConfig implements IFleaUser {
     @Override
     public void setUserId(Long userId) {
         put(FleaAuthConstants.UserModuleConstants.USER_ID, userId);
+    }
+
+    @Override
+    public Long getSystemUserId() {
+        return get(FleaAuthConstants.UserModuleConstants.SYSTEM_USER_ID, Long.class);
+    }
+
+    @Override
+    public void setSystemUserId(Long systemUserId) {
+        put(FleaAuthConstants.UserModuleConstants.SYSTEM_USER_ID, systemUserId);
     }
 
     @Override

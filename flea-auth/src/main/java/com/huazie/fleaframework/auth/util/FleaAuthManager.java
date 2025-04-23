@@ -121,6 +121,8 @@ public class FleaAuthManager {
      */
     public static void initSystemUserData(IFleaUser fleaUser, FleaUserModuleData systemUser) {
         FleaUser sysUser = systemUser.getFleaUser();
+        // 系统用户编号
+        fleaUser.set(FleaAuthConstants.UserModuleConstants.SYSTEM_USER_ID, sysUser.getUserId());
         // 系统用户名
         fleaUser.set(FleaAuthConstants.UserModuleConstants.SYSTEM_USER_NAME, sysUser.getUserName());
         // 添加系统用户扩展属性信息

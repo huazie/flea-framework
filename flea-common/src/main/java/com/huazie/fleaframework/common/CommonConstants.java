@@ -4,13 +4,16 @@ package com.huazie.fleaframework.common;
  * 公共常量类
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
-public interface CommonConstants {
+public final class CommonConstants {
 
-    interface SystemConstants {
-        String APP_CODE = "APP_CODE";
+    private CommonConstants() {
+    }
+
+    public static final class SystemConstants {
+        public static final String APP_CODE = "APP_CODE";
     }
 
     /**
@@ -18,9 +21,9 @@ public interface CommonConstants {
      *
      * @since 1.0.0
      */
-    interface MethodConstants {
-        String GET = "get";
-        String SET = "set";
+    public static final class MethodConstants {
+        public static final String GET = "get";
+        public static final String SET = "set";
     }
 
     /**
@@ -28,35 +31,35 @@ public interface CommonConstants {
      *
      * @since 1.0.0
      */
-    interface NumeralConstants {
+    public static final class NumeralConstants {
         /**
-         * 整数 -1， long类型
+         * 整数 -1， public static final long类型
          */
-        long MINUS_ONE = -1L;
+        public static final long MINUS_ONE = -1L;
         /**
-         * 整数 -2， long类型
+         * 整数 -2， public static final long类型
          */
-        long MINUS_TWO = -2L;
+        public static final long MINUS_TWO = -2L;
         /**
-         * 整数 0 , long类型
+         * 整数 0 , public static final long类型
          */
-        long ZERO = 0L;
+        public static final long ZERO = 0L;
         /**
-         * 整数 0 , int类型
+         * 整数 0 , public static final int类型
          */
-        int INT_ZERO = 0;
+        public static final int INT_ZERO = 0;
         /**
-         * 整数 1 , int类型
+         * 整数 1 , public static final int类型
          */
-        int INT_ONE = 1;
+        public static final int INT_ONE = 1;
         /**
-         * 整数 2 , int类型
+         * 整数 2 , public static final int类型
          */
-        int INT_TWO = 2;
+        public static final int INT_TWO = 2;
         /**
-         * 整数 3 , int类型
+         * 整数 3 , public static final int类型
          */
-        int INT_THREE = 3;
+        public static final int INT_THREE = 3;
     }
 
     /**
@@ -64,51 +67,51 @@ public interface CommonConstants {
      *
      * @since 1.0.0
      */
-    interface SymbolConstants {
+    public static final class SymbolConstants {
         /**
          * 左花括号
          */
-        String LEFT_CURLY_BRACE = "{";
+        public static final String LEFT_CURLY_BRACE = "{";
         /**
          * 右花括号
          */
-        String RIGHT_CURLY_BRACE = "}";
+        public static final String RIGHT_CURLY_BRACE = "}";
         /**
          * 竖线
          */
-        String VERTICAL_LINE = "|";
+        public static final String VERTICAL_LINE = "|";
         /**
          * 下划线
          */
-        String UNDERLINE = "_";
+        public static final String UNDERLINE = "_";
         /**
          * 连号
          */
-        String HYPHEN = "-";
+        public static final String HYPHEN = "-";
         /**
          * 点号
          */
-        String DOT = ".";
+        public static final String DOT = ".";
         /**
          * 斜杠
          */
-        String SLASH = "/";
+        public static final String SLASH = "/";
         /**
          * 逗号
          */
-        String COMMA = ",";
+        public static final String COMMA = ",";
         /**
          * 冒号
          */
-        String COLON = ":";
+        public static final String COLON = ":";
         /**
          * 星号
          */
-        String ASTERISK = "*";
+        public static final String ASTERISK = "*";
         /**
          * 百分号
          */
-        String PERCENT = "%";
+        public static final String PERCENT = "%";
     }
 
     /**
@@ -116,10 +119,10 @@ public interface CommonConstants {
      *
      * @since 1.0.0
      */
-    interface FleaI18NConstants {
-        String FLEA_I18N_FILE_PATH = "flea/i18n/";
-        String FLEA_I18N_FILE_NAME_PREFIX = "flea_i18n";
-        String FLEA_I18N_CONFIG_ITEMS_KEY = "flea-i18n-config";
+    public static final class FleaI18NConstants {
+        public static final String FLEA_I18N_FILE_PATH = "flea/i18n/";
+        public static final String FLEA_I18N_FILE_NAME_PREFIX = "flea_i18n";
+        public static final String FLEA_I18N_CONFIG_ITEMS_KEY = "flea-i18n-config";
     }
 
     /**
@@ -127,27 +130,27 @@ public interface CommonConstants {
      *
      * @since 1.0.0
      */
-    interface IPAddressConstants {
+    public static final class IPAddressConstants {
         /**
          * 国家
          */
-        String COUNTRY = "country";
+        public static final String COUNTRY = "country";
         /**
          * 地区
          */
-        String REGION = "region";
+        public static final String REGION = "region";
         /**
          * 省份
          */
-        String PROVINCE = "province";
+        public static final String PROVINCE = "province";
         /**
          * 城市
          */
-        String CITY = "city";
+        public static final String CITY = "city";
         /**
          * 互联网服务提供商
          */
-        String ISP = "isp";
+        public static final String ISP = "isp";
     }
 
     /**
@@ -155,37 +158,39 @@ public interface CommonConstants {
      *
      * @since 1.0.0
      */
-    interface FleaConfigConstants {
+    public static final class FleaConfigConstants {
         /**
          * Flea Config 默认文件路径
          */
-        String FLEA_CONFIG_FILE_NAME = "flea/flea-config.xml";
+        public static final String FLEA_CONFIG_FILE_NAME = "flea/flea-config.xml";
         /**
          * Flea Config 系统环境变量
          */
-        String FLEA_CONFIG_FILE_SYSTEM_KEY = "fleaframework.flea.config.filename";
+        public static final String FLEA_CONFIG_FILE_SYSTEM_KEY = "fleaframework.flea.config.filename";
         /**
          * Flea URL 配置
          */
-        String FLEA_URL_CONFIG = "flea-url-config";
+        public static final String FLEA_URL_CONFIG = "flea-url-config";
         /**
          * 淘宝IP地址信息查询URL
          */
-        String TAOBAO_IP_URL = "taobao_ip_url";
+        public static final String TAOBAO_IP_URL = "taobao_ip_url";
     }
 
     /**
      * Flea池常量
+     *
+     * @since 1.0.0
      */
-    interface FleaPoolConstants {
+    public static final class FleaPoolConstants {
         /**
          * 默认池名
          */
-        String DEFAULT_POOL_NAME = "default";
+        public static final String DEFAULT_POOL_NAME = "default";
         /**
          * Flea对象池配置
          */
-        String FLEA_OBJECT_POOL = "flea-object-pool";
+        public static final String FLEA_OBJECT_POOL = "flea-object-pool";
     }
 
     /**
@@ -193,25 +198,25 @@ public interface CommonConstants {
      *
      * @since 1.0.0
      */
-    interface FleaFrameInitConstants {
+    public static final class FleaFrameInitConstants {
         /**
          * Flea Framework 初始化配置
          */
-        String FLEA_FRAMEWORK_INIT = "flea-framework-init";
+        public static final String FLEA_FRAMEWORK_INIT = "flea-framework-init";
 
         /**
          * 系统账户编号
          */
-        String CONFIG_ITEM_SYSTEM_ACCOUNT_ID = "system_account_id";
+        public static final String CONFIG_ITEM_SYSTEM_ACCOUNT_ID = "system_account_id";
 
         /**
          * 系统账户密码
          */
-        String CONFIG_ITEM_SYSTEM_ACCOUNT_PWD = "system_account_pwd";
+        public static final String CONFIG_ITEM_SYSTEM_ACCOUNT_PWD = "system_account_pwd";
 
         /**
          * 失效时间(永久)
          */
-        String CONFIG_ITEM_EXPIRY_TIME_FOREVER = "expiry_time_forever";
+        public static final String CONFIG_ITEM_EXPIRY_TIME_FOREVER = "expiry_time_forever";
     }
 }
