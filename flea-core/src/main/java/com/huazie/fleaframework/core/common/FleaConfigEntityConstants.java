@@ -9,36 +9,39 @@ import com.huazie.fleaframework.common.FleaEntityConstants;
  * @version 1.0.0
  * @since 1.0.0
  */
-public interface FleaConfigEntityConstants extends FleaEntityConstants {
+public final class FleaConfigEntityConstants extends FleaEntityConstants {
 
-    String E_CONFIG_TYPE = "configType";
+    private FleaConfigEntityConstants() {
+    }
 
-    String E_CONFIG_CODE = "configCode";
+    public static final String E_CONFIG_TYPE = "configType";
 
-    String E_CONFIG_STATE = "configState";
+    public static final String E_CONFIG_CODE = "configCode";
 
-    String E_PARA_TYPE = "paraType";
+    public static final String E_CONFIG_STATE = "configState";
 
-    String E_PARA_CODE = "paraCode";
+    public static final String E_PARA_TYPE = "paraType";
 
-    String E_PARA_STATE = "paraState";
+    public static final String E_PARA_CODE = "paraCode";
 
-    String E_RESOURCE_CODE = "resourceCode";
+    public static final String E_PARA_STATE = "paraState";
 
-    String E_SERVICE_CODE = "serviceCode";
+    public static final String E_RESOURCE_CODE = "resourceCode";
 
-    String E_I18N_CODE = "i18nCode";
+    public static final String E_SERVICE_CODE = "serviceCode";
 
-    String E_CLIENT_CODE = "clientCode";
+    public static final String E_I18N_CODE = "i18nCode";
 
-    String E_ACCOUNT_ID = "accountId";
+    public static final String E_CLIENT_CODE = "clientCode";
 
-    String E_MENU_CODE = "menuCode";
+    public static final String E_ACCOUNT_ID = "accountId";
 
-    String E_MENU_NAME = "menuName";
+    public static final String E_MENU_CODE = "menuCode";
 
-    String E_MENU_ICON = "menuIcon";
+    public static final String E_MENU_NAME = "menuName";
 
-    String E_FAVORITE_STATE = "favoritesState";
+    public static final String E_MENU_ICON = "menuIcon";
+
+    public static final String E_FAVORITE_STATE = "favoritesState";
 
 }

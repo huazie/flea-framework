@@ -7,30 +7,33 @@ package com.huazie.fleaframework.core.common;
  * @version 1.0.0
  * @since 1.0.0
  */
-public interface FleaCoreConstants {
+public final class FleaCoreConstants {
+
+    private FleaCoreConstants() {
+    }
 
     /**
      * <p> Flea Request配置数据常量 </p>
      *
      * @since 1.0.0
      */
-    interface FleaRequestConfigConstants {
+    public static final class FleaRequestConfigConstants {
         /**
          * <p> Flea Request 默认文件路径 </p>
          */
-        String FLEA_REQUEST_FILE_NAME = "flea/request/flea-request.xml";
+        public static final String FLEA_REQUEST_FILE_NAME = "flea/request/flea-request.xml";
         /**
          * <p> Flea Request 系统环境变量 </p>
          */
-        String FLEA_REQUEST_FILE_SYSTEM_KEY = "fleaframework.request.flea.request.filename";
+        public static final String FLEA_REQUEST_FILE_SYSTEM_KEY = "fleaframework.request.flea.request.filename";
         /**
          * <p> Flea Request Filter 默认文件路径 </p>
          */
-        String FLEA_REQUEST_FILTER_FILE_NAME = "flea/request/flea-request-filter.xml";
+        public static final String FLEA_REQUEST_FILTER_FILE_NAME = "flea/request/flea-request-filter.xml";
         /**
          * <p> Flea Request Filter 系统环境变量 </p>
          */
-        String FLEA_REQUEST_FILTER_FILE_SYSTEM_KEY = "fleaframework.request.flea.request.filter.filename";
+        public static final String FLEA_REQUEST_FILTER_FILE_SYSTEM_KEY = "fleaframework.request.flea.request.filter.filename";
 
     }
 

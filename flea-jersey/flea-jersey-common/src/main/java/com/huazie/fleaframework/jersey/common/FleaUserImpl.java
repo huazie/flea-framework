@@ -10,7 +10,7 @@ import java.util.Map;
  * 用户信息实现
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 public class FleaUserImpl extends FleaCommonConfig implements IFleaUser {

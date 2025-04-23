@@ -6,7 +6,7 @@ import java.util.Map;
  * Flea 用户信息接口
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 public interface IFleaUser {

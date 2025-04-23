@@ -4,54 +4,54 @@ package com.huazie.fleaframework.common;
  * Flea 实体类通用常量接口
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
-public interface FleaEntityConstants {
+public class FleaEntityConstants {
 
     /**
-     * 创建日期 
+     * 创建日期
      */
-    String E_CREATE_DATE = "createDate";
+    public static final String E_CREATE_DATE = "createDate";
 
     /**
-     * 修改日期 
+     * 修改日期
      */
-    String E_DONE_DATE = "doneDate";
+    public static final String E_DONE_DATE = "doneDate";
 
     /**
-     * 生效日期 
+     * 生效日期
      */
-    String E_EFFECTIVE_DATE = "effectiveDate";
+    public static final String E_EFFECTIVE_DATE = "effectiveDate";
 
     /**
-     * 失效日期 
+     * 失效日期
      */
-    String E_EXPIRY_DATE = "expiryDate";
+    public static final String E_EXPIRY_DATE = "expiryDate";
 
     /**
      * 组编号
      */
-    String E_GROUP_ID = "groupId";
+    public static final String E_GROUP_ID = "groupId";
 
     /**
-     * 状态 
+     * 状态
      */
-    String E_STATE = "state";
+    public static final String E_STATE = "state";
 
     /**
      * 属性编号
      */
-    String E_ATTR_ID = "attrId";
+    public static final String E_ATTR_ID = "attrId";
 
     /**
-     * 属性码 
+     * 属性码
      */
-    String E_ATTR_CODE = "attrCode";
+    public static final String E_ATTR_CODE = "attrCode";
 
     /**
-     * 属性值 
+     * 属性值
      */
-    String E_ATTR_VALUE = "attrValue";
+    public static final String E_ATTR_VALUE = "attrValue";
 
 }
