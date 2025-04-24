@@ -7,6 +7,7 @@ import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -83,7 +84,8 @@ public class DateUtils {
         try {
             dateStr = dateFormat.format(date);
         } catch (Exception e) {
-            LOGGER.error1(new Object() {},"DateUtils##date2String 日期转换异常：", e);
+            LOGGER.error1(new Object() {
+            }, "DateUtils##date2String 日期转换异常：", e);
         }
         return dateStr;
     }
@@ -136,7 +138,8 @@ public class DateUtils {
             SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatStr);
             return dateFormat.parse(dateStr);
         } catch (Exception e) {
-            LOGGER.error1(new Object() {},"DateUtils##string2Date 日期字符串转换异常：", e);
+            LOGGER.error1(new Object() {
+            }, "DateUtils##string2Date 日期字符串转换异常：", e);
         }
         return null;
     }
@@ -169,5 +172,18 @@ public class DateUtils {
         return string2Date(dateStr, DateFormatEnum.DATE_FORMAT_DEFAULT);
     }
 
-
+    /**
+     * 获取当前时间前后指定时间单位和间隔的时间
+     *
+     * @param timeUnit 时间单位，Calendar.MINUTE、Calendar.HOUR_OF_DAY 或 Calendar.DAY_OF_YEAR
+     * @param interval 时间间隔，正数表示之后，负数表示之前
+     * @return 当前时间前后指定时间单位和间隔的时间
+     * @since 1.0.0
+     */
+    public static Date getTime(int timeUnit, int interval) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(timeUnit, interval);
+        return calendar.getTime();
+    }
 }
