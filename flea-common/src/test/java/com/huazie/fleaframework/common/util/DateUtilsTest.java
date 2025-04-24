@@ -5,6 +5,7 @@ import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import org.junit.Test;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -38,5 +39,15 @@ public class DateUtilsTest {
         assert date2 != null;
         assert date1 != null;
         LOGGER.debug("Time: {}", date2.getTime() - date1.getTime());
+    }
+
+    @Test
+    public void testGetIntervalTime() {
+        LOGGER.debug("当前时间5分钟前：{}", DateUtils.date2String(DateUtils.getTime(Calendar.MINUTE, -5)));
+        LOGGER.debug("当前时间5分钟后：{}", DateUtils.date2String(DateUtils.getTime(Calendar.MINUTE, 5)));
+        LOGGER.debug("当前时间10小时前：{}", DateUtils.date2String(DateUtils.getTime(Calendar.HOUR_OF_DAY, -10)));
+        LOGGER.debug("当前时间10小时后：{}", DateUtils.date2String(DateUtils.getTime(Calendar.HOUR_OF_DAY, 10)));
+        LOGGER.debug("当前时间3天前：{}", DateUtils.date2String(DateUtils.getTime(Calendar.DAY_OF_YEAR, -3)));
+        LOGGER.debug("当前时间3天后：{}", DateUtils.date2String(DateUtils.getTime(Calendar.DAY_OF_YEAR, 3)));
     }
 }
