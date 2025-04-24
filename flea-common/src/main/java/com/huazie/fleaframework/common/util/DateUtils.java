@@ -84,8 +84,7 @@ public class DateUtils {
         try {
             dateStr = dateFormat.format(date);
         } catch (Exception e) {
-            LOGGER.error1(new Object() {
-            }, "DateUtils##date2String 日期转换异常：", e);
+            LOGGER.error1(new Object() {}, "DateUtils##date2String 日期转换异常：", e);
         }
         return dateStr;
     }
@@ -138,8 +137,7 @@ public class DateUtils {
             SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatStr);
             return dateFormat.parse(dateStr);
         } catch (Exception e) {
-            LOGGER.error1(new Object() {
-            }, "DateUtils##string2Date 日期字符串转换异常：", e);
+            LOGGER.error1(new Object() {}, "DateUtils##string2Date 日期字符串转换异常：", e);
         }
         return null;
     }
