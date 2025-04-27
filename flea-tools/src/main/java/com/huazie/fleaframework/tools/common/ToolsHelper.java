@@ -1,6 +1,6 @@
 package com.huazie.fleaframework.tools.common;
 
-import javax.swing.*;
+import javax.swing.JOptionPane;
 
 /**
  * <p> 工具类 </p>
