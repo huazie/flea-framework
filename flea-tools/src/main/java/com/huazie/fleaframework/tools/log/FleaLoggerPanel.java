@@ -2,8 +2,12 @@ package com.huazie.fleaframework.tools.log;
 
 import com.huazie.fleaframework.tools.common.impl.TextAreaLogAppender;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.LayoutManager;
 
 /**
  * <p> 日志面板 </p>
