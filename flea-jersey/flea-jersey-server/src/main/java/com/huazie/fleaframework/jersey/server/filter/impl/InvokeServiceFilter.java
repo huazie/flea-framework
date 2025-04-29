@@ -1,6 +1,7 @@
 package com.huazie.fleaframework.jersey.server.filter.impl;
 
 import com.huazie.fleaframework.common.exceptions.CommonException;
+import com.huazie.fleaframework.common.exceptions.FleaException;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
 import com.huazie.fleaframework.common.util.ExceptionUtils;
@@ -32,7 +33,7 @@ import org.springframework.web.context.WebApplicationContext;
  * 对应的资源服务方法，获取业务返回报文，并添加至响应业务报文中。
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 public class InvokeServiceFilter implements IFleaJerseyFilter {
@@ -40,7 +41,7 @@ public class InvokeServiceFilter implements IFleaJerseyFilter {
     private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(InvokeServiceFilter.class);
 
     @Override
-    public void doFilter(FleaJerseyRequest request, FleaJerseyResponse response) throws CommonException {
+    public void doFilter(FleaJerseyRequest request, FleaJerseyResponse response) throws CommonException, FleaException {
         Object obj = null;
         if (LOGGER.isDebugEnabled()) {
             obj = new Object() {};

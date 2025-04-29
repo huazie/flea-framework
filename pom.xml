@@ -56,6 +56,7 @@
                     <target>${jdk.version}</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
                     <compilerArgs>
+                        <!-- 开启完整调试信息 -->
                         <arg>-g</arg>
                     </compilerArgs>
                 </configuration>
