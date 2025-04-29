@@ -4,11 +4,13 @@ import com.huazie.fleaframework.common.CommonConstants;
 import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.exceptions.FleaException;
 
+import java.lang.reflect.InvocationTargetException;
+
 /**
  * 异常工具类，封装了自定义异常抛出的通用逻辑
  *
  * @author huazie
- * @version 1.1.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 public class ExceptionUtils {
@@ -102,6 +104,28 @@ public class ExceptionUtils {
         Object exceptionInstance = ReflectUtils.newInstance(exceptionClazz, params, paramTypes);
         if (ObjectUtils.isNotEmpty(exceptionInstance)) {
             throw exceptionClazz.cast(exceptionInstance);
+        }
+    }
+
+    /**
+     * 抛出异常【如果遇到 CommonException，需要原样抛出】
+     *
+     * @param message 自定义异常信息
+     * @param cause 捕获的异常对象
+     * @since 2.0.0
+     */
+    public static void throwException(String message, Throwable cause) {
+        if (cause instanceof CommonException) {
+            throw (CommonException) cause;
+        } else if (cause instanceof InvocationTargetException) {
+            Throwable temp = ((InvocationTargetException) cause).getTargetException();
+            if (temp instanceof CommonException) {
+                throw (CommonException) temp;
+            } else {
+                ExceptionUtils.throwFleaException(FleaException.class, message, temp);
+            }
+        } else {
+            ExceptionUtils.throwFleaException(FleaException.class, message, cause);
         }
     }
 

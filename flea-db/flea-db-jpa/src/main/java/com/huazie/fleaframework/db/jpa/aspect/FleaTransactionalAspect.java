@@ -7,12 +7,11 @@ import com.huazie.fleaframework.common.exceptions.FleaException;
 import com.huazie.fleaframework.common.util.ArrayUtils;
 import com.huazie.fleaframework.common.util.CollectionUtils;
 import com.huazie.fleaframework.common.util.ExceptionUtils;
-import com.huazie.fleaframework.common.util.FleaAspectUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.ReflectUtils;
+import com.huazie.fleaframework.common.util.StringUtils;
 import com.huazie.fleaframework.db.common.DBConstants;
 import com.huazie.fleaframework.db.common.exceptions.DaoException;
-import com.huazie.fleaframework.db.common.exceptions.FleaDBException;
 import com.huazie.fleaframework.db.common.lib.pojo.SplitLib;
 import com.huazie.fleaframework.db.common.table.pojo.SplitTable;
 import com.huazie.fleaframework.db.common.util.FleaLibUtil;
@@ -20,9 +19,17 @@ import com.huazie.fleaframework.db.common.util.FleaSplitUtils;
 import com.huazie.fleaframework.db.jpa.dao.impl.AbstractFleaJPADAOImpl;
 import com.huazie.fleaframework.db.jpa.persistence.FleaEntityManager;
 import com.huazie.fleaframework.db.jpa.transaction.FleaTransactionTemplate;
+import com.huazie.fleaframework.db.jpa.transaction.FleaTransactional;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.context.expression.MethodBasedEvaluationContext;
+import org.springframework.core.DefaultParameterNameDiscoverer;
+import org.springframework.core.ParameterNameDiscoverer;
+import org.springframework.expression.EvaluationContext;
+import org.springframework.expression.ExpressionParser;
+import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
@@ -62,16 +69,42 @@ public class FleaTransactionalAspect {
 
     private static final String METHOD_NAME_GET_ENTITY_MANAGER = "getEntityManager";
 
-    @Around("@annotation(com.huazie.fleaframework.db.jpa.transaction.FleaTransactional)")
-    public Object invokeWithinTransaction(final ProceedingJoinPoint joinPoint) throws CommonException, FleaException, NoSuchMethodException {
-        // 获取当前连接点上的方法
-        Method method = FleaAspectUtils.getTargetMethod(joinPoint);
-        // 获取当前连接点方法上的自定义Flea事务注解上对应的事务名称
-        String transactionName = FleaEntityManager.getTransactionName(method);
+    // SpEL解析相关
+    // 表达式解析器
+    private final ExpressionParser parser = new SpelExpressionParser();
+    // 参数名发现器
+    private final ParameterNameDiscoverer paramDiscoverer = new DefaultParameterNameDiscoverer();
+
+    @Around("@annotation(fleaTransactional)")
+    public Object invokeWithinTransaction(final ProceedingJoinPoint joinPoint, FleaTransactional fleaTransactional) throws CommonException, FleaException {
         // 获取连接点方法签名上的参数列表
         Object[] args = joinPoint.getArgs();
         // 获取标记Flea事务注解的目标对象
         Object tObj = joinPoint.getTarget();
+        String seq = fleaTransactional.seq();
+        Class seqProvider = fleaTransactional.seqProvider();
+        String seqMethod = fleaTransactional.seqMethod();
+        if (StringUtils.isNotBlank(seq)) {
+            MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+            EvaluationContext context = new MethodBasedEvaluationContext(tObj, signature.getMethod(), args, paramDiscoverer);
+            // 解析表达式，获取分库序列集
+            Object actualSeq = parser.parseExpression(seq).getValue(context);
+            // 设置分库序列集
+            FleaLibUtil.setSplitLibSequence(actualSeq.toString());
+        } else if (ObjectUtils.isNotEmpty(seqProvider) && seqProvider != Void.class && StringUtils.isNotBlank(seqMethod)) {
+            try {
+                Object provider = FleaApplicationContext.getBean(seqProvider);
+                Method method = provider.getClass().getMethod(seqMethod);
+                // 调用外部方法来设置分库序列
+                method.invoke(provider);
+            } catch (Exception e) {
+                String msg = String.format("Sharding sequence setup failed: %s.%s() - %s", seqProvider, seqMethod, e.getMessage());
+                ExceptionUtils.throwException(msg, e);
+            }
+        }
+
+        // 获取当前连接点方法上的自定义Flea事务注解上对应的事务名称
+        String transactionName = fleaTransactional.value();
 
         // 获取最后一个参数【实体对象】
         FleaEntity fleaEntity = null;
@@ -98,7 +131,7 @@ public class FleaTransactionalAspect {
             }
         } else {
             // 获取当前连接点方法上的自定义Flea事务注解上对应的持久化单元名
-            String unitName = FleaEntityManager.getUnitName(method);
+            String unitName = fleaTransactional.unitName();
             // 获取分库对象
             SplitLib splitLib = FleaSplitUtils.getSplitLib(unitName, FleaLibUtil.getSplitLibSeqValues());
             // 分库场景
@@ -120,8 +153,8 @@ public class FleaTransactionalAspect {
             public Object doInTransaction(TransactionStatus status) {
                 try {
                     return joinPoint.proceed();
-                }  catch (Throwable throwable) {
-                    ExceptionUtils.throwFleaException(FleaDBException.class, "Proceed with the next advice or target method invocation occurs exception : \n", throwable);
+                } catch (Throwable throwable) {
+                    ExceptionUtils.throwException("Proceed with the next advice or target method invocation occurs exception : \n", throwable);
                 }
                 return null;
             }

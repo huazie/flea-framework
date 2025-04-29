@@ -12,10 +12,10 @@ import java.util.Locale;
  * Flea I18N 通用异常，由子类传入具体的国际化资源枚举类型
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
-public abstract class CommonException extends Exception {
+public abstract class CommonException extends RuntimeException {
 
     private static final long serialVersionUID = -3631865415922051268L;
 

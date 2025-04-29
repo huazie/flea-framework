@@ -13,7 +13,7 @@ import java.util.Arrays;
  * 反射工具类
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 public class ReflectUtils {
@@ -249,6 +249,7 @@ public class ReflectUtils {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error1(new Object() {}, "反射调用对象指定方法【" + method.getName() + "】、指定参数列表【" + Arrays.toString(method.getParameterTypes()) + "】出错，Exception = ", e);
             }
+            ExceptionUtils.throwException("反射调用对象指定方法【" + method.getName() + "】、指定参数列表【" + Arrays.toString(method.getParameterTypes()) + "】出错", e);
         }
         return result;
     }
@@ -272,6 +273,7 @@ public class ReflectUtils {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error1(new Object() {}, "反射调用对象指定方法【" + methodName + "】、指定参数列表【" + Arrays.toString(types) + "】出错，Exception = ", e);
             }
+            ExceptionUtils.throwException("反射调用对象指定方法【" + methodName + "】、指定参数列表【" + Arrays.toString(types) + "】出错", e);
         }
         return result;
     }
@@ -295,6 +297,7 @@ public class ReflectUtils {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error1(new Object() {}, "反射调用对象指定方法【" + methodName + "】出错，Exception = ", e);
             }
+            ExceptionUtils.throwException("反射调用对象指定方法【" + methodName + "】出错", e);
         }
         return outputObj;
     }

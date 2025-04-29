@@ -26,7 +26,7 @@ import org.springframework.web.context.WebApplicationContext;
  * 产生的各种异常映射为对应的错误码并添加到公共报文中返回。
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 public class ErrorFilter extends JerseyLoggerFilter implements IFleaJerseyErrorFilter {
@@ -106,12 +106,7 @@ public class ErrorFilter extends JerseyLoggerFilter implements IFleaJerseyErrorF
             I18nErrorMapping i18nErrorMapping = FleaJerseyFilterConfig.getI18nErrorMapping(i18nKey);
             if (ObjectUtils.isNotEmpty(i18nErrorMapping)) {
                 responsePublicData.setResultCode(i18nErrorMapping.getErrorCode());
-                String returnMess = i18nErrorMapping.getReturnMess();
-                // 过滤器配置中返回信息配置为空，则根据国际码获取对应的描述
-                // 如果想要实现返回错误信息的国际化，就可以在过滤器配置中将返回信息配置为空
-                if (ObjectUtils.isEmpty(returnMess))
-                    returnMess = errMsg;
-                setPublicResultMess(responsePublicData, returnMess, exception);
+                setPublicResultMess(responsePublicData, i18nErrorMapping.getReturnMess(), exception);
             } else {
                 // 过滤器中的国际码和错误码映射，应该由上面分支获取，如果上面没有查到，可以认为 错误码未配置
                 if (ObjectUtils.isNotEmpty(i18nKey) && i18nKey.startsWith(FleaJerseyConstants.JerseyFilterConstants.PREFIX_ERROR_JERSEY_FILTER)) {
