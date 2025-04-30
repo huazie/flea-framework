@@ -58,6 +58,8 @@
                     <compilerArgs>
                         <!-- 开启完整调试信息 -->
                         <arg>-g</arg>
+                        <!-- 同时保留方法参数名 -->
+                        <arg>-parameters</arg>
                     </compilerArgs>
                 </configuration>
             </plugin>

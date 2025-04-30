@@ -11,12 +11,14 @@ import com.huazie.fleaframework.common.util.StringUtils;
 import com.huazie.fleaframework.db.common.FleaTable;
 import com.huazie.fleaframework.db.common.FleaTableGenerator;
 import com.huazie.fleaframework.db.common.exceptions.DaoException;
+import com.huazie.fleaframework.db.common.exceptions.FleaDBException;
 import com.huazie.fleaframework.db.common.sql.template.config.Param;
 import com.huazie.fleaframework.db.common.sql.template.config.Relation;
 import com.huazie.fleaframework.db.common.sql.template.config.Template;
 import com.huazie.fleaframework.db.common.table.pojo.Column;
 import com.huazie.fleaframework.db.common.table.pojo.SplitTable;
 
+import javax.persistence.Id;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -25,12 +27,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 实体工具类
  *
  * @author huazie
- * @version 1.0.0
+ * @version 2.0.0
  * @since 1.0.0
  */
 public class EntityUtils {
@@ -268,6 +271,69 @@ public class EntityUtils {
         // 请检查初始实体类（实体类的属性列相关信息不存在）
         ArrayUtils.checkEmpty(entityCols, DaoException.class, "ERROR-DB-SQT0000000016");
         return FleaSplitUtils.getSplitTable(tableName, entityCols);
+    }
+
+    private static final Map<Class<?>, Field> idFieldCache = new ConcurrentHashMap<>();
+
+    /**
+     * 动态创建实体类实例并设置主键字段的值
+     *
+     * <p>通过反射机制实现以下步骤：<br>
+     * 1. 调用默认构造方法创建实例<br>
+     * 2. 查找类及其父类中标记 {@link javax.persistence.Id} 注解的主键字段<br>
+     * 3. 将主键值设置到实例的对应字段</p>
+     *
+     * @param clazz    实体类的 Class 对象，需满足以下条件：<br>
+     *                 - 提供无参构造方法<br>
+     *                 - 包含标记 {@link javax.persistence.Id} 的字段
+     * @param keyValue 主键值，类型必须与主键字段的类型兼容
+     * @param <T>      实体类型泛型
+     * @return 已设置主键的实体类实例
+     * @throws FleaDBException 出现以下情况时抛出：<br>
+     *                         - 类无无参构造方法<br>
+     *                         - 主键字段未找到<br>
+     *                         - 字段访问权限不足<br>
+     *                         - 主键值类型不匹配
+     * @since 2.0.0
+     */
+    public static <T> T createEntityWithId(Class<T> clazz, Object keyValue) {
+        T instance = null;
+        try {
+            instance = clazz.getDeclaredConstructor().newInstance();
+            Field idField = findIdField(clazz);
+            idField.setAccessible(true);
+            idField.set(instance, keyValue);
+        } catch (Exception e) {
+            ExceptionUtils.throwFleaException(FleaDBException.class, e);
+        }
+        return instance;
+    }
+
+    private static Field findIdField(Class<?> clazz) {
+        // 1. 先从缓存中查找
+        Field cachedField = idFieldCache.get(clazz);
+        if (cachedField != null) {
+            return cachedField;
+        }
+
+        // 2. 缓存未命中时遍历字段
+        Class<?> currentClass = clazz;
+        while (currentClass != null && currentClass != Object.class) {
+            for (Field field : currentClass.getDeclaredFields()) {
+                if (field.isAnnotationPresent(Id.class)) {
+                    // 3. 存入缓存（线程安全）
+                    synchronized (idFieldCache) {
+                        if (!idFieldCache.containsKey(clazz)) {
+                            idFieldCache.put(clazz, field);
+                        }
+                    }
+                    return field;
+                }
+            }
+            currentClass = currentClass.getSuperclass();
+        }
+
+        throw new FleaDBException("No @Id field found in class: " + clazz.getName());
     }
 
 }

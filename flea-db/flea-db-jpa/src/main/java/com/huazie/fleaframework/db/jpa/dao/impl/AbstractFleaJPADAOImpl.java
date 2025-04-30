@@ -17,6 +17,7 @@ import com.huazie.fleaframework.db.common.sql.pojo.SqlParam;
 import com.huazie.fleaframework.db.common.sql.template.ITemplate;
 import com.huazie.fleaframework.db.common.sql.template.SqlTemplateFactory;
 import com.huazie.fleaframework.db.common.sql.template.TemplateTypeEnum;
+import com.huazie.fleaframework.db.common.util.EntityUtils;
 import com.huazie.fleaframework.db.jpa.FleaJPASplitHelper;
 import com.huazie.fleaframework.db.jpa.common.FleaJPAQuery;
 import com.huazie.fleaframework.db.jpa.common.FleaJPAQueryPool;
@@ -127,6 +128,9 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
      */
     protected T queryById(Object entityId, T entity) throws CommonException {
         checkPrimaryKey(entityId);
+        if (ObjectUtils.isEmpty(entity)) {
+            entity = EntityUtils.createEntityWithId(entityClass, entityId);
+        }
         return FleaEntityManager.find(getEntityManager(entity), entityId, entityClass, entity);
     }
 
