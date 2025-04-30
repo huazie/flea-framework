@@ -132,6 +132,10 @@ public class FleaTransactionalAspect {
         } else {
             // 获取当前连接点方法上的自定义Flea事务注解上对应的持久化单元名
             String unitName = fleaTransactional.unitName();
+            if (StringUtils.isBlank(unitName) && tObj instanceof AbstractFleaJPADAOImpl) {
+                // 设置默认库名，取DAO实现类的父类中的 @PersistenceContext 中的持久化单元名
+                unitName = FleaEntityManager.getPersistenceUnitName(tObj.getClass().getSuperclass());
+            }
             // 获取分库对象
             SplitLib splitLib = FleaSplitUtils.getSplitLib(unitName, FleaLibUtil.getSplitLibSeqValues());
             // 分库场景
