@@ -71,9 +71,7 @@ public abstract class FleaObjectPool<T> implements Closeable {
         try {
             object = fleaObjectPool.borrowObject();
         } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("Could not get a object instance from the pool, Exception :\n", e);
-            }
+            LOGGER.error("Could not get a object instance from the pool, Exception :\n", e);
         }
         return object;
     }
@@ -91,9 +89,7 @@ public abstract class FleaObjectPool<T> implements Closeable {
         try {
             fleaObjectPool.returnObject(object);
         } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "Could not return the object instance to the pool, Exception :\n", e);
-            }
+            LOGGER.error1(new Object() {}, "Could not return the object instance to the pool, Exception :\n", e);
         }
     }
 
@@ -120,9 +116,7 @@ public abstract class FleaObjectPool<T> implements Closeable {
                 fleaObjectPool.close();
             }
         } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("Could not close the pool, Exception :\n", e);
-            }
+            LOGGER.error("Could not close the pool, Exception :\n", e);
         }
     }
 
@@ -197,9 +191,7 @@ public abstract class FleaObjectPool<T> implements Closeable {
                 fleaObjectPool.addObject();
             }
         } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "Error trying to add idle objects, Exception :\n", e);
-            }
+            LOGGER.error1(new Object() {}, "Error trying to add idle objects, Exception :\n", e);
         }
     }
 

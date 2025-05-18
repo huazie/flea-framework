@@ -72,9 +72,7 @@ public class FleaJerseyFilterChain {
      */
     public FleaJerseyResponse doFilter(String requestData) {
         FleaJerseyResponse response = new FleaJerseyResponse();
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "RequestData = {}", requestData);
-        }
+        LOGGER.debug1(new Object() {}, "RequestData = {}", requestData);
         FleaJerseyRequest request = null;
         try {
             // 请求报文不能为空
@@ -112,9 +110,7 @@ public class FleaJerseyFilterChain {
             // 执行异常过滤器
             doErrorFilter(request, response, e);
         } finally {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug1(new Object() {}, "Filter = {}", showStep());
-            }
+            LOGGER.debug1(new Object() {}, "Filter = {}", showStep());
             resetStep();
         }
 

@@ -28,9 +28,7 @@ public class FleaDaoInterfacesBuilder extends FleaCodeBuilder {
 
     @Override
     protected void code(Map<String, Object> param) {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("开始编写DAO层接口类代码");
-        }
+        LOGGER.debug("开始编写DAO层接口类代码");
 
         // DAO层接口类代码文件路径
         String iFleaDAOFilePathStr = StringUtils.valueOf(param.get(ToolsConstants.CodeConstants.CODE_FILE_PATH));
@@ -41,11 +39,9 @@ public class FleaDaoInterfacesBuilder extends FleaCodeBuilder {
         String content = IOUtils.toNativeStringFromResource("flea/code/dao/IFleaDAO.code");
         // 新建DAO层接口类java文件
         IOUtils.toFileFromNativeString(FleaCodeHelper.convert(content, param), iFleaDAOFilePathStr);
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("DAO层接口类 = {}", "I" + entityClassName + "DAO");
-            LOGGER.debug("DAO层接口类代码文件路径 = {}", iFleaDAOFilePathStr);
-            LOGGER.debug("结束编写DAO层接口类代码");
-        }
+        LOGGER.debug("DAO层接口类 = {}", "I" + entityClassName + "DAO");
+        LOGGER.debug("DAO层接口类代码文件路径 = {}", iFleaDAOFilePathStr);
+        LOGGER.debug("结束编写DAO层接口类代码");
     }
 
 }

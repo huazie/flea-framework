@@ -45,6 +45,7 @@ public class LoggerUtils {
      * 添加当前日志打印的所在类的方法相关信息至日志上下文MDC中
      *
      * @param elements 当前线程的堆栈元素
+     * @param position 堆栈元素指定的位置
      * @param obj      Object对象实例, obj = new Object() {}
      * @since 1.0.0
      */

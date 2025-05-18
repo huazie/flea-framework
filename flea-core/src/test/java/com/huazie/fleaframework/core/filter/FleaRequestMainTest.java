@@ -33,9 +33,7 @@ public class FleaRequestMainTest {
             try {
                 FleaRequestUtil.doFilterTask(new FleaRequestContext());
             } catch (CommonException e) {
-                if (LOGGER.isErrorEnabled()) {
-                    LOGGER.error("Exception : \n", e);
-                }
+                LOGGER.error("Exception : \n", e);
             }
         }
     }

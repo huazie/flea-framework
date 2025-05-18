@@ -45,13 +45,9 @@ public class RedisShardedConfig extends RedisCommonConfig {
         String fileName = RedisConfigConstants.REDIS_FILE_NAME;
         if (StringUtils.isNotBlank(System.getProperty(RedisConfigConstants.REDIS_CONFIG_FILE_SYSTEM_KEY))) {
             fileName = StringUtils.trim(System.getProperty(RedisConfigConstants.REDIS_CONFIG_FILE_SYSTEM_KEY));
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("RedisConfig Use the specified redis.properties：{}", fileName);
-            }
+            LOGGER.debug("RedisConfig Use the specified redis.properties：{}", fileName);
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("RedisConfig Use the current redis.properties：{}", fileName);
-        }
+        LOGGER.debug("RedisConfig Use the current redis.properties：{}", fileName);
         // 获取配置文件
         prop = PropertiesUtil.getProperties(fileName);
     }
@@ -73,9 +69,7 @@ public class RedisShardedConfig extends RedisCommonConfig {
             // Jedis连接配置信息
             setJedisPoolConfig(prop);
         } catch (FleaCacheException e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("Please check the redis config :", e);
-            }
+            LOGGER.error("Please check the redis config :", e);
         }
     }
 

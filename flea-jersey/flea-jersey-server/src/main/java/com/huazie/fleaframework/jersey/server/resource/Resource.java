@@ -131,9 +131,7 @@ public abstract class Resource {
             FleaJerseyManager.getManager().addFormDataBodyPart(responseData, FleaJerseyConstants.FormDataConstants.FORM_DATA_KEY_RESPONSE);
             formDataMultiPart = FleaJerseyManager.getManager().getFileContext().getFormDataMultiPart();
         } catch (CommonException e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "Exception occurs : \n", e);
-            }
+            LOGGER.error1(new Object() {}, "Exception occurs : \n", e);
         }
         return formDataMultiPart;
     }

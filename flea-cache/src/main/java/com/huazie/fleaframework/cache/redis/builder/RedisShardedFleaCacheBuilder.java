@@ -63,11 +63,9 @@ public class RedisShardedFleaCacheBuilder implements IFleaCacheBuilder {
             // 创建一个Redis Flea缓存
             fleaCache = new RedisFleaCache(name, expiry, nullCacheExpiry, CacheModeEnum.SHARDED, redisClient);
 
-            if (LOGGER.isDebugEnabled()) {
-                Object obj = new Object() {};
-                LOGGER.debug1(obj, "Pool Name = {}", RedisShardedPool.getInstance(group).getPoolName());
-                LOGGER.debug1(obj, "Pool = {}", RedisShardedPool.getInstance(group).getJedisPool());
-            }
+            Object obj = new Object() {};
+            LOGGER.debug1(obj, "Pool Name = {}", RedisShardedPool.getInstance(group).getPoolName());
+            LOGGER.debug1(obj, "Pool = {}", RedisShardedPool.getInstance(group).getJedisPool());
         } else { // 开关关闭，默认返回空缓存实现
             fleaCache = new EmptyFleaCache(name, expiry, nullCacheExpiry);
         }

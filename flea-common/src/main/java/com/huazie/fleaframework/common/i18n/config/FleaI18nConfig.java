@@ -159,13 +159,11 @@ public class FleaI18nConfig {
      * @since 1.0.0
      */
     public String getI18NDataValue(String key, String resName, Locale locale) {
-        Object obj = null;
-        if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            LOGGER.debug1(obj, "Find the key     : {}", key);
-            LOGGER.debug1(obj, "Find the resName : {}", resName);
-            LOGGER.debug1(obj, "Find the locale  : {} , {}", locale == null ? Locale.getDefault() : locale, locale == null ? Locale.getDefault().getDisplayLanguage() : locale.getDisplayLanguage());
-        }
+        Object obj = obj = new Object() {};
+        LOGGER.debug1(obj, "Find the key     : {}", key);
+        LOGGER.debug1(obj, "Find the resName : {}", resName);
+        LOGGER.debug1(obj, "Find the locale  : {} , {}", locale == null ? Locale.getDefault() : locale, locale == null ? Locale.getDefault().getDisplayLanguage() : locale.getDisplayLanguage());
+
         ResourceBundle resource = getResourceBundle(resName, locale);
 
         String value = null;
@@ -176,9 +174,7 @@ public class FleaI18nConfig {
             }
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj, "Find the value   : {} ", value);
-        }
+        LOGGER.debug1(obj, "Find the value   : {} ", value);
         return value;
     }
 
@@ -194,11 +190,8 @@ public class FleaI18nConfig {
 
         String key = generateKey(resName, locale);
 
-        Object obj = null;
-        if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            LOGGER.debug1(obj, "Find the resKey  : {}", key);
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "Find the resKey  : {}", key);
 
         ResourceBundle resource = resources.get(key);
 
@@ -208,12 +201,10 @@ public class FleaI18nConfig {
             fileName.append(CommonConstants.SymbolConstants.UNDERLINE).append(resName);
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            if (ObjectUtils.isEmpty(locale)) {
-                LOGGER.debug1(obj, "Find the expected fileName: {}.properties", fileName);
-            } else {
-                LOGGER.debug1(obj, "Find the expected fileName: {}_{}.properties", fileName, locale);
-            }
+        if (ObjectUtils.isEmpty(locale)) {
+            LOGGER.debug1(obj, "Find the expected fileName: {}.properties", fileName);
+        } else {
+            LOGGER.debug1(obj, "Find the expected fileName: {}_{}.properties", fileName, locale);
         }
 
         // 获取资源文件
@@ -226,13 +217,11 @@ public class FleaI18nConfig {
             resources.put(key, resource);
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            Locale realLocale = resource.getLocale();
-            if (ObjectUtils.isEmpty(locale) || StringUtils.isBlank(realLocale.toString())) {
-                LOGGER.debug1(obj, "Find the real fileName: {}.properties", fileName);
-            } else {
-                LOGGER.debug1(obj, "Find the real fileName: {}_{}.properties", fileName, realLocale);
-            }
+        Locale realLocale = resource.getLocale();
+        if (ObjectUtils.isEmpty(locale) || StringUtils.isBlank(realLocale.toString())) {
+            LOGGER.debug1(obj, "Find the real fileName: {}.properties", fileName);
+        } else {
+            LOGGER.debug1(obj, "Find the real fileName: {}_{}.properties", fileName, realLocale);
         }
 
         return resource;

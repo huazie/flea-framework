@@ -58,9 +58,7 @@ public class IOUtils {
                 input = new String(bytes);
             }
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "INPUT = \n{}", input);
-        }
+        LOGGER.debug1(new Object() {}, "INPUT = \n{}", input);
         return input;
     }
 
@@ -76,9 +74,7 @@ public class IOUtils {
         try (InputStream inputStream = new FileInputStream(file)) {
             input = toString(inputStream, base64Flag);
         } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {},"文件转字符串出现异常：", e);
-            }
+            LOGGER.error1(new Object() {},"文件转字符串出现异常：", e);
         }
         return input;
     }
@@ -95,9 +91,7 @@ public class IOUtils {
         try (InputStream inputStream = toInputStream(input, base64Flag)) {
             file = toFile(inputStream, filePath);
         } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {},"字符串转文件出现异常：", e);
-            }
+            LOGGER.error1(new Object() {},"字符串转文件出现异常：", e);
         }
         return file;
     }
@@ -116,9 +110,7 @@ public class IOUtils {
             byte[] bytes = toByteArray(inputStream);
             outputStream.write(bytes, 0, bytes.length);
         } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {},"文件输入流转文件出现异常：", e);
-            }
+            LOGGER.error1(new Object() {},"文件输入流转文件出现异常：", e);
         }
         return file;
     }
@@ -160,9 +152,7 @@ public class IOUtils {
             }
             result = outputStream.toByteArray();
         } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {},"输入流转字节数组出现异常：", e);
-            }
+            LOGGER.error1(new Object() {},"输入流转字节数组出现异常：", e);
         }
 
         return result;
@@ -192,9 +182,7 @@ public class IOUtils {
                 content.deleteCharAt(content.length() - 1); // 删除最后一个换行符
                 result = content.toString();
             } catch (Exception e) {
-                if (LOGGER.isErrorEnabled()) {
-                    LOGGER.error1(new Object() {},"获取资源文件内容出现异常：", e);
-                }
+                LOGGER.error1(new Object() {},"获取资源文件内容出现异常：", e);
             }
         }
 
@@ -222,9 +210,7 @@ public class IOUtils {
             try {
                 file.createNewFile();
             } catch (IOException e) {
-                if (LOGGER.isErrorEnabled()) {
-                    LOGGER.error1(new Object() {},"文件创建出现异常：", e);
-                }
+                LOGGER.error1(new Object() {},"文件创建出现异常：", e);
             }
         }
 
@@ -233,9 +219,7 @@ public class IOUtils {
             bufferedWriter.write(content);
             bufferedWriter.flush();
         } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {},"指定文件写内容出现异常：", e);
-            }
+            LOGGER.error1(new Object() {},"指定文件写内容出现异常：", e);
         }
         return file;
     }

@@ -30,18 +30,13 @@ public class SessionCheckFilterTask implements IFilterTask {
 
     @Override
     public void doFilterTask(FleaRequestContext fleaRequestContext, IFilterTaskChain filterTaskChain) throws CommonException {
-        Object obj = null;
-        if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            LOGGER.debug1(obj, "Start");
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "Start");
 
         // 获取用户SESSION信息键
         String userSessionKey = FleaRequestUtil.getUserSessionKey();
         if (ObjectUtils.isEmpty(userSessionKey)) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("<user-session-key> is not configured or is Empty");
-            }
+            LOGGER.error("<user-session-key> is not configured or is Empty");
             filterTaskChain.doFilterTask(fleaRequestContext);
             return;
         }
@@ -54,12 +49,10 @@ public class SessionCheckFilterTask implements IFilterTask {
             if (ObjectUtils.isNotEmpty(httpSession) && (FleaRequestUtil.isBusinessUrl(uri) || FleaRequestUtil.isPageUrl(uri))) {
                 // 用户没有登录
                 if (!isLogin(httpSession, userSessionKey)) {
-                    if (LOGGER.isDebugEnabled()) {
-                        if (FleaRequestUtil.isBusinessUrl(uri)) {
-                            LOGGER.debug1(obj, "Business Request And User Not Login, Redirect to Login Page");
-                        } else if (FleaRequestUtil.isPageUrl(uri)) {
-                            LOGGER.debug1(obj, "Page Request And User Not Login, Redirect to Login Page");
-                        }
+                    if (FleaRequestUtil.isBusinessUrl(uri)) {
+                        LOGGER.debug1(obj, "Business Request And User Not Login, Redirect to Login Page");
+                    } else if (FleaRequestUtil.isPageUrl(uri)) {
+                        LOGGER.debug1(obj, "Page Request And User Not Login, Redirect to Login Page");
                     }
                     // 重定向到登录页面
                     FleaRequestUtil.sendRedirectToLoginPage(fleaRequestContext);
@@ -67,12 +60,10 @@ public class SessionCheckFilterTask implements IFilterTask {
                 }
                 // 用户登录已失效
                 if (isLoginExpired(httpSession, userSessionKey)) {
-                    if (LOGGER.isDebugEnabled()) {
-                        if (FleaRequestUtil.isBusinessUrl(uri)) {
-                            LOGGER.debug1(obj, "Business Request And User Session Has Expired, Redirect to Login Page");
-                        } else if (FleaRequestUtil.isPageUrl(uri)) {
-                            LOGGER.debug1(obj, "Page Request And User Session Has Expired, Redirect to Login Page");
-                        }
+                    if (FleaRequestUtil.isBusinessUrl(uri)) {
+                        LOGGER.debug1(obj, "Business Request And User Session Has Expired, Redirect to Login Page");
+                    } else if (FleaRequestUtil.isPageUrl(uri)) {
+                        LOGGER.debug1(obj, "Page Request And User Session Has Expired, Redirect to Login Page");
                     }
                     // 重定向到登录页面
                     FleaRequestUtil.sendRedirectToLoginPage(fleaRequestContext);
@@ -81,9 +72,7 @@ public class SessionCheckFilterTask implements IFilterTask {
             }
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj, "End");
-        }
+        LOGGER.debug1(obj, "End");
 
         filterTaskChain.doFilterTask(fleaRequestContext);
     }
@@ -102,13 +91,11 @@ public class SessionCheckFilterTask implements IFilterTask {
         if (ObjectUtils.isNotEmpty(sessionObj)) {
             isLogin = true;
         }
-        if (LOGGER.isDebugEnabled()) {
-            Object obj = new Object() {};
-            if (isLogin) {
-                LOGGER.debug1(obj, "Login");
-            } else {
-                LOGGER.debug1(obj, "Not Login");
-            }
+        Object obj = new Object() {};
+        if (isLogin) {
+            LOGGER.debug1(obj, "Login");
+        } else {
+            LOGGER.debug1(obj, "Not Login");
         }
         return isLogin;
     }
@@ -132,13 +119,11 @@ public class SessionCheckFilterTask implements IFilterTask {
             Long idleTime = Long.valueOf(FleaRequestUtil.getIdleTime());
             // Session实际空闲时长
             long realIdleTime = currentTime - oldActiveTime;
-            if (LOGGER.isDebugEnabled()) {
-                Object obj = new Object() {};
-                LOGGER.debug1(obj, "*************************");
-                LOGGER.debug1(obj, "IdleTime     = {}s", idleTime);
-                LOGGER.debug1(obj, "RealIdleTime = {}s", realIdleTime / 1000);
-                LOGGER.debug1(obj, "*************************");
-            }
+            Object obj = new Object() {};
+            LOGGER.debug1(obj, "*************************");
+            LOGGER.debug1(obj, "IdleTime     = {}s", idleTime);
+            LOGGER.debug1(obj, "RealIdleTime = {}s", realIdleTime / 1000);
+            LOGGER.debug1(obj, "*************************");
 
             if (currentTime - oldActiveTime > idleTime * 1000) {
                 // 用户Session已经失效

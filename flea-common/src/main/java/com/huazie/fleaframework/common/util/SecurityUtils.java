@@ -57,12 +57,9 @@ public class SecurityUtils {
      * @since 1.0.0
      */
     private static String encrypt(EncryptionAlgorithmEnum algorithm, String info) {
-        Object obj = null;
-        if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            LOGGER.debug1(obj, "Algorithm = {}", algorithm.getAlgorithm());
-            LOGGER.debug1(obj, "Info = {}", info);
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "Algorithm = {}", algorithm.getAlgorithm());
+        LOGGER.debug1(obj, "Info = {}", info);
         byte[] digestInfo = null;
         try {
             // 得到一个加密算法（MD5, SHA-1）消息摘要
@@ -72,15 +69,11 @@ public class SecurityUtils {
             // 得到该摘要
             digestInfo = messageDigest.digest();
         } catch (NoSuchAlgorithmException e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {},"Exception = ", e);
-            }
+            LOGGER.error1(obj,"Exception = ", e);
         }
         // 将摘要转为字符串
         String result = DataHandleUtils.byte2hex(digestInfo);
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj, "Result = {}", result);
-        }
+        LOGGER.debug1(obj, "Result = {}", result);
         return result;
     }
 
@@ -115,12 +108,9 @@ public class SecurityUtils {
      * @since 1.0.0
      */
     private static String getKey(EncryptionAlgorithmEnum algorithm, String src) {
-        Object obj = null;
-        if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            LOGGER.debug1(obj, "Algorithm = {}", algorithm.getAlgorithm());
-            LOGGER.debug1(obj, "Src = {}", src);
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "Algorithm = {}", algorithm.getAlgorithm());
+        LOGGER.debug1(obj, "Src = {}", src);
         String key = null;
         if (null != algorithm) {
             String algorithmName = algorithm.getAlgorithm();
@@ -130,9 +120,7 @@ public class SecurityUtils {
                 key = src.substring(0, 8);
             }
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj, "Key = {}", key);
-        }
+        LOGGER.debug1(obj, "Key = {}", key);
         return key;
     }
 
@@ -164,11 +152,8 @@ public class SecurityUtils {
      * @since 1.0.0
      */
     private static SecretKey createSecretKey(EncryptionAlgorithmEnum algorithm) {
-        Object obj = null;
-        if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            LOGGER.debug1(obj, "Algorithm = {}", algorithm.getAlgorithm());
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "Algorithm = {}", algorithm.getAlgorithm());
         // KeyGenerator对象
         KeyGenerator keygen;
         // 密钥对象
@@ -179,11 +164,9 @@ public class SecurityUtils {
             // 生成一个密钥
             key = keygen.generateKey();
         } catch (NoSuchAlgorithmException e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {},"Exception = ", e);
-            }
+            LOGGER.error1(obj,"Exception = ", e);
         }
-        if (LOGGER.isDebugEnabled() && ObjectUtils.isNotEmpty(key)) {
+        if (ObjectUtils.isNotEmpty(key)) {
             LOGGER.debug1(obj, "SecretKey = {}", DataHandleUtils.byte2hex(key.getEncoded()));
         }
         return key;
@@ -199,13 +182,10 @@ public class SecurityUtils {
      * @since 1.0.0
      */
     private static String encrypt(String algorithm, SecretKey key, String info) {
-        Object obj = null;
-        if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            LOGGER.debug1(obj, "Encrypt, Algorithm = {}", algorithm);
-            LOGGER.debug1(obj, "Encrypt, SecretKey = {}", DataHandleUtils.byte2hex(key.getEncoded()));
-            LOGGER.debug1(obj, "Encrypt, Info = {}", info);
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "Encrypt, Algorithm = {}", algorithm);
+        LOGGER.debug1(obj, "Encrypt, SecretKey = {}", DataHandleUtils.byte2hex(key.getEncoded()));
+        LOGGER.debug1(obj, "Encrypt, Info = {}", info);
         String result = null;
         try {
             // 得到加密/解密器
@@ -218,13 +198,9 @@ public class SecurityUtils {
             // 返回密文的十六进制形式
             result = DataHandleUtils.byte2hex(cipherByte);
         } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {},"Exception = ", e);
-            }
+            LOGGER.error1(obj,"Exception = ", e);
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj, "Encrypt Result = {}", result);
-        }
+        LOGGER.debug1(obj, "Encrypt Result = {}", result);
         return result;
     }
 
@@ -243,13 +219,9 @@ public class SecurityUtils {
             SecretKey secretKey = checkKey(algorithm, key);
             result = encrypt(algorithm, secretKey, info);
         } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {},"Exception = ", e);
-            }
+            LOGGER.error1(new Object() {},"Exception = ", e);
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "Encrypt Result = {}", result);
-        }
+        LOGGER.debug1(new Object() {}, "Encrypt Result = {}", result);
         return result;
     }
 
@@ -263,13 +235,10 @@ public class SecurityUtils {
      * @since 1.0.0
      */
     private static String decrypt(String algorithm, SecretKey key, String info) {
-        Object obj = null;
-        if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            LOGGER.debug1(obj, "Decrypt, Algorithm = {}", algorithm);
-            LOGGER.debug1(obj, "Decrypt, SecretKey = {}", DataHandleUtils.byte2hex(key.getEncoded()));
-            LOGGER.debug1(obj, "Decrypt, Info = {}", info);
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "Decrypt, Algorithm = {}", algorithm);
+        LOGGER.debug1(obj, "Decrypt, SecretKey = {}", DataHandleUtils.byte2hex(key.getEncoded()));
+        LOGGER.debug1(obj, "Decrypt, Info = {}", info);
         String result = null;
         try {
             // 得到加密/解密器
@@ -280,13 +249,9 @@ public class SecurityUtils {
             byte[] cipherByte = c1.doFinal(DataHandleUtils.hex2byte(info));
             result = new String(cipherByte);
         } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {},"Exception = ", e);
-            }
+            LOGGER.error1(obj,"Exception = ", e);
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj, "Decrypt Result = {}", result);
-        }
+        LOGGER.debug1(obj, "Decrypt Result = {}", result);
         return result;
     }
 
@@ -305,13 +270,9 @@ public class SecurityUtils {
             SecretKey secretKey = checkKey(algorithm, key);
             result = decrypt(algorithm, secretKey, info);
         } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {},"Exception = ", e);
-            }
+            LOGGER.error1(new Object() {},"Exception = ", e);
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "Decrypt Result = {}", result);
-        }
+        LOGGER.debug1(new Object() {}, "Decrypt Result = {}", result);
         return result;
     }
 

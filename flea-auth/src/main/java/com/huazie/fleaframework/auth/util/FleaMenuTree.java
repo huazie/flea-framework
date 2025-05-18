@@ -141,17 +141,15 @@ public class FleaMenuTree extends FleaTree<FleaMenu> {
         int pMenuLevel = parentMenu.getMenuLevel();
         int pHeight = pMenuLevel + 1;
 
-        if (LOGGER.isDebugEnabled()) {
-            Object obj = new Object() {};
-            LOGGER.debug1(obj, "Start Adding Menu to MenuTree");
-            LOGGER.debug1(obj, "Current Menu = {}", fleaMenu);
-            LOGGER.debug1(obj, "Current Menu Id = {}", id);
-            LOGGER.debug1(obj, "Current Menu Level = {}", menuLevel);
-            LOGGER.debug1(obj, "Parent Menu = {}", parentMenu);
-            LOGGER.debug1(obj, "Parent Menu Id = {}", pId);
-            LOGGER.debug1(obj, "Parent Menu Level = {}", pMenuLevel);
-            LOGGER.debug1(obj, "Finish Adding Menu to MenuTree");
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "Start Adding Menu to MenuTree");
+        LOGGER.debug1(obj, "Current Menu = {}", fleaMenu);
+        LOGGER.debug1(obj, "Current Menu Id = {}", id);
+        LOGGER.debug1(obj, "Current Menu Level = {}", menuLevel);
+        LOGGER.debug1(obj, "Parent Menu = {}", parentMenu);
+        LOGGER.debug1(obj, "Parent Menu Id = {}", pId);
+        LOGGER.debug1(obj, "Parent Menu Level = {}", pMenuLevel);
+        LOGGER.debug1(obj, "Finish Adding Menu to MenuTree");
 
         addTreeNote(fleaMenu, id, height, parentMenu, pId, pHeight);
     }

@@ -52,20 +52,13 @@ public abstract class AbstractFleaCache implements IFleaCache {
     @Override
     public Object get(String key) {
         Object value = null;
+        Object obj = new Object() {};
         try {
-            Object obj = null;
-            if (LOGGER.isDebugEnabled()) {
-                obj = new Object() {};
-                LOGGER.debug1(obj, "KEY = {}", key);
-            }
+            LOGGER.debug1(obj, "KEY = {}", key);
             value = getNativeValue(getNativeKey(key));
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug1(obj, "VALUE = {}", value);
-            }
+            LOGGER.debug1(obj, "VALUE = {}", value);
         } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "The action of getting [" + cache.getName() + "] cache occurs exception : ", e);
-            }
+            LOGGER.error1(obj, "The action of getting [" + cache.getName() + "] cache occurs exception : ", e);
         }
         return value;
     }
@@ -74,34 +67,25 @@ public abstract class AbstractFleaCache implements IFleaCache {
     public void put(String key, Object value) {
         try {
             Object result = putNativeValue(getNativeKey(key), value, expiry);
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug1(new Object() {}, "Result = {}", result);
-            }
+            LOGGER.debug1(new Object() {}, "Result = {}", result);
             // 将指定Cache的key添加到Set集合，并存于缓存中
             addCacheKey(key);
         } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "The action of adding [" + cache.getName() + "] cache occurs exception : ", e);
-            }
+            LOGGER.error1(new Object() {}, "The action of adding [" + cache.getName() + "] cache occurs exception : ", e);
         }
     }
 
     @Override
     public void clear() {
         Set<String> keySet = getCacheKey();
-        Object obj = null;
-        if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            LOGGER.debug1(obj, "KEYS = {}", keySet);
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "KEYS = {}", keySet);
 
         if (CollectionUtils.isEmpty(keySet)) return;
 
         for (String key : keySet) {
             Object result = deleteNativeValue(getNativeKey(key));
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug1(obj, "Result = {}", result);
-            }
+            LOGGER.debug1(obj, "Result = {}", result);
         }
         // 删除 记录当前Cache所有数据键关键字 的缓存
         deleteCacheAllKey();
@@ -111,15 +95,11 @@ public abstract class AbstractFleaCache implements IFleaCache {
     public void delete(String key) {
         try {
             Object result = deleteNativeValue(getNativeKey(key));
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug1(new Object() {}, "Result = {}", result);
-            }
+            LOGGER.debug1(new Object() {}, "Result = {}", result);
             // 从 记录当前Cache所有数据键关键字 的缓存中 删除指定数据键关键字key
             deleteCacheKey(key);
         } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "The action of deleting [" + cache.getName() + "] cache occurs exception : ", e);
-            }
+            LOGGER.error1(new Object() {}, "The action of deleting [" + cache.getName() + "] cache occurs exception : ", e);
         }
     }
 
@@ -137,9 +117,7 @@ public abstract class AbstractFleaCache implements IFleaCache {
         if (!keySet.contains(key)) { // 只有其中不存在，才重新设置
             keySet.add(key);
             Object result = putNativeValue(getNativeCacheKey(name), keySet, CommonConstants.NumeralConstants.INT_ZERO);
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug1(new Object() {}, "Result = {}", result);
-            }
+            LOGGER.debug1(new Object() {}, "Result = {}", result);
         }
     }
 
@@ -154,14 +132,11 @@ public abstract class AbstractFleaCache implements IFleaCache {
 
         if (CollectionUtils.isEmpty(keySet)) return;
 
+        Object obj = new Object() {};
+
         // 存在待删除的数据键关键字
         if (keySet.contains(key)) {
-            Object obj = null;
-            if (LOGGER.isDebugEnabled()) {
-                obj = new Object() {
-                };
-                LOGGER.debug1(obj, "Delete cache of recording all key, KEY = {}", key);
-            }
+            LOGGER.debug1(obj, "Delete cache of recording all key, KEY = {}", key);
             if (CommonConstants.NumeralConstants.INT_ONE == keySet.size()) {
                 deleteCacheAllKey(); // 直接将记录当前Cache所有数据键关键字的缓存从缓存中清空
             } else {
@@ -169,15 +144,10 @@ public abstract class AbstractFleaCache implements IFleaCache {
                 keySet.remove(key);
                 // 重新覆盖当前Cache所有数据键关键字的缓存信息
                 Object result = putNativeValue(getNativeCacheKey(name), keySet, CommonConstants.NumeralConstants.INT_ZERO);
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug1(obj, "Result = {}", result);
-                }
+                LOGGER.debug1(obj, "Result = {}", result);
             }
         } else {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug1(new Object() {
-                }, "The CacheKey of [{}] is not exist", key);
-            }
+            LOGGER.debug1(obj, "The CacheKey of [{}] is not exist", key);
         }
     }
 
@@ -187,20 +157,13 @@ public abstract class AbstractFleaCache implements IFleaCache {
      * @since 1.0.0
      */
     private void deleteCacheAllKey() {
+        Object obj = new Object() {};
         try {
-            Object obj = null;
-            if (LOGGER.isDebugEnabled()) {
-                obj = new Object() {};
-                LOGGER.debug1(obj, "Delete cache of recording all key");
-            }
+            LOGGER.debug1(obj, "Delete cache of recording all key");
             Object result = deleteNativeValue(getNativeCacheKey(name));
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug1(obj, "Result = {}", result);
-            }
+            LOGGER.debug1(obj, "Result = {}", result);
         } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "The action of deleting [" + cache.getName() + "] cache occurs exception : ", e);
-            }
+            LOGGER.error1(obj, "The action of deleting [" + cache.getName() + "] cache occurs exception : ", e);
         }
     }
 
@@ -213,13 +176,9 @@ public abstract class AbstractFleaCache implements IFleaCache {
             if (ObjectUtils.isNotEmpty(keySetObj) && keySetObj instanceof Set) {
                 keySet = (Set<String>) keySetObj;
             }
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug1(new Object() {}, "CacheKey = {}", keySet);
-            }
+            LOGGER.debug1(new Object() {}, "CacheKey = {}", keySet);
         } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "The action of getting [" + cache.getName() + "] cache occurs exception : ", e);
-            }
+            LOGGER.error1(new Object() {}, "The action of getting [" + cache.getName() + "] cache occurs exception : ", e);
         }
         return keySet;
     }

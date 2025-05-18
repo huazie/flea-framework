@@ -72,11 +72,8 @@ public abstract class FleaRequest implements Request {
     @Override
     public <T> Response<T> doRequest(Class<T> clazz) throws CommonException {
 
-        Object obj = null;
-        if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            LOGGER.debug1(obj, "Start");
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "Start");
 
         if (ObjectUtils.isEmpty(config) || config.isEmpty()) {
             // 未初始化请求配置，请检查！
@@ -138,9 +135,8 @@ public abstract class FleaRequest implements Request {
         WebTarget target = ClientBuilder.newClient().register(MultiPartFeature.class).target(resourceUrl).path(resourceCode);
 
         FleaJerseyRequest request = createFleaJerseyRequest(resourceCode, serviceCode, input);
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj, "FleaJerseyRequest = \n{}", JABXUtils.toXml(request, true));
-        }
+
+        LOGGER.debug1(obj, "FleaJerseyRequest = \n{}", JABXUtils.toXml(request, true));
 
         FleaJerseyResponse response = request(target, request);
         // 资源服务请求异常：响应报文为空
@@ -154,9 +150,7 @@ public abstract class FleaRequest implements Request {
         // 资源服务请求异常：响应公共报文为空
         ObjectUtils.checkEmpty(responsePublicData, FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000006");
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj, "FleaJerseyResponse = \n{}", JABXUtils.toXml(response, true));
-        }
+        LOGGER.debug1(obj, "FleaJerseyResponse = \n{}", JABXUtils.toXml(response, true));
 
         Response<T> responseResult = new Response<>();
         T output = null;
@@ -177,9 +171,7 @@ public abstract class FleaRequest implements Request {
             responseResult.setRetMess(responsePublicData.getResultMess());
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj, "End");
-        }
+        LOGGER.debug1(obj, "End");
 
         return responseResult;
     }
@@ -202,9 +194,7 @@ public abstract class FleaRequest implements Request {
         try {
             mediaType = MediaType.valueOf(mediaTypeStr);
         } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "Exception = {}", e);
-            }
+            LOGGER.error1(new Object() {}, "Exception = {}", e);
             // 请检查客户端配置【client_code = {0}】: 【{1} = {2}】非法
             ExceptionUtils.throwCommonException(FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000010", config.getClientCode(),
                     RequestConfigEnum.MEDIA_TYPE.getKey(), mediaTypeStr);
@@ -229,9 +219,7 @@ public abstract class FleaRequest implements Request {
             // 将请求报文转换成xml
             return JABXUtils.toXml(request, false);
         } catch (UnsupportedEncodingException e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "Exception = {}", e);
-            }
+            LOGGER.error1(new Object() {}, "Exception = {}", e);
         }
         return null;
     }

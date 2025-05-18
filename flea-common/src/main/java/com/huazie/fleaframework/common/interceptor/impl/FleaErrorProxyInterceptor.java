@@ -22,8 +22,6 @@ public class FleaErrorProxyInterceptor implements IFleaExceptionProxyInterceptor
 
     @Override
     public void exceptionHandle(Object proxyObject, Method method, Object[] args, Throwable throwable) {
-        if (LOGGER.isErrorEnabled()) {
-            LOGGER.error1(new Object() {}, "动态代理出现异常，代理对象【proxyObject = " + proxyObject + "】, 调用方法【method = " + method + "】，方法参数【args = " + Arrays.toString(args) + "】", throwable);
-        }
+        LOGGER.error1(new Object() {}, "动态代理出现异常，代理对象【proxyObject = " + proxyObject + "】, 调用方法【method = " + method + "】，方法参数【args = " + Arrays.toString(args) + "】", throwable);
     }
 }

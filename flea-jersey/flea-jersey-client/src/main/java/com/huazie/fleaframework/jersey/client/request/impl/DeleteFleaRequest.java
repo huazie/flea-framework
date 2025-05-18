@@ -52,12 +52,9 @@ public class DeleteFleaRequest extends FleaRequest {
         // 将请求报文转换成请求数据字符串
         String requestData = toRequestData(request);
 
-        Object obj = null;
-        if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            LOGGER.debug1(obj, "DELETE Request, Start");
-            LOGGER.debug1(obj, "DELETE Request, RequestData = {}", requestData);
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "DELETE Request, Start");
+        LOGGER.debug1(obj, "DELETE Request, RequestData = {}", requestData);
 
         // DELETE请求发送
         FleaJerseyResponse response = target
@@ -65,10 +62,8 @@ public class DeleteFleaRequest extends FleaRequest {
                 .request(toMediaType())
                 .delete(FleaJerseyResponse.class);
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj, "DELETE Request, FleaJerseyResponse = {}", response);
-            LOGGER.debug1(obj, "DELETE Request, End");
-        }
+        LOGGER.debug1(obj, "DELETE Request, FleaJerseyResponse = {}", response);
+        LOGGER.debug1(obj, "DELETE Request, End");
 
         return response;
     }

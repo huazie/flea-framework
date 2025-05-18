@@ -66,9 +66,7 @@ public class ObjectUtils {
             objectOutputStream.writeObject(object);
             return byteArrayOutputStream.toByteArray();
         } catch (IOException e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object(), "Exception occurs in the process of object serialization : \n", e);
-            }
+            LOGGER.error1(new Object(), "Exception occurs in the process of object serialization : \n", e);
         }
         return null;
     }
@@ -88,10 +86,8 @@ public class ObjectUtils {
              ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream)) {
             return objectInputStream.readObject();
         } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {
+            LOGGER.error1(new Object() {
                 }, "Exception occurs in the process of object deserialization : \n", e);
-            }
         }
         return null;
     }

@@ -177,9 +177,7 @@ public final class FleaJPAQuery implements Closeable {
             this.entity = entity;
             FleaJPASplitHelper.getHandler().handle(this, entity);
         } else {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "初始化查询实体类【entity = {}】不是【sourceClazz = {}】的实例，请检查!", entity, sourceClazz);
-            }
+            LOGGER.error1(new Object() {}, "初始化查询实体类【entity = {}】不是【sourceClazz = {}】的实例，请检查!", entity, sourceClazz);
         }
         return this;
     }
@@ -307,17 +305,12 @@ public final class FleaJPAQuery implements Closeable {
             // 不做处理，直接返回即可
             return this;
         }
-        if (LOGGER.isDebugEnabled()) {
-            Object obj = new Object() {};
-            if (isEqual) {
-                LOGGER.debug1(obj, "Equal, attrName = {}, value = {}", attrName, value);
-            } else {
-                LOGGER.debug1(obj, "Not Equal, attrName = {}, value = {}", attrName, value);
-            }
-        }
+        Object obj = new Object() {};
         if (isEqual) {
+            LOGGER.debug1(obj, "Equal, attrName = {}, value = {}", attrName, value);
             predicates.add(criteriaBuilder.equal(root.get(attrName), value));
         } else {
+            LOGGER.debug1(obj, "Not Equal, attrName = {}, value = {}", attrName, value);
             predicates.add(criteriaBuilder.notEqual(root.get(attrName), value));
         }
         return this;
@@ -337,13 +330,11 @@ public final class FleaJPAQuery implements Closeable {
         // 【{0}】不能为空
         CollectionUtils.checkEmpty(attrNames, DaoException.class, "ERROR-DB-DAO0000000002", "attrNames");
 
-        if (LOGGER.isDebugEnabled()) {
-            Object obj = new Object() {};
-            if (isEqual) {
-                LOGGER.debug1(obj, "Equal, attrNames = {}", attrNames);
-            } else {
-                LOGGER.debug1(obj, "Not Equal, attrNames = {}", attrNames);
-            }
+        Object obj = new Object() {};
+        if (isEqual) {
+            LOGGER.debug1(obj, "Equal, attrNames = {}", attrNames);
+        } else {
+            LOGGER.debug1(obj, "Not Equal, attrNames = {}", attrNames);
         }
         for (String attrName : attrNames) {
             Object attrValue = getAttrValue(attrName);
@@ -374,13 +365,11 @@ public final class FleaJPAQuery implements Closeable {
         // 【{0}】不能为空
         MapUtils.checkEmpty(paramMap, DaoException.class, "ERROR-DB-DAO0000000002", "paramMap");
 
-        if (LOGGER.isDebugEnabled()) {
-            Object obj = new Object() {};
-            if (isEqual) {
-                LOGGER.debug1(obj, "Equal, paramMap = {}", paramMap);
-            } else {
-                LOGGER.debug1(obj, "Not Equal, paramMap = {}", paramMap);
-            }
+        Object obj = new Object() {};
+        if (isEqual) {
+            LOGGER.debug1(obj, "Equal, paramMap = {}", paramMap);
+        } else {
+            LOGGER.debug1(obj, "Not Equal, paramMap = {}", paramMap);
         }
         Set<String> keySet = paramMap.keySet();
         for (String key : keySet) {
@@ -431,13 +420,11 @@ public final class FleaJPAQuery implements Closeable {
         // 属性列名非空校验
         checkAttrName(attrName);
 
-        if (LOGGER.isDebugEnabled()) {
-            Object obj = new Object() {};
-            if (isNull) {
-                LOGGER.debug1(obj, "Null, attrName = {}", attrName);
-            } else {
-                LOGGER.debug1(obj, "Not Null, attrName = {}", attrName);
-            }
+        Object obj = new Object() {};
+        if (isNull) {
+            LOGGER.debug1(obj, "Null, attrName = {}", attrName);
+        } else {
+            LOGGER.debug1(obj, "Not Null, attrName = {}", attrName);
         }
         if (isNull) {
             predicates.add(criteriaBuilder.isNull(root.get(attrName)));
@@ -490,14 +477,11 @@ public final class FleaJPAQuery implements Closeable {
             // 不做处理，直接返回即可
             return this;
         }
-
-        if (LOGGER.isDebugEnabled()) {
-            Object obj = new Object() {};
-            if (isIn) {
-                LOGGER.debug1(obj, "In, attrName = {}, value = {}", attrName, value);
-            } else {
-                LOGGER.debug1(obj, "Not In, attrName = {}, value = {}", attrName, value);
-            }
+        Object obj = new Object() {};
+        if (isIn) {
+            LOGGER.debug1(obj, "In, attrName = {}, value = {}", attrName, value);
+        } else {
+            LOGGER.debug1(obj, "Not In, attrName = {}, value = {}", attrName, value);
         }
         Iterator iterator = value.iterator();
         In in = criteriaBuilder.in(root.get(attrName));
@@ -543,9 +527,7 @@ public final class FleaJPAQuery implements Closeable {
             // 不做处理，直接返回即可
             return this;
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "attrName = {}, value = {}", attrName, value);
-        }
+        LOGGER.debug1(new Object() {}, "attrName = {}, value = {}", attrName, value);
         if (!value.contains(SQLConstants.SQL_PERCENT)) {
             value = SQLConstants.SQL_PERCENT + value + SQLConstants.SQL_PERCENT;
         }
@@ -584,9 +566,7 @@ public final class FleaJPAQuery implements Closeable {
             // 不做处理，直接返回即可
             return this;
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "le, attrName = {}, value = {}", attrName, value);
-        }
+        LOGGER.debug1(new Object() {}, "le, attrName = {}, value = {}", attrName, value);
         predicates.add(criteriaBuilder.le(root.get(attrName), value));
         return this;
     }
@@ -622,9 +602,7 @@ public final class FleaJPAQuery implements Closeable {
             // 不做处理，直接返回即可
             return this;
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "lt, attrName = {}, value = {}", attrName, value);
-        }
+        LOGGER.debug1(new Object() {}, "lt, attrName = {}, value = {}", attrName, value);
         predicates.add(criteriaBuilder.lt(root.get(attrName), value));
         return this;
     }
@@ -660,9 +638,7 @@ public final class FleaJPAQuery implements Closeable {
             // 不做处理，直接返回即可
             return this;
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "ge, attrName = {}, value = {}", attrName, value);
-        }
+        LOGGER.debug1(new Object() {}, "ge, attrName = {}, value = {}", attrName, value);
         predicates.add(criteriaBuilder.ge(root.get(attrName), value));
         return this;
     }
@@ -698,9 +674,7 @@ public final class FleaJPAQuery implements Closeable {
             // 不做处理，直接返回即可
             return this;
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "gt, attrName = {}, value = {}", attrName, value);
-        }
+        LOGGER.debug1(new Object() {}, "gt, attrName = {}, value = {}", attrName, value);
         predicates.add(criteriaBuilder.gt(root.get(attrName), value));
         return this;
     }
@@ -727,9 +701,7 @@ public final class FleaJPAQuery implements Closeable {
             // 开始时间必须小于结束时间
             ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000004");
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "attrName = {}, startTime = {}, endTime = {}", attrName, startTime, endTime);
-        }
+        LOGGER.debug1(new Object() {}, "attrName = {}, startTime = {}, endTime = {}", attrName, startTime, endTime);
         predicates.add(criteriaBuilder.between(root.get(attrName), startTime, endTime));
         return this;
     }
@@ -765,9 +737,7 @@ public final class FleaJPAQuery implements Closeable {
             // 不做处理，直接返回即可
             return this;
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, ">, attrName = {}, value = {}", attrName, value);
-        }
+        LOGGER.debug1(new Object() {}, ">, attrName = {}, value = {}", attrName, value);
         predicates.add(criteriaBuilder.greaterThan(root.get(attrName), value));
         return this;
     }
@@ -803,9 +773,7 @@ public final class FleaJPAQuery implements Closeable {
             // 不做处理，直接返回即可
             return this;
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, ">=, attrName = {}, value = {}", attrName, value);
-        }
+        LOGGER.debug1(new Object() {}, ">=, attrName = {}, value = {}", attrName, value);
         predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get(attrName), value));
         return this;
     }
@@ -841,9 +809,7 @@ public final class FleaJPAQuery implements Closeable {
             // 不做处理，直接返回即可
             return this;
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "<, attrName = {}, value = {}", attrName, value);
-        }
+        LOGGER.debug1(new Object() {}, "<, attrName = {}, value = {}", attrName, value);
         predicates.add(criteriaBuilder.lessThan(root.get(attrName), value));
         return this;
     }
@@ -879,9 +845,7 @@ public final class FleaJPAQuery implements Closeable {
             // 不做处理，直接返回即可
             return this;
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "<=, attrName = {}, value = {}", attrName, value);
-        }
+        LOGGER.debug1(new Object() {}, "<=, attrName = {}, value = {}", attrName, value);
         predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get(attrName), value));
         return this;
     }
@@ -906,11 +870,7 @@ public final class FleaJPAQuery implements Closeable {
     public FleaJPAQuery countDistinct(String attrName) throws CommonException {
         // 属性列名非空校验
         checkAttrName(attrName);
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "attrName = {}", attrName);
-        }
-
+        LOGGER.debug1(new Object() {}, "attrName = {}", attrName);
         criteriaQuery.select(criteriaBuilder.countDistinct(root.get(attrName)));
         return this;
     }
@@ -926,10 +886,7 @@ public final class FleaJPAQuery implements Closeable {
     public FleaJPAQuery max(String attrName) throws CommonException {
         // 属性列名非空校验
         checkAttrName(attrName);
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "attrName = {}", attrName);
-        }
+        LOGGER.debug1(new Object() {}, "attrName = {}", attrName);
         criteriaQuery.select(criteriaBuilder.max(root.get(attrName)));
         return this;
     }
@@ -945,10 +902,7 @@ public final class FleaJPAQuery implements Closeable {
     public FleaJPAQuery min(String attrName) throws CommonException {
         // 属性列名非空校验
         checkAttrName(attrName);
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "attrName = {}", attrName);
-        }
+        LOGGER.debug1(new Object() {}, "attrName = {}", attrName);
         criteriaQuery.select(criteriaBuilder.min(root.get(attrName)));
         return this;
     }
@@ -964,10 +918,7 @@ public final class FleaJPAQuery implements Closeable {
     public FleaJPAQuery avg(String attrName) throws CommonException {
         // 属性列名非空校验
         checkAttrName(attrName);
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "attrName = {}", attrName);
-        }
+        LOGGER.debug1(new Object() {}, "attrName = {}", attrName);
         criteriaQuery.select(criteriaBuilder.avg(root.get(attrName)));
         return this;
     }
@@ -983,10 +934,7 @@ public final class FleaJPAQuery implements Closeable {
     public FleaJPAQuery sum(String attrName) throws CommonException {
         // 属性列名非空校验
         checkAttrName(attrName);
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "attrName = {}", attrName);
-        }
+        LOGGER.debug1(new Object() {}, "attrName = {}", attrName);
         criteriaQuery.select(criteriaBuilder.sum(root.get(attrName)));
         return this;
     }
@@ -1002,10 +950,7 @@ public final class FleaJPAQuery implements Closeable {
     public FleaJPAQuery sumAsLong(String attrName) throws CommonException {
         // 属性列名非空校验
         checkAttrName(attrName);
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "attrName = {}", attrName);
-        }
+        LOGGER.debug1(new Object() {}, "attrName = {}", attrName);
         criteriaQuery.select(criteriaBuilder.sumAsLong(root.get(attrName)));
         return this;
     }
@@ -1021,10 +966,7 @@ public final class FleaJPAQuery implements Closeable {
     public FleaJPAQuery sumAsDouble(String attrName) throws CommonException {
         // 属性列名非空校验
         checkAttrName(attrName);
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "attrName = {}", attrName);
-        }
+        LOGGER.debug1(new Object() {}, "attrName = {}", attrName);
         criteriaQuery.select(criteriaBuilder.sumAsDouble(root.get(attrName)));
         return this;
     }
@@ -1040,10 +982,7 @@ public final class FleaJPAQuery implements Closeable {
     public FleaJPAQuery distinct(String attrName) throws CommonException {
         // 属性列名非空校验
         checkAttrName(attrName);
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "attrName = {}", attrName);
-        }
+        LOGGER.debug1(new Object() {}, "attrName = {}", attrName);
         criteriaQuery.select(root.get(attrName)).distinct(true);
         return this;
     }
@@ -1072,9 +1011,7 @@ public final class FleaJPAQuery implements Closeable {
             // 排序关键字【{0}】非法, 必须是【asc, ASC】 或【desc, DESC】
             ExceptionUtils.throwCommonException(DaoException.class, "ERROR-DB-DAO0000000005", orderBy);
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "attrName = {}, orderBy = {}", attrName, orderBy);
-        }
+        LOGGER.debug1(new Object() {}, "attrName = {}, orderBy = {}", attrName, orderBy);
         return this;
     }
 
@@ -1096,9 +1033,8 @@ public final class FleaJPAQuery implements Closeable {
 
         groups.add(root.get(attrName));
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "attrName = {}", attrName);
-        }
+        LOGGER.debug1(new Object() {}, "attrName = {}", attrName);
+
         return this;
     }
 
@@ -1113,10 +1049,8 @@ public final class FleaJPAQuery implements Closeable {
     public <T> List<T> getResultList() throws CommonException {
         try {
             List<T> resultList = (List<T>) createQuery(false).getResultList();
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("ResultList = {}", resultList);
-                LOGGER.debug("Size = {}", null != resultList ? resultList.size() : 0);
-            }
+            LOGGER.debug("ResultList = {}", resultList);
+            LOGGER.debug("Size = {}", null != resultList ? resultList.size() : 0);
             return resultList;
         } finally {
             // 将Flea JPA查询对象重置，并归还给对象池
@@ -1136,21 +1070,24 @@ public final class FleaJPAQuery implements Closeable {
      */
     public <T> List<T> getResultList(int start, int max) throws CommonException {
         try {
-            TypedQuery query = createQuery(false);
-            // 设置开始查询记录行
-            query.setFirstResult(start);
-            // 设置一次最大查询数量
-            query.setMaxResults(max);
-            List<T> resultList = (List<T>) query.getResultList();
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug1(new Object(){}, "ResultList = {}", resultList);
-                LOGGER.debug1(new Object(){}, "Size = {}", null != resultList ? resultList.size() : 0);
-            }
+            List<T> resultList = getResultList(start, max, false);
+            Object obj = new Object() {};
+            LOGGER.debug1(obj, "ResultList = {}", resultList);
+            LOGGER.debug1(obj, "Size = {}", null != resultList ? resultList.size() : 0);
             return resultList;
         } finally {
             // 将Flea JPA查询对象重置，并归还给对象池
             close();
         }
+    }
+
+    private <T> List<T> getResultList(int start, int max, boolean isSingle) {
+        TypedQuery query = createQuery(isSingle);
+        // 设置开始查询记录行
+        query.setFirstResult(start);
+        // 设置一次最大查询数量
+        query.setMaxResults(max);
+        return (List<T>) query.getResultList();
     }
 
     /**
@@ -1164,9 +1101,7 @@ public final class FleaJPAQuery implements Closeable {
      * @since 2.0.0
      */
     public <T> List<T> getResultList4Page(int pageNum, int pageCount) throws CommonException {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "pageNum = {}, pageCount = {}", pageNum, pageCount);
-        }
+        LOGGER.debug1(new Object() {}, "pageNum = {}, pageCount = {}", pageNum, pageCount);
         if (pageNum > 0 && pageCount > 0)
             return getResultList((pageNum - 1) * pageCount, pageCount);
         else
@@ -1184,10 +1119,8 @@ public final class FleaJPAQuery implements Closeable {
     public <T> List<T> getSingleResultList() throws CommonException {
         try {
             List<T> singleResultList = (List<T>) createQuery(true).getResultList();
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Single ResultList = {}", singleResultList);
-                LOGGER.debug("Size = {}", null != singleResultList ? singleResultList.size() : 0);
-            }
+            LOGGER.debug("Single ResultList = {}", singleResultList);
+            LOGGER.debug("Size = {}", null != singleResultList ? singleResultList.size() : 0);
             return singleResultList;
         } finally {
             // 将Flea JPA查询对象重置，并归还给对象池
@@ -1207,16 +1140,10 @@ public final class FleaJPAQuery implements Closeable {
      */
     public <T> List<T> getSingleResultList(int start, int max) throws CommonException {
         try {
-            TypedQuery query = createQuery(true);
-            // 设置开始查询记录行
-            query.setFirstResult(start);
-            // 设置一次最大查询数量
-            query.setMaxResults(max);
-            List<T> singleResultList = (List<T>) query.getResultList();
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug1(new Object(){}, "Single ResultList = {}", singleResultList);
-                LOGGER.debug1(new Object(){}, "Size = {}", null != singleResultList ? singleResultList.size() : 0);
-            }
+            List<T> singleResultList = getResultList(start, max, true);
+            Object obj = new Object() {};
+            LOGGER.debug1(obj, "Single ResultList = {}", singleResultList);
+            LOGGER.debug1(obj, "Size = {}", null != singleResultList ? singleResultList.size() : 0);
             return singleResultList;
         } finally {
             // 将Flea JPA查询对象重置，并归还给对象池
@@ -1243,9 +1170,7 @@ public final class FleaJPAQuery implements Closeable {
     public <T> T getSingleResult() throws CommonException {
         try {
             T result = (T) createQuery(true).getSingleResult();
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Single Result = {}", result);
-            }
+            LOGGER.debug("Single Result = {}", result);
             return result;
         } finally {
             // 将Flea JPA查询对象重置，并归还给对象池
@@ -1361,10 +1286,8 @@ public final class FleaJPAQuery implements Closeable {
      * @since 1.0.0
      */
     void reset() {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Start");
-            LOGGER.debug("Before FleaJPAQuery = {}", toString());
-        }
+        LOGGER.debug("Start");
+        LOGGER.debug("Before FleaJPAQuery = {}", toString());
         entityManager = null;
         sourceClazz = null;
         resultClazz = null;
@@ -1377,10 +1300,8 @@ public final class FleaJPAQuery implements Closeable {
         orders = null;
         groups = null;
         entity = null;
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("After FleaJPAQuery = {}", toString());
-            LOGGER.debug("End");
-        }
+        LOGGER.debug("After FleaJPAQuery = {}", toString());
+        LOGGER.debug("End");
     }
 
     /**

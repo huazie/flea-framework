@@ -58,12 +58,9 @@ public class FGetFleaRequest extends FleaRequest {
         // 将请求报文转换成请求数据字符串
         String requestData = toRequestData(request);
 
-        Object obj = null;
-        if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            LOGGER.debug1(obj, "FGet Request, Start");
-            LOGGER.debug1(obj, "FGet Request, RequestData = {}", requestData);
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "FGet Request, Start");
+        LOGGER.debug1(obj, "FGet Request, RequestData = {}", requestData);
 
         FleaJerseyResponse response = null;
 
@@ -85,10 +82,8 @@ public class FGetFleaRequest extends FleaRequest {
             response = JABXUtils.fromXml(responseData, FleaJerseyResponse.class);
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj, "FILE GET Request, FleaJerseyResponse = {}", response);
-            LOGGER.debug1(obj, "FILE GET Request, End");
-        }
+        LOGGER.debug1(obj, "FILE GET Request, FleaJerseyResponse = {}", response);
+        LOGGER.debug1(obj, "FILE GET Request, End");
 
         return response;
     }

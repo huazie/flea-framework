@@ -447,9 +447,7 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
                 FleaLoginLogPOJO fleaLoginLogPOJO = new FleaLoginLogPOJO(accountId, ip4, ip6, address);
                 this.fleaLoginLogSV.saveLoginLog(fleaLoginLogPOJO);
             } catch (Exception e) {
-                if (LOGGER.isErrorEnabled()) {
-                    LOGGER.error1(new Object() {}, "Exception occurs when saving login log : ", e);
-                }
+                LOGGER.error1(new Object() {}, "Exception occurs when saving login log : ", e);
             }
         }
     }
@@ -460,9 +458,7 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
             try {
                 this.fleaLoginLogSV.saveQuitLog(accountId);
             } catch (CommonException e) {
-                if (LOGGER.isErrorEnabled()) {
-                    LOGGER.error1(new Object() {}, "Exception occurs when saving quit log : ", e);
-                }
+                LOGGER.error1(new Object() {}, "Exception occurs when saving quit log : ", e);
             }
         }
     }

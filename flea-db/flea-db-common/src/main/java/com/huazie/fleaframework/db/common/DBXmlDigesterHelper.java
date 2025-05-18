@@ -85,15 +85,11 @@ public class DBXmlDigesterHelper {
         String fileName = DBConstants.LibTableSplitConstants.LIB_SPLIT_FILE_PATH;
         if (StringUtils.isNotBlank(System.getProperty(DBConstants.LibTableSplitConstants.LIB_SPLIT_FILE_SYSTEM_KEY))) {
             fileName = StringUtils.trim(System.getProperty(DBConstants.LibTableSplitConstants.LIB_SPLIT_FILE_SYSTEM_KEY));
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Use the specified flea-lib-split.xml :" + fileName);
-            }
+            LOGGER.debug("Use the specified flea-lib-split.xml :" + fileName);
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Use the current flea-lib-split.xml :" + fileName);
-            LOGGER.debug("Start to parse the flea-lib-split.xml");
-        }
+        LOGGER.debug("Use the current flea-lib-split.xml :" + fileName);
+        LOGGER.debug("Start to parse the flea-lib-split.xml");
 
         Digester digester = newFleaLibSplitFileDigester();
         FleaLibSplit fleaLibSplit = XmlDigesterHelper.parse(fileName, digester, FleaLibSplit.class);
@@ -120,9 +116,7 @@ public class DBXmlDigesterHelper {
             }
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("End to parse the flea-lib-split.xml");
-        }
+        LOGGER.debug("End to parse the flea-lib-split.xml");
 
         return fleaLibSplit;
     }
@@ -183,15 +177,11 @@ public class DBXmlDigesterHelper {
         String fileName = DBConstants.LibTableSplitConstants.TABLE_SPLIT_FILE_PATH;
         if (StringUtils.isNotBlank(System.getProperty(DBConstants.LibTableSplitConstants.TABLE_SPLIT_FILE_SYSTEM_KEY))) {
             fileName = StringUtils.trim(System.getProperty(DBConstants.LibTableSplitConstants.TABLE_SPLIT_FILE_SYSTEM_KEY));
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Use the specified flea-table-split.xml :" + fileName);
-            }
+            LOGGER.debug("Use the specified flea-table-split.xml :" + fileName);
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Use the current flea-table-split.xml :" + fileName);
-            LOGGER.debug("Start to parse the flea-table-split.xml");
-        }
+        LOGGER.debug("Use the current flea-table-split.xml :" + fileName);
+        LOGGER.debug("Start to parse the flea-table-split.xml");
 
         Digester digester = newFleaTableSplitFileDigester();
         FleaTableSplit fleaTableSplit = XmlDigesterHelper.parse(fileName, digester, FleaTableSplit.class);
@@ -218,9 +208,7 @@ public class DBXmlDigesterHelper {
             }
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("End to parse the flea-table-split.xml");
-        }
+        LOGGER.debug("End to parse the flea-table-split.xml");
 
         return fleaTableSplit;
     }
@@ -277,21 +265,15 @@ public class DBXmlDigesterHelper {
         String fileName = DBConstants.SqlTemplateConstants.SQL_TEMPLATE_FILE_PATH;
         if (StringUtils.isNotBlank(System.getProperty(DBConstants.SqlTemplateConstants.SQL_TEMPLATE_FILE_SYSTEM_KEY))) {
             fileName = StringUtils.trim(System.getProperty(DBConstants.SqlTemplateConstants.SQL_TEMPLATE_FILE_SYSTEM_KEY));
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Use the specified flea-sql-template.xml :" + fileName);
-            }
+            LOGGER.debug("Use the specified flea-sql-template.xml :" + fileName);
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Use the current flea-sql-template.xml :" + fileName);
-            LOGGER.debug("Start to parse the flea-sql-template.xml");
-        }
+        LOGGER.debug("Use the current flea-sql-template.xml :" + fileName);
+        LOGGER.debug("Start to parse the flea-sql-template.xml");
 
         Sql sqlTemplate = XmlDigesterHelper.parse(fileName, newFleaSqlTemplateFileDigester(), Sql.class);
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("End to parse the flea-sql-template.xml");
-        }
+        LOGGER.debug("End to parse the flea-sql-template.xml");
 
         return sqlTemplate;
     }

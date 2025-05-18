@@ -24,11 +24,9 @@ public class FleaJPAQueryPoolBuilder implements IFleaObjectPoolBuilder {
         // 新建 Flea JPA查询对象池
         FleaObjectPool fleaObjectPool = new FleaJPAQueryPool(poolName, fleaJPAQueryPoolConfig);
 
-        if (LOGGER.isDebugEnabled()) {
-            Object obj = new Object() {};
-            LOGGER.debug1(obj, "FleaJPAQueryPoolConfig = {}", fleaJPAQueryPoolConfig);
-            LOGGER.debug1(obj, "FleaObjectPool = {}", fleaObjectPool);
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "FleaJPAQueryPoolConfig = {}", fleaJPAQueryPoolConfig);
+        LOGGER.debug1(obj, "FleaObjectPool = {}", fleaObjectPool);
         return fleaObjectPool;
     }
 

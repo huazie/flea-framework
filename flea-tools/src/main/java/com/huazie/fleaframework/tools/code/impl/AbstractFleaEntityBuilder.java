@@ -38,9 +38,7 @@ public abstract class AbstractFleaEntityBuilder extends FleaCodeBuilder {
 
     @Override
     protected void code(Map<String, Object> param) {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("开始编写实体类代码");
-        }
+        LOGGER.debug("开始编写实体类代码");
 
         // 实体类代码文件路径
         String fleaEntityFilePathStr = StringUtils.valueOf(param.get(ToolsConstants.CodeConstants.CODE_FILE_PATH));
@@ -75,11 +73,9 @@ public abstract class AbstractFleaEntityBuilder extends FleaCodeBuilder {
         // 新建实体类java文件
         IOUtils.toFileFromNativeString(FleaCodeHelper.convert(content, param), fleaEntityFilePathStr);
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("实体类 = {}", entityClassName);
-            LOGGER.debug("实体类代码文件路径 = {}", fleaEntityFilePathStr);
-            LOGGER.debug("结束编写实体类代码");
-        }
+        LOGGER.debug("实体类 = {}", entityClassName);
+        LOGGER.debug("实体类代码文件路径 = {}", fleaEntityFilePathStr);
+        LOGGER.debug("结束编写实体类代码");
 
         String idGeneratorStrategy = StringUtils.valueOf(param.get(ToolsConstants.CodeConstants.ID_GENERATOR_STRATEGY));
         if (GenerationType.TABLE.name().equals(idGeneratorStrategy)) {

@@ -60,9 +60,7 @@ public class FleaProxyHandler implements InvocationHandler {
             try {
                 fleaProxyInterceptor.beforeHandle(proxyObject, method, args);
             } catch (CommonException e) {
-                if (LOGGER.isErrorEnabled()) {
-                    LOGGER.error("前置处理【beforeHandle】出现异常，代理拦截器【 fleaProxyInterceptor = " + fleaProxyInterceptor + "】，代理对象【proxyObject = " + proxyObject + "】", e);
-                }
+                LOGGER.error("前置处理【beforeHandle】出现异常，代理拦截器【 fleaProxyInterceptor = " + fleaProxyInterceptor + "】，代理对象【proxyObject = " + proxyObject + "】", e);
             }
         }
 
@@ -77,9 +75,7 @@ public class FleaProxyHandler implements InvocationHandler {
                 try {
                     exceptionProxyInterceptor.exceptionHandle(proxyObject, method, args, e);
                 } catch (CommonException ex) {
-                    if (LOGGER.isErrorEnabled()) {
-                        LOGGER.error("异常处理【exceptionHandle】出现异常，异常代理拦截器【 exceptionProxyInterceptor = " + exceptionProxyInterceptor + "】，代理对象【proxyObject = " + proxyObject + "】", e);
-                    }
+                    LOGGER.error("异常处理【exceptionHandle】出现异常，异常代理拦截器【 exceptionProxyInterceptor = " + exceptionProxyInterceptor + "】，代理对象【proxyObject = " + proxyObject + "】", e);
                 }
             }
             throw e;
@@ -89,9 +85,7 @@ public class FleaProxyHandler implements InvocationHandler {
                 try {
                     fleaProxyInterceptor.afterHandle(proxyObject, method, args, result, hasException);
                 } catch (CommonException e) {
-                    if (LOGGER.isErrorEnabled()) {
-                        LOGGER.error("后置处理【afterHandle】出现异常，代理拦截器【 fleaProxyInterceptor = " + fleaProxyInterceptor + "】，代理对象【proxyObject = " + proxyObject + "】", e);
-                    }
+                    LOGGER.error("后置处理【afterHandle】出现异常，代理拦截器【 fleaProxyInterceptor = " + fleaProxyInterceptor + "】，代理对象【proxyObject = " + proxyObject + "】", e);
                 }
             }
         }

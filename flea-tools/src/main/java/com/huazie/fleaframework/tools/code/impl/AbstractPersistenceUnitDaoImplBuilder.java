@@ -35,9 +35,7 @@ public abstract class AbstractPersistenceUnitDaoImplBuilder extends FleaCodeBuil
 
     @Override
     protected void code(Map<String, Object> param) {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("开始编写持久化单元DAO层实现类代码");
-        }
+        LOGGER.debug("开始编写持久化单元DAO层实现类代码");
 
         // 持久化单元DAO层实现类代码文件路径
         String fleaPersistenceUnitDAOImplFilePathStr = StringUtils.valueOf(param.get(ToolsConstants.CodeConstants.CODE_FILE_PATH));
@@ -48,10 +46,8 @@ public abstract class AbstractPersistenceUnitDaoImplBuilder extends FleaCodeBuil
         // 持久化单元DAO层实现类名
         String fleaPersistenceUnitDaoClassName = StringUtils.valueOf(param.get(ToolsConstants.CodeConstants.FLEA_PERSISTENCE_UNIT_DAO_CLASS_NAME));
         if (StringUtils.isBlank(fleaPUName) || StringUtils.isBlank(fleaPUAliasName)) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("采用现有的持久化单元DAO层实现类 = {}", fleaPersistenceUnitDaoClassName);
-                LOGGER.debug("现有持久化单元DAO层实现类代码文件路径 = {}", fleaPersistenceUnitDAOImplFilePathStr);
-            }
+            LOGGER.debug("采用现有的持久化单元DAO层实现类 = {}", fleaPersistenceUnitDaoClassName);
+            LOGGER.debug("现有持久化单元DAO层实现类代码文件路径 = {}", fleaPersistenceUnitDAOImplFilePathStr);
             return;
         }
 
@@ -59,11 +55,9 @@ public abstract class AbstractPersistenceUnitDaoImplBuilder extends FleaCodeBuil
         String content = toEntityCodeFileContent();
         // 新建DAO层实现类java文件
         IOUtils.toFileFromNativeString(FleaCodeHelper.convert(content, param), fleaPersistenceUnitDAOImplFilePathStr);
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("持久化单元DAO层实现类 = {}", fleaPersistenceUnitDaoClassName);
-            LOGGER.debug("持久化单元DAO层实现类代码文件路径 = {}", fleaPersistenceUnitDAOImplFilePathStr);
-            LOGGER.debug("结束编写持久化单元DAO层实现类代码");
-        }
+        LOGGER.debug("持久化单元DAO层实现类 = {}", fleaPersistenceUnitDaoClassName);
+        LOGGER.debug("持久化单元DAO层实现类代码文件路径 = {}", fleaPersistenceUnitDAOImplFilePathStr);
+        LOGGER.debug("结束编写持久化单元DAO层实现类代码");
     }
 
     /**
@@ -83,9 +77,7 @@ public abstract class AbstractPersistenceUnitDaoImplBuilder extends FleaCodeBuil
         // 持久化单元DAO层实现类名
         String fleaPersistenceUnitDaoClassName = StringUtils.valueOf(param.get(ToolsConstants.CodeConstants.FLEA_PERSISTENCE_UNIT_DAO_CLASS_NAME));
         if (StringUtils.isBlank(fleaPersistenceUnitName) || StringUtils.isBlank(fleaPersistenceUnitAliasName)) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("不需要销毁，采用现有的持久化单元DAO层实现类 = {}", fleaPersistenceUnitDaoClassName);
-            }
+            LOGGER.debug("不需要销毁，采用现有的持久化单元DAO层实现类 = {}", fleaPersistenceUnitDaoClassName);
             return;
         } else {
             param.put(ToolsConstants.CodeConstants.FLEA_PERSISTENCE_UNIT_DAO_CLASS_NAME, fleaPersistenceUnitAliasName + "DAOImpl");

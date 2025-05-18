@@ -28,9 +28,7 @@ public class FleaDaoImplBuilder extends FleaCodeBuilder {
 
     @Override
     protected void code(Map<String, Object> param) {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("开始编写DAO层实现类代码");
-        }
+        LOGGER.debug("开始编写DAO层实现类代码");
 
         // DAO层实现类代码文件路径
         String fleaDAOImplFilePathStr = StringUtils.valueOf(param.get(ToolsConstants.CodeConstants.CODE_FILE_PATH));
@@ -41,10 +39,9 @@ public class FleaDaoImplBuilder extends FleaCodeBuilder {
         String content = IOUtils.toNativeStringFromResource("flea/code/dao/FleaDAOImpl.code");
         // 新建DAO层实现类java文件
         IOUtils.toFileFromNativeString(FleaCodeHelper.convert(content, param), fleaDAOImplFilePathStr);
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("DAO层实现类 = {}", entityClassName + "DAOImpl");
-            LOGGER.debug("DAO层实现类代码文件路径 = {}", fleaDAOImplFilePathStr);
-            LOGGER.debug("结束编写DAO层实现类代码");
-        }
+
+        LOGGER.debug("DAO层实现类 = {}", entityClassName + "DAOImpl");
+        LOGGER.debug("DAO层实现类代码文件路径 = {}", fleaDAOImplFilePathStr);
+        LOGGER.debug("结束编写DAO层实现类代码");
     }
 }

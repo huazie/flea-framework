@@ -158,26 +158,18 @@ public class FleaTransactionTemplate extends DefaultTransactionDefinition implem
      * @since 1.2.0
      */
     private void rollbackOnException(TransactionStatus status, Throwable ex) throws TransactionException {
-        if (LOGGER.isErrorEnabled()) {
-            LOGGER.error("Initiating transaction rollback on application exception", ex);
-        }
+        LOGGER.error("Initiating transaction rollback on application exception", ex);
         try {
             this.transactionManager.rollback(status);
         } catch (TransactionSystemException tse) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("Application exception overridden by rollback exception", ex);
-            }
+            LOGGER.error("Application exception overridden by rollback exception", ex);
             tse.initApplicationException(ex);
             throw tse;
         } catch (RuntimeException re) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("Application exception overridden by rollback exception", ex);
-            }
+            LOGGER.error("Application exception overridden by rollback exception", ex);
             throw re;
         } catch (Error err) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("Application exception overridden by rollback error", ex);
-            }
+            LOGGER.error("Application exception overridden by rollback error", ex);
             throw err;
         }
     }

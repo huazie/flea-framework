@@ -33,11 +33,8 @@ public class AuthCheckFilter implements IFleaJerseyFilter {
 
     @Override
     public void doFilter(FleaJerseyRequest request, FleaJerseyResponse response) throws CommonException {
-        Object obj = null;
-        if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            LOGGER.debug1(obj, "Auth Check, Start");
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "Auth Check, Start");
 
         RequestPublicData requestPublicData = request.getRequestData().getPublicData();
         // 系统账户编号
@@ -80,9 +77,7 @@ public class AuthCheckFilter implements IFleaJerseyFilter {
         // 初始化用户信息
         FleaAuthManager.initUserInfo(aId, operationUser, sysId, systemUser, null, new FleaUserImplObjectFactory());
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj,"Auth Check, End");
-        }
+        LOGGER.debug1(obj,"Auth Check, End");
     }
 
 }

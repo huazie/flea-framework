@@ -65,9 +65,7 @@ public class FleaJPASplitHelper {
         // 获取分表处理者实现类实例
         IFleaJPASplitHandler tableSplitHandler = (IFleaJPASplitHandler) ReflectUtils.newInstance(handlerClassStr);
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Flea Split Handler = {}", tableSplitHandler);
-        }
+        LOGGER.debug("Flea Split Handler = {}", tableSplitHandler);
 
         return tableSplitHandler;
     }

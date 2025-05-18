@@ -83,22 +83,16 @@ public class FleaRequestXmlDigesterHelper {
         String fileName = FleaCoreConstants.FleaRequestConfigConstants.FLEA_REQUEST_FILE_NAME;
         if (StringUtils.isNotBlank(System.getProperty(FleaCoreConstants.FleaRequestConfigConstants.FLEA_REQUEST_FILE_SYSTEM_KEY))) {
             fileName = StringUtils.trim(System.getProperty(FleaCoreConstants.FleaRequestConfigConstants.FLEA_REQUEST_FILE_SYSTEM_KEY));
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Use the specified flea-request.xml : " + fileName);
-            }
+            LOGGER.debug("Use the specified flea-request.xml : " + fileName);
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Use the current flea-request.xml : " + fileName);
-            LOGGER.debug("Start to parse the flea-request.xml");
-        }
+        LOGGER.debug("Use the current flea-request.xml : " + fileName);
+        LOGGER.debug("Start to parse the flea-request.xml");
 
         Digester digester = newFleaRequestFileDigester();
         FleaRequest obj = XmlDigesterHelper.parse(fileName, digester, FleaRequest.class);
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("End to parse the flea-request.xml");
-        }
+        LOGGER.debug("End to parse the flea-request.xml");
 
         return obj;
     }
@@ -181,22 +175,16 @@ public class FleaRequestXmlDigesterHelper {
         String fileName = FleaCoreConstants.FleaRequestConfigConstants.FLEA_REQUEST_FILTER_FILE_NAME;
         if (StringUtils.isNotBlank(System.getProperty(FleaCoreConstants.FleaRequestConfigConstants.FLEA_REQUEST_FILTER_FILE_SYSTEM_KEY))) {
             fileName = StringUtils.trim(System.getProperty(FleaCoreConstants.FleaRequestConfigConstants.FLEA_REQUEST_FILTER_FILE_SYSTEM_KEY));
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Use the specified flea-request-filter.xml : " + fileName);
-            }
+            LOGGER.debug("Use the specified flea-request-filter.xml : " + fileName);
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Use the current flea-request-filter.xml : " + fileName);
-            LOGGER.debug("Start to parse the flea-request-filter.xml");
-        }
+        LOGGER.debug("Use the current flea-request-filter.xml : " + fileName);
+        LOGGER.debug("Start to parse the flea-request-filter.xml");
 
         Digester digester = newFleaRequestFilterFileDigester();
         FleaRequestFilter obj = XmlDigesterHelper.parse(fileName, digester, FleaRequestFilter.class);
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("End to parse the flea-request-filter.xml");
-        }
+        LOGGER.debug("End to parse the flea-request-filter.xml");
 
         return obj;
     }

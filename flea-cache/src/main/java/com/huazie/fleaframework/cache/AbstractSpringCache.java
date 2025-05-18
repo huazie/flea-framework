@@ -54,9 +54,7 @@ public abstract class AbstractSpringCache implements Cache, IFleaCache {
             if (cacheValue instanceof NullCache) {
                 cacheValue = null;
             }
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug1(new Object() {}, "VALUE = {}", cacheValue);
-            }
+            LOGGER.debug1(new Object() {}, "VALUE = {}", cacheValue);
             wrapper = new SimpleValueWrapper(cacheValue);
         }
         return wrapper;
@@ -67,9 +65,7 @@ public abstract class AbstractSpringCache implements Cache, IFleaCache {
         if (ObjectUtils.isEmpty(key) || ObjectUtils.isEmpty(type)) return null;
         Object cacheValue = get(key.toString());
         if (!type.isInstance(cacheValue)) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug1(new Object() {}, "Cached value is not of required type [{}] : {}", type.getName(), cacheValue);
-            }
+            LOGGER.debug1(new Object() {}, "Cached value is not of required type [{}] : {}", type.getName(), cacheValue);
             return null;
         }
         return type.cast(cacheValue);
@@ -83,15 +79,10 @@ public abstract class AbstractSpringCache implements Cache, IFleaCache {
     @Override
     public Object get(String key) {
         if (StringUtils.isBlank(key)) return null;
-        Object obj = null;
-        if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            LOGGER.debug1(obj, "KEY = {}", key);
-        }
+        Object obj = obj = new Object() {};
+        LOGGER.debug1(obj, "KEY = {}", key);
         Object cacheValue = fleaCache.get(key);
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj, "VALUE = {}", cacheValue);
-        }
+        LOGGER.debug1(obj, "VALUE = {}", cacheValue);
         return cacheValue;
     }
 
@@ -116,11 +107,9 @@ public abstract class AbstractSpringCache implements Cache, IFleaCache {
 
     @Override
     public void put(String key, Object value) {
-        if (LOGGER.isDebugEnabled()) {
-            Object obj = new Object() {};
-            LOGGER.debug1(obj, "KEY = {}", key);
-            LOGGER.debug1(obj, "VALUE = {}", value);
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "KEY = {}", key);
+        LOGGER.debug1(obj, "VALUE = {}", value);
         fleaCache.put(key, value);
     }
 
@@ -137,9 +126,7 @@ public abstract class AbstractSpringCache implements Cache, IFleaCache {
 
     @Override
     public void delete(String key) {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "KEY = {}", key);
-        }
+        LOGGER.debug1(new Object() {}, "KEY = {}", key);
         fleaCache.delete(key);
     }
 

@@ -92,7 +92,7 @@ public class CollectionUtils {
             t = elementList.get(0);
         }
 
-        if (LOGGER.isDebugEnabled() && ObjectUtils.isNotEmpty(elementClazz)) {
+        if (ObjectUtils.isNotEmpty(elementClazz)) {
             LOGGER.debug1(new Object() {}, elementClazz.getSimpleName() + " = {}", t);
         }
 

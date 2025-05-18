@@ -46,9 +46,7 @@ public class RandomCode {
         for (int i = 0; i < len; i++) {
             sNumberCode.append(random.nextInt(NUMBER_TEN));
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "NumberCode = {}", sNumberCode);
-        }
+        LOGGER.debug1(new Object() {}, "NumberCode = {}", sNumberCode);
         return sNumberCode.toString();
     }
 
@@ -110,9 +108,7 @@ public class RandomCode {
             }
             sLetterCode.append(letter);
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "LetterCode = {}", sLetterCode);
-        }
+        LOGGER.debug1(new Object() {}, "LetterCode = {}", sLetterCode);
         return sLetterCode.toString();
     }
 
@@ -159,16 +155,11 @@ public class RandomCode {
      */
     public static String toUUID() {
         String sUUID = UUID.randomUUID().toString();
-        Object obj = null;
-        if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            LOGGER.debug1(obj, "Before UUID = {}", sUUID);
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "Before UUID = {}", sUUID);
         // 去掉"-"符号
         String sResult = sUUID.replaceAll(CommonConstants.SymbolConstants.HYPHEN, "");
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj, "After UUID = {}", sResult);
-        }
+        LOGGER.debug1(obj, "After UUID = {}", sResult);
         return sResult;
     }
 }
