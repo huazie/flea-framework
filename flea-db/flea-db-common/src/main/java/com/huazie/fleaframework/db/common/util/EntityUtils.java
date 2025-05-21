@@ -221,17 +221,6 @@ public class EntityUtils {
     }
 
     /**
-     * 根据实体类获取对应的表名信息，实体类上包含 @Table 或者 @FleaTable 注解）
-     *
-     * @param entity 被@Table或者@FleaTable注解修饰的实体类
-     * @return 实体类对应数据库表名
-     * @since 1.0.0
-     */
-    public static String getTableName(Object entity) {
-        return getTableName(entity.getClass());
-    }
-
-    /**
      * 根据实体类的Class类型获取对应的表名信息，实体类上包含 @Table 或者 @FleaTable 注解）
      *
      * @param entityClass 被@Table或者@FleaTable注解修饰的实体类的Class类型
@@ -253,6 +242,21 @@ public class EntityUtils {
     }
 
     /**
+     * 当前表是否再分库中
+     *
+     * @param entityClass 实体类Class类型
+     * @return true：当前表在分库中 false：当前表在模板库中
+     */
+    public static boolean isSplitLib(Class<?> entityClass) {
+        boolean splitLibFlag = true;
+        FleaTable fleaTableAnnotation = entityClass.getAnnotation(FleaTable.class);
+        if (ObjectUtils.isNotEmpty(fleaTableAnnotation)) {
+            splitLibFlag = fleaTableAnnotation.splitLibFlag();
+        }
+        return splitLibFlag;
+    }
+
+    /**
      * 获取真实的表名，如是分表，则获取分表名
      *
      * @param entity 实体类对象实例
@@ -262,7 +266,7 @@ public class EntityUtils {
      */
     public static SplitTable getSplitTable(Object entity) throws CommonException {
         // 从实体类上获取表名
-        String tableName = getTableName(entity);
+        String tableName = getTableName(entity.getClass());
         // 请检查初始实体类(其上的注解@Table或者@FleaTable对应的表名不能为空)
         StringUtils.checkBlank(tableName, DaoException.class, "ERROR-DB-SQT0000000012");
 
