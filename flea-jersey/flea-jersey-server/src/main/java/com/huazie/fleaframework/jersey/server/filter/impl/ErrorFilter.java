@@ -35,12 +35,9 @@ public class ErrorFilter extends JerseyLoggerFilter implements IFleaJerseyErrorF
 
     @Override
     public void doFilter(FleaJerseyRequest request, FleaJerseyResponse response, Throwable throwable) {
-        Object obj = null;
-        if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            LOGGER.debug1(obj, "Catch Exception, Start");
-            LOGGER.debug1(obj, "Exception : ", throwable);
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "Catch Exception, Start");
+        LOGGER.debug1(obj, "Exception : ", throwable);
 
         FleaJerseyResponseData responseData = response.getResponseData();
         if (ObjectUtils.isEmpty(responseData)) {
@@ -67,18 +64,14 @@ public class ErrorFilter extends JerseyLoggerFilter implements IFleaJerseyErrorF
             responsePublicData.setResultCode(FleaJerseyConstants.ResponseResultConstants.RESULT_CODE_OTHER);
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj, "Catch Exception, End");
-        }
+        LOGGER.debug1(obj, "Catch Exception, End");
 
         try {
             if (ObjectUtils.isNotEmpty(request)) {
                 super.doFilter(request, response); // 保存异常调用日志
             }
         } catch (CommonException e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "保存异常调用日志出错：\n", e);
-            }
+            LOGGER.error1(obj, "保存异常调用日志出错：\n", e);
         }
     }
 
@@ -98,9 +91,7 @@ public class ErrorFilter extends JerseyLoggerFilter implements IFleaJerseyErrorF
             WebApplicationContext webApplicationContext = ContextLoader.getCurrentWebApplicationContext();
             FleaConfigDataSpringBean fleaConfigDataSpringBean = webApplicationContext.getBean(FleaConfigDataSpringBean.class);
 
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug1(new Object() {}, "FleaConfigDataSpringBean = {}", fleaConfigDataSpringBean);
-            }
+            LOGGER.debug1(new Object() {}, "FleaConfigDataSpringBean = {}", fleaConfigDataSpringBean);
 
             // 首先获取过滤器国际码和错误码映射配置
             I18nErrorMapping i18nErrorMapping = FleaJerseyFilterConfig.getI18nErrorMapping(i18nKey);
@@ -129,9 +120,7 @@ public class ErrorFilter extends JerseyLoggerFilter implements IFleaJerseyErrorF
                 }
             }
         } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "Exception : \n", e);
-            }
+            LOGGER.error1(new Object() {}, "Exception : \n", e);
             responsePublicData.setResultCode(FleaJerseyConstants.ResponseResultConstants.RESULT_CODE_OTHER);
         }
     }

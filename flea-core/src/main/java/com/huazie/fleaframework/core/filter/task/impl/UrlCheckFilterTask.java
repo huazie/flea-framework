@@ -31,20 +31,15 @@ public class UrlCheckFilterTask implements IFilterTask {
 
     @Override
     public void doFilterTask(FleaRequestContext fleaRequestContext, IFilterTaskChain filterTaskChain) throws CommonException {
-        Object obj = null;
-        if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            LOGGER.debug1(obj, "Start");
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "Start");
 
         String urlIllegalChar = FleaRequestUtil.getUrlIllegalChar();
         if (StringUtils.isBlank(urlIllegalChar)) {
             urlIllegalChar = DEFAULT_URL_ILLEGAL_CHAR;
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj, "URL_ILLEGAL_CHAR = {}", urlIllegalChar);
-        }
+        LOGGER.debug1(obj, "URL_ILLEGAL_CHAR = {}", urlIllegalChar);
 
         HttpServletRequest request = (HttpServletRequest) fleaRequestContext.getServletRequest();
         if (ObjectUtils.isNotEmpty(request)) {
@@ -55,32 +50,24 @@ public class UrlCheckFilterTask implements IFilterTask {
             }
 
             String uri = request.getRequestURI();
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug1(obj, "URI = {}", uri);
-            }
+            LOGGER.debug1(obj, "URI = {}", uri);
 
             // 不需校验的URL，直接跳过
             if (FleaRequestUtil.isUnCheckUrl(uri)) {
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug1(obj, "UnCheck URL");
-                }
+                LOGGER.debug1(obj, "UnCheck URL");
                 return;
             }
 
             // 需要校验的URL【默认重定向到登录页面】
             if (FleaRequestUtil.isCheckUrl(uri)) {
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug1(obj, "Check URL, Redirect to Login Page");
-                }
+                LOGGER.debug1(obj, "Check URL, Redirect to Login Page");
                 // 重定向到登录页面
                 FleaRequestUtil.sendRedirectToLoginPage(fleaRequestContext);
                 return;
             }
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj, "End");
-        }
+        LOGGER.debug1(obj, "End");
 
         // 执行下一条过滤器任务
         filterTaskChain.doFilterTask(fleaRequestContext);

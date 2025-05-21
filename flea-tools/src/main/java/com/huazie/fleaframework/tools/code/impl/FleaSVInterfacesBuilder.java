@@ -28,9 +28,7 @@ public class FleaSVInterfacesBuilder extends FleaCodeBuilder {
 
     @Override
     protected void code(Map<String, Object> param) {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("开始编写SV层接口类代码");
-        }
+        LOGGER.debug("开始编写SV层接口类代码");
 
         // SV层接口类代码文件路径
         String iFleaSVFilePathStr = StringUtils.valueOf(param.get(ToolsConstants.CodeConstants.CODE_FILE_PATH));
@@ -41,10 +39,8 @@ public class FleaSVInterfacesBuilder extends FleaCodeBuilder {
         String content = IOUtils.toNativeStringFromResource("flea/code/service/IFleaSV.code");
         // 新建SV层接口类java文件
         IOUtils.toFileFromNativeString(FleaCodeHelper.convert(content, param), iFleaSVFilePathStr);
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("SV层接口类 = {}", entityClassName);
-            LOGGER.debug("SV层接口类代码文件路径 = {}", iFleaSVFilePathStr);
-            LOGGER.debug("结束编写SV层接口类代码");
-        }
+        LOGGER.debug("SV层接口类 = {}", entityClassName);
+        LOGGER.debug("SV层接口类代码文件路径 = {}", iFleaSVFilePathStr);
+        LOGGER.debug("结束编写SV层接口类代码");
     }
 }

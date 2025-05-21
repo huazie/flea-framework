@@ -55,9 +55,7 @@ public class ClassDescriptorUtils {
             SplitTable splitTable = FleaEntityManager.getSplitTable(entity);
             return getSplitDescriptor(descriptor, session, splitTable);
         } catch (CommonException e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "Getting the ClassDescriptor of split table occurs Exception : \n", e);
-            }
+            LOGGER.error1(new Object() {}, "Getting the ClassDescriptor of split table occurs Exception : \n", e);
         }
         return descriptor;
     }

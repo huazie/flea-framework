@@ -22,6 +22,10 @@ Flea框架，取名跳蚤，源于作者Huazie的跳蚤市场毕设项目，第�
 
 ## 文档
 
+### DeepWiki
+
+https://deepwiki.com/huazie/flea-framework
+
 ### flea-auth
 
 https://blog.huazie.com/diversity/blog/?path=/categories/%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6-Flea/flea-auth/

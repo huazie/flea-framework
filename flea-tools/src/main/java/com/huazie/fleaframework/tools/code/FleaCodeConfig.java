@@ -59,13 +59,10 @@ public class FleaCodeConfig {
         String fileName = ToolsConstants.CodeConfigConstants.CODE_CONFIG_FILE_NAME;
         if (StringUtils.isNotBlank(System.getProperty(ToolsConstants.CodeConfigConstants.CODE_CONFIG_FILE_SYSTEM_KEY))) {
             fileName = StringUtils.trim(System.getProperty(ToolsConstants.CodeConfigConstants.CODE_CONFIG_FILE_SYSTEM_KEY));
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("CodeConfig Use the specified code.properties：{}", fileName);
-            }
+            LOGGER.debug("CodeConfig Use the specified code.properties：{}", fileName);
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("CodeConfig Use the current code.properties：{}", fileName);
-        }
+        LOGGER.debug("CodeConfig Use the current code.properties：{}", fileName);
+
         // 获取配置文件
         Properties prop = PropertiesUtil.getProperties(fileName);
 

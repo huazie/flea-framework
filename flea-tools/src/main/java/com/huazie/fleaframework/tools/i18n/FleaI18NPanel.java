@@ -119,9 +119,7 @@ public class FleaI18NPanel extends JPanel {
                 try {
                     open();
                 } catch (Exception e1) {
-                    if (LOGGER.isErrorEnabled()) {
-                        LOGGER.error("Exception : \n", e1);
-                    }
+                    LOGGER.error("Exception : \n", e1);
                 }
             }
         });
@@ -141,9 +139,7 @@ public class FleaI18NPanel extends JPanel {
                         stringUnicodeToNative();// Unicode字符串转本地字符串
                     }
                 } catch (Exception e1) {
-                    if (LOGGER.isErrorEnabled()) {
-                        LOGGER.error("Exception : \n", e1);
-                    }
+                    LOGGER.error("Exception : \n", e1);
                 }
             }
         });
@@ -185,9 +181,7 @@ public class FleaI18NPanel extends JPanel {
                 try {
                     selectFile();
                 } catch (Exception ex) {
-                    if (LOGGER.isErrorEnabled()) {
-                        LOGGER.error("Exception : \n", ex);
-                    }
+                    LOGGER.error("Exception : \n", ex);
                 }
             }
         });
@@ -221,9 +215,7 @@ public class FleaI18NPanel extends JPanel {
                 try {
                     selectFile();
                 } catch (Exception ex) {
-                    if (LOGGER.isErrorEnabled()) {
-                        LOGGER.error("Exception : \n", ex);
-                    }
+                    LOGGER.error("Exception : \n", ex);
                 }
             }
         });

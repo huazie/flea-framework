@@ -48,9 +48,7 @@ public class FleaAsyncTask extends FleaRunnable {
 
     @Override
     protected void subRun() {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Start");
-        }
+        LOGGER.debug("Start");
 
         try {
             if (isParamCheck()) {
@@ -58,14 +56,10 @@ public class FleaAsyncTask extends FleaRunnable {
                 method.invoke(asyncTaskExecObj, params);
             }
         } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("AsyncTask Execute Exception : ", e);
-            }
+            LOGGER.error("AsyncTask Execute Exception : ", e);
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("End");
-        }
+        LOGGER.debug("End");
     }
 
     /**
@@ -78,29 +72,21 @@ public class FleaAsyncTask extends FleaRunnable {
         boolean isCheck = true;
 
         if (ObjectUtils.isEmpty(asyncTaskExecObj)) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("asyncTaskExecObj is null, is not allowed");
-            }
+            LOGGER.debug("asyncTaskExecObj is null, is not allowed");
             isCheck = false;
         }
 
         if (StringUtils.isBlank(methodName)) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("methodName is empty, is not allowed");
-            }
+            LOGGER.debug("methodName is empty, is not allowed");
             isCheck = false;
         }
 
         if (ArrayUtils.isEmpty(paramTypes)) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("paramTypes is empty");
-            }
+            LOGGER.debug("paramTypes is empty");
         }
 
         if (ArrayUtils.isEmpty(params)) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("params is empty");
-            }
+            LOGGER.debug("params is empty");
         }
 
         return isCheck;

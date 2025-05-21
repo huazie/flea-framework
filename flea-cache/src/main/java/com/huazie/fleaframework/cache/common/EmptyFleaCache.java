@@ -22,25 +22,19 @@ public class EmptyFleaCache extends AbstractFleaCache {
 
     @Override
     public Object getNativeValue(String key) {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "空缓存getNativeValue实现");
-        }
+        LOGGER.debug1(new Object() {}, "空缓存getNativeValue实现");
         return null;
     }
 
     @Override
     public Object putNativeValue(String key, Object value, int expiry) {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "空缓存putNativeValue实现");
-        }
+        LOGGER.debug1(new Object() {}, "空缓存putNativeValue实现");
         return null;
     }
 
     @Override
     public Object deleteNativeValue(String key) {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "空缓存deleteNativeValue实现");
-        }
+        LOGGER.debug1(new Object() {}, "空缓存deleteNativeValue实现");
         return null;
     }
 

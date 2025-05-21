@@ -31,11 +31,8 @@ public class DataPreCheckFilter implements IFleaJerseyFilter {
     @Override
     public void doFilter(FleaJerseyRequest request, FleaJerseyResponse response) throws CommonException {
 
-        Object obj = null;
-        if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            LOGGER.debug1(obj, "Data PreCheck, Start");
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "Data PreCheck, Start");
 
         if (ObjectUtils.isEmpty(response)) {
             response = new FleaJerseyResponse();
@@ -90,11 +87,9 @@ public class DataPreCheckFilter implements IFleaJerseyFilter {
         // 请求业务报文不能为空
         StringUtils.checkBlank(input, FleaJerseyFilterException.class, "ERROR-JERSEY-FILTER0000000005");
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj, "RequestPublicData = {}", requestPublicData);
-            LOGGER.debug1(obj, "RequestBusinessData = {}", requestBusinessData);
-            LOGGER.debug1(obj, "Data PreCheck, End");
-        }
+        LOGGER.debug1(obj, "RequestPublicData = {}", requestPublicData);
+        LOGGER.debug1(obj, "RequestBusinessData = {}", requestBusinessData);
+        LOGGER.debug1(obj, "Data PreCheck, End");
     }
 
 }

@@ -54,9 +54,7 @@ public abstract class FleaCodeBuilder implements IFleaCodeBuilder {
         File fleaCodeFile = new File(filePath);
         if (fleaCodeFile.exists()) {
             fleaCodeFile.delete();
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug1(new Object() {}, "删除代码文件：{}", filePath);
-            }
+            LOGGER.debug1(new Object() {}, "删除代码文件：{}", filePath);
         }
     }
 

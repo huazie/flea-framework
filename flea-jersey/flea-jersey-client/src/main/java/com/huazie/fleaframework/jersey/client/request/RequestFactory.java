@@ -59,12 +59,9 @@ public class RequestFactory {
             ExceptionUtils.throwCommonException(FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000000");
         }
 
-        Object obj = null;
-        if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            LOGGER.debug1(obj, "Start");
-            LOGGER.debug1(obj, "RequestConfig = {}", config.getConfig());
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "Start");
+        LOGGER.debug1(obj, "RequestConfig = {}", config.getConfig());
 
         // 获取请求方式
         String requestMode = config.getRequestMode();
@@ -77,9 +74,7 @@ public class RequestFactory {
         try {
             requestModeEnum = RequestModeEnum.valueOf(requestMode.toUpperCase());
         } catch (IllegalArgumentException e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "Exception = ", e);
-            }
+            LOGGER.error1(obj, "Exception = ", e);
         }
 
         Request request = null;
@@ -91,13 +86,11 @@ public class RequestFactory {
             }
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            if (ObjectUtils.isNotEmpty(request)) {
-                LOGGER.debug1(obj, "Request = {}", request.getClass().getName());
-                LOGGER.debug1(obj, "RequestMode = {}", request.getRequestMode().getMode());
-            }
-            LOGGER.debug1(obj, "End");
+        if (ObjectUtils.isNotEmpty(request)) {
+            LOGGER.debug1(obj, "Request = {}", request.getClass().getName());
+            LOGGER.debug1(obj, "RequestMode = {}", request.getRequestMode().getMode());
         }
+        LOGGER.debug1(obj, "End");
 
         return request;
     }

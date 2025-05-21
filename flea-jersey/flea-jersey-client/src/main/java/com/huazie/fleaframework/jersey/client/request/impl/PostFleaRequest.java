@@ -49,20 +49,16 @@ public class PostFleaRequest extends FleaRequest {
     @Override
     protected FleaJerseyResponse request(WebTarget target, FleaJerseyRequest request) throws CommonException {
 
-        Object obj = null;
-        if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            LOGGER.debug1(obj, "POST Request, Start");
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "POST Request, Start");
 
         Entity<FleaJerseyRequest> entity = Entity.entity(request, toMediaType());
 
         FleaJerseyResponse response = target.request(toMediaType()).post(entity, FleaJerseyResponse.class);
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj, "POST Request, FleaJerseyResponse = {}", response);
-            LOGGER.debug1(obj, "POST Request, End");
-        }
+        LOGGER.debug1(obj, "POST Request, FleaJerseyResponse = {}", response);
+        LOGGER.debug1(obj, "POST Request, End");
+
         return response;
     }
 }

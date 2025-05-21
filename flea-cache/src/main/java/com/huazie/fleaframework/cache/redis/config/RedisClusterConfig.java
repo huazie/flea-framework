@@ -49,13 +49,9 @@ public class RedisClusterConfig extends RedisCommonConfig {
         String fileName = RedisConfigConstants.REDIS_CLUSTER_FILE_NAME;
         if (StringUtils.isNotBlank(System.getProperty(RedisConfigConstants.REDIS_CLUSTER_CONFIG_FILE_SYSTEM_KEY))) {
             fileName = StringUtils.trim(System.getProperty(RedisConfigConstants.REDIS_CLUSTER_CONFIG_FILE_SYSTEM_KEY));
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("RedisClusterConfig Use the specified redis.cluster.properties：{}", fileName);
-            }
+            LOGGER.debug("RedisClusterConfig Use the specified redis.cluster.properties：{}", fileName);
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("RedisClusterConfig Use the current redis.cluster.properties：{}", fileName);
-        }
+        LOGGER.debug("RedisClusterConfig Use the current redis.cluster.properties：{}", fileName);
         // 获取配置文件
         prop = PropertiesUtil.getProperties(fileName);
     }
@@ -81,9 +77,7 @@ public class RedisClusterConfig extends RedisCommonConfig {
             // Redis客户端操作最大尝试次数【包含第一次操作】
             setMaxAttempts(prop);
         } catch (FleaCacheException e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("Please check the redis cluster config :", e);
-            }
+            LOGGER.error("Please check the redis cluster config :", e);
         }
     }
 

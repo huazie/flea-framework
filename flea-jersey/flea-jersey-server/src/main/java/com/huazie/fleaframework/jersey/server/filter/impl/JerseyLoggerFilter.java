@@ -27,11 +27,8 @@ public class JerseyLoggerFilter implements IFleaJerseyFilter {
 
     @Override
     public void doFilter(FleaJerseyRequest request, FleaJerseyResponse response) throws CommonException {
-        Object obj = null;
-        if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            LOGGER.debug1(obj, "Jersey Logger, Start");
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "Jersey Logger, Start");
 
         // 请求公共报文
         RequestPublicData requestPublicData = request.getRequestData().getPublicData();
@@ -65,9 +62,7 @@ public class JerseyLoggerFilter implements IFleaJerseyFilter {
         // 保存资源服务调用日志
         fleaConfigDataSpringBean.saveResServiceLog(resServiceLogPOJO);
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj, "Jersey Logger, End");
-        }
+        LOGGER.debug1(obj, "Jersey Logger, End");
     }
 
 }

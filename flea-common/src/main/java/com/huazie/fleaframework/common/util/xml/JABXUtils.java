@@ -42,9 +42,7 @@ public class JABXUtils {
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, isFormat);
             marshaller.marshal(t, writer);
         } catch (JAXBException e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "实体转XML，出现异常：\n", e);
-            }
+            LOGGER.error1(new Object() {}, "实体转XML，出现异常：\n", e);
         }
         return writer.toString();
     }
@@ -69,9 +67,7 @@ public class JABXUtils {
                 t = clazz.cast(obj);
             }
         } catch (JAXBException e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "XML转实体，出现异常：\n", e);
-            }
+            LOGGER.error1(new Object() {}, "XML转实体，出现异常：\n", e);
         }
         return t;
     }

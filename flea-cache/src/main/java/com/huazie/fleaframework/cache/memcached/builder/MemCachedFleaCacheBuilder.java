@@ -59,11 +59,9 @@ public class MemCachedFleaCacheBuilder implements IFleaCacheBuilder {
             // 创建一个MemCached Flea缓存类
             fleaCache = new MemCachedFleaCache(name, expiry, nullCacheExpiry, memCachedClient);
 
-            if (LOGGER.isDebugEnabled()) {
-                Object obj = new Object() {};
-                LOGGER.debug1(obj, "Pool Name = {}", MemCachedPool.getInstance(group).getPoolName());
-                LOGGER.debug1(obj, "Pool = {}", MemCachedPool.getInstance(group).getSockIOPool());
-            }
+            Object obj = new Object() {};
+            LOGGER.debug1(obj, "Pool Name = {}", MemCachedPool.getInstance(group).getPoolName());
+            LOGGER.debug1(obj, "Pool = {}", MemCachedPool.getInstance(group).getSockIOPool());
         } else { // 开关关闭，默认返回空缓存实现
             fleaCache = new EmptyFleaCache(name, expiry, nullCacheExpiry);
         }

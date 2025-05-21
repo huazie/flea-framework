@@ -33,24 +33,17 @@ public class FastJsonUtils {
      * @since 1.0.0
      */
     public static <T> T toEntity(String json, Class<T> clazz) {
-        Object obj = null;
-        if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            LOGGER.debug1(obj, "#F# Json converted to Entity, Json = {}", json);
-            LOGGER.debug1(obj, "#F# Json converted to Entity, Class = {}", clazz);
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "#F# Json converted to Entity, Json = {}", json);
+        LOGGER.debug1(obj, "#F# Json converted to Entity, Class = {}", clazz);
         T t = null;
         try {
             t = JSON.parseObject(json, clazz);
         } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "#F# Json converted to Entity, Exception = ", e);
-            }
+            LOGGER.error1(obj, "#F# Json converted to Entity, Exception = ", e);
             ExceptionUtils.throwFleaException(FleaException.class, e);
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj, "#F# Json converted to Entity, Entity = {}", t);
-        }
+        LOGGER.debug1(obj, "#F# Json converted to Entity, Entity = {}", t);
         return t;
     }
 
@@ -63,24 +56,17 @@ public class FastJsonUtils {
      * @since 1.0.0
      */
     public static <T> List<T> toEntityList(String json, Class<T> clazz) {
-        Object obj = null;
-        if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            LOGGER.debug1(obj, "#F# Json converted to EntityList, Json = {}", json);
-            LOGGER.debug1(obj, "#F# Json converted to EntityList, Class = {}", clazz);
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "#F# Json converted to EntityList, Json = {}", json);
+        LOGGER.debug1(obj, "#F# Json converted to EntityList, Class = {}", clazz);
         List<T> entityList = null;
         try {
             entityList = JSON.parseArray(json, clazz);
         } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "#F# Json converted to EntityList, Exception = ", e);
-            }
+            LOGGER.error1(obj, "#F# Json converted to EntityList, Exception = ", e);
             ExceptionUtils.throwFleaException(FleaException.class, e);
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj, "#F# Json converted to EntityList, EntityList={}", entityList);
-        }
+        LOGGER.debug1(obj, "#F# Json converted to EntityList, EntityList={}", entityList);
         return entityList;
     }
 
@@ -92,24 +78,17 @@ public class FastJsonUtils {
      * @since 1.0.0
      */
     public static Map<String, Object> toMap(String json) {
-        Object obj = null;
-        if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            LOGGER.debug1(obj, "#F# Json converted to Map, Json = {}", json);
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "#F# Json converted to Map, Json = {}", json);
         Map<String, Object> map = null;
         try {
             map = JSON.parseObject(json, new TypeReference<Map<String, Object>>() {
             });
         } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "#F# Json converted to Map, Exception = \n", e);
-            }
+            LOGGER.error1(obj, "#F# Json converted to Map, Exception = \n", e);
             ExceptionUtils.throwFleaException(FleaException.class, e);
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj, "#F# Json converted to Map, Map = {}", map);
-        }
+        LOGGER.debug1(obj, "#F# Json converted to Map, Map = {}", map);
         return map;
     }
 
@@ -121,23 +100,16 @@ public class FastJsonUtils {
      * @since 1.0.0
      */
     public static List<Map<String, Object>> toMapList(String json) {
-        Object obj = null;
-        if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            LOGGER.debug1(obj, "#F# Json converted to MapList, Json = {}", json);
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "#F# Json converted to MapList, Json = {}", json);
         List<Map<String, Object>> mapList = null;
         try {
             mapList = JSON.parseObject(json, new TypeReference<List<Map<String, Object>>>() {});
         } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "#F# Json converted to MapList, Exception = ", e);
-            }
+            LOGGER.error1(new Object() {}, "#F# Json converted to MapList, Exception = ", e);
             ExceptionUtils.throwFleaException(FleaException.class, e);
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj, "#F# Json converted to MapList, MapList={}", mapList);
-        }
+        LOGGER.debug1(obj, "#F# Json converted to MapList, MapList={}", mapList);
         return mapList;
     }
 
@@ -149,15 +121,10 @@ public class FastJsonUtils {
      * @since 1.0.0
      */
     public static String toJsonString(Object object) {
-        Object obj = null;
-        if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            LOGGER.debug1(obj, "#F# Object converted to Json String, Object = {}", object);
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "#F# Object converted to Json String, Object = {}", object);
         String json = JSON.toJSONString(object);
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj, "#F# Object converted to Json String, Json = {}", json);
-        }
+        LOGGER.debug1(obj, "#F# Object converted to Json String, Json = {}", json);
         return json;
     }
 

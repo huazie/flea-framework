@@ -53,11 +53,8 @@ public class FleaJerseyClient {
      */
     public <T> Response<T> invoke(String clientCode, Object input, Class<T> outputClazz) throws CommonException {
 
-        Object obj = null;
-        if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            LOGGER.debug1(obj, "Start");
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "Start");
 
         // 客户端编码不能为空
         StringUtils.checkBlank(clientCode, FleaJerseyClientException.class, "ERROR-JERSEY-CLIENT0000000001");
@@ -70,9 +67,7 @@ public class FleaJerseyClient {
 
         // 未注入Bean，直接返回null
         if (ObjectUtils.isEmpty(springBean)) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.debug1(new Object() {}, "未注入配置数据 Spring Bean，请检查");
-            }
+            LOGGER.error1(obj, "未注入配置数据 Spring Bean，请检查");
             return null;
         }
 
@@ -101,9 +96,7 @@ public class FleaJerseyClient {
         // 业务出参类全名字符串
         config.addClientOutput(resClient.getClientOutput());
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj, "Request Config = {}", config);
-        }
+        LOGGER.debug1(obj, "Request Config = {}", config);
 
         // 传入请求配置，让请求工厂生产一个Flea Jersey请求
         Request request = RequestFactory.getInstance().buildFleaRequest(config);
@@ -112,10 +105,8 @@ public class FleaJerseyClient {
             response = request.doRequest(outputClazz);
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj, "Response = {}", response);
-            LOGGER.debug1(obj, "End");
-        }
+        LOGGER.debug1(obj, "Response = {}", response);
+        LOGGER.debug1(obj, "End");
 
         return response;
     }

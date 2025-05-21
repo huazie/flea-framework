@@ -37,9 +37,7 @@ public class PropertiesUtil {
             prop.load(reader);
         } catch (Exception e) {
             prop = null;
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {},"读取路径为【" + path + "】的配置出错", e);
-            }
+            LOGGER.error1(new Object() {},"读取路径为【" + path + "】的配置出错", e);
         }
         return prop;
     }

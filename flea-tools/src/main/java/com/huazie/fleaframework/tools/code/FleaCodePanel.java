@@ -529,9 +529,7 @@ public class FleaCodePanel extends JPanel implements ActionListener, ItemListene
                 }
             }
         } catch (Exception e1) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("Exception = {}", e1);
-            }
+            LOGGER.error("Exception = {}", e1);
             ToolsHelper.showTips(FleaI18nHelper.i18nForCommon("COMMON_I18N_00010"), e1.getMessage(), JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -569,9 +567,7 @@ public class FleaCodePanel extends JPanel implements ActionListener, ItemListene
                 }
             }
         } catch (Exception e1) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("Exception = {}", e1);
-            }
+            LOGGER.error("Exception = {}", e1);
             ToolsHelper.showTips(FleaI18nHelper.i18nForCommon("COMMON_I18N_00010"), e1.getMessage(), JOptionPane.ERROR_MESSAGE);
             idGeneratorStrategyComboBox.setSelectedIndex(0); // 重新选择TABLE
         }

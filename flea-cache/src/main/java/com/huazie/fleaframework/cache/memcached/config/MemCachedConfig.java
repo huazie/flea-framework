@@ -63,13 +63,9 @@ public class MemCachedConfig {
         String fileName = CacheConstants.MemCachedConfigConstants.MEMCACHED_FILE_NAME;
         if (StringUtils.isNotBlank(System.getProperty(CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_FILE_SYSTEM_KEY))) {
             fileName = StringUtils.trim(System.getProperty(CacheConstants.MemCachedConfigConstants.MEMCACHED_CONFIG_FILE_SYSTEM_KEY));
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("MemCachedConfig Use the specified memcached.properties：{}", fileName);
-            }
+            LOGGER.debug("MemCachedConfig Use the specified memcached.properties：{}", fileName);
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("MemCachedConfig Use the current memcached.properties：{}", fileName);
-        }
+        LOGGER.debug("MemCachedConfig Use the current memcached.properties：{}", fileName);
         // 获取配置文件
         prop = PropertiesUtil.getProperties(fileName);
     }
@@ -103,9 +99,7 @@ public class MemCachedConfig {
             // 一致性hash算法
             setHashingAlg();
         } catch (FleaCacheException e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("Please check the MemCached config :", e);
-            }
+            LOGGER.error("Please check the MemCached config :", e);
         }
     }
 

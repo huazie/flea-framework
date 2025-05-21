@@ -54,11 +54,8 @@ public class FPostFleaRequest extends FleaRequest {
     @Override
     protected FleaJerseyResponse request(WebTarget target, FleaJerseyRequest request) throws CommonException {
 
-        Object obj = null;
-        if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            LOGGER.debug1(obj, "FILE POST Request, Start");
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "FILE POST Request, Start");
 
         String requestData = JABXUtils.toXml(request, false);
         // 添加请求表单数据
@@ -72,10 +69,8 @@ public class FPostFleaRequest extends FleaRequest {
                 .request()
                 .post(entity, FleaJerseyResponse.class);
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj, "FILE POST Request, FleaJerseyResponse = {}", response);
-            LOGGER.debug1(obj, "FILE POST Request, End");
-        }
+        LOGGER.debug1(obj, "FILE POST Request, FleaJerseyResponse = {}", response);
+        LOGGER.debug1(obj, "FILE POST Request, End");
 
         return response;
     }

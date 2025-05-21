@@ -60,28 +60,20 @@ public abstract class RedisClientCommand<T, P extends Pool<M>, M> {
             ExceptionUtils.throwFleaException(FleaCacheMaxAttemptsException.class, "No more attempts left.");
         }
         M connection = null;
+        Object obj = new Object() {};
         try {
             connection = pool.getResource();
-            Object obj = null;
-            if (LOGGER.isDebugEnabled()) {
-                obj = new Object() {};
-                LOGGER.debug1(obj, "Get Jedis = {}", connection);
-            }
+            LOGGER.debug1(obj, "Get Jedis = {}", connection);
             T result = execute(connection);
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug1(obj, "Result = {}", result);
-            }
+            LOGGER.debug1(obj, "Result = {}", result);
             return result;
         } catch (JedisConnectionException e) {
             // 在开始下一次尝试前，释放当前分布式Jedis的连接，将分布式Jedis对象归还给分布式Jedis连接池
             releaseConnection(connection);
             connection = null; // 这里置空是为了最后finally不重复操作
-            if (LOGGER.isErrorEnabled()) {
-                Object obj = new Object() {};
-                LOGGER.error1(obj, "Redis连接异常：", e);
-                int currAttempts = this.maxAttempts - attempts + 1;
-                LOGGER.error1(obj, "第 {} 次尝试失败，开始第 {} 次尝试...", currAttempts, currAttempts + 1);
-            }
+            LOGGER.error1(obj, "Redis连接异常：", e);
+            int currAttempts = this.maxAttempts - attempts + 1;
+            LOGGER.error1(obj, "第 {} 次尝试失败，开始第 {} 次尝试...", currAttempts, currAttempts + 1);
             return runWithRetries(attempts - 1);
         } finally {
             releaseConnection(connection);
@@ -96,15 +88,12 @@ public abstract class RedisClientCommand<T, P extends Pool<M>, M> {
      */
     private void releaseConnection(M connection) {
         if (ObjectUtils.isNotEmpty(connection)) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug1(new Object() {}, "Close Jedis");
-            }
+            Object obj = new Object() {};
+            LOGGER.debug1(obj, "Close Jedis");
             try {
                 ((Closeable)connection).close();
             } catch (IOException e) {
-                if (LOGGER.isErrorEnabled()) {
-                    LOGGER.error1(new Object() {}, "Jedis close occurs Exception:", e);
-                }
+                LOGGER.error1(obj, "Jedis close occurs Exception:", e);
             }
         }
     }

@@ -83,14 +83,10 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         Class<?> clz = getClass();
         // 获取子类对象的泛型父类类型（也就是AbstractDaoImpl<T>）
         ParameterizedType type = (ParameterizedType) clz.getGenericSuperclass();
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Type = {}", type);
-        }
+        LOGGER.debug("Type = {}", type);
         Type[] types = type.getActualTypeArguments();
         entityClass = (Class<T>) types[0];
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("ClassName = {}", entityClass.getName());
-        }
+        LOGGER.debug("ClassName = {}", entityClass.getName());
     }
 
     @Override
@@ -346,9 +342,7 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         String nativeSql = selectSqlTemplate.toNativeSql();
         List<SqlParam> nativeParam = selectSqlTemplate.toNativeParams();
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "SQL = {}", nativeSql);
-        }
+        LOGGER.debug1(new Object() {}, "SQL = {}", nativeSql);
 
         Query query;
         if (isSingle) {
@@ -392,15 +386,13 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
         String nativeSql = sqlTemplate.toNativeSql();
         List<SqlParam> nativeParam = sqlTemplate.toNativeParams();
 
-        if (LOGGER.isDebugEnabled()) {
-            Object obj = new Object() {};
-            if (TemplateTypeEnum.INSERT.getKey().equals(sqlTemplate.getTemplateType().getKey())) {
-                LOGGER.debug1(obj, "SQL = {}", nativeSql);
-            } else if (TemplateTypeEnum.UPDATE.getKey().equals(sqlTemplate.getTemplateType().getKey())) {
-                LOGGER.debug1(obj, "SQL = {}", nativeSql);
-            } else if (TemplateTypeEnum.DELETE.getKey().equals(sqlTemplate.getTemplateType().getKey())) {
-                LOGGER.debug1(obj, "SQL = {}", nativeSql);
-            }
+        Object obj = new Object() {};
+        if (TemplateTypeEnum.INSERT.getKey().equals(sqlTemplate.getTemplateType().getKey())) {
+            LOGGER.debug1(obj, "SQL = {}", nativeSql);
+        } else if (TemplateTypeEnum.UPDATE.getKey().equals(sqlTemplate.getTemplateType().getKey())) {
+            LOGGER.debug1(obj, "SQL = {}", nativeSql);
+        } else if (TemplateTypeEnum.DELETE.getKey().equals(sqlTemplate.getTemplateType().getKey())) {
+            LOGGER.debug1(obj, "SQL = {}", nativeSql);
         }
 
         Query query = getEntityManager(entity).createNativeQuery(nativeSql);
@@ -480,11 +472,9 @@ public abstract class AbstractFleaJPADAOImpl<T> implements IAbstractFleaJPADAO<T
 
         // 获取Flea JPA查询对象实例
         FleaJPAQuery query = pool.getFleaObject();
-        if (LOGGER.isDebugEnabled()) {
-            Object obj = new Object() {};
-            LOGGER.debug1(obj, "FleaJPAQueryPool = {}", pool);
-            LOGGER.debug1(obj, "FleaJPAQuery = {}", query);
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "FleaJPAQueryPool = {}", pool);
+        LOGGER.debug1(obj, "FleaJPAQuery = {}", query);
         // 获取实例后必须调用该方法,对Flea JPA查询对象进行初始化
         query.init(getEntityManager(), entityClass, result);
         return query;

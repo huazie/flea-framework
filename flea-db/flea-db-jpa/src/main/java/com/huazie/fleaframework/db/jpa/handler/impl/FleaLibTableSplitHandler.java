@@ -60,9 +60,7 @@ public abstract class FleaLibTableSplitHandler implements IFleaJPASplitHandler {
             // 获取默认库名，这里的对象池名为持久化单元名【通常对应着库名】
             String libName = query.getPoolName();
             if (ObjectUtils.isEmpty(libName)) {
-                if (LOGGER.isErrorEnabled()) {
-                    LOGGER.error1(new Object() {}, "默认库名为空，本次不处理【FleaJPAQuery】！");
-                }
+                LOGGER.error1(new Object() {}, "默认库名为空，本次不处理【FleaJPAQuery】！");
                 return;
             }
             splitLib = FleaSplitUtils.getSplitLib(libName, FleaLibUtil.getSplitLibSeqValues());
@@ -94,9 +92,7 @@ public abstract class FleaLibTableSplitHandler implements IFleaJPASplitHandler {
         SplitTable splitTable = getSplitTableFromEntity(query.getEntity());
         // 分表信息为空或不存在分表，默认不处理
         if (!splitTable.isExistSplitTable()) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "分表信息为空或不存在分表，本次不处理【FleaJPAQuery】！");
-            }
+            LOGGER.error1(new Object() {}, "分表信息为空或不存在分表，本次不处理【FleaJPAQuery】！");
             return;
         }
         // 处理类型查询接口的分表信息
@@ -125,9 +121,7 @@ public abstract class FleaLibTableSplitHandler implements IFleaJPASplitHandler {
             // 获取默认库名
             String libName = fleaEntity.get(DBConstants.LibTableSplitConstants.FLEA_LIB_NAME, String.class);
             if (ObjectUtils.isEmpty(libName)) {
-                if (LOGGER.isErrorEnabled()) {
-                    LOGGER.error1(new Object() {}, "默认库名为空，本次不处理【EntityManager】！");
-                }
+                LOGGER.error1(new Object() {}, "默认库名为空，本次不处理【EntityManager】！");
                 return entityManager;
             }
             splitLib = FleaSplitUtils.getSplitLib(libName, FleaLibUtil.getSplitLibSeqValues());
@@ -203,9 +197,7 @@ public abstract class FleaLibTableSplitHandler implements IFleaJPASplitHandler {
             t =  entityManager.find(entityClass, primaryKey);
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, entityClass.getSimpleName() + " = {}", t);
-        }
+        LOGGER.debug1(new Object() {}, entityClass.getSimpleName() + " = {}", t);
 
         return t;
     }

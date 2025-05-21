@@ -67,11 +67,9 @@ public class FleaJDBCConfig {
      */
     public static void init(String mDatabase, String mName) {
         FleaFrameManager.getManager().setDBConfigKey(mDatabase, mName);
-        if (LOGGER.isDebugEnabled()) {
-            Object obj = new Object() {};
-            LOGGER.debug1(obj, "关系数据库管理系统名：{}", mDatabase);
-            LOGGER.debug1(obj, "数据库名或数据库用户：{}", mName);
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "关系数据库管理系统名：{}", mDatabase);
+        LOGGER.debug1(obj, "数据库名或数据库用户：{}", mName);
     }
 
     /**
@@ -101,13 +99,11 @@ public class FleaJDBCConfig {
             // 请正确初始化数据库管理系统和数据库（或数据库用户）
             ObjectUtils.checkEmpty(fleaDBUnit, DaoException.class, "ERROR-DB-DAO0000000013");
 
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("数据库配置键名：{}", dbConfigKey);
-                LOGGER.debug("数据库驱动名称：{}", fleaDBUnit.getDriver());
-                LOGGER.debug("数据库连接地址：{}", fleaDBUnit.getUrl());
-                LOGGER.debug("数据库登录用户：{}", fleaDBUnit.getUser());
-                LOGGER.debug("数据库登录密码：{}", fleaDBUnit.getPassword());
-            }
+            LOGGER.debug("数据库配置键名：{}", dbConfigKey);
+            LOGGER.debug("数据库驱动名称：{}", fleaDBUnit.getDriver());
+            LOGGER.debug("数据库连接地址：{}", fleaDBUnit.getUrl());
+            LOGGER.debug("数据库登录用户：{}", fleaDBUnit.getUser());
+            LOGGER.debug("数据库登录密码：{}", fleaDBUnit.getPassword());
 
             Class.forName(fleaDBUnit.getDriver());
             conn = DriverManager.getConnection(fleaDBUnit.getUrl(), fleaDBUnit.getUser(), fleaDBUnit.getPassword());
@@ -151,14 +147,10 @@ public class FleaJDBCConfig {
         try {
             if (ObjectUtils.isNotEmpty(conn)) {
                 conn.close();
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug1(new Object() {}, "Connection已关闭。");
-                }
+                LOGGER.debug1(new Object() {}, "Connection已关闭。");
             }
         } catch (SQLException e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "关闭数据库连接异常：", e);
-            }
+            LOGGER.error1(new Object() {}, "关闭数据库连接异常：", e);
         }
     }
 
@@ -171,14 +163,10 @@ public class FleaJDBCConfig {
         try {
             if (ObjectUtils.isNotEmpty(statement)) {
                 statement.close();
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug1(new Object() {}, "Statement已关闭。");
-                }
+                LOGGER.debug1(new Object() {}, "Statement已关闭。");
             }
         } catch (SQLException e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "关闭数据库statement异常：", e);
-            }
+            LOGGER.error1(new Object() {}, "关闭数据库statement异常：", e);
         }
     }
 
@@ -191,14 +179,10 @@ public class FleaJDBCConfig {
         try {
             if (ObjectUtils.isNotEmpty(rs)) {
                 rs.close();
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug1(new Object() {}, "ResultSet已关闭。");
-                }
+                LOGGER.debug1(new Object() {}, "ResultSet已关闭。");
             }
         } catch (SQLException e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "关闭结果集异常：", e);
-            }
+            LOGGER.error1(new Object() {}, "关闭结果集异常：", e);
         }
     }
 

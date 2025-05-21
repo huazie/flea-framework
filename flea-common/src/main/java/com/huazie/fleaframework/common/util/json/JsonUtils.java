@@ -38,12 +38,9 @@ public class JsonUtils {
      * @since 1.0.0
      */
     public static List<String> toStringList(String json, String key) {
-        Object obj = null;
-        if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            LOGGER.debug1(obj, "Json converted to List<String>, Json = {}", json);
-            LOGGER.debug1(obj, "Json converted to List<String>, Key = {}", key);
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "Json converted to List<String>, Json = {}", json);
+        LOGGER.debug1(obj, "Json converted to List<String>, Key = {}", key);
         List<String> list = null;
         try {
             JSONTokener jsonTokener = new JSONTokener(json);
@@ -59,14 +56,10 @@ public class JsonUtils {
                 }
             }
         } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "Json converted to List<String>, Exception = \n", e);
-            }
+            LOGGER.error1(obj, "Json converted to List<String>, Exception = \n", e);
             ExceptionUtils.throwFleaException(FleaException.class, e);
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj, "Json converted to List<String>, List<String> = {}", list);
-        }
+        LOGGER.debug1(obj, "Json converted to List<String>, List<String> = {}", list);
         return list;
     }
 
@@ -80,12 +73,9 @@ public class JsonUtils {
      */
     @SuppressWarnings("unchecked")
     public static List<Map<String, Object>> toMapList(String json, String key) {
-        Object obj = null;
-        if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            LOGGER.debug1(obj, "Json converted to List<Map<String, Object>>, Json = {}", json);
-            LOGGER.debug1(obj, "Json converted to List<Map<String, Object>>, Key = {}", key);
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "Json converted to List<Map<String, Object>>, Json = {}", json);
+        LOGGER.debug1(obj, "Json converted to List<Map<String, Object>>, Key = {}", key);
         List<Map<String, Object>> list = null;
         try {
             JSONTokener jsonTokener = new JSONTokener(json);
@@ -111,14 +101,10 @@ public class JsonUtils {
                 }
             }
         } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "Json converted to List<Map<String, Object>>, Exception = \n", e);
-            }
+            LOGGER.error1(obj, "Json converted to List<Map<String, Object>>, Exception = \n", e);
             ExceptionUtils.throwFleaException(FleaException.class, e);
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj, "Json converted to List<Map<String, Object>>, List<Map<String, Object>> = {}", list);
-        }
+        LOGGER.debug1(obj, "Json converted to List<Map<String, Object>>, List<Map<String, Object>> = {}", list);
         return list;
     }
 }

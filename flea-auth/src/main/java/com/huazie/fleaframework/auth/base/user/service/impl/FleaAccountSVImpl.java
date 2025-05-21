@@ -56,16 +56,13 @@ public class FleaAccountSVImpl extends AbstractFleaJPASVImpl<FleaAccount> implem
     @Override
     public String encrypt(String originalAccountPwd) {
         String encryptedAccountPwd = originalAccountPwd;
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "originalAccountPwd = {}", originalAccountPwd);
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "originalAccountPwd = {}", originalAccountPwd);
         // TODO 暂时使用 SHA
         if (StringUtils.isNotBlank(originalAccountPwd)) {
             encryptedAccountPwd = SecurityUtils.encryptToSHA(originalAccountPwd);
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "encryptedAccountPwd = {}", encryptedAccountPwd);
-        }
+        LOGGER.debug1(obj, "encryptedAccountPwd = {}", encryptedAccountPwd);
         return encryptedAccountPwd;
     }
 

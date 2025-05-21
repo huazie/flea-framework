@@ -33,16 +33,12 @@ public class XmlDigesterHelper {
 
         T config = null;
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "The File Path : {}", filePath);
-        }
+        LOGGER.debug1(new Object() {}, "The File Path : {}", filePath);
 
         try (InputStream input = IOUtils.getInputStreamFromClassPath(filePath)) {
             config = parse(input, digester, clazz);
         } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "File Parsing Exception : \n", e);
-            }
+            LOGGER.error1(new Object() {}, "File Parsing Exception : \n", e);
         }
 
         return config;
@@ -69,9 +65,7 @@ public class XmlDigesterHelper {
             }
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "Config = {}", config);
-        }
+        LOGGER.debug1(new Object() {}, "Config = {}", config);
 
         return config;
     }

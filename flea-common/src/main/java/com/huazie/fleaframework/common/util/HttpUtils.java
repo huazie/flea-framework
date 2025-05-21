@@ -67,9 +67,7 @@ public class HttpUtils {
             ip = "0.0.0.0";
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "IP ={}", ip);
-        }
+        LOGGER.debug1(new Object() {}, "IP ={}", ip);
 
         return ip;
     }
@@ -101,12 +99,9 @@ public class HttpUtils {
                 return "";
             }
 
-            Object obj = null;
-            if (LOGGER.isDebugEnabled()) {
-                obj = new Object() {};
-                LOGGER.debug1(obj, "Map = {}", map);
-                LOGGER.debug1(obj, "Data = {}", dataMap);
-            }
+            Object obj = new Object() {};
+            LOGGER.debug1(obj, "Map = {}", map);
+            LOGGER.debug1(obj, "Data = {}", dataMap);
 
             sb.append(dataMap.get(CommonConstants.IPAddressConstants.COUNTRY));
             sb.append(dataMap.get(CommonConstants.IPAddressConstants.REGION));
@@ -116,14 +111,10 @@ public class HttpUtils {
                 sb.append("(").append(dataMap.get(CommonConstants.IPAddressConstants.ISP)).append(")");
             }
 
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug1(obj, "Address = {}", sb);
-            }
+            LOGGER.debug1(obj, "Address = {}", sb);
 
         } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {},"Exception = ", e);
-            }
+            LOGGER.error1(new Object() {},"Exception = ", e);
         }
 
         return sb.toString();
@@ -148,21 +139,15 @@ public class HttpUtils {
             while ((line = reader.readLine()) != null) {
                 sBuilder.append(line);
             }
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug1(new Object() {}, "Output={}", sBuilder);
-            }
+            LOGGER.debug1(new Object() {}, "Output={}", sBuilder);
         } catch (IOException e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {},"IOException={}", e);
-            }
+            LOGGER.error1(new Object() {},"IOException={}", e);
         } finally {
             if (reader != null) {
                 try {
                     reader.close();
                 } catch (IOException e) {
-                    if (LOGGER.isErrorEnabled()) {
-                        LOGGER.error1(new Object() {},"IOException={}", e);
-                    }
+                    LOGGER.error1(new Object() {},"IOException={}", e);
                 }
             }
         }

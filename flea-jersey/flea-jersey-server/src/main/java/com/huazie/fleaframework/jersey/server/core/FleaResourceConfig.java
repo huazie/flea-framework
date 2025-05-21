@@ -52,15 +52,11 @@ public abstract class FleaResourceConfig extends ResourceConfig {
             FleaConfigDataSpringBean springBean = webApplicationContext.getBean(FleaConfigDataSpringBean.class);
             resourcePackages = springBean.getResourcePackages();
         } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "Exception occurs when getting resource packages : \n", e);
-            }
+            LOGGER.error1(new Object() {}, "Exception occurs when getting resource packages : \n", e);
         }
 
         if (CollectionUtils.isNotEmpty(resourcePackages)) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug1(new Object() {}, "scan packages : {}", resourcePackages);
-            }
+            LOGGER.debug1(new Object() {}, "scan packages : {}", resourcePackages);
             packages(resourcePackages.toArray(new String[0]));
         }
         // 服务端注册MultiPartFeature组件，用于支持 multipart/form-data 媒体类型

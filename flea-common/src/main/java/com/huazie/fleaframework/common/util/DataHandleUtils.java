@@ -91,11 +91,8 @@ public class DataHandleUtils {
             return null;
         }
 
-        Object obj = null;
-        if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            LOGGER.debug1(obj, "[GZIP] Original Length = {}", originalStr.length());
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "[GZIP] Original Length = {}", originalStr.length());
 
         String compressedStr = null;
         try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
@@ -106,15 +103,11 @@ public class DataHandleUtils {
                 compressedStr = new String(Base64Helper.getInstance().encode(byteArrayOutputStream.toByteArray()));
             }
         } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {}, "采用gzip方式压缩数据异常：", e);
-            }
+            LOGGER.error1(new Object() {}, "采用gzip方式压缩数据异常：", e);
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            if (StringUtils.isNotBlank(compressedStr)) {
-                LOGGER.debug1(obj, "Compressed Length = {}", compressedStr.length());
-            }
+        if (StringUtils.isNotBlank(compressedStr)) {
+            LOGGER.debug1(obj, "Compressed Length = {}", compressedStr.length());
         }
 
         return compressedStr;
@@ -132,11 +125,8 @@ public class DataHandleUtils {
             return null;
         }
 
-        Object obj = null;
-        if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            LOGGER.debug1(obj,"[GZIP] Compressed Length = {}", compressedStr.length());
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj,"[GZIP] Compressed Length = {}", compressedStr.length());
 
         String originalStr = null;
         byte[] compressedArr = Base64Helper.getInstance().decode(compressedStr.getBytes());
@@ -144,15 +134,11 @@ public class DataHandleUtils {
              GZIPInputStream gzipInputStream = new GZIPInputStream(byteArrayInputStream)) {
             originalStr = IOUtils.toString(gzipInputStream, false);
         } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {},"采用gzip方式解压数据异常：", e);
-            }
+            LOGGER.error1(new Object() {},"采用gzip方式解压数据异常：", e);
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            if (StringUtils.isNotBlank(originalStr)) {
-                LOGGER.debug1(obj,"Original Length = {}", originalStr.length());
-            }
+        if (StringUtils.isNotBlank(originalStr)) {
+            LOGGER.debug1(obj,"Original Length = {}", originalStr.length());
         }
 
         return originalStr;
@@ -170,11 +156,8 @@ public class DataHandleUtils {
             return null;
         }
 
-        Object obj = null;
-        if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            LOGGER.debug1(obj,"[ZIP] Original Length = {}", originalStr.length());
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj,"[ZIP] Original Length = {}", originalStr.length());
 
         String compressedStr = null;
         try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -187,15 +170,11 @@ public class DataHandleUtils {
 
             compressedStr = new String(Base64Helper.getInstance().encode(byteArrayOutputStream.toByteArray()));
         } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {},"采用zip方式压缩数据异常：", e);
-            }
+            LOGGER.error1(new Object() {},"采用zip方式压缩数据异常：", e);
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            if (StringUtils.isNotBlank(compressedStr)) {
-                LOGGER.debug1(obj,"Compressed Length = {}", compressedStr.length());
-            }
+        if (StringUtils.isNotBlank(compressedStr)) {
+            LOGGER.debug1(obj,"Compressed Length = {}", compressedStr.length());
         }
 
         return compressedStr;
@@ -213,11 +192,8 @@ public class DataHandleUtils {
             return null;
         }
 
-        Object obj = null;
-        if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            LOGGER.debug1(obj,"[ZIP] Compressed Length = {}", compressedStr.length());
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj,"[ZIP] Compressed Length = {}", compressedStr.length());
 
         String originalStr = null;
         byte[] compressedArr = Base64Helper.getInstance().decode(compressedStr.getBytes());
@@ -226,15 +202,11 @@ public class DataHandleUtils {
             zipInputStream.getNextEntry();
             originalStr = IOUtils.toString(zipInputStream, false);
         } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error1(new Object() {},"采用zip方式解压数据异常：", e);
-            }
+            LOGGER.error1(new Object() {},"采用zip方式解压数据异常：", e);
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            if (StringUtils.isNotBlank(originalStr)) {
-                LOGGER.debug1(obj,"Original Length = {}", originalStr.length());
-            }
+        if (StringUtils.isNotBlank(originalStr)) {
+            LOGGER.debug1(obj,"Original Length = {}", originalStr.length());
         }
 
         return originalStr;

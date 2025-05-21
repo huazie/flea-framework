@@ -85,11 +85,8 @@ public class FleaSplitUtils {
         splitTable.setExistSplitTablePkColumn(false); // 默认没有ID生成器表中分表的主键值
         splitTable.setGeneratorFlag(generatorFlag); // 默认主键生成器表在模板库中
 
-        Object obj = null;
-        if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            LOGGER.debug1(obj, "The name of main table = {}", tableName);
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "The name of main table = {}", tableName);
 
         // 获取分表信息
         Table tab = TableSplitConfig.getConfig().getTable(tableName);
@@ -151,9 +148,7 @@ public class FleaSplitUtils {
                 Object attrValue = entityCol.getAttrValue();
                 // 获取分表字段值【即分表规则转换后的值】
                 String splitTableFieldValue = tableSplit.convert(attrValue);
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug1(obj, "The field value of split table = {}", splitTableFieldValue);
-                }
+                LOGGER.debug1(obj, "The field value of split table = {}", splitTableFieldValue);
                 String columnPlaceholder = DBConstants.SQLConstants.SQL_LEFT_ROUND_BRACKETS + column.toUpperCase()
                         + DBConstants.SQLConstants.SQL_RIGHT_ROUND_BRACKETS;
                 StringUtils.replace(tableNameBuilder, columnPlaceholder, splitTableFieldValue);
@@ -188,11 +183,9 @@ public class FleaSplitUtils {
             splitTable.setSplitLib(splitLib);
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(obj, "The real name of table = {}", splitTable.getSplitTableName());
-            LOGGER.debug1(obj, "The origin of pkColumnValue of table = {}", splitTable.getPkColumnValue());
-            LOGGER.debug1(obj, "The pkColumnValue of split table = {}", splitTable.getSplitTablePkColumnValue());
-        }
+        LOGGER.debug1(obj, "The real name of table = {}", splitTable.getSplitTableName());
+        LOGGER.debug1(obj, "The origin of pkColumnValue of table = {}", splitTable.getPkColumnValue());
+        LOGGER.debug1(obj, "The pkColumnValue of split table = {}", splitTable.getSplitTablePkColumnValue());
 
         return splitTable;
     }
@@ -228,11 +221,8 @@ public class FleaSplitUtils {
 
         if (StringUtils.isNotBlank(libName) && MapUtils.isNotEmpty(splitLibObjMap)) {
 
-            Object obj = null;
-            if (LOGGER.isDebugEnabled()) {
-                obj = new Object() {};
-                LOGGER.debug1(obj, "The name of template library = {}", libName);
-            }
+            Object obj = new Object() {};
+            LOGGER.debug1(obj, "The name of template library = {}", libName);
 
             // 分库信息
             Lib lib = LibSplitConfig.getConfig().getLib(libName);
@@ -310,9 +300,7 @@ public class FleaSplitUtils {
                     }
                     // 获取分库序列键【即分库规则转换后的值】
                     String splitLibSeq = libSplit.convert(splitLibObj, count);
-                    if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug1(obj, "The sequence key of split lib = {}", splitLibSeq);
-                    }
+                    LOGGER.debug1(obj, "The sequence key of split lib = {}", splitLibSeq);
 
                     // 分库序列键
                     String seqPlaceholder = DBConstants.SQLConstants.SQL_LEFT_ROUND_BRACKETS +
@@ -332,11 +320,9 @@ public class FleaSplitUtils {
                 splitLib.setExistSplitLib(true);
             }
 
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug1(obj, "The real name of lib = {}", splitLib.getSplitLibName());
-                LOGGER.debug1(obj, "The name of template transaction = {}", splitLib.getTransactionName());
-                LOGGER.debug1(obj, "The real name of transaction = {}", splitLib.getSplitLibTxName());
-            }
+            LOGGER.debug1(obj, "The real name of lib = {}", splitLib.getSplitLibName());
+            LOGGER.debug1(obj, "The name of template transaction = {}", splitLib.getTransactionName());
+            LOGGER.debug1(obj, "The real name of transaction = {}", splitLib.getSplitLibTxName());
         }
 
         return splitLib;

@@ -80,15 +80,11 @@ public class JerseyXmlDigesterHelper {
         String fileName = FleaJerseyConstants.JerseyFilterConstants.JSERSY_FILTER_FILE_PATH;
         if (StringUtils.isNotBlank(System.getProperty(FleaJerseyConstants.JerseyFilterConstants.JERSEY_FILTER_FILE_SYSTEM_KEY))) {
             fileName = StringUtils.trim(System.getProperty(FleaJerseyConstants.JerseyFilterConstants.JERSEY_FILTER_FILE_SYSTEM_KEY));
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Use the specified flea-jersey-filter.xml : " + fileName);
-            }
+            LOGGER.debug("Use the specified flea-jersey-filter.xml : " + fileName);
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Use the current flea-jersey-filter.xml : " + fileName);
-            LOGGER.debug("Start to parse the flea-jersey-filter.xml");
-        }
+        LOGGER.debug("Use the current flea-jersey-filter.xml : " + fileName);
+        LOGGER.debug("Start to parse the flea-jersey-filter.xml");
 
         Digester digester = newFleaJerseyFilterFileDigester();
         Jersey jersey = XmlDigesterHelper.parse(fileName, digester, Jersey.class);
@@ -118,9 +114,7 @@ public class JerseyXmlDigesterHelper {
             }
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("End to parse the flea-jersey-filter.xml");
-        }
+        LOGGER.debug("End to parse the flea-jersey-filter.xml");
 
         return jersey;
     }

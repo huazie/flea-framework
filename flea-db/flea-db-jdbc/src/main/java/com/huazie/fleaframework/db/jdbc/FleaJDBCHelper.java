@@ -347,17 +347,12 @@ public class FleaJDBCHelper {
         Connection connection = FleaJDBCConfig.getConfig().getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
-        Object obj = null;
-        if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            LOGGER.debug1(obj, "SQL = {}", sql);
-        }
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "SQL = {}", sql);
 
         if (ObjectUtils.isNotEmpty(preparedStatement) && ArrayUtils.isNotEmpty(params)) {
             for (int i = 0; i < params.length; i++) {
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug1(obj, "PARAM{} = {}", i + 1, params[i]);
-                }
+                LOGGER.debug1(obj, "PARAM{} = {}", i + 1, params[i]);
                 preparedStatement.setObject(i + 1, params[i]);
             }
         }
@@ -511,18 +506,15 @@ public class FleaJDBCHelper {
 
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
-        Object obj = null;
-        if (LOGGER.isDebugEnabled()) {
-            obj = new Object() {};
-            if (TemplateTypeEnum.INSERT.getKey().equals(templateType)) {
-                LOGGER.debug1(obj, "SQL = {}", sql);
-            } else if (TemplateTypeEnum.UPDATE.getKey().equals(templateType)) {
-                LOGGER.debug1(obj, "SQL = {}", sql);
-            } else if (TemplateTypeEnum.DELETE.getKey().equals(templateType)) {
-                LOGGER.debug1(obj, "SQL = {}", sql);
-            } else if (TemplateTypeEnum.SELECT.getKey().equals(templateType)) {
-                LOGGER.debug1(obj, "SQL = {}", sql);
-            }
+        Object obj = new Object() {};
+        if (TemplateTypeEnum.INSERT.getKey().equals(templateType)) {
+            LOGGER.debug1(obj, "SQL = {}", sql);
+        } else if (TemplateTypeEnum.UPDATE.getKey().equals(templateType)) {
+            LOGGER.debug1(obj, "SQL = {}", sql);
+        } else if (TemplateTypeEnum.DELETE.getKey().equals(templateType)) {
+            LOGGER.debug1(obj, "SQL = {}", sql);
+        } else if (TemplateTypeEnum.SELECT.getKey().equals(templateType)) {
+            LOGGER.debug1(obj, "SQL = {}", sql);
         }
 
         if (CollectionUtils.isNotEmpty(sqlParams)) {
@@ -669,14 +661,10 @@ public class FleaJDBCHelper {
 
             }
         } catch (Exception e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("数据库操作异常：", e);
-            }
+            LOGGER.error("数据库操作异常：", e);
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug1(new Object() {}, "Table Info : {}", columnList);
-        }
+        LOGGER.debug1(new Object() {}, "Table Info : {}", columnList);
 
         return columnList;
     }
