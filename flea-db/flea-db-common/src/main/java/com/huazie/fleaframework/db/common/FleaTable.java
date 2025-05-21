@@ -23,4 +23,12 @@ public @interface FleaTable {
      * @since 1.0.0
      */
     String name() default "";
+
+    /**
+     * 分库标识，boolean类型，默认为 true。
+     *
+     * @return true：当前表在分库中 false：当前表在模板库中
+     * @since 1.0.0
+     */
+    boolean splitLibFlag() default true;
 }

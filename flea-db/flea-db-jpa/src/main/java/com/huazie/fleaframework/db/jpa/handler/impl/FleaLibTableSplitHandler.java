@@ -11,6 +11,7 @@ import com.huazie.fleaframework.common.util.ReflectUtils;
 import com.huazie.fleaframework.db.common.DBConstants;
 import com.huazie.fleaframework.db.common.lib.pojo.SplitLib;
 import com.huazie.fleaframework.db.common.table.pojo.SplitTable;
+import com.huazie.fleaframework.db.common.util.EntityUtils;
 import com.huazie.fleaframework.db.common.util.FleaLibUtil;
 import com.huazie.fleaframework.db.common.util.FleaSplitUtils;
 import com.huazie.fleaframework.db.jpa.common.FleaJPAQuery;
@@ -67,7 +68,7 @@ public abstract class FleaLibTableSplitHandler implements IFleaJPASplitHandler {
         }
 
         // 分库场景，重新获取对应分库下的实体管理类
-        EntityManager splitEntityManager = handleInner(splitLib);
+        EntityManager splitEntityManager = handleInner(splitLib, fleaEntity);
 
         EntityManager entityManager;
         if (ObjectUtils.isEmpty(splitEntityManager)) {
@@ -135,7 +136,7 @@ public abstract class FleaLibTableSplitHandler implements IFleaJPASplitHandler {
         }
 
         // 分库场景，重新获取对应分库下的实体管理类
-        EntityManager splitEntityManager = handleInner(splitLib);
+        EntityManager splitEntityManager = handleInner(splitLib, fleaEntity);
         if (ObjectUtils.isNotEmpty(splitEntityManager)) {
             // 分库场景，重新初始化实体管理类
             entityManager = splitEntityManager;
@@ -151,9 +152,9 @@ public abstract class FleaLibTableSplitHandler implements IFleaJPASplitHandler {
      * @throws CommonException 通用异常
      * @since 1.1.0
      */
-    private EntityManager handleInner(SplitLib splitLib) throws CommonException {
+    private EntityManager handleInner(SplitLib splitLib, FleaEntity entity) throws CommonException {
         EntityManager entityManager = null;
-        if (ObjectUtils.isNotEmpty(splitLib) && splitLib.isExistSplitLib()) {
+        if (ObjectUtils.isNotEmpty(splitLib) && splitLib.isExistSplitLib() && EntityUtils.isSplitLib(entity.getClass())) {
             String unitName = splitLib.getSplitLibName();
             String transactionName = splitLib.getSplitLibTxName();
             entityManager = FleaEntityManager.getEntityManager(unitName, transactionName);

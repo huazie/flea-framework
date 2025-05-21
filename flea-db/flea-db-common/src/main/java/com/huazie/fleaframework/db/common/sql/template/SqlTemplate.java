@@ -161,8 +161,11 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
         // 获取SQL模板参数配置的对应表名
         String tName = tableProp.getValue();
 
+        // 请检查初始实体类（该实体类对象没有被初始化）
+        ObjectUtils.checkEmpty(entity, SQT_CLASS, "ERROR-DB-SQT0000000015");
+
         if (StringUtils.isBlank(tableName)) {
-            tableName = EntityUtils.getTableName(entity);// 从实体类上获取表名
+            tableName = EntityUtils.getTableName(entity.getClass());// 从实体类上获取表名
             // 请检查初始实体类(其上的注解@Table或者@FleaTable对应的表名不能为空)
             StringUtils.checkBlank(tableName, SQT_CLASS, "ERROR-DB-SQT0000000012");
         }
@@ -174,9 +177,6 @@ public abstract class SqlTemplate<T> implements ITemplate<T> {
             // 请检查SQL模板参数【id="{0}"】配置(【key="table"】属性值【{1}】和初始化的表名【{2}】两者不一致)
             ExceptionUtils.throwCommonException(SQT_CLASS, "ERROR-DB-SQT0000000014", paramId, tName, tableName);
         }
-
-        // 请检查初始实体类（该实体类对象没有被初始化）
-        ObjectUtils.checkEmpty(entity, SQT_CLASS, "ERROR-DB-SQT0000000015");
 
         // 获取实体类T的对象的属性列相关信息
         Column[] entityCols = EntityUtils.toColumnsArray(entity);
