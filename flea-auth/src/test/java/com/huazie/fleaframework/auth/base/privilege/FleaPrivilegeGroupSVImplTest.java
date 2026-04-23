@@ -87,4 +87,11 @@ public class FleaPrivilegeGroupSVImplTest {
         fleaPrivilegeGroupSV.savePrivilegeGroup(fleaPrivilegeGroupPOJO);
     }
 
+    @Test
+    public void savePrivilegeGroupForAceManagerMenu() throws CommonException {
+        int isMain = FleaAuthConstants.PrivilegeModuleConstants.NOT_MAIN;
+        FleaPrivilegeGroupPOJO fleaPrivilegeGroupPOJO = FleaAuthPOJOUtils.newFleaPrivilegeGroupPOJOForMenu("《Ace管理》菜单访问", "", isMain, "");
+        fleaPrivilegeGroupSV.savePrivilegeGroup(fleaPrivilegeGroupPOJO);
+    }
+
 }

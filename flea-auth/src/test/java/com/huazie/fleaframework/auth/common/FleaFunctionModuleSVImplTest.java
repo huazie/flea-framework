@@ -5,6 +5,7 @@ import com.huazie.fleaframework.auth.base.function.operation.FleaFSFileOperation
 import com.huazie.fleaframework.auth.base.function.operation.FleaFSFileOperationAttr;
 import com.huazie.fleaframework.auth.base.function.resource.FleaFSResource;
 import com.huazie.fleaframework.auth.common.pojo.function.attr.FleaFunctionAttrPOJO;
+import com.huazie.fleaframework.auth.common.pojo.function.element.FleaElementPOJO;
 import com.huazie.fleaframework.auth.common.pojo.function.menu.FleaMenuPOJO;
 import com.huazie.fleaframework.auth.common.pojo.function.operation.FleaOperationPOJO;
 import com.huazie.fleaframework.auth.common.pojo.function.resource.FleaResourcePOJO;
@@ -77,16 +78,44 @@ public class FleaFunctionModuleSVImplTest {
     }
 
     @Test
-    public void queryValidElements() throws CommonException { // TODO
+    public void queryValidElements() throws CommonException {
         fleaFunctionModuleSV.queryValidElements(null);
     }
 
     @Test
-    public void addFleaElement() { // TODO
+    public void addFleaElement() throws CommonException {
+        FleaElementPOJO fleaElementPOJO = new FleaElementPOJO();
+        fleaElementPOJO.setElementCode("TEST_ELEMENT");
+        fleaElementPOJO.setElementName("测试元素");
+        fleaElementPOJO.setElementDesc("该元素用于测试");
+        fleaElementPOJO.setElementType(1); // 元素类型
+        fleaElementPOJO.setElementContent("<div class='test-element'>测试内容</div>");
+        fleaElementPOJO.setRemarks("元素添加测试");
+        Long elementId = fleaFunctionModuleSV.addFleaElement(fleaElementPOJO);
+        System.out.println("添加元素成功，元素编号 = " + elementId);
     }
 
     @Test
-    public void modifyFleaElement() { // TODO
+    public void modifyFleaElement() throws CommonException {
+        // 先添加一个元素
+        FleaElementPOJO addElementPOJO = new FleaElementPOJO();
+        addElementPOJO.setElementCode("TEST_ELEMENT_MODIFY");
+        addElementPOJO.setElementName("待修改元素");
+        addElementPOJO.setElementDesc("待修改的元素描述");
+        addElementPOJO.setElementType(1);
+        addElementPOJO.setElementContent("<div>原始内容</div>");
+        addElementPOJO.setRemarks("添加用于修改测试");
+        Long elementId = fleaFunctionModuleSV.addFleaElement(addElementPOJO);
+
+        // 修改元素信息
+        FleaElementPOJO modifyElementPOJO = new FleaElementPOJO();
+        modifyElementPOJO.setElementName("已修改元素");
+        modifyElementPOJO.setElementDesc("已修改的元素描述");
+        modifyElementPOJO.setElementType(2);
+        modifyElementPOJO.setElementContent("<div>修改后的内容</div>");
+        modifyElementPOJO.setRemarks("元素修改测试");
+        fleaFunctionModuleSV.modifyFleaElement(elementId, modifyElementPOJO);
+        System.out.println("修改元素成功，元素编号 = " + elementId);
     }
 
     @Test

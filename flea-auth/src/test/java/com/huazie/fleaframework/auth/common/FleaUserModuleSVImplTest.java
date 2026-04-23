@@ -139,7 +139,8 @@ public class FleaUserModuleSVImplTest {
     }
 
     @Test
-    public void userRelRoleGroup() throws CommonException { // TODO
+    public void userRelRoleGroup() throws CommonException {
+        // 用户【Huazie】绑定【管理员】角色组
         Long userId = 10000L;
         Long roleGroupId = 1000L;
         fleaUserModuleSV.userRelRoleGroup(userId, roleGroupId, null);
@@ -154,7 +155,7 @@ public class FleaUserModuleSVImplTest {
     }
 
     @Test
-    public void userGroupRelRoleGroup() throws CommonException { // TODO
+    public void userGroupRelRoleGroup() throws CommonException {
         Long userGroupId = 1000L;
         Long roleGroupId = 1000L;
         fleaUserModuleSV.userGroupRelRoleGroup(userGroupId, roleGroupId, null);
