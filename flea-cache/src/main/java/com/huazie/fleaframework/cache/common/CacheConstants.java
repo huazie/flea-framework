@@ -101,7 +101,7 @@ public final class CacheConstants {
         /**
          * 自查线程周期进行工作，其每次休眠时间（单位：ms）
          */
-        public static final String MEMCACHED_CONFIG_MAINTSLEEP = "memcached.mapublic static final intSleep";
+        public static final String MEMCACHED_CONFIG_MAINTSLEEP = "memcached.maintSleep";
         /**
          * Socket的参数，如果是true在写数据时不缓冲，立即发送出去
          */

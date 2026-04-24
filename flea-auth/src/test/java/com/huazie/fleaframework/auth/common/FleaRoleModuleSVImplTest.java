@@ -58,7 +58,7 @@ public class FleaRoleModuleSVImplTest {
     }
 
     @Test
-    public void roleRelRole() throws CommonException { // TODO
+    public void roleRelRole() throws CommonException {
         Long roleId = 1000L;
         Long relRoleId = 1001L;
         // 角色关联角色
@@ -66,7 +66,7 @@ public class FleaRoleModuleSVImplTest {
     }
 
     @Test
-    public void roleRelPrivilege() throws CommonException { // TODO
+    public void roleRelPrivilege() throws CommonException {
         Long roleId = 1000L;
         Long privilegeId = 1000L;
         // 角色关联权限
