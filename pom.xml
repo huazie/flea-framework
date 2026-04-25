@@ -33,6 +33,7 @@
         <javax.persistence.version>2.1.0</javax.persistence.version>
         <eclipselink.version>2.5.0</eclipselink.version>
         <spring.version>4.3.29.RELEASE</spring.version>
+        <jbcrypt.version>0.4</jbcrypt.version>
         <struts2.version>2.3.20</struts2.version>
         <jersey.version>2.9</jersey.version>
         <activemq.version>5.17.1</activemq.version>
@@ -340,6 +341,13 @@
                 <version>${spring.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <!-- jBCrypt for password hashing -->
+            <dependency>
+                <groupId>org.mindrot</groupId>
+                <artifactId>jbcrypt</artifactId>
+                <version>${jbcrypt.version}</version>
             </dependency>
 
             <!-- Struct2 -->
