@@ -3,6 +3,7 @@ package com.huazie.fleaframework.common.util;
 import com.huazie.fleaframework.common.EncryptionAlgorithmEnum;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
+import org.mindrot.jbcrypt.BCrypt;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -11,6 +12,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.regex.Pattern;
 
 /**
  * 加密解密工具类
@@ -22,6 +24,11 @@ import java.security.NoSuchAlgorithmException;
 public class SecurityUtils {
 
     private static final FleaLogger LOGGER = FleaLoggerProxy.getProxyInstance(SecurityUtils.class);
+
+    // jBCrypt 工作因子（默认 10，范围 4-31，数值越大越安全但越慢）
+
+    // BCrypt 密码格式正则：$2a$10$xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    private static final Pattern BCRYPT_PATTERN = Pattern.compile("^\\$2[aby]?\\$\\d{1,2}\\$.{53}$");
 
     private SecurityUtils() {
     }
@@ -46,6 +53,82 @@ public class SecurityUtils {
      */
     public static String encryptToSHA(String info) {
         return encrypt(EncryptionAlgorithmEnum.SHA_1, info);
+    }
+
+    /**
+     * 使用 BCrypt 进行密码加密（带随机盐）
+     *
+     * @param password 原始密码
+     * @return BCrypt 加密后的密码
+     * @since 2.0.0
+     */
+    public static String encryptToBCrypt(String password) {
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "BCrypt encrypting password");
+        if (StringUtils.isBlank(password)) {
+            return password;
+        }
+        String encoded = BCrypt.hashpw(password, BCrypt.gensalt());
+        LOGGER.debug1(obj, "BCrypt encrypted successfully, reulst = {}", encoded);
+        return encoded;
+    }
+
+    /**
+     * 验证密码是否匹配（兼容 SHA 和 BCrypt）
+     * <p> 优先判断是否为 BCrypt 格式，如果是则使用 BCrypt 校验；
+     * <p> 否则使用 SHA 校验（兼容旧数据）
+     *
+     * @param rawPassword     原始密码
+     * @param encodedPassword 加密后的密码（数据库中存储的密码）
+     * @return true: 匹配 false: 不匹配
+     * @since 2.0.0
+     */
+    public static boolean matchesPassword(String rawPassword, String encodedPassword) {
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "Matching password");
+
+        if (StringUtils.isBlank(rawPassword) || StringUtils.isBlank(encodedPassword)) {
+            return false;
+        }
+
+        // 判断是否为 BCrypt 格式
+        if (isBCryptEncoded(encodedPassword)) {
+            LOGGER.debug1(obj, "Using BCrypt matching");
+            return BCrypt.checkpw(rawPassword, encodedPassword);
+        } else {
+            // 兼容旧数据：使用 SHA 加密后比较
+            LOGGER.debug1(obj, "Using SHA matching (legacy)");
+            String shaEncoded = encryptToSHA(rawPassword);
+            return encodedPassword.equals(shaEncoded);
+        }
+    }
+
+    /**
+     * 判断密码是否为 BCrypt 加密格式
+     *
+     * @param encodedPassword 加密后的密码
+     * @return true: 是 BCrypt 格式 false: 不是 BCrypt 格式
+     * @since 2.0.0
+     */
+    public static boolean isBCryptEncoded(String encodedPassword) {
+        if (StringUtils.isBlank(encodedPassword)) {
+            return false;
+        }
+        return BCRYPT_PATTERN.matcher(encodedPassword).matches();
+    }
+
+    /**
+     * 将 SHA 加密的密码升级为 BCrypt 加密
+     * <p> 用于用户登录成功后，自动将旧密码升级为新加密方式
+     *
+     * @param rawPassword 原始密码
+     * @return BCrypt 加密后的密码
+     * @since 2.0.0
+     */
+    public static String upgradeToBCrypt(String rawPassword) {
+        Object obj = new Object() {};
+        LOGGER.debug1(obj, "Upgrading password to BCrypt");
+        return encryptToBCrypt(rawPassword);
     }
 
     /**

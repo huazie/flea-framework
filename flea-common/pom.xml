@@ -148,6 +148,12 @@
             <artifactId>spring-aspects</artifactId>
         </dependency>
 
+        <!-- jBCrypt for password hashing -->
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

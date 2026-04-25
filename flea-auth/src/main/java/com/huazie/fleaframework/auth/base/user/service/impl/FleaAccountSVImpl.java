@@ -44,8 +44,13 @@ public class FleaAccountSVImpl extends AbstractFleaJPASVImpl<FleaAccount> implem
 
     @Override
     public FleaAccount queryAccount(String accountCode, String accountPwd) throws CommonException {
-        // 用户密码需要加密后，与数据库进行比对
-        return fleaAccountDao.queryValidAccount(accountCode, encrypt(accountPwd));
+        // 根据账号查询账户信息
+        FleaAccount fleaAccount = fleaAccountDao.queryValidAccount(accountCode);
+        // 校验账户是否存在且密码匹配（兼容 SHA 和 BCrypt）
+        if (fleaAccount != null && SecurityUtils.matchesPassword(accountPwd, fleaAccount.getAccountPwd())) {
+            return fleaAccount;
+        }
+        return null;
     }
 
     @Override
@@ -55,13 +60,10 @@ public class FleaAccountSVImpl extends AbstractFleaJPASVImpl<FleaAccount> implem
 
     @Override
     public String encrypt(String originalAccountPwd) {
-        String encryptedAccountPwd = originalAccountPwd;
         Object obj = new Object() {};
         LOGGER.debug1(obj, "originalAccountPwd = {}", originalAccountPwd);
-        // TODO 暂时使用 SHA
-        if (StringUtils.isNotBlank(originalAccountPwd)) {
-            encryptedAccountPwd = SecurityUtils.encryptToSHA(originalAccountPwd);
-        }
+        // 使用 BCrypt 进行密码加密（带随机盐）
+        String encryptedAccountPwd = SecurityUtils.encryptToBCrypt(originalAccountPwd);
         LOGGER.debug1(obj, "encryptedAccountPwd = {}", encryptedAccountPwd);
         return encryptedAccountPwd;
     }
