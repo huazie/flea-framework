@@ -434,11 +434,11 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
     @Override
     public void saveLoginLog(Long accountId, HttpServletRequest request) {
         if (NumberUtils.isPositiveNumber(accountId)) {
-            // 获取用户登录的ip4地址
+            // 获取用户登录的 IPv4 地址
             String ip4 = HttpUtils.getIp(request);
 
-            // TODO 获取用户登录的ip6地址
-            String ip6 = "";
+            // 获取用户登录的 IPv6 地址
+            String ip6 = HttpUtils.getIpv6(request);
 
             // 获取用户登录的地市地址
             String address = HttpUtils.getAddressByTaoBao(ip4);

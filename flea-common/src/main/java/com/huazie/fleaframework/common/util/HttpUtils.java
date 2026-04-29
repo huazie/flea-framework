@@ -73,6 +73,99 @@ public class HttpUtils {
     }
 
     /**
+     * 获取 Http 请求的客户端 IPv6 地址;
+     * <p>优先从代理头中获取 IPv6 地址，如果没有则尝试从 remoteAddr 获取
+     *
+     * @param request Http请求对象
+     * @return IPv6 地址，如果未获取到则返回空字符串
+     * @since 2.0.0
+     */
+    public static String getIpv6(HttpServletRequest request) {
+        if (ObjectUtils.isEmpty(request)) {
+            return "";
+        }
+
+        String ipv6 = request.getHeader("X-Forwarded-For");
+        if (StringUtils.isNotBlank(ipv6) && !isIPv4(ipv6)) {
+            // 如果是 IPv6 地址，取第一个
+            if (ipv6.contains(",")) {
+                ipv6 = ipv6.substring(0, ipv6.indexOf(",")).trim();
+            }
+            if (isIPv6(ipv6)) {
+                LOGGER.debug1(new Object() {}, "IPv6 from X-Forwarded-For = {}", ipv6);
+                return ipv6;
+            }
+        }
+
+        ipv6 = request.getHeader("X-Real-IP");
+        if (StringUtils.isNotBlank(ipv6) && !isIPv4(ipv6)) {
+            if (isIPv6(ipv6)) {
+                LOGGER.debug1(new Object() {}, "IPv6 from X-Real-IP = {}", ipv6);
+                return ipv6;
+            }
+        }
+
+        ipv6 = request.getHeader("HTTP_CLIENT_IP");
+        if (StringUtils.isNotBlank(ipv6) && !isIPv4(ipv6)) {
+            if (isIPv6(ipv6)) {
+                LOGGER.debug1(new Object() {}, "IPv6 from HTTP_CLIENT_IP = {}", ipv6);
+                return ipv6;
+            }
+        }
+
+        ipv6 = request.getHeader("HTTP_X_FORWARDED_FOR");
+        if (StringUtils.isNotBlank(ipv6) && !isIPv4(ipv6)) {
+            if (ipv6.contains(",")) {
+                ipv6 = ipv6.substring(0, ipv6.indexOf(",")).trim();
+            }
+            if (isIPv6(ipv6)) {
+                LOGGER.debug1(new Object() {}, "IPv6 from HTTP_X_FORWARDED_FOR = {}", ipv6);
+                return ipv6;
+            }
+        }
+
+        // 尝试从 remoteAddr 获取
+        ipv6 = request.getRemoteAddr();
+        if (StringUtils.isNotBlank(ipv6) && isIPv6(ipv6)) {
+            LOGGER.debug1(new Object() {}, "IPv6 from RemoteAddr = {}", ipv6);
+            return ipv6;
+        }
+
+        LOGGER.debug1(new Object() {}, "IPv6 not found or not IPv6 format");
+        return "";
+    }
+
+    /**
+     * 判断是否为 IPv4 地址
+     *
+     * @param ip IP 地址字符串
+     * @return true 是 IPv4，false 不是
+     * @since 2.0.0
+     */
+    private static boolean isIPv4(String ip) {
+        if (StringUtils.isBlank(ip)) {
+            return false;
+        }
+        // IPv4 格式：xxx.xxx.xxx.xxx
+        return ip.matches("\\d{1,3}(\\.\\d{1,3}){3}");
+    }
+
+    /**
+     * 判断是否为 IPv6 地址
+     *
+     * @param ip IP 地址字符串
+     * @return true 是 IPv6，false 不是
+     * @since 2.0.0
+     */
+    private static boolean isIPv6(String ip) {
+        if (StringUtils.isBlank(ip)) {
+            return false;
+        }
+        // 简单的 IPv6 判断：包含冒号
+        return ip.contains(":");
+    }
+
+    /**
      * 通过TaoBao的接口获取ip所在地理地址
      *
      * @param ip ip地址
