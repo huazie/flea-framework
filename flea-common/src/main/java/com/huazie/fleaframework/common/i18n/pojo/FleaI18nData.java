@@ -1,6 +1,6 @@
 package com.huazie.fleaframework.common.i18n.pojo;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;
 

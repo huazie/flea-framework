@@ -11,7 +11,7 @@ import com.huazie.fleaframework.common.util.NumberUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.PatternMatcherUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.ArrayList;
 import java.util.Date;

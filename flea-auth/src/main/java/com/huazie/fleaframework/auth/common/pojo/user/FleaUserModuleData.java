@@ -8,7 +8,7 @@ import com.huazie.fleaframework.auth.base.user.entity.FleaUserAttr;
 import com.huazie.fleaframework.auth.util.FleaAuthManager;
 import com.huazie.fleaframework.common.util.CollectionUtils;
 import com.huazie.fleaframework.common.util.MapUtils;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;
 import java.util.HashMap;

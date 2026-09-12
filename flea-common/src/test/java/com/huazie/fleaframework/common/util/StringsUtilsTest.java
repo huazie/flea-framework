@@ -3,7 +3,7 @@ package com.huazie.fleaframework.common.util;
 import com.huazie.fleaframework.common.CommonConstants;
 import com.huazie.fleaframework.common.slf4j.FleaLogger;
 import com.huazie.fleaframework.common.slf4j.impl.FleaLoggerProxy;
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Test;
 
 /**

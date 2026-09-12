@@ -13,7 +13,7 @@ import com.huazie.fleaframework.common.util.StringUtils;
 import com.huazie.fleaframework.db.common.DBConstants.SQLConstants;
 import com.huazie.fleaframework.db.common.exceptions.DaoException;
 import com.huazie.fleaframework.db.jpa.FleaJPASplitHelper;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;

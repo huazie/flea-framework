@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.jersey.common.filter.config;
 
 import com.huazie.fleaframework.common.util.ObjectUtils;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * 过滤器链，可从配置文件【flea-jersey-filter.xml】

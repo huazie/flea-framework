@@ -1,6 +1,6 @@
 package com.huazie.fleaframework.db.jdbc.pojo;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * <p> Flea 数据库单元 </p>

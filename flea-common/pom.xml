@@ -53,10 +53,10 @@
             <artifactId>slf4j-log4j12</artifactId>
         </dependency>
 
-        <!-- 提供一些基础的、通用的操作和处理 -->
+        <!-- 提供一些基础的、通用的操作和处理 (commons-lang3) -->
         <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
         </dependency>
 
         <!--  使用注解所需jar -->

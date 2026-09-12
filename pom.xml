@@ -175,6 +175,13 @@
                 <version>2.5</version>
             </dependency>
 
+            <!-- 提供一些基础的、通用的操作和处理 (commons-lang3, 替代 commons-lang 2.x) -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.14.0</version>
+            </dependency>
+
             <!--  使用注解所需jar -->
             <dependency>
                 <groupId>javax.annotation</groupId>

@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.auth.common.pojo.user.attr;
 
 import com.huazie.fleaframework.auth.common.pojo.FleaAttrPOJO;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * Flea账户扩展属性POJO类

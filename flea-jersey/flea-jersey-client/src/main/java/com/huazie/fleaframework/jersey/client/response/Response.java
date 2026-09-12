@@ -2,7 +2,7 @@ package com.huazie.fleaframework.jersey.client.response;
 
 import com.huazie.fleaframework.common.pojo.OutputCommonData;
 import com.huazie.fleaframework.jersey.common.FleaJerseyConstants;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * 响应结果，封装 Flea Jersey 资源服务请求响应数据

@@ -1,6 +1,6 @@
 package com.huazie.fleaframework.db.common.sql.template.config;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * 定义模板和规则中各语句的属性

@@ -6,7 +6,7 @@ import com.huazie.fleaframework.common.util.CollectionUtils;
 import com.huazie.fleaframework.common.util.MapUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.ArrayList;
 import java.util.HashMap;

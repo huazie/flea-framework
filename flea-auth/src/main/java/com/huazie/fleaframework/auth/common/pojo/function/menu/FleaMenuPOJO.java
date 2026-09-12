@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.auth.common.pojo.function.menu;
 
 import com.huazie.fleaframework.auth.common.pojo.function.attr.FleaFunctionOtherPOJO;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * Flea菜单POJO类

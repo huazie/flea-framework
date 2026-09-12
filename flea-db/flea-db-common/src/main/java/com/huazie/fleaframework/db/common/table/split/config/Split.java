@@ -1,6 +1,6 @@
 package com.huazie.fleaframework.db.common.table.split.config;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * 分表转换或分库转换配置定义，参考 flea-table-split.xml 或

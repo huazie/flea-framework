@@ -1,6 +1,6 @@
 package com.huazie.fleaframework.db.common.lib.split.config;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * 分库事务配置定义，参考 flea-lib-split.xml中 {@code <transaction />}

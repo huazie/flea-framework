@@ -3,7 +3,7 @@ package com.huazie.fleaframework.auth.base.privilege.entity;
 import com.huazie.fleaframework.common.EntityStateEnum;
 import com.huazie.fleaframework.common.FleaEntity;
 import com.huazie.fleaframework.common.util.DateUtils;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
