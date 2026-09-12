@@ -235,6 +235,7 @@ CREATE TABLE `flea_id_generator` (
 -- ----------------------------
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_account', '9999');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_account_attr', '0');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_auth_audit_log', '0');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_element', '999');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_function_attr_element', '0');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_function_attr_menu', '0');
@@ -245,6 +246,7 @@ INSERT INTO `flea_id_generator` VALUES ('pk_flea_login_log_202108', '0');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_login_log_202205', '0');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_menu', '999');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_operation', '999');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_organization', '0');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_privilege', '999');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_privilege_group', '999');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_privilege_group_rel', '0');
@@ -259,6 +261,7 @@ INSERT INTO `flea_id_generator` VALUES ('pk_flea_user', '9999');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_user_attr', '0');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_user_group', '999');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_user_group_rel', '0');
+INSERT INTO `flea_id_generator` VALUES ('pk_flea_user_org_rel', '0');
 INSERT INTO `flea_id_generator` VALUES ('pk_flea_user_rel', '0');
 
 -- ----------------------------
@@ -748,4 +751,83 @@ CREATE TABLE `flea_user_rel` (
 
 -- ----------------------------
 -- Records of flea_user_rel
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `flea_organization`
+-- ----------------------------
+DROP TABLE IF EXISTS `flea_organization`;
+CREATE TABLE `flea_organization` (
+  `org_id`       int(11)     NOT NULL AUTO_INCREMENT COMMENT '组织编号',
+  `org_code`     varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '组织编码',
+  `org_name`     varchar(100) NOT NULL COMMENT '组织名称',
+  `org_desc`     varchar(255) DEFAULT NULL COMMENT '组织描述',
+  `parent_id`    int(11)     NOT NULL COMMENT '父组织编号(-1 表示根)',
+  `org_level`    int(11)     NOT NULL COMMENT '组织层级(根=1)',
+  `org_type`     tinyint(4)  NOT NULL COMMENT '组织类型(1:公司 2:部门 3:小组)',
+  `org_state`    tinyint(4)  NOT NULL COMMENT '组织状态(0:删除 1:正常)',
+  `create_date`  datetime    NOT NULL COMMENT '创建日期',
+  `done_date`    datetime    DEFAULT NULL COMMENT '修改日期',
+  `remarks`      varchar(1024) DEFAULT NULL COMMENT '备注信息',
+  PRIMARY KEY (`org_id`),
+  UNIQUE KEY `UNIQUE_ORG_CODE` (`org_code`) USING BTREE,
+  KEY `INDEX_PARENT_ID` (`parent_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of flea_organization
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `flea_user_org_rel`
+-- ----------------------------
+DROP TABLE IF EXISTS `flea_user_org_rel`;
+CREATE TABLE `flea_user_org_rel` (
+  `user_org_rel_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户组织关联编号',
+  `user_id`    int(11) NOT NULL COMMENT '用户编号',
+  `org_id`     int(11) NOT NULL COMMENT '组织编号',
+  `is_primary` tinyint(4) NOT NULL COMMENT '是否主组织(0:否 1:是)',
+  `rel_state`  tinyint(4) NOT NULL COMMENT '关联状态(0:删除 1:正常)',
+  `create_date` datetime NOT NULL COMMENT '创建日期',
+  `done_date`  datetime DEFAULT NULL COMMENT '修改日期',
+  `remarks`    varchar(1024) DEFAULT NULL COMMENT '备注信息',
+  `rel_ext_a`  varchar(255) DEFAULT NULL COMMENT '关联扩展字段A',
+  `rel_ext_b`  varchar(255) DEFAULT NULL COMMENT '关联扩展字段B',
+  `rel_ext_c`  varchar(255) DEFAULT NULL COMMENT '关联扩展字段C',
+  `rel_ext_x`  varchar(255) DEFAULT NULL COMMENT '关联扩展字段X',
+  `rel_ext_y`  varchar(255) DEFAULT NULL COMMENT '关联扩展字段Y',
+  `rel_ext_z`  varchar(255) DEFAULT NULL COMMENT '关联扩展字段Z',
+  PRIMARY KEY (`user_org_rel_id`),
+  UNIQUE KEY `UNIQUE_USER_ORG` (`user_id`,`org_id`) USING BTREE,
+  KEY `INDEX_USER_ID` (`user_id`) USING BTREE,
+  KEY `INDEX_ORG_ID` (`org_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of flea_user_org_rel
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `flea_auth_audit_log`
+-- ----------------------------
+DROP TABLE IF EXISTS `flea_auth_audit_log`;
+CREATE TABLE `flea_auth_audit_log` (
+  `audit_id`   int(11) NOT NULL AUTO_INCREMENT COMMENT '审计编号',
+  `user_id`    int(11) DEFAULT NULL COMMENT '用户编号',
+  `account_id` int(11) DEFAULT NULL COMMENT '账户编号',
+  `op_type`    varchar(50) NOT NULL COMMENT '操作类型(LOGIN/AUTH/LOGOUT/CHG_PWD/GRANT...)',
+  `op_target`  varchar(100) DEFAULT NULL COMMENT '操作对象',
+  `op_desc`    varchar(512) DEFAULT NULL COMMENT '操作描述',
+  `op_result`  tinyint(4) NOT NULL COMMENT '操作结果(0:失败 1:成功)',
+  `ip_addr`    varchar(45) DEFAULT NULL COMMENT '客户端IP(支持IPv6)',
+  `request_id` varchar(64) DEFAULT NULL COMMENT '请求追踪编号',
+  `create_date` datetime NOT NULL COMMENT '创建日期',
+  `remarks`    varchar(1024) DEFAULT NULL COMMENT '备注信息',
+  PRIMARY KEY (`audit_id`),
+  KEY `INDEX_USER_ID` (`user_id`) USING BTREE,
+  KEY `INDEX_CREATE_DATE` (`create_date`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of flea_auth_audit_log
 -- ----------------------------

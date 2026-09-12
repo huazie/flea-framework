@@ -358,4 +358,113 @@ public final class FleaAuthEntityConstants extends FleaEntityConstants {
         public static final String E_REL_STATE = "relState";
 
     }
+
+    /**
+     * 组织实体常量
+     *
+     * @since 2.0.0
+     */
+    public static final class OrganizationEntityConstants {
+
+        /**
+         * 组织编号
+         */
+        public static final String E_ORG_ID = "orgId";
+
+        /**
+         * 组织编码
+         */
+        public static final String E_ORG_CODE = "orgCode";
+
+        /**
+         * 组织名称
+         */
+        public static final String E_ORG_NAME = "orgName";
+
+        /**
+         * 组织描述
+         */
+        public static final String E_ORG_DESC = "orgDesc";
+
+        /**
+         * 父组织编号(-1 表示根)
+         */
+        public static final String E_PARENT_ID = "parentId";
+
+        /**
+         * 组织层级(根=1)
+         */
+        public static final String E_ORG_LEVEL = "orgLevel";
+
+        /**
+         * 组织类型(1:公司 2:部门 3:小组)
+         */
+        public static final String E_ORG_TYPE = "orgType";
+
+        /**
+         * 组织状态
+         */
+        public static final String E_ORG_STATE = "orgState";
+    }
+
+    /**
+     * 用户组织关联实体常量
+     *
+     * @since 2.0.0
+     */
+    public static final class UserOrgRelEntityConstants {
+
+        /**
+         * 用户组织关联编号
+         */
+        public static final String E_USER_ORG_REL_ID = "userOrgRelId";
+
+        /**
+         * 是否主组织(0:否 1:是)
+         */
+        public static final String E_IS_PRIMARY = "isPrimary";
+    }
+
+    /**
+     * 授权操作审计日志实体常量
+     *
+     * @since 2.0.0
+     */
+    public static final class AuthAuditLogEntityConstants {
+
+        /**
+         * 审计编号
+         */
+        public static final String E_AUDIT_ID = "auditId";
+
+        /**
+         * 操作类型
+         */
+        public static final String E_OP_TYPE = "opType";
+
+        /**
+         * 操作对象
+         */
+        public static final String E_OP_TARGET = "opTarget";
+
+        /**
+         * 操作描述
+         */
+        public static final String E_OP_DESC = "opDesc";
+
+        /**
+         * 操作结果(0:失败 1:成功)
+         */
+        public static final String E_OP_RESULT = "opResult";
+
+        /**
+         * 客户端IP(支持IPv6)
+         */
+        public static final String E_IP_ADDR = "ipAddr";
+
+        /**
+         * 请求追踪编号
+         */
+        public static final String E_REQUEST_ID = "requestId";
+    }
 }

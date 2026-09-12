@@ -1,5 +1,6 @@
 package com.huazie.fleaframework.auth.util;
 
+import com.huazie.fleaframework.auth.base.audit.entity.FleaAuthAuditLog;
 import com.huazie.fleaframework.common.FleaSessionManager;
 import com.huazie.fleaframework.common.IFleaUser;
 import com.huazie.fleaframework.common.object.FleaObjectFactory;
@@ -25,6 +26,7 @@ public class FleaAuthAsyncTask {
     private static final ExecutorService executorService = Executors.newCachedThreadPool();
 
     private static final String METHOD_INIT_USER_INFO = "initUserInfo";
+    private static final String METHOD_RECORD_AUTH_LOG = "doRecordAuthLog";
 
     /**
      * 私有构造方法，工具类不需要实例化
@@ -50,6 +52,22 @@ public class FleaAuthAsyncTask {
         Class<?>[] paramTypes = {Long.class, Long.class, Map.class, FleaObjectFactory.class};
         Object[] params = {accountId, systemAccountId, otherAttrs, fleaObjectFactory};
         FleaAsyncTask fleaAsyncTask = new FleaAsyncTask(FleaSessionManager.getUserInfo(), asyncTaskExecObj, METHOD_INIT_USER_INFO, paramTypes, params);
+        executorService.execute(fleaAsyncTask);
+    }
+
+    /**
+     * 异步记录授权操作审计日志
+     *
+     * <p> 内部调用 {@link com.huazie.fleaframework.auth.base.audit.service.impl.FleaAuthAuditSVImpl#doRecordAuthLog(FleaAuthAuditLog)} 方法 </p>
+     *
+     * @param asyncTaskExecObj 异步任务执行对象（FleaAuthAuditSVImpl实例）
+     * @param auditLog         审计日志数据
+     * @since 2.0.0
+     */
+    public static void asyncRecordAuthLog(Object asyncTaskExecObj, FleaAuthAuditLog auditLog) {
+        Class<?>[] paramTypes = {FleaAuthAuditLog.class};
+        Object[] params = {auditLog};
+        FleaAsyncTask fleaAsyncTask = new FleaAsyncTask(FleaSessionManager.getUserInfo(), asyncTaskExecObj, METHOD_RECORD_AUTH_LOG, paramTypes, params);
         executorService.execute(fleaAsyncTask);
     }
 }

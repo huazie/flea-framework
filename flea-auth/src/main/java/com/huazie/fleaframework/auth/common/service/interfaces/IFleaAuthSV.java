@@ -70,4 +70,36 @@ public interface IFleaAuthSV {
      */
     boolean checkResourceAuth(Long accountId, Long systemAccountId, String resourceCode) throws CommonException;
 
+    /**
+     * 获取指定用户的数据范围允许的组织编号集。
+     *
+     * <p> 解析规则：取用户组织集 U，对用户全部角色关联的数据范围（rel_type = ROLE_REL_DATA_SCOPE）逐一展开；
+     * 多角色叠加采用最宽松策略——任一角色为【全部数据】则整体无约束，否则对各角色范围取并集。
+     * 角色未绑定数据范围时，视为无约束（兼容既有角色数据）。 </p>
+     *
+     * <p> 注意：数据范围类型为【仅本人 SELF】时，不贡献组织编号，行级过滤需由调用方
+     * 追加 create_user_id = userId 条件。 </p>
+     *
+     * @param userId 用户编号
+     * @return {@code null}：无约束（允许访问全部数据）；
+     *         非 {@code null}：允许的组织编号集（可能为空，空集表示无数据权限）
+     * @throws CommonException 通用异常
+     * @since 2.0.0
+     */
+    List<Long> getDataScopeOrgIds(Long userId) throws CommonException;
+
+    /**
+     * 校验数据范围，判断指定用户是否可以访问归属指定组织的数据。
+     *
+     * <p> 注意：该方法仅校验组织维度的数据权限；数据范围为【仅本人 SELF】的行级数据，
+     * 需由调用方额外按 create_user_id = userId 过滤。 </p>
+     *
+     * @param userId   用户编号
+     * @param rowOrgId 数据归属的组织编号
+     * @return true：允许访问该组织的数据  false：不允许访问该组织的数据
+     * @throws CommonException 通用异常
+     * @since 2.0.0
+     */
+    boolean checkDataScope(Long userId, Long rowOrgId) throws CommonException;
+
 }
