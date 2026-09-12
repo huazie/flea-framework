@@ -7,6 +7,8 @@ import com.huazie.fleaframework.auth.base.function.service.interfaces.IFleaFunct
 import com.huazie.fleaframework.auth.base.function.service.interfaces.IFleaMenuSV;
 import com.huazie.fleaframework.auth.base.function.service.interfaces.IFleaOperationSV;
 import com.huazie.fleaframework.auth.base.function.service.interfaces.IFleaResourceSV;
+import com.huazie.fleaframework.auth.base.organization.entity.FleaOrganization;
+import com.huazie.fleaframework.auth.base.organization.service.interfaces.IFleaOrganizationSV;
 import com.huazie.fleaframework.auth.base.privilege.entity.FleaPrivilegeGroupRel;
 import com.huazie.fleaframework.auth.base.privilege.service.interfaces.IFleaPrivilegeGroupRelSV;
 import com.huazie.fleaframework.auth.base.privilege.service.interfaces.IFleaPrivilegeRelSV;
@@ -26,17 +28,21 @@ import com.huazie.fleaframework.auth.base.user.service.interfaces.IFleaAccountSV
 import com.huazie.fleaframework.auth.base.user.service.interfaces.IFleaRealNameInfoSV;
 import com.huazie.fleaframework.auth.base.user.service.interfaces.IFleaUserAttrSV;
 import com.huazie.fleaframework.auth.base.user.service.interfaces.IFleaUserGroupRelSV;
+import com.huazie.fleaframework.auth.base.user.service.interfaces.IFleaUserOrgRelSV;
 import com.huazie.fleaframework.auth.base.user.service.interfaces.IFleaUserRelSV;
 import com.huazie.fleaframework.auth.base.user.service.interfaces.IFleaUserSV;
 import com.huazie.fleaframework.auth.common.AuthRelTypeEnum;
+import com.huazie.fleaframework.auth.common.DataScopeTypeEnum;
 import com.huazie.fleaframework.auth.common.FleaAuthConstants;
 import com.huazie.fleaframework.auth.common.FleaAuthEntityConstants;
 import com.huazie.fleaframework.auth.common.FunctionTypeEnum;
+import com.huazie.fleaframework.auth.common.exceptions.FleaAuthCommonException;
 import com.huazie.fleaframework.auth.common.pojo.user.FleaUserModuleData;
 import com.huazie.fleaframework.auth.common.service.interfaces.IFleaAuthSV;
 import com.huazie.fleaframework.auth.util.FleaAuthCheck;
 import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.util.CollectionUtils;
+import com.huazie.fleaframework.common.util.ExceptionUtils;
 import com.huazie.fleaframework.common.util.NumberUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
@@ -69,6 +75,10 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
     private IFleaUserGroupRelSV fleaUserGroupRelSV; // Flea用户组关联服务
 
     private IFleaUserRelSV fleaUserRelSV; // Flea用户关联服务
+
+    private IFleaUserOrgRelSV fleaUserOrgRelSV; // Flea用户组织关联服务
+
+    private IFleaOrganizationSV fleaOrganizationSV; // Flea组织服务
 
     private IFleaRoleGroupRelSV fleaRoleGroupRelSV; // Flea角色组关联服务
 
@@ -121,6 +131,16 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
     @Resource(name = "fleaUserRelSV")
     public void setFleaUserRelSV(IFleaUserRelSV fleaUserRelSV) {
         this.fleaUserRelSV = fleaUserRelSV;
+    }
+
+    @Resource(name = "fleaUserOrgRelSV")
+    public void setFleaUserOrgRelSV(IFleaUserOrgRelSV fleaUserOrgRelSV) {
+        this.fleaUserOrgRelSV = fleaUserOrgRelSV;
+    }
+
+    @Resource(name = "fleaOrganizationSV")
+    public void setFleaOrganizationSV(IFleaOrganizationSV fleaOrganizationSV) {
+        this.fleaOrganizationSV = fleaOrganizationSV;
     }
 
     @Resource(name = "fleaRoleGroupRelSV")
@@ -490,6 +510,148 @@ public class FleaAuthSVImpl implements IFleaAuthSV {
         List<Long> resourceIdList = this.fleaPrivilegeRelSV.getPrivilegeRelIdList(privilegeIdList, AuthRelTypeEnum.PRIVILEGE_REL_RESOURCE.getRelType());
 
         return resourceIdList.contains(resourceId);
+    }
+
+    @Override
+    public List<Long> getDataScopeOrgIds(Long userId) throws CommonException {
+        // 校验用户编号不能为空且必须为正数
+        FleaAuthCheck.checkUserId(userId);
+
+        // 获取用户下的角色编号集
+        List<Long> roleIdList = this.getUserRoles(userId);
+        // 用户下无角色，返回空集（无数据权限）
+        if (CollectionUtils.isEmpty(roleIdList)) return new ArrayList<>();
+
+        // 获取用户组织编号集 U = { 主组织 ∪ 用户组织关联中所有组织编号 }
+        List<Long> userOrgIdList = this.fleaUserOrgRelSV.getUserOrgIds(userId);
+
+        // 多角色叠加后的允许组织编号集（最宽松策略：各角色范围取并集）
+        List<Long> allowedOrgIdList = new ArrayList<>();
+
+        for (Long roleId : roleIdList) {
+            // 获取角色关联数据范围数据
+            List<FleaRoleRel> roleRelDataScopes = this.fleaRoleRelSV.getRoleRelList(roleId, AuthRelTypeEnum.ROLE_REL_DATA_SCOPE.getRelType());
+            if (CollectionUtils.isEmpty(roleRelDataScopes)) {
+                // 角色未绑定数据范围，视为无约束（兼容既有角色数据）
+                return null;
+            }
+
+            for (FleaRoleRel roleRel : roleRelDataScopes) {
+                if (ObjectUtils.isEmpty(roleRel)) continue;
+
+                // rel_id 存储数据范围类型码
+                DataScopeTypeEnum dataScopeType = DataScopeTypeEnum.getTypeEnum(roleRel.getRelId() == null ? null : roleRel.getRelId().intValue());
+                if (ObjectUtils.isEmpty(dataScopeType)) {
+                    // ERROR-AUTH-COMMON0000000024 数据范围类型【{0}】不支持！
+                    ExceptionUtils.throwCommonException(FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000024", roleRel.getRelId());
+                }
+
+                // 按数据范围类型展开允许的组织集合，任一角色为【全部数据】则整体无约束
+                boolean isUnlimited = expandDataScope(allowedOrgIdList, dataScopeType, roleRel.getRelExtA(), userOrgIdList);
+                if (isUnlimited) return null;
+            }
+        }
+
+        return allowedOrgIdList;
+    }
+
+    @Override
+    public boolean checkDataScope(Long userId, Long rowOrgId) throws CommonException {
+        // 校验用户编号不能为空且必须为正数
+        FleaAuthCheck.checkUserId(userId);
+
+        // 校验数据归属的组织编号不能为空
+        FleaAuthCheck.checkEmpty(rowOrgId, FleaAuthEntityConstants.OrganizationEntityConstants.E_ORG_ID);
+
+        // 获取允许的组织编号集，null 表示无约束
+        List<Long> allowedOrgIdList = this.getDataScopeOrgIds(userId);
+        if (allowedOrgIdList == null) return true;
+
+        return allowedOrgIdList.contains(rowOrgId);
+    }
+
+    /**
+     * 按数据范围类型展开允许的组织编号集合
+     *
+     * @param allowedOrgIdList 允许的组织编号集合（多角色叠加取并集）
+     * @param dataScopeType    数据范围类型
+     * @param customOrgIds     自定义组织编号列表（逗号分隔，仅 CUSTOM 类型生效）
+     * @param userOrgIdList    用户组织编号集 U
+     * @return true：无约束（全部数据）；false：已按范围展开
+     * @throws CommonException 通用异常
+     * @since 2.0.0
+     */
+    private boolean expandDataScope(List<Long> allowedOrgIdList, DataScopeTypeEnum dataScopeType, String customOrgIds, List<Long> userOrgIdList) throws CommonException {
+        switch (dataScopeType) {
+            case ALL: // 全部数据，不过滤
+                return true;
+            case DEPT: // 仅本部门：允许组织集 = 用户组织集 U
+                addDistinctOrgIds(allowedOrgIdList, userOrgIdList);
+                return false;
+            case DEPT_AND_CHILD: // 本部门及子部门：U 沿 parent_id 向上取祖先，再连同 U 一起向下展开子树
+                handleDeptAndChildScope(allowedOrgIdList, userOrgIdList);
+                return false;
+            case SELF: // 仅本人：不贡献组织编号，行级过滤由调用方追加 create_user_id = userId
+                return false;
+            case CUSTOM: // 自定义组织：rel_ext_a 存储组织编号列表【存在多个，以逗号分隔】
+                CollectionUtils.distinctAddWithComma(allowedOrgIdList, customOrgIds);
+                return false;
+            default:
+                // ERROR-AUTH-COMMON0000000024 数据范围类型【{0}】不支持！
+                ExceptionUtils.throwCommonException(FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000024", dataScopeType.getType());
+                return false;
+        }
+    }
+
+    /**
+     * 处理【本部门及子部门】数据范围：取用户组织集 U 及其祖先集，再逐一向下展开子树
+     *
+     * @param allowedOrgIdList 允许的组织编号集合
+     * @param userOrgIdList    用户组织编号集 U
+     * @throws CommonException 通用异常
+     * @since 2.0.0
+     */
+    private void handleDeptAndChildScope(List<Long> allowedOrgIdList, List<Long> userOrgIdList) throws CommonException {
+        if (CollectionUtils.isEmpty(userOrgIdList)) return;
+
+        // 收集用户组织集 U 及其祖先组织编号集
+        List<Long> rootOrgIdList = new ArrayList<>(userOrgIdList);
+        for (Long userOrgId : userOrgIdList) {
+            // 沿 parent_id 向上取祖先
+            Long currentOrgId = userOrgId;
+            while (NumberUtils.isPositiveNumber(currentOrgId)) {
+                FleaOrganization fleaOrganization = this.fleaOrganizationSV.queryValidOrganization(currentOrgId);
+                if (ObjectUtils.isEmpty(fleaOrganization)) break;
+                currentOrgId = fleaOrganization.getParentId();
+            }
+            // 祖先链的顶端（根或断链处）也纳入展开范围
+            CollectionUtils.distinctAdd(rootOrgIdList, currentOrgId);
+        }
+
+        // 对 U 及其祖先，逐一向下展开子树
+        for (Long rootOrgId : rootOrgIdList) {
+            CollectionUtils.distinctAdd(allowedOrgIdList, rootOrgId);
+            List<FleaOrganization> subTreeList = this.fleaOrganizationSV.querySubTree(rootOrgId);
+            if (CollectionUtils.isEmpty(subTreeList)) continue;
+            for (FleaOrganization fleaOrganization : subTreeList) {
+                if (ObjectUtils.isEmpty(fleaOrganization)) continue;
+                CollectionUtils.distinctAdd(allowedOrgIdList, fleaOrganization.getOrgId());
+            }
+        }
+    }
+
+    /**
+     * 将组织编号集合中的有效编号去重追加到目标集合
+     *
+     * @param targetOrgIdList 目标组织编号集合
+     * @param sourceOrgIdList 来源组织编号集合
+     * @since 2.0.0
+     */
+    private void addDistinctOrgIds(List<Long> targetOrgIdList, List<Long> sourceOrgIdList) {
+        if (CollectionUtils.isEmpty(sourceOrgIdList)) return;
+        for (Long orgId : sourceOrgIdList) {
+            CollectionUtils.distinctAdd(targetOrgIdList, orgId);
+        }
     }
 
 }

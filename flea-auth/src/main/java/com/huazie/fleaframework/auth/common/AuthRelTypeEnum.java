@@ -22,6 +22,7 @@ public enum AuthRelTypeEnum {
     ROLE_REL_ROLE("ROLE_REL_ROLE", "角色关联角色"),
     ROLE_REL_PRIVILEGE("ROLE_REL_PRIVILEGE", "角色关联权限"),
     ROLE_REL_PRIVILEGE_GROUP("ROLE_REL_PRIVILEGE_GROUP", "角色关联权限组"),
+    ROLE_REL_DATA_SCOPE("ROLE_REL_DATA_SCOPE", "角色关联数据范围"),
 
     // 角色组关联类型
     ROLE_GROUP_REL_ROLE("ROLE_GROUP_REL_ROLE", "角色组关联角色"),

@@ -17,6 +17,11 @@
 		<class>com.huazie.fleaframework.auth.base.user.entity.FleaUserRel</class>
 		<class>com.huazie.fleaframework.auth.base.user.entity.FleaUserGroup</class>
 		<class>com.huazie.fleaframework.auth.base.user.entity.FleaUserGroupRel</class>
+		<class>com.huazie.fleaframework.auth.base.user.entity.FleaUserOrgRel</class>
+		<!-- 组织子模块 -->
+		<class>com.huazie.fleaframework.auth.base.organization.entity.FleaOrganization</class>
+		<!-- 审计子模块 -->
+		<class>com.huazie.fleaframework.auth.base.audit.entity.FleaAuthAuditLog</class>
 		<!-- 角色子模块 -->
 		<class>com.huazie.fleaframework.auth.base.role.entity.FleaRole</class>
 		<class>com.huazie.fleaframework.auth.base.role.entity.FleaRoleRel</class>
