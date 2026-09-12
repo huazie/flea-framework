@@ -10,7 +10,7 @@ import com.huazie.fleaframework.db.common.sql.template.SqlTemplateEnum;
 import com.huazie.fleaframework.db.common.sql.template.TemplateTypeEnum;
 import com.huazie.fleaframework.db.common.sql.template.config.Property;
 import com.huazie.fleaframework.db.common.table.pojo.Column;
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.Map;
 

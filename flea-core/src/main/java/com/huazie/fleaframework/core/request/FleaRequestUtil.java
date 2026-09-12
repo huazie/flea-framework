@@ -9,7 +9,7 @@ import com.huazie.fleaframework.core.request.config.FleaRequestConfig;
 import com.huazie.fleaframework.core.request.config.FleaSession;
 import com.huazie.fleaframework.core.request.config.FleaUrl;
 import com.huazie.fleaframework.core.request.config.Property;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

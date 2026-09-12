@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.core.common.pojo;
 
 import com.huazie.fleaframework.common.pojo.FleaEffExpDatePOJO;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * Flea菜单收藏夹POJO类

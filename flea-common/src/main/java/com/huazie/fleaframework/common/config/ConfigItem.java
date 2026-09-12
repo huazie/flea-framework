@@ -1,6 +1,6 @@
 package com.huazie.fleaframework.common.config;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * 配置项，可在【flea-config.xml】文件中

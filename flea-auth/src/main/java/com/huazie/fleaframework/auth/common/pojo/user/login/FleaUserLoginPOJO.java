@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.auth.common.pojo.user.login;
 
 import com.huazie.fleaframework.common.pojo.FleaCommonPOJO;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * Flea用户登录信息POJO类

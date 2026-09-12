@@ -1,6 +1,6 @@
 package com.huazie.fleaframework.db.common.table.split.config;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.ArrayList;
 import java.util.List;

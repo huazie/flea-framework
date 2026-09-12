@@ -1,6 +1,6 @@
 package com.huazie.fleaframework.cache.config;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * 缓存定义，对应【flea-cache.xml】中

@@ -2,7 +2,7 @@ package com.huazie.fleaframework.db.common.lib.split.config;
 
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.db.common.DBXmlDigesterHelper;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * 分库配置类，参考 分库配置文件 flea-lib-split.xml

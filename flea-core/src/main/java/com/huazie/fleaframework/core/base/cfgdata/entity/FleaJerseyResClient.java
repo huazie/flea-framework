@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.core.base.cfgdata.entity;
 
 import com.huazie.fleaframework.common.FleaEntity;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

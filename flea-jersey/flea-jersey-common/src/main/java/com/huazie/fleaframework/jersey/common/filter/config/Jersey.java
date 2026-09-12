@@ -2,7 +2,7 @@ package com.huazie.fleaframework.jersey.common.filter.config;
 
 import com.huazie.fleaframework.common.util.ObjectUtils;
 import com.huazie.fleaframework.common.util.xml.ImportList;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * Flea Jersey接口配置对象，可从配置文件【flea-jersey-filter.xml】

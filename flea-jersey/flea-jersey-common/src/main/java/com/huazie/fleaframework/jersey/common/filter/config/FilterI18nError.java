@@ -2,7 +2,7 @@ package com.huazie.fleaframework.jersey.common.filter.config;
 
 import com.huazie.fleaframework.common.config.ConfigMap;
 import com.huazie.fleaframework.common.util.CollectionUtils;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.ArrayList;
 import java.util.List;

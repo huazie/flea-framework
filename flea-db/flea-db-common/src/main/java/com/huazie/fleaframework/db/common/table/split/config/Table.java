@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.db.common.table.split.config;
 
 import com.huazie.fleaframework.common.util.ObjectUtils;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * 分表配置定义，参考 flea-table-split.xml 中 {@code <table></table>}

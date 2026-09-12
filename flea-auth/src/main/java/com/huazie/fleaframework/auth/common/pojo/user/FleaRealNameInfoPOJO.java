@@ -1,7 +1,7 @@
 package com.huazie.fleaframework.auth.common.pojo.user;
 
 import com.huazie.fleaframework.common.pojo.FleaEffExpDatePOJO;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * Flea实名信息POJO类

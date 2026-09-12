@@ -1,6 +1,6 @@
 package com.huazie.fleaframework.jersey.common.filter.config;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * 国际码和错误码映射对象配置，可从配置文件【flea-jersey-filter.xml】

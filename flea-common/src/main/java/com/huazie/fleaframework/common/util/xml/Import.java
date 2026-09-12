@@ -1,6 +1,6 @@
 package com.huazie.fleaframework.common.util.xml;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * 资源导入的XML节点，可查看各配置文件中

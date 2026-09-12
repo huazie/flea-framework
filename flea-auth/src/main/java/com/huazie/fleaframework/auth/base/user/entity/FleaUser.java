@@ -5,7 +5,7 @@ import com.huazie.fleaframework.common.CommonConstants;
 import com.huazie.fleaframework.common.FleaEntity;
 import com.huazie.fleaframework.common.util.DateUtils;
 import com.huazie.fleaframework.common.util.ObjectUtils;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

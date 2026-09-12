@@ -1,6 +1,6 @@
 package com.huazie.fleaframework.core.request.config;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * Flea 请求，在配置文件 <b>flea-request.xml</b>
