@@ -36,4 +36,15 @@ public interface IFleaUserRelSV extends IAbstractFleaJPASV<FleaUserRel> {
      * @since 2.0.0
      */
     FleaUserRel saveUserRel(FleaUserRelPOJO fleaUserRelPOJO) throws CommonException;
+
+    /**
+     * 取消Flea用户关联数据（逻辑删除指定用户在指定关联类型下与关联编号的关联关系）
+     *
+     * @param userId      用户编号
+     * @param relId       关联编号
+     * @param authRelType 授权关联类型
+     * @throws CommonException 通用异常
+     * @since 2.0.0
+     */
+    void removeUserRel(Long userId, Long relId, String authRelType) throws CommonException;
 }

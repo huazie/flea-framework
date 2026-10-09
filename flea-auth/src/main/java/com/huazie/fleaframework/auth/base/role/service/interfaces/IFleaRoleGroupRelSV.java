@@ -36,4 +36,15 @@ public interface IFleaRoleGroupRelSV extends IAbstractFleaJPASV<FleaRoleGroupRel
      * @since 2.0.0
      */
     FleaRoleGroupRel saveRoleGroupRel(FleaRoleGroupRelPOJO fleaRoleGroupRelPOJO) throws CommonException;
+
+    /**
+     * 取消Flea角色组关联数据（逻辑删除指定角色组在指定关联类型下与关联编号的关联关系）
+     *
+     * @param roleGroupId 角色组编号
+     * @param relId       关联编号
+     * @param authRelType 授权关联类型
+     * @throws CommonException 通用异常
+     * @since 2.0.0
+     */
+    void removeRoleGroupRel(Long roleGroupId, Long relId, String authRelType) throws CommonException;
 }

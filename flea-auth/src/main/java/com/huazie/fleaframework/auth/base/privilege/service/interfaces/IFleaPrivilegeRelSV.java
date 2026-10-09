@@ -98,4 +98,15 @@ public interface IFleaPrivilegeRelSV extends IAbstractFleaJPASV<FleaPrivilegeRel
      * @since 1.0.0
      */
     FleaPrivilegeRel savePrivilegeRel(FleaPrivilegeRelPOJO fleaPrivilegeRelPOJO) throws CommonException;
+
+    /**
+     * 取消Flea权限关联数据（逻辑删除指定权限在指定关联类型下与关联编号的关联关系）
+     *
+     * @param privilegeId 权限编号
+     * @param relId       关联编号
+     * @param authRelType 授权关联类型
+     * @throws CommonException 通用异常
+     * @since 2.0.0
+     */
+    void removePrivilegeRel(Long privilegeId, Long relId, String authRelType) throws CommonException;
 }
