@@ -23,6 +23,8 @@ public class FleaAccountPOJO extends FleaEffExpDatePOJO {
 
     private Integer accountState; // 账户状态
 
+    private String remarks; // 备注信息
+
     public Long getAccountId() {
         return accountId;
     }
@@ -61,5 +63,13 @@ public class FleaAccountPOJO extends FleaEffExpDatePOJO {
 
     public void setAccountState(Integer accountState) {
         this.accountState = accountState;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 }

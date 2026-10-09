@@ -5,7 +5,10 @@ import com.huazie.fleaframework.auth.base.role.entity.FleaRoleGroupRel;
 import com.huazie.fleaframework.auth.base.role.service.interfaces.IFleaRoleGroupRelSV;
 import com.huazie.fleaframework.auth.common.pojo.role.FleaRoleGroupRelPOJO;
 import com.huazie.fleaframework.auth.util.FleaAuthCheck;
+import com.huazie.fleaframework.common.EntityStateEnum;
 import com.huazie.fleaframework.common.exceptions.CommonException;
+import com.huazie.fleaframework.common.util.CollectionUtils;
+import com.huazie.fleaframework.common.util.DateUtils;
 import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import com.huazie.fleaframework.db.jpa.service.impl.AbstractFleaJPASVImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +46,29 @@ public class FleaRoleGroupRelSVImpl extends AbstractFleaJPASVImpl<FleaRoleGroupR
         // 保存Flea角色组关联数据
         this.save(fleaRoleGroupRel);
         return fleaRoleGroupRel;
+    }
+
+    @Override
+    public void removeRoleGroupRel(Long roleGroupId, Long relId, String authRelType) throws CommonException {
+        // 校验角色组编号
+        FleaAuthCheck.checkNonPositiveNumber(roleGroupId, "角色组编号");
+        // 校验关联编号
+        FleaAuthCheck.checkNonPositiveNumber(relId, "关联编号");
+        // 校验关联类型
+        FleaAuthCheck.checkBlank(authRelType, "关联类型");
+
+        // 查询该角色组在指定关联类型下的有效关联数据
+        List<FleaRoleGroupRel> roleGroupRelList = this.getRoleGroupRelList(roleGroupId, authRelType);
+        if (CollectionUtils.isNotEmpty(roleGroupRelList)) {
+            for (FleaRoleGroupRel fleaRoleGroupRel : roleGroupRelList) {
+                if (relId.compareTo(fleaRoleGroupRel.getRelId()) == 0) {
+                    // 逻辑删除关联数据
+                    fleaRoleGroupRel.setRelState(EntityStateEnum.BE_DELETED.getState());
+                    fleaRoleGroupRel.setDoneDate(DateUtils.getCurrentTime());
+                    this.update(fleaRoleGroupRel);
+                }
+            }
+        }
     }
 
     /**

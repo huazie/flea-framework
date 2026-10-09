@@ -8,7 +8,10 @@ import com.huazie.fleaframework.auth.base.privilege.service.interfaces.IFleaPriv
 import com.huazie.fleaframework.auth.common.pojo.privilege.FleaPrivilegeGroupRelPOJO;
 import com.huazie.fleaframework.auth.util.FleaAuthCheck;
 import com.huazie.fleaframework.auth.util.FleaAuthPOJOUtils;
+import com.huazie.fleaframework.common.EntityStateEnum;
 import com.huazie.fleaframework.common.exceptions.CommonException;
+import com.huazie.fleaframework.common.util.CollectionUtils;
+import com.huazie.fleaframework.common.util.DateUtils;
 import com.huazie.fleaframework.db.jpa.dao.interfaces.IAbstractFleaJPADAO;
 import com.huazie.fleaframework.db.jpa.service.impl.AbstractFleaJPASVImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +54,29 @@ public class FleaPrivilegeGroupRelSVImpl extends AbstractFleaJPASVImpl<FleaPrivi
         // 保存权限组关联数据
         this.save(fleaPrivilegeGroupRel);
         return fleaPrivilegeGroupRel;
+    }
+
+    @Override
+    public void removePrivilegeGroupRel(Long privilegeGroupId, Long relId, String authRelType) throws CommonException {
+        // 校验权限组编号
+        FleaAuthCheck.checkNonPositiveNumber(privilegeGroupId, "权限组编号");
+        // 校验关联编号
+        FleaAuthCheck.checkNonPositiveNumber(relId, "关联编号");
+        // 校验关联类型
+        FleaAuthCheck.checkBlank(authRelType, "关联类型");
+
+        // 查询该权限组在指定关联类型下的有效关联数据
+        List<FleaPrivilegeGroupRel> privilegeGroupRelList = this.getPrivilegeGroupRelList(privilegeGroupId, authRelType);
+        if (CollectionUtils.isNotEmpty(privilegeGroupRelList)) {
+            for (FleaPrivilegeGroupRel fleaPrivilegeGroupRel : privilegeGroupRelList) {
+                if (relId.compareTo(fleaPrivilegeGroupRel.getRelId()) == 0) {
+                    // 逻辑删除关联数据
+                    fleaPrivilegeGroupRel.setRelState(EntityStateEnum.BE_DELETED.getState());
+                    fleaPrivilegeGroupRel.setDoneDate(DateUtils.getCurrentTime());
+                    this.update(fleaPrivilegeGroupRel);
+                }
+            }
+        }
     }
 
     /**
