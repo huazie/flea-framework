@@ -6,6 +6,8 @@ import com.huazie.fleaframework.auth.base.privilege.service.interfaces.IFleaPriv
 import com.huazie.fleaframework.auth.base.privilege.service.interfaces.IFleaPrivilegeSV;
 import com.huazie.fleaframework.auth.base.role.entity.FleaRole;
 import com.huazie.fleaframework.auth.base.role.entity.FleaRoleGroup;
+import com.huazie.fleaframework.auth.base.role.entity.FleaRoleGroupRel;
+import com.huazie.fleaframework.auth.base.role.entity.FleaRoleRel;
 import com.huazie.fleaframework.auth.base.role.service.interfaces.IFleaRoleGroupRelSV;
 import com.huazie.fleaframework.auth.base.role.service.interfaces.IFleaRoleGroupSV;
 import com.huazie.fleaframework.auth.base.role.service.interfaces.IFleaRoleRelSV;
@@ -27,6 +29,7 @@ import com.huazie.fleaframework.db.jpa.transaction.FleaTransactional;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Flea角色管理服务层实现类
@@ -98,8 +101,8 @@ public class FleaRoleModuleSVImpl implements IFleaRoleModuleSV {
         // 校验Flea角色是否存在
         FleaAuthCheck.checkFleaRoleExist(fleaRole, StringUtils.valueOf(roleId));
 
-        // 将Flea角色POJO对象中非空的数据，复制到Flea角色数据中
-        POJOUtils.copyNotEmpty(fleaRolePOJO, fleaRole);
+        // 将Flea角色POJO对象中非 null 的数据，复制到Flea角色数据中（空串支持显式清空）
+        POJOUtils.copyNonNull(fleaRolePOJO, fleaRole);
 
         // 更新Flea角色数据
         this.fleaRoleSV.update(fleaRole);
@@ -123,8 +126,8 @@ public class FleaRoleModuleSVImpl implements IFleaRoleModuleSV {
         // 校验Flea角色组是否存在
         FleaAuthCheck.checkFleaRoleGroupExist(fleaRoleGroup, StringUtils.valueOf(roleGroupId));
 
-        // 将Flea角色组POJO对象中非空的数据，复制到Flea角色组数据中
-        POJOUtils.copyNotEmpty(fleaRoleGroupPOJO, fleaRoleGroup);
+        // 将Flea角色组POJO对象中非 null 的数据，复制到Flea角色组数据中（空串支持显式清空）
+        POJOUtils.copyNonNull(fleaRoleGroupPOJO, fleaRoleGroup);
 
         // 更新Flea角色组数据
         this.fleaRoleGroupSV.update(fleaRoleGroup);
@@ -156,7 +159,7 @@ public class FleaRoleModuleSVImpl implements IFleaRoleModuleSV {
         FleaRoleRelPOJO roleRelRolePOJO = FleaAuthPOJOUtils.newRoleRelRolePOJO(roleId, roleName, relRoleId, relRoleName);
 
         // 复制授权关联扩展数据
-        POJOUtils.copyAll(fleaAuthRelExtPOJO, roleRelRolePOJO);
+        POJOUtils.copyNotEmpty(fleaAuthRelExtPOJO, roleRelRolePOJO);
 
         // 保存角色关联角色
         this.fleaRoleRelSV.saveRoleRel(roleRelRolePOJO);
@@ -188,7 +191,7 @@ public class FleaRoleModuleSVImpl implements IFleaRoleModuleSV {
         FleaRoleRelPOJO roleRelPrivilegePOJO = FleaAuthPOJOUtils.newRoleRelPrivilegePOJO(roleId, roleName, privilegeId, privilegeName);
 
         // 复制授权关联扩展数据
-        POJOUtils.copyAll(fleaAuthRelExtPOJO, roleRelPrivilegePOJO);
+        POJOUtils.copyNotEmpty(fleaAuthRelExtPOJO, roleRelPrivilegePOJO);
 
         // 保存角色关联权限
         this.fleaRoleRelSV.saveRoleRel(roleRelPrivilegePOJO);
@@ -220,7 +223,7 @@ public class FleaRoleModuleSVImpl implements IFleaRoleModuleSV {
         FleaRoleRelPOJO roleRelPrivilegeGroupPOJO = FleaAuthPOJOUtils.newRoleRelPrivilegeGroupPOJO(roleId, roleName, privilegeGroupId, privilegeGroupName);
 
         // 复制授权关联扩展数据
-        POJOUtils.copyAll(fleaAuthRelExtPOJO, roleRelPrivilegeGroupPOJO);
+        POJOUtils.copyNotEmpty(fleaAuthRelExtPOJO, roleRelPrivilegeGroupPOJO);
 
         // 保存角色关联权限组
         this.fleaRoleRelSV.saveRoleRel(roleRelPrivilegeGroupPOJO);
@@ -261,8 +264,50 @@ public class FleaRoleModuleSVImpl implements IFleaRoleModuleSV {
         FleaRoleGroupRelPOJO roleGroupRelRolePOJO = FleaAuthPOJOUtils.newRoleGroupRelRolePOJO(roleGroupId, roleGroupName, roleId, roleName);
 
         // 复制授权关联扩展信息
-        POJOUtils.copyAll(fleaAuthRelExtPOJO, roleGroupRelRolePOJO);
+        POJOUtils.copyNotEmpty(fleaAuthRelExtPOJO, roleGroupRelRolePOJO);
 
         this.fleaRoleGroupRelSV.saveRoleGroupRel(roleGroupRelRolePOJO);
+    }
+
+    @Override
+    public FleaRole queryRoleInUse(Long roleId) throws CommonException {
+        return this.fleaRoleSV.queryRoleInUse(roleId);
+    }
+
+    @Override
+    public List<FleaRole> queryRolesInUse(String roleName, Long groupId) throws CommonException {
+        return this.fleaRoleSV.queryRolesInUse(roleName, groupId);
+    }
+
+    @Override
+    public FleaRoleGroup queryRoleGroupInUse(Long roleGroupId) throws CommonException {
+        return this.fleaRoleGroupSV.queryRoleGroupInUse(roleGroupId);
+    }
+
+    @Override
+    public List<FleaRoleGroup> queryRoleGroupsInUse(String roleGroupName) throws CommonException {
+        return this.fleaRoleGroupSV.queryRoleGroupsInUse(roleGroupName);
+    }
+
+    @Override
+    public List<FleaRoleRel> getRoleRelList(Long roleId, String authRelType) throws CommonException {
+        return this.fleaRoleRelSV.getRoleRelList(roleId, authRelType);
+    }
+
+    @Override
+    @FleaTransactional(value = "fleaAuthTransactionManager", unitName = "fleaauth")
+    public void removeRoleRel(Long roleId, Long relId, String authRelType) throws CommonException {
+        this.fleaRoleRelSV.removeRoleRel(roleId, relId, authRelType);
+    }
+
+    @Override
+    public List<FleaRoleGroupRel> getRoleGroupRelList(Long roleGroupId, String authRelType) throws CommonException {
+        return this.fleaRoleGroupRelSV.getRoleGroupRelList(roleGroupId, authRelType);
+    }
+
+    @Override
+    @FleaTransactional(value = "fleaAuthTransactionManager", unitName = "fleaauth")
+    public void removeRoleGroupRel(Long roleGroupId, Long relId, String authRelType) throws CommonException {
+        this.fleaRoleGroupRelSV.removeRoleGroupRel(roleGroupId, relId, authRelType);
     }
 }

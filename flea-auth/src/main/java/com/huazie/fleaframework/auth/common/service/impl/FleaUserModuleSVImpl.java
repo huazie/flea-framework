@@ -8,6 +8,8 @@ import com.huazie.fleaframework.auth.base.role.service.interfaces.IFleaRoleSV;
 import com.huazie.fleaframework.auth.base.user.entity.FleaAccount;
 import com.huazie.fleaframework.auth.base.user.entity.FleaUser;
 import com.huazie.fleaframework.auth.base.user.entity.FleaUserGroup;
+import com.huazie.fleaframework.auth.base.user.entity.FleaUserGroupRel;
+import com.huazie.fleaframework.auth.base.user.entity.FleaUserRel;
 import com.huazie.fleaframework.auth.base.user.service.interfaces.IFleaAccountAttrSV;
 import com.huazie.fleaframework.auth.base.user.service.interfaces.IFleaAccountSV;
 import com.huazie.fleaframework.auth.base.user.service.interfaces.IFleaLoginLogSV;
@@ -18,9 +20,11 @@ import com.huazie.fleaframework.auth.base.user.service.interfaces.IFleaUserRelSV
 import com.huazie.fleaframework.auth.base.user.service.interfaces.IFleaUserSV;
 import com.huazie.fleaframework.auth.cache.bean.FleaAuthCache;
 import com.huazie.fleaframework.auth.common.pojo.FleaAuthRelExtPOJO;
+import com.huazie.fleaframework.auth.common.pojo.user.FleaAccountPOJO;
 import com.huazie.fleaframework.auth.common.pojo.user.FleaUserGroupPOJO;
 import com.huazie.fleaframework.auth.common.pojo.user.FleaUserGroupRelPOJO;
 import com.huazie.fleaframework.auth.common.pojo.user.FleaUserModuleData;
+import com.huazie.fleaframework.auth.common.pojo.user.FleaUserPOJO;
 import com.huazie.fleaframework.auth.common.pojo.user.FleaUserRelPOJO;
 import com.huazie.fleaframework.auth.common.pojo.user.login.FleaLoginLogPOJO;
 import com.huazie.fleaframework.auth.common.pojo.user.login.FleaUserLoginPOJO;
@@ -39,6 +43,7 @@ import com.huazie.fleaframework.common.util.DateUtils;
 import com.huazie.fleaframework.common.util.HttpUtils;
 import com.huazie.fleaframework.common.util.NumberUtils;
 import com.huazie.fleaframework.common.util.POJOUtils;
+import com.huazie.fleaframework.common.util.SecurityUtils;
 import com.huazie.fleaframework.common.util.StringUtils;
 import com.huazie.fleaframework.db.jpa.transaction.FleaTransactional;
 import org.springframework.stereotype.Service;
@@ -255,8 +260,8 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
         // 校验Flea用户组是否存在
         FleaAuthCheck.checkFleaUserGroupExist(fleaUserGroup, StringUtils.valueOf(userGroupId));
 
-        // 将Flea用户组POJO对象中非空的数据，复制到Flea用户组数据中
-        POJOUtils.copyNotEmpty(fleaUserGroupPOJO, fleaUserGroup);
+        // 将Flea用户组POJO对象中非 null 的数据，复制到Flea用户组数据中（空串支持显式清空）
+        POJOUtils.copyNonNull(fleaUserGroupPOJO, fleaUserGroup);
 
         // 更新Flea用户组数据
         this.fleaUserGroupSV.update(fleaUserGroup);
@@ -288,7 +293,7 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
         FleaUserRelPOJO userRelRolePOJO = FleaAuthPOJOUtils.newUserRelRolePOJO(userId, userName, roleId, roleName);
 
         // 复制授权关联扩展数据
-        POJOUtils.copyAll(fleaAuthRelExtPOJO, userRelRolePOJO);
+        POJOUtils.copyNotEmpty(fleaAuthRelExtPOJO, userRelRolePOJO);
 
         // 保存用户关联角色
         this.fleaUserRelSV.saveUserRel(userRelRolePOJO);
@@ -320,7 +325,7 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
         FleaUserRelPOJO userRelRoleGroupPOJO = FleaAuthPOJOUtils.newUserRelRoleGroupPOJO(userId, userName, roleGroupId, roleGroupName);
 
         // 复制授权关联扩展数据
-        POJOUtils.copyAll(fleaAuthRelExtPOJO, userRelRoleGroupPOJO);
+        POJOUtils.copyNotEmpty(fleaAuthRelExtPOJO, userRelRoleGroupPOJO);
 
         // 保存用户关联角色
         this.fleaUserRelSV.saveUserRel(userRelRoleGroupPOJO);
@@ -352,7 +357,7 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
         FleaUserGroupRelPOJO userGroupRelRolePOJO = FleaAuthPOJOUtils.newUserGroupRelRolePOJO(userGroupId, userGroupName, roleId, roleName);
 
         // 复制授权关联扩展数据
-        POJOUtils.copyAll(fleaAuthRelExtPOJO, userGroupRelRolePOJO);
+        POJOUtils.copyNotEmpty(fleaAuthRelExtPOJO, userGroupRelRolePOJO);
 
         // 保存用户组关联角色
         this.fleaUserGroupRelSV.saveUserGroupRel(userGroupRelRolePOJO);
@@ -384,7 +389,7 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
         FleaUserGroupRelPOJO userGroupRelRoleGroupPOJO = FleaAuthPOJOUtils.newUserGroupRelRoleGroupPOJO(userGroupId, userGroupName, roleGroupId, roleGroupName);
 
         // 复制授权关联扩展数据
-        POJOUtils.copyAll(fleaAuthRelExtPOJO, userGroupRelRoleGroupPOJO);
+        POJOUtils.copyNotEmpty(fleaAuthRelExtPOJO, userGroupRelRoleGroupPOJO);
 
         // 保存用户组关联角色
         this.fleaUserGroupRelSV.saveUserGroupRel(userGroupRelRoleGroupPOJO);
@@ -425,7 +430,7 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
         FleaUserGroupRelPOJO userGroupRelUserPOJO = FleaAuthPOJOUtils.newUserGroupRelUserPOJO(userGroupId, userGroupName, userId, userName);
 
         // 复制授权关联扩展数据
-        POJOUtils.copyAll(fleaAuthRelExtPOJO, userGroupRelUserPOJO);
+        POJOUtils.copyNotEmpty(fleaAuthRelExtPOJO, userGroupRelUserPOJO);
 
         // 保存用户组关联用户
         this.fleaUserGroupRelSV.saveUserGroupRel(userGroupRelUserPOJO);
@@ -461,5 +466,117 @@ public class FleaUserModuleSVImpl implements IFleaUserModuleSV {
                 LOGGER.error1(new Object() {}, "Exception occurs when saving quit log : ", e);
             }
         }
+    }
+
+    @Override
+    public FleaAccount queryValidAccount(Long accountId) throws CommonException {
+        return this.fleaAccountSV.queryValidAccount(accountId);
+    }
+
+    @Override
+    public List<FleaAccount> queryAllAccounts(String orderField, String orderType) throws CommonException {
+        if (StringUtils.isBlank(orderField)) {
+            return this.fleaAccountSV.queryAll();
+        }
+        return this.fleaAccountSV.queryAll(orderField, orderType);
+    }
+
+    @Override
+    public FleaUser queryValidUser(Long userId) throws CommonException {
+        return this.fleaUserSV.queryValidUser(userId);
+    }
+
+    @Override
+    public List<FleaUser> queryAllUsers(String orderField, String orderType) throws CommonException {
+        if (StringUtils.isBlank(orderField)) {
+            return this.fleaUserSV.queryAll();
+        }
+        return this.fleaUserSV.queryAll(orderField, orderType);
+    }
+
+    @Override
+    public List<FleaUserGroup> queryAllUserGroups(String orderField, String orderType) throws CommonException {
+        if (StringUtils.isBlank(orderField)) {
+            return this.fleaUserGroupSV.queryAll();
+        }
+        return this.fleaUserGroupSV.queryAll(orderField, orderType);
+    }
+
+    @Override
+    public FleaUserGroup queryUserGroupInUse(Long userGroupId) throws CommonException {
+        return this.fleaUserGroupSV.queryUserGroupInUse(userGroupId);
+    }
+
+    @Override
+    public void modifyFleaAccount(Long accountId, FleaAccountPOJO fleaAccountPOJO) throws CommonException {
+        // 校验账户编号
+        FleaAuthCheck.checkAccountId(accountId);
+
+        // 校验Flea账户POJO对象不能为空
+        FleaAuthCheck.checkEmpty(fleaAccountPOJO, FleaAccountPOJO.class.getSimpleName());
+
+        // 查询在用的账户数据
+        FleaAccount fleaAccount = this.fleaAccountSV.queryValidAccount(accountId);
+        // 校验Flea账户是否存在
+        FleaAuthCheck.checkFleaAccountExist(fleaAccount, StringUtils.valueOf(accountId));
+
+        // 密码非空表示可能需要修改：与库中密文比对相同（如浏览器自动填充原密码）视为未修改，不同才加密覆盖；为空置 null 跳过合并
+        if (StringUtils.isNotBlank(fleaAccountPOJO.getAccountPwd())) {
+            if (SecurityUtils.matchesPassword(fleaAccountPOJO.getAccountPwd(), fleaAccount.getAccountPwd())) {
+                fleaAccountPOJO.setAccountPwd(null);
+            } else {
+                fleaAccountPOJO.setAccountPwd(this.fleaAccountSV.encrypt(fleaAccountPOJO.getAccountPwd()));
+            }
+        } else {
+            fleaAccountPOJO.setAccountPwd(null);
+        }
+
+        // 将Flea账户POJO对象中非 null 的数据，复制到Flea账户数据中（空串支持显式清空）
+        POJOUtils.copyNonNull(fleaAccountPOJO, fleaAccount);
+
+        // 更新Flea账户数据
+        this.fleaAccountSV.update(fleaAccount);
+    }
+
+    @Override
+    public void modifyFleaUser(Long userId, FleaUserPOJO fleaUserPOJO) throws CommonException {
+        // 校验用户编号
+        FleaAuthCheck.checkUserId(userId);
+
+        // 校验Flea用户POJO对象不能为空
+        FleaAuthCheck.checkEmpty(fleaUserPOJO, FleaUserPOJO.class.getSimpleName());
+
+        // 查询有效的用户数据
+        FleaUser fleaUser = this.fleaUserSV.queryValidUser(userId);
+        // 校验Flea用户是否存在
+        FleaAuthCheck.checkFleaUserExist(fleaUser, StringUtils.valueOf(userId));
+
+        // 将Flea用户POJO对象中非 null 的数据，复制到Flea用户数据中（空串支持显式清空）
+        POJOUtils.copyNonNull(fleaUserPOJO, fleaUser);
+
+        // 更新Flea用户数据
+        this.fleaUserSV.update(fleaUser);
+    }
+
+    @Override
+    public List<FleaUserRel> getUserRelList(Long userId, String authRelType) throws CommonException {
+        return this.fleaUserRelSV.getUserRelList(userId, authRelType);
+    }
+
+    @Override
+    @FleaTransactional(value = "fleaAuthTransactionManager", unitName = "fleaauth")
+    public void removeUserRel(Long userId, Long relId, String authRelType) throws CommonException {
+        this.fleaUserRelSV.removeUserRel(userId, relId, authRelType);
+    }
+
+    @Override
+    public List<FleaUserGroupRel> getUserGroupRelList(Long userGroupId, String authRelType) throws CommonException {
+        return this.fleaUserGroupRelSV.getUserGroupRelList(userGroupId, null, authRelType);
+    }
+
+    @Override
+    @FleaTransactional(value = "fleaAuthTransactionManager", unitName = "fleaauth")
+    public void removeUserGroupRel(Long userGroupId, Long relId, String authRelType) throws CommonException {
+        this.fleaUserGroupRelSV.removeUserGroupRel(userGroupId, relId, authRelType);
     }
 }

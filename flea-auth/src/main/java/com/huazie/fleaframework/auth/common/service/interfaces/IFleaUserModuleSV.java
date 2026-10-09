@@ -1,8 +1,14 @@
 package com.huazie.fleaframework.auth.common.service.interfaces;
 
 import com.huazie.fleaframework.auth.base.user.entity.FleaAccount;
+import com.huazie.fleaframework.auth.base.user.entity.FleaUser;
+import com.huazie.fleaframework.auth.base.user.entity.FleaUserGroup;
+import com.huazie.fleaframework.auth.base.user.entity.FleaUserGroupRel;
+import com.huazie.fleaframework.auth.base.user.entity.FleaUserRel;
 import com.huazie.fleaframework.auth.common.pojo.FleaAuthRelExtPOJO;
+import com.huazie.fleaframework.auth.common.pojo.user.FleaAccountPOJO;
 import com.huazie.fleaframework.auth.common.pojo.user.FleaUserGroupPOJO;
+import com.huazie.fleaframework.auth.common.pojo.user.FleaUserPOJO;
 import com.huazie.fleaframework.auth.common.pojo.user.login.FleaUserLoginPOJO;
 import com.huazie.fleaframework.auth.common.pojo.user.register.FleaUserRegisterPOJO;
 import com.huazie.fleaframework.common.IFleaUser;
@@ -10,6 +16,7 @@ import com.huazie.fleaframework.common.exceptions.CommonException;
 import com.huazie.fleaframework.common.object.FleaObjectFactory;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -143,4 +150,136 @@ public interface IFleaUserModuleSV {
      * @since 1.0.0
      */
     void saveQuitLog(Long accountId);
+
+    /**
+     * 查询有效的账户数据
+     *
+     * @param accountId 账户编号
+     * @return 有效的账户数据
+     * @throws CommonException 通用异常
+     * @since 2.0.0
+     */
+    FleaAccount queryValidAccount(Long accountId) throws CommonException;
+
+    /**
+     * 查询所有的账户数据
+     *
+     * @param orderField 排序字段（可为空，为空时不排序）
+     * @param orderType  排序类型（asc/desc，可为空）
+     * @return 账户数据集合
+     * @throws CommonException 通用异常
+     * @since 2.0.0
+     */
+    List<FleaAccount> queryAllAccounts(String orderField, String orderType) throws CommonException;
+
+    /**
+     * 查询有效的用户数据
+     *
+     * @param userId 用户编号
+     * @return 有效的用户数据
+     * @throws CommonException 通用异常
+     * @since 2.0.0
+     */
+    FleaUser queryValidUser(Long userId) throws CommonException;
+
+    /**
+     * 查询所有的用户数据
+     *
+     * @param orderField 排序字段（可为空，为空时不排序）
+     * @param orderType  排序类型（asc/desc，可为空）
+     * @return 用户数据集合
+     * @throws CommonException 通用异常
+     * @since 2.0.0
+     */
+    List<FleaUser> queryAllUsers(String orderField, String orderType) throws CommonException;
+
+    /**
+     * 查询所有的用户组数据
+     *
+     * @param orderField 排序字段（可为空，为空时不排序）
+     * @param orderType  排序类型（asc/desc，可为空）
+     * @return 用户组数据集合
+     * @throws CommonException 通用异常
+     * @since 2.0.0
+     */
+    List<FleaUserGroup> queryAllUserGroups(String orderField, String orderType) throws CommonException;
+
+    /**
+     * 查询在用的用户组数据
+     *
+     * @param userGroupId 用户组编号
+     * @return 在用的用户组数据
+     * @throws CommonException 通用异常
+     * @since 2.0.0
+     */
+    FleaUserGroup queryUserGroupInUse(Long userGroupId) throws CommonException;
+
+    /**
+     * 变更账户数据
+     *
+     * <p> 将 {@link FleaAccountPOJO} 中非空的数据合并到在用的账户数据中；
+     * 密码不为空时，内部统一加密后落库。 </p>
+     *
+     * @param accountId        账户编号
+     * @param fleaAccountPOJO  账户数据POJO对象（仅携带需变更的字段）
+     * @throws CommonException 通用异常
+     * @since 2.0.0
+     */
+    void modifyFleaAccount(Long accountId, FleaAccountPOJO fleaAccountPOJO) throws CommonException;
+
+    /**
+     * 变更用户数据
+     *
+     * <p> 将 {@link FleaUserPOJO} 中非空的数据合并到有效的用户数据中。 </p>
+     *
+     * @param userId        用户编号
+     * @param fleaUserPOJO  用户数据POJO对象（仅携带需变更的字段）
+     * @throws CommonException 通用异常
+     * @since 2.0.0
+     */
+    void modifyFleaUser(Long userId, FleaUserPOJO fleaUserPOJO) throws CommonException;
+
+    /**
+     * 查询用户授权关联数据
+     *
+     * @param userId   用户编号
+     * @param authRelType 授权关联类型（可为空，为空表示不限制）
+     * @return 用户授权关联数据集合
+     * @throws CommonException 通用异常
+     * @since 2.0.0
+     */
+    List<FleaUserRel> getUserRelList(Long userId, String authRelType) throws CommonException;
+
+    /**
+     * 撤销用户授权关联
+     *
+     * @param userId      用户编号
+     * @param relId       关联对象编号
+     * @param authRelType 授权关联类型
+     * @throws CommonException 通用异常
+     * @since 2.0.0
+     */
+    void removeUserRel(Long userId, Long relId, String authRelType) throws CommonException;
+
+    /**
+     * 查询用户组授权关联数据
+     *
+     * @param userGroupId 用户组编号
+     * @param authRelType 授权关联类型（可为空，为空表示不限制）
+     * @return 用户组授权关联数据集合
+     * @throws CommonException 通用异常
+     * @since 2.0.0
+     */
+    List<FleaUserGroupRel> getUserGroupRelList(Long userGroupId, String authRelType) throws CommonException;
+
+    /**
+     * 撤销用户组授权关联
+     *
+     * @param userGroupId 用户组编号
+     * @param relId       关联对象编号
+     * @param authRelType 授权关联类型
+     * @throws CommonException 通用异常
+     * @since 2.0.0
+     */
+    void removeUserGroupRel(Long userGroupId, Long relId, String authRelType) throws CommonException;
 }
