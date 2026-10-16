@@ -5,6 +5,7 @@ import com.huazie.fleaframework.auth.base.function.entity.FleaFunctionAttr;
 import com.huazie.fleaframework.auth.base.function.entity.FleaMenu;
 import com.huazie.fleaframework.auth.base.function.entity.FleaOperation;
 import com.huazie.fleaframework.auth.base.function.entity.FleaResource;
+import com.huazie.fleaframework.auth.base.organization.entity.FleaOrganization;
 import com.huazie.fleaframework.auth.base.privilege.entity.FleaPrivilege;
 import com.huazie.fleaframework.auth.base.privilege.entity.FleaPrivilegeGroup;
 import com.huazie.fleaframework.auth.base.role.entity.FleaRole;
@@ -540,6 +541,33 @@ public class FleaAuthCheck {
         checkEmpty(resourceId, FleaAuthEntityConstants.FunctionEntityConstants.E_RESOURCE_ID);
         // 校验资源编号必须为正数
         checkNonPositiveNumber(resourceId, FleaAuthEntityConstants.FunctionEntityConstants.E_RESOURCE_ID);
+    }
+
+    /**
+     * 校验组织编号，如果为空或者不是正数，则抛出相应的异常。
+     *
+     * @param orgId 组织编号
+     * @throws CommonException 通用异常
+     * @since 2.0.0
+     */
+    public static void checkOrgId(Long orgId) throws CommonException {
+        // 校验组织编号不能为空
+        checkEmpty(orgId, FleaAuthEntityConstants.OrganizationEntityConstants.E_ORG_ID);
+        // 校验组织编号必须为正数
+        checkNonPositiveNumber(orgId, FleaAuthEntityConstants.OrganizationEntityConstants.E_ORG_ID);
+    }
+
+    /**
+     * 校验Flea组织是否存在，如果不存在，则抛出相应的异常。
+     *
+     * @param fleaOrganization Flea组织
+     * @param orgId            组织编号
+     * @throws CommonException 通用异常
+     * @since 2.0.0
+     */
+    public static void checkFleaOrganizationExist(FleaOrganization fleaOrganization, String orgId) throws CommonException {
+        // ERROR-AUTH-COMMON0000000025 组织【org_id = {0}】不存在或已失效！
+        ObjectUtils.checkEmpty(fleaOrganization, FleaAuthCommonException.class, "ERROR-AUTH-COMMON0000000025", orgId);
     }
 
     /**
