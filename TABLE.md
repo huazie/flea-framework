@@ -29,6 +29,10 @@
 |  flea_function_attr_operation  |  操作扩展属性【功能类型分表】   |
 |  flea_function_attr_element    |  元素扩展属性【功能类型分表】   |
 |  flea_function_attr_resource   |  资源扩展属性【功能类型分表】   |
+|  flea_id_generator        |  主键生成器（序号表）            |
+|  flea_organization        |  组织                            |
+|  flea_user_org_rel        |  用户组织关联                     |
+|  flea_auth_audit_log      |  授权操作审计日志                 |
    
 ***
 

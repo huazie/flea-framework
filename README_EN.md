@@ -6,7 +6,7 @@ Flea Framework, named Flea, which originates from the flea market graduation pro
 |  Module                  |  Name                              |    Description                                                        |
 |-----------------------|---------------------------------------| ----------------------------------------------------------------------|
 |  flea-algorithm       | Flea General Algorithm Package        | Java implementation of various algorithms（Continuous replenishment）  |
-|  flea-auth            | Flea Authorization Operation Package  | Authorization four sub modules, including User, Role, Privilege and Function|
+|  flea-auth            | Flea Authorization Operation Package  | Authorization six sub modules, including User, Role, Privilege, Function, Organization and Audit|
 |  flea-framework-bom   | Flea Framework Dependency List        | You can use it to import Flea Framework dependencies in pom mode |
 |  flea-cache           | Flea Cache Processing Package         | Integrate various caches, including MemCached and Redis  |
 |  flea-common          | Flea Util Package                     | Internationalization, Logging, Object Pool, Strategy, Dynamic Proxy, JSON and XML Processing and other tool classes|
