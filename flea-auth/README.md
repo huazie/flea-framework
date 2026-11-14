@@ -1,6 +1,6 @@
 # Flea Auth 模块
 
-通用权限管理模块，提供用户、角色、权限、功能（菜单、操作、元素、资源）等一体化的权限管理解决方案。
+通用权限管理模块，提供用户、角色、权限、功能（菜单、操作、元素、资源）、组织、操作审计等一体化的权限管理解决方案。
 
 ## 模块介绍
 
@@ -14,6 +14,8 @@ Flea Auth 是 Flea Framework 框架的核心模块之一，专注于企业级应
 - **功能管理**：支持菜单、操作、元素、资源四种功能类型
 - **授权管理**：灵活的关联关系管理，支持多种授权模式
 - **登录日志**：完整的登录登出记录追踪
+- **组织管理**：树形组织结构，支持用户与组织关联
+- **操作审计**：授权操作异步落库，支持变更差异比对
 
 ## 技术架构
 
@@ -23,7 +25,9 @@ Flea Auth 是 Flea Framework 框架的核心模块之一，专注于企业级应
 flea-auth/
 ├── src/main/java/com/huazie/fleaframework/auth/
 │   ├── base/                          # 基础层
+│   │   ├── audit/                     # 审计模块（操作审计日志）
 │   │   ├── function/                  # 功能模块（菜单/操作/元素/资源）
+│   │   ├── organization/              # 组织模块
 │   │   ├── privilege/                 # 权限模块
 │   │   ├── role/                      # 角色模块
 │   │   └── user/                      # 用户模块
@@ -48,6 +52,8 @@ flea-auth/
 | **Role Module** | 角色管理服务，提供角色和角色组管理 |
 | **Privilege Module** | 权限管理服务，提供权限和权限组管理 |
 | **Function Module** | 功能管理服务，提供菜单、操作、元素、资源管理 |
+| **Organization Module** | 组织管理服务，提供组织树与用户组织关联管理 |
+| **Audit Module** | 操作审计服务，提供授权操作日志与变更差异记录 |
 | **Auth Service** | 授权服务，提供权限校验和数据查询 |
 
 ## 数据模型
@@ -68,6 +74,9 @@ flea-auth/
 | `FleaElement` | 元素 |
 | `FleaResource` | 资源 |
 | `FleaLoginLog` | 登录日志 |
+| `FleaOrganization` | 组织信息 |
+| `FleaUserOrgRel` | 用户与组织关联 |
+| `FleaAuthAuditLog` | 授权操作审计日志 |
 
 ### 关联关系
 
@@ -122,7 +131,7 @@ flea-auth/
 |---------|------|
 | `flea/cache/flea-auth-cache.xml` | 授权模块缓存定义（被 flea-cache.xml 引入） |
 | `flea/db/flea-auth-table-split.xml` | 授权模块分表规则（被 flea-table-split.xml 引入） |
-| `fleaauth.sql` | 数据库初始化脚本（28 张表） |
+| `fleaauth.sql` | 数据库初始化脚本（31 张表） |
 | `flea/i18n/flea_i18n_auth*.properties` | 授权模块通用提示语（支持中英文） |
 | `flea/i18n/flea_i18n_error_auth*.properties` | 授权模块错误信息（支持中英文） |
 
@@ -130,7 +139,9 @@ flea-auth/
 
 ```
 用户模块：FleaUser, FleaAccount, FleaUserGroup, FleaUserRel, FleaUserAttr,
-         FleaAccountAttr, FleaRealNameInfo, FleaLoginLog
+         FleaAccountAttr, FleaRealNameInfo, FleaLoginLog, FleaUserOrgRel
+组织模块：FleaOrganization
+审计模块：FleaAuthAuditLog
 角色模块：FleaRole, FleaRoleGroup, FleaRoleRel, FleaRoleGroupRel
 权限模块：FleaPrivilege, FleaPrivilegeGroup, FleaPrivilegeRel, FleaPrivilegeGroupRel
 功能模块：FleaMenu, FleaOperation, FleaElement, FleaResource, FleaFunctionAttr
