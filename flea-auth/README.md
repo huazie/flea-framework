@@ -242,9 +242,8 @@ boolean matches = SecurityUtils.matchesPassword(rawPwd, encryptedPwd);
 
 ## 注意事项
 
-1. **TODO 项**：部分功能待完善，包括 IPv6 地址获取等
-2. **数据库兼容性**：当前 SQL 脚本基于 MySQL 5.5+
-3. **依赖管理**：需要配合 `flea-db`、`flea-cache` 等模块使用
+1. **数据库兼容性**：当前 SQL 脚本基于 MySQL 5.5+
+2. **依赖管理**：需要配合 `flea-db`、`flea-cache` 等模块使用
 
 ## 版本历史
 
