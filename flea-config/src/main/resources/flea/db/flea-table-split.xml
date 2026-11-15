@@ -14,9 +14,8 @@
                     seq    : 分库序列键【若不为空，值需对应flea-lib-split.xml中<split seq="SEQ" />】
                     implClass : 分表转换实现类【可自行定义，需实现com.huazie.fleaframework.db.common.table.split.ITableSplit】
                     注意：
-                    （1）key不为空，implClass可不填
-                    （2）key为空，implClass必填
-                    （3）key 和 implClass 都不为空，implClass需要和分表转换类型枚举中分表转换实现类对应上
+                    （1）key不为空，不允许填写implClass【内置规则由TableSplitEnum工厂实例化】
+                    （2）key为空，implClass必填【自定义分表转换实现类】
                 -->
                 <split key="TWO" column="file_id" seq="SEQ"/>
             </splits>

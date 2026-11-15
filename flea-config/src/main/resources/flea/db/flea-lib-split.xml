@@ -18,9 +18,8 @@
                     seq : 分库序列键【】
                     implClass : 分库转换实现类【可自行定义，需实现com.huazie.fleaframework.db.common.lib.split.ILibSplit】
                     注意：
-                    （1）key不为空，implClass可不填
-                    （2）key为空，implClass必填
-                    （3）key 和 implClass 都不为空，implClass需要和分库转换类型枚举中分库转换实现类对应上
+                    （1）key不为空，不允许填写implClass【内置规则由LibSplitEnum工厂实例化】
+                    （2）key为空，implClass必填【自定义分库转换实现类】
                 -->
                 <split key="HEX_NUM" seq="SEQ"/>
             </splits>

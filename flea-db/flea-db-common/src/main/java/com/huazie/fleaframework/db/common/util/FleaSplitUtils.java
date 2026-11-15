@@ -112,27 +112,23 @@ public class FleaSplitUtils {
                 String column = split.getColumn();
                 // 分表转换实现类
                 String implClass = split.getImplClass();
+                // 分表转换类型枚举，key 非空时存在
+                TableSplitEnum tableSplitEnum = null;
 
-                if (StringUtils.isBlank(implClass)) { // 分表转换实现类【implClass】为空，则分表转换类型关键字【key】不能为空
-                    // 请检查分表配置信息（分表转换类型关键字【key】不能为空）
-                    StringUtils.checkBlank(key, TableSplitException.class, "ERROR-DB-TSP0000000004");
-                }
-
-                if (StringUtils.isBlank(key)) { // 分表转换类型关键字【key】为空，则 分表转换实现类【implClass】不能为空
-                    // 请检查分表配置信息（分表转换实现类【implClass】不能为空）
-                    StringUtils.checkBlank(implClass, TableSplitException.class, "ERROR-DB-TSP0000000006");
-                } else {
-                    // 根据分表转换类型关键字【key】，获取对应的分表枚举
-                    TableSplitEnum tableSplitEnum = (TableSplitEnum) EntityUtils.getEntity(TableSplitEnum.values(), DBConstants.LibTableSplitConstants.KEY, key);
-                    if (ObjectUtils.isEmpty(tableSplitEnum)) {
-                        // 请检查分表配置信息（分表转换类型关键字【key】非法）
-                        ExceptionUtils.throwCommonException(TableSplitException.class, "ERROR-DB-TSP0000000010");
-                    } else if (StringUtils.isNotBlank(implClass) && !implClass.equals(tableSplitEnum.getImplClass())) {
+                if (StringUtils.isNotBlank(key)) { // 分表转换类型关键字【key】不为空，则为内置分表转换类型模式
+                    if (StringUtils.isNotBlank(implClass)) { // 内置分表转换类型模式下，不允许填写分表转换实现类【implClass】
                         // 请检查分表配置信息（分表转换实现类【implClass】非法）
                         ExceptionUtils.throwCommonException(TableSplitException.class, "ERROR-DB-TSP0000000007");
                     }
-                    // 取枚举类中的分表转换实现类
-                    implClass = tableSplitEnum.getImplClass();
+                    // 根据分表转换类型关键字【key】，获取对应的分表枚举
+                    tableSplitEnum = (TableSplitEnum) EntityUtils.getEntity(TableSplitEnum.values(), DBConstants.LibTableSplitConstants.KEY, key);
+                    if (ObjectUtils.isEmpty(tableSplitEnum)) {
+                        // 请检查分表配置信息（分表转换类型关键字【key】非法）
+                        ExceptionUtils.throwCommonException(TableSplitException.class, "ERROR-DB-TSP0000000010");
+                    }
+                } else { // 分表转换类型关键字【key】为空，则为自定义分表转换实现类模式，分表转换实现类【implClass】不能为空
+                    // 请检查分表配置信息（分表转换实现类【implClass】不能为空）
+                    StringUtils.checkBlank(implClass, TableSplitException.class, "ERROR-DB-TSP0000000006");
                 }
 
                 // 请检查分表配置信息（分表属性列【column】不能为空）
@@ -142,8 +138,15 @@ public class FleaSplitUtils {
                 // 请检查分表配置信息（分表属性列【column】不存在）
                 ObjectUtils.checkEmpty(entityCol, TableSplitException.class, "ERROR-DB-TSP0000000008");
 
-                // 获取分表转换实现类
-                ITableSplit tableSplit = (ITableSplit) ReflectUtils.newInstance(implClass);
+                // 获取分表转换实现类：key 模式走枚举参数化工厂；key 为空时为业务自定义实现类，走反射实例化
+                ITableSplit tableSplit;
+                if (ObjectUtils.isNotEmpty(tableSplitEnum)) {
+                    tableSplit = tableSplitEnum.newInstance();
+                } else {
+                    tableSplit = (ITableSplit) ReflectUtils.newInstance(implClass);
+                    // 请检查分表配置信息（分表转换实现类【implClass】非法）
+                    ObjectUtils.checkEmpty(tableSplit, TableSplitException.class, "ERROR-DB-TSP0000000007");
+                }
                 // 获取分表列的属性值
                 Object attrValue = entityCol.getAttrValue();
                 // 获取分表字段值【即分表规则转换后的值】
@@ -263,27 +266,23 @@ public class FleaSplitUtils {
                     String seq = split.getSeq();
                     // 分库转换实现类
                     String implClass = split.getImplClass();
+                    // 分库转换类型枚举，key 非空时存在
+                    LibSplitEnum libSplitEnum = null;
 
-                    if (StringUtils.isBlank(implClass)) { // 分库转换实现类【implClass】为空，则分库转换类型关键字【key】不能为空
-                        // 请检查分库配置信息（分库转换类型关键字【key】不能为空）
-                        StringUtils.checkBlank(key, LibSplitException.class, "ERROR-DB-LSP0000000003");
-                    }
-
-                    if (StringUtils.isBlank(key)) { // 分库转换类型关键字【key】为空，则 分库转换实现类【implClass】不能为空
-                        // 请检查分库配置信息（分库转换实现类【implClass】不能为空）
-                        StringUtils.checkBlank(implClass, LibSplitException.class, "ERROR-DB-LSP0000000004");
-                    } else {
-                        // 根据分库转换类型关键字【key】，获取对应的分库转换类型枚举
-                        LibSplitEnum libSplitEnum = (LibSplitEnum) EntityUtils.getEntity(LibSplitEnum.values(), DBConstants.LibTableSplitConstants.KEY, key);
-                        if (ObjectUtils.isEmpty(libSplitEnum)) {
-                            // 请检查分库配置信息（分库转换类型关键字【key】非法）
-                            ExceptionUtils.throwCommonException(LibSplitException.class, "ERROR-DB-LSP0000000005");
-                        } else if (StringUtils.isNotBlank(implClass) && !implClass.equals(libSplitEnum.getImplClass())) {
+                    if (StringUtils.isNotBlank(key)) { // 分库转换类型关键字【key】不为空，则为内置分库转换类型模式
+                        if (StringUtils.isNotBlank(implClass)) { // 内置分库转换类型模式下，不允许填写分库转换实现类【implClass】
                             // 请检查分库配置信息（分库转换实现类【implClass】非法）
                             ExceptionUtils.throwCommonException(LibSplitException.class, "ERROR-DB-LSP0000000006");
                         }
-                        // 取枚举类中的分表转换实现类
-                        implClass = libSplitEnum.getImplClass();
+                        // 根据分库转换类型关键字【key】，获取对应的分库转换类型枚举
+                        libSplitEnum = (LibSplitEnum) EntityUtils.getEntity(LibSplitEnum.values(), DBConstants.LibTableSplitConstants.KEY, key);
+                        if (ObjectUtils.isEmpty(libSplitEnum)) {
+                            // 请检查分库配置信息（分库转换类型关键字【key】非法）
+                            ExceptionUtils.throwCommonException(LibSplitException.class, "ERROR-DB-LSP0000000005");
+                        }
+                    } else { // 分库转换类型关键字【key】为空，则为自定义分库转换实现类模式，分库转换实现类【implClass】不能为空
+                        // 请检查分库配置信息（分库转换实现类【implClass】不能为空）
+                        StringUtils.checkBlank(implClass, LibSplitException.class, "ERROR-DB-LSP0000000004");
                     }
 
                     // 请检查分库配置信息（分库序列键【seq】不能为空）
@@ -292,11 +291,16 @@ public class FleaSplitUtils {
                     // 根据分库序列键从分库对象集合中获取分库对象
                     Object splitLibObj = splitLibObjMap.get(seq);
 
-                    // 获取分库转换实现类
-                    ILibSplit libSplit = (ILibSplit) ReflectUtils.newInstance(implClass);
-                    if (ObjectUtils.isEmpty(libSplit)) {
-                        // 请检查分库配置信息（分库转换实现类【implClass】非法）
-                        ExceptionUtils.throwCommonException(LibSplitException.class, "ERROR-DB-LSP0000000006");
+                    // 获取分库转换实现类：key 模式走枚举参数化工厂；key 为空时为业务自定义实现类，走反射实例化
+                    ILibSplit libSplit;
+                    if (ObjectUtils.isNotEmpty(libSplitEnum)) {
+                        libSplit = libSplitEnum.newInstance();
+                    } else {
+                        libSplit = (ILibSplit) ReflectUtils.newInstance(implClass);
+                        if (ObjectUtils.isEmpty(libSplit)) {
+                            // 请检查分库配置信息（分库转换实现类【implClass】非法）
+                            ExceptionUtils.throwCommonException(LibSplitException.class, "ERROR-DB-LSP0000000006");
+                        }
                     }
                     // 获取分库序列键【即分库规则转换后的值】
                     String splitLibSeq = libSplit.convert(splitLibObj, count);
